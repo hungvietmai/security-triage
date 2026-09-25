@@ -1,0 +1,127 @@
+name: security-triage
+
+x-backend: &backend
+  build:
+    context: ./backend
+    target: runtime
+  environment: &backend-env
+    DATABASE_URL: postgresql+psycopg://triage:${POSTGRES_PASSWORD:-triage_dev}@postgres:5432/triage
+    REDIS_URL: redis://redis:6379/0
+    S3_ENDPOINT_URL: http://seaweedfs:8333
+    S3_ACCESS_KEY: ${S3_ACCESS_KEY:-triage-local}
+    S3_SECRET_KEY: ${S3_SECRET_KEY:-triage-local-development-only}
+    S3_BUCKET: ${S3_BUCKET:-source-artifacts}
+    S3_REGION: us-east-1
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: triage
+      POSTGRES_USER: triage
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-triage_dev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U triage -d triage"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  seaweedfs:
+    image: chrislusf/seaweedfs:4.47
+    working_dir: /data
+    command: ["server", "-dir=/data", "-ip=seaweedfs", "-ip.bind=0.0.0.0", "-filer", "-s3", "-master.volumeSizeLimitMB=1024", "-volume.max=10"]
+    environment:
+      AWS_ACCESS_KEY_ID: ${S3_ACCESS_KEY:-triage-local}
+      AWS_SECRET_ACCESS_KEY: ${S3_SECRET_KEY:-triage-local-development-only}
+    volumes:
+      - seaweed_data:/data
+      - ./infra/seaweedfs/filer.toml:/etc/seaweedfs/filer.toml:ro
+
+  migrate:
+    <<: *backend
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  storage-init:
+    <<: *backend
+    command: ["python", "-m", "scripts.init_storage"]
+    depends_on:
+      seaweedfs:
+        condition: service_started
+
+  api:
+    <<: *backend
+    init: true
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      storage-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health/ready', timeout=15)"]
+      interval: 15s
+      timeout: 20s
+      start_period: 20s
+      retries: 5
+
+  worker:
+    <<: *backend
+    init: true
+    command: ["celery", "-A", "app.workers.celery_app:celery_app", "worker", "--loglevel=INFO", "--concurrency=2"]
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "celery -A app.workers.celery_app:celery_app inspect ping --destination celery@$$HOSTNAME --timeout 5"]
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      target: runtime
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-5173}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  test:
+    <<: *backend
+    profiles: ["test"]
+    build:
+      context: ./backend
+      target: development
+    command: ["pytest", "-q", "-p", "no:cacheprovider"]
+    environment:
+      <<: *backend-env
+      TEST_DATABASE_URL: postgresql+psycopg://triage:${POSTGRES_PASSWORD:-triage_dev}@postgres:5432/triage
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  seaweed_data:

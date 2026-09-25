@@ -1,0 +1,36 @@
+# docker compose -f compose.yaml -f compose.dev.yaml up --build
+services:
+  api:
+    build:
+      target: development
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    volumes:
+      - ./backend/app:/app/app
+
+  worker:
+    build:
+      target: development
+    volumes:
+      - ./backend/app:/app/app
+    # Celery does not auto-reload. Restart worker after changing task code.
+
+  frontend:
+    build:
+      target: development
+    # Replace the runtime port mapping rather than append another published port.
+    ports: !override
+      - "127.0.0.1:${FRONTEND_PORT:-5173}:5173"
+    environment:
+      API_PROXY_TARGET: http://api:8000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.ts:/app/vite.config.ts
+
+  postgres:
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+
+  seaweedfs:
+    ports:
+      - "127.0.0.1:${S3_PORT:-8333}:8333"
