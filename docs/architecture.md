@@ -4,7 +4,8 @@ This repository is the initial development foundation, not a working vulnerabili
 
 ## Implemented
 
-- React/TypeScript project creation and paginated project list; honest loading/error/empty states.
+- React/TypeScript app (shadcn/ui, TanStack Query/Router): dashboard, paginated project list,
+  project detail, system status; honest loading/error/empty and not-yet-implemented states.
 - FastAPI project creation/list/detail endpoints, liveness and dependency readiness.
 - SQLAlchemy foundation: projects → source_snapshots → scans → tool_runs → findings.
 - Immutable Alembic migration file, UUID keys, foreign keys, uniqueness and status constraints.
