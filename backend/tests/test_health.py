@@ -11,7 +11,7 @@ def test_readiness_distinguishes_storage_failure(client, monkeypatch):
     redis = MagicMock()
     monkeypatch.setattr(health.Redis, "from_url", redis)
     storage = MagicMock()
-    storage.return_value.__enter__.return_value.head_bucket.side_effect = OSError("Unavailable")
+    storage.return_value.head_bucket.side_effect = OSError("Unavailable")
     monkeypatch.setattr(health, "get_s3_client", storage)
     response = client.get("/api/v1/health/ready")
     assert response.status_code == 503

@@ -1,6 +1,7 @@
 """Idempotent local bucket initialization; bounded retries while SeaweedFS starts."""
 
 import time
+from contextlib import closing
 
 from botocore.exceptions import BotoCoreError, ClientError
 
@@ -10,7 +11,7 @@ from app.services.storage import get_s3_client
 
 def initialize() -> None:
     bucket = get_settings().s3_bucket
-    with get_s3_client() as client:
+    with closing(get_s3_client()) as client:
         for attempt in range(30):
             try:
                 try:

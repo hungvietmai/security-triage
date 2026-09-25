@@ -1,4 +1,5 @@
 import logging
+from contextlib import closing
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
@@ -41,7 +42,7 @@ def readiness(session: Annotated[Session, Depends(get_session)]) -> JSONResponse
         logger.exception("Redis readiness failed")
         checks["redis"] = "unavailable"
     try:
-        with get_s3_client() as client:
+        with closing(get_s3_client()) as client:
             client.head_bucket(Bucket=settings.s3_bucket)
         checks["storage"] = "ok"
     except Exception:
