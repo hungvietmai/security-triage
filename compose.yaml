@@ -12,10 +12,12 @@ x-backend: &backend
     S3_SECRET_KEY: ${S3_SECRET_KEY:-triage-local-development-only}
     S3_BUCKET: ${S3_BUCKET:-source-artifacts}
     S3_REGION: us-east-1
+    LOG_LEVEL: ${LOG_LEVEL:-INFO}
 
 services:
   postgres:
     image: postgres:17-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: triage
       POSTGRES_USER: triage
@@ -30,6 +32,7 @@ services:
 
   redis:
     image: redis:7.4-alpine
+    restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis_data:/data
@@ -41,6 +44,7 @@ services:
 
   seaweedfs:
     image: chrislusf/seaweedfs:4.47
+    restart: unless-stopped
     working_dir: /data
     command: ["server", "-dir=/data", "-ip=seaweedfs", "-ip.bind=0.0.0.0", "-filer", "-s3", "-master.volumeSizeLimitMB=1024", "-volume.max=10"]
     environment:
@@ -67,6 +71,7 @@ services:
   api:
     <<: *backend
     init: true
+    restart: unless-stopped
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     depends_on:
@@ -86,9 +91,15 @@ services:
   worker:
     <<: *backend
     init: true
+    restart: unless-stopped
     command: ["celery", "-A", "app.workers.celery_app:celery_app", "worker", "--loglevel=INFO", "--concurrency=2"]
+    # The worker needs the schema, bucket and broker, not the HTTP API.
     depends_on:
-      api:
+      migrate:
+        condition: service_completed_successfully
+      storage-init:
+        condition: service_completed_successfully
+      redis:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "celery -A app.workers.celery_app:celery_app inspect ping --destination celery@$$HOSTNAME --timeout 5"]
@@ -101,6 +112,7 @@ services:
     build:
       context: ./frontend
       target: runtime
+    restart: unless-stopped
     ports:
       - "127.0.0.1:${FRONTEND_PORT:-5173}:80"
     depends_on:
@@ -113,7 +125,7 @@ services:
     build:
       context: ./backend
       target: development
-    command: ["pytest", "-q", "-p", "no:cacheprovider"]
+    command: ["pytest", "-q", "-p", "no:cacheprovider", "--cov"]
     environment:
       <<: *backend-env
       TEST_DATABASE_URL: postgresql+psycopg://triage:${POSTGRES_PASSWORD:-triage_dev}@postgres:5432/triage

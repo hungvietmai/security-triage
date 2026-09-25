@@ -6,6 +6,8 @@ services:
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     volumes:
       - ./backend/app:/app/app
+      - ./backend/migrations:/app/migrations
+      - ./backend/scripts:/app/scripts
 
   worker:
     build:
@@ -13,6 +15,14 @@ services:
     volumes:
       - ./backend/app:/app/app
     # Celery does not auto-reload. Restart worker after changing task code.
+
+  # Run tests against the working tree without rebuilding the image.
+  test:
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/migrations:/app/migrations
+      - ./backend/scripts:/app/scripts
+      - ./backend/tests:/app/tests
 
   frontend:
     build:
@@ -26,6 +36,7 @@ services:
       - ./frontend/src:/app/src
       - ./frontend/index.html:/app/index.html
       - ./frontend/vite.config.ts:/app/vite.config.ts
+      - ./frontend/public:/app/public
 
   postgres:
     ports:
