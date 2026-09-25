@@ -26,6 +26,12 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
       - run: npm run lint
+      - run: npm run format:check
+      - name: Check generated API types match openapi.json
+        run: |
+          npm run gen:api
+          git diff --exit-code -- src/types/api-schema.d.ts
+      - run: npm test
       - run: npm run build
 
   docker-integration:
@@ -41,12 +47,23 @@ jobs:
         run: docker compose up --build -d --wait --wait-timeout 180
       - name: Test API with isolated PostgreSQL schemas
         run: docker compose --profile test run --build --rm test
-      - name: Lint Python
+      - name: Lint and type-check Python
         run: |
           docker compose --profile test run --rm --no-deps test ruff check .
           docker compose --profile test run --rm --no-deps test ruff format --check .
-      - name: Check migrations match models
-        run: docker compose exec -T api alembic check
+          docker compose --profile test run --rm --no-deps test mypy
+      - name: Audit Python dependencies for known vulnerabilities
+        run: docker compose --profile test run --rm --no-deps test pip-audit --progress-spinner off
+      - name: Check migrations match models and downgrade cleanly
+        run: |
+          docker compose exec -T api alembic check
+          docker compose exec -T api alembic downgrade base
+          docker compose exec -T api alembic upgrade head
+          docker compose exec -T api alembic check
+      - name: Check frontend/openapi.json matches the API
+        run: |
+          docker compose exec -T api python -m scripts.export_openapi > frontend/openapi.json
+          git diff --exit-code -- frontend/openapi.json
       - name: Verify FE proxy, readiness and worker
         run: |
           curl --fail --retry 5 --retry-delay 2 http://localhost:5173/
