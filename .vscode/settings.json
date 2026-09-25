@@ -1,0 +1,32 @@
+{
+  // Backend: uv-managed virtualenv (Python 3.12, see backend/.python-version).
+  // Create or update it with `cd backend && uv sync`.
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+  // Imports are `app.*` relative to backend/, not to the repository root.
+  "python.analysis.extraPaths": ["backend"],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.cwd": "${workspaceFolder}/backend",
+  "python.testing.pytestArgs": ["tests"],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.organizeImports": "explicit" }
+  },
+
+  // Frontend: Prettier (with Tailwind class sorting) on save.
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.formatOnSave": true },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.formatOnSave": true },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode", "editor.formatOnSave": true },
+  "prettier.prettierPath": "frontend/node_modules/prettier",
+  "js/ts.tsdk.path": "frontend/node_modules/typescript/lib",
+  // Tailwind v4 has no JS config; point IntelliSense at the CSS entry point.
+  "tailwindCSS.experimental.configFile": "frontend/src/index.css",
+
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.mypy_cache": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true
+  }
+}
