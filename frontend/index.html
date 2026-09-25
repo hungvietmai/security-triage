@@ -8,6 +8,21 @@
       content="Quản lý dự án phân tích mã nguồn với Semgrep và CodeQL."
     />
     <title>Security Triage</title>
+    <script>
+      // Apply the saved theme before the first paint to avoid a light/dark flash.
+      // Mirrors src/lib/theme.ts (storage key "theme").
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var dark =
+            stored === "dark" ||
+            (stored !== "light" &&
+              matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+          document.documentElement.style.colorScheme = dark ? "dark" : "light";
+        } catch (_) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -4,7 +4,7 @@ import { afterAll, afterEach, beforeAll, beforeEach } from "vitest";
 import { resetDb } from "@/testing/mocks/db";
 import { server } from "@/testing/mocks/server";
 
-// jsdom lacks these browser APIs used by next-themes, the sidebar and Radix.
+// jsdom lacks these browser APIs used by the theme provider, the sidebar and Radix.
 // Node-environment tests (e.g. architecture.test.ts) have no window at all.
 if (typeof window !== "undefined") {
   window.matchMedia ??= (query: string) =>
@@ -24,6 +24,9 @@ if (typeof window !== "undefined") {
     disconnect() {}
   };
   Element.prototype.scrollIntoView ??= () => {};
+  // jsdom defines scrollTo but only logs "Not implemented"; the router's scroll
+  // restoration calls it on every navigation.
+  window.scrollTo = () => {};
 }
 
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
