@@ -1,0 +1,9 @@
+# Full test suites before code leaves the machine. Skip once with `git push --no-verify`.
+set -e
+
+echo "pre-push: frontend tests"
+npm --prefix frontend test
+
+echo "pre-push: backend tests"
+cd backend
+uv run pytest -q --cov
