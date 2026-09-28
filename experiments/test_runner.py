@@ -106,6 +106,32 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(rows, [])
             self.assertFalse(complete)
 
+    def test_informational_notifications_do_not_make_scan_partial(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "report.sarif"
+            path.write_text(
+                json.dumps(
+                    {
+                        "version": "2.1.0",
+                        "runs": [
+                            {
+                                "invocations": [
+                                    {
+                                        "executionSuccessful": True,
+                                        "toolExecutionNotifications": [
+                                            {"level": "none", "message": {"text": "coverage"}}
+                                        ],
+                                    }
+                                ],
+                                "results": [],
+                            }
+                        ],
+                    }
+                )
+            )
+            _, complete = sarif_findings(path, "codeql", "snapshot")
+            self.assertTrue(complete)
+
 
 if __name__ == "__main__":
     unittest.main()
