@@ -82,6 +82,11 @@ def unpack(archive, destination, archive_root):
 
 
 def invoke(argv, cwd, output, name, timeout, env=None):
+    if env is None:
+        env = os.environ.copy()
+    if name.startswith("semgrep"):
+        env.update(SEMGREP_SEND_METRICS="off", SEMGREP_ENABLE_VERSION_CHECK="0")
+        env.pop("SEMGREP_APP_TOKEN", None)
     start = time.monotonic()
     record = {"argv": list(map(str, argv)), "status": "failed", "exit_code": None}
     with (
@@ -134,8 +139,10 @@ def sarif_findings(path, tool, snapshot):
         for invocation in run.get("invocations", []):
             if invocation.get("executionSuccessful") is False:
                 complete = False
-            if invocation.get("toolExecutionNotifications"):
-                # Conservatively require review, even for nonfatal notifications.
+            if any(
+                note.get("level", "warning") not in {"none", "note"}
+                for note in invocation.get("toolExecutionNotifications", [])
+            ):
                 complete = False
         rules = {r["id"]: r for r in run.get("tool", {}).get("driver", {}).get("rules", [])}
         for result_index, result in enumerate(run.get("results", [])):
