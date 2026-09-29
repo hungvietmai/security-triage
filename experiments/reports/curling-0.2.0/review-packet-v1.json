@@ -1,0 +1,584 @@
+{
+  "schema_version": "sink-proposals-v1",
+  "builder_sha256": "e36ce70d5389f9c3cf6daa694551691ea2edb5c3362d8f1414d7dbe8fc2d6a40",
+  "case_id": "secbench-curling-0.2.0",
+  "evidence_sha256": "05d9cca995639c94f9c98d3aadd2fb216f9fbb575ee9227770fd97d05c4b6513",
+  "attempt": "002",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "configuration_commit": "8ffd191a4b63d74db3b655aeb08c3ce9aa33a4c5",
+  "scanner_status": {
+    "semgrep": {
+      "recorded_status": "completed",
+      "sarif_available": true,
+      "sarif_complete": true
+    },
+    "codeql": {
+      "recorded_status": "completed",
+      "sarif_available": true,
+      "sarif_complete": true
+    }
+  },
+  "review_status": "unreviewed",
+  "blinded": false,
+  "raw_findings": [
+    {
+      "raw_id": "codeql:0:0",
+      "tool": "codeql",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "startLine": 56,
+        "startColumn": 8,
+        "endColumn": 25
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](5) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](6) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](7) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](8) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](9) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](10) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](11) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](12) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:0"
+      },
+      "fallback_unit_id": "fallback:f094da7684b4c0f84e62abe819c2216edb7164821029f11f3ccdc8effe3b37da",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "startLine": 56,
+          "startColumn": 8,
+          "endColumn": 25
+        },
+        "discriminator": {
+          "sarif": "codeql.sarif",
+          "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+          "raw_id": "codeql:0:0"
+        }
+      },
+      "candidates": [
+        {
+          "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+          "identity": {
+            "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+            "path": "lib/curl-transport.js",
+            "sink_anchor": {
+              "startLine": 56,
+              "startColumn": 3,
+              "endLine": 58,
+              "endColumn": 5
+            },
+            "argument_role": "shell_command"
+          },
+          "evidence": {
+            "related_location_id": 2,
+            "message_link": "[shell command](2)"
+          },
+          "source_context": "exports.run = function (command, cb) {\n  exec(\"curl \" + command, function (error, stdout, stderr) {\n    cb(null, {payload: stdout, stats: parseStats(stderr)});\n  })\n    .on('error', function (err) {",
+          "status": "proposed_needs_review"
+        }
+      ],
+      "proposal_reason": "explicit_sink_candidate",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    },
+    {
+      "raw_id": "codeql:0:1",
+      "tool": "codeql",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "startLine": 76,
+        "startColumn": 12,
+        "endColumn": 57
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](5) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](6) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](7) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:1"
+      },
+      "fallback_unit_id": "fallback:94e15493fc781c462582afbeef9a362424b42e5a0d4a247b0e1f1f784c009b64",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "startLine": 76,
+          "startColumn": 12,
+          "endColumn": 57
+        },
+        "discriminator": {
+          "sarif": "codeql.sarif",
+          "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+          "raw_id": "codeql:0:1"
+        }
+      },
+      "candidates": [
+        {
+          "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+          "identity": {
+            "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+            "path": "lib/curl-transport.js",
+            "sink_anchor": {
+              "startLine": 56,
+              "startColumn": 3,
+              "endLine": 58,
+              "endColumn": 5
+            },
+            "argument_role": "shell_command"
+          },
+          "evidence": {
+            "related_location_id": 2,
+            "message_link": "[shell command](2)"
+          },
+          "source_context": "exports.run = function (command, cb) {\n  exec(\"curl \" + command, function (error, stdout, stderr) {\n    cb(null, {payload: stdout, stats: parseStats(stderr)});\n  })\n    .on('error', function (err) {",
+          "status": "proposed_needs_review"
+        }
+      ],
+      "proposal_reason": "explicit_sink_candidate",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    },
+    {
+      "raw_id": "codeql:0:2",
+      "tool": "codeql",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "startLine": 108,
+        "startColumn": 21,
+        "endColumn": 57
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:2"
+      },
+      "fallback_unit_id": "fallback:53cf2a2aa03113fee62b967060f537f28d473e634576efd1015a5272869d833a",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "startLine": 108,
+          "startColumn": 21,
+          "endColumn": 57
+        },
+        "discriminator": {
+          "sarif": "codeql.sarif",
+          "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+          "raw_id": "codeql:0:2"
+        }
+      },
+      "candidates": [
+        {
+          "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+          "identity": {
+            "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+            "path": "lib/curl-transport.js",
+            "sink_anchor": {
+              "startLine": 56,
+              "startColumn": 3,
+              "endLine": 58,
+              "endColumn": 5
+            },
+            "argument_role": "shell_command"
+          },
+          "evidence": {
+            "related_location_id": 2,
+            "message_link": "[shell command](2)"
+          },
+          "source_context": "exports.run = function (command, cb) {\n  exec(\"curl \" + command, function (error, stdout, stderr) {\n    cb(null, {payload: stdout, stats: parseStats(stderr)});\n  })\n    .on('error', function (err) {",
+          "status": "proposed_needs_review"
+        }
+      ],
+      "proposal_reason": "explicit_sink_candidate",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    },
+    {
+      "raw_id": "codeql:0:3",
+      "tool": "codeql",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "startLine": 113,
+        "startColumn": 21,
+        "endColumn": 56
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:3"
+      },
+      "fallback_unit_id": "fallback:9f640c8adac217b20c260b046dfa89f5e04f45dc6a12c4e5b8e8737842bdc246",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "startLine": 113,
+          "startColumn": 21,
+          "endColumn": 56
+        },
+        "discriminator": {
+          "sarif": "codeql.sarif",
+          "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+          "raw_id": "codeql:0:3"
+        }
+      },
+      "candidates": [
+        {
+          "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+          "identity": {
+            "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+            "path": "lib/curl-transport.js",
+            "sink_anchor": {
+              "startLine": 56,
+              "startColumn": 3,
+              "endLine": 58,
+              "endColumn": 5
+            },
+            "argument_role": "shell_command"
+          },
+          "evidence": {
+            "related_location_id": 2,
+            "message_link": "[shell command](2)"
+          },
+          "source_context": "exports.run = function (command, cb) {\n  exec(\"curl \" + command, function (error, stdout, stderr) {\n    cb(null, {payload: stdout, stats: parseStats(stderr)});\n  })\n    .on('error', function (err) {",
+          "status": "proposed_needs_review"
+        }
+      ],
+      "proposal_reason": "explicit_sink_candidate",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    },
+    {
+      "raw_id": "codeql:0:4",
+      "tool": "codeql",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "startLine": 123,
+        "startColumn": 21,
+        "endColumn": 64
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:4"
+      },
+      "fallback_unit_id": "fallback:95a2563ffbed55faf0ff2137f584b8b35d12221fdd3e615ba9e1950ea464cba9",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "startLine": 123,
+          "startColumn": 21,
+          "endColumn": 64
+        },
+        "discriminator": {
+          "sarif": "codeql.sarif",
+          "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+          "raw_id": "codeql:0:4"
+        }
+      },
+      "candidates": [
+        {
+          "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+          "identity": {
+            "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+            "path": "lib/curl-transport.js",
+            "sink_anchor": {
+              "startLine": 56,
+              "startColumn": 3,
+              "endLine": 58,
+              "endColumn": 5
+            },
+            "argument_role": "shell_command"
+          },
+          "evidence": {
+            "related_location_id": 2,
+            "message_link": "[shell command](2)"
+          },
+          "source_context": "exports.run = function (command, cb) {\n  exec(\"curl \" + command, function (error, stdout, stderr) {\n    cb(null, {payload: stdout, stats: parseStats(stderr)});\n  })\n    .on('error', function (err) {",
+          "status": "proposed_needs_review"
+        }
+      ],
+      "proposal_reason": "explicit_sink_candidate",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    },
+    {
+      "raw_id": "codeql:0:5",
+      "tool": "codeql",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "startLine": 128,
+        "startColumn": 21,
+        "endColumn": 76
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:5"
+      },
+      "fallback_unit_id": "fallback:3fb66af008cdcddd2876d9d3a2859250568205571e75e6234ea6c4b9482e4f90",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "startLine": 128,
+          "startColumn": 21,
+          "endColumn": 76
+        },
+        "discriminator": {
+          "sarif": "codeql.sarif",
+          "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+          "raw_id": "codeql:0:5"
+        }
+      },
+      "candidates": [
+        {
+          "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+          "identity": {
+            "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+            "path": "lib/curl-transport.js",
+            "sink_anchor": {
+              "startLine": 56,
+              "startColumn": 3,
+              "endLine": 58,
+              "endColumn": 5
+            },
+            "argument_role": "shell_command"
+          },
+          "evidence": {
+            "related_location_id": 2,
+            "message_link": "[shell command](2)"
+          },
+          "source_context": "exports.run = function (command, cb) {\n  exec(\"curl \" + command, function (error, stdout, stderr) {\n    cb(null, {payload: stdout, stats: parseStats(stderr)});\n  })\n    .on('error', function (err) {",
+          "status": "proposed_needs_review"
+        }
+      ],
+      "proposal_reason": "explicit_sink_candidate",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    }
+  ],
+  "candidate_groups": {
+    "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687": [
+      {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:0"
+      },
+      {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:1"
+      },
+      {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:2"
+      },
+      {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:3"
+      },
+      {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:4"
+      },
+      {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:5"
+      }
+    ]
+  },
+  "labels": {
+    "fallback:f094da7684b4c0f84e62abe819c2216edb7164821029f11f3ccdc8effe3b37da": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    },
+    "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    },
+    "fallback:94e15493fc781c462582afbeef9a362424b42e5a0d4a247b0e1f1f784c009b64": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    },
+    "fallback:53cf2a2aa03113fee62b967060f537f28d473e634576efd1015a5272869d833a": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    },
+    "fallback:9f640c8adac217b20c260b046dfa89f5e04f45dc6a12c4e5b8e8737842bdc246": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    },
+    "fallback:95a2563ffbed55faf0ff2137f584b8b35d12221fdd3e615ba9e1950ea464cba9": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    },
+    "fallback:3fb66af008cdcddd2876d9d3a2859250568205571e75e6234ea6c4b9482e4f90": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    }
+  },
+  "metrics": null,
+  "summary": {
+    "raw_findings": 6,
+    "fallback_records_retained": 6,
+    "raw_with_sink_proposal": 6,
+    "raw_without_sink_proposal": 0,
+    "unique_proposed_sinks": 1,
+    "accepted_sink_assignments": 0,
+    "unresolved_mapping_records": 6,
+    "automatic_unmatched_rate": 1.0,
+    "note": "Proposals are not assignments. Candidate and fallback labels are alternatives, not additive scoring units."
+  }
+}
