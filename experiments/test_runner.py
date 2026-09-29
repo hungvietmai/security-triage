@@ -7,10 +7,31 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from experiments.run_pilot import sarif_findings, unpack
+from experiments.run_pilot import ROOT, digest, sarif_findings, stage_rule, unpack
 
 
 class RunnerTests(unittest.TestCase):
+    def test_local_rule_is_verified_before_copy(self):
+        rule = ROOT / "experiments/rules/detect-child-process-upstream.yaml"
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "rule.yaml"
+            spec = {"path": str(rule.relative_to(ROOT)), "sha256": digest(rule)}
+            stage_rule(spec, target)
+            self.assertEqual(target.read_bytes(), rule.read_bytes())
+            target.unlink()
+            spec["sha256"] = "0" * 64
+            with self.assertRaisesRegex(ValueError, "checksum mismatch"):
+                stage_rule(spec, target)
+            self.assertFalse(target.exists())
+
+    def test_local_rule_cannot_escape_repository(self):
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder) / "rule.yaml"
+            with self.assertRaisesRegex(ValueError, "inside repository"):
+                stage_rule({"path": "../outside.yaml", "sha256": "0" * 64}, target)
+            with self.assertRaisesRegex(ValueError, "exactly one"):
+                stage_rule({"path": "rule.yaml", "url": "https://example.org"}, target)
+
     def archive(self, root, name, kind=None):
         p = root / "input.tgz"
         with tarfile.open(p, "w:gz") as bundle:
