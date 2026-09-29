@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import signal
 import subprocess
 import tarfile
@@ -42,6 +43,22 @@ def fetch(url, target, expected_hash, max_bytes=MAX_ARCHIVE):
     if len(data) > max_bytes or hashlib.sha256(data).hexdigest() != expected_hash:
         raise ValueError("Download size limit or checksum mismatch")
     target.write_bytes(data)
+
+
+def stage_rule(rule, target):
+    """Support committed local rules and pinned upstream downloads equally."""
+    if ("path" in rule) == ("url" in rule):
+        raise ValueError("Rule needs exactly one of path or url")
+    if "url" in rule:
+        fetch(rule["url"], target, rule["sha256"], 2 * 1024 * 1024)
+        return
+    relative = Path(rule["path"])
+    source = (ROOT / relative).resolve()
+    if relative.is_absolute() or not source.is_relative_to(ROOT):
+        raise ValueError("Local rule must stay inside repository")
+    if source.stat().st_size > 2 * 1024 * 1024 or digest(source) != rule["sha256"]:
+        raise ValueError("Local rule size limit or checksum mismatch")
+    shutil.copyfile(source, target)
 
 
 def unpack(archive, destination, archive_root):
@@ -190,6 +207,9 @@ def main():
     parser.add_argument("--semgrep", default="semgrep")
     parser.add_argument("--codeql", default="codeql")
     parser.add_argument("--javascript-query-pack", type=Path)
+    parser.add_argument(
+        "--source-archive", type=Path, help="Reuse an archive with the manifest hash"
+    )
     args = parser.parse_args()
     if not re.fullmatch(r"[a-f0-9]{40}", args.configuration_commit):
         parser.error("Exact configuration commit required")
@@ -231,7 +251,15 @@ def main():
     try:
         begin = time.monotonic()
         archive = output / "source.tgz"
-        fetch(case["artifact_url"], archive, case["artifact_sha256"])
+        if args.source_archive:
+            if (
+                args.source_archive.stat().st_size > MAX_ARCHIVE
+                or digest(args.source_archive) != case["artifact_sha256"]
+            ):
+                raise ValueError("Cached source size limit or checksum mismatch")
+            shutil.copyfile(args.source_archive, archive)
+        else:
+            fetch(case["artifact_url"], archive, case["artifact_sha256"])
         if case.get("registry_integrity"):
             integrity = (
                 "sha512-" + base64.b64encode(hashlib.sha512(archive.read_bytes()).digest()).decode()
@@ -251,6 +279,7 @@ def main():
         ]
         report["steps"]["acquisition"] = {
             "status": "completed",
+            "transport": "verified_local_archive" if args.source_archive else "https",
             "seconds": time.monotonic() - begin,
         }
         for tool in config["scanners"]:
@@ -274,7 +303,7 @@ def main():
                     ]
                     for idx, rule in enumerate(config["semgrep_rules"]):
                         local = output / f"rule-{idx}.yaml"
-                        fetch(rule["url"], local, rule["sha256"], 2 * 1024 * 1024)
+                        stage_rule(rule, local)
                         argv += ["--config", str(local)]
                     argv += ["."]
                     rec = invoke(argv, source, output, tool, config["timeout_seconds"])
