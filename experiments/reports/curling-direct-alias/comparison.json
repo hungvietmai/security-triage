@@ -1,0 +1,56 @@
+{
+  "configuration_commit": "d6ce12ece91dcb86427e542f7a7f858f6c98a193",
+  "fixture": {
+    "upstream": {
+      "expected_lines": [
+        7
+      ],
+      "actual_lines": [
+        7
+      ],
+      "matched": true,
+      "errors": []
+    },
+    "direct-alias": {
+      "expected_lines": [
+        7,
+        10,
+        13
+      ],
+      "actual_lines": [
+        7,
+        10,
+        13
+      ],
+      "matched": true,
+      "errors": []
+    }
+  },
+  "curling": {
+    "upstream": {
+      "status": "completed",
+      "source_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "raw_findings": 0,
+      "reported_locations": []
+    },
+    "direct-alias": {
+      "status": "completed",
+      "source_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "raw_findings": 1,
+      "reported_locations": [
+        {
+          "path": "lib/curl-transport.js",
+          "region": {
+            "endColumn": 25,
+            "endLine": 56,
+            "snippet": {
+              "text": "  exec(\"curl \" + command, function (error, stdout, stderr) {"
+            },
+            "startColumn": 8,
+            "startLine": 56
+          }
+        }
+      ]
+    }
+  }
+}
