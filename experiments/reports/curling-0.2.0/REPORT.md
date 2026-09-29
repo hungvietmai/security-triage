@@ -91,3 +91,14 @@ findings JSON is omitted because it duplicates SARIF result objects.
    policy and S1 as configurations of the same CLI, tracking development effort.
 4. Freeze the complete configurations, grouped split, labels and protocol revision
    before any final held-out evaluation.
+
+## Follow-up: reproducible sink proposals
+
+The [offline review builder](../../build_review.py) now reproduces the candidate
+mapping from preserved evidence without rescanning. Its
+[review packet](review-packet-v1.json) retains all six fallback records and groups
+six proposals under one candidate sink identity, excluding CWE from the key.
+There are zero accepted mappings and no resolved technical/scope labels. The
+[review workflow](../../REVIEW_WORKFLOW.md) describes approval fields and remaining
+gates. Six mapping/integrity tests plus six runner tests pass locally. This is a
+postprocessing implementation checkpoint; the original run evidence is unchanged.
