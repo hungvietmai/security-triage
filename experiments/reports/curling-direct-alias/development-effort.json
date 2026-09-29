@@ -1,0 +1,22 @@
+{
+  "actor": "assistant",
+  "activity": "S1 candidate sink coverage diagnostic",
+  "language": "javascript",
+  "round": 1,
+  "maximum_rounds": 2,
+  "development_cases": [
+    "secbench-curling-0.2.0",
+    "synthetic-direct-alias-controls"
+  ],
+  "held_out_cases_seen": [],
+  "measurement_start_utc": "2026-09-29T02:56:50+00:00",
+  "measurement_end_utc": "2026-09-29T03:00:28.326237+00:00",
+  "budget_minutes_charged": 4,
+  "measurement_method": "Conservative wall-clock charge including scan waits and shared runner work. Not an estimate of human person-hours. Preliminary reasoning before the measurement start is not metered.",
+  "budget_minutes_per_language": 240,
+  "configuration_commit": "d6ce12ece91dcb86427e542f7a7f858f6c98a193",
+  "method_change": "Only add sink patterns for direct CommonJS .exec/.execSync aliases; upstream source patterns and existing sink patterns unchanged.",
+  "shared_infrastructure": "Local rule checksum verification and reusable source archive option in existing CLI; included in conservative charge, not subtracted.",
+  "outcome": "Fixture original 1 vs adjusted 3; curling original 0 vs adjusted 1 raw alert. No edits to rule after fixture observation.",
+  "limits": "Not a frozen S1 baseline; broader development data and future effort logging required. No FP reduction inference. CodeQL already reports this case using native models; no new CodeQL model added."
+}
