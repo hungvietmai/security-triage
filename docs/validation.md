@@ -58,3 +58,13 @@ application CI above does not validate it.
 The next research gate is review of the first case's proposed sink mapping and
 labels, followed by remaining development cases. See the authoritative
 [evaluation protocol](../experiments/EVALUATION_PROTOCOL.md).
+
+## Offline mapping checkpoint (2026-09-29)
+
+The review builder reconstructs the saved evidence with checksum verification.
+For curling it retains all six raw records and proposes one shared sink, with
+zero accepted assignments and unresolved truth/scope labels. Six additional
+review tests pass, for 12 experiment tests total; Python lint passes. Checks cover
+CWE-independent identity, arbitrary message-link IDs, ambiguous/unsafe locations,
+fallback retention and evidence tampering. These do not validate vulnerability
+labels. See [review workflow](../experiments/REVIEW_WORKFLOW.md).
