@@ -107,3 +107,9 @@ See [batch 01 report](reports/development-batch-01/REPORT.md) for six raw Semgre
 alerts and zero CodeQL alerts across five completed paired snapshots. The report
 preserves failed attempts and preliminary capped review; no FP or accuracy gain
 is confirmed. Run further fixed batches with `python -m experiments.run_batch`.
+
+## Application-helper development survey
+
+[Batch 02](reports/development-batch-02/REPORT.md) records four Semgrep and one
+CodeQL alert across three published snapshots. The node-notifier sanitizer
+review is a concrete hypothesis awaiting validation, not a confirmed FP.

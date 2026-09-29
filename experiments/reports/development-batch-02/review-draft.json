@@ -1,0 +1,4531 @@
+{
+  "status": "unapproved_development_notes",
+  "selection": "Listed package order; within each tool sort by relative path,startLine,startColumn,rule_id,raw_id; first three raw alerts per tool per package; retain remainder unreviewed.",
+  "findings": [
+    {
+      "case_id": "npm-node-notifier-10.0.1",
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "5e75d1bb41696f3334481ec083204335e519920d292855cb6afb6b0e2d9afe9b",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-node-notifier-10.0.1.detect-child-process",
+      "reported_path": "lib/utils.js",
+      "reported_region": {
+        "endColumn": 52,
+        "endLine": 59,
+        "snippet": {
+          "text": "  return cp.exec(notifier + ' ' + options.join(' '), function ("
+        },
+        "startColumn": 18,
+        "startLine": 59
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `notifier`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/utils.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 52,
+                "endLine": 59,
+                "snippet": {
+                  "text": "  return cp.exec(notifier + ' ' + options.join(' '), function ("
+                },
+                "startColumn": 18,
+                "startLine": 59
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `notifier`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-node-notifier-10.0.1.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "5e75d1bb41696f3334481ec083204335e519920d292855cb6afb6b0e2d9afe9b",
+        "path": "lib/utils.js",
+        "line": 59
+      },
+      "review_note": "NotifySend caller fixes notify-send and supplies a key allowlist; argument builder defaults escape on and double-quote wrapping. CodeQL paths include branches bypassing escaping and a non-string escapeQuotes return. Candidate for path-sensitive sanitizer review, not an approved site-wide FP. Deep imports of exported utils.command have a broader input contract. See SANITIZER_REVIEW.md."
+    },
+    {
+      "case_id": "npm-node-notifier-10.0.1",
+      "raw_id": "semgrep:0:1",
+      "tool": "semgrep",
+      "snapshot_sha256": "5e75d1bb41696f3334481ec083204335e519920d292855cb6afb6b0e2d9afe9b",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-node-notifier-10.0.1.detect-child-process",
+      "reported_path": "lib/utils.js",
+      "reported_region": {
+        "endColumn": 52,
+        "endLine": 59,
+        "snippet": {
+          "text": "  return cp.exec(notifier + ' ' + options.join(' '), function ("
+        },
+        "startColumn": 18,
+        "startLine": 59
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `options`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/utils.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 52,
+                "endLine": 59,
+                "snippet": {
+                  "text": "  return cp.exec(notifier + ' ' + options.join(' '), function ("
+                },
+                "startColumn": 18,
+                "startLine": 59
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `options`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-node-notifier-10.0.1.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "5e75d1bb41696f3334481ec083204335e519920d292855cb6afb6b0e2d9afe9b",
+        "path": "lib/utils.js",
+        "line": 59
+      },
+      "review_note": "NotifySend caller fixes notify-send and supplies a key allowlist; argument builder defaults escape on and double-quote wrapping. CodeQL paths include branches bypassing escaping and a non-string escapeQuotes return. Candidate for path-sensitive sanitizer review, not an approved site-wide FP. Deep imports of exported utils.command have a broader input contract. See SANITIZER_REVIEW.md."
+    },
+    {
+      "case_id": "npm-node-notifier-10.0.1",
+      "raw_id": "codeql:0:0",
+      "tool": "codeql",
+      "snapshot_sha256": "5e75d1bb41696f3334481ec083204335e519920d292855cb6afb6b0e2d9afe9b",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "reported_path": "lib/utils.js",
+      "reported_region": {
+        "startLine": 59,
+        "startColumn": 18,
+        "endColumn": 52
+      },
+      "reported_cwes": [
+        "cwe-078",
+        "cwe-088"
+      ],
+      "message": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "ruleId": "js/shell-command-constructed-from-input",
+        "ruleIndex": 1,
+        "rule": {
+          "id": "js/shell-command-constructed-from-input",
+          "index": 1
+        },
+        "message": {
+          "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/utils.js",
+                "uriBaseId": "%SRCROOT%",
+                "index": 0
+              },
+              "region": {
+                "startLine": 59,
+                "startColumn": 18,
+                "endColumn": 52
+              }
+            }
+          }
+        ],
+        "partialFingerprints": {
+          "primaryLocationLineHash": "4b10028296c3d25b:1",
+          "primaryLocationStartColumnFingerprint": "15"
+        },
+        "codeFlows": [
+          {
+            "threadFlows": [
+              {
+                "locations": [
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 29,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 38
+                        }
+                      },
+                      "message": {
+                        "text": "options || {}"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 13,
+                          "startColumn": 16,
+                          "endColumn": 19
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 36,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 21,
+                          "endColumn": 40
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.stringify(obj)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 10,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.pa ... y(obj))"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 13,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ...  || {})"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 60,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 84,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 161,
+                          "startColumn": 44,
+                          "endColumn": 51
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 24,
+                          "endColumn": 31
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 134,
+                          "startColumn": 30,
+                          "endColumn": 37
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 140,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 13,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "mapAppIcon(options)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 21,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 143,
+                          "startColumn": 27,
+                          "endColumn": 34
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 149,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 13,
+                          "endColumn": 29
+                        }
+                      },
+                      "message": {
+                        "text": "mapText(options)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 184,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 13,
+                          "endColumn": 43
+                        }
+                      },
+                      "message": {
+                        "text": "utils.m ... ptions)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 48,
+                          "endColumn": 55
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 287,
+                          "startColumn": 50,
+                          "endColumn": 57
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 53,
+                          "endColumn": 60
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 53,
+                          "endColumn": 65
+                        }
+                      },
+                      "message": {
+                        "text": "options[key]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 301,
+                          "startColumn": 38,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 22,
+                          "endColumn": 25
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 12,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "wrapper ... wrapper"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 44,
+                          "endColumn": 66
+                        }
+                      },
+                      "message": {
+                        "text": "escapeF ... s[key])"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 12,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "[post update] args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 329,
+                          "startColumn": 10,
+                          "endColumn": 14
+                        }
+                      },
+                      "message": {
+                        "text": "args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 20,
+                          "endLine": 96,
+                          "endColumn": 5
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ... ts\\n  }) [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 9,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 98,
+                          "startColumn": 27,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 51,
+                          "startColumn": 46,
+                          "endColumn": 53
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 52
+                        }
+                      },
+                      "message": {
+                        "text": "options.join(' ')"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "threadFlows": [
+              {
+                "locations": [
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 29,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 38
+                        }
+                      },
+                      "message": {
+                        "text": "options || {}"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 13,
+                          "startColumn": 16,
+                          "endColumn": 19
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 36,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 21,
+                          "endColumn": 40
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.stringify(obj)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 10,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.pa ... y(obj))"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 13,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ...  || {})"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 41,
+                          "startColumn": 50,
+                          "endColumn": 57
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 41,
+                          "startColumn": 15,
+                          "endColumn": 59
+                        }
+                      },
+                      "message": {
+                        "text": "{ title ... tions } [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 41,
+                          "startColumn": 5,
+                          "endColumn": 12
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 60,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 84,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 161,
+                          "startColumn": 44,
+                          "endColumn": 51
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 24,
+                          "endColumn": 31
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 134,
+                          "startColumn": 30,
+                          "endColumn": 37
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 140,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 13,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "mapAppIcon(options) [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 21,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 143,
+                          "startColumn": 27,
+                          "endColumn": 34
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 149,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 13,
+                          "endColumn": 29
+                        }
+                      },
+                      "message": {
+                        "text": "mapText(options) [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 184,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 13,
+                          "endColumn": 43
+                        }
+                      },
+                      "message": {
+                        "text": "utils.m ... ptions) [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options [message]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 35,
+                          "endColumn": 50
+                        }
+                      },
+                      "message": {
+                        "text": "options.message"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 19,
+                          "endColumn": 51
+                        }
+                      },
+                      "message": {
+                        "text": "[option ... essage] [1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 9,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "initial [1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 93,
+                          "startColumn": 14,
+                          "endColumn": 21
+                        }
+                      },
+                      "message": {
+                        "text": "initial [1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 57,
+                          "endLine": 96,
+                          "endColumn": 4
+                        }
+                      },
+                      "message": {
+                        "text": "{\\n    i ... nts\\n  } [initial, 1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 287,
+                          "startColumn": 59,
+                          "endColumn": 64
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 289,
+                          "startColumn": 11,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 289,
+                          "startColumn": 3,
+                          "endColumn": 8
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 292,
+                          "startColumn": 19,
+                          "endColumn": 24
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 292,
+                          "startColumn": 19,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "extra.initial [1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 292,
+                          "startColumn": 9,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "initial [1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 315,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "initial [1]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 315,
+                          "startColumn": 29,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "val"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 316,
+                          "startColumn": 24,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "val"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 301,
+                          "startColumn": 38,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 307,
+                          "startColumn": 26,
+                          "endColumn": 29
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 19,
+                          "startColumn": 32,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "str"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 23,
+                          "startColumn": 12,
+                          "endColumn": 15
+                        }
+                      },
+                      "message": {
+                        "text": "str"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 307,
+                          "startColumn": 13,
+                          "endColumn": 30
+                        }
+                      },
+                      "message": {
+                        "text": "escapeQuotes(arg)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 307,
+                          "startColumn": 7,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 22,
+                          "endColumn": 25
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 12,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "wrapper ... wrapper"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 316,
+                          "startColumn": 15,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "escapeFn(val)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 316,
+                          "startColumn": 5,
+                          "endColumn": 9
+                        }
+                      },
+                      "message": {
+                        "text": "[post update] args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 329,
+                          "startColumn": 10,
+                          "endColumn": 14
+                        }
+                      },
+                      "message": {
+                        "text": "args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 20,
+                          "endLine": 96,
+                          "endColumn": 5
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ... ts\\n  }) [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 9,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 98,
+                          "startColumn": 27,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 51,
+                          "startColumn": 46,
+                          "endColumn": 53
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 52
+                        }
+                      },
+                      "message": {
+                        "text": "options.join(' ')"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "threadFlows": [
+              {
+                "locations": [
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 29,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 38
+                        }
+                      },
+                      "message": {
+                        "text": "options || {}"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 13,
+                          "startColumn": 16,
+                          "endColumn": 19
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 36,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 21,
+                          "endColumn": 40
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.stringify(obj)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 10,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.pa ... y(obj))"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 13,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ...  || {})"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 66,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 84,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 161,
+                          "startColumn": 44,
+                          "endColumn": 51
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 24,
+                          "endColumn": 31
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 134,
+                          "startColumn": 30,
+                          "endColumn": 37
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 140,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 13,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "mapAppIcon(options)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 21,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 143,
+                          "startColumn": 27,
+                          "endColumn": 34
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 149,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 13,
+                          "endColumn": 29
+                        }
+                      },
+                      "message": {
+                        "text": "mapText(options)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 184,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 13,
+                          "endColumn": 43
+                        }
+                      },
+                      "message": {
+                        "text": "utils.m ... ptions)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 86,
+                          "startColumn": 19,
+                          "endColumn": 26
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 86,
+                          "startColumn": 19,
+                          "endColumn": 56
+                        }
+                      },
+                      "message": {
+                        "text": "options ... ation:'"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 86,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "[post update] options [title]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options [title]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 20,
+                          "endColumn": 33
+                        }
+                      },
+                      "message": {
+                        "text": "options.title"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 19,
+                          "endColumn": 51
+                        }
+                      },
+                      "message": {
+                        "text": "[option ... essage] [0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 88,
+                          "startColumn": 9,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "initial [0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 93,
+                          "startColumn": 14,
+                          "endColumn": 21
+                        }
+                      },
+                      "message": {
+                        "text": "initial [0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 57,
+                          "endLine": 96,
+                          "endColumn": 4
+                        }
+                      },
+                      "message": {
+                        "text": "{\\n    i ... nts\\n  } [initial, 0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 287,
+                          "startColumn": 59,
+                          "endColumn": 64
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 289,
+                          "startColumn": 11,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 289,
+                          "startColumn": 3,
+                          "endColumn": 8
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 292,
+                          "startColumn": 19,
+                          "endColumn": 24
+                        }
+                      },
+                      "message": {
+                        "text": "extra [initial, 0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 292,
+                          "startColumn": 19,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "extra.initial [0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 292,
+                          "startColumn": 9,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "initial [0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 315,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "initial [0]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 315,
+                          "startColumn": 29,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "val"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 316,
+                          "startColumn": 24,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "val"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 301,
+                          "startColumn": 38,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 303,
+                          "startColumn": 29,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 301,
+                          "startColumn": 38,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 310,
+                          "startColumn": 28,
+                          "endColumn": 31
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 332,
+                          "startColumn": 25,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "str"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 334,
+                          "startColumn": 10,
+                          "endColumn": 13
+                        }
+                      },
+                      "message": {
+                        "text": "str"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 334,
+                          "startColumn": 10,
+                          "endColumn": 47
+                        }
+                      },
+                      "message": {
+                        "text": "str.rep ... ewline)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 310,
+                          "startColumn": 13,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "removeNewLines(arg)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 310,
+                          "startColumn": 7,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 22,
+                          "endColumn": 25
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 12,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "wrapper ... wrapper"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 303,
+                          "startColumn": 29,
+                          "endColumn": 46
+                        }
+                      },
+                      "message": {
+                        "text": "arg.map(escapeFn) [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 303,
+                          "startColumn": 29,
+                          "endColumn": 56
+                        }
+                      },
+                      "message": {
+                        "text": "arg.map ... in(',')"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 332,
+                          "startColumn": 25,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "str"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 334,
+                          "startColumn": 10,
+                          "endColumn": 13
+                        }
+                      },
+                      "message": {
+                        "text": "str"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 334,
+                          "startColumn": 10,
+                          "endColumn": 47
+                        }
+                      },
+                      "message": {
+                        "text": "str.rep ... ewline)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 303,
+                          "startColumn": 14,
+                          "endColumn": 57
+                        }
+                      },
+                      "message": {
+                        "text": "removeN ... n(','))"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 316,
+                          "startColumn": 15,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "escapeFn(val)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 316,
+                          "startColumn": 5,
+                          "endColumn": 9
+                        }
+                      },
+                      "message": {
+                        "text": "[post update] args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 329,
+                          "startColumn": 10,
+                          "endColumn": 14
+                        }
+                      },
+                      "message": {
+                        "text": "args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 20,
+                          "endLine": 96,
+                          "endColumn": 5
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ... ts\\n  }) [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 9,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 98,
+                          "startColumn": 27,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 51,
+                          "startColumn": 46,
+                          "endColumn": 53
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 52
+                        }
+                      },
+                      "message": {
+                        "text": "options.join(' ')"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "threadFlows": [
+              {
+                "locations": [
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 29,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 25,
+                          "endColumn": 38
+                        }
+                      },
+                      "message": {
+                        "text": "options || {}"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 13,
+                          "startColumn": 16,
+                          "endColumn": 19
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 36,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "obj"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 21,
+                          "endColumn": 40
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.stringify(obj)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 14,
+                          "startColumn": 10,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "JSON.pa ... y(obj))"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 13,
+                          "endColumn": 39
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ...  || {})"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 30,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 60,
+                          "startColumn": 20,
+                          "endColumn": 27
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 84,
+                          "startColumn": 25,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 161,
+                          "startColumn": 44,
+                          "endColumn": 51
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 24,
+                          "endColumn": 31
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 134,
+                          "startColumn": 30,
+                          "endColumn": 37
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 140,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 13,
+                          "endColumn": 32
+                        }
+                      },
+                      "message": {
+                        "text": "mapAppIcon(options)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 162,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 21,
+                          "endColumn": 28
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 143,
+                          "startColumn": 27,
+                          "endColumn": 34
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 149,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 13,
+                          "endColumn": 29
+                        }
+                      },
+                      "message": {
+                        "text": "mapText(options)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 163,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 184,
+                          "startColumn": 10,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 13,
+                          "endColumn": 43
+                        }
+                      },
+                      "message": {
+                        "text": "utils.m ... ptions)"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 85,
+                          "startColumn": 3,
+                          "endColumn": 10
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 48,
+                          "endColumn": 55
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 287,
+                          "startColumn": 50,
+                          "endColumn": 57
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 53,
+                          "endColumn": 60
+                        }
+                      },
+                      "message": {
+                        "text": "options"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 53,
+                          "endColumn": 65
+                        }
+                      },
+                      "message": {
+                        "text": "options[key]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 301,
+                          "startColumn": 38,
+                          "endColumn": 41
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 22,
+                          "endColumn": 25
+                        }
+                      },
+                      "message": {
+                        "text": "arg"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 312,
+                          "startColumn": 12,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "wrapper ... wrapper"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 44,
+                          "endColumn": 66
+                        }
+                      },
+                      "message": {
+                        "text": "escapeF ... s[key])"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 326,
+                          "startColumn": 12,
+                          "endColumn": 16
+                        }
+                      },
+                      "message": {
+                        "text": "[post update] args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 324,
+                          "startColumn": 9,
+                          "endColumn": 13
+                        }
+                      },
+                      "message": {
+                        "text": "args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 329,
+                          "startColumn": 10,
+                          "endColumn": 14
+                        }
+                      },
+                      "message": {
+                        "text": "args [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 20,
+                          "endLine": 96,
+                          "endColumn": 5
+                        }
+                      },
+                      "message": {
+                        "text": "utils.c ... ts\\n  }) [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 92,
+                          "startColumn": 9,
+                          "endColumn": 17
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "notifiers/notifysend.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 1
+                        },
+                        "region": {
+                          "startLine": 98,
+                          "startColumn": 27,
+                          "endColumn": 35
+                        }
+                      },
+                      "message": {
+                        "text": "argsList [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 51,
+                          "startColumn": 46,
+                          "endColumn": 53
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 42
+                        }
+                      },
+                      "message": {
+                        "text": "options [ArrayElement]"
+                      }
+                    }
+                  },
+                  {
+                    "location": {
+                      "physicalLocation": {
+                        "artifactLocation": {
+                          "uri": "lib/utils.js",
+                          "uriBaseId": "%SRCROOT%",
+                          "index": 0
+                        },
+                        "region": {
+                          "startLine": 59,
+                          "startColumn": 35,
+                          "endColumn": 52
+                        }
+                      },
+                      "message": {
+                        "text": "options.join(' ')"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "relatedLocations": [
+          {
+            "id": 1,
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "notifiers/notifysend.js",
+                "uriBaseId": "%SRCROOT%",
+                "index": 1
+              },
+              "region": {
+                "startLine": 29,
+                "startColumn": 20,
+                "endColumn": 27
+              }
+            },
+            "message": {
+              "text": "library input"
+            }
+          },
+          {
+            "id": 2,
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/utils.js",
+                "uriBaseId": "%SRCROOT%",
+                "index": 0
+              },
+              "region": {
+                "startLine": 59,
+                "startColumn": 10,
+                "endLine": 66,
+                "endColumn": 5
+              }
+            },
+            "message": {
+              "text": "shell command"
+            }
+          },
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "notifiers/notifysend.js",
+                "uriBaseId": "%SRCROOT%",
+                "index": 1
+              },
+              "region": {
+                "startLine": 29,
+                "startColumn": 20,
+                "endColumn": 27
+              }
+            }
+          },
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/utils.js",
+                "uriBaseId": "%SRCROOT%",
+                "index": 0
+              },
+              "region": {
+                "startLine": 59,
+                "startColumn": 35,
+                "endColumn": 52
+              }
+            }
+          }
+        ]
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "5e75d1bb41696f3334481ec083204335e519920d292855cb6afb6b0e2d9afe9b",
+        "path": "lib/utils.js",
+        "line": 59
+      },
+      "review_note": "NotifySend caller fixes notify-send and supplies a key allowlist; argument builder defaults escape on and double-quote wrapping. CodeQL paths include branches bypassing escaping and a non-string escapeQuotes return. Candidate for path-sensitive sanitizer review, not an approved site-wide FP. Deep imports of exported utils.command have a broader input contract. See SANITIZER_REVIEW.md."
+    },
+    {
+      "case_id": "npm-launch-editor-2.14.1",
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "b7f61c5d811a9efaacc7d1c61da16c30cbdf309b0b7a2e60939f6d30f3f6591e",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-launch-editor-2.14.1.detect-child-process",
+      "reported_path": "index.js",
+      "reported_region": {
+        "endColumn": 58,
+        "endLine": 167,
+        "snippet": {
+          "text": "    currentChildProcess = childProcess.exec(launchCommand, {"
+        },
+        "startColumn": 45,
+        "startLine": 167
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `specifiedEditor`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "index.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 58,
+                "endLine": 167,
+                "snippet": {
+                  "text": "    currentChildProcess = childProcess.exec(launchCommand, {"
+                },
+                "startColumn": 45,
+                "startLine": 167
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `specifiedEditor`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-launch-editor-2.14.1.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "b7f61c5d811a9efaacc7d1c61da16c30cbdf309b0b7a2e60939f6d30f3f6591e",
+        "path": "index.js",
+        "line": 167
+      },
+      "review_note": "Reported source specifiedEditor is parsed by guessEditor into executable and arguments. Warning concerns executable selection, not only filename interpolation. Non-Windows spawn without a shell is insufficient to exclude command execution when the executable is controlled. Windows branch has custom quoting; neither that nor existsSync proves safety. Caller trust remains unresolved."
+    },
+    {
+      "case_id": "npm-launch-editor-2.14.1",
+      "raw_id": "semgrep:0:1",
+      "tool": "semgrep",
+      "snapshot_sha256": "b7f61c5d811a9efaacc7d1c61da16c30cbdf309b0b7a2e60939f6d30f3f6591e",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-launch-editor-2.14.1.detect-child-process",
+      "reported_path": "index.js",
+      "reported_region": {
+        "endColumn": 52,
+        "endLine": 172,
+        "snippet": {
+          "text": "    currentChildProcess = childProcess.spawn(editor, args, { stdio: 'inherit' })"
+        },
+        "startColumn": 46,
+        "startLine": 172
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `specifiedEditor`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "index.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 52,
+                "endLine": 172,
+                "snippet": {
+                  "text": "    currentChildProcess = childProcess.spawn(editor, args, { stdio: 'inherit' })"
+                },
+                "startColumn": 46,
+                "startLine": 172
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `specifiedEditor`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-02-retry.npm-launch-editor-2.14.1.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "b7f61c5d811a9efaacc7d1c61da16c30cbdf309b0b7a2e60939f6d30f3f6591e",
+        "path": "index.js",
+        "line": 172
+      },
+      "review_note": "Reported source specifiedEditor is parsed by guessEditor into executable and arguments. Warning concerns executable selection, not only filename interpolation. Non-Windows spawn without a shell is insufficient to exclude command execution when the executable is controlled. Windows branch has custom quoting; neither that nor existsSync proves safety. Caller trust remains unresolved."
+    }
+  ]
+}
