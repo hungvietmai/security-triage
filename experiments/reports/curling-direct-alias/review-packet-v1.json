@@ -1,0 +1,108 @@
+{
+  "schema_version": "sink-proposals-v1",
+  "builder_sha256": "e36ce70d5389f9c3cf6daa694551691ea2edb5c3362d8f1414d7dbe8fc2d6a40",
+  "case_id": "secbench-curling-0.2.0",
+  "evidence_sha256": "20166001a19bfbc953d90da2c94ea5a1d071f559487f982a69d7a116a04b7e63",
+  "attempt": "004",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "configuration_commit": "d6ce12ece91dcb86427e542f7a7f858f6c98a193",
+  "scanner_status": {
+    "semgrep": {
+      "recorded_status": "completed",
+      "sarif_available": true,
+      "sarif_complete": true
+    },
+    "codeql": {
+      "recorded_status": "not_run",
+      "sarif_available": false
+    }
+  },
+  "review_status": "unreviewed",
+  "blinded": false,
+  "raw_findings": [
+    {
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.curling-direct-alias-004.detect-child-process",
+      "reported_path": "lib/curl-transport.js",
+      "reported_region": {
+        "endColumn": 25,
+        "endLine": 56,
+        "snippet": {
+          "text": "  exec(\"curl \" + command, function (error, stdout, stderr) {"
+        },
+        "startColumn": 8,
+        "startLine": 56
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_reference": {
+        "sarif": "semgrep.sarif",
+        "sha256": "5c5cd9819768cfe04136e0a5b3a7635d3234f10db1133f8b79ba53ac46aee846",
+        "raw_id": "semgrep:0:0"
+      },
+      "fallback_unit_id": "fallback:20fb11283ba3aff056e0d3b0ad65c4a6d3dcc55e7f2c88188a98299852e7dab5",
+      "fallback_identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "reported_path": "lib/curl-transport.js",
+        "reported_region": {
+          "endColumn": 25,
+          "endLine": 56,
+          "snippet": {
+            "text": "  exec(\"curl \" + command, function (error, stdout, stderr) {"
+          },
+          "startColumn": 8,
+          "startLine": 56
+        },
+        "discriminator": {
+          "sarif": "semgrep.sarif",
+          "sha256": "5c5cd9819768cfe04136e0a5b3a7635d3234f10db1133f8b79ba53ac46aee846",
+          "raw_id": "semgrep:0:0"
+        }
+      },
+      "candidates": [],
+      "proposal_reason": "unsupported_rule",
+      "mapping_review": {
+        "decision": "unresolved",
+        "accepted_unit_ids": [],
+        "reviewer": null,
+        "reason": null
+      }
+    }
+  ],
+  "candidate_groups": {},
+  "labels": {
+    "fallback:20fb11283ba3aff056e0d3b0ad65c4a6d3dcc55e7f2c88188a98299852e7dab5": {
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "adjudicated_cwes": [],
+      "truth_set": "unresolved",
+      "evidence_references": [],
+      "assumptions": [],
+      "reviewer": null,
+      "reviewed_at": null,
+      "label_version": null,
+      "threat_model_version": null,
+      "second_review": null
+    }
+  },
+  "metrics": null,
+  "summary": {
+    "raw_findings": 1,
+    "fallback_records_retained": 1,
+    "raw_with_sink_proposal": 0,
+    "raw_without_sink_proposal": 1,
+    "unique_proposed_sinks": 0,
+    "accepted_sink_assignments": 0,
+    "unresolved_mapping_records": 1,
+    "automatic_unmatched_rate": 1.0,
+    "note": "Proposals are not assignments. Candidate and fallback labels are alternatives, not additive scoring units."
+  }
+}
