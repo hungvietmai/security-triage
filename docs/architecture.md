@@ -1,11 +1,13 @@
 # Architecture and scope
 
-This repository is the initial development foundation, not a working vulnerability scanner.
+The web application is a development foundation. A separate experiment CLI now
+runs Semgrep and CodeQL on a pinned JavaScript npm case; it is not yet connected
+to the application. The authoritative research design is
+[the evaluation protocol](../experiments/EVALUATION_PROTOCOL.md).
 
 ## Implemented
 
-- React/TypeScript app (shadcn/ui, TanStack Query/Router): dashboard, paginated project list,
-  project detail, system status; honest loading/error/empty and not-yet-implemented states.
+- React/TypeScript project creation and paginated project list; honest loading/error/empty states.
 - FastAPI project creation/list/detail endpoints, liveness and dependency readiness.
 - SQLAlchemy foundation: projects → source_snapshots → scans → tool_runs → findings.
 - Immutable Alembic migration file, UUID keys, foreign keys, uniqueness and status constraints.
@@ -15,6 +17,10 @@ This repository is the initial development foundation, not a working vulnerabili
   worker availability is a separate Docker healthcheck.
 
 ## Next milestones
+
+The acquisition and raw scanning portions of steps 1–2 have been demonstrated on
+one development case; see the [pilot report](../experiments/reports/curling-0.2.0/REPORT.md).
+Sink mapping, independent labels and policy implementation are the next gates.
 
 1. A manifest-driven Python runner fetches one real SecBench.js case at a fixed
    package version/artifact hash or Git commit and runs Semgrep, preserving raw
@@ -54,7 +60,9 @@ Initial policy v0.1 is a design, not implemented behavior:
 Begin with direct shell invocation on Linux/POSIX: Node.js exec/execSync,
 Python os.system and subprocess run/Popen with shell=True. Check exported API
 input models for package cases; HTTP-only sources may miss these entry points.
-Match snapshot, file, sink AST location, command argument and weakness family.
+Match snapshot, file, sink AST location and command argument. CWE is a label
+attribute, not part of the location key; retain unmapped alerts at their reported
+locations as specified by the evaluation protocol.
 
 The primary policy retains `supported` and `inconclusive`. A sensitivity analysis
 retains only `supported`, reporting both FP reduction and lost true positives.
