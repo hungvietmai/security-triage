@@ -6,11 +6,79 @@ import tarfile
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from experiments import run_pilot
 from experiments.run_pilot import ROOT, digest, sarif_findings, stage_rule, unpack
 
 
 class RunnerTests(unittest.TestCase):
+    def test_missing_sarif_preserves_process_diagnostics(self):
+        for process_status, exit_code in (("failed", 2), ("timeout", None)):
+            with (
+                self.subTest(process_status=process_status),
+                tempfile.TemporaryDirectory() as folder,
+            ):
+                root = Path(folder)
+                archive = root / "package.tgz"
+                with tarfile.open(archive, "w:gz") as bundle:
+                    data = b'{"name":"fixture","version":"1.0.0"}'
+                    entry = tarfile.TarInfo("package/package.json")
+                    entry.size = len(data)
+                    bundle.addfile(entry, io.BytesIO(data))
+                case = root / "case.json"
+                case.write_text(
+                    json.dumps(
+                        {
+                            "case_id": "fixture",
+                            "split": "development",
+                            "source_kind": "npm_tarball",
+                            "language": "javascript",
+                            "artifact_sha256": digest(archive),
+                            "archive_root": "package",
+                            "package_name": "fixture",
+                            "package_version": "1.0.0",
+                        }
+                    )
+                )
+                config = ROOT / "experiments/configs/development-semgrep-upstream.json"
+                output = root / "run"
+                args = [
+                    "run_pilot",
+                    "--case",
+                    str(case),
+                    "--config",
+                    str(config),
+                    "--output",
+                    str(output),
+                    "--configuration-commit",
+                    "a" * 40,
+                    "--source-archive",
+                    str(archive),
+                ]
+                record = {
+                    "argv": ["scanner", "scan"],
+                    "status": process_status,
+                    "exit_code": exit_code,
+                    "seconds": 1.25,
+                }
+                with (
+                    patch("sys.argv", args),
+                    patch.object(run_pilot, "tool_version"),
+                    patch.object(run_pilot, "invoke", return_value=record),
+                    patch("builtins.print"),
+                ):
+                    self.assertEqual(run_pilot.main(), 2)
+                report = json.loads((output / "run.json").read_text())
+                failure = report["steps"]["semgrep"]
+                self.assertEqual(report["status"], "partial")
+                self.assertEqual(failure["status"], process_status)
+                self.assertEqual(failure["exit_code"], exit_code)
+                self.assertEqual(failure["argv"], ["scanner", "scan"])
+                self.assertEqual(failure["seconds"], 1.25)
+                self.assertIn("no SARIF", failure["error"])
+                self.assertNotIn("raw_findings", failure)
+
     def test_local_rule_is_verified_before_copy(self):
         rule = ROOT / "experiments/rules/detect-child-process-upstream.yaml"
         with tempfile.TemporaryDirectory() as folder:
@@ -49,7 +117,9 @@ class RunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             with self.assertRaises(ValueError):
-                unpack(self.archive(root, "package/../../escape"), root / "out", "package")
+                unpack(
+                    self.archive(root, "package/../../escape"), root / "out", "package"
+                )
             self.assertFalse((root / "escape").exists())
 
     def test_rejects_links(self):
@@ -57,12 +127,18 @@ class RunnerTests(unittest.TestCase):
             with self.subTest(kind=kind), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder)
                 with self.assertRaises(ValueError):
-                    unpack(self.archive(root, "package/link", kind), root / "out", "package")
+                    unpack(
+                        self.archive(root, "package/link", kind),
+                        root / "out",
+                        "package",
+                    )
 
     def test_extracts_regular_file_without_execution(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            source = unpack(self.archive(root, "package/install.sh"), root / "out", "package")
+            source = unpack(
+                self.archive(root, "package/install.sh"), root / "out", "package"
+            )
             self.assertEqual((source / "install.sh").read_text(), "source text")
             self.assertFalse((source / "install.sh").stat().st_mode & 0o111)
 
@@ -80,13 +156,18 @@ class RunnerTests(unittest.TestCase):
                                         "rules": [
                                             {
                                                 "id": "r",
-                                                "properties": {"tags": ["external/cwe/cwe-078"]},
+                                                "properties": {
+                                                    "tags": ["external/cwe/cwe-078"]
+                                                },
                                             }
                                         ]
                                     }
                                 },
                                 "results": [
-                                    {"ruleIndex": 0, "message": {"text": "no location"}},
+                                    {
+                                        "ruleIndex": 0,
+                                        "message": {"text": "no location"},
+                                    },
                                     {
                                         "ruleId": "r",
                                         "locations": [
@@ -119,7 +200,12 @@ class RunnerTests(unittest.TestCase):
                 json.dumps(
                     {
                         "version": "2.1.0",
-                        "runs": [{"invocations": [{"executionSuccessful": False}], "results": []}],
+                        "runs": [
+                            {
+                                "invocations": [{"executionSuccessful": False}],
+                                "results": [],
+                            }
+                        ],
                     }
                 )
             )
@@ -140,7 +226,10 @@ class RunnerTests(unittest.TestCase):
                                     {
                                         "executionSuccessful": True,
                                         "toolExecutionNotifications": [
-                                            {"level": "none", "message": {"text": "coverage"}}
+                                            {
+                                                "level": "none",
+                                                "message": {"text": "coverage"},
+                                            }
                                         ],
                                     }
                                 ],

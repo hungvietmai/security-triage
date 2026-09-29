@@ -34,7 +34,9 @@ def write_json(path, value):
 
 
 def fetch(url, target, expected_hash, max_bytes=MAX_ARCHIVE):
-    if not url.startswith("https://") or not re.fullmatch(r"[a-f0-9]{64}", expected_hash):
+    if not url.startswith("https://") or not re.fullmatch(
+        r"[a-f0-9]{64}", expected_hash
+    ):
         raise ValueError("HTTPS URL and exact SHA-256 required")
     with urllib.request.urlopen(url, timeout=60) as response:
         if not response.url.startswith("https://"):
@@ -133,7 +135,11 @@ def invoke(argv, cwd, output, name, timeout, env=None):
 
 
 def tool_version(binary, expected, output, tool, steps):
-    args = [binary, "--version"] if tool == "semgrep" else [binary, "version", "--format=json"]
+    args = (
+        [binary, "--version"]
+        if tool == "semgrep"
+        else [binary, "version", "--format=json"]
+    )
     rec = invoke(args, ROOT, output, tool + "-version", 60)
     steps[tool + "-version"] = rec
     if rec["status"] != "completed":
@@ -161,7 +167,9 @@ def sarif_findings(path, tool, snapshot):
                 for note in invocation.get("toolExecutionNotifications", [])
             ):
                 complete = False
-        rules = {r["id"]: r for r in run.get("tool", {}).get("driver", {}).get("rules", [])}
+        rules = {
+            r["id"]: r for r in run.get("tool", {}).get("driver", {}).get("rules", [])
+        }
         for result_index, result in enumerate(run.get("results", [])):
             physical = (result.get("locations") or [{}])[0].get("physicalLocation", {})
             rule_id = result.get("ruleId")
@@ -218,7 +226,9 @@ def main():
         json.loads(args.config.read_text()),
     )
     if case["split"] != "development":
-        parser.error("Held-out execution is blocked: full freeze gate is not implemented")
+        parser.error(
+            "Held-out execution is blocked: full freeze gate is not implemented"
+        )
     if case["source_kind"] != "npm_tarball" or case["language"] != "javascript":
         parser.error("This first adapter supports JavaScript npm tarballs only")
     if set(config["scanners"]) - {"semgrep", "codeql"}:
@@ -262,7 +272,10 @@ def main():
             fetch(case["artifact_url"], archive, case["artifact_sha256"])
         if case.get("registry_integrity"):
             integrity = (
-                "sha512-" + base64.b64encode(hashlib.sha512(archive.read_bytes()).digest()).decode()
+                "sha512-"
+                + base64.b64encode(
+                    hashlib.sha512(archive.read_bytes()).digest()
+                ).decode()
             )
             if integrity != case["registry_integrity"]:
                 raise ValueError("Registry integrity mismatch")
@@ -285,7 +298,9 @@ def main():
         for tool in config["scanners"]:
             try:
                 binary = args.semgrep if tool == "semgrep" else args.codeql
-                tool_version(binary, config[tool + "_version"], output, tool, report["steps"])
+                tool_version(
+                    binary, config[tool + "_version"], output, tool, report["steps"]
+                )
                 sarif = output / (tool + ".sarif")
                 if tool == "semgrep":
                     argv = [
@@ -368,17 +383,31 @@ def main():
                 if not sarif.exists():
                     raise RuntimeError("Scanner produced no SARIF output")
                 if sarif.exists():
-                    rows, complete = sarif_findings(sarif, tool, case["artifact_sha256"])
+                    rows, complete = sarif_findings(
+                        sarif, tool, case["artifact_sha256"]
+                    )
                     findings.extend(rows)
                     rec["raw_findings"] = len(rows)
                     rec["sarif_sha256"] = digest(sarif)
                     if rec["status"] == "completed" and not complete:
                         rec["status"] = "partial"
-            except (OSError, ValueError, RuntimeError, KeyError, tarfile.TarError) as exc:
-                report["steps"][tool] = {"status": "failed", "error": str(exc)}
+            except (
+                OSError,
+                ValueError,
+                RuntimeError,
+                KeyError,
+                tarfile.TarError,
+            ) as exc:
+                failure = report["steps"].setdefault(tool, {})
+                failure["status"] = (
+                    "timeout" if failure.get("status") == "timeout" else "failed"
+                )
+                failure["error"] = str(exc)
         report["status"] = (
             "completed"
-            if all(report["steps"][t]["status"] == "completed" for t in config["scanners"])
+            if all(
+                report["steps"][t]["status"] == "completed" for t in config["scanners"]
+            )
             else "partial"
         )
     except (OSError, ValueError, RuntimeError, KeyError, tarfile.TarError) as exc:
