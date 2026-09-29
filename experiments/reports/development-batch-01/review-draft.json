@@ -1,0 +1,391 @@
+{
+  "status": "unapproved_development_notes",
+  "selection": "In listed package order: sort Semgrep raw alerts by relative path,startLine,startColumn,rule_id,raw_id; review first 3 each. Then sort CodeQL alerts identically and review first 3 each. Preserve all beyond cap as unreviewed; do not cherry-pick.",
+  "findings": [
+    {
+      "case_id": "npm-shelljs-0.10.0",
+      "attempt": "recovery",
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "0908d4921a9e304cbf0aacf161f31aafaa7d5920b403c1493d1c99646ace9ff2",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-shelljs-recovery.detect-child-process",
+      "reported_path": "src/exec.js",
+      "reported_region": {
+        "endColumn": 25,
+        "endLine": 147,
+        "snippet": {
+          "text": "  var c = child.exec(cmd, opts, function (err, stdout, stderr) {"
+        },
+        "startColumn": 22,
+        "startLine": 147
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `cmd`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "src/exec.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 25,
+                "endLine": 147,
+                "snippet": {
+                  "text": "  var c = child.exec(cmd, opts, function (err, stdout, stderr) {"
+                },
+                "startColumn": 22,
+                "startLine": 147
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `cmd`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-shelljs-recovery.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "0908d4921a9e304cbf0aacf161f31aafaa7d5920b403c1493d1c99646ace9ff2",
+        "path": "src/exec.js",
+        "line": 147
+      },
+      "review_note": "execAsync receives cmd and passes it to child.exec. README explicitly documents arbitrary shell execution and the caller sanitation obligation. The conditional dangerous-input warning is plausible; this snapshot does not establish an untrusted caller crossing a security boundary. Command is not proven constant.",
+      "source_references": "src/exec.js:137-165; README.md:389-392"
+    },
+    {
+      "case_id": "npm-grunt-shell-4.0.0",
+      "attempt": "attempt-2",
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "a29183e76c77c905a2c3602304ee52efdefb9bee57ef9e756929a7dc83ad2724",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-grunt-shell-4.0.0.detect-child-process",
+      "reported_path": "tasks/shell.js",
+      "reported_region": {
+        "endColumn": 22,
+        "endLine": 46,
+        "snippet": {
+          "text": "\t\tconst cp = exec(cmd, options.execOptions, (error, stdout, stderr) => {"
+        },
+        "startColumn": 19,
+        "startLine": 46
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `grunt`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "tasks/shell.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 22,
+                "endLine": 46,
+                "snippet": {
+                  "text": "\t\tconst cp = exec(cmd, options.execOptions, (error, stdout, stderr) => {"
+                },
+                "startColumn": 19,
+                "startLine": 46
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `grunt`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-grunt-shell-4.0.0.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "a29183e76c77c905a2c3602304ee52efdefb9bee57ef9e756929a7dc83ad2724",
+        "path": "tasks/shell.js",
+        "line": 46
+      },
+      "review_note": "cmd comes from task configuration or a callback, then grunt.template.process. The reported source is the framework object grunt; object receiver taint alone does not establish attacker control of command bytes. README documents both static and parameterized commands. Need concrete task/caller trust context; no universal constant argument proof.",
+      "source_references": "tasks/shell.js:9-46; readme.md:35-86"
+    },
+    {
+      "case_id": "npm-gulp-shell-0.8.0",
+      "attempt": "attempt-2",
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.spawn-shell-true",
+      "reported_path": "lib/index.js",
+      "reported_region": {
+        "endColumn": 7,
+        "endLine": 41,
+        "snippet": {
+          "text": "    var child = child_process_1.spawn(command, {\n        env: options.env,\n        cwd: lodash_template_1.default(options.cwd)(context),\n        shell: options.shell,\n        stdio: options.quiet ? 'ignore' : 'inherit'\n    });"
+        },
+        "startColumn": 17,
+        "startLine": 36
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Found '$SPAWN' with '{shell: options.shell}'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use '{shell: false}' instead.",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/index.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 7,
+                "endLine": 41,
+                "snippet": {
+                  "text": "    var child = child_process_1.spawn(command, {\n        env: options.env,\n        cwd: lodash_template_1.default(options.cwd)(context),\n        shell: options.shell,\n        stdio: options.quiet ? 'ignore' : 'inherit'\n    });"
+                },
+                "startColumn": 17,
+                "startLine": 36
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Found '$SPAWN' with '{shell: options.shell}'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use '{shell: false}' instead."
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.spawn-shell-true"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+        "path": "lib/index.js",
+        "line": 36
+      },
+      "review_note": "runCommand templates command with file and templateData and calls spawn. normalizeOptions defaults shell to true but allows override. The audit rule does not prove shell true on every invocation. command/file data may affect shell text depending on caller template; neither a vulnerability nor a safe call is established for every use. No constant argument proof.",
+      "source_references": "lib/index.js:20-41,80-99"
+    },
+    {
+      "case_id": "npm-gulp-shell-0.8.0",
+      "attempt": "attempt-2",
+      "raw_id": "semgrep:0:1",
+      "tool": "semgrep",
+      "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.detect-child-process",
+      "reported_path": "lib/index.js",
+      "reported_region": {
+        "endColumn": 46,
+        "endLine": 36,
+        "snippet": {
+          "text": "    var child = child_process_1.spawn(command, {"
+        },
+        "startColumn": 39,
+        "startLine": 36
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/index.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 46,
+                "endLine": 36,
+                "snippet": {
+                  "text": "    var child = child_process_1.spawn(command, {"
+                },
+                "startColumn": 39,
+                "startLine": 36
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+        "path": "lib/index.js",
+        "line": 36
+      },
+      "review_note": "runCommand templates command with file and templateData and calls spawn. normalizeOptions defaults shell to true but allows override. The audit rule does not prove shell true on every invocation. command/file data may affect shell text depending on caller template; neither a vulnerability nor a safe call is established for every use. No constant argument proof.",
+      "source_references": "lib/index.js:20-41,80-99"
+    },
+    {
+      "case_id": "npm-gulp-shell-0.8.0",
+      "attempt": "attempt-2",
+      "raw_id": "semgrep:0:2",
+      "tool": "semgrep",
+      "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.detect-child-process",
+      "reported_path": "lib/index.js",
+      "reported_region": {
+        "endColumn": 46,
+        "endLine": 36,
+        "snippet": {
+          "text": "    var child = child_process_1.spawn(command, {"
+        },
+        "startColumn": 39,
+        "startLine": 36
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `file`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/index.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 46,
+                "endLine": 36,
+                "snippet": {
+                  "text": "    var child = child_process_1.spawn(command, {"
+                },
+                "startColumn": 39,
+                "startLine": 36
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `file`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.detect-child-process"
+      },
+      "review_status": "preliminary",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": {
+        "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+        "path": "lib/index.js",
+        "line": 36
+      },
+      "review_note": "runCommand templates command with file and templateData and calls spawn. normalizeOptions defaults shell to true but allows override. The audit rule does not prove shell true on every invocation. command/file data may affect shell text depending on caller template; neither a vulnerability nor a safe call is established for every use. No constant argument proof.",
+      "source_references": "lib/index.js:20-41,80-99"
+    },
+    {
+      "case_id": "npm-gulp-shell-0.8.0",
+      "attempt": "attempt-2",
+      "raw_id": "semgrep:0:3",
+      "tool": "semgrep",
+      "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.detect-child-process",
+      "reported_path": "lib/index.js",
+      "reported_region": {
+        "endColumn": 46,
+        "endLine": 36,
+        "snippet": {
+          "text": "    var child = child_process_1.spawn(command, {"
+        },
+        "startColumn": 39,
+        "startLine": 36
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `options`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/index.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 46,
+                "endLine": 36,
+                "snippet": {
+                  "text": "    var child = child_process_1.spawn(command, {"
+                },
+                "startColumn": 39,
+                "startLine": 36
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `options`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage.artifacts.development-batch-01-retry.npm-gulp-shell-0.8.0.detect-child-process"
+      },
+      "review_status": "unreviewed_cap",
+      "reviewer": "assistant; unblinded; no independent approval",
+      "approved": false,
+      "proposed_sink": null,
+      "review_note": null
+    }
+  ]
+}

@@ -89,7 +89,7 @@ aliases for the pinned CodeQL shell-command-construction result format. It keeps
 all fallback records and leaves mapping decisions and truth labels unresolved.
 See [REVIEW_WORKFLOW.md](REVIEW_WORKFLOW.md) for commands, limitations and manual
 review fields. Six runner tests plus six review tests pass locally (12 total).
-These are separate from the application's 12-test backend suite.
+Application test counts are tracked separately; see the latest batch report.
 
 ## Development rule diagnostic
 
@@ -100,3 +100,10 @@ the upstream smoke rule returns 0 raw findings and a direct-alias extension retu
 source truth labels and effectiveness metrics remain pending. See the
 [paired diagnostic report](reports/curling-direct-alias/REPORT.md). There are now
 14 offline experiment tests, separate from application backend tests.
+
+## Five-package development survey
+
+See [batch 01 report](reports/development-batch-01/REPORT.md) for six raw Semgrep
+alerts and zero CodeQL alerts across five completed paired snapshots. The report
+preserves failed attempts and preliminary capped review; no FP or accuracy gain
+is confirmed. Run further fixed batches with `python -m experiments.run_batch`.

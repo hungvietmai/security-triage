@@ -1,0 +1,515 @@
+{
+  "batch_id": "development-batch-01",
+  "configuration_commit": "7b3a26b4dbdec7f3ece438dbe1384af905e80375",
+  "split": "development",
+  "cases": [
+    {
+      "case_id": "npm-shelljs-0.10.0",
+      "snapshot_sha256": "0908d4921a9e304cbf0aacf161f31aafaa7d5920b403c1493d1c99646ace9ff2",
+      "selected_attempt": "recovery",
+      "status": "completed",
+      "semgrep_raw_findings": 1,
+      "codeql_raw_findings": 0,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "status": "partial",
+          "semgrep": {
+            "status": "failed",
+            "error": "semgrep unavailable; see version logs"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-shelljs-0.10.0/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-shelljs-0.10.0/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 19.8104,
+            "raw_findings": 0,
+            "sarif_sha256": "5887e5c6bba859504eca7ff216aa871368fa193a5ef97606520a39cc906bb362"
+          }
+        },
+        {
+          "attempt": "attempt-2",
+          "status": "partial",
+          "semgrep": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/batch-setup/semgrep-venv/bin/semgrep",
+              "scan",
+              "--metrics=off",
+              "--disable-version-check",
+              "--disable-nosem",
+              "--no-git-ignore",
+              "--jobs",
+              "1",
+              "--sarif",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-shelljs-0.10.0/semgrep.sarif",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-shelljs-0.10.0/rule-0.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-shelljs-0.10.0/rule-1.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-shelljs-0.10.0/rule-2.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-shelljs-0.10.0/rule-3.yaml",
+              "."
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 3.9139,
+            "raw_findings": 1,
+            "sarif_sha256": "2798d74c20dae8db0e96ce382fd6a7649be00104120c85008790c877b9e2e78b"
+          },
+          "codeql": {
+            "status": "failed",
+            "error": "Scanner produced no SARIF output"
+          }
+        },
+        {
+          "attempt": "recovery",
+          "status": "completed",
+          "semgrep": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/batch-setup/semgrep-venv/bin/semgrep",
+              "scan",
+              "--metrics=off",
+              "--disable-version-check",
+              "--disable-nosem",
+              "--no-git-ignore",
+              "--jobs",
+              "1",
+              "--sarif",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/semgrep.sarif",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/rule-0.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/rule-1.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/rule-2.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/rule-3.yaml",
+              "."
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 4.1487,
+            "raw_findings": 1,
+            "sarif_sha256": "9d9bb531aaa37bdc96b3880c0d444fac1d195869d7ad5d478f9d2f859150b61f"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-shelljs-recovery/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 19.7869,
+            "raw_findings": 0,
+            "sarif_sha256": "2ae5a4f564cabdf02d985c32820d39b2fcef864e248149d125bfb6b2a0559521"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "npm-execa-10.0.1",
+      "snapshot_sha256": "b2f53cb1b3da8f1e3f27007641cdd419df34215eb704dfccfe0899603da64cc8",
+      "selected_attempt": "attempt-2",
+      "status": "completed",
+      "semgrep_raw_findings": 0,
+      "codeql_raw_findings": 0,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "status": "partial",
+          "semgrep": {
+            "status": "failed",
+            "error": "semgrep unavailable; see version logs"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-execa-10.0.1/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-execa-10.0.1/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 20.4896,
+            "raw_findings": 0,
+            "sarif_sha256": "50ecbe6d54ff425a44c9008e9899a9588e2152261bd5148e488fd115739ab1d2"
+          }
+        },
+        {
+          "attempt": "attempt-2",
+          "status": "completed",
+          "semgrep": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/batch-setup/semgrep-venv/bin/semgrep",
+              "scan",
+              "--metrics=off",
+              "--disable-version-check",
+              "--disable-nosem",
+              "--no-git-ignore",
+              "--jobs",
+              "1",
+              "--sarif",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/semgrep.sarif",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/rule-0.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/rule-1.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/rule-2.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/rule-3.yaml",
+              "."
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 4.0837,
+            "raw_findings": 0,
+            "sarif_sha256": "e7c04b8a0360a2eaddd166302e54ed9506018a00ab495fff9adc163ad0ac3561"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-execa-10.0.1/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 19.7775,
+            "raw_findings": 0,
+            "sarif_sha256": "7e1242019a46e6842932328275ed4745d16ff6c2e17dec8f7e3d6ccb9802b04b"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "npm-npm-run-all-4.1.5",
+      "snapshot_sha256": "9b73632f016a90db2d090c1d89d211fd4ce46d6281948721986f6897f7fbabfc",
+      "selected_attempt": "attempt-2",
+      "status": "completed",
+      "semgrep_raw_findings": 0,
+      "codeql_raw_findings": 0,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "status": "partial",
+          "semgrep": {
+            "status": "failed",
+            "error": "semgrep unavailable; see version logs"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-npm-run-all-4.1.5/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-npm-run-all-4.1.5/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 19.7778,
+            "raw_findings": 0,
+            "sarif_sha256": "65ffc6856d96cd9b937c858ddcfa4ae2aa236b71630d056120605fed35f1af21"
+          }
+        },
+        {
+          "attempt": "attempt-2",
+          "status": "completed",
+          "semgrep": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/batch-setup/semgrep-venv/bin/semgrep",
+              "scan",
+              "--metrics=off",
+              "--disable-version-check",
+              "--disable-nosem",
+              "--no-git-ignore",
+              "--jobs",
+              "1",
+              "--sarif",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/semgrep.sarif",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/rule-0.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/rule-1.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/rule-2.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/rule-3.yaml",
+              "."
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 4.6869,
+            "raw_findings": 0,
+            "sarif_sha256": "4459300294df4d203dbec4fca1a13f481787d5cc0cfa6129e5d325d92db9d314"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-npm-run-all-4.1.5/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 18.5798,
+            "raw_findings": 0,
+            "sarif_sha256": "078b612c8e0d2b4d9b09212ddcce247a9273d8ce5beee1a309cbebcfd529f366"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "npm-grunt-shell-4.0.0",
+      "snapshot_sha256": "a29183e76c77c905a2c3602304ee52efdefb9bee57ef9e756929a7dc83ad2724",
+      "selected_attempt": "attempt-2",
+      "status": "completed",
+      "semgrep_raw_findings": 1,
+      "codeql_raw_findings": 0,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "status": "partial",
+          "semgrep": {
+            "status": "failed",
+            "error": "semgrep unavailable; see version logs"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-grunt-shell-4.0.0/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-grunt-shell-4.0.0/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 16.5381,
+            "raw_findings": 0,
+            "sarif_sha256": "179c23489b02e3c90e577df78ac2b8b5b13701a8e6503d6df73499885ee544e3"
+          }
+        },
+        {
+          "attempt": "attempt-2",
+          "status": "completed",
+          "semgrep": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/batch-setup/semgrep-venv/bin/semgrep",
+              "scan",
+              "--metrics=off",
+              "--disable-version-check",
+              "--disable-nosem",
+              "--no-git-ignore",
+              "--jobs",
+              "1",
+              "--sarif",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/semgrep.sarif",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/rule-0.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/rule-1.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/rule-2.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/rule-3.yaml",
+              "."
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 3.1284,
+            "raw_findings": 1,
+            "sarif_sha256": "474c51f4e308a7e30c2a416f20817d810688c08dc4ac45bf63ffb60fd726c64d"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-grunt-shell-4.0.0/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 17.1605,
+            "raw_findings": 0,
+            "sarif_sha256": "0f675510df8aebfb71d4cb306b4d7b106b4034c53442a7022daac196be97e816"
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "npm-gulp-shell-0.8.0",
+      "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+      "selected_attempt": "attempt-2",
+      "status": "completed",
+      "semgrep_raw_findings": 4,
+      "codeql_raw_findings": 0,
+      "attempts": [
+        {
+          "attempt": "attempt-1",
+          "status": "partial",
+          "semgrep": {
+            "status": "failed",
+            "error": "semgrep unavailable; see version logs"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-gulp-shell-0.8.0/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01/npm-gulp-shell-0.8.0/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 16.6832,
+            "raw_findings": 0,
+            "sarif_sha256": "0775eaad7e15c69c03aa91a448204203a505c317f5c663faa22a56840fc7efba"
+          }
+        },
+        {
+          "attempt": "attempt-2",
+          "status": "completed",
+          "semgrep": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/batch-setup/semgrep-venv/bin/semgrep",
+              "scan",
+              "--metrics=off",
+              "--disable-version-check",
+              "--disable-nosem",
+              "--no-git-ignore",
+              "--jobs",
+              "1",
+              "--sarif",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/semgrep.sarif",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/rule-0.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/rule-1.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/rule-2.yaml",
+              "--config",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/rule-3.yaml",
+              "."
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 2.9767,
+            "raw_findings": 4,
+            "sarif_sha256": "748759534e1bfa65d19a7daaef643335004b20439ffea3c8f77fe91c7a681ba0"
+          },
+          "codeql": {
+            "argv": [
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+              "database",
+              "analyze",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/codeql-db",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+              "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+              "--format=sarif-latest",
+              "--output",
+              "/workspace/scratch/b726e5b835c4/security-triage/artifacts/development-batch-01-retry/npm-gulp-shell-0.8.0/codeql.sarif",
+              "--threads",
+              "1",
+              "--ram=2048"
+            ],
+            "status": "completed",
+            "exit_code": 0,
+            "seconds": 21.0665,
+            "raw_findings": 0,
+            "sarif_sha256": "2856c63621e0ddbaf97ac4e29ce6d574ed31da3bb61e9391cac1b1fbc176974e"
+          }
+        }
+      ]
+    }
+  ],
+  "raw_alerts": 6,
+  "preliminary_reviewed_raw_alerts": 5,
+  "unreviewed_raw_alerts": 1,
+  "approved_labels": 0,
+  "confirmed_false_positives": 0,
+  "metrics": null
+}
