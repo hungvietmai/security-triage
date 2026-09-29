@@ -68,3 +68,12 @@ review tests pass, for 12 experiment tests total; Python lint passes. Checks cov
 CWE-independent identity, arbitrary message-link IDs, ambiguous/unsafe locations,
 fallback retention and evidence tampering. These do not validate vulnerability
 labels. See [review workflow](../experiments/REVIEW_WORKFLOW.md).
+
+## Semgrep alias diagnostic (2026-09-29)
+
+Two same-input Semgrep configurations completed on curling: unchanged upstream
+rule 0 raw findings; direct exec/execSync alias extension 1 at line 56. Synthetic
+controls returned expected lines (upstream: 7; adjusted: 7, 10, 13), without alerts
+on the literal-command/non-execution controls. Fourteen offline experiment tests
+and Python lint pass. No held-out evaluation or FP-reduction claim is made. See
+[the diagnostic report](../experiments/reports/curling-direct-alias/REPORT.md).
