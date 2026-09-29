@@ -1,0 +1,48 @@
+{
+  "config_id": "development-batch-01-upstream",
+  "purpose": "Purposive command/build-tool development survey; unchanged upstream rules; no tuned alias; not held-out evaluation",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "scanners": [
+    "semgrep",
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [
+    {
+      "path": "experiments/rules/batch-01/detect-child-process.yaml",
+      "sha256": "baee696b05b3c38fa5a82435ae458026ec81ce9a6e6a73116d68dc963496296c",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/detect-child-process.yaml"
+    },
+    {
+      "path": "experiments/rules/batch-01/dangerous-spawn-shell.yaml",
+      "sha256": "1a81f91e9ad9ea4c62a9b0bda4dcf3cf2fc1bb6f2d9e2580ea3effa6bfe9ba74",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/audit/dangerous-spawn-shell.yaml"
+    },
+    {
+      "path": "experiments/rules/batch-01/spawn-shell-true.yaml",
+      "sha256": "452fb593301edca721a151ed3c051f428ca1df1fc1af613380d58b076601b5ba",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/audit/spawn-shell-true.yaml"
+    },
+    {
+      "path": "experiments/rules/batch-01/shelljs-exec-injection.yaml",
+      "sha256": "adfff907f257d82341c060dca56d2361bc2e750c89243b89b781d0d9678000bb",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/shelljs/security/shelljs-exec-injection.yaml"
+    }
+  ],
+  "codeql_queries": [
+    "Security/CWE-078/CommandInjection.ql",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-078/CommandInjection.ql": "bb85242cf730c85b04826ce914862872c0f83d58540750ae69b1f6a0951bd45c",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql": "77c3cfa9bcf11440035c6c469fc940f2c8bf418b62e60951a9423c0ff16499c4"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "sha256": "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833",
+    "javascript_query_pack": "2.4.6"
+  }
+}
