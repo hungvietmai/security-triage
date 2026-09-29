@@ -81,3 +81,12 @@ python3 -m unittest experiments.test_runner -v
 See [curling 0.2.0 pilot report](reports/curling-0.2.0/REPORT.md): both tools ran,
 Semgrep returned zero raw findings and CodeQL six. Sink mapping and labels remain
 unresolved; this is an integration checkpoint, not an accuracy comparison.
+
+## Sink proposal and review packet
+
+An offline review builder now verifies the preserved evidence and proposes sink
+aliases for the pinned CodeQL shell-command-construction result format. It keeps
+all fallback records and leaves mapping decisions and truth labels unresolved.
+See [REVIEW_WORKFLOW.md](REVIEW_WORKFLOW.md) for commands, limitations and manual
+review fields. Six runner tests plus six review tests pass locally (12 total).
+These are separate from the application's 12-test backend suite.
