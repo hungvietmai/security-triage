@@ -1,0 +1,90 @@
+{
+  "case_id": "secbench-curling-0.2.0",
+  "status": "draft_needs_review",
+  "author_type": "assistant",
+  "blinded": false,
+  "independent_reviewer": null,
+  "technical_verdict": "unresolved",
+  "threat_model_scope": "unresolved",
+  "reference": "https://github.com/advisories/GHSA-xmxh-g7wj-8m4m",
+  "candidate_known_location": {
+    "path": "lib/curl-transport.js",
+    "line": 56,
+    "column": 3,
+    "reason": "Pinned SecBench metadata names this sink; source passes command to child_process.exec via string concatenation. Confirm reference and scope before admitting to K."
+  },
+  "candidate_aliases": [
+    {
+      "raw_id": "codeql:0:0",
+      "candidate_sink": {
+        "path": "lib/curl-transport.js",
+        "line": 56,
+        "column": 3,
+        "argument_role": "shell_command"
+      },
+      "evidence": "SARIF relatedLocations id 2, explicitly referenced as shell command in result message",
+      "status": "proposed_not_accepted"
+    },
+    {
+      "raw_id": "codeql:0:1",
+      "candidate_sink": {
+        "path": "lib/curl-transport.js",
+        "line": 56,
+        "column": 3,
+        "argument_role": "shell_command"
+      },
+      "evidence": "SARIF relatedLocations id 2, explicitly referenced as shell command in result message",
+      "status": "proposed_not_accepted"
+    },
+    {
+      "raw_id": "codeql:0:2",
+      "candidate_sink": {
+        "path": "lib/curl-transport.js",
+        "line": 56,
+        "column": 3,
+        "argument_role": "shell_command"
+      },
+      "evidence": "SARIF relatedLocations id 2, explicitly referenced as shell command in result message",
+      "status": "proposed_not_accepted"
+    },
+    {
+      "raw_id": "codeql:0:3",
+      "candidate_sink": {
+        "path": "lib/curl-transport.js",
+        "line": 56,
+        "column": 3,
+        "argument_role": "shell_command"
+      },
+      "evidence": "SARIF relatedLocations id 2, explicitly referenced as shell command in result message",
+      "status": "proposed_not_accepted"
+    },
+    {
+      "raw_id": "codeql:0:4",
+      "candidate_sink": {
+        "path": "lib/curl-transport.js",
+        "line": 56,
+        "column": 3,
+        "argument_role": "shell_command"
+      },
+      "evidence": "SARIF relatedLocations id 2, explicitly referenced as shell command in result message",
+      "status": "proposed_not_accepted"
+    },
+    {
+      "raw_id": "codeql:0:5",
+      "candidate_sink": {
+        "path": "lib/curl-transport.js",
+        "line": 56,
+        "column": 3,
+        "argument_role": "shell_command"
+      },
+      "evidence": "SARIF relatedLocations id 2, explicitly referenced as shell command in result message",
+      "status": "proposed_not_accepted"
+    }
+  ],
+  "notes": [
+    "All six results refer to the same candidate sink. No generic assumption that relatedLocations id 2 is always a sink.",
+    "Primary regions are concatenations at lines 56,76,108,113,123,128. Do not count these as six confirmed vulnerabilities.",
+    "Keep original reported locations and raw identities if mapping cannot be confirmed.",
+    "No conclusion about Semgrep overall coverage from one smoke rule."
+  ]
+}
