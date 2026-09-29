@@ -90,3 +90,13 @@ all fallback records and leaves mapping decisions and truth labels unresolved.
 See [REVIEW_WORKFLOW.md](REVIEW_WORKFLOW.md) for commands, limitations and manual
 review fields. Six runner tests plus six review tests pass locally (12 total).
 These are separate from the application's 12-test backend suite.
+
+## Development rule diagnostic
+
+The shared CLI now accepts checksum-pinned repository rules and an optional
+`--source-archive` cache with manifest verification. On the same curling archive,
+the upstream smoke rule returns 0 raw findings and a direct-alias extension returns
+1 at line 56. This is an S1 development candidate, not the frozen tuned baseline;
+source truth labels and effectiveness metrics remain pending. See the
+[paired diagnostic report](reports/curling-direct-alias/REPORT.md). There are now
+14 offline experiment tests, separate from application backend tests.
