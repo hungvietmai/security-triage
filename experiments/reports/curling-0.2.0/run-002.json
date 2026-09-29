@@ -1,0 +1,120 @@
+{
+  "case_id": "secbench-curling-0.2.0",
+  "split": "development",
+  "config_id": "development-smoke-javascript",
+  "purpose": "acquisition and scanner integration only; not the frozen S0/Q0 benchmark",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "configuration_commit": "8ffd191a4b63d74db3b655aeb08c3ce9aa33a4c5",
+  "protocol_sha256": "0a7f882a86f81aa36dfa3b99d43fa0893ceff6148402c01028003ec3bc2937c0",
+  "case_manifest_sha256": "17adca4dfc5bd99c19388ad363f6b47c372649f90055a7e198e24bc808a1f3b4",
+  "configuration_sha256": "adf762957905a891e62375d18a0241ee80487bfe0e29c2f5f98f4daced728ea8",
+  "runner_sha256": "14a320af6841d247877a2e1573d7b6c4babfdda0b5b44a5b63b3e4ab178222e3",
+  "status": "completed",
+  "steps": {
+    "acquisition": {
+      "status": "completed",
+      "seconds": 9.142293914999755
+    },
+    "semgrep-version": {
+      "argv": [
+        "/workspace/scratch/b726e5b835c4/pilot-setup/venv/bin/semgrep",
+        "--version"
+      ],
+      "status": "completed",
+      "exit_code": 0,
+      "seconds": 3.2422
+    },
+    "semgrep": {
+      "argv": [
+        "/workspace/scratch/b726e5b835c4/pilot-setup/venv/bin/semgrep",
+        "scan",
+        "--metrics=off",
+        "--disable-version-check",
+        "--disable-nosem",
+        "--no-git-ignore",
+        "--jobs",
+        "1",
+        "--sarif",
+        "--output",
+        "/workspace/scratch/b726e5b835c4/security-triage/artifacts/pilot-curling-002/semgrep.sarif",
+        "--config",
+        "/workspace/scratch/b726e5b835c4/security-triage/artifacts/pilot-curling-002/rule-0.yaml",
+        "."
+      ],
+      "status": "completed",
+      "exit_code": 0,
+      "seconds": 5.767,
+      "raw_findings": 0,
+      "sarif_sha256": "2c49fc348872a5b6aae3eb9988a6b8d9859a93f84d948d2682f9c68c693fdf4a"
+    },
+    "codeql-version": {
+      "argv": [
+        "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+        "version",
+        "--format=json"
+      ],
+      "status": "completed",
+      "exit_code": 0,
+      "seconds": 1.6317
+    },
+    "codeql-create": {
+      "argv": [
+        "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+        "database",
+        "create",
+        "/workspace/scratch/b726e5b835c4/security-triage/artifacts/pilot-curling-002/codeql-db",
+        "--language=javascript",
+        "--source-root",
+        "/workspace/scratch/b726e5b835c4/security-triage/artifacts/pilot-curling-002/source/package",
+        "--build-mode=none",
+        "--threads",
+        "1",
+        "--ram=2048"
+      ],
+      "status": "completed",
+      "exit_code": 0,
+      "seconds": 17.3573
+    },
+    "codeql": {
+      "argv": [
+        "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/codeql",
+        "database",
+        "analyze",
+        "/workspace/scratch/b726e5b835c4/security-triage/artifacts/pilot-curling-002/codeql-db",
+        "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/CommandInjection.ql",
+        "/workspace/scratch/b726e5b835c4/pilot-setup/codeql/qlpacks/codeql/javascript-queries/2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+        "--format=sarif-latest",
+        "--output",
+        "/workspace/scratch/b726e5b835c4/security-triage/artifacts/pilot-curling-002/codeql.sarif",
+        "--threads",
+        "1",
+        "--ram=2048"
+      ],
+      "status": "completed",
+      "exit_code": 0,
+      "seconds": 40.2001,
+      "raw_findings": 6,
+      "sarif_sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647"
+    }
+  },
+  "labels_commit": null,
+  "mapping_version": "raw-ledger-v0",
+  "metrics": null,
+  "metrics_reason": "No reviewed common location/label ledger yet",
+  "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+  "source_files": [
+    ".npmignore",
+    "README.md",
+    "index.js",
+    "lib/curl-transport.js",
+    "package.json",
+    "tests/curl-transport.tests.js"
+  ],
+  "codeql_query_files": {
+    "Security/CWE-078/CommandInjection.ql": "bb85242cf730c85b04826ce914862872c0f83d58540750ae69b1f6a0951bd45c",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql": "77c3cfa9bcf11440035c6c469fc940f2c8bf418b62e60951a9423c0ff16499c4"
+  },
+  "codeql_pack_manifest": "---\nlibrary: false\nwarnOnImplicitThis: true\nname: codeql/javascript-queries\nversion: 2.4.6\nbuildMetadata:\n  sha: 6e9f9e38390175c41b99070a423c875f450759ca\n  cliVersion: 2.27.1\ndependencies:\n  codeql/javascript-all: 2.10.2\n  codeql/suite-helpers: 1.0.58\n  codeql/typos: 1.0.58\n  codeql/util: 2.0.45\nsuites: codeql-suites\nextractor: javascript\ngroups:\n - javascript\n - queries\ndefaultSuiteFile: codeql-suites/javascript-code-scanning.qls\n",
+  "wall_seconds": 86.2991,
+  "raw_findings": 6
+}
