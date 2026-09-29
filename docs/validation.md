@@ -1,6 +1,6 @@
 # Validation evidence
 
-Updated 2026-09-25. Application foundation validation and research evaluation are
+Updated 2026-09-29. Application foundation validation and research evaluation are
 separate: the checks below do not establish scanner or adjudication effectiveness.
 
 ## Verified GitHub Actions run
@@ -34,14 +34,27 @@ suite and successful GitHub-hosted Docker run above.
 An upstream Starlette warning about the httpx/httpx2 transition was observed in
 local test dependencies. It was not suppressed.
 
+## Development scanner checkpoint
+
+The manifest-driven CLI acquired pinned npm `curling@0.2.0` and ran Semgrep
+1.178.0 and CodeQL 2.27.1 natively. The successful attempt returned 0 and 6 raw
+findings respectively. Six focused runner tests passed. Raw outputs, failed
+attempt history and configuration hashes are preserved in the
+[pilot report](../experiments/reports/curling-0.2.0/REPORT.md).
+
+This is one JavaScript development case with a small smoke configuration. It is
+not a frozen baseline comparison. Sink mapping and independent labels remain
+pending. The dedicated experiment Dockerfile has not been built or tested;
+application CI above does not validate it.
+
 ## Not yet validated or implemented
 
-- Manifest ingestion and reproducible Git/package source acquisition.
+- Python/Git source support in the experiment CLI and complete baseline suites.
 - Source upload and provenance schema extensions.
-- Semgrep/CodeQL execution, SARIF parsing and sink matching.
-- CWE-78 evidence policy, independent labels or held-out evaluation.
+- Automatic sink matching, CWE-78 evidence policy or tuned Semgrep configuration.
+- Independent labels, metric computation or held-out evaluation.
 - False-positive reduction, recall retention or runtime improvements.
 
-The next research checkpoint is a real, version-pinned SecBench.js case executed
-from a manifest, with source hash, scanner configuration, raw output and an
-independent label record. See [architecture.md](architecture.md).
+The next research gate is review of the first case's proposed sink mapping and
+labels, followed by remaining development cases. See the authoritative
+[evaluation protocol](../experiments/EVALUATION_PROTOCOL.md).
