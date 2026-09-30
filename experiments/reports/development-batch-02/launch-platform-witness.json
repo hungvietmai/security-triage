@@ -1,0 +1,48 @@
+{
+  "source_sha256": "67aaecfb57e82054dbd1c4ce08b859f09d93ee926d50ffbd2d3a35dc53ab74ff",
+  "node_version": "v24.19.0",
+  "scope": "Two mocked platform branches; source guard is the scope evidence. This is not native Windows execution or an exploit/sanitizer test.",
+  "substitutions": [
+    "fs.existsSync always true",
+    "guessEditor returns trusted code",
+    "process.platform mocked",
+    "exec and spawn capture only"
+  ],
+  "results": [
+    {
+      "modeled_platform": "linux",
+      "expected_method": "spawn",
+      "calls": [
+        {
+          "method": "spawn",
+          "args": [
+            "code",
+            [
+              "/review/sample.js"
+            ],
+            {
+              "stdio": "inherit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modeled_platform": "win32",
+      "expected_method": "exec",
+      "calls": [
+        {
+          "method": "exec",
+          "args": [
+            "code C:\\review\\sample.js",
+            {
+              "stdio": "inherit",
+              "shell": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "harness_sha256": "af8174f536148d9c362c855fb8b4077f883dc7d0c58d6872407dbf371ae93bf1"
+}

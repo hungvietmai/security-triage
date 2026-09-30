@@ -136,3 +136,12 @@ evidence, not real-data FP reduction or recall improvement.
 findings. The [versioned mapping](mappings/README.md) separates API-use warnings
 from modeled flows and preserves unknown classifications. [Results](reports/rule-claims-v1/REPORT.md)
 retain all 11 alerts from the eight real packages and all nine synthetic alerts.
+
+## Platform scope and complete preliminary coverage
+
+[Follow-up review](reports/development-batch-02/SCOPE_REVIEW.md) records the
+Windows-only launch-editor sink as out of the Linux/POSIX threat model, with its
+technical verdict still unresolved. This is not an FP or a policy suppression.
+The previously capped gulp-shell options alert now has source notes: all 11 batch
+alerts have preliminary review, but confirmed in-scope FPs remain zero. R1 still
+has no defensible negative example; no suppressor or effectiveness metric is enabled.

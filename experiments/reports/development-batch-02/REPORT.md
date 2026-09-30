@@ -86,3 +86,8 @@ remote CI success.
 
 Follow-up: [path review](PATH_REVIEW.md) records controlled argument-construction
 checks and corrects earlier wording about SARIF paths. Raw scan evidence is unchanged.
+
+Follow-up 2026-09-30: [scope review](SCOPE_REVIEW.md) marks the Windows-only
+launch-editor call outside the Linux/POSIX threat model (technical label remains
+unresolved) and completes preliminary notes for the previously capped gulp-shell
+alert. These changes produce no confirmed FP and no policy suppression.

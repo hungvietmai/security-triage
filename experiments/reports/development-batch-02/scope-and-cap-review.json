@@ -1,0 +1,102 @@
+{
+  "schema_version": "development-review-delta-v1",
+  "reviewed_at": "2026-09-30T07:53:53.302142+00:00",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "threat_model_version": "EVALUATION_PROTOCOL.md v1.0.0 section 4",
+  "reviewer": "assistant",
+  "blinded": false,
+  "independent_second_review": null,
+  "human_approval": null,
+  "scope_review": {
+    "case_id": "npm-launch-editor-2.14.1",
+    "attempt": "attempt-2",
+    "raw_reference": {
+      "raw_id": "semgrep:0:0",
+      "sarif_sha256": "0eaeb94d4d480b3cc1db08083ea4b2004b8fbd66ee3a2f1bb325d9fe55daaace"
+    },
+    "reported_region": {
+      "endColumn": 58,
+      "endLine": 167,
+      "snippet": {
+        "text": "    currentChildProcess = childProcess.exec(launchCommand, {"
+      },
+      "startColumn": 45,
+      "startLine": 167
+    },
+    "source_sha256": "67aaecfb57e82054dbd1c4ce08b859f09d93ee926d50ffbd2d3a35dc53ab74ff",
+    "unit_id": "sink:5c65c8ab6a6cf8ef31cdc789dfd733d1186eb50b1d5e767d7edf93bc59182999",
+    "identity": {
+      "snapshot_sha256": "b7f61c5d811a9efaacc7d1c61da16c30cbdf309b0b7a2e60939f6d30f3f6591e",
+      "path": "index.js",
+      "sink_anchor": {
+        "startLine": 167,
+        "startColumn": 27,
+        "endLine": 170,
+        "endColumn": 7
+      },
+      "argument_role": "shell_command"
+    },
+    "mapping_decision": "accept_candidate_single_reviewer",
+    "technical_verdict": "unresolved",
+    "scope_verdict": "out_of_scope",
+    "reason": "Exec at index.js:167 is lexically inside process.platform === win32 at line 123; else branch at line 172 uses a distinct spawn call. No assignment to process.platform or alias of process occurs in this source. Ordinary trusted Node runtime is assumed.",
+    "evidence": [
+      "index.js:123-173",
+      "launch-platform-witness.json"
+    ],
+    "not_established": [
+      "Safety of Windows argument quoting",
+      "A false positive on Windows",
+      "Safety of non-Windows executable selection"
+    ],
+    "metric_treatment": "Report out-of-scope with unresolved technical label separately; no FP-reduction credit and no policy suppression recorded."
+  },
+  "extended_review": {
+    "case_id": "npm-gulp-shell-0.8.0",
+    "attempt": "attempt-2",
+    "raw_reference": {
+      "raw_id": "semgrep:0:3",
+      "sarif_sha256": "748759534e1bfa65d19a7daaef643335004b20439ffea3c8f77fe91c7a681ba0"
+    },
+    "snapshot_sha256": "c1bfa0bacb2339c5be5c62fc1c1bb3406db6642cf169ddee4f4a23829a7cd1d5",
+    "source_sha256": "e6b585149fdbdeec30ca2b7d43d26927b17af458487f412673f86538f9e133c0",
+    "readme_sha256": "0eea5733e19c9a2fdb597dbfdf377ecfa647892c6068275a2c83074709413f9d",
+    "reported_region": {
+      "endColumn": 46,
+      "endLine": 36,
+      "snippet": {
+        "text": "    var child = child_process_1.spawn(command, {"
+      },
+      "startColumn": 39,
+      "startLine": 36
+    },
+    "technical_verdict": "unresolved",
+    "scope_verdict": "unresolved",
+    "prior_status": "unreviewed_due_to_initial_cap",
+    "current_status": "preliminary_source_review_complete",
+    "candidate_sink": {
+      "path": "lib/index.js",
+      "line": 36
+    },
+    "reason": "options.templateData is merged into interpolation context (31), which is passed to the command template (32). Options also overrides shell and env (20-28,36-41). The command is not proven constant; the caller controls the template and which data it consumes. README documents dangerous interpolation.",
+    "source_references": [
+      "lib/index.js:20-41",
+      "lib/index.js:75-92",
+      "README.md:usage and commands/templateData documentation"
+    ],
+    "decision": "retain_for_review",
+    "review_change": "Development-only extension of the first-three-alert cap to the sole remaining raw alert; no scan or rule changes."
+  },
+  "checkpoint": {
+    "batch_01_raw_alerts": 6,
+    "batch_02_raw_alerts": 5,
+    "raw_alerts_with_at_least_preliminary_notes": 11,
+    "raw_alerts_still_without_preliminary_notes": 0,
+    "raw_alerts_with_out_of_scope_first_review": 1,
+    "confirmed_in_scope_FP_units": 0,
+    "R1_eligible_reviewed_negative_units": 0,
+    "note": "Raw review coverage is not resolved label coverage. Count excludes curling and synthetic probes; original raw findings and failed attempts remain unchanged."
+  },
+  "policy_executed": false,
+  "metrics": null
+}
