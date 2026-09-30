@@ -1,0 +1,89 @@
+{
+  "version": "rule-claims-v1",
+  "status": "development; no held-out freeze",
+  "prediction_policy": "Retain every selected CWE-78 rule result as a candidate, including audit rules. Claim kind does not establish exploitability, truth, threat scope or suppression. Unknown definitions stay classification_unresolved.",
+  "rules": [
+    {
+      "tool": "semgrep",
+      "rule_id": "detect-child-process",
+      "tool_version": "1.178.0",
+      "definition_sha256": "baee696b05b3c38fa5a82435ae458026ec81ce9a6e6a73116d68dc963496296c",
+      "claim_kind": "conditional_argument_flow",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "command_or_executable",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/detect-child-process.yaml"
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "dangerous-spawn-shell",
+      "tool_version": "1.178.0",
+      "definition_sha256": "1a81f91e9ad9ea4c62a9b0bda4dcf3cf2fc1bb6f2d9e2580ea3effa6bfe9ba74",
+      "claim_kind": "conditional_interpreter_argument",
+      "upstream_subcategory": "vuln",
+      "focus_role_hint": "interpreter_argument",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/audit/dangerous-spawn-shell.yaml"
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "spawn-shell-true",
+      "tool_version": "1.178.0",
+      "definition_sha256": "452fb593301edca721a151ed3c051f428ca1df1fc1af613380d58b076601b5ba",
+      "claim_kind": "shell_usage_audit",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "shell_option",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/audit/spawn-shell-true.yaml"
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "shelljs-exec-injection",
+      "tool_version": "1.178.0",
+      "definition_sha256": "adfff907f257d82341c060dca56d2361bc2e750c89243b89b781d0d9678000bb",
+      "claim_kind": "conditional_wrapper_call",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "wrapper_command",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/shelljs/security/shelljs-exec-injection.yaml"
+    },
+    {
+      "tool": "codeql",
+      "rule_id": "js/command-line-injection",
+      "tool_version": "2.27.1",
+      "query_path": "Security/CWE-078/CommandInjection.ql",
+      "definition_sha256": "bb85242cf730c85b04826ce914862872c0f83d58540750ae69b1f6a0951bd45c",
+      "claim_kind": "modeled_command_line_flow",
+      "upstream_subcategory": null,
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78",
+        "CWE-88"
+      ],
+      "source": "codeql/javascript-queries@2.4.6/Security/CWE-078/CommandInjection.ql"
+    },
+    {
+      "tool": "codeql",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "tool_version": "2.27.1",
+      "query_path": "Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "definition_sha256": "77c3cfa9bcf11440035c6c469fc940f2c8bf418b62e60951a9423c0ff16499c4",
+      "claim_kind": "modeled_library_command_construction",
+      "upstream_subcategory": null,
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78",
+        "CWE-88"
+      ],
+      "source": "codeql/javascript-queries@2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql"
+    }
+  ]
+}

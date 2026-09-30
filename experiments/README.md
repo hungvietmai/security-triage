@@ -126,3 +126,10 @@ no accuracy metric or exclusion rule is enabled.
 upstream rules leave constant-command candidates for R1. Semgrep emits six alerts
 and CodeQL three; an explicit interpreter probe is Semgrep-only. This is mechanism
 evidence, not real-data FP reduction or recall improvement.
+
+## Rule meaning and CWE annotation
+
+`python -m experiments.annotate_claims` annotates recorded scans without removing
+findings. The [versioned mapping](mappings/README.md) separates API-use warnings
+from modeled flows and preserves unknown classifications. [Results](reports/rule-claims-v1/REPORT.md)
+retain all 11 alerts from the eight real packages and all nine synthetic alerts.
