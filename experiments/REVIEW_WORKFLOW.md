@@ -27,6 +27,11 @@ gói dữ liệu tùy ý từ người dùng. Không chạy mã nguồn của pa
 
 ## Kết quả hiện tại
 
+Cập nhật 2026-09-30: [rà nguồn curling](reports/curling-0.2.0/SOURCE_REVIEW.md)
+đã ghi một vị trí TP trong phạm vi và sáu ánh xạ được assistant chấp nhận ở lượt
+rà đầu. Nhãn và ánh xạ lưu riêng trong `reviewed-units-v1.json`; chưa có người rà
+độc lập. Mô tả packet bên dưới là trạng thái đầu ra tự động ban đầu, được giữ nguyên.
+
 [review-packet-v1.json](reports/curling-0.2.0/review-packet-v1.json) giữ đủ 6 cảnh
 báo gốc bằng tham chiếu SARIF/checksum. Mỗi cảnh báo có một đơn vị fallback riêng.
 Cả 6 có đề xuất cùng một sink, dựa vào liên kết `[shell command](id)` trong message

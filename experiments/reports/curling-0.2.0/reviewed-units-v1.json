@@ -1,0 +1,260 @@
+{
+  "schema_version": "reviewed-units-v1",
+  "case_id": "secbench-curling-0.2.0",
+  "split": "development",
+  "reviewed_at": "2026-09-30T07:47:22.737391+00:00",
+  "label_version": "curling-source-review-v1",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "threat_model_version": "EVALUATION_PROTOCOL.md v1.0.0 section 4",
+  "review": {
+    "reviewer": "assistant",
+    "mode": "single_reviewer",
+    "blinded": false,
+    "independent_second_review": null,
+    "human_approval": null,
+    "limitation": "Source/advisory evidence is independent of scanners; reviewer has seen scanner output. This is not independent human adjudication."
+  },
+  "input_packet": {
+    "path": "review-packet-v1.json",
+    "sha256": "ca44035ee00335a63c4656b7fa7ae3f7ac706d08a0b182b8bf31bf2611b86ba5",
+    "evidence_sha256": "05d9cca995639c94f9c98d3aadd2fb216f9fbb575ee9227770fd97d05c4b6513",
+    "attempt": "002",
+    "configuration_commit": "8ffd191a4b63d74db3b655aeb08c3ce9aa33a4c5"
+  },
+  "source_files": [
+    {
+      "path": "lib/curl-transport.js",
+      "sha256": "debb7b0fde4bc70b530cd90a023549e98acc98cdb5586f9e25cff84c3b0e902b"
+    },
+    {
+      "path": "index.js",
+      "sha256": "b18ed75298aec46ee1d09268ecc019a1ea4e717b0f4ab22cea7eee459880c93f"
+    },
+    {
+      "path": "README.md",
+      "sha256": "5714fbe9dcb53638daead44432bb404ad0e78727100782aba8e5c24cf4121715"
+    }
+  ],
+  "references": [
+    {
+      "id": "GHSA-xmxh-g7wj-8m4m",
+      "alias": "CVE-2019-10789",
+      "url": "https://github.com/github/advisory-database/blob/5f020e75ceb39c5b24ae2350de254b8656caa01c/advisories/github-reviewed/2021/04/GHSA-xmxh-g7wj-8m4m/GHSA-xmxh-g7wj-8m4m.json",
+      "claim": "Affected npm range before 1.1.0 includes 0.2.0; command argument reaches shell without sanitization."
+    },
+    {
+      "id": "upstream-validation-change",
+      "url": "https://github.com/hgarcia/curling/commit/53867b9f29dc0f26046a0fb146e66959ebf631a6",
+      "claim": "Adds metacharacter validation before exec; supporting history only, not proof of complete remediation or a reviewed negative case."
+    }
+  ],
+  "units": [
+    {
+      "unit_id": "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687",
+      "identity": {
+        "snapshot_sha256": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+        "path": "lib/curl-transport.js",
+        "sink_anchor": {
+          "startLine": 56,
+          "startColumn": 3,
+          "endLine": 58,
+          "endColumn": 5
+        },
+        "argument_role": "shell_command"
+      },
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "cwe_links": [
+        "https://cwe.mitre.org/data/definitions/78.html"
+      ],
+      "truth_set": "development_independent_reference",
+      "held_out_K_member": false,
+      "assumptions": [
+        "Linux/POSIX shell; trusted curl executable and environment.",
+        "Caller passes attacker-controlled URL or option value to the public HTTP API. This is a package-level boundary, not demonstrated remote reachability in an application."
+      ],
+      "reason": "connect().get URL is concatenated by getCommand, then GET prefix, then run into child_process.exec without shell neutralization. Option strings are double-quoted without neutralizing command substitution. The HTTP API data path supports the label independently of intentional low-level run usage.",
+      "source_evidence": [
+        {
+          "path": "index.js",
+          "lines": [
+            1,
+            2
+          ],
+          "role": "public exports"
+        },
+        {
+          "path": "lib/curl-transport.js",
+          "lines": [
+            2,
+            55,
+            56,
+            58
+          ],
+          "role": "exec import and call; anchor covers exec invocation, excludes chained on handler"
+        },
+        {
+          "path": "lib/curl-transport.js",
+          "lines": [
+            102,
+            103,
+            112,
+            113,
+            114
+          ],
+          "role": "public URL to shared shell-command sink"
+        },
+        {
+          "path": "lib/curl-transport.js",
+          "lines": [
+            75,
+            76,
+            79,
+            87,
+            98,
+            99
+          ],
+          "role": "option values embedded in double quotes without neutralization"
+        }
+      ],
+      "evidence_references": [
+        "GHSA-xmxh-g7wj-8m4m",
+        "upstream-validation-change",
+        "command-capture.json"
+      ],
+      "policy_action": "retain",
+      "policy_implementation": "not_run",
+      "policy_reason": "Positive unsafe data-to-shell path; not eligible for constant-only R1 suppression."
+    }
+  ],
+  "assignments": [
+    {
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:0"
+      },
+      "reported_region": {
+        "startLine": 56,
+        "startColumn": 8,
+        "endColumn": 25
+      },
+      "fallback_unit_id": "fallback:f094da7684b4c0f84e62abe819c2216edb7164821029f11f3ccdc8effe3b37da",
+      "decision": "accept_candidate",
+      "accepted_unit_ids": [
+        "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687"
+      ],
+      "reason": "Reviewed import, complete exec call span, and message-linked related location. Construction expressions flow to the same command argument."
+    },
+    {
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:1"
+      },
+      "reported_region": {
+        "startLine": 76,
+        "startColumn": 12,
+        "endColumn": 57
+      },
+      "fallback_unit_id": "fallback:94e15493fc781c462582afbeef9a362424b42e5a0d4a247b0e1f1f784c009b64",
+      "decision": "accept_candidate",
+      "accepted_unit_ids": [
+        "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687"
+      ],
+      "reason": "Reviewed import, complete exec call span, and message-linked related location. Construction expressions flow to the same command argument."
+    },
+    {
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:2"
+      },
+      "reported_region": {
+        "startLine": 108,
+        "startColumn": 21,
+        "endColumn": 57
+      },
+      "fallback_unit_id": "fallback:53cf2a2aa03113fee62b967060f537f28d473e634576efd1015a5272869d833a",
+      "decision": "accept_candidate",
+      "accepted_unit_ids": [
+        "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687"
+      ],
+      "reason": "Reviewed import, complete exec call span, and message-linked related location. Construction expressions flow to the same command argument."
+    },
+    {
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:3"
+      },
+      "reported_region": {
+        "startLine": 113,
+        "startColumn": 21,
+        "endColumn": 56
+      },
+      "fallback_unit_id": "fallback:9f640c8adac217b20c260b046dfa89f5e04f45dc6a12c4e5b8e8737842bdc246",
+      "decision": "accept_candidate",
+      "accepted_unit_ids": [
+        "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687"
+      ],
+      "reason": "Reviewed import, complete exec call span, and message-linked related location. Construction expressions flow to the same command argument."
+    },
+    {
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:4"
+      },
+      "reported_region": {
+        "startLine": 123,
+        "startColumn": 21,
+        "endColumn": 64
+      },
+      "fallback_unit_id": "fallback:95a2563ffbed55faf0ff2137f584b8b35d12221fdd3e615ba9e1950ea464cba9",
+      "decision": "accept_candidate",
+      "accepted_unit_ids": [
+        "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687"
+      ],
+      "reason": "Reviewed import, complete exec call span, and message-linked related location. Construction expressions flow to the same command argument."
+    },
+    {
+      "raw_reference": {
+        "sarif": "codeql.sarif",
+        "sha256": "0cbdff3f22ffe6f58979eef73a1bd8f8bf43b2915a70233dd0e94d3a00a51647",
+        "raw_id": "codeql:0:5"
+      },
+      "reported_region": {
+        "startLine": 128,
+        "startColumn": 21,
+        "endColumn": 76
+      },
+      "fallback_unit_id": "fallback:3fb66af008cdcddd2876d9d3a2859250568205571e75e6234ea6c4b9482e4f90",
+      "decision": "accept_candidate",
+      "accepted_unit_ids": [
+        "sink:83e9ecd9ee52800ad5fcb4f223cd50ee5a775cd3ef89185252494931bddc7687"
+      ],
+      "reason": "Reviewed import, complete exec call span, and message-linked related location. Construction expressions flow to the same command argument."
+    }
+  ],
+  "summary": {
+    "raw_findings": 6,
+    "reviewed_mappings": 6,
+    "unique_reviewed_sink_units": 1,
+    "true_positive_in_scope_units": 1,
+    "false_positive_in_scope_units": 0,
+    "unmatched_after_review": 0,
+    "single_reviewer_units": 1,
+    "human_reviewed_units": 0
+  },
+  "metrics": null,
+  "limitations": [
+    "Location label does not certify every individual CodeQL source trace.",
+    "Fallback records remain in the input packet; accepted sink replaces them for this reviewed unit, not seven additive units.",
+    "Smoke scan and alias diagnostic are not frozen full S0/S1 configurations.",
+    "No held-out data examined; no precision, recall, F1 or FP reduction computed."
+  ]
+}

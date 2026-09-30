@@ -3,6 +3,11 @@
 Recorded 2026-09-29. This is a working acquisition/scanner integration checkpoint,
 not a held-out evaluation or a claim of improved detection.
 
+Follow-up 2026-09-30: [source review](SOURCE_REVIEW.md) records one in-scope
+CWE-78 TP location and six accepted mappings from an unblinded assistant first
+review. Independent human review remains pending. The observations below retain
+their original run-time status; use the linked review for current label status.
+
 ## Provenance
 
 - Protocol v1.0.0 was committed before scanning:

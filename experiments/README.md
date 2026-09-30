@@ -79,8 +79,10 @@ python3 -m unittest experiments.test_runner -v
 ## Recorded development run
 
 See [curling 0.2.0 pilot report](reports/curling-0.2.0/REPORT.md): both tools ran,
-Semgrep returned zero raw findings and CodeQL six. Sink mapping and labels remain
-unresolved; this is an integration checkpoint, not an accuracy comparison.
+Semgrep returned zero raw findings and CodeQL six. A subsequent
+[source review](reports/curling-0.2.0/SOURCE_REVIEW.md) maps the six alerts to one
+in-scope CWE-78 TP location, with an unblinded assistant first review and independent
+human review pending. This remains a development checkpoint, not an accuracy comparison.
 
 ## Sink proposal and review packet
 
@@ -97,7 +99,8 @@ The shared CLI now accepts checksum-pinned repository rules and an optional
 `--source-archive` cache with manifest verification. On the same curling archive,
 the upstream smoke rule returns 0 raw findings and a direct-alias extension returns
 1 at line 56. This is an S1 development candidate, not the frozen tuned baseline;
-source truth labels and effectiveness metrics remain pending. See the
+the shared location now has a [first-review TP label](reports/curling-0.2.0/SOURCE_REVIEW.md),
+while frozen cross-configuration scoring and effectiveness metrics remain pending. See the
 [paired diagnostic report](reports/curling-direct-alias/REPORT.md). There are now
 14 offline experiment tests, separate from application backend tests.
 

@@ -1,0 +1,27 @@
+{
+  "source_sha256": "debb7b0fde4bc70b530cd90a023549e98acc98cdb5586f9e25cff84c3b0e902b",
+  "node_version": "v24.19.0",
+  "execution": "child_process.exec replaced with capture stub; no shell, curl, filesystem payload or network request executed",
+  "claim": "Three concrete API inputs reach the command string unchanged. This is a bounded transport witness, not a shell-execution or whole-package safety test.",
+  "cases": [
+    {
+      "id": "direct-run",
+      "input": "; printf TRIAGE_MARKER",
+      "captured_command": "curl ; printf TRIAGE_MARKER",
+      "matches_expected": true
+    },
+    {
+      "id": "get-url",
+      "input": "https://example.invalid/; printf TRIAGE_MARKER",
+      "captured_command": "curl --GET https://example.invalid/; printf TRIAGE_MARKER",
+      "matches_expected": true
+    },
+    {
+      "id": "get-option",
+      "input": "$(printf TRIAGE_MARKER)",
+      "captured_command": "curl --GET https://example.invalid/ --header \"$(printf TRIAGE_MARKER)\"",
+      "matches_expected": true
+    }
+  ],
+  "harness_sha256": "3ea7cac6cebd9fe9c57e6496df7f8c9731a4304f4b575bbbed59c788c2a67ab2"
+}
