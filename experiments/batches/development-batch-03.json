@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "batch_id": "development-batch-03",
+  "split": "development",
+  "selection": "Fixed application/build/release CLIs: nodemon, node-gyp, release-it. Versions and hashes fixed before scanning. Purposive selection by inspectable CLI/task callers, not scanner outcome or advisory absence. Keep zero results and failed attempts. Published package only; dependency sources are not installed.",
+  "case_manifests": [
+    "experiments/cases/npm-nodemon-3.1.14.json",
+    "experiments/cases/npm-node-gyp-13.0.2.json",
+    "experiments/cases/npm-release-it-21.1.0.json"
+  ],
+  "config": "experiments/configs/development-batch-01-upstream.json",
+  "review_order": "Listed package order; Semgrep then CodeQL; within each sort by reported_path,startLine,startColumn,rule_id,raw_id and review first three raw findings. Preserve remainder explicitly unreviewed.",
+  "review_cap_per_tool_per_package": 3,
+  "status": "planned_before_scanning"
+}
