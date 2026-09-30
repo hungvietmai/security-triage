@@ -13,6 +13,36 @@ from experiments.run_pilot import ROOT, digest, sarif_findings, stage_rule, unpa
 
 
 class RunnerTests(unittest.TestCase):
+    def test_retained_manifest_bytes_match_hashes_for_noncanonical_json(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source_case = {
+                "case_id": "fixture", "split": "development",
+                "source_kind": "npm_tarball", "language": "javascript",
+            }
+            source_config = {
+                "scanners": [], "config_id": "fixture", "purpose": "test",
+                "protocol_commit": "a" * 40,
+            }
+            # Deliberately compact JSON, CRLF and trailing whitespace. A
+            # reserialized snapshot would keep semantics but lose provenance.
+            case, config, output = root / "case.json", root / "config.json", root / "out"
+            case_bytes = json.dumps(source_case, separators=(",", ":")).encode() + b"\r\n \r\n"
+            config_bytes = json.dumps(source_config, indent=4).encode() + b"\n\n"
+            case.write_bytes(case_bytes)
+            config.write_bytes(config_bytes)
+            argv = ["run_pilot", "--case", str(case), "--config", str(config),
+                    "--output", str(output), "--configuration-commit", "b" * 40]
+            # Acquisition deliberately stops; manifest preservation must hold
+            # even in failed runs, before any network or scanner is invoked.
+            with patch("sys.argv", argv), patch("builtins.print"):
+                self.assertEqual(run_pilot.main(), 2)
+            report = json.loads((output / "run.json").read_text())
+            self.assertEqual((output / "case.json").read_bytes(), case_bytes)
+            self.assertEqual((output / "config.json").read_bytes(), config_bytes)
+            self.assertEqual(report["case_manifest_sha256"], digest(output / "case.json"))
+            self.assertEqual(report["configuration_sha256"], digest(output / "config.json"))
+
     def test_missing_sarif_preserves_process_diagnostics(self):
         for process_status, exit_code in (("failed", 2), ("timeout", None)):
             with (

@@ -221,10 +221,8 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r"[a-f0-9]{40}", args.configuration_commit):
         parser.error("Exact configuration commit required")
-    case, config = (
-        json.loads(args.case.read_text()),
-        json.loads(args.config.read_text()),
-    )
+    case_bytes, config_bytes = args.case.read_bytes(), args.config.read_bytes()
+    case, config = json.loads(case_bytes), json.loads(config_bytes)
     if case["split"] != "development":
         parser.error(
             "Held-out execution is blocked: full freeze gate is not implemented"
@@ -235,8 +233,8 @@ def main():
         parser.error("Unsupported scanner; ST/S1 are not implemented yet")
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    write_json(output / "case.json", case)
-    write_json(output / "config.json", config)
+    (output / "case.json").write_bytes(case_bytes)
+    (output / "config.json").write_bytes(config_bytes)
     protocol_path = ROOT / "experiments/EVALUATION_PROTOCOL.md"
     report = {
         "case_id": case["case_id"],
@@ -246,8 +244,8 @@ def main():
         "protocol_commit": config["protocol_commit"],
         "configuration_commit": args.configuration_commit,
         "protocol_sha256": digest(protocol_path),
-        "case_manifest_sha256": digest(args.case),
-        "configuration_sha256": digest(args.config),
+        "case_manifest_sha256": digest(output / "case.json"),
+        "configuration_sha256": digest(output / "config.json"),
         "runner_sha256": digest(Path(__file__)),
         "status": "running",
         "steps": {},
