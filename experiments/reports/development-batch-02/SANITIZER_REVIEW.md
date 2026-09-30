@@ -6,7 +6,7 @@ Technical verdict and threat-model verdict remain unresolved. No policy is appli
 ## Exact warning and scope
 
 CodeQL `js/shell-command-constructed-from-input`, raw ID `codeql:0:0`, reports
-`lib/utils.js:59` and supplies five code flows through `notifiers/notifysend.js`.
+`lib/utils.js:59` and supplies four code flows through `notifiers/notifysend.js`.
 Semgrep supplies two conditional warnings at the same call, naming `notifier` and
 `options` as sources. The reported API claim is narrower than a proven exploit.
 All three raw results are preserved; sharing a call does not equate their claims.
@@ -30,11 +30,12 @@ All three raw results are preserved; sharing a call does not equate their claims
 
 ## What the reported paths require us to check
 
-Several trace paths skip the escape branch in `escapeFn`. Another follows the
-non-string branch at `escapeQuotes:23`, while string values require the other branch.
-Those paths motivate a type- and call-context-sensitive feasibility check. They
-are not proof that the analyzer is wrong: a complete argument must cover coercion,
-arrays, all relevant callers and platform behavior, not just an example string.
+Several taint traces do not display the escaping nodes in `escapeFn`. Their omission
+is not evidence that a control-flow branch was bypassed: SARIF taint paths are not
+complete execution traces. One trace does include the non-string return at
+`escapeQuotes:23`. These observations motivate checking types and call context,
+not declaring an infeasible execution from missing nodes alone. A complete
+argument must cover coercion, arrays, callers and platform behavior.
 
 A plausible **restricted** negative hypothesis is: for the inspected NotifySend
 caller, JSON-serializable notification data cannot break out of the intended POSIX
@@ -65,3 +66,11 @@ implementing a general shell sanitizer verifier now would materially increase
 scope. First review the narrow caller/path evidence and keep the current policy
 conservative. If the current location-level unit stays unresolved, retain it and
 report the boundary rather than force a negative label.
+
+## Follow-up, 2026-09-30
+
+[Path review and bounded diagnostic](PATH_REVIEW.md) corrects the flow count to
+four (verified in both retained attempts) and records 174 controlled cases.
+346 shell argument checks matched their specified outcomes, including a documented
+empty-array arity change. One additional case throws TypeError before shell use.
+The diagnostic does not approve an FP label or a site-wide exclusion.

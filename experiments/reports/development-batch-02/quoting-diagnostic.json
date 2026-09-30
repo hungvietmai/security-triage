@@ -1,0 +1,7604 @@
+{
+  "diagnostic": "node-notifier-quoting-v1",
+  "source_sha256": "bd5ed859adeda193e15672e769551966b31cecaa6294fc52297533d835af3702",
+  "caller_sha256": "29fe357ee97ad29245f55bfcfee3ce75bc86375910d9b9709105a11d28f287de",
+  "runner_sha256": "3a5b70fd44613a1a0ab929fdb18c25279916ae7c42d66ec634bacd4561e97d55",
+  "extracted_program_sha256": "293a96ab614a8f34d3583d12068f0d7b08806fe809bddb8668f3cca40c4b1c80",
+  "corpus_sha256": "cbdcac84c6d584b3190bfdce5902f97faffe7711ec5b13b85f807eca73ca4714",
+  "node_version": "v24.19.0",
+  "shell_binary_sha256": {
+    "/usr/bin/dash": "86d31f6fb799e91fa21bad341484564510ca287703a16e9e46c53338776f4f42",
+    "/usr/bin/bash": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1"
+  },
+  "cases": [
+    {
+      "id": "message-0",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:"
+      },
+      "expected": [
+        "fixed-title",
+        "data:",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-0",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-0",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-0",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-1",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-1",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-1",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-1",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-2",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: "
+      },
+      "expected": [
+        "fixed-title",
+        "data: ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-2",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-2",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-2",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-3",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-3",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-3",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-3",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-4",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-4",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-4",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-4",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-5",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-5",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-5",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-5",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-6",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-6",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-6",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-6",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-7",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-7",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-7",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-7",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-8",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-8",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-8",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-8",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-9",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:aa"
+      },
+      "expected": [
+        "fixed-title",
+        "data:aa",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-9",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:aa\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-9",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:aa"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:aa",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-9",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:aa\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-10",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a "
+      },
+      "expected": [
+        "fixed-title",
+        "data:a ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-10",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-10",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-10",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-11",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:a\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-11",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-11",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-11",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-12",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-12",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-12",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-12",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-13",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-13",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-13",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-13",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-14",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-14",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-14",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-14",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-15",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-15",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-15",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-15",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-16",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-16",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-16",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-16",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-17",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: a"
+      },
+      "expected": [
+        "fixed-title",
+        "data: a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-17",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-17",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-17",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-18",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:  "
+      },
+      "expected": [
+        "fixed-title",
+        "data:  ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-18",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:  \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-18",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:  "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:  ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-18",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:  \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-19",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: \""
+      },
+      "expected": [
+        "fixed-title",
+        "data: \"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-19",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: \\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-19",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: \""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: \"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-19",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: \\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-20",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: '"
+      },
+      "expected": [
+        "fixed-title",
+        "data: '",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-20",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: '\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-20",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: '"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: '",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-20",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: '\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-21",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: $"
+      },
+      "expected": [
+        "fixed-title",
+        "data: $",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-21",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: \\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-21",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: $"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: $",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-21",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: \\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-22",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: `"
+      },
+      "expected": [
+        "fixed-title",
+        "data: `",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-22",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: \\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-22",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: `"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: `",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-22",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: \\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-23",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: \\"
+      },
+      "expected": [
+        "fixed-title",
+        "data: \\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-23",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: \\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-23",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: \\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: \\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-23",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: \\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-24",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data: \n"
+      },
+      "expected": [
+        "fixed-title",
+        "data: \\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-24",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data: \\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTogXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-24",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data: \n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data: \\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-24",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data: \\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTogXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-25",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"a"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-25",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-25",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-25",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-26",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\" "
+      },
+      "expected": [
+        "fixed-title",
+        "data:\" ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-26",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\" \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-26",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\" "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\" ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-26",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\" \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-27",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-27",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-27",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-27",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-28",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-28",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-28",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-28",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-29",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-29",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-29",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-29",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-30",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-30",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-30",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-30",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-31",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-31",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-31",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-31",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-32",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-32",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-32",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-32",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-33",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'a"
+      },
+      "expected": [
+        "fixed-title",
+        "data:'a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-33",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-33",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-33",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-34",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:' "
+      },
+      "expected": [
+        "fixed-title",
+        "data:' ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-34",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:' \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-34",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:' "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:' ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-34",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:' \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-35",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:'\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-35",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-35",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-35",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-36",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:''"
+      },
+      "expected": [
+        "fixed-title",
+        "data:''",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-36",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:''\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-36",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:''"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:''",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-36",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:''\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-37",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:'$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-37",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-37",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-37",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-38",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:'`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-38",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-38",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-38",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-39",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:'\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-39",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-39",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-39",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-40",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:'\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:'\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-40",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:'\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTonXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-40",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:'\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:'\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-40",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:'\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTonXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-41",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$a"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-41",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-41",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-41",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-42",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$ "
+      },
+      "expected": [
+        "fixed-title",
+        "data:$ ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-42",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$ \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-42",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$ "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$ ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-42",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$ \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-43",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:$\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-43",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-43",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-43",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-44",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-44",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-44",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-44",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-45",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-45",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-45",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-45",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-46",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-46",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-46",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-46",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-47",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-47",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-47",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-47",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-48",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-48",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-48",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-48",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-49",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`a"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-49",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-49",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-49",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-50",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:` "
+      },
+      "expected": [
+        "fixed-title",
+        "data:` ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-50",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\` \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-50",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:` "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:` ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-50",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\` \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-51",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:`\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-51",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-51",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-51",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-52",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-52",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-52",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-52",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-53",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-53",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-53",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-53",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-54",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:``"
+      },
+      "expected": [
+        "fixed-title",
+        "data:``",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-54",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-54",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:``"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:``",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-54",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-55",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-55",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-55",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-55",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-56",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-56",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-56",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-56",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-57",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\a"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-57",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-57",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\a"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\a",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-57",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\a\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcYQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-58",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\ "
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\ ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-58",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\ \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-58",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\ "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\ ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-58",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\ \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcIAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-59",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-59",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-59",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-59",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcIgAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-60",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-60",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-60",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-60",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcJwAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-61",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-61",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-61",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-61",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcJAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-62",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-62",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-62",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-62",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcYAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-63",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-63",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-63",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-63",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcXAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-64",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\\\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-64",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\\\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-64",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\\\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-64",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\\\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcXG4ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-65",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\na"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\na",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-65",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\na\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbmEALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbmEALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-65",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\na"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\na",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-65",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\na\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbmEALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbmEALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-66",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n "
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-66",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbiAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbiAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-66",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n "
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n ",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-66",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n \"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbiAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbiAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-67",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n\""
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-67",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbiIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbiIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-67",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n\""
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n\"",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-67",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n\\\"\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbiIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbiIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-68",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n'"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-68",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbicALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbicALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-68",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n'"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n'",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-68",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n'\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbicALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbicALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-69",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n$"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-69",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbiQALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbiQALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-69",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n$"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n$",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-69",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n\\$\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbiQALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbiQALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-70",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-70",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbmAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcbmAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-70",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-70",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbmAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcbmAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-71",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n\\"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-71",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcblwALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcblwALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-71",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n\\"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n\\",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-71",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n\\\\\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcblwALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcblwALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-72",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\n\n"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\\n\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-72",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\n\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcblxuAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpcblxuAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-72",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\n\n"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\\n\\n",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-72",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\n\\n\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcblxuAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpcblxuAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-73",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:$(printf TRIAGE_PROBE)"
+      },
+      "expected": [
+        "fixed-title",
+        "data:$(printf TRIAGE_PROBE)",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-73",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\$(printf TRIAGE_PROBE)\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokKHByaW50ZiBUUklBR0VfUFJPQkUpAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTokKHByaW50ZiBUUklBR0VfUFJPQkUpAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-73",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:$(printf TRIAGE_PROBE)"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:$(printf TRIAGE_PROBE)",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-73",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\$(printf TRIAGE_PROBE)\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokKHByaW50ZiBUUklBR0VfUFJPQkUpAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTokKHByaW50ZiBUUklBR0VfUFJPQkUpAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-74",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:`printf TRIAGE_PROBE`"
+      },
+      "expected": [
+        "fixed-title",
+        "data:`printf TRIAGE_PROBE`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-74",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\`printf TRIAGE_PROBE\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgcHJpbnRmIFRSSUFHRV9QUk9CRWAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpgcHJpbnRmIFRSSUFHRV9QUk9CRWAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-74",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:`printf TRIAGE_PROBE`"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:`printf TRIAGE_PROBE`",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-74",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\`printf TRIAGE_PROBE\\`\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgcHJpbnRmIFRSSUFHRV9QUk9CRWAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpgcHJpbnRmIFRSSUFHRV9QUk9CRWAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-75",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:\"; printf TRIAGE_PROBE; #"
+      },
+      "expected": [
+        "fixed-title",
+        "data:\"; printf TRIAGE_PROBE; #",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-75",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\\"; printf TRIAGE_PROBE; #\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiOyBwcmludGYgVFJJQUdFX1BST0JFOyAjAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToiOyBwcmludGYgVFJJQUdFX1BST0JFOyAjAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-75",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:\"; printf TRIAGE_PROBE; #"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:\"; printf TRIAGE_PROBE; #",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-75",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\\"; printf TRIAGE_PROBE; #\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiOyBwcmludGYgVFJJQUdFX1BST0JFOyAjAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToiOyBwcmludGYgVFJJQUdFX1BST0JFOyAjAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-76",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:${TRIAGE_PROBE}"
+      },
+      "expected": [
+        "fixed-title",
+        "data:${TRIAGE_PROBE}",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-76",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:\\${TRIAGE_PROBE}\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToke1RSSUFHRV9QUk9CRX0ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToke1RSSUFHRV9QUk9CRX0ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-76",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:${TRIAGE_PROBE}"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:${TRIAGE_PROBE}",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-76",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:\\${TRIAGE_PROBE}\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToke1RSSUFHRV9QUk9CRX0ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToke1RSSUFHRV9QUk9CRX0ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-77",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:*?[abc]"
+      },
+      "expected": [
+        "fixed-title",
+        "data:*?[abc]",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-77",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:*?[abc]\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToqP1thYmNdAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YToqP1thYmNdAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-77",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:*?[abc]"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:*?[abc]",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-77",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:*?[abc]\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToqP1thYmNdAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YToqP1thYmNdAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-78",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a\r\nb"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a\\nb",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-78",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\\nb\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphXG5iAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphXG5iAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-78",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a\r\nb"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a\\nb",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-78",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\\nb\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphXG5iAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphXG5iAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-79",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a\rb"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a\rb",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-79",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\rb\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphDWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphDWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-79",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a\rb"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a\rb",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-79",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\rb\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphDWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphDWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-80",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:Tiếng Việt"
+      },
+      "expected": [
+        "fixed-title",
+        "data:Tiếng Việt",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-80",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:Tiếng Việt\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpUaeG6v25nIFZp4buHdAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTpUaeG6v25nIFZp4buHdAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-80",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:Tiếng Việt"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:Tiếng Việt",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-80",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:Tiếng Việt\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpUaeG6v25nIFZp4buHdAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTpUaeG6v25nIFZp4buHdAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-81",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:--help"
+      },
+      "expected": [
+        "fixed-title",
+        "data:--help",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-81",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:--help\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTotLWhlbHAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTotLWhlbHAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-81",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:--help"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:--help",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-81",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:--help\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTotLWhlbHAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTotLWhlbHAALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "message-82",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "data:a\tb"
+      },
+      "expected": [
+        "fixed-title",
+        "data:a\tb",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "message-82",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"data:a\tb\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphCWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZGF0YTphCWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "icon-82",
+      "group": "string",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": "data:a\tb"
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "data:a\tb",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "icon-82",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"data:a\tb\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphCWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AZGF0YTphCWIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "number",
+      "group": "json-type",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": 42
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "42",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "number",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"42\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24ANDIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24ANDIALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "boolean",
+      "group": "json-type",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": true
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "true",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "boolean",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"true\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AdHJ1ZQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AdHJ1ZQAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "null",
+      "group": "json-type",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": null
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "null",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "null",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"null\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AbnVsbAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AbnVsbAAtLWV4cGlyZS10aW1lADEwMDAwAA==",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "object",
+      "group": "json-type",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": {
+          "x": 1
+        }
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "[object Object]",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "object",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"[object Object]\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AW29iamVjdCBPYmplY3RdAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AW29iamVjdCBPYmplY3RdAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "array",
+      "group": "json-type",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": [
+          "a",
+          "b"
+        ]
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "a,b",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "array",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"a\",\"b\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AYSxiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AYSxiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "nested-array",
+      "group": "json-type",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": [
+          [
+            "a"
+          ],
+          [
+            "b"
+          ]
+        ]
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "a,b",
+        "--expire-time",
+        "10000"
+      ],
+      "constructed": {
+        "id": "nested-array",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "\"a\",\"b\"",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AYSxiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24AYSxiAC0tZXhwaXJlLXRpbWUAMTAwMDAA",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "empty-array",
+      "group": "boundary",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": []
+      },
+      "expected": [
+        "fixed-title",
+        "fixed-message",
+        "--icon",
+        "--expire-time",
+        "10000"
+      ],
+      "note": "Empty array emits no shell word: value arity changes, not proof of injection.",
+      "constructed": {
+        "id": "empty-array",
+        "program": "notify-send",
+        "args": [
+          "\"fixed-title\"",
+          "\"fixed-message\"",
+          "--icon",
+          "",
+          "--expire-time",
+          "\"10000\""
+        ]
+      },
+      "shells": [
+        {
+          "shell": "/usr/bin/dash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        },
+        {
+          "shell": "/usr/bin/bash",
+          "exit_code": 0,
+          "stdout_base64": "Zml4ZWQtdGl0bGUAZml4ZWQtbWVzc2FnZQAtLWljb24ALS1leHBpcmUtdGltZQAxMDAwMAA=",
+          "stderr": "",
+          "passed": true
+        }
+      ],
+      "matched_expectation": true
+    },
+    {
+      "id": "noncallable-toString",
+      "group": "boundary",
+      "options": {
+        "title": "fixed-title",
+        "message": "fixed-message",
+        "icon": {
+          "toString": "x"
+        }
+      },
+      "expected_error": "TypeError",
+      "constructed": {
+        "id": "noncallable-toString",
+        "error": "TypeError"
+      },
+      "shells": [],
+      "matched_expectation": true
+    }
+  ],
+  "controls": [
+    {
+      "shell": "/usr/bin/dash",
+      "detected_unescaped_substitution": true
+    },
+    {
+      "shell": "/usr/bin/bash",
+      "detected_unescaped_substitution": true
+    }
+  ],
+  "summary": {
+    "cases": 174,
+    "matched": 174,
+    "shell_checks": 346
+  },
+  "label_status": "unapproved; bounded diagnostic only; no FP metric"
+}

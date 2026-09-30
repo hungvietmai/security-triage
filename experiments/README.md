@@ -113,3 +113,9 @@ is confirmed. Run further fixed batches with `python -m experiments.run_batch`.
 [Batch 02](reports/development-batch-02/REPORT.md) records four Semgrep and one
 CodeQL alert across three published snapshots. The node-notifier sanitizer
 review is a concrete hypothesis awaiting validation, not a confirmed FP.
+
+## NotifySend path diagnostic
+
+[Follow-up review](reports/development-batch-02/PATH_REVIEW.md) records four CodeQL
+traces and bounded argument-construction checks. The shared sink stays unresolved;
+no accuracy metric or exclusion rule is enabled.

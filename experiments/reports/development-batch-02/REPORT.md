@@ -22,10 +22,10 @@ claimed. Zero alerts concern the selected queries and snapshot, not package safe
 
 ## What this batch contributes
 
-- **node-notifier:** both tools report `lib/utils.js:59`. CodeQL provides five paths
+- **node-notifier:** both tools report `lib/utils.js:59`. CodeQL provides four paths
   from notification input. The caller fixes the executable, allowlists option names
-  and passes values through escaping/quoting. Some reported paths skip those branches
-  or follow a non-string branch. This is a concrete candidate for type/call-context
+  and passes values through escaping/quoting. Some taint traces omit those nodes
+  or include a non-string return; omission is not proof of a bypass. This is a concrete candidate for type/call-context
   review. [Sanitizer review](SANITIZER_REVIEW.md) records exact source locations,
   assumptions and unresolved proof obligations. It is not an approved FP or an
   implemented sanitizer model. The exported generic helper remains broader than
@@ -83,3 +83,6 @@ Local validation: 15 experiment tests, 43 frontend tests and 81 backend tests pa
 backend coverage 97.84%. Repository pre-commit, commit-message and pre-push hooks
 were run. No application code changed; this does not assert a new Docker run or
 remote CI success.
+
+Follow-up: [path review](PATH_REVIEW.md) records controlled argument-construction
+checks and corrects earlier wording about SARIF paths. Raw scan evidence is unchanged.
