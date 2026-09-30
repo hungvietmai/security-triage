@@ -1,0 +1,10 @@
+exports.case1 = require('./01-literal-exec.js');
+exports.case2 = require('./02-folded-exec.js');
+exports.case3 = require('./03-dynamic-exec.js');
+exports.case4 = require('./04-fixed-spawn-shell.js');
+exports.case5 = require('./05-dynamic-spawn-shell.js');
+exports.case6 = require('./06-explicit-interpreter.js');
+exports.case7 = require('./07-dynamic-executable.js');
+exports.case8 = require('./08-fixed-executable-argv.js');
+exports.case9 = require('./09-shelljs-literal.js');
+exports.case10 = require('./10-shelljs-dynamic.js');

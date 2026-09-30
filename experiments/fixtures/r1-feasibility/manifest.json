@@ -1,0 +1,83 @@
+{
+  "kind": "synthetic_development_diagnostic",
+  "purpose": "Check upstream candidate coverage before implementing constant-command R1",
+  "case_count": 10,
+  "threat_assumptions": "Untrusted function parameter; fixed trusted POSIX runtime, executable files, environment and imports; source is never executed. Not population-level labels or real-world FP evidence.",
+  "rules": "Reuse pinned batch-01 four-rule set and two CodeQL queries unchanged.",
+  "cases": [
+    {
+      "case_id": "01-literal-exec",
+      "file": "01-literal-exec.js",
+      "source_sha256": "c8ca27fc0cdf02f41309a5730dd1a2548424d0e0a881f95e75a8d5a91ecf314e",
+      "semantic_category": "fixed_shell_command",
+      "assumptions": "No attacker-controlled command data under fixed environment; literal constant R1 candidate only if alerted."
+    },
+    {
+      "case_id": "02-folded-exec",
+      "file": "02-folded-exec.js",
+      "source_sha256": "9bfea99d4bd5def1f07f5ecb854db177b55b6d008738944712b2e791b10661a9",
+      "semantic_category": "fixed_shell_command",
+      "assumptions": "Constant concatenation; R1 candidate only if alerted."
+    },
+    {
+      "case_id": "03-dynamic-exec",
+      "file": "03-dynamic-exec.js",
+      "source_sha256": "e4dc815812b4c5f98ed5b554ee75ce4f43040a15deaba40604b83ef7aa3a294f",
+      "semantic_category": "unsafe_shell_data",
+      "assumptions": "Unquoted caller data enters shell command; positive control."
+    },
+    {
+      "case_id": "04-fixed-spawn-shell",
+      "file": "04-fixed-spawn-shell.js",
+      "source_sha256": "30133d621d2b33bccac3093164a65930c20917c7dc4bf83532d202ab07a9099c",
+      "semantic_category": "fixed_shell_command",
+      "assumptions": "Whole shell command and arguments fixed; audit warning may still be literally correct."
+    },
+    {
+      "case_id": "05-dynamic-spawn-shell",
+      "file": "05-dynamic-spawn-shell.js",
+      "source_sha256": "a2d1392acc9f8f2a1d0dd268c9fd0bace262a94bae45f25497bad0b08083d0a4",
+      "semantic_category": "unsafe_shell_data",
+      "assumptions": "Fixed executable with dynamic shell-interpreted arguments; do not suppress by first argument alone."
+    },
+    {
+      "case_id": "06-explicit-interpreter",
+      "file": "06-explicit-interpreter.js",
+      "source_sha256": "776eac5432f544e54805552bd8bd6eb5dfcb75e64f9a929b15346d068da8944d",
+      "semantic_category": "unsafe_interpreter_data",
+      "assumptions": "Explicit interpreter processes attacker data even though shell:false."
+    },
+    {
+      "case_id": "07-dynamic-executable",
+      "file": "07-dynamic-executable.js",
+      "source_sha256": "233a191e25b1b4e00a4ee1adc2e7c96ada9e1dd6515419dd18cae74da424af0d",
+      "semantic_category": "executable_selection",
+      "assumptions": "Caller selects executable; classification requires policy but cannot infer safety from shell:false."
+    },
+    {
+      "case_id": "08-fixed-executable-argv",
+      "file": "08-fixed-executable-argv.js",
+      "source_sha256": "969ed114fbe5925461c2e72f7033c8ab237cd4382cb4aa1562028d83d1ec36dc",
+      "semantic_category": "data_only_argument",
+      "assumptions": "Fixed trusted printf executable and fixed format, input data only; excludes tampered runtime/binary."
+    },
+    {
+      "case_id": "09-shelljs-literal",
+      "file": "09-shelljs-literal.js",
+      "source_sha256": "3a5fbe53afa81614f466c97fe3aece456d1382d583362931fc35811327ee60fc",
+      "semantic_category": "fixed_shell_command",
+      "assumptions": "Assume conventional shelljs.exec semantics; dependency source not installed."
+    },
+    {
+      "case_id": "10-shelljs-dynamic",
+      "file": "10-shelljs-dynamic.js",
+      "source_sha256": "fb0fe6a6d2e64474f094a5b67133cd72823f2d397859dc1359bda158e3f12757",
+      "semantic_category": "unsafe_shell_data",
+      "assumptions": "Wrapper positive control; dependency source not installed."
+    }
+  ],
+  "support_files": {
+    "package.json": "4770690f455d2a3aa656587247af3a231a56dba3b8269b78599a711c58dc06c9",
+    "index.js": "455d2b6b8c290ee52c33b0f6497cdfcce157dae69f9e867f86e2c7c7316664ce"
+  }
+}

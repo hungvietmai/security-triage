@@ -119,3 +119,10 @@ review is a concrete hypothesis awaiting validation, not a confirmed FP.
 [Follow-up review](reports/development-batch-02/PATH_REVIEW.md) records four CodeQL
 traces and bounded argument-construction checks. The shared sink stays unresolved;
 no accuracy metric or exclusion rule is enabled.
+
+## R1 candidate feasibility
+
+[Ten synthetic probes](reports/r1-feasibility/REPORT.md) check whether the current
+upstream rules leave constant-command candidates for R1. Semgrep emits six alerts
+and CodeQL three; an explicit interpreter probe is Semgrep-only. This is mechanism
+evidence, not real-data FP reduction or recall improvement.
