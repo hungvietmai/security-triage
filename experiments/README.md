@@ -145,3 +145,12 @@ technical verdict still unresolved. This is not an FP or a policy suppression.
 The previously capped gulp-shell options alert now has source notes: all 11 batch
 alerts have preliminary review, but confirmed in-scope FPs remain zero. R1 still
 has no defensible negative example; no suppressor or effectiveness metric is enabled.
+
+## Recovered application-caller batch
+
+[Batch 03](reports/development-batch-03/REPORT.md) records fresh 2026-10-01 scans
+of nodemon, node-gyp and release-it with the unchanged suite: Semgrep 0/1/1,
+CodeQL 0/0/0. One Windows-only branch is outside scope; no in-scope FP is confirmed.
+The two prior unpushed local attempts were lost during workspace maintenance and
+are explicitly excluded. The recovered run uses the published exact-byte manifest
+fix and passes provenance verification. The focused experiment suite has 22 tests.

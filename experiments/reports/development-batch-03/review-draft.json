@@ -1,0 +1,239 @@
+{
+  "status": "single_reviewer_development_notes",
+  "selection": "All observed alerts fit the predeclared first-three-per-tool-per-package cap.",
+  "independent_human_approval": null,
+  "findings": [
+    {
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "1b1524d914331bd01312729e31a828192d53af84e113dacb6e36afabb6c21a6d",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-03-recovery-20261001.npm-node-gyp-13.0.2.detect-child-process",
+      "reported_path": "lib/node-gyp.js",
+      "reported_region": {
+        "endColumn": 42,
+        "endLine": 175,
+        "snippet": {
+          "text": "    const cp = childProcess.spawn(command, args, opts)"
+        },
+        "startColumn": 35,
+        "startLine": 175
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. ",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "unresolved",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/node-gyp.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 42,
+                "endLine": 175,
+                "snippet": {
+                  "text": "    const cp = childProcess.spawn(command, args, opts)"
+                },
+                "startColumn": 35,
+                "startLine": 175
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-03-recovery-20261001.npm-node-gyp-13.0.2.detect-child-process"
+      },
+      "rule_semantics": {
+        "mapping_version": "rule-claims-v1",
+        "mapping_sha256": "4fe97d92e124869984e59ec7d0f4644e05c043da98df90183460f30bcaf1b5cd",
+        "status": "mapped",
+        "canonical_rule_id": "detect-child-process",
+        "claim_kind": "conditional_argument_flow",
+        "upstream_subcategory": "audit",
+        "focus_role_hint": "command_or_executable",
+        "reported_cwes_normalized": [
+          "CWE-78"
+        ],
+        "mapped_rule_cwes": [
+          "CWE-78"
+        ],
+        "cwe_links": {
+          "CWE-78": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "candidate_status": "cwe78_candidate",
+        "automatic_suppression": false
+      },
+      "case_id": "npm-node-gyp-13.0.2",
+      "attempt": "recovery-20261001",
+      "reviewer": "assistant",
+      "blinded": false,
+      "human_approval": null,
+      "second_review": null,
+      "review_status": "preliminary",
+      "reviewed_at": "2026-10-01T11:54:12.252204+00:00",
+      "raw_reference": {
+        "raw_id": "semgrep:0:0",
+        "sarif_sha256": "ac2b6178e2b2eb5d9078654955c34d5dffbc4f1e812f212b1d703ef4814520ae"
+      },
+      "review_note": "command, args and opts reach exported Gyp.spawn. Internal build/configure callers select make/MSBuild or Python; build.js supports configured make and environment MAKE. Caller opts can specify shell at the generic helper. A no-shell default and deliberate build behavior do not establish a negative CWE-78 label at this shared site.",
+      "decision": "retain_for_review",
+      "source_evidence": [
+        {
+          "path": "lib/node-gyp.js",
+          "sha256": "6221f4df47b863bcff62ae052d53f11b7487c9ea015f787771323c4c232a2139",
+          "line_ranges": [
+            [
+              168,
+              179
+            ],
+            [
+              198,
+              199
+            ]
+          ]
+        },
+        {
+          "path": "lib/build.js",
+          "sha256": "0acfff6c3c8deb9e7507cd785f552884197a6eaf576babe6317e402aec62148d",
+          "line_ranges": [
+            [
+              21,
+              26
+            ],
+            [
+              104,
+              120
+            ],
+            [
+              223,
+              224
+            ]
+          ]
+        },
+        {
+          "path": "lib/configure.js",
+          "sha256": "640d14e5719d34a4b5f1b7728cd94f383b0992a6089f3a133ecb9a349625d861",
+          "line_ranges": [
+            [
+              300,
+              315
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "raw_id": "semgrep:0:0",
+      "tool": "semgrep",
+      "snapshot_sha256": "9db50403ddffb79fd7d99913b6fd3ba29d91afc173dc1de32971b941d4dfd0b5",
+      "rule_id": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-03-recovery-20261001.npm-release-it-21.1.0.spawn-shell-true",
+      "reported_path": "lib/shell.js",
+      "reported_region": {
+        "endColumn": 77,
+        "endLine": 90,
+        "snippet": {
+          "text": "            ? spawn(command.join(' '), [], { ...spawnOptions, shell: true })"
+        },
+        "startColumn": 15,
+        "startLine": 90
+      },
+      "reported_cwes": [
+        "CWE-78"
+      ],
+      "message": "Found '$SPAWN' with '{shell: true}'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use '{shell: false}' instead.",
+      "sink_identity": null,
+      "mapping_status": "unresolved",
+      "technical_verdict": "unresolved",
+      "scope_verdict": "out_of_scope",
+      "raw_result": {
+        "fingerprints": {
+          "matchBasedId/v1": "requires login"
+        },
+        "locations": [
+          {
+            "physicalLocation": {
+              "artifactLocation": {
+                "uri": "lib/shell.js",
+                "uriBaseId": "%SRCROOT%"
+              },
+              "region": {
+                "endColumn": 77,
+                "endLine": 90,
+                "snippet": {
+                  "text": "            ? spawn(command.join(' '), [], { ...spawnOptions, shell: true })"
+                },
+                "startColumn": 15,
+                "startLine": 90
+              }
+            }
+          }
+        ],
+        "message": {
+          "text": "Found '$SPAWN' with '{shell: true}'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use '{shell: false}' instead."
+        },
+        "properties": {},
+        "ruleId": "workspace.scratch.b726e5b835c4.security-triage-current.artifacts.development-batch-03-recovery-20261001.npm-release-it-21.1.0.spawn-shell-true"
+      },
+      "rule_semantics": {
+        "mapping_version": "rule-claims-v1",
+        "mapping_sha256": "4fe97d92e124869984e59ec7d0f4644e05c043da98df90183460f30bcaf1b5cd",
+        "status": "mapped",
+        "canonical_rule_id": "spawn-shell-true",
+        "claim_kind": "shell_usage_audit",
+        "upstream_subcategory": "audit",
+        "focus_role_hint": "shell_option",
+        "reported_cwes_normalized": [
+          "CWE-78"
+        ],
+        "mapped_rule_cwes": [
+          "CWE-78"
+        ],
+        "cwe_links": {
+          "CWE-78": "https://cwe.mitre.org/data/definitions/78.html"
+        },
+        "candidate_status": "cwe78_candidate",
+        "automatic_suppression": false
+      },
+      "case_id": "npm-release-it-21.1.0",
+      "attempt": "recovery-20261001",
+      "reviewer": "assistant",
+      "blinded": false,
+      "human_approval": null,
+      "second_review": null,
+      "review_status": "preliminary",
+      "reviewed_at": "2026-10-01T11:54:12.264193+00:00",
+      "raw_reference": {
+        "raw_id": "semgrep:0:0",
+        "sarif_sha256": "4787fa8a516c46d5bb44ffb146dbcad1f372ec50915b7c33068d8ca2b1fb5a63"
+      },
+      "scope_reason": "Conditional expression at lib/shell.js:89 chooses this shell:true call only on win32 for npm/yarn/pnpm. The else call at line 91 is a distinct sink. Assumes ordinary trusted Node runtime.",
+      "review_note": "API-use warning accurately identifies shell:true on this branch; CWE-78 exploitability stays unresolved. Scope exclusion is not FP evidence or R1 and must apply equally to every configuration.",
+      "decision": "report_out_of_scope_keep_technical_unresolved",
+      "source_evidence": [
+        {
+          "path": "lib/shell.js",
+          "sha256": "6aa55d39d4396f4c2d04d65c245dcf9374b20578811e7728d4a6b08e7661bca6",
+          "line_ranges": [
+            [
+              75,
+              91
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "metrics": null
+}
