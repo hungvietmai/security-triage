@@ -1,0 +1,268 @@
+{
+  "label_version": "owasp-python-source-review-v1",
+  "source_commit": "f1291485808b66e20ddb6b01b10dc71b3df8c8ba",
+  "review_date": "2026-10-02",
+  "reviewer": "assistant-source-review",
+  "blinding": "unblinded; upstream labels and scanner outputs visible",
+  "independent_human_review": "pending; no human approval or agreement statistic claimed",
+  "threat_model_version": "protocol-v1.0.0-linux-posix",
+  "assumptions": [
+    "Only normal HTTP dispatch through the shipped Flask route registration; no attacker-controlled monkeypatching or alternate handler registration.",
+    "Trusted Python standard library, installed shell, environment and application configuration, as in the protocol.",
+    "Technical labels concern CWE-78 at the recorded subprocess sink; benchmark bugs in other categories are not blanket negatives."
+  ],
+  "source_review_note": "All 20 source files and request wrapper reviewed; no target application, subprocess or exploit executed. Upstream expectations are retained separately.",
+  "units": [
+    {
+      "test_id": "BenchmarkTest00165",
+      "path": "testcode/BenchmarkTest00165.py",
+      "source_sha256": "11ed0026305523bca64fc4b16190f59e84074a9ff266a64c884ec9b2839457fb",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Form value flows through append/pop: after pop(0), lst[0] is param. On POSIX, [sh, -c, f\"echo {bar}\"] interprets attacker-controlled shell syntax (lines 31-57).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00166",
+      "path": "testcode/BenchmarkTest00166.py",
+      "source_sha256": "54ada57a1c31ebd7b19e93833bad94d85f9d01e73364b5a1b0a3f7d3ecda922d",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Form value stored and read from keyB, then interpolated into a shell=True command without quoting (lines 31-53).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00167",
+      "path": "testcode/BenchmarkTest00167.py",
+      "source_sha256": "9ccadb894c12ca6ad016aee03830140737f3872c8c3d7bd520814316724a4fd6",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "The constant string contains should, so the else branch sets bar = form input; shell=True reaches unescaped command text (lines 31-53).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00168",
+      "path": "testcode/BenchmarkTest00168.py",
+      "source_sha256": "4ac770cd0c09bb7f0836026f44bfbef036d499eead2925ef195824e2605df169",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "guess is always A and that branch sets bar to form input; shell=True receives unescaped text (lines 31-60).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00267",
+      "path": "testcode/BenchmarkTest00267.py",
+      "source_sha256": "5a084613e1d0d2707291563b6eda8ee1684fa652a1dfa0f27f60f8896596982a",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "First form-list value is stored/read under keyB and passed through explicit sh -c; shell=False default does not prevent interpretation (lines 31-55).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00268",
+      "path": "testcode/BenchmarkTest00268.py",
+      "source_sha256": "09ccb3f44e83f14c03b428ade533fdc4d2b8d640b921fbb0803ed22b3511c1ff",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Constant condition selects the branch with first form-list input, then explicit sh -c interprets it (lines 31-55).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00350",
+      "path": "testcode/BenchmarkTest00350.py",
+      "source_sha256": "52eeea7199c73ff35fdb3e260ed647337df16f962f40a7e5b2e2854eed3c6476",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "Local dict keyA is literal a-Value. The last assignment overwrites the previous keyB/user value; no intervening mutation or alias escape. POSIX command is exactly sh -c echo a-Value (lines 38-58).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00431",
+      "path": "testcode/BenchmarkTest00431.py",
+      "source_sha256": "8a9aeea0ecab0b766af73a0152b1a3999e023e6e7e0bd078bbd3d46a47c3911d",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Attacker controls form field names as well as values; name selected when its values contain the test ID becomes unquoted command text (lines 31-51).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00432",
+      "path": "testcode/BenchmarkTest00432.py",
+      "source_sha256": "37871e4ee62d7aa94e3c96f0e5062c4540adc831e64cac04311df5e343f199c2",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Attacker-controlled form field name survives base64 encode/decode unchanged and enters unquoted shell command text (lines 31-53).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00511",
+      "path": "testcode/BenchmarkTest00511.py",
+      "source_sha256": "60eb453e6e3ddcff7e1576e617c58fe4736cca9b736ae11e2c9a5489c95b08e1",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Header value survives list append/pop and is the command-text suffix passed to explicit sh -c (lines 31-57).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00512",
+      "path": "testcode/BenchmarkTest00512.py",
+      "source_sha256": "6fea4f65eb817b5051660be2a3cdc3378356fc7a8aab31dda3cf8cc3b2f4015d",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "Fresh ConfigParser stores literal a_Value at keyA and user text at distinct keyB. get(keyA) retrieves the fixed value with no interpolation reference. Invalid keyB interpolation can raise before the sink, not change keyA (lines 35-56).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00606",
+      "path": "testcode/BenchmarkTest00606.py",
+      "source_sha256": "aee8066efd44591f50004069ac8d23fe17f239845f2f2b40d132629142f547f1",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "First header value enters the shell=True command unchanged (lines 31-51).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00607",
+      "path": "testcode/BenchmarkTest00607.py",
+      "source_sha256": "fbe750cdc750a6fc43eee7d6a5b76f1bfd1d4917bffe794319d304265ee42e82",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "Header input passes through a slice that removes its final character (suffix length is 16, cut is -17). The attacker retains control of all earlier characters; this is not neutralization of shell syntax (lines 31-54).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00736",
+      "path": "testcode/BenchmarkTest00736.py",
+      "source_sha256": "7bc66f88647cbdaf7ab7bd358b8f3b9ec7dd1f5d3ef50e809bcb0de3ff583e05",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "The last assignment reads literal a-Value from fresh local dict keyA, overwriting prior keyB/query input. Command is fixed and has no expansions or attacker-controlled executable/options (lines 35-55).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00899",
+      "path": "testcode/BenchmarkTest00899.py",
+      "source_sha256": "3011b4f24753f7ff6cbe922efbdffe2d10fcb5f5a981d842143f68e3f3ac22bf",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "helpers.separate_request.request_wrapper.get_query_parameter returns request.args.get(name). Constant match selects A and passes the query value into explicit sh -c (lines 31-64; helper lines 12-13).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest00900",
+      "path": "testcode/BenchmarkTest00900.py",
+      "source_sha256": "218fe6f12081d65dd6b4d6b6dc23f2c28751ddd673572fac1269071949e92b32",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "Fresh ConfigParser keyA is a_Value; keyB contains separate query input. get(keyA) has no interpolation reference and no attacker-controlled key selection; command is fixed (lines 38-59).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest01097",
+      "path": "testcode/BenchmarkTest01097.py",
+      "source_sha256": "09cffddc1f408d4fd05026a71f8c6a1179c1fd0e42c7cb3010e83b53b58908d9",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "7*42-86 = 208 > 200 is always true; command suffix is This_should_always_happen. The request-dependent else branch is unreachable under normal Python semantics (lines 36-55).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest01098",
+      "path": "testcode/BenchmarkTest01098.py",
+      "source_sha256": "9ee4aded003903a95c07e7811c97ab2ff1adc65234267ddd87d2a250610b9580",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "Both route decorators are fixed /benchmark/cmdi-00/BenchmarkTest01098, with no variable segment. Through the shipped HTTP entry point, request.path.split(\"/\")[1] is benchmark; slicing yields benchmar. No source call site invokes the handler under a different route. Command is fixed under this application entry-point assumption (lines 23-53 and app.py loader).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest01173",
+      "path": "testcode/BenchmarkTest01173.py",
+      "source_sha256": "cab02e797999547489e145d4fed01cffa2d1e6b7b966868223b2cb2ab486e74b",
+      "technical_verdict": "false_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [],
+      "evidence": "request_wrapper.get_safe_value returns literal bar and never reads the request. Base64 roundtrip preserves it. POSIX command is exactly sh -c echo bar (lines 31-51; helper lines 18-19).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    },
+    {
+      "test_id": "BenchmarkTest01191",
+      "path": "testcode/BenchmarkTest01191.py",
+      "source_sha256": "39bb4b833002ed60f6d8325c1279788d16ae8fb30ab48a44bb466cab1ebc23aa",
+      "technical_verdict": "true_positive",
+      "scope_verdict": "in_scope",
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "evidence": "request_wrapper.get_form_parameter directly returns request.form.get(name); the value is interpolated into explicit sh -c command text (lines 31-52; helper lines 9-10).",
+      "policy_decision": "not_implemented",
+      "second_review": "pending"
+    }
+  ],
+  "context_files_sha256": {
+    "app.py": "1e66534772ea54e7fa0c5ed395fba345c281f697bae2277ad637af779a17aeb7",
+    "helpers/separate_request.py": "89db71030f136a205b52ea1aecec7ffb596efca2721ef91522eea4b2075814a4",
+    "helpers/utils.py": "899b04b2610fe168cecf618ee12c9f318dffaeb0a7b4e59f27bcd629c5795834"
+  }
+}

@@ -164,3 +164,10 @@ The [selection memo](batches/OWASP_PYTHON_DEVELOPMENT.md) pins all 20 CWE-78 cas
 from OWASP BenchmarkPython, including seven expected negatives. This synthetic
 development source is separate from real npm survey evidence. The JS Docker image
 is unchanged; use the native Python bundle documented in the memo.
+
+The [first paired report](reports/owasp-python-development/REPORT.md) records 18
+Semgrep and 13 CodeQL raw findings. Single-reviewer source labels identify seven
+negative sites flagged by Semgrep, two also flagged by CodeQL; these are external
+synthetic cases, not real-package FPs. CodeQL detects more true sites, and the union
+adds only negative warnings here. No R1 suppression or improvement is claimed.
+The shared runner's focused suite now has 25 tests.
