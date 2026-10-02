@@ -100,6 +100,44 @@ def unpack(archive, destination, archive_root):
     return destination / archive_root
 
 
+def verify_source_identity(case, source):
+    """Validate pinned source identity without importing or executing target code."""
+    if case["source_kind"] == "npm_tarball":
+        package = json.loads((source / "package.json").read_text())
+        if (package["name"], package["version"]) != (
+            case["package_name"], case["package_version"]
+        ):
+            raise ValueError("Package identity mismatch")
+        return
+    if case["source_kind"] != "github_tarball":
+        raise ValueError("Unsupported source kind")
+    commit, repository = case["source_commit"], case["repository"]
+    if not re.fullmatch(r"[a-f0-9]{40}", commit) or not re.fullmatch(
+        r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository
+    ):
+        raise ValueError("GitHub repository and full source commit required")
+    if case["artifact_url"] != f"https://codeload.github.com/{repository}/tar.gz/{commit}":
+        raise ValueError("Archive URL must pin the source commit")
+    if case["archive_root"] != f"{repository.split('/')[1]}-{commit}":
+        raise ValueError("Archive root does not match pinned commit")
+    identity_files = case.get("identity_files_sha256", {})
+    if not identity_files:
+        raise ValueError("Source identity file hashes required")
+    for relative, expected in identity_files.items():
+        path = (source / relative).resolve()
+        if Path(relative).is_absolute() or not path.is_relative_to(source.resolve()):
+            raise ValueError("Identity path escapes source root")
+        if digest(path) != expected:
+            raise ValueError(f"Source identity mismatch: {relative}")
+
+
+def query_pack_for_language(args, language):
+    pack = getattr(args, language + "_query_pack")
+    if not pack:
+        raise ValueError(f"--{language}-query-pack must point to bundled pinned queries")
+    return pack.resolve()
+
+
 def invoke(argv, cwd, output, name, timeout, env=None):
     if env is None:
         env = os.environ.copy()
@@ -215,6 +253,7 @@ def main():
     parser.add_argument("--semgrep", default="semgrep")
     parser.add_argument("--codeql", default="codeql")
     parser.add_argument("--javascript-query-pack", type=Path)
+    parser.add_argument("--python-query-pack", type=Path)
     parser.add_argument(
         "--source-archive", type=Path, help="Reuse an archive with the manifest hash"
     )
@@ -227,8 +266,14 @@ def main():
         parser.error(
             "Held-out execution is blocked: full freeze gate is not implemented"
         )
-    if case["source_kind"] != "npm_tarball" or case["language"] != "javascript":
-        parser.error("This first adapter supports JavaScript npm tarballs only")
+    if (case["source_kind"], case["language"]) not in {
+        ("npm_tarball", "javascript"),
+        ("github_tarball", "javascript"),
+        ("github_tarball", "python"),
+    }:
+        parser.error("Supported sources: JavaScript npm, or pinned GitHub JS/Python archives")
+    if config.get("language", "javascript") != case["language"]:
+        parser.error("Case and scanner configuration languages must agree")
     if set(config["scanners"]) - {"semgrep", "codeql"}:
         parser.error("Unsupported scanner; ST/S1 are not implemented yet")
     output = args.output.resolve()
@@ -278,12 +323,7 @@ def main():
             if integrity != case["registry_integrity"]:
                 raise ValueError("Registry integrity mismatch")
         source = unpack(archive, output / "source", case["archive_root"])
-        package = json.loads((source / "package.json").read_text())
-        if (package["name"], package["version"]) != (
-            case["package_name"],
-            case["package_version"],
-        ):
-            raise ValueError("Package identity mismatch")
+        verify_source_identity(case, source)
         report["snapshot_sha256"] = digest(archive)
         report["source_files"] = [
             str(p.relative_to(source)) for p in sorted(source.rglob("*")) if p.is_file()
@@ -321,11 +361,7 @@ def main():
                     argv += ["."]
                     rec = invoke(argv, source, output, tool, config["timeout_seconds"])
                 else:
-                    if not args.javascript_query_pack:
-                        raise ValueError(
-                            "--javascript-query-pack must point to bundled pinned queries"
-                        )
-                    pack = args.javascript_query_pack.resolve()
+                    pack = query_pack_for_language(args, case["language"])
                     query_paths = [pack / x for x in config["codeql_queries"]]
                     if not all(q.is_file() for q in query_paths):
                         raise ValueError("Configured CodeQL query missing from pack")
@@ -342,7 +378,7 @@ def main():
                             "database",
                             "create",
                             str(database),
-                            "--language=javascript",
+                            "--language=" + case["language"],
                             "--source-root",
                             str(source),
                             "--build-mode=none",

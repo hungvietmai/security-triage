@@ -1,0 +1,51 @@
+{
+  "config_id": "development-owasp-python-upstream",
+  "purpose": "External synthetic benchmark feasibility; full source, all 20 CWE-78 rows; not held-out or a real-project prevalence estimate.",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "scanners": [
+    "semgrep",
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [
+    {
+      "path": "experiments/rules/python-upstream/dangerous-subprocess-use.yaml",
+      "sha256": "9aaf4e9fcb13afed4e60c04def4132f9f7f2baac3414dc1d7bbd5dcb29db0586",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/lang/security/dangerous-subprocess-use.yaml"
+    },
+    {
+      "path": "experiments/rules/python-upstream/dangerous-system-call.yaml",
+      "sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/lang/security/dangerous-system-call.yaml"
+    },
+    {
+      "path": "experiments/rules/python-upstream/subprocess-shell-true.yaml",
+      "sha256": "753ba9d29d592b3d7f5086e671e424ee05138acbf75a39b663d92aa3275f5380",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/lang/security/audit/subprocess-shell-true.yaml"
+    },
+    {
+      "path": "experiments/rules/python-upstream/subprocess-injection.yaml",
+      "sha256": "3999fd54bda682edd0391678e362cd8c70b313d4aeb24252179f374604c73d66",
+      "upstream_url": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/flask/security/injection/subprocess-injection.yaml"
+    }
+  ],
+  "codeql_queries": [
+    "Security/CWE-078/CommandInjection.ql",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-078/CommandInjection.ql": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql": "d3e2a5c45764fe819fcf051d111f9cc1e6f02e2080b7e3ea98d06afcd0ead7fb"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "asset": "codeql-bundle-python-linux64.tar.zst",
+    "sha256": "ea86393c6c812542ae5a3a7122bcc760873707a50b25cc47d2fd7cfd514b0cb0",
+    "python_query_pack": "1.8.11",
+    "python_all_pack": "7.2.6"
+  },
+  "language": "python"
+}

@@ -5,6 +5,7 @@ import json
 import tarfile
 import tempfile
 import unittest
+from types import SimpleNamespace
 from pathlib import Path
 from unittest.mock import patch
 
@@ -13,6 +14,49 @@ from experiments.run_pilot import ROOT, digest, sarif_findings, stage_rule, unpa
 
 
 class RunnerTests(unittest.TestCase):
+    def test_github_identity_is_pinned_and_verified_without_package_json(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "app.py").write_text("raise RuntimeError('never execute')\n")
+            commit = "a" * 40
+            case = {
+                "source_kind": "github_tarball", "repository": "org/fixture",
+                "source_commit": commit, "archive_root": "fixture-" + commit,
+                "artifact_url": "https://codeload.github.com/org/fixture/tar.gz/" + commit,
+                "identity_files_sha256": {"app.py": digest(root / "app.py")},
+            }
+            run_pilot.verify_source_identity(case, root)
+            for field, value in (
+                ("source_commit", "main"),
+                ("artifact_url", "https://codeload.github.com/org/fixture/tar.gz/main"),
+                ("archive_root", "fixture-main"),
+                ("identity_files_sha256", {"app.py": "0" * 64}),
+                ("identity_files_sha256", {"../outside": "0" * 64}),
+                ("identity_files_sha256", {}),
+            ):
+                with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                    run_pilot.verify_source_identity({**case, field: value}, root)
+
+    def test_language_selects_its_own_query_pack(self):
+        args = SimpleNamespace(javascript_query_pack=Path("js"), python_query_pack=Path("py"))
+        self.assertEqual(run_pilot.query_pack_for_language(args, "python"), Path("py").resolve())
+        self.assertEqual(run_pilot.query_pack_for_language(args, "javascript"), Path("js").resolve())
+        args.python_query_pack = None
+        with self.assertRaisesRegex(ValueError, "--python-query-pack"):
+            run_pilot.query_pack_for_language(args, "python")
+
+    def test_python_rejects_javascript_configuration_before_scanning(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            case = root / "case.json"
+            case.write_text(json.dumps({"split": "development", "source_kind": "github_tarball", "language": "python"}))
+            config = ROOT / "experiments/configs/development-batch-01-upstream.json"
+            output = root / "out"
+            argv = ["run_pilot", "--case", str(case), "--config", str(config), "--output", str(output), "--configuration-commit", "b" * 40]
+            with patch("sys.argv", argv), patch("sys.stderr"), self.assertRaises(SystemExit):
+                run_pilot.main()
+            self.assertFalse(output.exists())
+
     def test_retained_manifest_bytes_match_hashes_for_noncanonical_json(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

@@ -7,7 +7,8 @@ Protocol v1.0.0 was committed before development scanning at
 ## Available now
 
 `run_pilot.py` is one configuration-driven CLI. The first implementation supports
-pinned JavaScript npm tarballs, Semgrep and CodeQL, raw SARIF preservation and a
+pinned JavaScript npm tarballs and GitHub JS/Python archives, Semgrep and CodeQL,
+raw SARIF preservation and a
 lossless review ledger/CSV. It rejects non-development cases. It does not yet
 implement adjudication, automatic sink matching, S1 tuning or metric computation.
 The first configuration is an integration smoke test, not the frozen S0/Q0 suite.
@@ -44,8 +45,9 @@ the same tool versions natively. The web application's earlier Docker CI success
 is not evidence for this new experiment image.
 
 The image installs Semgrep 1.178.0 with pinned Python dependency versions and the
-checksum-verified JavaScript-only CodeQL 2.27.1 bundle. Python scanner support is
-not yet wired into this runner. Use CodeQL in accordance with its license; this
+checksum-verified JavaScript-only CodeQL 2.27.1 bundle. Python support requires
+a separate native Python bundle; this Docker image still contains only JavaScript.
+Use CodeQL in accordance with its license; this
 pilot scans an open-source package.
 
 ## Native invocation
@@ -154,3 +156,11 @@ CodeQL 0/0/0. One Windows-only branch is outside scope; no in-scope FP is confir
 The two prior unpushed local attempts were lost during workspace maintenance and
 are explicitly excluded. The recovered run uses the published exact-byte manifest
 fix and passes provenance verification. The focused experiment suite has 22 tests.
+
+## External Python benchmark development
+
+The same CLI now accepts pinned GitHub source archives and a Python CodeQL pack.
+The [selection memo](batches/OWASP_PYTHON_DEVELOPMENT.md) pins all 20 CWE-78 cases
+from OWASP BenchmarkPython, including seven expected negatives. This synthetic
+development source is separate from real npm survey evidence. The JS Docker image
+is unchanged; use the native Python bundle documented in the memo.
