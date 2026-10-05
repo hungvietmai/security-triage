@@ -87,7 +87,6 @@ def test_stage_rule_rejects_path_escape(tmp_path):
         raise AssertionError("path escape was accepted")
 
 
-
 def test_stage_remote_rule_uses_injected_fetch(tmp_path):
     from app.scanners.semgrep import stage_rule
 
