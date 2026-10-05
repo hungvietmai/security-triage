@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: 27b0ca89daace848ab70bf175db4ba9189796a17
+          ref: 965ccc489be21842e5c7971db49ac09e99f55240
           fetch-depth: 0
 
       - uses: actions/setup-python@v7
@@ -51,7 +51,7 @@ jobs:
             security-triage-pilot:evidence \
             --case experiments/cases/secbench-curling-0.2.0.json \
             --config experiments/configs/development-smoke-javascript.json \
-            --configuration-commit 27b0ca89daace848ab70bf175db4ba9189796a17 \
+            --configuration-commit 965ccc489be21842e5c7971db49ac09e99f55240 \
             --output artifacts/curling-real-evidence
 
       - name: Compare real output to step 1
@@ -69,7 +69,7 @@ jobs:
           assert run["steps"]["codeql"]["raw_findings"] == 6
           assert len(run["runner_files_sha256"]) == 9
           print(json.dumps({
-              "candidate_commit": "27b0ca89daace848ab70bf175db4ba9189796a17",
+              "candidate_commit": "965ccc489be21842e5c7971db49ac09e99f55240",
               "findings_byte_identical_to_step1": True,
               "semgrep_raw_findings": 0,
               "codeql_raw_findings": 6,
