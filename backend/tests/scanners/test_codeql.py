@@ -102,7 +102,6 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
     assert result.query_files == {"Security/CWE-078/CommandInjection.ql": digest(query)}
 
 
-
 def test_query_pack_rejects_unsupported_language(tmp_path):
     try:
         query_pack_for_language("ruby", javascript_query_pack=tmp_path, python_query_pack=tmp_path)
