@@ -23,3 +23,33 @@ This log records externally visible research-methodology freezes and publication
   the vulnerable sink performs or initiates OS process/command execution under
   the frozen Linux/POSIX threat model; other CWE-77 interpreter cases are
   excluded from the primary scope with a recorded reason.
+
+## 2026-10-05 — split-v0: deterministic language-stratified split
+
+- Split artifact: `experiments/inventory/split_v0.json`
+- Split generator: `experiments/make_split.py`
+- Freeze commit: `72972469ea7b8da895ba4a3bdc2309676b04a953`
+- Commit URL: https://github.com/hungvietmai/security-triage/commit/72972469ea7b8da895ba4a3bdc2309676b04a953
+- Tag: `split-v0`
+- Tag URL: https://github.com/hungvietmai/security-triage/tree/split-v0
+- Verified tag target: `72972469ea7b8da895ba4a3bdc2309676b04a953`
+- GitHub-recorded publication evidence time: `2026-10-05T06:59:16Z`
+  (`2026-10-05T13:59:16+07:00`)
+- Publication evidence: GitHub Actions run
+  https://github.com/hungvietmai/security-triage/actions/runs/37275228419
+- Split-generation evidence: GitHub Actions run
+  https://github.com/hungvietmai/security-triage/actions/runs/37275106036
+- Workflow conclusion: `success`.
+- Unit of split: `group_id`; stratification is by language only.
+- Hash rule: ascending SHA-256 of UTF-8 `group_id`; the first
+  `ceil(40% * fresh eligible groups)` in each language are held out.
+- JavaScript: 21 fresh eligible groups -> 9 held out and 12 development;
+  with two previously exposed groups, total development is 14. Twelve groups
+  are reserve and twelve are excluded.
+- Python: 27 fresh eligible groups -> 11 held out and 16 development.
+- Total held-out groups: 20.
+- `cwe_unresolved` and non-primary CWE groups are reserve; pre-existing
+  exclusions remain excluded. Explicit future `scope_verdict=out_of_scope`
+  is excluded and `scope_verdict=unresolved` is reserve.
+- No new Semgrep/CodeQL pair scan was run to create or inspect this split.
+
