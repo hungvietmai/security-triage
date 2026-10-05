@@ -10,7 +10,14 @@ import json
 import re
 import tarfile
 import time
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+_BACKEND = ROOT / "backend"
+for _IMPORT_ROOT in (ROOT, _BACKEND):
+    if str(_IMPORT_ROOT) not in sys.path:
+        sys.path.insert(0, str(_IMPORT_ROOT))
 
 from app.scanners.acquisition import (
     MAX_ARCHIVE,
@@ -22,7 +29,6 @@ from app.scanners.acquisition import (
 from app.scanners.pipeline import run_pipeline
 from app.scanners.provenance import digest
 
-ROOT = Path(__file__).resolve().parents[1]
 SCANNER_ROOT = ROOT / "backend/app/scanners"
 
 

@@ -133,3 +133,29 @@ Final effective group counts:
   effectiveness claim.
 - No new vulnerable-pair Semgrep/CodeQL scan was run before this freeze.
 
+
+
+## 2026-10-05 — Post-refactor real-scanner reproducibility check
+
+- Verification candidate commit:
+  `965ccc489be21842e5c7971db49ac09e99f55240`.
+- GitHub Actions evidence:
+  https://github.com/hungvietmai/security-triage/actions/runs/37297668652
+- GitHub-recorded run time: `2026-10-05T10:36:34Z`
+  (`2026-10-05T17:36:34+07:00`); workflow conclusion: `success`.
+- The workflow checked out the candidate commit explicitly, built
+  `experiments/Dockerfile`, and ran `curling@0.2.0` with the image's real
+  Semgrep 1.178.0 and CodeQL 2.27.1 toolchains. Scanner functions were not
+  replaced with test doubles.
+- Smoke result: Semgrep = **0** raw findings, CodeQL = **6** raw findings,
+  total = **6**, matching the recorded pre-refactor development result.
+- `findings.json` was byte-identical to the pre-refactor Step 1 baseline.
+- The generated `run.json` contained `runner_files_sha256` entries for all
+  **9** runner files (the CLI plus eight `app/scanners` Python files).
+- The same workflow verified the documented native commands with
+  `PYTHONPATH` explicitly removed and passed the full **31-test** experiment
+  suite using the CI command
+  `PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v`.
+- This is a development reproducibility/integration check on the already exposed
+  curling case. It is not a new held-out vulnerability-pair result and does not
+  change the frozen split or evaluation claims.

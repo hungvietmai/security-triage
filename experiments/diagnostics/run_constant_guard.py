@@ -8,6 +8,13 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+import sys
+
+_ROOT = Path(__file__).resolve().parents[2]
+_BACKEND = _ROOT / "backend"
+for _IMPORT_ROOT in (_ROOT, _BACKEND):
+    if str(_IMPORT_ROOT) not in sys.path:
+        sys.path.insert(0, str(_IMPORT_ROOT))
 
 from app.scanners.process import invoke, tool_version
 from experiments.run_pilot import ROOT, digest, write_json

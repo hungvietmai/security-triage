@@ -46,15 +46,20 @@ Semgrep 1.178.0 remains dependency-pinned. CodeQL uses the full multi-language
 `1ec99cfa9420f04c2330784b4ddb8363a0dd67c3e4471cd93963c50e6c433717`.
 The build asserts that JavaScript queries 2.4.6 and Python queries 1.8.11 are
 present, and the entrypoint supplies both pack paths. Verification run
-`37295641693` built the image, imported the scanner package, ran all 31
-experiment tests, and reproduced the six curling findings byte-for-byte against
-the pre-refactor baseline. Use CodeQL in accordance with its license.
+`37297668652` built the image from candidate commit
+`965ccc489be21842e5c7971db49ac09e99f55240`, verified the native commands with
+`PYTHONPATH` removed, ran all 31 experiment tests, and reproduced the six curling
+findings byte-for-byte against the pre-refactor baseline. Use CodeQL in accordance with its license.
 
 ## Native invocation
 
-Use Python 3.12+, Semgrep 1.178.0 and CodeQL 2.27.1. Native runs must supply the
-query pack that matches the case language; the verified Docker image supplies both
-JavaScript queries 2.4.6 and Python queries 1.8.11 automatically. For JavaScript:
+Use Python 3.12+, Semgrep 1.178.0 and CodeQL 2.27.1. The experiment entry scripts
+bootstrap `backend/` onto `sys.path`, so the commands below work from the
+repository root without manually setting `PYTHONPATH`. CI still sets
+`PYTHONPATH=backend` explicitly as an independent environment check. Native runs
+must supply the query pack that matches the case language; the verified Docker
+image supplies both JavaScript queries 2.4.6 and Python queries 1.8.11
+automatically. For JavaScript:
 
 ```bash
 python3 experiments/run_pilot.py \
@@ -73,10 +78,17 @@ Raw output is distinct from a reviewed location/label ledger. Do not interpret r
 finding count as unique vulnerabilities or calculate F1 before mapping and labeling.
 Artifacts/ is ignored by Git; compact evidence and report extracts live in reports/.
 
-Run focused offline checks with:
+Run the focused runner checks with:
 
 ```bash
 python3 -m unittest experiments.test_runner -v
+```
+
+Run the complete experiment suite (currently 31 tests) with the same command used
+by CI:
+
+```bash
+PYTHONPATH=backend python3 -m unittest discover -s experiments -p 'test_*.py' -v
 ```
 
 ## Recorded development run
@@ -163,8 +175,10 @@ fix and passes provenance verification. The focused experiment suite has 22 test
 The same CLI now accepts pinned GitHub source archives and a Python CodeQL pack.
 The [selection memo](batches/OWASP_PYTHON_DEVELOPMENT.md) pins all 20 CWE-78 cases
 from OWASP BenchmarkPython, including seven expected negatives. This synthetic
-development source is separate from real npm survey evidence. The JS Docker image
-is unchanged; use the native Python bundle documented in the memo.
+development source is separate from real npm survey evidence. The verified
+experiment Docker image now uses the full CodeQL 2.27.1 bundle and includes both
+the JavaScript and Python query packs; the memo still documents the earlier native
+Python run for provenance.
 
 The [first paired report](reports/owasp-python-development/REPORT.md) records 18
 Semgrep and 13 CodeQL raw findings. Single-reviewer source labels identify seven
