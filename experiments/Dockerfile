@@ -26,11 +26,4 @@ WORKDIR /app
 COPY backend/app/scanners /app/backend/app/scanners
 COPY experiments /app/experiments
 
-ENTRYPOINT [
-  "python",
-  "experiments/run_pilot.py",
-  "--javascript-query-pack",
-  "/opt/codeql/qlpacks/codeql/javascript-queries/2.4.6",
-  "--python-query-pack",
-  "/opt/codeql/qlpacks/codeql/python-queries/1.8.11"
-]
+ENTRYPOINT ["python", "experiments/run_pilot.py", "--javascript-query-pack", "/opt/codeql/qlpacks/codeql/javascript-queries/2.4.6", "--python-query-pack", "/opt/codeql/qlpacks/codeql/python-queries/1.8.11"]
