@@ -74,3 +74,62 @@ This log records externally visible research-methodology freezes and publication
 - No new vulnerable-pair Semgrep/CodeQL scan had been produced or inspected
   before adoption of this amendment.
 
+## 2026-10-05 — Scope review v0 and split-v0.1
+
+- Scope amendment: `experiments/amendments/AMENDMENT_04_SCOPE_REVIEW.md`
+- Scope review commit: `246b46959c00e28bfc24dc3e2e62b265095bc995`
+- Scope review artifact: `experiments/inventory/scope-review-v0.json`
+- Human-readable scope report: `experiments/inventory/SCOPE_REVIEW_V0.md`
+- Scope-evidence collection run:
+  https://github.com/hungvietmai/security-triage/actions/runs/37284347406
+- Scope review used advisory/fix-patch evidence only; no Semgrep/CodeQL pair
+  output was used.
+- Usable groups reviewed: **62**.
+  - JavaScript: 34 in scope, 1 out of scope.
+  - Python: 15 in scope, 12 out of scope.
+- Mixed repository groups retained because they contain at least one in-scope
+  pair row: `pyvul:mlflow/mlflow` and `pyvul:paddlepaddle/paddle`.
+  Out-of-scope pair rows inside those groups are excluded from the primary
+  denominator.
+
+### split-v0.1 freeze
+
+- Split artifact: `experiments/inventory/split_v0.1.json`
+- Corrected split generator: `experiments/make_split.py`
+- Freeze commit: `67f77a381ba2be64b9686f046715223bb508c46c`
+- Commit URL: https://github.com/hungvietmai/security-triage/commit/67f77a381ba2be64b9686f046715223bb508c46c
+- Tag: `split-v0.1`
+- Tag URL: https://github.com/hungvietmai/security-triage/tree/split-v0.1
+- Verified tag target: `67f77a381ba2be64b9686f046715223bb508c46c`
+- GitHub-recorded publication evidence time: `2026-10-05T08:47:41Z`
+  (`2026-10-05T15:47:41+07:00`)
+- Tag publication evidence:
+  https://github.com/hungvietmai/security-triage/actions/runs/37285860127
+- Split verification/test run:
+  https://github.com/hungvietmai/security-triage/actions/runs/37285579232
+- The verification run confirmed that regenerated split-v0 is identical to the
+  frozen split-v0 artifact before deriving v0.1.
+- Test status: **31 experiment tests passed** (27 existing tests + 4 new split
+  reproducibility/idempotence tests).
+- `prior_exposure` is now an immutable input separate from generated `split`.
+- `make_split.py --check` compares split-v0 without mutating the inventory.
+- split-v0.1 is derived from frozen split-v0 by scope filtering only:
+  `selection_redrawn=false`, `replacement_performed=false`.
+
+Final effective group counts:
+
+- JavaScript: 14 development, 9 held out, 11 reserve, 13 excluded.
+- Python: 9 development, 6 held out, 12 excluded.
+- Pooled held-out groups after scope review: **15**.
+- Removed from frozen held-out without replacement:
+  `pyvul:autogluon/autogluon`, `pyvul:pytorch/pytorch`,
+  `pyvul:snowflakedb/snowflake-connector-python`,
+  `pyvul:tankywoo/simiki`, and `pyvul:tensorflow/tensorflow`.
+- Remaining held-out groups by in-scope CWE:
+  - JavaScript: CWE-77 = 4, CWE-78 = 5.
+  - Python: CWE-77 = 1, CWE-78 = 4, CWE-88 = 1.
+- The pooled held-out total remains above the Amendment 02 minimum, but the
+  Python held-out stratum is too small for a strong Python-specific
+  effectiveness claim.
+- No new vulnerable-pair Semgrep/CodeQL scan was run before this freeze.
+
