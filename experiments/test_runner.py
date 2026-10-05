@@ -6,9 +6,9 @@ import tarfile
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
 
 from app.scanners.acquisition import (
+    MAX_ARCHIVE,
     MAX_FILES,
     MAX_UNPACKED,
     AcquiredSource,
@@ -83,7 +83,6 @@ class RunnerTests(unittest.TestCase):
             config = ROOT / "experiments/configs/development-batch-01-upstream.json"
             output = root / "out"
             argv = [
-                "run_pilot",
                 "--case",
                 str(case),
                 "--config",
@@ -93,8 +92,8 @@ class RunnerTests(unittest.TestCase):
                 "--configuration-commit",
                 "b" * 40,
             ]
-            with patch("sys.argv", argv), patch("sys.stderr"), self.assertRaises(SystemExit):
-                run_pilot.main()
+            with self.assertRaises(SystemExit):
+                run_pilot.main(argv, print_fn=lambda _: None)
             self.assertFalse(output.exists())
 
     def test_rejects_invalid_configuration_commit_before_output(self):
@@ -104,7 +103,6 @@ class RunnerTests(unittest.TestCase):
             config = ROOT / "experiments/configs/development-smoke-javascript.json"
             output = root / "out"
             argv = [
-                "run_pilot",
                 "--case",
                 str(case),
                 "--config",
@@ -114,8 +112,8 @@ class RunnerTests(unittest.TestCase):
                 "--configuration-commit",
                 "not-a-commit",
             ]
-            with patch("sys.argv", argv), patch("sys.stderr"), self.assertRaises(SystemExit):
-                run_pilot.main()
+            with self.assertRaises(SystemExit):
+                run_pilot.main(argv, print_fn=lambda _: None)
             self.assertFalse(output.exists())
 
     def test_rejects_held_out_before_output(self):
@@ -130,7 +128,6 @@ class RunnerTests(unittest.TestCase):
             config = ROOT / "experiments/configs/development-smoke-javascript.json"
             output = root / "out"
             argv = [
-                "run_pilot",
                 "--case",
                 str(case),
                 "--config",
@@ -140,8 +137,8 @@ class RunnerTests(unittest.TestCase):
                 "--configuration-commit",
                 "b" * 40,
             ]
-            with patch("sys.argv", argv), patch("sys.stderr"), self.assertRaises(SystemExit):
-                run_pilot.main()
+            with self.assertRaises(SystemExit):
+                run_pilot.main(argv, print_fn=lambda _: None)
             self.assertFalse(output.exists())
 
     def test_retained_manifest_bytes_and_runner_file_provenance(self):
@@ -169,7 +166,6 @@ class RunnerTests(unittest.TestCase):
             case.write_bytes(case_bytes)
             config.write_bytes(config_bytes)
             argv = [
-                "run_pilot",
                 "--case",
                 str(case),
                 "--config",
@@ -179,8 +175,18 @@ class RunnerTests(unittest.TestCase):
                 "--configuration-commit",
                 "b" * 40,
             ]
-            with patch("sys.argv", argv), patch("builtins.print"):
-                self.assertEqual(run_pilot.main(), 2)
+
+            def fail_acquisition(*args, **kwargs):
+                raise ValueError("fixture acquisition stop")
+
+            self.assertEqual(
+                run_pilot.main(
+                    argv,
+                    acquire_source_fn=fail_acquisition,
+                    print_fn=lambda _: None,
+                ),
+                2,
+            )
             report = json.loads((output / "run.json").read_text())
             self.assertEqual((output / "case.json").read_bytes(), case_bytes)
             self.assertEqual((output / "config.json").read_bytes(), config_bytes)
@@ -188,6 +194,7 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(report["configuration_sha256"], digest(output / "config.json"))
             self.assertEqual(report["runner_files_sha256"], runner_files_sha256())
             self.assertNotIn("runner_sha256", report)
+            self.assertEqual(report["error"], "fixture acquisition stop")
 
     def test_cli_delegates_and_writes_all_outputs(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -232,7 +239,6 @@ class RunnerTests(unittest.TestCase):
                 codeql_pack_manifest="name: test\n",
             )
             argv = [
-                "run_pilot",
                 "--case",
                 str(case),
                 "--config",
@@ -241,17 +247,64 @@ class RunnerTests(unittest.TestCase):
                 str(output),
                 "--configuration-commit",
                 "b" * 40,
+                "--semgrep",
+                "/tools/semgrep",
+                "--codeql",
+                "/tools/codeql",
+                "--javascript-query-pack",
+                str(root / "js-pack"),
             ]
-            with (
-                patch("sys.argv", argv),
-                patch.object(run_pilot, "acquire_source", return_value=acquired) as acquire,
-                patch.object(run_pilot, "run_pipeline", return_value=result) as pipeline,
-                patch("builtins.print"),
-            ):
-                self.assertEqual(run_pilot.main(), 0)
+            acquisition_calls = []
+            pipeline_calls = []
+            printed = []
 
-            acquire.assert_called_once()
-            pipeline.assert_called_once()
+            def fake_acquire(case_value, output_value, *, source_archive, limits):
+                acquisition_calls.append(
+                    {
+                        "case": case_value,
+                        "output": output_value,
+                        "source_archive": source_archive,
+                        "limits": limits,
+                    }
+                )
+                return acquired
+
+            def fake_pipeline(**kwargs):
+                pipeline_calls.append(kwargs)
+                return result
+
+            self.assertEqual(
+                run_pilot.main(
+                    argv,
+                    acquire_source_fn=fake_acquire,
+                    run_pipeline_fn=fake_pipeline,
+                    print_fn=printed.append,
+                ),
+                0,
+            )
+
+            self.assertEqual(len(acquisition_calls), 1)
+            self.assertEqual(len(pipeline_calls), 1)
+            acquire_call = acquisition_calls[0]
+            pipeline_call = pipeline_calls[0]
+            self.assertEqual(acquire_call["case"], case_data)
+            self.assertEqual(acquire_call["output"], output.resolve())
+            self.assertIsNone(acquire_call["source_archive"])
+            self.assertEqual(acquire_call["limits"].max_archive_bytes, MAX_ARCHIVE)
+            self.assertEqual(acquire_call["limits"].max_unpacked_bytes, MAX_UNPACKED)
+            self.assertEqual(acquire_call["limits"].max_files, MAX_FILES)
+            self.assertEqual(pipeline_call["source"], source)
+            self.assertEqual(pipeline_call["snapshot_sha256"], "d" * 64)
+            self.assertEqual(pipeline_call["repository_root"], ROOT)
+            self.assertEqual(pipeline_call["semgrep_binary"], "/tools/semgrep")
+            self.assertEqual(pipeline_call["codeql_binary"], "/tools/codeql")
+            self.assertEqual(
+                pipeline_call["javascript_query_pack"],
+                root / "js-pack",
+            )
+            self.assertEqual(pipeline_call["codeql_ram_mb"], 2048)
+            self.assertEqual(len(printed), 1)
+
             report = json.loads((output / "run.json").read_text())
             findings = json.loads((output / "findings.json").read_text())
             self.assertEqual(report["status"], "completed")
