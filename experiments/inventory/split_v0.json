@@ -1,0 +1,1307 @@
+{
+  "split_id": "split-v0",
+  "status": "pre_scan_frozen",
+  "date": "2026-10-05",
+  "unit": "group_id",
+  "primary_cwes": [
+    "CWE-77",
+    "CWE-78",
+    "CWE-88"
+  ],
+  "stratification": [
+    "language"
+  ],
+  "hash": {
+    "algorithm": "sha256",
+    "input": "UTF-8 group_id",
+    "tie_break": "group_id lexical order"
+  },
+  "held_out_rule": {
+    "fraction": 0.4,
+    "count_rule": "ceil(fresh_eligible_groups * 0.40) per language",
+    "selection": "first groups in ascending SHA-256 order"
+  },
+  "special_handling": {
+    "pre_exposed_group": "development",
+    "cwe_unresolved": "reserve",
+    "non_primary_cwe": "reserve",
+    "scope_unresolved": "reserve",
+    "scope_out_of_scope": "excluded",
+    "pre_existing_excluded": "excluded"
+  },
+  "summary_by_language": {
+    "javascript": {
+      "development": 14,
+      "excluded": 12,
+      "held_out": 9,
+      "reserve": 12
+    },
+    "python": {
+      "development": 16,
+      "held_out": 11
+    }
+  },
+  "strata": {
+    "javascript": {
+      "fresh_eligible_groups": 21,
+      "held_out_groups": 9,
+      "development_groups_from_hash": 12,
+      "held_out_fraction": 0.42857142857142855,
+      "ordered_group_ids": [
+        "secbench:total.js",
+        "secbench:macaddress",
+        "secbench:pidusage",
+        "secbench:apex-publish-static-files",
+        "secbench:bestzip",
+        "secbench:kill-by-port",
+        "secbench:whereis",
+        "secbench:giting",
+        "secbench:async-git",
+        "secbench:local-devices",
+        "secbench:codecov",
+        "secbench:connection-tester",
+        "secbench:gm",
+        "secbench:killport",
+        "secbench:@thi.ng/egf",
+        "secbench:get-npm-package-version",
+        "secbench:libnmap",
+        "secbench:diskusage-ng",
+        "secbench:react-dev-utils",
+        "secbench:dns-sync",
+        "secbench:pdf-image"
+      ]
+    },
+    "python": {
+      "fresh_eligible_groups": 27,
+      "held_out_groups": 11,
+      "development_groups_from_hash": 16,
+      "held_out_fraction": 0.4074074074074074,
+      "ordered_group_ids": [
+        "pyvul:pytorch/pytorch",
+        "pyvul:snowflakedb/snowflake-connector-python",
+        "pyvul:tankywoo/simiki",
+        "pyvul:weblateorg/weblate",
+        "pyvul:jupyterhub/binderhub",
+        "pyvul:cyanomiko/dcnnt-py",
+        "pyvul:mlflow/mlflow",
+        "pyvul:autogluon/autogluon",
+        "pyvul:abilian/abilian-devtools",
+        "pyvul:jaspernbrouwer/powerline-gitstatus",
+        "pyvul:tensorflow/tensorflow",
+        "pyvul:ansible/ansible",
+        "pyvul:google/slo-generator",
+        "pyvul:huggingface/transformers",
+        "pyvul:langchain-ai/langchain",
+        "pyvul:dgilland/pydash",
+        "pyvul:dwisiswant0/apkleaks",
+        "pyvul:ray-project/ray",
+        "pyvul:celery/celery",
+        "pyvul:savon-noir/python-libnmap",
+        "pyvul:pgadmin-org/pgadmin4",
+        "pyvul:paddlepaddle/paddle",
+        "pyvul:nexb/scancode.io",
+        "pyvul:django/django",
+        "pyvul:pypa/pip",
+        "pyvul:apache/airflow",
+        "pyvul:yt-dlp/yt-dlp"
+      ]
+    }
+  },
+  "groups": [
+    {
+      "group_id": "pyvul:abilian/abilian-devtools",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-abilian-abilian-devtools-9d71b0d3b6b4"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "386566ce5f69a69b95682af87e1235c944cc732fd29bd402e1d4831068a49552",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-ansible-ansible-03aff644cc1c",
+        "pyvul-ansible-ansible-35938b907dfc",
+        "pyvul-ansible-ansible-4c8c40fd3d4a",
+        "pyvul-ansible-ansible-8aa850e3573e",
+        "pyvul-ansible-ansible-8b17e5b9229f"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77",
+        "CWE-78"
+      ],
+      "hash_sha256": "4fd19e103ca76c266c7eeaa7ee5b4001d36dc503a7232821a579fb7c9862abec",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:apache/airflow",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-apache-airflow-2844dad1c762"
+      ],
+      "adjudicated_cwes": [
+        "CWE-88"
+      ],
+      "hash_sha256": "f7e86d4b4c54acd9cb6f225cc1afa623951686cd96619efd1969fe08018f10ed",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:autogluon/autogluon",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-autogluon-autogluon-23a37e74e58d"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "30e5be05383c355a3058e880e92e66591251915282e12a2449ea5d72d53a0a37",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:celery/celery",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-celery-celery-1f7ad7e6df1e"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "ad5a05b11b048a50b1bcc98f7831a01ea9a3641db83ad3182a3f5e6862bc4cfe",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:cyanomiko/dcnnt-py",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-cyanomiko-dcnnt-py-b4021d784a97"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "16d458b369118beba9b0ffc0800da7145deac544fcd85162c91fa61ce362250b",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:dgilland/pydash",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-dgilland-pydash-6ff0831ad285"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "951d4327fbb35484573414b689c0eb1aeea8f9323086e5116294527ff403ad28",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:django/django",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-django-django-e1e81aa1c442"
+      ],
+      "adjudicated_cwes": [
+        "CWE-88"
+      ],
+      "hash_sha256": "e2bbe3f90a14ef98b7f04b103b67e9819a6509f7f5446ba78d7c2f5ae98ae9db",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:dwisiswant0/apkleaks",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-dwisiswant0-apkleaks-a966e781499f"
+      ],
+      "adjudicated_cwes": [
+        "CWE-88"
+      ],
+      "hash_sha256": "9ef712926442993e421bdde9ea221373aabe1f936da25b0139c36d4f5d45ef7b",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:google/slo-generator",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-google-slo-generator-36318beab1b8"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "5035785d3e0011446243488b0df1b7bd5ce8f56d70f939c686d2c3839f3531b3",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:huggingface/transformers",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-huggingface-transformers-2272ab57a99b"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "591028cee94cc7a9519bc4269d60d7ab2ed6faf10d2b5aae28f83bdc24a8dee5",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:jaspernbrouwer/powerline-gitstatus",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-jaspernbrouwer-powerline-gitstatus-fe8e963b3489"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "42f2e57d68e5f58248b97178d7f81707010344ad035787c03621e391aee2cb59",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:jupyterhub/binderhub",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-jupyterhub-binderhub-195caac17269"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "13d7173de667f11330995ccfef0af07a25b31d4a1c70ce541f987e2b154a8d74",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:langchain-ai/langchain",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-langchain-ai-langchain-a2f191a32229"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "857134cd771110fa0cc3c92d133ba881750ad109424606de05b0b3d1afd3b0e2",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:mlflow/mlflow",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-mlflow-mlflow-6dde93758d42",
+        "pyvul-mlflow-mlflow-802911381717",
+        "pyvul-mlflow-mlflow-a98a341a7222"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77",
+        "CWE-78"
+      ],
+      "hash_sha256": "30bf9295f1376ab9714989d08deee8671b4d65c378c456e0e189106b3c40b475",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:nexb/scancode.io",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-nexB-scancode.io-07ec0de1964b"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "e1b9ec7c48de44d7ef29e437a75af7b271b9b946212b3a090715bcdf9a9164e8",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:paddlepaddle/paddle",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-PaddlePaddle-Paddle-49bec1760535",
+        "pyvul-PaddlePaddle-Paddle-5ed9478fdef9",
+        "pyvul-PaddlePaddle-Paddle-c5f6862d118d"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "dd5f96d028920c550194e82a255f68e8843dad2a62c4b71f3de2abaff06e6e68",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:pgadmin-org/pgadmin4",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-pgadmin-org-pgadmin4-35f05e49b363"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "db26025015722412373dfba127584d4b0f6bc62ba7ebb54752efedaf3c4003ac",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:pypa/pip",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-pypa-pip-389cb799d0da"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "f48f58cc938180d2a98f79d6057111d6954cc21d65a0b5d681971e5d86b7c1f5",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:pytorch/pytorch",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-pytorch-pytorch-767f6aa49fe2"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "05b02166f7ca2d7693dc5192b2e76019a3f0281e21c71b4db0908d83b0c22f55",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:ray-project/ray",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-ray-project-ray-193ff8c80067"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "a6ef80a5005ae64a02e5d206b408eba44703ab04695c07d4bdcc6198b5185225",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:savon-noir/python-libnmap",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-savon-noir-python-libnmap-c36fecde9001"
+      ],
+      "adjudicated_cwes": [
+        "CWE-88"
+      ],
+      "hash_sha256": "aeae3488d230536d5cb968dbade93d56d5fac23b7efd758083ad921dd3bc0888",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:snowflakedb/snowflake-connector-python",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-snowflakedb-snowflake-connector-python-1cdbd3b1403c"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "0cdd3524e6705cf5a6899239889cbb5b95cf1b311c0cd50731380ada56cafc8c",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:tankywoo/simiki",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-tankywoo-simiki-45da0ab7c1e9"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "1062c6b1d00b9f699fd919950957ab61f408ae63fcd10b0ea6c78c6ee09cec4e",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:tensorflow/tensorflow",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-tensorflow-tensorflow-8b202f08d52e"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "46b2ad5f20da57a3bd86c9564b13be53c5e07389de626b3610681ddd970027f6",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:weblateorg/weblate",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-WeblateOrg-weblate-35d59f1f0405",
+        "pyvul-WeblateOrg-weblate-d83672a3e741"
+      ],
+      "adjudicated_cwes": [
+        "CWE-88"
+      ],
+      "hash_sha256": "11a25c69e998615b556dcf47573283ccc4bbe92efcac6a55061d0a7420ec32b1",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "pyvul:yt-dlp/yt-dlp",
+      "language": "python",
+      "dataset": [
+        "PyVul"
+      ],
+      "pair_ids": [
+        "pyvul-yt-dlp-yt-dlp-de015e930747"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "f81bc375f18e5e13c22fbb00a0069823e6ca3aa2b68c5c81b62c099203c629b1",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:@thi.ng/egf",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-thi.ng-egf-0.3.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "86bc8336e743ce95226a9986e3a8e4d7eb7a4774b75be9c8cb60ce190d4c13e0",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:alfred-workflow-nodejs",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-alfred-workflow-nodejs-2.0.1"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "d7710e54de33a639375d238aba3928d48119a6669f3df506403697e0717cbd0a",
+      "assignment": "excluded",
+      "reason": "GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation; fixed version equals vulnerable version and GHSA does not provide one unique existing first_patched_version"
+    },
+    {
+      "group_id": "secbench:apex-publish-static-files",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-apex-publish-static-files-2.0.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "3207360c54ec0d2c3c2d11eec22090b96e94bb320810fa40ce466bc1e9306e61",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:arpping",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-arpping-2.0.0"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "29830b61a8b084df51b39a70ea4e685ae05472de475fced1fd89d6641f47314e",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:async-git",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-async-git-1.13.1"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "5780001857e3807f7e7675cea941edde8ee4041f843ae1d17a6daad8b41b44a1",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:bestzip",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-bestzip-2.1.6"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "352230e90ceb7781df922609a5565018da3dc0364500148b54f9fac78b46a6b0",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:blamer",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-blamer-0.1.13"
+      ],
+      "adjudicated_cwes": [
+        "CWE-94"
+      ],
+      "hash_sha256": "7df994d8ad055733625d166b7c5c6e531d3722a9b942aba834a1aad17e2f8c54",
+      "assignment": "reserve",
+      "reason": "outside primary CWE family: CWE-94"
+    },
+    {
+      "group_id": "secbench:clamscan",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-clamscan-1.2.0"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "c0892c8547cc77c44026b0b0c6c0b0430d87ca99a2036b87399f344330b4e7f2",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:codecov",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-codecov-3.6.4"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "60a61e5f746922d012f28c9109d02883b56a5ecfe6c892d8eaedf00c8aae2412",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:command-exists",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-command-exists-1.2.2"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "1fff27c6477c9a80ad11822907279d3eb1a54092939855ca9dbe576da9ac5c31",
+      "assignment": "excluded",
+      "reason": "GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation; fixed npm version '0.22.2' does not exist and no unique existing GHSA first_patched_version is available"
+    },
+    {
+      "group_id": "secbench:connection-tester",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-connection-tester-0.2.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "6223f0517387afc6b09ac23fad2d0c9a1c21a84ed632d672689ac4b5c4749ebb",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:curling",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-curling-0.2.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "a6330e32e1358325d8dfe441d847bba695df960465392d02b822c4b29629a985",
+      "assignment": "development",
+      "reason": "previously exposed group"
+    },
+    {
+      "group_id": "secbench:diskstats",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-diskstats-0.0.2"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "bf72fef0c86deb00aa82ef6f8105632adc993d13d754cd97aac3ee238df2d5b1",
+      "assignment": "excluded",
+      "reason": "GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation; fixed npm version '2.0.1' does not exist and no unique existing GHSA first_patched_version is available"
+    },
+    {
+      "group_id": "secbench:diskusage-ng",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-diskusage-ng-0.2.6"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "ba191979b86582c4140323693fd753d37f74b775d5447a3b6dcbd237b6defe47",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:dns-sync",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-dns-sync-0.1.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "d666e0ee8a2e7c21d095317a679baf606b2030197cd3a29340933690198fba41",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:extra-asciinema",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-extra-asciinema-1.0.0"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "876435ce905b34ff1efbf77a700cc8106505012f414321eada6e8a7a87e723aa",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:find-process",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-find-process-1.4.4"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "adee2215a2e02684c55909564e229638bbaaf51f6eef8fcef5df52713f16e02b",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy; GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation"
+    },
+    {
+      "group_id": "secbench:get-npm-package-version",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-get-npm-package-version-1.0.6"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "8cc67c3a7e6f61b135b8aa489879c3d0a069bb6879c135d6a9f6af7dbd436a71",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:git-parse",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-git-parse-1.0.4"
+      ],
+      "adjudicated_cwes": [
+        "CWE-74"
+      ],
+      "hash_sha256": "8ee66a0c162be05f2ec9212fb8b5717ea8033e9488e0281dfe21ee578e6884d7",
+      "assignment": "reserve",
+      "reason": "outside primary CWE family: CWE-74"
+    },
+    {
+      "group_id": "secbench:giting",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-giting-0.0.7"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "4a2f1289c9b5ad9b884f31dcb27b81510f61032b83661bd7674bccf3ed4c0af3",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:gm",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-gm-1.20.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "65f4ee1ca7fccfb7acb228f6da7d1075ee84741022362553b953b1dd8c48e10b",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:growl",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-growl-1.9.0"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "ba8928ec29da61ed181fa1ff0d50f36f397ac864467d29d31b18eea9e6beea13",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:gry",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-gry-5.0.8"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "5d4a0897addd5418845181d9f347eb3a80015f14a31adf4e4ad6d4569e0917ed",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:hot-formula-parser",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-hot-formula-parser-3.0.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-94"
+      ],
+      "hash_sha256": "5c3a7671aaf7f6b259279c4c0bde55203db328b0412af2ce5f9f88632d008a5f",
+      "assignment": "reserve",
+      "reason": "outside primary CWE family: CWE-94"
+    },
+    {
+      "group_id": "secbench:im-metadata",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-im-metadata-3.0.1"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "4b15028c0e9c506bff75c4b916eb90f5faecbb4f679b9ed04640f29b61944900",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy"
+    },
+    {
+      "group_id": "secbench:im-resize",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-im-resize-2.3.2"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "3f88ffde0f85606e9af73bf33c6e9960976c4d94dbc9a1272dae6825ab3283b4",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy"
+    },
+    {
+      "group_id": "secbench:kill-by-port",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-kill-by-port-0.0.1"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "3896bc59fd4a40e2c7b013ef3fe36c01bcc74ee52ea504e35b8a19f4d4e1f90e",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:kill-port-process",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-kill-port-process-0.0.1"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "c776863dfecb59c9f06b6b51edd3ed0328dca6232e47ab55e249b0f4df588507",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:killport",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-killport-1.0.1"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "694403d5e9ae36a2a3a9b5487b8346c68738728d5e433f6c8e777b8f46f3cf6c",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:libnmap",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-libnmap-0.4.11"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "ac8957c1e4946b7926cefd4f32660b3b622752aee081e20b8f8909e1c24b2454",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:local-devices",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-local-devices-2.0.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "57ea202dd5944800d88d6a49aeef40362c0b329d3e7610a3119c7937293be40e",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:macaddress",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-macaddress-0.2.8"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "2d0ba70cd0e9349c10c2c3dab489fd81234c1fdc1c299b0c84af28ad7ee0ba17",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:macfromip",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-macfromip-1.1.1"
+      ],
+      "adjudicated_cwes": [
+        "CWE-74"
+      ],
+      "hash_sha256": "d3afaac3d1239c09fd3be0235b6a3276699aa574a8f0a09c2802e001eb39c1a1",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy"
+    },
+    {
+      "group_id": "secbench:open",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-open-0.0.5"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "042d0ef4ae5e014dbeac08c3c5847efea884ac1ece4fcc155c0c7dd2ccf22f7d",
+      "assignment": "development",
+      "reason": "previously exposed group"
+    },
+    {
+      "group_id": "secbench:pdf-image",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-pdf-image-1.0.5"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "de8314d10a97887d9549d27f0be71cb2c72b0f2dee50f03b983e55afab0cba8b",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:pdfinfojs",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-pdfinfojs-0.3.6"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "594362bbdcf14cb82be0c75cf89e91f0d0fa31ece3b14974ed5bc55eeabbe9d0",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:pidusage",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-pidusage-1.0.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "2eb52ed9a3383f10220046936a2ab05627b56753cda6d36a2336890c799ed37c",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:portprocesses",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-portprocesses-1.0.4"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "af32c542c9e78424369aae07f3d2d699d68b43b573f7aef1501377f1e51f9016",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:ps",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-ps-0.0.2"
+      ],
+      "adjudicated_cwes": [
+        "cwe_unresolved"
+      ],
+      "hash_sha256": "0310b0733ae459d39e49ddc2d40aafa1fd983ca666d2e5ad8ff013ea5083c0d0",
+      "assignment": "reserve",
+      "reason": "contains cwe_unresolved"
+    },
+    {
+      "group_id": "secbench:react-dev-utils",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-react-dev-utils-11.0.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "be06e985b290ec6653e3ac9f751f440242c3e6b2a868a79ee9f107e16d791d84",
+      "assignment": "development",
+      "reason": "fresh eligible group outside first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:samsung-remote",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-samsung-remote-1.2.5"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "f37592609f1449fdaeedaf362f49b08df4dfd1344b2907774e2a0fce459ed664",
+      "assignment": "excluded",
+      "reason": "GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation"
+    },
+    {
+      "group_id": "secbench:scp",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-scp-0.0.3"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "b9771c1cfc58a27b52b7683caa50254c75300b9e4a40468d4c9267a3ff96ecc5",
+      "assignment": "excluded",
+      "reason": "GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation; fixed npm version '0.22.2' does not exist and no unique existing GHSA first_patched_version is available"
+    },
+    {
+      "group_id": "secbench:strider-git",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-strider-git-1.0.3"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "359e15e75b2f33ae604297c18f290a0061df8136fe4922b4c9627f8cfe6eb334",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy; GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation"
+    },
+    {
+      "group_id": "secbench:total.js",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-total.js-3.4.6"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "0be62393470ec3ab923c49b70cfda1fa8d42378c92ad87f372ed7a85374c4ac4",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:vboxmanage.js",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-vboxmanage.js-1.0.6"
+      ],
+      "adjudicated_cwes": [
+        "CWE-78"
+      ],
+      "hash_sha256": "c3e3f0842bf00eb74e2ae624e0ad5ff76c129fdda15f6545e86e19b76b3cc5b5",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy; GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation"
+    },
+    {
+      "group_id": "secbench:whereis",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-whereis-0.4.0"
+      ],
+      "adjudicated_cwes": [
+        "CWE-77"
+      ],
+      "hash_sha256": "3d5c91b755f5785c2749a871de84ff45aa58b883abcb96d17f45a3e3ec35ee6e",
+      "assignment": "held_out",
+      "reason": "fresh eligible group selected in first ceil(40%) of SHA-256 order"
+    },
+    {
+      "group_id": "secbench:xps",
+      "language": "javascript",
+      "dataset": [
+        "SecBench.js"
+      ],
+      "pair_ids": [
+        "secbench-xps-1.0.2"
+      ],
+      "adjudicated_cwes": [
+        "CWE-94"
+      ],
+      "hash_sha256": "159784d463b2bd0d59b24b1689a114fb3a9dd50faa1efe90520e4a5ad9cfffd1",
+      "assignment": "excluded",
+      "reason": "SecBench.js fixedVersion is unavailable; fixed npm tarball cannot be materialized under the adopted source policy; GHSA advisory package does not match the SecBench npm package; provenance is not reliable for primary evaluation"
+    }
+  ]
+}
