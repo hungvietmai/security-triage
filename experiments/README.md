@@ -39,21 +39,22 @@ docker run --rm \
 The output directory must be new. The commit above pins the native runner/config
 used for the recorded second attempt. If code/config changes, pass its actual
 committed revision and rebuild the image; hashes also appear in run.json.
-This dedicated Dockerfile is supplied for convenience; it has not been built in
-the authoring environment, which has no Docker daemon. The recorded pilot uses
-the same tool versions natively. The web application's earlier Docker CI success
-is not evidence for this new experiment image.
-
-The image installs Semgrep 1.178.0 with pinned Python dependency versions and the
-checksum-verified JavaScript-only CodeQL 2.27.1 bundle. Python support requires
-a separate native Python bundle; this Docker image still contains only JavaScript.
-Use CodeQL in accordance with its license; this
-pilot scans an open-source package.
+The experiment image is verified in GitHub Actions. It copies the reusable
+`backend/app/scanners` package into the image and sets `PYTHONPATH=/app/backend`.
+Semgrep 1.178.0 remains dependency-pinned. CodeQL uses the full multi-language
+`codeql-bundle-linux64.tar.zst` release 2.27.1, verified with SHA-256
+`1ec99cfa9420f04c2330784b4ddb8363a0dd67c3e4471cd93963c50e6c433717`.
+The build asserts that JavaScript queries 2.4.6 and Python queries 1.8.11 are
+present, and the entrypoint supplies both pack paths. Verification run
+`37295641693` built the image, imported the scanner package, ran all 31
+experiment tests, and reproduced the six curling findings byte-for-byte against
+the pre-refactor baseline. Use CodeQL in accordance with its license.
 
 ## Native invocation
 
-Use Python 3.12+, Semgrep 1.178.0 and the JavaScript CodeQL bundle 2.27.1. Both CLI
-paths and the bundled javascript-queries/2.4.6 directory can be supplied:
+Use Python 3.12+, Semgrep 1.178.0 and CodeQL 2.27.1. Native runs must supply the
+query pack that matches the case language; the verified Docker image supplies both
+JavaScript queries 2.4.6 and Python queries 1.8.11 automatically. For JavaScript:
 
 ```bash
 python3 experiments/run_pilot.py \
