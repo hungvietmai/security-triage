@@ -1,6 +1,4 @@
 import json
-from pathlib import Path
-
 from app.scanners.provenance import digest
 from app.scanners.semgrep import run_semgrep
 
