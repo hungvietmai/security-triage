@@ -180,7 +180,10 @@ def acquire_source(
     artifact_hash = _required_str(case, "artifact_sha256")
 
     if source_archive is not None:
-        if source_archive.stat().st_size > limits.max_archive_bytes or digest(source_archive) != artifact_hash:
+        if (
+            source_archive.stat().st_size > limits.max_archive_bytes
+            or digest(source_archive) != artifact_hash
+        ):
             raise ValueError("Cached source size limit or checksum mismatch")
         shutil.copyfile(source_archive, archive)
         transport = "verified_local_archive"
