@@ -52,7 +52,7 @@ def _write_findings_csv(path, findings):
         writer.writerows(findings)
 
 
-def main():
+def main(argv=None, *, acquire_source_fn=acquire_source, run_pipeline_fn=run_pipeline, print_fn=print):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
@@ -65,7 +65,7 @@ def main():
     parser.add_argument(
         "--source-archive", type=Path, help="Reuse an archive with the manifest hash"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     if not re.fullmatch(r"[a-f0-9]{40}", args.configuration_commit):
         parser.error("Exact configuration commit required")
@@ -120,7 +120,7 @@ def main():
     findings = []
     start = time.monotonic()
     try:
-        acquired = acquire_source(
+        acquired = acquire_source_fn(
             case,
             output,
             source_archive=args.source_archive,
@@ -138,7 +138,7 @@ def main():
             "seconds": acquired.seconds,
         }
 
-        result = run_pipeline(
+        result = run_pipeline_fn(
             scanners=config["scanners"],
             language=case["language"],
             source=acquired.source_path,
@@ -174,7 +174,7 @@ def main():
     write_json(output / "findings.json", findings)
     _write_findings_csv(output / "findings.csv", findings)
     write_json(output / "run.json", report)
-    print(
+    print_fn(
         json.dumps(
             {
                 "status": report["status"],
