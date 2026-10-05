@@ -1,0 +1,100 @@
+name: Temporary post-refactor curling comparison
+
+on:
+  push:
+    branches:
+      - tmp/thin-pilot-step3-4
+    paths:
+      - .github/workflows/tmp-post-refactor-curling.yml
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch pre-refactor baseline branch
+        run: git fetch origin tmp/scanner-refactor-baseline:refs/remotes/origin/tmp/scanner-refactor-baseline
+
+      - name: Install Semgrep 1.178.0
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/semgrep-venv
+          /tmp/semgrep-venv/bin/python -m pip install --upgrade pip
+          /tmp/semgrep-venv/bin/pip install "semgrep==1.178.0"
+
+      - name: Install CodeQL 2.27.1
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3             "https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.27.1/codeql-bundle-linux64.tar.gz"             -o /tmp/codeql-bundle-linux64.tar.gz
+          echo "1d380f79896ededc654c7b21fafb3360136f1aeb678ad4df4df9af3910c6b815  /tmp/codeql-bundle-linux64.tar.gz" | sha256sum -c -
+          mkdir -p /tmp/codeql
+          tar -xzf /tmp/codeql-bundle-linux64.tar.gz -C /tmp/codeql
+
+      - name: Run refactored CLI on curling
+        env:
+          PYTHONPATH: backend
+        run: |
+          set -euo pipefail
+          python experiments/run_pilot.py             --case experiments/cases/secbench-curling-0.2.0.json             --config experiments/configs/development-smoke-javascript.json             --output /tmp/curling-post-refactor-run             --configuration-commit 11ce52361b56a479e37ea82edd5015fa92935234             --semgrep /tmp/semgrep-venv/bin/semgrep             --codeql /tmp/codeql/codeql/codeql             --javascript-query-pack /tmp/codeql/codeql/qlpacks/codeql/javascript-queries/2.4.6
+
+      - name: Compare against pre-refactor baseline
+        run: |
+          set -euo pipefail
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/findings.json > /tmp/pre-findings.json
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/run.json > /tmp/pre-run.json
+          cmp /tmp/pre-findings.json /tmp/curling-post-refactor-run/findings.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          pre=json.loads(Path("/tmp/pre-run.json").read_text())
+          post=json.loads(Path("/tmp/curling-post-refactor-run/run.json").read_text())
+
+          for key in (
+              "case_id", "split", "config_id", "purpose", "protocol_commit",
+              "configuration_commit", "protocol_sha256", "case_manifest_sha256",
+              "configuration_sha256", "snapshot_sha256", "source_files",
+              "status", "mapping_version", "metrics", "metrics_reason", "raw_findings",
+              "codeql_query_files", "codeql_pack_manifest",
+          ):
+              assert pre.get(key) == post.get(key), (key, pre.get(key), post.get(key))
+
+          def normalized_argv(value):
+              return [
+                  str(item)
+                  .replace("/tmp/curling-pre-refactor-run", "<OUT>")
+                  .replace("/tmp/curling-post-refactor-run", "<OUT>")
+                  for item in value
+              ]
+
+          for step in ("semgrep", "codeql-create", "codeql"):
+              a=pre["steps"][step]
+              b=post["steps"][step]
+              for key in ("status", "exit_code", "raw_findings"):
+                  assert a.get(key) == b.get(key), (step, key, a.get(key), b.get(key))
+              assert normalized_argv(a["argv"]) == normalized_argv(b["argv"]), (
+                  step, normalized_argv(a["argv"]), normalized_argv(b["argv"])
+              )
+
+          assert "runner_sha256" in pre
+          assert "runner_sha256" not in post
+          runner_files=post["runner_files_sha256"]
+          assert "experiments/run_pilot.py" in runner_files
+          scanner_keys=sorted(k for k in runner_files if k.startswith("backend/app/scanners/"))
+          assert scanner_keys
+          print(json.dumps({
+              "findings_exact_match": True,
+              "raw_findings": post["raw_findings"],
+              "semgrep_findings": post["steps"]["semgrep"]["raw_findings"],
+              "codeql_findings": post["steps"]["codeql"]["raw_findings"],
+              "runner_file_count": len(runner_files),
+              "scanner_file_count": len(scanner_keys),
+          }, indent=2))
+          PY
