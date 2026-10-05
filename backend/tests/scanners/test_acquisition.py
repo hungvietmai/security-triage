@@ -6,7 +6,6 @@ import shutil
 import tarfile
 
 import app.scanners.acquisition as acquisition
-
 from app.scanners.acquisition import (
     AcquisitionLimits,
     acquire_source,
