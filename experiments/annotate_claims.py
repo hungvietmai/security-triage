@@ -8,7 +8,8 @@ import re
 from collections import Counter
 from pathlib import Path
 
-from experiments.run_pilot import ROOT, digest, sarif_findings, write_json
+from app.scanners.sarif import sarif_findings
+from experiments.run_pilot import ROOT, digest, write_json
 
 DEFAULT_MAPPING = ROOT / "experiments/mappings/rule-claims-v1.json"
 
