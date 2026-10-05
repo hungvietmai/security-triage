@@ -78,7 +78,6 @@ def test_pipeline_accepts_injected_process_functions(tmp_path):
     assert invoke_calls[0][0] == "semgrep"
 
 
-
 def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
     repository_root = tmp_path / "repo"
     repository_root.mkdir()
