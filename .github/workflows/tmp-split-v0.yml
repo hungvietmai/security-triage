@@ -1,0 +1,58 @@
+name: Temporary split-v0 generation
+
+on:
+  push:
+    branches:
+      - tmp/split-v0
+    paths:
+      - .github/workflows/tmp-split-v0.yml
+
+permissions:
+  contents: write
+
+jobs:
+  split:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/split-v0
+          fetch-depth: 0
+
+      - name: Generate deterministic split
+        run: |
+          set -euo pipefail
+          python experiments/make_split.py
+
+      - name: Validate language strata
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path("experiments/inventory/split_v0.json").read_text())
+          for language in ("javascript", "python"):
+              summary = p["summary_by_language"].get(language, {})
+              held = summary.get("held_out", 0)
+              dev = summary.get("development", 0)
+              if held < 1 or dev < 1:
+                  raise SystemExit(f"{language}: insufficient held-out/development groups: {summary}")
+              print(language, summary)
+          PY
+
+      - name: Show generated diff
+        run: |
+          set -euo pipefail
+          git diff -- experiments/inventory/pair-inventory.csv experiments/inventory/split_v0.json || true
+          echo
+          git diff --stat -- experiments/inventory/pair-inventory.csv experiments/inventory/split_v0.json || true
+
+      - name: Commit generated split on temporary branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/inventory/pair-inventory.csv experiments/inventory/split_v0.json
+          git commit -m "tmp: generate split-v0"
+          git push origin HEAD:tmp/split-v0
