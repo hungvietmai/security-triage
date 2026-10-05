@@ -1,0 +1,60 @@
+name: Temporary split-v0.1 verification
+
+on:
+  push:
+    branches:
+      - tmp/split-v0.1
+    paths:
+      - .github/workflows/tmp-split-v01.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/split-v0.1
+          fetch-depth: 0
+
+      - name: Verify frozen split-v0 reproducibility
+        run: |
+          set -euo pipefail
+          python experiments/make_split.py --check
+
+      - name: Derive scope-filtered split-v0.1
+        run: |
+          set -euo pipefail
+          python experiments/make_split.py --derive-v0-1
+
+      - name: Run experiment tests
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s experiments -p 'test_*.py'
+
+      - name: Show split-v0.1 summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path("experiments/inventory/split_v0.1.json").read_text())
+          print(json.dumps({
+            "summary_by_language":p["summary_by_language"],
+            "held_out_groups_by_language_and_cwe":p["held_out_groups_by_language_and_cwe"],
+            "removed_or_reserved_from_frozen_held_out":p["removed_or_reserved_from_frozen_held_out"],
+            "selection_redrawn":p["selection_redrawn"],
+            "replacement_performed":p["replacement_performed"],
+          }, indent=2))
+          PY
+
+      - name: Commit derived artifact on temporary branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/inventory/split_v0.1.json
+          git commit -m "tmp: derive split-v0.1"
+          git push origin HEAD:tmp/split-v0.1
