@@ -4,6 +4,7 @@ import io
 import json
 import shutil
 import tarfile
+import urllib.request
 
 import app.scanners.acquisition as acquisition
 from app.scanners.acquisition import (
@@ -105,7 +106,7 @@ def test_fetch_verifies_transport_hash_and_limit(tmp_path, monkeypatch):
     expected = hashlib.sha256(data).hexdigest()
 
     monkeypatch.setattr(
-        acquisition.urllib.request,
+        urllib.request,
         "urlopen",
         lambda *args, **kwargs: _Response(data),
     )
@@ -113,7 +114,7 @@ def test_fetch_verifies_transport_hash_and_limit(tmp_path, monkeypatch):
     assert target.read_bytes() == data
 
     monkeypatch.setattr(
-        acquisition.urllib.request,
+        urllib.request,
         "urlopen",
         lambda *args, **kwargs: _Response(data, "http://example.test/archive.tgz"),
     )
@@ -125,7 +126,7 @@ def test_fetch_verifies_transport_hash_and_limit(tmp_path, monkeypatch):
         raise AssertionError("insecure redirect was accepted")
 
     monkeypatch.setattr(
-        acquisition.urllib.request,
+        urllib.request,
         "urlopen",
         lambda *args, **kwargs: _Response(data + b"x"),
     )
