@@ -134,8 +134,7 @@ def propose(row, sources):
                 "related_location_id": int(ref),
                 "message_link": f"[shell command]({ref})",
             },
-            "source_context": "
-".join(
+            "source_context": "\n".join(
                 lines[max(0, sl - 2) : min(len(lines), el + 1)]
             ),
             "status": "proposed_needs_review",
