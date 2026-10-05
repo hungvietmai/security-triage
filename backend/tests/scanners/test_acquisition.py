@@ -13,7 +13,6 @@ from app.scanners.acquisition import (
 )
 from app.scanners.provenance import digest
 
-
 def _write_archive(path):
     package = json.dumps({"name": "curling", "version": "0.2.0"}).encode()
     source = b"module.exports = {}\n"
@@ -29,7 +28,6 @@ def _write_archive(path):
         source_info = tarfile.TarInfo("package/index.js")
         source_info.size = len(source)
         bundle.addfile(source_info, io.BytesIO(source))
-
 
 def test_acquire_source_from_verified_local_archive(tmp_path):
     archive = tmp_path / "curling.tgz"
@@ -60,7 +58,6 @@ def test_acquire_source_from_verified_local_archive(tmp_path):
     assert acquired.snapshot_sha256 == digest(archive)
     assert acquired.source_files == ["index.js", "package.json"]
     assert (acquired.source_path / "package.json").is_file()
-
 
 def test_unpack_rejects_path_traversal(tmp_path):
     archive = tmp_path / "bad.tgz"
@@ -97,7 +94,6 @@ class _Response:
 
     def read(self, size):
         return self.data[:size]
-
 
 def test_fetch_verifies_transport_hash_and_limit(tmp_path, monkeypatch):
     target = tmp_path / "download.tgz"
@@ -136,7 +132,6 @@ def test_fetch_verifies_transport_hash_and_limit(tmp_path, monkeypatch):
     else:
         raise AssertionError("oversized download was accepted")
 
-
 def test_verify_github_source_identity(tmp_path):
     source = tmp_path / "repo"
     source.mkdir()
@@ -162,15 +157,12 @@ def test_verify_github_source_identity(tmp_path):
     else:
         raise AssertionError("bad identity hash was accepted")
 
-
 def test_acquire_source_download_and_registry_integrity(tmp_path, monkeypatch):
     archive = tmp_path / "original.tgz"
     _write_archive(archive)
     output = tmp_path / "output"
     output.mkdir()
-    integrity = "sha512-" + base64.b64encode(
-        hashlib.sha512(archive.read_bytes()).digest()
-    ).decode()
+    integrity = "sha512-" + base64.b64encode(hashlib.sha512(archive.read_bytes()).digest()).decode()
     case = {
         "source_kind": "npm_tarball",
         "package_name": "curling",
@@ -201,7 +193,6 @@ def test_acquire_source_download_and_registry_integrity(tmp_path, monkeypatch):
 
     assert acquired.transport == "https"
     assert acquired.snapshot_sha256 == digest(archive)
-
 
 def test_acquire_source_rejects_bad_registry_integrity(tmp_path):
     archive = tmp_path / "curling.tgz"
