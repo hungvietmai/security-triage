@@ -32,7 +32,11 @@ jobs:
           uv run ruff format --check .
           uv run mypy
           uv run pytest --cov
-      - name: Discover experiment tests
+      - name: Run experiment runner tests
         env:
           PYTHONPATH: backend
-        run: python -m unittest discover -s experiments -t . -v
+        run: python -m unittest experiments.test_runner -v
+      - name: Discover split tests
+        env:
+          PYTHONPATH: backend
+        run: python -m unittest discover -s experiments/tests -t . -v
