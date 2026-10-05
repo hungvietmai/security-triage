@@ -1,0 +1,35 @@
+name: Temporary scope evidence collection
+
+on:
+  push:
+    branches:
+      - tmp/scope-review-v0
+    paths:
+      - .github/workflows/tmp-scope-evidence.yml
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/scope-review-v0
+          fetch-depth: 0
+      - name: Collect advisory and patch evidence
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python experiments/collect_scope_evidence.py
+      - name: Commit evidence on temporary branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/inventory/scope-evidence-v0.json
+          git commit -m "tmp: collect scope evidence v0"
+          git push origin HEAD:tmp/scope-review-v0
