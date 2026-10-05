@@ -15,6 +15,7 @@ from app.scanners.acquisition import (
     unpack,
     verify_source_identity,
 )
+from app.scanners.codeql import query_pack_for_language
 from app.scanners.pipeline import PipelineResult
 from app.scanners.sarif import sarif_findings
 from app.scanners.semgrep import stage_rule
@@ -66,6 +67,92 @@ class RunnerTests(unittest.TestCase):
             ):
                 with self.subTest(field=field, value=value), self.assertRaises(ValueError):
                     verify_source_identity({**case, field: value}, root)
+
+    def test_language_selects_its_own_query_pack(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            javascript = root / "javascript"
+            python = root / "python"
+            javascript.mkdir()
+            python.mkdir()
+            self.assertEqual(
+                query_pack_for_language(
+                    "javascript",
+                    javascript_query_pack=javascript,
+                    python_query_pack=python,
+                ),
+                javascript.resolve(),
+            )
+            self.assertEqual(
+                query_pack_for_language(
+                    "python",
+                    javascript_query_pack=javascript,
+                    python_query_pack=python,
+                ),
+                python.resolve(),
+            )
+            self.assertNotEqual(javascript.resolve(), python.resolve())
+
+    def test_failed_pipeline_is_not_clean_scan(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            case_data = json.loads(
+                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text()
+            )
+            case = root / "case.json"
+            case.write_text(json.dumps(case_data))
+            config = ROOT / "experiments/configs/development-smoke-javascript.json"
+            output = root / "out"
+            source = root / "source"
+            source.mkdir()
+            acquired = AcquiredSource(
+                source_path=source,
+                archive_path=output / "source.tgz",
+                snapshot_sha256="f" * 64,
+                source_files=["index.js"],
+                transport="verified_local_archive",
+                seconds=0.1,
+            )
+            failed = PipelineResult(
+                status="failed",
+                steps={"codeql": {"status": "failed", "error": "fixture failure"}},
+                findings=[],
+                codeql_query_files=None,
+                codeql_pack_manifest=None,
+            )
+            argv = [
+                "--case",
+                str(case),
+                "--config",
+                str(config),
+                "--output",
+                str(output),
+                "--configuration-commit",
+                "c" * 40,
+            ]
+
+            def fake_acquire(case_value, output_value, *, source_archive, limits):
+                return acquired
+
+            def fake_pipeline(**kwargs):
+                return failed
+
+            self.assertEqual(
+                run_pilot.main(
+                    argv,
+                    acquire_source_fn=fake_acquire,
+                    run_pipeline_fn=fake_pipeline,
+                    print_fn=lambda _: None,
+                ),
+                2,
+            )
+            report = json.loads((output / "run.json").read_text())
+            findings = json.loads((output / "findings.json").read_text())
+            self.assertEqual(report["status"], "failed")
+            self.assertEqual(report["raw_findings"], 0)
+            self.assertEqual(report["steps"]["codeql"]["status"], "failed")
+            self.assertEqual(report["steps"]["codeql"]["error"], "fixture failure")
+            self.assertEqual(findings, [])
 
     def test_python_rejects_javascript_configuration_before_scanning(self):
         with tempfile.TemporaryDirectory() as folder:
