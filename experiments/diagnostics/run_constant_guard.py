@@ -9,7 +9,8 @@ import json
 from pathlib import Path
 import shutil
 
-from app.scanners.process import invoke, tool_version\nfrom experiments.run_pilot import ROOT, digest, write_json
+from app.scanners.process import invoke, tool_version
+from experiments.run_pilot import ROOT, digest, write_json
 
 QUERY = ROOT / "rules/codeql/python-evidence/ConstantIntegerGuard.ql"
 FIXTURES = ROOT / "experiments/fixtures/constant-guard"
@@ -89,7 +90,15 @@ def main():
             shutil.copyfile(path, output / name)
             report["retained_input_sha256"][name] = digest(output / name)
         shutil.copyfile(base / "run.json", output / "base-run.json")
-        tool_version(\n            str(binary),\n            "2.27.1",\n            output,\n            "codeql",\n            report["steps"],\n            working_directory=ROOT,\n            invoke_fn=invoke,\n        )
+        tool_version(
+            str(binary),
+            "2.27.1",
+            output,
+            "codeql",
+            report["steps"],
+            working_directory=ROOT,
+            invoke_fn=invoke,
+        )
         fixture_db = output / "fixture-db"
         run("fixture-create", [binary, "database", "create", fixture_db,
                                "--language=python", "--source-root", FIXTURES,
