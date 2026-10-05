@@ -1,7 +1,7 @@
 import json
 import sys
 
-from app.scanners.process import invoke, tool_version
+from app.scanners.process import ProcessRecord, invoke, tool_version
 
 
 def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
@@ -25,7 +25,7 @@ def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
 def test_tool_version_uses_injected_invoke(tmp_path):
     output = tmp_path / "output"
     output.mkdir()
-    steps = {}
+    steps: dict[str, ProcessRecord] = {}
     calls = []
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
