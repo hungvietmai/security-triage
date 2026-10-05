@@ -1,4 +1,5 @@
 import json
+
 from app.scanners.provenance import digest
 from app.scanners.semgrep import run_semgrep
 
