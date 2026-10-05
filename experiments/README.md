@@ -46,9 +46,10 @@ Semgrep 1.178.0 remains dependency-pinned. CodeQL uses the full multi-language
 `1ec99cfa9420f04c2330784b4ddb8363a0dd67c3e4471cd93963c50e6c433717`.
 The build asserts that JavaScript queries 2.4.6 and Python queries 1.8.11 are
 present, and the entrypoint supplies both pack paths. Verification run
-`37295641693` built the image, imported the scanner package, ran all 31
-experiment tests, and reproduced the six curling findings byte-for-byte against
-the pre-refactor baseline. Use CodeQL in accordance with its license.
+`37297668652` built the image from candidate commit
+`965ccc489be21842e5c7971db49ac09e99f55240`, verified the native commands with
+`PYTHONPATH` removed, ran all 31 experiment tests, and reproduced the six curling
+findings byte-for-byte against the pre-refactor baseline. Use CodeQL in accordance with its license.
 
 ## Native invocation
 
