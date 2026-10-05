@@ -34,9 +34,7 @@ def test_pipeline_accepts_injected_process_functions(tmp_path):
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
         invoke_calls.append((name, [str(item) for item in argv]))
         if name == "semgrep":
-            (output / "semgrep.sarif").write_text(
-                json.dumps({"version": "2.1.0", "runs": []})
-            )
+            (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
