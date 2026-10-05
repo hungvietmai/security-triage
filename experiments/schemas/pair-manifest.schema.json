@@ -140,6 +140,34 @@
     },
     "fixed_source": {
       "$ref": "#/$defs/source_or_null"
+    },
+    "scope_verdict": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "in_scope",
+            "out_of_scope",
+            "unresolved"
+          ]
+        },
+        {
+          "type": "string",
+          "maxLength": 0
+        }
+      ]
+    },
+    "scope_reason": {
+      "type": "string"
+    },
+    "sink_kind": {
+      "type": "string"
+    },
+    "os_command_execution_basis": {
+      "type": "string"
+    },
+    "scope_review_provenance": {
+      "type": "string"
     }
   },
   "allOf": [

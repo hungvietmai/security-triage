@@ -1,0 +1,1335 @@
+{
+  "review_id": "scope-review-v0",
+  "date": "2026-10-05",
+  "amendment": "experiments/amendments/AMENDMENT_04_SCOPE_REVIEW.md",
+  "method": "Manual verdict from advisory and fix-patch evidence; no Semgrep/CodeQL output used.",
+  "aggregation_rule": "A group remains in scope if at least one pair row is in_scope; out-of-scope rows inside a mixed group are excluded from the primary denominator.",
+  "reviewed_usable_groups": 62,
+  "reviewed_rows": 71,
+  "group_counts": {
+    "python:in_scope": 15,
+    "python:out_of_scope": 12,
+    "javascript:in_scope": 34,
+    "javascript:out_of_scope": 1
+  },
+  "row_counts": {
+    "javascript:in_scope": 34,
+    "javascript:out_of_scope": 1,
+    "python:out_of_scope": 19,
+    "python:in_scope": 17
+  },
+  "groups": [
+    {
+      "group_id": "pyvul:abilian/abilian-devtools",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-abilian-abilian-devtools-9d71b0d3b6b4",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix replaces os.system with subprocess argument execution.",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/abilian/abilian-devtools/commit/9d71b0d3b6b467589d58aacc932ca3dc7e524ce2"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-ansible-ansible-35938b907dfc",
+          "cwe": "CWE-77",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Reviewed fixes concern facts filtering/template unsafe preservation, not an OS process/command-execution sink.",
+          "sink_kind": "template_or_internal_data_handling",
+          "provenance": "https://github.com/ansible/ansible/commit/35938b907dfcd1106ca40b794f0db446bdb8cf09"
+        },
+        {
+          "pair_id": "pyvul-ansible-ansible-03aff644cc1c",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Reviewed fixes concern facts filtering/template unsafe preservation, not an OS process/command-execution sink.",
+          "sink_kind": "template_or_internal_data_handling",
+          "provenance": "https://github.com/ansible/ansible/commit/03aff644cc1c00e1f7551195c68fbd0d13a39e6e"
+        },
+        {
+          "pair_id": "pyvul-ansible-ansible-4c8c40fd3d4a",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Reviewed fixes concern facts filtering/template unsafe preservation, not an OS process/command-execution sink.",
+          "sink_kind": "template_or_internal_data_handling",
+          "provenance": "https://github.com/ansible/ansible/commit/4c8c40fd3d4a58defdc80e7d22aa8d26b731353e"
+        },
+        {
+          "pair_id": "pyvul-ansible-ansible-8aa850e3573e",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Reviewed fixes concern facts filtering/template unsafe preservation, not an OS process/command-execution sink.",
+          "sink_kind": "template_or_internal_data_handling",
+          "provenance": "https://github.com/ansible/ansible/commit/8aa850e3573e48c9a2f12aef84e8a3a6f5ba4847"
+        },
+        {
+          "pair_id": "pyvul-ansible-ansible-8b17e5b9229f",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Reviewed fixes concern facts filtering/template unsafe preservation, not an OS process/command-execution sink.",
+          "sink_kind": "template_or_internal_data_handling",
+          "provenance": "https://github.com/ansible/ansible/commit/8b17e5b9229ffaecfe10a4881bc3f87dd2c184e1"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:apache/airflow",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-apache-airflow-2844dad1c762",
+          "cwe": "CWE-88",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix restricts ODBC driver configuration from connection extras; no OS process/command execution is repaired.",
+          "sink_kind": "odbc_configuration",
+          "provenance": "https://github.com/apache/airflow/commit/2844dad1c762f5c7dd1271866d3661bf66657300"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:autogluon/autogluon",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-autogluon-autogluon-23a37e74e58d",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix changes yaml.load to safe_load; vulnerability is unsafe deserialization.",
+          "sink_kind": "unsafe_deserialization",
+          "provenance": "https://github.com/autogluon/autogluon/commit/23a37e74e58d03055c84a1b89c5af6c3db296b5e"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:celery/celery",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-celery-celery-1f7ad7e6df1e",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Advisory/fix documents attacker-controlled reconstruction reaching os.system as the callable sink.",
+          "sink_kind": "os_command_execution",
+          "provenance": "https://github.com/celery/celery/commit/1f7ad7e6df1e02039b6ab9eec617d283598cad6b"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:cyanomiko/dcnnt-py",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-cyanomiko-dcnnt-py-b4021d784a97",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix quotes attacker-controlled notification fields before subprocess.call(..., shell=True).",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/cyanomiko/dcnnt-py/commit/b4021d784a97e25151a5353aa763a741e9a148f5"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:dgilland/pydash",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-dgilland-pydash-6ff0831ad285",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix blocks dunder attribute access; vulnerable construct is object/introspection access, not OS command execution.",
+          "sink_kind": "object_attribute_access",
+          "provenance": "https://github.com/dgilland/pydash/commit/6ff0831ad285fff937cafd2a853f20cc9ae92021"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:django/django",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-django-django-e1e81aa1c442",
+          "cwe": "CWE-88",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Header/URL validation fix; no OS process/command execution sink.",
+          "sink_kind": "header_url_validation",
+          "provenance": "https://github.com/django/django/commit/e1e81aa1c4427411e3c68facdd761229ffea6f6f"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:dwisiswant0/apkleaks",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-dwisiswant0-apkleaks-a966e781499f",
+          "cwe": "CWE-88",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Vulnerable code executes a constructed command through os.system.",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/dwisiswant0/apkleaks/commit/a966e781499ff6fd4eea66876d7532301b13a382"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:google/slo-generator",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-google-slo-generator-36318beab1b8",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix replaces unsafe YAML loader with SafeLoader; vulnerability is unsafe deserialization.",
+          "sink_kind": "unsafe_deserialization",
+          "provenance": "https://github.com/google/slo-generator/commit/36318beab1b85d14bb860e45bea186b184690d5d"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:huggingface/transformers",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-huggingface-transformers-2272ab57a99b",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix removes shell=True and passes argument list to subprocess.Popen.",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:jaspernbrouwer/powerline-gitstatus",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-jaspernbrouwer-powerline-gitstatus-fe8e963b3489",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix mitigates command injection through Git command execution.",
+          "sink_kind": "os_command_argument_injection",
+          "provenance": "https://github.com/jaspernbrouwer/powerline-gitstatus/commit/fe8e963b3489e4cceaa2c1f26f2bcc2ef405364c"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:jupyterhub/binderhub",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-jupyterhub-binderhub-195caac17269",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix adds '--' to git ls-remote arguments, preventing option/argument injection into an OS command.",
+          "sink_kind": "os_command_argument_injection",
+          "provenance": "https://github.com/jupyterhub/binderhub/commit/195caac172690456dcdc8cc7a6ca50e05abf8182"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:langchain-ai/langchain",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-langchain-ai-langchain-a2f191a32229",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix removes arbitrary Python exec in JIRA wrapper; no OS command sink is the vulnerable construct.",
+          "sink_kind": "language_exec",
+          "provenance": "https://github.com/langchain-ai/langchain/commit/a2f191a32229256dd41deadf97786fe41ce04cbb"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:mlflow/mlflow",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": true,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-mlflow-mlflow-6dde93758d42",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix quotes values used to construct commands executed through MLflow process/shell helpers.",
+          "sink_kind": "os_command_execution",
+          "provenance": "https://github.com/mlflow/mlflow/commit/6dde93758d42455cb90ef324407919ed67668b9b"
+        },
+        {
+          "pair_id": "pyvul-mlflow-mlflow-a98a341a7222",
+          "cwe": "CWE-77",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix introduces Jinja2 SandboxedEnvironment; vulnerable construct is template interpretation.",
+          "sink_kind": "template_interpreter",
+          "provenance": "https://github.com/mlflow/mlflow/commit/a98a341a7222f894b7735db575ad9311ecaba4e3"
+        },
+        {
+          "pair_id": "pyvul-mlflow-mlflow-802911381717",
+          "cwe": "CWE-77",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix introduces Jinja2 SandboxedEnvironment; vulnerable construct is template interpretation.",
+          "sink_kind": "template_interpreter",
+          "provenance": "https://github.com/mlflow/mlflow/commit/8029113817175cc9b9bed5c1bebe2f9afea2835b"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:nexb/scancode.io",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-nexB-scancode.io-07ec0de1964b",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix changes subprocess.Popen from shell=True to shell=False; canonical repository is aboutcode-org/scancode.io.",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/aboutcode-org/scancode.io/commit/07ec0de1964b14bf085a1c9a27ece2b61ab6105c"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:paddlepaddle/paddle",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": true,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-PaddlePaddle-Paddle-c5f6862d118d",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "wget command is constructed and executed by subprocess.Popen(..., shell=True).",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/PaddlePaddle/Paddle/commit/c5f6862d118d7d69210f0e73bea1b055f5f21f2b"
+        },
+        {
+          "pair_id": "pyvul-PaddlePaddle-Paddle-49bec1760535",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Input is concatenated into os.popen('echo -n ' + value), a shell command sink.",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/PaddlePaddle/Paddle/commit/49bec176053595975c1941cff9749c55f7203ea9"
+        },
+        {
+          "pair_id": "pyvul-PaddlePaddle-Paddle-5ed9478fdef9",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix removes Python eval-based comparison logic; no OS command sink is the vulnerable construct.",
+          "sink_kind": "language_eval",
+          "provenance": "https://github.com/PaddlePaddle/Paddle/commit/5ed9478fdef96a06eeec9093f9e768c97b094af3"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:pgadmin-org/pgadmin4",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-pgadmin-org-pgadmin4-35f05e49b363",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix replaces shell command construction/subprocess.getoutput with subprocess.run(shell=False).",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/pgadmin-org/pgadmin4/commit/35f05e49b3632a0a674b9b36535a7fe2d93dd0c2"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:pypa/pip",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-pypa-pip-389cb799d0da",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix changes Mercurial '-r' argument formatting so attacker-controlled revision cannot be interpreted as an option.",
+          "sink_kind": "os_command_argument_injection",
+          "provenance": "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:pytorch/pytorch",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-pytorch-pytorch-767f6aa49fe2",
+          "cwe": "CWE-77",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix restricts Python eval of JIT annotation strings; vulnerable construct is language evaluation.",
+          "sink_kind": "language_eval",
+          "provenance": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:ray-project/ray",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-ray-project-ray-193ff8c80067",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix replaces shell subprocess execution with exec-style argument-list execution.",
+          "sink_kind": "os_shell_command",
+          "provenance": "https://github.com/ray-project/ray/commit/193ff8c80067aed4037755cc10f15eb6986dfe95"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:savon-noir/python-libnmap",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-savon-noir-python-libnmap-c36fecde9001",
+          "cwe": "CWE-88",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fix validates Nmap targets to prevent injection of extra command-line options.",
+          "sink_kind": "os_command_argument_injection",
+          "provenance": "https://github.com/savon-noir/python-libnmap/commit/c36fecde90017befeb4853396d0e2aac93c95b64"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:snowflakedb/snowflake-connector-python",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-snowflakedb-snowflake-connector-python-1cdbd3b1403c",
+          "cwe": "CWE-77",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix validates SSO URL before opening a browser; no OS command-execution sink is repaired.",
+          "sink_kind": "url_browser_navigation",
+          "provenance": "https://github.com/snowflakedb/snowflake-connector-python/commit/1cdbd3b1403c5ef520d7f4d9614fe35165e101ac"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:tankywoo/simiki",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-tankywoo-simiki-45da0ab7c1e9",
+          "cwe": "CWE-77",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix changes PyYAML loading behavior; vulnerability is unsafe deserialization.",
+          "sink_kind": "unsafe_deserialization",
+          "provenance": "https://github.com/tankywoo/simiki/commit/45da0ab7c1e94b368cac22867e7ac9a42dbb9390"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:tensorflow/tensorflow",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-tensorflow-tensorflow-8b202f08d52e",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix replaces Python eval with literal_eval; vulnerability is language-level code evaluation.",
+          "sink_kind": "language_eval",
+          "provenance": "https://github.com/tensorflow/tensorflow/commit/8b202f08d52e8206af2bdb2112a62fafbc546ec7"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:weblateorg/weblate",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-WeblateOrg-weblate-35d59f1f0405",
+          "cwe": "CWE-88",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fixes harden Git/Mercurial subprocess arguments against option injection.",
+          "sink_kind": "os_command_argument_injection",
+          "provenance": "https://github.com/WeblateOrg/weblate/commit/35d59f1f040541c358cece0a8d4a63183ca919b8"
+        },
+        {
+          "pair_id": "pyvul-WeblateOrg-weblate-d83672a3e741",
+          "cwe": "CWE-88",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Fixes harden Git/Mercurial subprocess arguments against option injection.",
+          "sink_kind": "os_command_argument_injection",
+          "provenance": "https://github.com/WeblateOrg/weblate/commit/d83672a3e7415da1490334e2c9431e5da1966842"
+        }
+      ]
+    },
+    {
+      "group_id": "pyvul:yt-dlp/yt-dlp",
+      "language": "python",
+      "dataset": "PyVul",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "pyvul-yt-dlp-yt-dlp-de015e930747",
+          "cwe": "CWE-78",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "Fix addresses shell escaping for --exec on Windows; frozen primary threat model is Linux/POSIX.",
+          "sink_kind": "platform_outside_linux_posix",
+          "provenance": "https://github.com/yt-dlp/yt-dlp/commit/de015e930747165dbb8fcd360f8775fd973b7d6e"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:@thi.ng/egf",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-thi.ng-egf-0.3.0",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-RJ44-GPJC-29R7|https://github.com/thi-ng/umbrella/commit/88f61656e5f5cfba960013b8133186389efaf243|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/thi.ng-egf_0.3.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:apex-publish-static-files",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-apex-publish-static-files-2.0.0",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-9JM3-5835-537M|https://github.com/vincentmorneau/apex-publish-static-files/commit/2209af8f2b65c24aa55ab757e0e05b958c16f063|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/apex-publish-static-files_2.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:arpping",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-arpping-2.0.0",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/haf-decent/arpping/commit/0db06723f8c3c73a5cc0829c667d45cba25ca44d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/arpping_2.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:async-git",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-async-git-1.13.1",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-6QPR-9MC5-7GCH|https://github.com/omrilotan/async-git/commit/d1950a5021f4e19d92f347614be0d85ce991510d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/async-git_1.13.1/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:bestzip",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-bestzip-2.1.6",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-6XV6-JPVW-CX6Q|https://github.com/nfriedly/node-bestzip/commit/45d4a901478c6a8f396c8b959dd6cf8fd3f955b6|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/bestzip_2.1.6/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:blamer",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-blamer-0.1.13",
+          "cwe": "CWE-94",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-7VM7-J8P7-H346|https://github.com/kucherenko/blamer/commit/5fada8c9b6986ecd28942b724fa682e77ce1e11c|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/blamer_0.1.13/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:clamscan",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-clamscan-1.2.0",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-5v25-xr56-phph|https://github.com/kylefarris/clamscan|https://github.com/kylefarris/clamscan/commit/5f557c970817fe8c578ec3f7ad3bcbcef4cf5538|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/clamscan_1.2.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:codecov",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-codecov-3.6.4",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-XP63-6VF5-XF3V|https://github.com/codecov/codecov-node/commit/c0711c656686e902af2cd92d6aecc8074de4d83d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/codecov_3.6.4/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:connection-tester",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-connection-tester-0.2.0",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-W5MP-8P8W-MHH8|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/connection-tester_0.2.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:curling",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-curling-0.2.0",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-XMXH-G7WJ-8M4M|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/curling_0.2.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:diskusage-ng",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-diskusage-ng-0.2.6",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-3269-X4PW-VFFG|https://github.com/iximiuz/node-diskusage-ng/commit/48e7e093486b528f0c81ec699573e0e4a431b8d3|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/diskusage-ng_0.2.6/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:dns-sync",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-dns-sync-0.1.0",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-Q5PQ-PGRV-FH89|https://github.com/skoranga/node-dns-sync|https://github.com/skoranga/node-dns-sync/commit/d9abaae384b198db1095735ad9c1c73d7b890a0d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/dns-sync_0.1.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:extra-asciinema",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-extra-asciinema-1.0.0",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/nodef/extra-asciinema/commit/fd1a8a38d6c72e1eb573b2ab03d5e86de8047480|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/extra-asciinema_1.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:get-npm-package-version",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-get-npm-package-version-1.0.6",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-4h66-vghf-xg5x|https://github.com/hoperyy/get-npm-package-version|https://github.com/hoperyy/get-npm-package-version/commit/40b1cf31a0607ea66f9e30a0c3af1383b52b2dec|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/get-npm-package-version_1.0.6/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:git-parse",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-git-parse-1.0.4",
+          "cwe": "CWE-74",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-m744-2jj8-vpfv|https://github.com/wayfair/git-parse|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/git-parse_1.0.4/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:giting",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-giting-0.0.7",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-53XJ-V576-3CH2|https://github.com/MangoRaft/git|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/giting_0.0.7/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:gm",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-gm-1.20.0",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-PJH3-JV7W-9JPR|https://github.com/aheckmann/gm|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/gm_1.20.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:growl",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-growl-1.9.0",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-QH2H-CHJ9-JFFQ|https://github.com/tj/node-growl|https://github.com/tj/node-growl/commit/d71177d5331c9de4658aca62e0ac921f178b0669|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/growl_1.9.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:gry",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-gry-5.0.8",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/gry_5.0.8/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:hot-formula-parser",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "out_of_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-hot-formula-parser-3.0.0",
+          "cwe": "CWE-94",
+          "scope_verdict": "out_of_scope",
+          "scope_reason": "GHSA/fix shows the vulnerable parse path concatenates input into JavaScript eval; OS execution is only a possible payload after language-level code execution.",
+          "sink_kind": "language_eval",
+          "provenance": "https://github.com/advisories/GHSA-RC77-XXQ6-4MFF|https://github.com/handsontable/formula-parser|https://github.com/handsontable/formula-parser/commit/396b089738d4bf30eb570a4fe6a188affa95cd5e|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/hot-formula-parser_3.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:kill-by-port",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-kill-by-port-0.0.1",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-MM4F-47CH-F7HX|https://github.com/GuyMograbi/kill-by-port|https://github.com/GuyMograbi/kill-by-port/commit/ea5b1f377e196a4492e05ff070eba8b30b7372c4|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/kill-by-port_0.0.1/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:kill-port-process",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-kill-port-process-0.0.1",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-xp4x-j9vh-c3wf|https://github.com/hilleer/kill-port-process|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/kill-port-process_0.0.1/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:killport",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-killport-1.0.1",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-FC42-H7Q4-QP8H|https://github.com/ssnau/killport/commit/bec8e371f170a12e11cd222ffc7a6e1ae9942638|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/killport_1.0.1/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:libnmap",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-libnmap-0.4.11",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-7G2W-6R25-2J7P|https://github.com/jas-/node-libnmap/commit/c235b24b0342e12a5dbf502f89daabe95883b6c8|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/libnmap_0.4.11/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:local-devices",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-local-devices-2.0.0",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-W725-67P7-XV22|https://github.com/DylanPiercey/local-devices|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/local-devices_2.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:macaddress",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-macaddress-0.2.8",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-PP57-MQMH-44H7|https://github.com/scravy/node-macaddress|https://github.com/scravy/node-macaddress/commit/358fd594adb196a86b94ac9c691f69fe5dad2332|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/macaddress_0.2.8/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:open",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-open-0.0.5",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-28XH-WPGR-7FM8|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/open_0.0.5/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:pdf-image",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-pdf-image-1.0.5",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-5GWH-G79J-VH4Q|https://github.com/roest01/node-pdf-image|https://github.com/roest01/node-pdf-image/commit/54679496a89738443917608c2bbe2f6e5dd20e83|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pdf-image_1.0.5/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:pdfinfojs",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-pdfinfojs-0.3.6",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-3PXP-6963-46R9|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pdfinfojs_0.3.6/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:pidusage",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-pidusage-1.0.0",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-HFQ9-RFPV-J8R8|https://github.com/soyuka/pidusage/commit/b70eca15f7ca7f1b82a15f8a5d4bb48737f5a89d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pidusage_1.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:portprocesses",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-portprocesses-1.0.4",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-VM67-7VMG-66VM|https://github.com/rrainn/PortProcesses/commit/86811216c9b97b01b5722f879f8c88a7aa4214e1|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/portprocesses_1.0.4/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:ps",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "reserve"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-ps-0.0.2",
+          "cwe": "cwe_unresolved",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-CFHG-9X44-78H2|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/ps_0.0.2/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:react-dev-utils",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "development"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-react-dev-utils-11.0.0",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-5Q6M-3H65-W53X|https://github.com/facebook/create-react-app|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/react-dev-utils_11.0.0/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:total.js",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-total.js-3.4.6",
+          "cwe": "CWE-78",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-4449-HG37-77V8|https://github.com/totaljs/framework/commit/6192491ab2631e7c1d317c221f18ea613e2c18a5|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/total.js_3.4.6/package.json"
+        }
+      ]
+    },
+    {
+      "group_id": "secbench:whereis",
+      "language": "javascript",
+      "dataset": "SecBench.js",
+      "frozen_split": [
+        "held_out"
+      ],
+      "group_scope_verdict": "in_scope",
+      "mixed_pair_scope": false,
+      "pair_decisions": [
+        {
+          "pair_id": "secbench-whereis-0.4.0",
+          "cwe": "CWE-77",
+          "scope_verdict": "in_scope",
+          "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+          "sink_kind": "os_process_command_execution",
+          "provenance": "https://github.com/advisories/GHSA-WJR4-2JGW-HMV8|https://github.com/vvo/node-whereis/commit/0f64e3780235004fb6e43bfd153ea3e0e210ee2b|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/whereis_0.4.0/package.json"
+        }
+      ]
+    }
+  ]
+}
