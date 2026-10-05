@@ -53,3 +53,24 @@ This log records externally visible research-methodology freezes and publication
   is excluded and `scope_verdict=unresolved` is reserve.
 - No new Semgrep/CodeQL pair scan was run to create or inspect this split.
 
+## 2026-10-05 — Amendment 04: pre-scan OS-command scope review
+
+- Amendment: `experiments/amendments/AMENDMENT_04_SCOPE_REVIEW.md`
+- Adoption commit: `f6243fa36784ecc88af2259bedc2b121a25f357d`
+- Commit URL: https://github.com/hungvietmai/security-triage/commit/f6243fa36784ecc88af2259bedc2b121a25f357d
+- Tag: `amendment-04`
+- Tag URL: https://github.com/hungvietmai/security-triage/tree/amendment-04
+- Verified tag target: `f6243fa36784ecc88af2259bedc2b121a25f357d`
+- GitHub-recorded publication evidence time: `2026-10-05T08:25:58Z`
+  (`2026-10-05T15:25:58+07:00`)
+- Publication evidence: GitHub Actions run
+  https://github.com/hungvietmai/security-triage/actions/runs/37283590108
+- Workflow conclusion: `success`.
+- Scope correction: the Linux/POSIX OS-process/command-execution sink condition
+  now applies to CWE-77, CWE-78 and CWE-88.
+- Scope review must use advisory/patch evidence without Semgrep/CodeQL output.
+- Out-of-scope or unresolved held-out groups are not replaced, and split-v0 is
+  not redrawn.
+- No new vulnerable-pair Semgrep/CodeQL scan had been produced or inspected
+  before adoption of this amendment.
+
