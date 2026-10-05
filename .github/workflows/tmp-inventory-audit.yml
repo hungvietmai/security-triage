@@ -1,0 +1,48 @@
+name: Temporary pair inventory audit
+
+on:
+  push:
+    branches:
+      - tmp/inventory-audit
+    paths:
+      - .github/workflows/tmp-inventory-audit.yml
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/inventory-audit
+          fetch-depth: 0
+
+      - name: Run flagged inventory audit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python experiments/audit_pair_inventory.py
+
+      - name: Show generated diff
+        run: |
+          set -euo pipefail
+          git diff -- experiments/inventory/pair-inventory.csv experiments/inventory/FLAGGED_REVIEW_2026-10-05.md || true
+          echo
+          git diff --stat -- experiments/inventory/pair-inventory.csv experiments/inventory/FLAGGED_REVIEW_2026-10-05.md || true
+
+      - name: Commit generated audit on temporary branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/inventory/pair-inventory.csv experiments/inventory/FLAGGED_REVIEW_2026-10-05.md
+          if git diff --cached --quiet; then
+            echo "No audit changes"
+            exit 0
+          fi
+          git commit -m "tmp: apply flagged inventory audit"
+          git push origin HEAD:tmp/inventory-audit
