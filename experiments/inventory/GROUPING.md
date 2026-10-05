@@ -144,15 +144,17 @@ Any group whose source, labels or scanner output has already influenced the
 project is development data.
 
 The following current inventory groups are explicitly marked
-`split=development`:
+`prior_exposure=true`; their frozen split-v0 assignment is `development`:
 
 | Group | Reason |
 |---|---|
 | `secbench:curling` | Existing SecBench.js curling case was scanned and used in prior method development |
 | `secbench:open` | The npm package `open` was already included in the earlier JavaScript development batch |
 
-The exposure rule applies at **group level**, not version level. A different
-version of the same package/repository cannot later be moved into held-out data.
+The exposure rule applies at **group level**, not version level. `prior_exposure`
+is the immutable input used by `make_split.py`; the generated `split` value is
+not used as evidence of exposure. A different version of the same
+package/repository cannot later be moved into held-out data.
 
 Other previously exposed datasets/cases that are not represented in this pair
 inventory remain development evidence under Amendment 02 but do not require a
