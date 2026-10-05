@@ -3,7 +3,6 @@ import json
 from app.scanners.provenance import digest
 from app.scanners.semgrep import run_semgrep
 
-
 def test_run_semgrep_preserves_cli_arguments(tmp_path):
     repository_root = tmp_path / "repo"
     repository_root.mkdir()
@@ -65,7 +64,6 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
     assert findings == []
     assert complete is True
 
-
 def test_stage_rule_rejects_path_escape(tmp_path):
     from app.scanners.semgrep import stage_rule
 
@@ -85,7 +83,6 @@ def test_stage_rule_rejects_path_escape(tmp_path):
         assert str(exc) == "Local rule must stay inside repository"
     else:
         raise AssertionError("path escape was accepted")
-
 
 
 def test_stage_remote_rule_uses_injected_fetch(tmp_path):
