@@ -85,3 +85,32 @@ def test_stage_rule_rejects_path_escape(tmp_path):
         assert str(exc) == "Local rule must stay inside repository"
     else:
         raise AssertionError("path escape was accepted")
+
+
+
+def test_stage_remote_rule_uses_injected_fetch(tmp_path):
+    from app.scanners.semgrep import stage_rule
+
+    target = tmp_path / "rule.yaml"
+    calls = []
+
+    def fake_fetch(url, output, expected_hash, max_bytes):
+        calls.append((url, output, expected_hash, max_bytes))
+        output.write_text("rules: []\n")
+
+    stage_rule(
+        {"url": "https://example.test/rule.yaml", "sha256": "a" * 64},
+        target,
+        repository_root=tmp_path,
+        fetch_fn=fake_fetch,
+    )
+
+    assert target.read_text() == "rules: []\n"
+    assert calls == [
+        (
+            "https://example.test/rule.yaml",
+            target,
+            "a" * 64,
+            2 * 1024 * 1024,
+        )
+    ]
