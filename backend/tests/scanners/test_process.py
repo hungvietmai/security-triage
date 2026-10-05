@@ -33,9 +33,7 @@ def test_tool_version_uses_injected_invoke(tmp_path):
         assert cwd == tmp_path
         assert output_dir == output
         assert timeout == 60
-        (output / "codeql-version.stdout.log").write_text(
-            json.dumps({"version": "2.27.1"})
-        )
+        (output / "codeql-version.stdout.log").write_text(json.dumps({"version": "2.27.1"}))
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
