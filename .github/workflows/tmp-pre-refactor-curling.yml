@@ -32,7 +32,7 @@ jobs:
         run: |
           set -euo pipefail
           curl -L --fail --retry 3             "https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.27.1/codeql-bundle-linux64.tar.gz"             -o /tmp/codeql-bundle-linux64.tar.gz
-          echo "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833  /tmp/codeql-bundle-linux64.tar.gz" | sha256sum -c -
+          echo "1d380f79896ededc654c7b21fafb3360136f1aeb678ad4df4df9af3910c6b815  /tmp/codeql-bundle-linux64.tar.gz" | sha256sum -c -
           mkdir -p /tmp/codeql
           tar -xzf /tmp/codeql-bundle-linux64.tar.gz -C /tmp/codeql
           /tmp/codeql/codeql/codeql version --format=json
