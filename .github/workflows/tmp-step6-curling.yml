@@ -1,0 +1,111 @@
+name: Temporary step 6 curling comparison
+
+on:
+  push:
+    branches:
+      - tmp/step5-tests-step6-compare
+    paths:
+      - .github/workflows/tmp-step6-curling.yml
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Fetch step 1 baseline
+        run: git fetch origin tmp/scanner-refactor-baseline:refs/remotes/origin/tmp/scanner-refactor-baseline
+
+      - name: Install Semgrep 1.178.0
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/semgrep-venv
+          /tmp/semgrep-venv/bin/python -m pip install --upgrade pip
+          /tmp/semgrep-venv/bin/pip install "semgrep==1.178.0"
+
+      - name: Install CodeQL 2.27.1
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3             "https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.27.1/codeql-bundle-linux64.tar.gz"             -o /tmp/codeql-bundle-linux64.tar.gz
+          echo "1d380f79896ededc654c7b21fafb3360136f1aeb678ad4df4df9af3910c6b815  /tmp/codeql-bundle-linux64.tar.gz" | sha256sum -c -
+          mkdir -p /tmp/codeql
+          tar -xzf /tmp/codeql-bundle-linux64.tar.gz -C /tmp/codeql
+
+      - name: Run new CLI on curling
+        env:
+          PYTHONPATH: backend
+        run: |
+          set -euo pipefail
+          python experiments/run_pilot.py             --case experiments/cases/secbench-curling-0.2.0.json             --config experiments/configs/development-smoke-javascript.json             --output /tmp/curling-step6             --configuration-commit 1e7edc5f2d6d544cf66ea29d60aad17ab35c4900             --semgrep /tmp/semgrep-venv/bin/semgrep             --codeql /tmp/codeql/codeql/codeql             --javascript-query-pack /tmp/codeql/codeql/qlpacks/codeql/javascript-queries/2.4.6
+
+      - name: Compare findings with step 1
+        run: |
+          set -euo pipefail
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/findings.json > /tmp/step1-findings.json
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/run.json > /tmp/step1-run.json
+
+          # Stronger than normalized comparison: findings must match byte-for-byte.
+          cmp /tmp/step1-findings.json /tmp/curling-step6/findings.json
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          before = json.loads(Path("/tmp/step1-run.json").read_text())
+          after = json.loads(Path("/tmp/curling-step6/run.json").read_text())
+
+          stable_fields = (
+              "case_id",
+              "split",
+              "config_id",
+              "purpose",
+              "protocol_commit",
+              "protocol_sha256",
+              "case_manifest_sha256",
+              "configuration_sha256",
+              "snapshot_sha256",
+              "source_files",
+              "status",
+              "mapping_version",
+              "metrics",
+              "metrics_reason",
+              "raw_findings",
+              "codeql_query_files",
+              "codeql_pack_manifest",
+          )
+          for key in stable_fields:
+              assert before.get(key) == after.get(key), (key, before.get(key), after.get(key))
+
+          def normalized_argv(values):
+              return [
+                  str(value)
+                  .replace("/tmp/curling-pre-refactor-run", "<OUTPUT>")
+                  .replace("/tmp/curling-step6", "<OUTPUT>")
+                  for value in values
+              ]
+
+          for step in ("semgrep", "codeql-create", "codeql"):
+              old = before["steps"][step]
+              new = after["steps"][step]
+              for key in ("status", "exit_code", "raw_findings"):
+                  assert old.get(key) == new.get(key), (step, key, old.get(key), new.get(key))
+              assert normalized_argv(old["argv"]) == normalized_argv(new["argv"]), step
+
+          assert after["raw_findings"] == 6
+          assert after["steps"]["semgrep"]["raw_findings"] == 0
+          assert after["steps"]["codeql"]["raw_findings"] == 6
+
+          print(json.dumps({
+              "findings_byte_identical": True,
+              "raw_findings": after["raw_findings"],
+              "semgrep_raw_findings": after["steps"]["semgrep"]["raw_findings"],
+              "codeql_raw_findings": after["steps"]["codeql"]["raw_findings"],
+              "scanner_argv_equivalent_after_temp_path_normalization": True,
+          }, indent=2))
+          PY
