@@ -1,0 +1,198 @@
+{
+  "split": "development",
+  "selection": "Hand-authored before fixture extraction/query; implementation checks, not independent benchmark labels.",
+  "cases": [
+    {
+      "function": "constant_true",
+      "guard_line": 6,
+      "expected_evidence": [
+        208,
+        ">",
+        200,
+        true
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "constant_false",
+      "guard_line": 15,
+      "expected_evidence": [
+        194,
+        ">",
+        200,
+        false
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "renamed_true",
+      "guard_line": 24,
+      "expected_evidence": [
+        250,
+        ">",
+        200,
+        true
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "dynamic_parameter",
+      "guard_line": 32,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "reassigned_input",
+      "guard_line": 42,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "conditional_reassignment",
+      "guard_line": 53,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "augmented_input",
+      "guard_line": 63,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "closure_mutation",
+      "guard_line": 76,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "conditional_definition",
+      "guard_line": 86,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "deleted_local",
+      "guard_line": 96,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "oversized_integer",
+      "guard_line": 105,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "oversized_intermediate",
+      "guard_line": 114,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "unsupported_call",
+      "guard_line": 123,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "floating_point",
+      "guard_line": 132,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "chained_comparison",
+      "guard_line": 141,
+      "expected_evidence": null,
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "negative_literal",
+      "guard_line": 149,
+      "expected_evidence": [
+        -5,
+        "<=",
+        -5,
+        true
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "greater_equal",
+      "guard_line": 157,
+      "expected_evidence": [
+        5,
+        ">=",
+        5,
+        true
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "less_false",
+      "guard_line": 165,
+      "expected_evidence": [
+        9,
+        "<",
+        2,
+        false
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "equal_false",
+      "guard_line": 173,
+      "expected_evidence": [
+        42,
+        "==",
+        43,
+        false
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "unequal_true",
+      "guard_line": 181,
+      "expected_evidence": [
+        42,
+        "!=",
+        43,
+        true
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": false
+    },
+    {
+      "function": "tainted_after_guard",
+      "guard_line": 190,
+      "expected_evidence": [
+        208,
+        ">",
+        200,
+        true
+      ],
+      "meaning": "guard outcome only; never a sink-safety label",
+      "sink_counterexample": true
+    }
+  ]
+}

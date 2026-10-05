@@ -1,5 +1,8 @@
 # CodeQL queries
 
-Add query packs and lockfiles here when implementing CodeQL analysis.
-Keep baseline query suites distinct from custom evidence queries.
-Record the CLI and pack versions for each tool run.
+Upstream baseline queries are checksum-pinned in `experiments/configs/` and loaded
+from the matching CodeQL bundles. Keep them distinct from custom evidence queries.
+
+The [Python evidence pack](python-evidence/README.md) contains the first bounded
+integer-guard diagnostic. It produces review evidence and authorizes no suppression.
+Its development runner records CLI/library versions, source hashes and raw results.

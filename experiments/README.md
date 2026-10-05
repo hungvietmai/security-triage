@@ -171,3 +171,12 @@ negative sites flagged by Semgrep, two also flagged by CodeQL; these are externa
 synthetic cases, not real-package FPs. CodeQL detects more true sites, and the union
 adds only negative warnings here. No R1 suppression or improvement is claimed.
 The shared runner's focused suite now has 25 tests.
+
+## First Python guard evidence query
+
+The [guard diagnostic](reports/constant-guard-development/REPORT.md) derives
+`208 > 200 = true` in benchmark 01097 and matches all 21 authored mechanism cases
+(9 guard facts, 12 abstentions). It also demonstrates why a constant guard alone
+cannot suppress a warning: the command may be overwritten afterward. Original
+alerts and protocol R1 exclusions are retained. The experiment unit suite now
+has 27 tests; this development evidence is separate from a policy effectiveness result.

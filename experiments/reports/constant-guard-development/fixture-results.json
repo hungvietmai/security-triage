@@ -1,0 +1,21 @@
+{"#select":{"columns":[
+   {"name":"file","kind":"String"}
+  ,{"name":"function_name","kind":"String"}
+  ,{"name":"guard_line","kind":"Integer"}
+  ,{"name":"guard_column","kind":"Integer"}
+  ,{"name":"left_value","kind":"Integer"}
+  ,{"name":"comparison_operator","kind":"String"}
+  ,{"name":"right_value","kind":"Integer"}
+  ,{"name":"condition_value","kind":"Boolean"}
+  ,{"name":"selected_branch","kind":"String"}]
+ ,"tuples":[
+   ["cases.py","constant_true",6,8,208,">",200,true,"then"]
+  ,["cases.py","constant_false",15,8,194,">",200,false,"else"]
+  ,["cases.py","renamed_true",24,8,250,">",200,true,"then"]
+  ,["cases.py","negative_literal",149,8,-5,"<=",-5,true,"then"]
+  ,["cases.py","greater_equal",157,8,5,">=",5,true,"then"]
+  ,["cases.py","less_false",165,8,9,"<",2,false,"else"]
+  ,["cases.py","equal_false",173,8,42,"==",43,false,"else"]
+  ,["cases.py","unequal_true",181,8,42,"!=",43,true,"then"]
+  ,["cases.py","tainted_after_guard",190,8,208,">",200,true,"then"]]
+ }}
