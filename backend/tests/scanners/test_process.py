@@ -3,7 +3,6 @@ import sys
 
 from app.scanners.process import ProcessRecord, invoke, tool_version
 
-
 def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
     output = tmp_path / "output"
     output.mkdir()
@@ -20,7 +19,6 @@ def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
     assert record["status"] == "completed"
     assert record["exit_code"] == 0
     assert (output / "probe.stdout.log").read_text().strip() == "ok"
-
 
 def test_tool_version_uses_injected_invoke(tmp_path):
     output = tmp_path / "output"
@@ -53,7 +51,6 @@ def test_tool_version_uses_injected_invoke(tmp_path):
 
     assert calls == [["/tools/codeql", "version", "--format=json"]]
     assert steps["codeql-version"]["status"] == "completed"
-
 
 
 def test_invoke_reports_nonzero_missing_binary_and_timeout(tmp_path):
@@ -92,7 +89,6 @@ def test_invoke_reports_nonzero_missing_binary_and_timeout(tmp_path):
     )
     assert timed_out["status"] == "timeout"
 
-
 def test_invoke_sanitizes_semgrep_environment(tmp_path):
     output = tmp_path / "output"
     output.mkdir()
@@ -120,7 +116,6 @@ def test_invoke_sanitizes_semgrep_environment(tmp_path):
         "0",
         "None",
     ]
-
 
 def test_tool_version_rejects_mismatch(tmp_path):
     output = tmp_path / "output"
