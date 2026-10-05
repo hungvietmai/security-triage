@@ -1,0 +1,35 @@
+name: Temporary scanner module checks
+
+on:
+  push:
+    branches:
+      - tmp/scanner-module-step2
+    paths:
+      - .github/workflows/tmp-scanner-module-checks.yml
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install uv and dependencies
+        run: |
+          python -m pip install uv
+          uv sync --locked
+      - name: Ruff
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+      - name: Mypy strict
+        run: uv run mypy
+      - name: Pytest with coverage
+        run: uv run pytest --cov
