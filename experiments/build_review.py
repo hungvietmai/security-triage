@@ -14,7 +14,8 @@ import tarfile
 import tempfile
 from pathlib import Path, PurePosixPath
 
-from app.scanners.sarif import sarif_findings\nfrom experiments.run_pilot import write_json
+from app.scanners.sarif import sarif_findings
+from experiments.run_pilot import write_json
 
 VERSION = "sink-proposals-v1"
 SUPPORTED_RULE = "js/shell-command-constructed-from-input"
@@ -133,7 +134,8 @@ def propose(row, sources):
                 "related_location_id": int(ref),
                 "message_link": f"[shell command]({ref})",
             },
-            "source_context": "\n".join(
+            "source_context": "
+".join(
                 lines[max(0, sl - 2) : min(len(lines), el + 1)]
             ),
             "status": "proposed_needs_review",
