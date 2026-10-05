@@ -11,8 +11,9 @@ from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[1]
 _BACKEND = _ROOT / "backend"
-if str(_BACKEND) not in sys.path:
-    sys.path.insert(0, str(_BACKEND))
+for _IMPORT_ROOT in (_ROOT, _BACKEND):
+    if str(_IMPORT_ROOT) not in sys.path:
+        sys.path.insert(0, str(_IMPORT_ROOT))
 
 from app.scanners.sarif import sarif_findings
 from experiments.run_pilot import ROOT, digest, write_json
