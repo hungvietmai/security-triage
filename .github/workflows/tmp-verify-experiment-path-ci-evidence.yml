@@ -1,0 +1,76 @@
+name: Verify experiment path CI and real scanners
+
+on:
+  push:
+    branches:
+      - tmp/verify-experiment-path-ci-evidence
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: 27b0ca89daace848ab70bf175db4ba9189796a17
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Verify README commands without PYTHONPATH
+        run: |
+          set -euo pipefail
+          env -u PYTHONPATH python3 experiments/run_pilot.py --help >/tmp/run-pilot-help.txt
+          env -u PYTHONPATH python3 -m unittest experiments.test_runner -v
+          env -u PYTHONPATH python3 -m experiments.annotate_claims --help >/tmp/annotate-help.txt
+          env -u PYTHONPATH python3 -m experiments.build_review --help >/tmp/review-help.txt
+          env -u PYTHONPATH python3 experiments/diagnostics/run_constant_guard.py --help >/tmp/guard-help.txt
+
+      - name: Run full experiment suite with CI command
+        run: PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v
+
+      - name: Build experiment image
+        run: docker build -f experiments/Dockerfile -t security-triage-pilot:evidence .
+
+      - name: Fetch pre-refactor curling baseline
+        run: git fetch origin tmp/scanner-refactor-baseline:refs/remotes/origin/tmp/scanner-refactor-baseline
+
+      - name: Run curling with real Semgrep and CodeQL
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/evidence-artifacts
+          docker run --rm \
+            -v /tmp/evidence-artifacts:/app/artifacts \
+            security-triage-pilot:evidence \
+            --case experiments/cases/secbench-curling-0.2.0.json \
+            --config experiments/configs/development-smoke-javascript.json \
+            --configuration-commit 27b0ca89daace848ab70bf175db4ba9189796a17 \
+            --output artifacts/curling-real-evidence
+
+      - name: Compare real output to step 1
+        run: |
+          set -euo pipefail
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/findings.json > /tmp/step1-findings.json
+          cmp /tmp/step1-findings.json /tmp/evidence-artifacts/curling-real-evidence/findings.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          run=json.loads(Path("/tmp/evidence-artifacts/curling-real-evidence/run.json").read_text())
+          assert run["status"] == "completed"
+          assert run["raw_findings"] == 6
+          assert run["steps"]["semgrep"]["raw_findings"] == 0
+          assert run["steps"]["codeql"]["raw_findings"] == 6
+          assert len(run["runner_files_sha256"]) == 9
+          print(json.dumps({
+              "candidate_commit": "27b0ca89daace848ab70bf175db4ba9189796a17",
+              "findings_byte_identical_to_step1": True,
+              "semgrep_raw_findings": 0,
+              "codeql_raw_findings": 6,
+              "runner_files_sha256_count": 9
+          }, indent=2))
+          PY
