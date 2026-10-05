@@ -5,11 +5,11 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import TypeAlias, TypedDict, cast
+from typing import TypedDict, cast
 
-JsonScalar: TypeAlias = str | int | float | bool | None
-JsonValue: TypeAlias = JsonScalar | list["JsonValue"] | dict[str, "JsonValue"]
-JsonObject: TypeAlias = dict[str, JsonValue]
+type JsonScalar = str | int | float | bool | None
+type JsonValue = JsonScalar | list[JsonValue] | dict[str, JsonValue]
+type JsonObject = dict[str, JsonValue]
 
 
 class Finding(TypedDict):
