@@ -1,0 +1,85 @@
+name: Temporary step 7 experiment Docker
+
+on:
+  push:
+    branches:
+      - tmp/step7-experiment-docker
+    paths:
+      - experiments/Dockerfile
+      - experiments/**
+      - backend/app/scanners/**
+      - .github/workflows/tmp-step7-docker.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Run all experiment tests
+        env:
+          PYTHONPATH: backend
+        run: python -m unittest discover -s experiments -p 'test_*.py' -v
+
+      - name: Build experiment image
+        run: docker build -f experiments/Dockerfile -t security-triage-pilot:step7 .
+
+      - name: Verify scanner imports and CodeQL packs
+        run: |
+          set -euo pipefail
+          docker run --rm security-triage-pilot:step7 --help >/tmp/pilot-help.txt
+          grep -q -- "--python-query-pack" /tmp/pilot-help.txt
+          docker run --rm --entrypoint python security-triage-pilot:step7 -c \
+            "import app.scanners.pipeline; from pathlib import Path; assert Path('/opt/codeql/qlpacks/codeql/javascript-queries/2.4.6').is_dir(); assert Path('/opt/codeql/qlpacks/codeql/python-queries/1.8.11').is_dir()"
+          docker run --rm --entrypoint /opt/codeql/codeql security-triage-pilot:step7 version --format=json
+
+      - name: Fetch step 1 curling baseline
+        run: git fetch origin tmp/scanner-refactor-baseline:refs/remotes/origin/tmp/scanner-refactor-baseline
+
+      - name: Run curling in experiment image
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/step7-artifacts
+          CONFIGURATION_COMMIT="$(git rev-parse HEAD)"
+          docker run --rm \
+            -v /tmp/step7-artifacts:/app/artifacts \
+            security-triage-pilot:step7 \
+            --case experiments/cases/secbench-curling-0.2.0.json \
+            --config experiments/configs/development-smoke-javascript.json \
+            --configuration-commit "$CONFIGURATION_COMMIT" \
+            --output artifacts/curling-step7
+
+      - name: Compare Docker curling findings with step 1
+        run: |
+          set -euo pipefail
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/findings.json > /tmp/step1-findings.json
+          cmp /tmp/step1-findings.json /tmp/step7-artifacts/curling-step7/findings.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          run=json.loads(Path("/tmp/step7-artifacts/curling-step7/run.json").read_text())
+          assert run["status"] == "completed"
+          assert run["raw_findings"] == 6
+          assert run["steps"]["semgrep"]["raw_findings"] == 0
+          assert run["steps"]["codeql"]["raw_findings"] == 6
+          assert "runner_files_sha256" in run
+          assert len(run["runner_files_sha256"]) == 9
+          print(json.dumps({
+              "docker_build": "success",
+              "findings_byte_identical_to_step1": True,
+              "raw_findings": run["raw_findings"],
+              "semgrep": run["steps"]["semgrep"]["raw_findings"],
+              "codeql": run["steps"]["codeql"]["raw_findings"],
+              "runner_files_sha256_count": len(run["runner_files_sha256"]),
+          }, indent=2))
+          PY
