@@ -200,9 +200,9 @@ def acquire_source(
     if registry_integrity is not None:
         if not isinstance(registry_integrity, str):
             raise ValueError("registry_integrity must be a string")
-        actual_integrity = "sha512-" + base64.b64encode(
-            hashlib.sha512(archive.read_bytes()).digest()
-        ).decode()
+        actual_integrity = (
+            "sha512-" + base64.b64encode(hashlib.sha512(archive.read_bytes()).digest()).decode()
+        )
         if actual_integrity != registry_integrity:
             raise ValueError("Registry integrity mismatch")
 
