@@ -1,5 +1,10 @@
 # Evaluation protocol — Security Triage
 
+> Development update (2026-10-05): [Amendment 01](amendments/AMENDMENT_01_QT.md)
+> changes the primary method to QT and adds Q1, review procedures and ordered
+> gates. It takes precedence on those points. Supervisor agreement is pending.
+> The v1.0.0 text below is retained so earlier results keep their interpretation.
+
 - Protocol version: **1.0.0**
 - Adopted: **2026-09-28**
 - Status: **pilot protocol; no held-out evaluation has run under this protocol**.
