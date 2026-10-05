@@ -4,7 +4,6 @@ from app.scanners.pipeline import run_pipeline
 from app.scanners.process import ToolName
 from app.scanners.provenance import digest
 
-
 def test_pipeline_accepts_injected_process_functions(tmp_path):
     repository_root = tmp_path / "repo"
     repository_root.mkdir()
@@ -78,7 +77,6 @@ def test_pipeline_accepts_injected_process_functions(tmp_path):
     assert invoke_calls[0][0] == "semgrep"
 
 
-
 def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
     repository_root = tmp_path / "repo"
     repository_root.mkdir()
@@ -106,9 +104,7 @@ def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
         if name == "codeql":
-            (output / "codeql.sarif").write_text(
-                json.dumps({"version": "2.1.0", "runs": []})
-            )
+            (output / "codeql.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
         return {"status": "completed", "exit_code": 0}
 
     scanners: list[ToolName] = ["codeql"]
@@ -164,7 +160,6 @@ def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
     assert failed.steps["codeql"]["status"] == "failed"
     assert "--javascript-query-pack" in failed.steps["codeql"]["error"]
 
-
 def test_pipeline_is_partial_when_one_scanner_fails(tmp_path):
     repository_root = tmp_path / "repo"
     repository_root.mkdir()
@@ -189,9 +184,7 @@ def test_pipeline_is_partial_when_one_scanner_fails(tmp_path):
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
         if name == "semgrep":
-            (output / "semgrep.sarif").write_text(
-                json.dumps({"version": "2.1.0", "runs": []})
-            )
+            (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
         return {"status": "completed", "exit_code": 0}
 
     scanners: list[ToolName] = ["semgrep", "codeql"]
