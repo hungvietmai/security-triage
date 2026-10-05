@@ -22,9 +22,7 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
         assert output_dir == output
         assert name == "semgrep"
         assert timeout == 600
-        (output / "semgrep.sarif").write_text(
-            json.dumps({"version": "2.1.0", "runs": []})
-        )
+        (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
