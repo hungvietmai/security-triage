@@ -100,3 +100,100 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
     assert result.findings == []
     assert result.complete is True
     assert result.query_files == {"Security/CWE-078/CommandInjection.ql": digest(query)}
+
+
+
+def test_query_pack_rejects_unsupported_language(tmp_path):
+    try:
+        query_pack_for_language(
+            "ruby", javascript_query_pack=tmp_path, python_query_pack=tmp_path
+        )
+    except ValueError as exc:
+        assert str(exc) == "Unsupported CodeQL language: ruby"
+    else:
+        raise AssertionError("unsupported language was accepted")
+
+
+def test_run_codeql_rejects_missing_query_and_digest_mismatch(tmp_path):
+    source = tmp_path / "source"
+    source.mkdir()
+    output = tmp_path / "output"
+    output.mkdir()
+    pack = tmp_path / "pack"
+    pack.mkdir()
+    (pack / "qlpack.yml").write_text("name: test\n")
+
+    try:
+        run_codeql(
+            binary="codeql",
+            language="javascript",
+            source=source,
+            output=output,
+            snapshot_sha256="a" * 64,
+            query_pack=pack,
+            queries=["missing.ql"],
+            expected_query_sha256={},
+            jobs=1,
+            ram_mb=2048,
+            timeout_seconds=60,
+        )
+    except ValueError as exc:
+        assert str(exc) == "Configured CodeQL query missing from pack"
+    else:
+        raise AssertionError("missing query was accepted")
+
+    query = pack / "query.ql"
+    query.write_text("select 1\n")
+    try:
+        run_codeql(
+            binary="codeql",
+            language="javascript",
+            source=source,
+            output=output,
+            snapshot_sha256="a" * 64,
+            query_pack=pack,
+            queries=["query.ql"],
+            expected_query_sha256={"query.ql": "0" * 64},
+            jobs=1,
+            ram_mb=2048,
+            timeout_seconds=60,
+        )
+    except ValueError as exc:
+        assert str(exc) == "CodeQL query digest mismatch"
+    else:
+        raise AssertionError("query digest mismatch was accepted")
+
+
+def test_run_codeql_rejects_failed_database_create(tmp_path):
+    source = tmp_path / "source"
+    source.mkdir()
+    output = tmp_path / "output"
+    output.mkdir()
+    pack = tmp_path / "pack"
+    pack.mkdir()
+    query = pack / "query.ql"
+    query.write_text("select 1\n")
+    (pack / "qlpack.yml").write_text("name: test\n")
+
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+        return {"status": "failed", "exit_code": 2}
+
+    try:
+        run_codeql(
+            binary="codeql",
+            language="javascript",
+            source=source,
+            output=output,
+            snapshot_sha256="a" * 64,
+            query_pack=pack,
+            queries=["query.ql"],
+            expected_query_sha256={"query.ql": digest(query)},
+            jobs=1,
+            ram_mb=2048,
+            timeout_seconds=60,
+            invoke_fn=fake_invoke,
+        )
+    except RuntimeError as exc:
+        assert str(exc) == "CodeQL extraction failed"
+    else:
+        raise AssertionError("failed database create was accepted")
