@@ -3,7 +3,6 @@ import json
 from app.scanners.codeql import query_pack_for_language, run_codeql
 from app.scanners.provenance import digest
 
-
 def test_query_pack_selection_requires_explicit_path(tmp_path):
     pack = tmp_path / "pack"
     pack.mkdir()
@@ -18,7 +17,6 @@ def test_query_pack_selection_requires_explicit_path(tmp_path):
         assert "--python-query-pack" in str(exc)
     else:
         raise AssertionError("missing query pack was accepted")
-
 
 def test_run_codeql_preserves_cli_arguments(tmp_path):
     source = tmp_path / "source"
@@ -102,17 +100,13 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
     assert result.query_files == {"Security/CWE-078/CommandInjection.ql": digest(query)}
 
 
-
 def test_query_pack_rejects_unsupported_language(tmp_path):
     try:
-        query_pack_for_language(
-            "ruby", javascript_query_pack=tmp_path, python_query_pack=tmp_path
-        )
+        query_pack_for_language("ruby", javascript_query_pack=tmp_path, python_query_pack=tmp_path)
     except ValueError as exc:
         assert str(exc) == "Unsupported CodeQL language: ruby"
     else:
         raise AssertionError("unsupported language was accepted")
-
 
 def test_run_codeql_rejects_missing_query_and_digest_mismatch(tmp_path):
     source = tmp_path / "source"
@@ -162,7 +156,6 @@ def test_run_codeql_rejects_missing_query_and_digest_mismatch(tmp_path):
         assert str(exc) == "CodeQL query digest mismatch"
     else:
         raise AssertionError("query digest mismatch was accepted")
-
 
 def test_run_codeql_rejects_failed_database_create(tmp_path):
     source = tmp_path / "source"
