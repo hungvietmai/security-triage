@@ -1,0 +1,88 @@
+name: Pre-refactor curling baseline
+
+on:
+  push:
+    branches:
+      - tmp/scanner-refactor-baseline
+    paths:
+      - .github/workflows/tmp-pre-refactor-curling.yml
+
+permissions:
+  contents: write
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/scanner-refactor-baseline
+          fetch-depth: 0
+
+      - name: Install Semgrep 1.178.0
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/semgrep-venv
+          /tmp/semgrep-venv/bin/python -m pip install --upgrade pip
+          /tmp/semgrep-venv/bin/pip install "semgrep==1.178.0"
+          /tmp/semgrep-venv/bin/semgrep --version
+
+      - name: Install CodeQL 2.27.1
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3             "https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.27.1/codeql-bundle-linux64.tar.gz"             -o /tmp/codeql-bundle-linux64.tar.gz
+          echo "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833  /tmp/codeql-bundle-linux64.tar.gz" | sha256sum -c -
+          mkdir -p /tmp/codeql
+          tar -xzf /tmp/codeql-bundle-linux64.tar.gz -C /tmp/codeql
+          /tmp/codeql/codeql/codeql version --format=json
+          test -d /tmp/codeql/codeql/qlpacks/codeql/javascript-queries/2.4.6
+
+      - name: Run current CLI on curling@0.2.0
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/curling-pre-refactor-run
+          python experiments/run_pilot.py             --case experiments/cases/secbench-curling-0.2.0.json             --config experiments/configs/development-smoke-javascript.json             --output /tmp/curling-pre-refactor-run             --configuration-commit 11ce52361b56a479e37ea82edd5015fa92935234             --semgrep /tmp/semgrep-venv/bin/semgrep             --codeql /tmp/codeql/codeql/codeql             --javascript-query-pack /tmp/codeql/codeql/qlpacks/codeql/javascript-queries/2.4.6
+
+      - name: Preserve baseline outputs on temporary branch
+        run: |
+          set -euo pipefail
+          mkdir -p experiments/tmp/pre-refactor-curling
+          cp /tmp/curling-pre-refactor-run/findings.json experiments/tmp/pre-refactor-curling/findings.json
+          cp /tmp/curling-pre-refactor-run/run.json experiments/tmp/pre-refactor-curling/run.json
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          d=Path("experiments/tmp/pre-refactor-curling")
+          def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+          run=json.loads((d/"run.json").read_text())
+          findings=json.loads((d/"findings.json").read_text())
+          meta={
+            "baseline_name":"pre-refactor-curling",
+            "repository_commit":"11ce52361b56a479e37ea82edd5015fa92935234",
+            "case":"secbench-curling-0.2.0",
+            "config":"development-smoke-javascript",
+            "semgrep_version":"1.178.0",
+            "codeql_version":"2.27.1",
+            "javascript_query_pack":"2.4.6",
+            "run_status":run.get("status"),
+            "raw_findings":run.get("raw_findings"),
+            "findings_sha256":sha(d/"findings.json"),
+            "run_sha256":sha(d/"run.json"),
+            "finding_counts_by_tool":{
+              tool:sum(1 for x in findings if x.get("tool")==tool)
+              for tool in sorted({x.get("tool") for x in findings})
+            }
+          }
+          (d/"baseline-meta.json").write_text(json.dumps(meta,indent=2)+"\n")
+          print(json.dumps(meta,indent=2))
+          PY
+
+      - name: Commit baseline outputs on temporary branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/tmp/pre-refactor-curling/findings.json                   experiments/tmp/pre-refactor-curling/run.json                   experiments/tmp/pre-refactor-curling/baseline-meta.json
+          git commit -m "tmp: preserve pre-refactor curling baseline"
+          git push origin HEAD:tmp/scanner-refactor-baseline
