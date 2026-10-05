@@ -1,0 +1,137 @@
+policy_id: command-injection-priority
+policy_version: "0"
+status: pre_scan_frozen
+date: "2026-10-05"
+
+source:
+  amendment: experiments/amendments/AMENDMENT_02_APPLICATION_TRIAGE.md
+  section: "4.1 Priority policy v0"
+
+scope:
+  validated_family:
+    - CWE-77
+    - CWE-78
+    - CWE-88
+  threat_model: Linux/POSIX
+  human_scope_labels_allowed_as_runtime_features: false
+
+policy_type: explainable_decision_table
+weighted_score: false
+
+classification_precedence:
+  - P1
+  - P2
+  - U
+  - P3
+  - P4
+
+operational_queue_order:
+  - P1
+  - P2
+  - U
+  - P3
+  - P4
+
+tiers:
+  P1:
+    label: very_high_review_priority
+    description: >-
+      Execution candidate with strong source-to-sink evidence and no
+      automatically verified blocking condition, plus either cross-tool
+      agreement at the same canonical unit or command/shell/interpreter
+      semantics that independently strengthen the security claim.
+    rule:
+      all:
+        - execution_candidate
+        - strong_source_to_sink_evidence
+        - no_automatically_verified_blocking_condition
+        - any:
+            - cross_tool_agreement_same_canonical_unit
+            - command_shell_interpreter_semantics_strengthen_claim
+
+  P2:
+    label: high_review_priority
+    description: >-
+      A flow-supported command-execution candidate where one important property
+      remains unresolved, or cross-tool agreement exists but one claim is
+      primarily audit-oriented rather than a complete flow claim.
+    rule:
+      any:
+        - all:
+            - flow_supported_command_execution_candidate
+            - one_important_property_unresolved
+        - all:
+            - cross_tool_agreement_same_canonical_unit
+            - at_least_one_claim_audit_oriented
+            - not_complete_flow_claim
+
+  U:
+    label: unresolved
+    description: >-
+      Mapping or evidence extraction is incomplete, contradictory, or
+      unavailable. U is not evidence of safety.
+    rule:
+      any:
+        - mapping_incomplete
+        - mapping_contradictory
+        - mapping_unavailable
+        - evidence_extraction_incomplete
+        - evidence_extraction_contradictory
+        - evidence_extraction_unavailable
+
+  P3:
+    label: manual_review_required
+    description: >-
+      A single-tool conditional-flow or audit candidate at a relevant execution
+      sink with incomplete trust-boundary, guard, sanitizer, argument-role, or
+      command-semantics evidence.
+    rule:
+      all:
+        - single_tool_candidate
+        - relevant_execution_sink
+        - any:
+            - conditional_flow_claim
+            - audit_claim
+        - any:
+            - trust_boundary_evidence_incomplete
+            - guard_evidence_incomplete
+            - sanitizer_evidence_incomplete
+            - argument_role_evidence_incomplete
+            - command_semantics_evidence_incomplete
+
+  P4:
+    label: audit_candidate
+    description: >-
+      Primarily an API-use or broad dangerous-operation warning without
+      demonstrated untrusted flow or equivalent strong evidence.
+    rule:
+      all:
+        - any:
+            - api_use_warning
+            - broad_dangerous_operation_warning
+        - no_demonstrated_untrusted_flow
+        - no_equivalent_strong_evidence
+
+evidence_constraints:
+  missing_trace_is_not_safety_evidence: true
+  preserve_tool_evidence_asymmetry: true
+  semgrep_and_codeql_need_not_expose_equivalent_evidence: true
+  human_ground_truth_must_not_change_runtime_priority: true
+
+tie_handling:
+  research_evaluation: expected_value_under_uniform_random_order_within_tier
+  interface_display: deterministic_canonical_id_order_allowed
+  interface_order_must_not_be_used_for_research_advantage: true
+
+ranking_baselines:
+  defined_in: experiments/amendments/AMENDMENT_02_APPLICATION_TRIAGE.md
+  section: "4.3 Ranking baselines"
+  required:
+    - B-RND
+    - B-QF
+    - B-AGR
+    - B-SEV
+
+notes:
+  - "U is operationally placed after P2 and before P3."
+  - "Any change to this decision table after held-out outcomes are observed requires a new version and cannot be used to rescore the same held-out evaluation as if pre-specified."
