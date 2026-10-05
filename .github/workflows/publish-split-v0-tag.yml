@@ -1,0 +1,35 @@
+name: Publish split-v0 tag
+
+on:
+  push:
+    branches:
+      - tmp/split-v0
+    paths:
+      - .github/workflows/publish-split-v0-tag.yml
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish split-v0 tag
+        env:
+          TARGET_SHA: 72972469ea7b8da895ba4a3bdc2309676b04a953
+          TAG_NAME: split-v0
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG_NAME" >/dev/null 2>&1; then
+            echo "Tag $TAG_NAME already exists; refusing to move it."
+            exit 0
+          fi
+          git cat-file -e "$TARGET_SHA^{commit}"
+          git tag "$TAG_NAME" "$TARGET_SHA"
+          git push origin "refs/tags/$TAG_NAME"
