@@ -1,0 +1,49 @@
+name: Temporary CWE fill review
+
+on:
+  push:
+    branches:
+      - tmp/fill-cwe
+    paths:
+      - .github/workflows/tmp-fill-cwe.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fill:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: tmp/fill-cwe
+          fetch-depth: 0
+
+      - name: Run CWE resolver
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          set -euo pipefail
+          python experiments/fetch_cwe.py
+
+      - name: Show generated diff
+        run: |
+          set -euo pipefail
+          git diff -- experiments/inventory/pair-inventory.csv
+          echo
+          git diff --stat -- experiments/inventory/pair-inventory.csv
+
+      - name: Commit generated inventory on temporary branch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/inventory/pair-inventory.csv
+          if git diff --cached --quiet; then
+            echo "No inventory changes"
+            exit 0
+          fi
+          git commit -m "tmp: generate CWE provenance for review"
+          git push origin HEAD:tmp/fill-cwe
