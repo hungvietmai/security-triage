@@ -14,7 +14,7 @@ import tarfile
 import tempfile
 from pathlib import Path, PurePosixPath
 
-from experiments.run_pilot import sarif_findings, write_json
+from app.scanners.sarif import sarif_findings\nfrom experiments.run_pilot import write_json
 
 VERSION = "sink-proposals-v1"
 SUPPORTED_RULE = "js/shell-command-constructed-from-input"
