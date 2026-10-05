@@ -55,7 +55,6 @@ def test_tool_version_uses_injected_invoke(tmp_path):
     assert steps["codeql-version"]["status"] == "completed"
 
 
-
 def test_invoke_reports_nonzero_missing_binary_and_timeout(tmp_path):
     output = tmp_path / "output"
     output.mkdir()
