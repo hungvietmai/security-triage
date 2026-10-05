@@ -1,6 +1,7 @@
 """Enforces the layering rules in backend/AGENTS.md by parsing imports."""
 
 import ast
+import sys
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[1] / "app"
@@ -68,3 +69,16 @@ def test_every_feature_model_module_is_registered():
     }
     assert feature_models, "no feature models found"
     assert feature_models - registered == set()
+
+
+def test_scanners_use_only_stdlib_and_scanner_modules():
+    def is_violation(_: Path, name: str) -> bool:
+        if within(name, "app.features"):
+            return True
+        if within(name, "app.scanners"):
+            return False
+        root = name.split(".", 1)[0]
+        return root != "__future__" and root not in sys.stdlib_module_names
+
+    files = (APP / "scanners").rglob("*.py")
+    assert violations(files, is_violation) == []
