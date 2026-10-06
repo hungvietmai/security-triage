@@ -88,7 +88,12 @@ def _add_triage_chain(session):
     )
     session.add(unit)
     session.flush()
-    link = UnitFinding(unit_id=unit.id, finding_id=finding.id, match_rule="containment")
+    link = UnitFinding(
+        unit_id=unit.id,
+        finding_id=finding.id,
+        reconciler_version="reconcile-v0.1",
+        match_rule="containment",
+    )
     assessment = UnitAssessment(
         unit_id=unit.id,
         semgrep_flag=True,
@@ -115,16 +120,185 @@ def test_triage_rows_cascade_with_project(session):
         assert session.scalar(select(func.count()).select_from(model)) == 0
 
 
-def test_location_unit_key_is_unique_per_scan(session):
+def test_location_unit_key_is_unique_per_scan_and_reconciler_version(session):
     _, run = add_chain(session)
     common = dict(
         scan_id=run.scan_id,
-        unit_key="reconcile-v0.1:" + "b" * 64,
+        unit_key="b" * 64,
         mapping_status="mapped",
         reconciler_version="reconcile-v0.1",
         locator_version="sink-locator-v0",
     )
     session.add_all([LocationUnit(**common), LocationUnit(**common)])
+
+    with pytest.raises(IntegrityError):
+        session.commit()
+
+
+def test_location_unit_key_can_repeat_across_reconciler_versions(session):
+    _, run = add_chain(session)
+    common = dict(
+        scan_id=run.scan_id,
+        unit_key="c" * 64,
+        mapping_status="mapped",
+        locator_version="sink-locator-v0",
+    )
+    session.add_all(
+        [
+            LocationUnit(**common, reconciler_version="reconcile-v0.1"),
+            LocationUnit(**common, reconciler_version="reconcile-v0.2"),
+        ]
+    )
+
+    session.commit()
+    assert session.scalar(select(func.count()).select_from(LocationUnit)) == 2
+
+
+def _unit_for_version(session, scan_id, version, key):
+    unit = LocationUnit(
+        scan_id=scan_id,
+        unit_key=key,
+        mapping_status="mapped",
+        reconciler_version=version,
+        locator_version="sink-locator-v0",
+    )
+    session.add(unit)
+    session.flush()
+    return unit
+
+
+def test_finding_maps_once_per_reconciler_version(session):
+    _, run = add_chain(session)
+    finding = Finding(tool_run_id=run.id, result_index=0, rule_id="r", message="m")
+    session.add(finding)
+    session.flush()
+    first = _unit_for_version(session, run.scan_id, "reconcile-v0.1", "d" * 64)
+    second = _unit_for_version(session, run.scan_id, "reconcile-v0.1", "e" * 64)
+    session.add_all(
+        [
+            UnitFinding(
+                unit_id=first.id,
+                finding_id=finding.id,
+                reconciler_version="reconcile-v0.1",
+            ),
+            UnitFinding(
+                unit_id=second.id,
+                finding_id=finding.id,
+                reconciler_version="reconcile-v0.1",
+            ),
+        ]
+    )
+
+    with pytest.raises(IntegrityError):
+        session.commit()
+
+
+def test_finding_can_be_remapped_by_new_reconciler_version(session):
+    _, run = add_chain(session)
+    finding = Finding(tool_run_id=run.id, result_index=0, rule_id="r", message="m")
+    session.add(finding)
+    session.flush()
+    old = _unit_for_version(session, run.scan_id, "reconcile-v0.1", "f" * 64)
+    new = _unit_for_version(session, run.scan_id, "reconcile-v0.2", "f" * 64)
+    session.add_all(
+        [
+            UnitFinding(
+                unit_id=old.id,
+                finding_id=finding.id,
+                reconciler_version="reconcile-v0.1",
+            ),
+            UnitFinding(
+                unit_id=new.id,
+                finding_id=finding.id,
+                reconciler_version="reconcile-v0.2",
+            ),
+        ]
+    )
+
+    session.commit()
+    assert session.scalar(select(func.count()).select_from(UnitFinding)) == 2
+
+
+def test_unit_finding_version_must_match_location_unit(session):
+    _, run = add_chain(session)
+    finding = Finding(tool_run_id=run.id, result_index=0, rule_id="r", message="m")
+    session.add(finding)
+    session.flush()
+    unit = _unit_for_version(session, run.scan_id, "reconcile-v0.1", "1" * 64)
+    session.add(
+        UnitFinding(
+            unit_id=unit.id,
+            finding_id=finding.id,
+            reconciler_version="reconcile-v0.2",
+        )
+    )
+
+    with pytest.raises(IntegrityError):
+        session.commit()
+
+
+@pytest.mark.parametrize(
+    "mapping_status",
+    ["mapped", "unmapped", "role_unresolved", "column_encoding_requires_review"],
+)
+def test_location_unit_accepts_frozen_mapping_status_vocabulary(session, mapping_status):
+    _, run = add_chain(session)
+    session.add(
+        LocationUnit(
+            scan_id=run.scan_id,
+            unit_key=f"status-{mapping_status}",
+            mapping_status=mapping_status,
+            reconciler_version="reconcile-v0.1",
+            locator_version="sink-locator-v0",
+        )
+    )
+    session.commit()
+
+
+def test_location_unit_rejects_unknown_mapping_status(session):
+    _, run = add_chain(session)
+    session.add(
+        LocationUnit(
+            scan_id=run.scan_id,
+            unit_key="status-invalid",
+            mapping_status="review_later",
+            reconciler_version="reconcile-v0.1",
+            locator_version="sink-locator-v0",
+        )
+    )
+
+    with pytest.raises(IntegrityError):
+        session.commit()
+
+
+@pytest.mark.parametrize("argument_role", [None, "shell_command", "executable", "argument_list"])
+def test_location_unit_accepts_frozen_argument_role_vocabulary(session, argument_role):
+    _, run = add_chain(session)
+    session.add(
+        LocationUnit(
+            scan_id=run.scan_id,
+            unit_key=f"role-{argument_role}",
+            argument_role=argument_role,
+            mapping_status="mapped",
+            reconciler_version="reconcile-v0.1",
+            locator_version="sink-locator-v0",
+        )
+    )
+    session.commit()
+
+
+def test_location_unit_rejects_unknown_argument_role(session):
+    _, run = add_chain(session)
+    session.add(
+        LocationUnit(
+            scan_id=run.scan_id,
+            unit_key="role-invalid",
+            argument_role="command",
+            mapping_status="mapped",
+            reconciler_version="reconcile-v0.1",
+            locator_version="sink-locator-v0",
+        )
+    )
 
     with pytest.raises(IntegrityError):
         session.commit()
