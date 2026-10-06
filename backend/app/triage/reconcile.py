@@ -161,9 +161,7 @@ def _column_requires_review(
 _JS_SHELL_LITERAL = re.compile(
     r"(?:^|[,{]\s*)(?:shell|'shell'|\"shell\")\s*:\s*(true|false)(?:\s*[,}]|$)"
 )
-_JS_SHELL_PRESENT = re.compile(
-    r"(?:^|[,{]\s*)(?:shell|'shell'|\"shell\")(?:\s*:|\s*[,}])"
-)
+_JS_SHELL_PRESENT = re.compile(r"(?:^|[,{]\s*)(?:shell|'shell'|\"shell\")(?:\s*:|\s*[,}])")
 
 
 def _shell_state(sink: SinkRecord) -> ShellState:
