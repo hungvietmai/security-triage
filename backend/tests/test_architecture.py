@@ -82,3 +82,15 @@ def test_scanners_use_only_stdlib_and_scanner_modules():
 
     files = (APP / "scanners").rglob("*.py")
     assert violations(files, is_violation) == []
+
+
+
+def test_triage_uses_only_stdlib_and_triage_modules():
+    def is_violation(_: Path, name: str) -> bool:
+        if within(name, "app.triage"):
+            return False
+        root = name.split(".", 1)[0]
+        return root != "__future__" and root not in sys.stdlib_module_names
+
+    files = (APP / "triage").rglob("*.py")
+    assert violations(files, is_violation) == []
