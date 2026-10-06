@@ -44,23 +44,17 @@ def test_javascript_locator_keeps_constant_commands_and_normalizes_aliases():
     payload, sources = _fixture()
     sinks = parse_javascript_sink_output(payload, sources)
 
-    literal_exec = next(
-        sink for sink in sinks if sink["path"].endswith("01-literal-exec.js")
-    )
-    literal_shelljs = next(
-        sink for sink in sinks if sink["path"].endswith("09-shelljs-literal.js")
-    )
+    literal_exec = next(sink for sink in sinks if sink["path"].endswith("01-literal-exec.js"))
+    literal_shelljs = next(sink for sink in sinks if sink["path"].endswith("09-shelljs-literal.js"))
     fixed_alias = next(
         sink
         for sink in sinks
-        if sink["path"].endswith("direct-alias/cases.js")
-        and sink["span"]["startLine"] == 16
+        if sink["path"].endswith("direct-alias/cases.js") and sink["span"]["startLine"] == 16
     )
     sync_alias = next(
         sink
         for sink in sinks
-        if sink["path"].endswith("direct-alias/cases.js")
-        and sink["span"]["startLine"] == 13
+        if sink["path"].endswith("direct-alias/cases.js") and sink["span"]["startLine"] == 13
     )
 
     assert literal_exec["sink_kind"] == "child_process.exec"
@@ -82,9 +76,7 @@ def test_javascript_locator_preserves_spawn_arguments_and_shell_option():
     payload, sources = _fixture()
     sinks = parse_javascript_sink_output(payload, sources)
 
-    spawn = next(
-        sink for sink in sinks if sink["path"].endswith("04-fixed-spawn-shell.js")
-    )
+    spawn = next(sink for sink in sinks if sink["path"].endswith("04-fixed-spawn-shell.js"))
     assert spawn["sink_kind"] == "child_process.spawn"
     assert [arg["value_kind"] for arg in spawn["args"]] == ["string", "list", "dict"]
     assert spawn["args"][0]["text"] == "'printf'"
