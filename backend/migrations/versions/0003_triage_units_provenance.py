@@ -1,5 +1,7 @@
 """Persist versioned triage units, assessments, and source provenance."""
 
+from typing import Any
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import postgresql
@@ -9,7 +11,7 @@ down_revision = "0002"
 branch_labels = None
 depends_on = None
 
-PROVENANCE_COLUMNS = [
+PROVENANCE_COLUMNS: list[tuple[str, sa.types.TypeEngine[Any]]] = [
     ("source_kind", sa.String(length=32)),
     ("repository_url", sa.Text()),
     ("resolved_commit", sa.String(length=128)),
