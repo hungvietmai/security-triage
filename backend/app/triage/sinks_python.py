@@ -64,9 +64,7 @@ def _argument(
     keyword: str | None,
 ) -> SinkArgument:
     literal_bool = (
-        node.value
-        if isinstance(node, ast.Constant) and isinstance(node.value, bool)
-        else None
+        node.value if isinstance(node, ast.Constant) and isinstance(node.value, bool) else None
     )
     return {
         "position": position,
