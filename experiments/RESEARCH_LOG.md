@@ -159,3 +159,34 @@ Final effective group counts:
 - This is a development reproducibility/integration check on the already exposed
   curling case. It is not a new held-out vulnerability-pair result and does not
   change the frozen split or evaluation claims.
+
+
+## 2026-10-06 — Reconciliation v0 wired into the experiment CLI
+
+- Verification branch head before this log entry:
+  `4616e5f847e295f925873be9704b68e291b6111b`.
+- GitHub Actions evidence:
+  https://github.com/hungvietmai/security-triage/actions/runs/37425469495
+- GitHub-recorded run start: `2026-10-06T06:44:40Z`
+  (`2026-10-06T13:44:40+07:00`); conclusion: `success`.
+- The verified Docker image ran the real pinned Semgrep and CodeQL toolchains on
+  development case `curling@0.2.0`, then ran `sink-locator-v0` and
+  `reconcile-v0`.
+- Raw scanner preservation check: the generated `findings.json` was
+  byte-identical to the Step 1 pre-refactor baseline.
+- Raw result count remained **6**: Semgrep **0**, CodeQL **6**.
+- Reconciliation output: `units.json` contained exactly **1** canonical unit:
+  - `unit_id = 58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb`
+  - `sink_kind = child_process.exec`
+  - `argument_role = shell_command`
+  - all **6** CodeQL raw findings mapped to this unit.
+- The run recorded **15** runner hashes: the CLI, eight `app/scanners/*.py`
+  files, five `app/triage/*.py` files, and
+  `experiments/locators/sink-locator-v0-javascript.yaml`.
+- Verification quality gates in the same workflow:
+  **122 backend tests passed**, backend coverage **90.36%**, and all
+  **31 experiment tests passed**.
+- No database write was introduced. `units.json` is a sidecar artifact and the
+  raw finding ledger remains unchanged.
+- This is a development integration/reproducibility check on an already exposed
+  case. It does not add a held-out result or change the frozen split.
