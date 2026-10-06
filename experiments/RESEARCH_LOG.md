@@ -190,3 +190,40 @@ Final effective group counts:
   raw finding ledger remains unchanged.
 - This is a development integration/reproducibility check on an already exposed
   case. It does not add a held-out result or change the frozen split.
+
+
+## 2026-10-06 — Day 3 reconciliation acceptance completed
+
+- Acceptance PR: https://github.com/hungvietmai/security-triage/pull/1
+- Verification workflow: https://github.com/hungvietmai/security-triage/actions/runs/37427597888
+- Squash merge commit: `3929776ddf00136e890827023535a2e669b53bb8`.
+- Reconciliation specification remained historically prior to implementation:
+  `b295c5572cb3091682a637a37d1a161d93489c11` (specification) precedes
+  `825229568d6cce3b2653d3ba936abe513b38769a` (locators) and
+  `4b2e839f17eb7b40ea3dd731bbe1b597eea1ed61` (reconciler/CLI).
+- The experiment CLI now enforces raw-finding conservation as a runtime
+  postcondition: every raw finding ID must occur exactly once across reconciled
+  units; loss or duplication fails the run.
+- Experiment suite: **33 tests passed** (31 prior tests plus 2 conservation
+  tests).
+- Real pinned Docker scanner verification on `curling@0.2.0`:
+  - baseline: **6 raw findings -> 1 canonical unit**;
+  - baseline unit ID:
+    `58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb`;
+  - baseline `findings.json` was byte-identical to the Step 1 baseline;
+  - paired direct-alias control: Semgrep **1** + CodeQL **6** = **7 raw
+    findings -> 1 canonical unit**;
+  - paired unit used the same approved unit ID and recorded
+    `tools = ["codeql", "semgrep"]`;
+  - all 7 paired raw finding IDs were retained exactly once.
+- Backend quality gates in the same CI workflow:
+  - **122 backend tests passed**;
+  - branch coverage **90.36%** (required floor 90%);
+  - Ruff check and format check passed;
+  - strict mypy passed with no issues in 80 source files;
+  - Alembic `downgrade base` then `upgrade head` completed successfully,
+    followed by a clean `alembic check`.
+- Historical Semgrep-only direct-alias evidence/configuration was preserved;
+  the paired integration control was added as a separate development config.
+- No database write was introduced by reconciliation. No held-out case was
+  opened or rescanned for this acceptance check.
