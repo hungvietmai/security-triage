@@ -84,7 +84,6 @@ def test_scanners_use_only_stdlib_and_scanner_modules():
     assert violations(files, is_violation) == []
 
 
-
 def test_triage_uses_only_stdlib_and_triage_modules():
     def is_violation(_: Path, name: str) -> bool:
         if within(name, "app.triage"):
