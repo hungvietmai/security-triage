@@ -3,7 +3,15 @@
 import uuid
 from typing import Any
 
-from sqlalchemy import Boolean, CheckConstraint, ForeignKey, String, Text, UniqueConstraint
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    ForeignKey,
+    ForeignKeyConstraint,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
@@ -15,7 +23,17 @@ class LocationUnit(Identity, Base):
 
     __tablename__ = "location_units"
     __table_args__ = (
-        UniqueConstraint("scan_id", "unit_key", name="uq_location_unit_key"),
+        UniqueConstraint(
+            "scan_id",
+            "reconciler_version",
+            "unit_key",
+            name="uq_location_unit_version_key",
+        ),
+        UniqueConstraint(
+            "id",
+            "reconciler_version",
+            name="uq_location_unit_id_version",
+        ),
         CheckConstraint("start_line >= 1", name="ck_location_unit_start_line"),
         CheckConstraint("end_line >= start_line", name="ck_location_unit_end_line"),
         CheckConstraint("start_column >= 1", name="ck_location_unit_start_column"),
@@ -23,6 +41,16 @@ class LocationUnit(Identity, Base):
         CheckConstraint(
             "end_line > start_line OR end_column >= start_column",
             name="ck_location_unit_end_column_order",
+        ),
+        CheckConstraint(
+            "mapping_status IN "
+            "('mapped', 'unmapped', 'role_unresolved', 'column_encoding_requires_review')",
+            name="ck_location_unit_mapping_status",
+        ),
+        CheckConstraint(
+            "argument_role IS NULL OR "
+            "argument_role IN ('shell_command', 'executable', 'argument_list')",
+            name="ck_location_unit_argument_role",
         ),
     )
 
@@ -46,14 +74,26 @@ class UnitFinding(Identity, Base):
     """One raw finding linked to one versioned reconciliation unit."""
 
     __tablename__ = "unit_findings"
-    __table_args__ = (UniqueConstraint("unit_id", "finding_id", name="uq_unit_finding"),)
-
-    unit_id: Mapped[uuid.UUID] = mapped_column(
-        ForeignKey("location_units.id", ondelete="CASCADE"), index=True
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["unit_id", "reconciler_version"],
+            ["location_units.id", "location_units.reconciler_version"],
+            ondelete="CASCADE",
+            name="fk_unit_finding_unit_version",
+        ),
+        UniqueConstraint("unit_id", "finding_id", name="uq_unit_finding"),
+        UniqueConstraint(
+            "finding_id",
+            "reconciler_version",
+            name="uq_finding_reconciler_version",
+        ),
     )
+
+    unit_id: Mapped[uuid.UUID] = mapped_column(index=True)
     finding_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("findings.id", ondelete="CASCADE"), index=True
     )
+    reconciler_version: Mapped[str] = mapped_column(String(80))
     match_rule: Mapped[str | None] = mapped_column(String(48))
 
 
