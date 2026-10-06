@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TypedDict
+from typing import NotRequired, TypedDict
 
 
 class Span(TypedDict):
@@ -19,6 +19,7 @@ class SinkArgument(TypedDict):
     text: str
     value_kind: str
     literal_bool: bool | None
+    sequence_items: NotRequired[list[Span]]
 
 
 class SinkRecord(TypedDict):
