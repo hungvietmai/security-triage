@@ -1,7 +1,15 @@
 from app.triage.reconcile import reconcile_findings
 
 
-def _sink(*, path="a.js", start=10, end=10, start_col=1, end_col=20, kind="child_process.exec"):
+def _sink(
+    *,
+    path="a.js",
+    start=10,
+    end=10,
+    start_col=1,
+    end_col=20,
+    kind="child_process.exec",
+):
     return {
         "path": path,
         "span": {
@@ -30,7 +38,14 @@ def _sink(*, path="a.js", start=10, end=10, start_col=1, end_col=20, kind="child
     }
 
 
-def _finding(*, raw_id="codeql:0:0", path="a.js", region=None, message="", raw_result=None):
+def _finding(
+    *,
+    raw_id="codeql:0:0",
+    path="a.js",
+    region=None,
+    message="",
+    raw_result=None,
+):
     return {
         "raw_id": raw_id,
         "tool": "codeql",
@@ -81,8 +96,7 @@ def test_explicit_link_merges_multiple_findings_into_one_shell_unit():
         ),
     ]
 
-    units = reconcile_findings(findings, [sink], {"a.js": "
-" * 60})
+    units = reconcile_findings(findings, [sink], {"a.js": "\n" * 60})
 
     assert len(units) == 1
     unit = units[0]
@@ -108,8 +122,7 @@ def test_containment_prefers_unique_innermost_sink():
         }
     )
 
-    unit = reconcile_findings([finding], [outer, inner], {"a.js": "
-" * 15})[0]
+    unit = reconcile_findings([finding], [outer, inner], {"a.js": "\n" * 15})[0]
 
     assert unit["mapping_status"] == "mapped"
     assert unit["sink_span"] == inner["span"]
@@ -120,8 +133,7 @@ def test_exact_span_maps_when_containment_is_strict():
     sink = _sink()
     finding = _finding(region=dict(sink["span"]))
 
-    unit = reconcile_findings([finding], [sink], {"a.js": "
-" * 15})[0]
+    unit = reconcile_findings([finding], [sink], {"a.js": "\n" * 15})[0]
 
     assert unit["mapping_status"] == "mapped"
     assert unit["mappings"][0]["mapping_method"] == "exact_span"
@@ -139,8 +151,7 @@ def test_ambiguous_incomparable_sinks_fall_back():
         }
     )
 
-    unit = reconcile_findings([finding], [first, second], {"a.js": "
-" * 15})[0]
+    unit = reconcile_findings([finding], [first, second], {"a.js": "\n" * 15})[0]
 
     assert unit["mapping_status"] == "unmapped"
     assert unit["sink_span"] is None
@@ -158,8 +169,7 @@ def test_non_ascii_relevant_line_requires_review():
         }
     )
 
-    unit = reconcile_findings([finding], [sink], {"a.js": "éxec(command)
-"})[0]
+    unit = reconcile_findings([finding], [sink], {"a.js": "éxec(command)\n"})[0]
 
     assert unit["mapping_status"] == "column_encoding_requires_review"
     assert unit["sink_span"] is None
@@ -169,8 +179,7 @@ def test_process_sink_without_role_evidence_is_role_unresolved():
     sink = _sink(kind="child_process.spawn")
     finding = _finding(region=dict(sink["span"]))
 
-    unit = reconcile_findings([finding], [sink], {"a.js": "
-" * 15})[0]
+    unit = reconcile_findings([finding], [sink], {"a.js": "\n" * 15})[0]
 
     assert unit["mapping_status"] == "role_unresolved"
     assert unit["argument_role"] is None
