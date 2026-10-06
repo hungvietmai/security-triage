@@ -66,7 +66,7 @@ def _argument(
     literal_bool = (
         node.value if isinstance(node, ast.Constant) and isinstance(node.value, bool) else None
     )
-    return {
+    argument: SinkArgument = {
         "position": position,
         "keyword": keyword,
         "span": _span(node),
@@ -74,6 +74,9 @@ def _argument(
         "value_kind": _value_kind(node),
         "literal_bool": literal_bool,
     }
+    if isinstance(node, (ast.List, ast.Tuple)):
+        argument["sequence_items"] = [_span(item) for item in node.elts]
+    return argument
 
 
 def _canonical_supported(name: str) -> bool:

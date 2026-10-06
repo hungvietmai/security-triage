@@ -511,7 +511,7 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(units, [unit])
             self.assertEqual(report["sink_count"], 0)
             self.assertEqual(report["unit_count"], 1)
-            self.assertEqual(report["mapping_version"], "reconcile-v0")
+            self.assertEqual(report["mapping_version"], "reconcile-v0.1")
             self.assertTrue((output / "findings.csv").is_file())
 
     def test_local_rule_is_verified_before_copy(self):

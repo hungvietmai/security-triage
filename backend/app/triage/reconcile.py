@@ -17,6 +17,9 @@ MappingStatus = Literal[
     "column_encoding_requires_review",
 ]
 MappingMethod = Literal["explicit_link", "containment", "exact_span"]
+ShellState = Literal["absent", "true", "false", "unresolved"]
+
+RECONCILIATION_VERSION = "reconcile-v0.1"
 
 
 class UnitMapping(TypedDict):
@@ -48,6 +51,8 @@ _SHELL_COMMAND_KINDS = {
     "os.system",
     "os.popen",
     "asyncio.create_subprocess_shell",
+    "subprocess.getoutput",
+    "subprocess.getstatusoutput",
 }
 _JS_PROCESS_KINDS = {
     "child_process.spawn",
@@ -133,33 +138,56 @@ def _relevant_lines(span: Span) -> range:
     return range(span["startLine"], span["endLine"] + 1)
 
 
-def _has_non_ascii(
+def _column_requires_review(
     path: str,
     evidence: Span,
     sink: SinkRecord,
     sources: Mapping[str, str],
 ) -> bool:
+    """Return True when column-based matching cannot be validated safely."""
     source = sources.get(path)
     if source is None:
-        return False
+        return True
     lines = source.splitlines()
     line_numbers = set(_relevant_lines(evidence)) | set(_relevant_lines(sink["span"]))
     for line_number in line_numbers:
-        if 1 <= line_number <= len(lines) and not lines[line_number - 1].isascii():
+        if not 1 <= line_number <= len(lines):
+            return True
+        if not lines[line_number - 1].isascii():
             return True
     return False
 
 
-def _shell_true(sink: SinkRecord) -> bool:
+_JS_SHELL_LITERAL = re.compile(
+    r"(?:^|[,{]\s*)(?:shell|'shell'|\"shell\")\s*:\s*(true|false)(?:\s*[,}]|$)"
+)
+_JS_SHELL_PRESENT = re.compile(r"(?:^|[,{]\s*)(?:shell|'shell'|\"shell\")(?:\s*:|\s*[,}])")
+
+
+def _shell_state(sink: SinkRecord) -> ShellState:
+    states: set[ShellState] = set()
     for argument in sink["args"]:
-        if argument["keyword"] == "shell" and argument["literal_bool"] is True:
-            return True
-        if argument["value_kind"] == "dict" and re.search(
-            r"(?:^|[,{]\s*)shell\s*:\s*true(?:\s*[,}]|$)",
-            argument["text"],
-        ):
-            return True
-    return False
+        if argument["keyword"] == "shell":
+            if argument["literal_bool"] is True:
+                states.add("true")
+            elif argument["literal_bool"] is False:
+                states.add("false")
+            else:
+                states.add("unresolved")
+            continue
+        if argument["value_kind"] != "dict":
+            continue
+        literal = _JS_SHELL_LITERAL.search(argument["text"])
+        if literal is not None:
+            states.add("true" if literal.group(1) == "true" else "false")
+        elif _JS_SHELL_PRESENT.search(argument["text"]):
+            states.add("unresolved")
+
+    if not states:
+        return "absent"
+    if len(states) == 1:
+        return next(iter(states))
+    return "unresolved"
 
 
 def _argument_for_evidence(sink: SinkRecord, evidence: Span) -> int | None:
@@ -171,14 +199,37 @@ def _argument_for_evidence(sink: SinkRecord, evidence: Span) -> int | None:
     return positions.pop() if len(positions) == 1 else None
 
 
+def _sequence_item_for_evidence(
+    sink: SinkRecord,
+    evidence: Span,
+    *,
+    argument_position: int,
+) -> int | None:
+    argument = next(
+        (item for item in sink["args"] if item["position"] == argument_position),
+        None,
+    )
+    if argument is None:
+        return None
+    matches = [
+        index
+        for index, span in enumerate(argument.get("sequence_items", []))
+        if _contains(span, evidence)
+    ]
+    return matches[0] if len(matches) == 1 else None
+
+
 def _argument_role(sink: SinkRecord, evidence: Span) -> str | None:
     kind = sink["sink_kind"]
     if kind in _SHELL_COMMAND_KINDS:
         return "shell_command"
 
     if kind in _JS_PROCESS_KINDS:
-        if _shell_true(sink):
+        shell_state = _shell_state(sink) if kind != "child_process.fork" else "absent"
+        if shell_state == "true":
             return "shell_command"
+        if shell_state == "unresolved":
+            return None
         position = _argument_for_evidence(sink, evidence)
         if position == 0:
             return "executable"
@@ -187,17 +238,29 @@ def _argument_role(sink: SinkRecord, evidence: Span) -> str | None:
         return None
 
     if kind.startswith("subprocess."):
-        if _shell_true(sink):
+        shell_state = _shell_state(sink)
+        if shell_state == "true":
             return "shell_command"
+        if shell_state == "unresolved":
+            return None
+
         position = _argument_for_evidence(sink, evidence)
-        if position == 0:
-            first = next(
-                (arg for arg in sink["args"] if arg["position"] == 0),
-                None,
-            )
-            if first is not None and first["value_kind"] not in {"list", "tuple"}:
+        if position != 0:
+            return None
+        first = next(
+            (arg for arg in sink["args"] if arg["position"] == 0),
+            None,
+        )
+        if first is None:
+            return None
+        if first["value_kind"] in {"list", "tuple"}:
+            item = _sequence_item_for_evidence(sink, evidence, argument_position=0)
+            if item == 0:
                 return "executable"
-        return None
+            if item is not None and item > 0:
+                return "argument_list"
+            return None
+        return "executable"
 
     if kind == "asyncio.create_subprocess_exec":
         position = _argument_for_evidence(sink, evidence)
@@ -207,7 +270,25 @@ def _argument_role(sink: SinkRecord, evidence: Span) -> str | None:
             return "argument_list"
         return None
 
-    if kind == "pty.spawn" or kind.startswith("os.exec") or kind.startswith("os.spawn"):
+    if kind == "pty.spawn":
+        if _argument_for_evidence(sink, evidence) != 0:
+            return None
+        item = _sequence_item_for_evidence(sink, evidence, argument_position=0)
+        if item == 0:
+            return "executable"
+        if item is not None and item > 0:
+            return "argument_list"
+        return None
+
+    if kind.startswith("os.spawn"):
+        position = _argument_for_evidence(sink, evidence)
+        if position == 1:
+            return "executable"
+        if position is not None and position > 1:
+            return "argument_list"
+        return None
+
+    if kind.startswith("os.exec"):
         position = _argument_for_evidence(sink, evidence)
         if position == 0:
             return "executable"
@@ -251,7 +332,7 @@ def _mapped_unit(
     assert path is not None
     raw_id = str(finding.get("raw_id") or "")
     tool = str(finding.get("tool") or "")
-    if _has_non_ascii(path, evidence, sink, sources):
+    if _column_requires_review(path, evidence, sink, sources):
         return _fallback_unit(
             finding,
             mapping_status="column_encoding_requires_review",

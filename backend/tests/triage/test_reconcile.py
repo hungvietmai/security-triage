@@ -1,4 +1,8 @@
+import pytest
+
 from app.triage.reconcile import reconcile_findings
+from app.triage.sinks_python import locate_python_sinks
+from app.triage.types import SinkRecord
 
 
 def _sink(
@@ -194,3 +198,219 @@ def test_missing_location_uses_raw_id_to_keep_fallbacks_distinct():
 
     assert len(units) == 2
     assert units[0]["unit_id"] != units[1]["unit_id"]
+
+
+def _region_for_token(source: str, token: str) -> dict[str, int]:
+    offset = source.index(token)
+    prefix = source[:offset]
+    line = prefix.count("\n") + 1
+    last_newline = prefix.rfind("\n")
+    zero_column = offset if last_newline < 0 else offset - last_newline - 1
+    return {
+        "startLine": line,
+        "startColumn": zero_column + 1,
+        "endLine": line,
+        "endColumn": zero_column + len(token) + 1,
+    }
+
+
+def _python_unit(source: str, token: str):
+    path = "fixture.py"
+    sinks = locate_python_sinks(path, source)
+    assert len(sinks) == 1
+    finding = _finding(path=path, region=_region_for_token(source, token))
+    return reconcile_findings([finding], sinks, {path: source})[0]
+
+
+@pytest.mark.parametrize(
+    ("source", "token", "expected_role"),
+    [
+        (
+            'import subprocess\nsubprocess.run(["ls", user_arg])\n',
+            '"ls"',
+            "executable",
+        ),
+        (
+            'import subprocess\nsubprocess.run(["ls", user_arg])\n',
+            "user_arg",
+            "argument_list",
+        ),
+        (
+            'import pty\npty.spawn(["sh", user_arg])\n',
+            '"sh"',
+            "executable",
+        ),
+        (
+            'import pty\npty.spawn(["sh", user_arg])\n',
+            "user_arg",
+            "argument_list",
+        ),
+        (
+            'import os\nos.spawnv(os.P_WAIT, program, ["argv0", user_arg])\n',
+            "os.P_WAIT",
+            None,
+        ),
+        (
+            'import os\nos.spawnv(os.P_WAIT, program, ["argv0", user_arg])\n',
+            "program",
+            "executable",
+        ),
+        (
+            'import os\nos.spawnv(os.P_WAIT, program, ["argv0", user_arg])\n',
+            "user_arg",
+            "argument_list",
+        ),
+        (
+            'import os\nos.execv(program, ["argv0", user_arg])\n',
+            "program",
+            "executable",
+        ),
+        (
+            'import os\nos.execv(program, ["argv0", user_arg])\n',
+            "user_arg",
+            "argument_list",
+        ),
+        (
+            "import asyncio\nasyncio.create_subprocess_exec(program, user_arg)\n",
+            "program",
+            "executable",
+        ),
+        (
+            "import asyncio\nasyncio.create_subprocess_exec(program, user_arg)\n",
+            "user_arg",
+            "argument_list",
+        ),
+        (
+            "import asyncio\nasyncio.create_subprocess_shell(user_cmd)\n",
+            "user_cmd",
+            "shell_command",
+        ),
+        (
+            "import subprocess\nsubprocess.getoutput(user_cmd)\n",
+            "user_cmd",
+            "shell_command",
+        ),
+        (
+            "import subprocess\nsubprocess.getstatusoutput(user_cmd)\n",
+            "user_cmd",
+            "shell_command",
+        ),
+        (
+            "import subprocess\nsubprocess.run(user_cmd, shell=False)\n",
+            "user_cmd",
+            "executable",
+        ),
+        (
+            "import subprocess\nsubprocess.run(user_cmd, shell=True)\n",
+            "user_cmd",
+            "shell_command",
+        ),
+        (
+            "import subprocess\nsubprocess.run(user_cmd, shell=use_shell)\n",
+            "user_cmd",
+            None,
+        ),
+    ],
+)
+def test_python_argument_role_table_v01(source, token, expected_role):
+    unit = _python_unit(source, token)
+    assert unit["argument_role"] == expected_role
+    assert unit["mapping_status"] == ("mapped" if expected_role is not None else "role_unresolved")
+
+
+def _js_arg(
+    position: int,
+    start_column: int,
+    end_column: int,
+    *,
+    text: str,
+    value_kind: str,
+):
+    return {
+        "position": position,
+        "keyword": None,
+        "span": {
+            "startLine": 1,
+            "startColumn": start_column,
+            "endLine": 1,
+            "endColumn": end_column,
+        },
+        "text": text,
+        "value_kind": value_kind,
+        "literal_bool": None,
+    }
+
+
+def _js_process_unit(kind: str, evidence_position: int, option_text: str | None = None):
+    args = [
+        _js_arg(0, 6, 12, text="command", value_kind="name"),
+        _js_arg(1, 14, 24, text="args", value_kind="list"),
+    ]
+    if option_text is not None:
+        args.append(_js_arg(2, 26, 55, text=option_text, value_kind="dict"))
+    sink: SinkRecord = {
+        "path": "a.js",
+        "span": {
+            "startLine": 1,
+            "startColumn": 1,
+            "endLine": 1,
+            "endColumn": 60,
+        },
+        "callee": kind.rsplit(".", 1)[-1],
+        "sink_kind": kind,
+        "args": args,
+    }
+    evidence = args[evidence_position]["span"]
+    finding = _finding(
+        path="a.js",
+        region={
+            "startLine": 1,
+            "startColumn": evidence["startColumn"],
+            "endLine": 1,
+            "endColumn": evidence["endColumn"],
+        },
+    )
+    return reconcile_findings([finding], [sink], {"a.js": "x" * 80 + "\n"})[0]
+
+
+@pytest.mark.parametrize(
+    ("kind", "evidence_position", "option_text", "expected_role"),
+    [
+        ("child_process.spawn", 0, None, "executable"),
+        ("child_process.spawn", 1, None, "argument_list"),
+        ("child_process.spawn", 0, "{shell: true}", "shell_command"),
+        ("child_process.spawn", 0, "{shell: false}", "executable"),
+        ("child_process.spawn", 0, "{shell: opts.shell}", None),
+        ("child_process.spawn", 0, "{shell: '/bin/bash'}", None),
+        ("child_process.spawn", 0, "{'shell': true}", "shell_command"),
+        ("child_process.spawn", 0, '{"shell": false}', "executable"),
+        ("child_process.fork", 0, "{shell: true}", "executable"),
+    ],
+)
+def test_javascript_argument_role_table_v01(
+    kind,
+    evidence_position,
+    option_text,
+    expected_role,
+):
+    unit = _js_process_unit(kind, evidence_position, option_text)
+    assert unit["argument_role"] == expected_role
+    assert unit["mapping_status"] == ("mapped" if expected_role is not None else "role_unresolved")
+
+
+def test_missing_source_never_uses_column_matching_automatically():
+    sink = _sink()
+    finding = _finding(
+        region={
+            "startLine": 10,
+            "startColumn": 6,
+            "endLine": 10,
+            "endColumn": 12,
+        }
+    )
+
+    unit = reconcile_findings([finding], [sink], {})[0]
+
+    assert unit["mapping_status"] == "column_encoding_requires_review"
+    assert unit["sink_span"] is None
+    assert unit["argument_role"] is None

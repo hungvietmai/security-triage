@@ -8,5 +8,15 @@ from app.features.findings.models import Finding
 from app.features.projects.models import Project
 from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
+from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 
-__all__ = ["Finding", "Project", "Scan", "SourceSnapshot", "ToolRun"]
+__all__ = [
+    "Finding",
+    "LocationUnit",
+    "Project",
+    "Scan",
+    "SourceSnapshot",
+    "ToolRun",
+    "UnitAssessment",
+    "UnitFinding",
+]
