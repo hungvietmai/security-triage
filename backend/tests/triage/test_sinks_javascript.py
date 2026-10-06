@@ -107,7 +107,6 @@ def test_javascript_locator_rejects_unknown_or_missing_source_result():
         raise AssertionError("missing source was accepted")
 
 
-
 def _one_result(source, call, check_id):
     start_offset = source.index(call)
     before = source[:start_offset]
