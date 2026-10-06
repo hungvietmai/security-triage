@@ -72,12 +72,8 @@ def _add_triage_chain(session):
     finding = Finding(tool_run_id=run.id, result_index=0, rule_id="r", message="m")
     session.add(finding)
     session.flush()
-    scan = run.__class__.__table__.metadata.tables["scans"]
-    scan_id = session.execute(
-        select(scan.c.id).where(scan.c.id == run.scan_id)
-    ).scalar_one()
     unit = LocationUnit(
-        scan_id=scan_id,
+        scan_id=run.scan_id,
         unit_key="reconcile-v0.1:" + "a" * 64,
         path="src/example.py",
         start_line=10,
@@ -136,10 +132,6 @@ def test_location_unit_key_is_unique_per_scan(session):
 
 @pytest.mark.parametrize("priority", ["P1", "P2", "U", "P3", "P4"])
 def test_unit_assessment_accepts_frozen_priority_vocabulary(session, priority):
-    _, unit, _ = _add_triage_chain(session)
-    session.rollback()
-
-    # Re-create a minimal committed chain after rollback.
     _, run = add_chain(session)
     unit = LocationUnit(
         scan_id=run.scan_id,
