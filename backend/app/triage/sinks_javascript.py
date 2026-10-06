@@ -155,9 +155,7 @@ def _direct_child_aliases(source: str) -> dict[str, str]:
     for match in imports.finditer(source):
         for part in match.group(1).split(","):
             item = part.strip()
-            alias_match = re.fullmatch(
-                rf"({methods})(?:\s+as\s+([A-Za-z_$][\w$]*))?", item
-            )
+            alias_match = re.fullmatch(rf"({methods})(?:\s+as\s+([A-Za-z_$][\w$]*))?", item)
             if alias_match:
                 aliases[alias_match.group(2) or alias_match.group(1)] = alias_match.group(1)
 
@@ -167,9 +165,7 @@ def _direct_child_aliases(source: str) -> dict[str, str]:
     for match in destructured.finditer(source):
         for part in match.group(1).split(","):
             item = part.strip()
-            alias_match = re.fullmatch(
-                rf"({methods})(?:\s*:\s*([A-Za-z_$][\w$]*))?", item
-            )
+            alias_match = re.fullmatch(rf"({methods})(?:\s*:\s*([A-Za-z_$][\w$]*))?", item)
             if alias_match:
                 aliases[alias_match.group(2) or alias_match.group(1)] = alias_match.group(1)
     return aliases
