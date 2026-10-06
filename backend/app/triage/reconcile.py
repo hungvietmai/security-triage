@@ -62,7 +62,11 @@ _SHELL_LINK = re.compile(r"\[shell command\]\((\d+)\)")
 def _dictionary(value: object) -> dict[str, object]:
     if not isinstance(value, dict):
         return {}
-    return {key: item for key, item in cast(dict[object, object], value).items() if isinstance(key, str)}
+    return {
+        key: item
+        for key, item in cast(dict[object, object], value).items()
+        if isinstance(key, str)
+    }
 
 
 def _objects(value: object) -> list[dict[str, object]]:
