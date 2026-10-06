@@ -95,7 +95,12 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("unit_id", "finding_id", name="uq_unit_finding"),
     )
-    op.create_index(op.f("ix_unit_findings_finding_id"), "unit_findings", ["finding_id"], unique=False)
+    op.create_index(
+        op.f("ix_unit_findings_finding_id"),
+        "unit_findings",
+        ["finding_id"],
+        unique=False,
+    )
     op.create_index(op.f("ix_unit_findings_unit_id"), "unit_findings", ["unit_id"], unique=False)
 
     op.create_table(
