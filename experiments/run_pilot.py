@@ -30,7 +30,7 @@ from app.scanners.acquisition import (
 from app.scanners.pipeline import run_pipeline
 from app.scanners.process import invoke
 from app.scanners.provenance import digest
-from app.triage.reconcile import reconcile_findings
+from app.triage.reconcile import RECONCILIATION_VERSION, reconcile_findings
 from app.triage.sinks_javascript import parse_javascript_sink_output
 from app.triage.sinks_python import locate_python_sinks
 
@@ -226,9 +226,9 @@ def main(
         "status": "running",
         "steps": {},
         "labels_commit": None,
-        "mapping_version": "reconcile-v0",
+        "mapping_version": RECONCILIATION_VERSION,
         "sink_locator_version": "sink-locator-v0",
-        "reconciliation_version": "reconcile-v0",
+        "reconciliation_version": RECONCILIATION_VERSION,
         "metrics": None,
         "metrics_reason": "No reviewed common location/label ledger yet",
     }
