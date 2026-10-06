@@ -1,0 +1,111 @@
+rules:
+  - id: sink-locator-v0-child-process-namespace
+    message: "sink-locator-v0: child_process namespace call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v0
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $CP = require('child_process');
+              ...
+          - pattern-inside: |
+              import * as $CP from 'child_process';
+              ...
+          - pattern-inside: |
+              import $CP from 'child_process';
+              ...
+      - pattern-either:
+          - pattern: $CP.exec(...)
+          - pattern: $CP.execSync(...)
+          - pattern: $CP.spawn(...)
+          - pattern: $CP.spawnSync(...)
+          - pattern: $CP.execFile(...)
+          - pattern: $CP.execFileSync(...)
+          - pattern: $CP.fork(...)
+
+  - id: sink-locator-v0-child-process-direct-require
+    message: "sink-locator-v0: child_process direct require alias"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v0
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FN = require('child_process').exec;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').execSync;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').spawn;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').spawnSync;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').execFile;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').execFileSync;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').fork;
+              ...
+      - pattern: $FN(...)
+
+  - id: sink-locator-v0-child-process-import-alias
+    message: "sink-locator-v0: child_process imported call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v0
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              import { exec as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { execSync as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { spawn as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { spawnSync as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { execFile as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { execFileSync as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { fork as $FN } from 'child_process';
+              ...
+      - pattern: $FN(...)
+
+  - id: sink-locator-v0-shelljs-namespace
+    message: "sink-locator-v0: shelljs exec call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v0
+      sink_family: shelljs
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $SHELL = require('shelljs');
+              ...
+          - pattern-inside: |
+              import * as $SHELL from 'shelljs';
+              ...
+          - pattern-inside: |
+              import $SHELL from 'shelljs';
+              ...
+      - pattern: $SHELL.exec(...)
