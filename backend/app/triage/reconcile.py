@@ -63,9 +63,7 @@ def _dictionary(value: object) -> dict[str, object]:
     if not isinstance(value, dict):
         return {}
     return {
-        key: item
-        for key, item in cast(dict[object, object], value).items()
-        if isinstance(key, str)
+        key: item for key, item in cast(dict[object, object], value).items() if isinstance(key, str)
     }
 
 
@@ -126,10 +124,7 @@ def _innermost(sinks: Sequence[SinkRecord]) -> SinkRecord | None:
     candidates = [
         sink
         for sink in sinks
-        if all(
-            sink is other or _contains(other["span"], sink["span"])
-            for other in sinks
-        )
+        if all(sink is other or _contains(other["span"], sink["span"]) for other in sinks)
     ]
     return candidates[0] if len(candidates) == 1 else None
 
@@ -365,9 +360,7 @@ def _match_one(
         return _fallback_unit(finding)
 
     same_path = [sink for sink in sinks if _normalized_path(sink["path"]) == path]
-    containing = [
-        sink for sink in same_path if _contains(sink["span"], primary, strict=True)
-    ]
+    containing = [sink for sink in same_path if _contains(sink["span"], primary, strict=True)]
     selected = _innermost(containing)
     if selected is not None:
         return _mapped_unit(
