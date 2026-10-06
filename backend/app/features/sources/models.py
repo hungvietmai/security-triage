@@ -1,6 +1,7 @@
 import uuid
+from datetime import datetime
 
-from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, String, Text
+from sqlalchemy import BigInteger, CheckConstraint, DateTime, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
@@ -29,5 +30,15 @@ class SourceSnapshot(Identity, Base):
     size_bytes: Mapped[int | None] = mapped_column(BigInteger)
     file_count: Mapped[int | None]
     manifest_key: Mapped[str | None] = mapped_column(Text)
+    source_kind: Mapped[str | None] = mapped_column(String(32))
+    repository_url: Mapped[str | None] = mapped_column(Text)
+    resolved_commit: Mapped[str | None] = mapped_column(String(128))
+    ecosystem: Mapped[str | None] = mapped_column(String(32))
+    package_name: Mapped[str | None] = mapped_column(Text)
+    package_version: Mapped[str | None] = mapped_column(String(128))
+    artifact_url: Mapped[str | None] = mapped_column(Text)
+    source_subdirectory: Mapped[str | None] = mapped_column(Text)
+    manifest_sha256: Mapped[str | None] = mapped_column(String(64))
+    provenance_verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     status: Mapped[str] = mapped_column(String(24), default="uploading")
     error_message: Mapped[str | None] = mapped_column(Text)
