@@ -1,0 +1,32 @@
+{
+  "config_id": "development-paired-direct-alias",
+  "purpose": "Development integration control: direct-alias Semgrep rule plus pinned CodeQL on the same curling input",
+  "protocol_commit": "80db12b6f7b275501f9c0f260c90cd05e818491e",
+  "scanners": [
+    "semgrep",
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [
+    {
+      "path": "experiments/rules/detect-child-process-direct-alias.yaml",
+      "sha256": "a4742d1077e46d15f8a47883061c8f1aeccc84cf05cba3a889bc9698a3fb8483"
+    }
+  ],
+  "codeql_queries": [
+    "Security/CWE-078/CommandInjection.ql",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-078/CommandInjection.ql": "bb85242cf730c85b04826ce914862872c0f83d58540750ae69b1f6a0951bd45c",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql": "77c3cfa9bcf11440035c6c469fc940f2c8bf418b62e60951a9423c0ff16499c4"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "sha256": "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833",
+    "javascript_query_pack": "2.4.6"
+  }
+}
