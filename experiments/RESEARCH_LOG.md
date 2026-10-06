@@ -247,6 +247,7 @@ Final effective group counts:
 - The canonical curling unit ID did not change:
   `58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb`.
 - Raw-finding conservation remained satisfied for both configurations.
+- Final substantive pre-merge head `40fa9ba1c433ed263671f4dd99bb2a96266daf7b` was re-verified by CI run #108 (`37438072270`): all four jobs succeeded; PostgreSQL migration verification completed `alembic check -> downgrade 0003 -> 0002 -> 0001 -> base -> upgrade head -> alembic check`, with **172 backend tests passed**, **92.93%** coverage, clean Ruff/mypy/dependency audit, and unchanged curling reconciliation acceptance.
 - This corrective acceptance changes role resolution only where reconcile-v0
   was semantically wrong or over-confident. It does not redraw the frozen split,
   inspect a new held-out case, or change the canonical unit key.
