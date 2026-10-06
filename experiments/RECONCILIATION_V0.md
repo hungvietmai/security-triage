@@ -1,8 +1,9 @@
-# Reconciliation v0 — canonical source-unit mapping
+# Reconciliation v0/v0.1 — canonical source-unit mapping
 
-- Reconciliation version: **`reconcile-v0`**
+- Current reconciliation version: **`reconcile-v0.1`**
+- Historical baseline: **`reconcile-v0`** (frozen before the Day 3 implementation)
 - Sink locator version: **`sink-locator-v0`**
-- Status: **frozen for development implementation**
+- Status: **`reconcile-v0.1` amendment frozen before corrective implementation**
 - Scope: normalized Semgrep/CodeQL findings for Python and JavaScript command-execution sinks
 - Ordering rule: the matcher applies the rules in Section 6 in order and stops at the first rule that produces one unambiguous unit.
 
@@ -14,6 +15,47 @@ the application-centered pipeline in Amendment 02.
 The implementation is post-processing only. It must not execute scanners, call
 external processes, access a database, fetch source code, inspect a vulnerability
 patch, or use held-out labels.
+
+
+## 0. reconcile-v0.1 — changelog (2026-10-06)
+
+This amendment corrects role-resolution errors found during direct development
+checks after Day 3 acceptance and before any vulnerability-pair result is used to
+tune reconciliation. It does not change the sink-unit key, matching-rule order,
+raw-finding conservation requirement, or held-out split.
+
+The corrections are:
+
+1. **Python shell helpers.** `subprocess.getoutput` and
+   `subprocess.getstatusoutput` always execute through a shell, so their command
+   argument is `shell_command`.
+2. **Python sequence semantics.** For `subprocess.*` list/tuple command forms
+   without shell mode, evidence inside element 0 resolves to `executable`;
+   evidence inside later elements resolves to `argument_list`. The same
+   element-level rule applies to syntactically resolved `pty.spawn` argv
+   sequences.
+3. **`os.spawn*` mode offset.** Positional argument 0 is the spawn mode and has
+   no executable/argv role. Positional argument 1 is the executable/program.
+   Remaining argv position(s) are `argument_list`. `os.exec*` keeps its
+   existing direct-process layout with positional argument 0 as the executable.
+4. **Non-literal shell options are unresolved.** For Python, an explicit
+   `shell=True` resolves the command as `shell_command`, explicit
+   `shell=False` permits direct-process role resolution, and an explicit
+   non-literal `shell=<expression>` yields `role_unresolved`. For JavaScript
+   process APIs, syntactic `{shell: true}` resolves to `shell_command`,
+   syntactic `{shell: false}` permits direct-process role resolution, and a
+   present `shell` property whose value is anything else (including a variable
+   or string) yields `role_unresolved`. V0.1 deliberately does not evaluate
+   JavaScript option expressions or object construction.
+5. **Missing source is conservative.** Rules 1–3 must not use column-based
+   automatic matching when the relevant source text is unavailable, because the
+   ASCII/coordinate safety check cannot be performed. In v0.1 this condition is
+   retained through the fallback path with
+   `column_encoding_requires_review`; no new verdict meaning is introduced.
+
+These corrections define `reconcile-v0.1`. Any implementation, provenance
+record, or persisted unit created after this amendment must record that version.
+
 
 ## 1. Package boundary
 
