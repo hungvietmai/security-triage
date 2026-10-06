@@ -13,24 +13,83 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: tmp/triage-hermetic-fixtures
-      - name: Validate Compose configurations
+          ref: tmp/triage-cli-units-v0
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Backend checks
+        working-directory: backend
         run: |
-          docker compose config --quiet
-          docker compose -f compose.yaml -f compose.dev.yaml config --quiet
-      - name: Start the complete stack
-        run: docker compose up --build -d --wait --wait-timeout 180
-      - name: Test API with isolated PostgreSQL schemas
-        run: docker compose --profile test run --build --rm test
-      - name: Lint and type-check Python
+          python -m pip install uv
+          uv sync --locked
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run mypy
+          uv run pytest --cov
+
+      - name: Experiment tests
+        run: PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v
+
+      - name: Build experiment image
+        run: docker build -f experiments/Dockerfile -t security-triage-pilot:units-v0 .
+
+      - name: Fetch step 1 baseline
+        run: git fetch origin tmp/scanner-refactor-baseline:refs/remotes/origin/tmp/scanner-refactor-baseline
+
+      - name: Run curling with real scanners and reconciliation
         run: |
-          docker compose --profile test run --rm --no-deps test ruff check .
-          docker compose --profile test run --rm --no-deps test ruff format --check .
-          docker compose --profile test run --rm --no-deps test mypy
-      - name: Stop CI services
-        if: always()
-        run: docker compose down --volumes
+          set -euo pipefail
+          mkdir -p /tmp/units-v0
+          COMMIT="$(git rev-parse HEAD)"
+          docker run --rm \
+            -v /tmp/units-v0:/app/artifacts \
+            security-triage-pilot:units-v0 \
+            --case experiments/cases/secbench-curling-0.2.0.json \
+            --config experiments/configs/development-smoke-javascript.json \
+            --configuration-commit "$COMMIT" \
+            --output artifacts/curling-units-v0
+
+      - name: Verify raw findings unchanged and one unit
+        run: |
+          set -euo pipefail
+          git show origin/tmp/scanner-refactor-baseline:experiments/tmp/pre-refactor-curling/findings.json > /tmp/step1-findings.json
+          cmp /tmp/step1-findings.json /tmp/units-v0/curling-units-v0/findings.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root=Path("/tmp/units-v0/curling-units-v0")
+          units=json.loads((root/"units.json").read_text())
+          run=json.loads((root/"run.json").read_text())
+          assert len(units)==1, units
+          unit=units[0]
+          assert unit["mapping_status"]=="mapped", unit
+          assert unit["argument_role"]=="shell_command", unit
+          assert unit["sink_kind"]=="child_process.exec", unit
+          assert len(unit["raw_finding_ids"])==6, unit
+          assert run["raw_findings"]==6
+          assert run["unit_count"]==1
+          assert run["sink_count"]>=1
+          hashes=run["runner_files_sha256"]
+          assert "experiments/locators/sink-locator-v0-javascript.yaml" in hashes
+          triage_hashes=[key for key in hashes if key.startswith("backend/app/triage/")]
+          assert "backend/app/triage/reconcile.py" in triage_hashes
+          print(json.dumps({
+              "findings_byte_identical": True,
+              "raw_findings": run["raw_findings"],
+              "unit_count": len(units),
+              "unit_id": unit["unit_id"],
+              "argument_role": unit["argument_role"],
+              "sink_kind": unit["sink_kind"],
+              "mapped_raw_findings": len(unit["raw_finding_ids"]),
+              "triage_hash_count": len(triage_hashes),
+              "runner_hash_count": len(hashes),
+          }, indent=2))
+          PY
