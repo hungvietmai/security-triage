@@ -2,6 +2,7 @@ import pytest
 
 from app.triage.reconcile import reconcile_findings
 from app.triage.sinks_python import locate_python_sinks
+from app.triage.types import SinkRecord
 
 
 def _sink(
@@ -347,7 +348,7 @@ def _js_process_unit(kind: str, evidence_position: int, option_text: str | None 
     ]
     if option_text is not None:
         args.append(_js_arg(2, 26, 55, text=option_text, value_kind="dict"))
-    sink = {
+    sink: SinkRecord = {
         "path": "a.js",
         "span": {
             "startLine": 1,
