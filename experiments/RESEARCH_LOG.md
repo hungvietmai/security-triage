@@ -227,3 +227,26 @@ Final effective group counts:
   the paired integration control was added as a separate development config.
 - No database write was introduced by reconciliation. No held-out case was
   opened or rescanned for this acceptance check.
+
+
+## 2026-10-06 — reconcile-v0.1 corrective acceptance
+
+- Specification amendment commit:
+  `deb901594954930114c215d4e9792eefc7f39615`, committed before corrective code.
+- Corrective implementation head verified by CI:
+  `314adc5219acdacde8526434686964f5fea5292d`.
+- GitHub Actions evidence:
+  https://github.com/hungvietmai/security-triage/actions/runs/37435211454
+- Reconciliation integration job conclusion: **success**.
+- The pinned Docker image ran the real scanners on the already exposed
+  `curling@0.2.0` development case after the reconcile-v0.1 role fixes.
+- Baseline result remained **6 raw findings -> 1 canonical unit**; the paired
+  direct-alias control remained **7 raw findings -> 1 canonical unit** with
+  `tools = ["codeql", "semgrep"]`.
+- `findings.json` remained byte-identical to the Step 1 baseline.
+- The canonical curling unit ID did not change:
+  `58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb`.
+- Raw-finding conservation remained satisfied for both configurations.
+- This corrective acceptance changes role resolution only where reconcile-v0
+  was semantically wrong or over-confident. It does not redraw the frozen split,
+  inspect a new held-out case, or change the canonical unit key.
