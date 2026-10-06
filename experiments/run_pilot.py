@@ -5,6 +5,7 @@ to the reusable scanner package. No benchmark code/install hooks are executed.
 """
 
 import argparse
+from collections import Counter
 import csv
 import json
 import re
@@ -137,6 +138,24 @@ def _write_findings_csv(path, findings):
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(findings)
+
+
+def _assert_finding_conservation(findings, units):
+    """Require reconciliation to preserve every raw finding exactly once."""
+    raw_ids = Counter(str(finding.get("raw_id") or "") for finding in findings)
+    unit_ids = Counter(
+        str(raw_id)
+        for unit in units
+        for raw_id in unit.get("raw_finding_ids", [])
+    )
+    if raw_ids == unit_ids:
+        return
+    missing = sorted((raw_ids - unit_ids).elements())
+    duplicated = sorted((unit_ids - raw_ids).elements())
+    raise RuntimeError(
+        "Reconciliation finding conservation failed: "
+        f"missing={missing}, duplicated={duplicated}"
+    )
 
 
 def main(
@@ -276,6 +295,7 @@ def main(
             )
             report["steps"]["sink-locator"] = locator_record
             units = reconcile_fn(findings, sinks, sources)
+            _assert_finding_conservation(findings, units)
             report["sink_count"] = len(sinks)
             report["unit_count"] = len(units)
     except (OSError, ValueError, RuntimeError, KeyError, tarfile.TarError) as exc:

@@ -22,6 +22,79 @@ jobs:
       - name: Run experiment tests
         run: PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v
 
+  reconciliation-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build pinned experiment image
+        run: docker build -f experiments/Dockerfile -t security-triage-pilot:day3 .
+      - name: Run curling baseline and paired alias control
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/day3-artifacts
+          COMMIT="$(git rev-parse HEAD)"
+          docker run --rm \
+            -v /tmp/day3-artifacts:/app/artifacts \
+            security-triage-pilot:day3 \
+            --case experiments/cases/secbench-curling-0.2.0.json \
+            --config experiments/configs/development-smoke-javascript.json \
+            --configuration-commit "$COMMIT" \
+            --output artifacts/curling-baseline
+          docker run --rm \
+            -v /tmp/day3-artifacts:/app/artifacts \
+            security-triage-pilot:day3 \
+            --case experiments/cases/secbench-curling-0.2.0.json \
+            --config experiments/configs/development-paired-direct-alias.json \
+            --configuration-commit "$COMMIT" \
+            --output artifacts/curling-paired-alias
+      - name: Verify Day 3 reconciliation acceptance criteria
+        run: |
+          set -euo pipefail
+          git fetch --depth=1 origin tmp/scanner-refactor-baseline
+          git show FETCH_HEAD:experiments/tmp/pre-refactor-curling/findings.json > /tmp/step1-findings.json
+          cmp /tmp/step1-findings.json /tmp/day3-artifacts/curling-baseline/findings.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("/tmp/day3-artifacts")
+          approved_unit = "58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb"
+
+          baseline_run = json.loads((root / "curling-baseline/run.json").read_text())
+          baseline_units = json.loads((root / "curling-baseline/units.json").read_text())
+          assert baseline_run["status"] == "completed", baseline_run
+          assert baseline_run["raw_findings"] == 6, baseline_run
+          assert baseline_run["steps"]["semgrep"]["raw_findings"] == 0, baseline_run
+          assert baseline_run["steps"]["codeql"]["raw_findings"] == 6, baseline_run
+          assert len(baseline_units) == 1, baseline_units
+          assert baseline_units[0]["unit_id"] == approved_unit, baseline_units
+          assert baseline_units[0]["tools"] == ["codeql"], baseline_units
+          assert sum(len(unit["raw_finding_ids"]) for unit in baseline_units) == baseline_run["raw_findings"]
+
+          paired_run = json.loads((root / "curling-paired-alias/run.json").read_text())
+          paired_units = json.loads((root / "curling-paired-alias/units.json").read_text())
+          assert paired_run["status"] == "completed", paired_run
+          assert paired_run["steps"]["semgrep"]["raw_findings"] == 1, paired_run
+          assert paired_run["steps"]["codeql"]["raw_findings"] == 6, paired_run
+          assert paired_run["raw_findings"] == 7, paired_run
+          assert len(paired_units) == 1, paired_units
+          assert paired_units[0]["unit_id"] == approved_unit, paired_units
+          assert paired_units[0]["tools"] == ["codeql", "semgrep"], paired_units
+          assert len(paired_units[0]["raw_finding_ids"]) == 7, paired_units
+          assert sum(len(unit["raw_finding_ids"]) for unit in paired_units) == paired_run["raw_findings"]
+
+          print(json.dumps({
+              "findings_byte_identical": True,
+              "baseline_raw_findings": baseline_run["raw_findings"],
+              "baseline_units": len(baseline_units),
+              "paired_raw_findings": paired_run["raw_findings"],
+              "paired_tools": paired_units[0]["tools"],
+              "paired_units": len(paired_units),
+              "unit_id": paired_units[0]["unit_id"],
+          }, indent=2))
+          PY
+
   frontend:
     runs-on: ubuntu-latest
     defaults:
