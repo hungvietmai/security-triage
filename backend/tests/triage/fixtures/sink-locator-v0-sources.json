@@ -1,0 +1,13 @@
+{
+  "experiments/fixtures/direct-alias/cases.js": "// Development-only synthetic controls; never execute these functions.\nvar cp = require('child_process');\nvar exec = require('child_process').exec;\nvar execSync = require('child_process').execSync;\n\nexports.namespace = function(command) {\n  cp.exec(\"curl \" + command);\n};\nexports.direct = function(command) {\n  exec(\"curl \" + command);\n};\nexports.directSync = function(command) {\n  execSync(\"curl \" + command);\n};\nexports.fixed = function(command) {\n  exec(\"printf hello\");\n};\nexports.unused = function(command) {\n  return \"curl \" + command;\n};\n",
+  "experiments/fixtures/r1-feasibility/01-literal-exec.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.exec('printf fixed'); };\n",
+  "experiments/fixtures/r1-feasibility/02-folded-exec.js": "const cp = require('child_process');\nmodule.exports = function(input) { const prefix = 'printf '; const suffix = 'fixed'; return cp.exec(prefix + suffix); };\n",
+  "experiments/fixtures/r1-feasibility/03-dynamic-exec.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.exec('printf ' + input); };\n",
+  "experiments/fixtures/r1-feasibility/04-fixed-spawn-shell.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.spawn('printf', ['fixed'], {shell: true}); };\n",
+  "experiments/fixtures/r1-feasibility/05-dynamic-spawn-shell.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.spawn('printf', [input], {shell: true}); };\n",
+  "experiments/fixtures/r1-feasibility/06-explicit-interpreter.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.spawn('/bin/sh', ['-c', input], {shell: false}); };\n",
+  "experiments/fixtures/r1-feasibility/07-dynamic-executable.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.spawn(input, [], {shell: false}); };\n",
+  "experiments/fixtures/r1-feasibility/08-fixed-executable-argv.js": "const cp = require('child_process');\nmodule.exports = function(input) { return cp.spawn('/usr/bin/printf', ['%s', input], {shell: false}); };\n",
+  "experiments/fixtures/r1-feasibility/09-shelljs-literal.js": "const shell = require('shelljs');\nmodule.exports = function(input) { return shell.exec('printf fixed'); };\n",
+  "experiments/fixtures/r1-feasibility/10-shelljs-dynamic.js": "const shell = require('shelljs');\nmodule.exports = function(input) { return shell.exec('printf ' + input); };\n"
+}

@@ -3,15 +3,14 @@ from pathlib import Path
 
 from app.triage.sinks_javascript import parse_javascript_sink_output
 
-ROOT = Path(__file__).resolve().parents[3]
-RECORDED = ROOT / "experiments/locators/fixtures/sink-locator-v0-recorded.json"
+FIXTURES = Path(__file__).resolve().parent / "fixtures"
+RECORDED = FIXTURES / "sink-locator-v0-recorded.json"
+SOURCES = FIXTURES / "sink-locator-v0-sources.json"
 
 
 def _fixture():
     payload = RECORDED.read_text()
-    data = json.loads(payload)
-    paths = {row["path"] for row in data["results"]}
-    sources = {path: (ROOT / path).read_text() for path in paths}
+    sources = json.loads(SOURCES.read_text())
     return payload, sources
 
 
