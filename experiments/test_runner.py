@@ -40,9 +40,14 @@ class RunnerTests(unittest.TestCase):
         hashes = runner_files_sha256()
         expected = {
             "experiments/run_pilot.py",
+            "experiments/locators/sink-locator-v0-javascript.yaml",
             *{
                 str(path.relative_to(ROOT))
                 for path in (ROOT / "backend/app/scanners").glob("*.py")
+            },
+            *{
+                str(path.relative_to(ROOT))
+                for path in (ROOT / "backend/app/triage").glob("*.py")
             },
         }
         self.assertEqual(set(hashes), expected)
@@ -155,11 +160,13 @@ class RunnerTests(unittest.TestCase):
             )
             report = json.loads((output / "run.json").read_text())
             findings = json.loads((output / "findings.json").read_text())
+            units = json.loads((output / "units.json").read_text())
             self.assertEqual(report["status"], "failed")
             self.assertEqual(report["raw_findings"], 0)
             self.assertEqual(report["steps"]["codeql"]["status"], "failed")
             self.assertEqual(report["steps"]["codeql"]["error"], "fixture failure")
             self.assertEqual(findings, [])
+            self.assertEqual(units, [])
 
     def test_python_rejects_javascript_configuration_before_scanning(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -289,6 +296,7 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(report["runner_files_sha256"], runner_files_sha256())
             self.assertNotIn("runner_sha256", report)
             self.assertEqual(report["error"], "fixture acquisition stop")
+            self.assertEqual(json.loads((output / "units.json").read_text()), [])
 
     def test_cli_delegates_and_writes_all_outputs(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -350,7 +358,35 @@ class RunnerTests(unittest.TestCase):
             ]
             acquisition_calls = []
             pipeline_calls = []
+            locator_calls = []
+            reconcile_calls = []
             printed = []
+            unit = {
+                "unit_id": "u" * 64,
+                "snapshot_sha256": "d" * 64,
+                "path": "index.js",
+                "sink_span": {
+                    "startLine": 1,
+                    "startColumn": 1,
+                    "endLine": 1,
+                    "endColumn": 10,
+                },
+                "reported_region": None,
+                "argument_role": "shell_command",
+                "sink_kind": "child_process.exec",
+                "callee": "exec",
+                "mapping_status": "mapped",
+                "raw_finding_ids": ["codeql:0:0"],
+                "tools": ["codeql"],
+                "mappings": [
+                    {
+                        "raw_id": "codeql:0:0",
+                        "tool": "codeql",
+                        "mapping_status": "mapped",
+                        "mapping_method": "explicit_link",
+                    }
+                ],
+            }
 
             def fake_acquire(case_value, output_value, *, source_archive, limits):
                 acquisition_calls.append(
@@ -367,11 +403,25 @@ class RunnerTests(unittest.TestCase):
                 pipeline_calls.append(kwargs)
                 return result
 
+            def fake_locator(**kwargs):
+                locator_calls.append(kwargs)
+                return (
+                    [],
+                    {"index.js": "exec(command);\n"},
+                    {"status": "completed", "raw_findings": 0},
+                )
+
+            def fake_reconcile(findings_value, sinks_value, sources_value):
+                reconcile_calls.append((findings_value, sinks_value, sources_value))
+                return [unit]
+
             self.assertEqual(
                 run_pilot.main(
                     argv,
                     acquire_source_fn=fake_acquire,
                     run_pipeline_fn=fake_pipeline,
+                    locate_sinks_fn=fake_locator,
+                    reconcile_fn=fake_reconcile,
                     print_fn=printed.append,
                 ),
                 0,
@@ -379,8 +429,11 @@ class RunnerTests(unittest.TestCase):
 
             self.assertEqual(len(acquisition_calls), 1)
             self.assertEqual(len(pipeline_calls), 1)
+            self.assertEqual(len(locator_calls), 1)
+            self.assertEqual(len(reconcile_calls), 1)
             acquire_call = acquisition_calls[0]
             pipeline_call = pipeline_calls[0]
+            locator_call = locator_calls[0]
             self.assertEqual(acquire_call["case"], case_data)
             self.assertEqual(acquire_call["output"], output.resolve())
             self.assertIsNone(acquire_call["source_archive"])
@@ -397,15 +450,27 @@ class RunnerTests(unittest.TestCase):
                 root / "js-pack",
             )
             self.assertEqual(pipeline_call["codeql_ram_mb"], 2048)
+            self.assertEqual(locator_call["language"], "javascript")
+            self.assertEqual(locator_call["source"], source)
+            self.assertEqual(locator_call["source_files"], ["index.js"])
+            self.assertEqual(locator_call["semgrep_binary"], "/tools/semgrep")
+            self.assertEqual(reconcile_calls[0][0], [finding])
+            self.assertEqual(reconcile_calls[0][1], [])
+            self.assertEqual(reconcile_calls[0][2], {"index.js": "exec(command);\n"})
             self.assertEqual(len(printed), 1)
 
             report = json.loads((output / "run.json").read_text())
             findings = json.loads((output / "findings.json").read_text())
+            units = json.loads((output / "units.json").read_text())
             self.assertEqual(report["status"], "completed")
             self.assertEqual(report["raw_findings"], 1)
             self.assertEqual(report["snapshot_sha256"], "d" * 64)
             self.assertEqual(report["codeql_query_files"], {"query.ql": "e" * 64})
             self.assertEqual(findings, [finding])
+            self.assertEqual(units, [unit])
+            self.assertEqual(report["sink_count"], 0)
+            self.assertEqual(report["unit_count"], 1)
+            self.assertEqual(report["mapping_version"], "reconcile-v0")
             self.assertTrue((output / "findings.csv").is_file())
 
     def test_local_rule_is_verified_before_copy(self):
