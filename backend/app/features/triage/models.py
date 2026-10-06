@@ -46,9 +46,7 @@ class UnitFinding(Identity, Base):
     """One raw finding linked to one versioned reconciliation unit."""
 
     __tablename__ = "unit_findings"
-    __table_args__ = (
-        UniqueConstraint("unit_id", "finding_id", name="uq_unit_finding"),
-    )
+    __table_args__ = (UniqueConstraint("unit_id", "finding_id", name="uq_unit_finding"),)
 
     unit_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("location_units.id", ondelete="CASCADE"), index=True
