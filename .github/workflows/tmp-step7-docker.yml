@@ -1,5 +1,5 @@
 name: Temporary step 7 experiment Docker
-# rerun triage locator checks v5
+# rerun triage locator checks v6
 
 on:
   push:
@@ -37,6 +37,10 @@ jobs:
 
       - name: Build experiment image
         run: docker build -f experiments/Dockerfile -t security-triage-pilot:sink-v0 .
+
+      - name: Verify triage package in experiment image
+        run: |
+          docker run --rm --entrypoint python security-triage-pilot:sink-v0 -c "import app.triage.sinks_python, app.triage.sinks_javascript"
 
       - name: Run real Semgrep JavaScript sink locator
         run: |
