@@ -151,7 +151,7 @@ def _direct_child_aliases(source: str) -> dict[str, str]:
     for match in direct.finditer(source):
         aliases[match.group(1)] = match.group(2)
 
-    imports = re.compile(r"import\\s*{([^}]+)}\\s*from\\s*['\\\"]child_process['\\\"]")
+    imports = re.compile(r"import\s*{([^}]+)}\s*from\s*['\"]child_process['\"]")
     for match in imports.finditer(source):
         for part in match.group(1).split(","):
             item = part.strip()
