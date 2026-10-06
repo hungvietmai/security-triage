@@ -27,9 +27,15 @@ from app.scanners.acquisition import (
     acquire_source,
 )
 from app.scanners.pipeline import run_pipeline
+from app.scanners.process import invoke
 from app.scanners.provenance import digest
+from app.triage.reconcile import reconcile_findings
+from app.triage.sinks_javascript import parse_javascript_sink_output
+from app.triage.sinks_python import locate_python_sinks
 
 SCANNER_ROOT = ROOT / "backend/app/scanners"
+TRIAGE_ROOT = ROOT / "backend/app/triage"
+LOCATOR_RULE = ROOT / "experiments/locators/sink-locator-v0-javascript.yaml"
 
 
 def write_json(path, value):
@@ -37,9 +43,84 @@ def write_json(path, value):
 
 
 def runner_files_sha256():
-    """Hash the thin CLI plus every Python file that implements scanner logic."""
-    files = [Path(__file__).resolve(), *sorted(SCANNER_ROOT.glob("*.py"))]
+    """Hash the CLI, scanner/triage code, and versioned sink-locator rule."""
+    files = [
+        Path(__file__).resolve(),
+        *sorted(SCANNER_ROOT.glob("*.py")),
+        *sorted(TRIAGE_ROOT.glob("*.py")),
+        LOCATOR_RULE,
+    ]
     return {str(path.relative_to(ROOT)): digest(path) for path in files}
+
+
+def _load_source_texts(source_root, source_files, language):
+    extensions = {
+        "python": {".py"},
+        "javascript": {".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx"},
+    }[language]
+    root = source_root.resolve()
+    sources = {}
+    for relative in source_files:
+        relative_path = Path(relative)
+        if relative_path.suffix.lower() not in extensions:
+            continue
+        candidate = (root / relative_path).resolve()
+        if not candidate.is_relative_to(root):
+            raise ValueError("Source file escapes acquired source root")
+        try:
+            sources[relative_path.as_posix()] = candidate.read_text()
+        except UnicodeDecodeError:
+            continue
+    return sources
+
+
+def _locate_sinks(
+    *,
+    language,
+    source,
+    output,
+    source_files,
+    semgrep_binary,
+    jobs,
+    timeout_seconds,
+    invoke_fn=invoke,
+):
+    sources = _load_source_texts(source, source_files, language)
+    if language == "python":
+        sinks = []
+        for path in sorted(sources):
+            sinks.extend(locate_python_sinks(path, sources[path]))
+        return sinks, sources, {"status": "completed", "raw_findings": len(sinks)}
+
+    locator_output = output / "sink-locator-v0.json"
+    argv = [
+        semgrep_binary,
+        "scan",
+        "--metrics=off",
+        "--disable-version-check",
+        "--disable-nosem",
+        "--no-git-ignore",
+        "--jobs",
+        str(jobs),
+        "--json",
+        "--output",
+        locator_output,
+        "--config",
+        LOCATOR_RULE,
+        ".",
+    ]
+    record = invoke_fn(
+        argv,
+        source,
+        output,
+        "sink-locator-javascript",
+        timeout_seconds,
+    )
+    if record["status"] != "completed":
+        raise RuntimeError("JavaScript sink locator failed; see locator logs")
+    sinks = parse_javascript_sink_output(locator_output.read_text(), sources)
+    record["raw_findings"] = len(sinks)
+    return sinks, sources, record
 
 
 def _write_findings_csv(path, findings):
@@ -58,7 +139,15 @@ def _write_findings_csv(path, findings):
         writer.writerows(findings)
 
 
-def main(argv=None, *, acquire_source_fn=acquire_source, run_pipeline_fn=run_pipeline, print_fn=print):
+def main(
+    argv=None,
+    *,
+    acquire_source_fn=acquire_source,
+    run_pipeline_fn=run_pipeline,
+    locate_sinks_fn=_locate_sinks,
+    reconcile_fn=reconcile_findings,
+    print_fn=print,
+):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
@@ -118,12 +207,15 @@ def main(argv=None, *, acquire_source_fn=acquire_source, run_pipeline_fn=run_pip
         "status": "running",
         "steps": {},
         "labels_commit": None,
-        "mapping_version": "raw-ledger-v0",
+        "mapping_version": "reconcile-v0",
+        "sink_locator_version": "sink-locator-v0",
+        "reconciliation_version": "reconcile-v0",
         "metrics": None,
         "metrics_reason": "No reviewed common location/label ledger yet",
     }
 
     findings = []
+    units = []
     start = time.monotonic()
     try:
         acquired = acquire_source_fn(
@@ -171,6 +263,21 @@ def main(argv=None, *, acquire_source_fn=acquire_source, run_pipeline_fn=run_pip
             report["codeql_query_files"] = result.codeql_query_files
         if result.codeql_pack_manifest is not None:
             report["codeql_pack_manifest"] = result.codeql_pack_manifest
+
+        if result.status in {"completed", "partial"}:
+            sinks, sources, locator_record = locate_sinks_fn(
+                language=case["language"],
+                source=acquired.source_path,
+                output=output,
+                source_files=acquired.source_files,
+                semgrep_binary=args.semgrep,
+                jobs=config["jobs"],
+                timeout_seconds=config["timeout_seconds"],
+            )
+            report["steps"]["sink-locator"] = locator_record
+            units = reconcile_fn(findings, sinks, sources)
+            report["sink_count"] = len(sinks)
+            report["unit_count"] = len(units)
     except (OSError, ValueError, RuntimeError, KeyError, tarfile.TarError) as exc:
         report["status"] = "failed"
         report["error"] = str(exc)
@@ -179,12 +286,14 @@ def main(argv=None, *, acquire_source_fn=acquire_source, run_pipeline_fn=run_pip
     report["raw_findings"] = len(findings)
     write_json(output / "findings.json", findings)
     _write_findings_csv(output / "findings.csv", findings)
+    write_json(output / "units.json", units)
     write_json(output / "run.json", report)
     print_fn(
         json.dumps(
             {
                 "status": report["status"],
                 "raw_findings": len(findings),
+                "units": len(units),
                 "output": str(output),
             }
         )
