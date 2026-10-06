@@ -1,5 +1,4 @@
 name: Temporary step 7 experiment Docker
-# rerun triage locator checks v6
 
 on:
   push:
@@ -14,89 +13,24 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: tmp/triage-sink-locator-v0
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-
-      - name: Backend checks
-        working-directory: backend
+          ref: tmp/triage-hermetic-fixtures
+      - name: Validate Compose configurations
         run: |
-          python -m pip install uv
-          uv sync --locked
-          uv run ruff check .
-          uv run ruff format --check .
-          uv run mypy
-          uv run pytest --cov
-
-      - name: Build experiment image
-        run: docker build -f experiments/Dockerfile -t security-triage-pilot:sink-v0 .
-
-      - name: Verify triage package in experiment image
+          docker compose config --quiet
+          docker compose -f compose.yaml -f compose.dev.yaml config --quiet
+      - name: Start the complete stack
+        run: docker compose up --build -d --wait --wait-timeout 180
+      - name: Test API with isolated PostgreSQL schemas
+        run: docker compose --profile test run --build --rm test
+      - name: Lint and type-check Python
         run: |
-          docker run --rm --entrypoint python security-triage-pilot:sink-v0 -c "import app.triage.sinks_python, app.triage.sinks_javascript"
-
-      - name: Run real Semgrep JavaScript sink locator
-        run: |
-          set -euo pipefail
-          docker run --rm --entrypoint semgrep security-triage-pilot:sink-v0 \
-            scan --metrics=off --disable-version-check --no-git-ignore \
-            --json \
-            --config experiments/locators/sink-locator-v0-javascript.yaml \
-            experiments/fixtures/r1-feasibility \
-            experiments/fixtures/direct-alias \
-            > /tmp/sinks-real.json
-
-      - name: Validate real locator output through triage parser
-        env:
-          PYTHONPATH: backend
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from app.triage.sinks_javascript import parse_javascript_sink_output
-
-          root=Path(".")
-          payload=Path("/tmp/sinks-real.json").read_text()
-          raw=json.loads(payload)
-          paths={row["path"] for row in raw["results"]}
-          sources={path:(root/path).read_text() for path in paths}
-          sinks=parse_javascript_sink_output(payload,sources)
-          r1=[s for s in sinks if "/r1-feasibility/" in s["path"]]
-          direct=[s for s in sinks if s["path"].endswith("direct-alias/cases.js")]
-          assert len(sinks)==14, len(sinks)
-          assert len(r1)==10, len(r1)
-          assert len(direct)==4, len(direct)
-          assert {Path(s["path"]).name for s in r1} == {
-              "01-literal-exec.js",
-              "02-folded-exec.js",
-              "03-dynamic-exec.js",
-              "04-fixed-spawn-shell.js",
-              "05-dynamic-spawn-shell.js",
-              "06-explicit-interpreter.js",
-              "07-dynamic-executable.js",
-              "08-fixed-executable-argv.js",
-              "09-shelljs-literal.js",
-              "10-shelljs-dynamic.js",
-          }
-          fixed=[
-              s for s in sinks
-              if s["path"].endswith("01-literal-exec.js")
-              or s["path"].endswith("09-shelljs-literal.js")
-              or (s["path"].endswith("direct-alias/cases.js") and s["span"]["startLine"]==16)
-          ]
-          assert len(fixed)==3
-          print(json.dumps({
-              "real_semgrep": True,
-              "total_sinks": len(sinks),
-              "r1_sinks": len(r1),
-              "direct_alias_sinks": len(direct),
-              "constant_command_sinks_retained": len(fixed),
-          }, indent=2))
-          PY
+          docker compose --profile test run --rm --no-deps test ruff check .
+          docker compose --profile test run --rm --no-deps test ruff format --check .
+          docker compose --profile test run --rm --no-deps test mypy
+      - name: Stop CI services
+        if: always()
+        run: docker compose down --volumes
