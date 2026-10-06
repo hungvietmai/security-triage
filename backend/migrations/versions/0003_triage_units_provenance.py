@@ -68,9 +68,29 @@ def upgrade() -> None:
             "end_line > start_line OR end_column >= start_column",
             name="ck_location_unit_end_column_order",
         ),
+        sa.CheckConstraint(
+            "mapping_status IN "
+            "('mapped', 'unmapped', 'role_unresolved', 'column_encoding_requires_review')",
+            name="ck_location_unit_mapping_status",
+        ),
+        sa.CheckConstraint(
+            "argument_role IS NULL OR "
+            "argument_role IN ('shell_command', 'executable', 'argument_list')",
+            name="ck_location_unit_argument_role",
+        ),
         sa.ForeignKeyConstraint(["scan_id"], ["scans.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint("scan_id", "unit_key", name="uq_location_unit_key"),
+        sa.UniqueConstraint(
+            "scan_id",
+            "reconciler_version",
+            "unit_key",
+            name="uq_location_unit_version_key",
+        ),
+        sa.UniqueConstraint(
+            "id",
+            "reconciler_version",
+            name="uq_location_unit_id_version",
+        ),
     )
     op.create_index(op.f("ix_location_units_scan_id"), "location_units", ["scan_id"], unique=False)
 
@@ -78,6 +98,7 @@ def upgrade() -> None:
         "unit_findings",
         sa.Column("unit_id", sa.Uuid(), nullable=False),
         sa.Column("finding_id", sa.Uuid(), nullable=False),
+        sa.Column("reconciler_version", sa.String(length=80), nullable=False),
         sa.Column("match_rule", sa.String(length=48), nullable=True),
         sa.Column("id", sa.Uuid(), nullable=False),
         sa.Column(
@@ -93,9 +114,19 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.ForeignKeyConstraint(["finding_id"], ["findings.id"], ondelete="CASCADE"),
-        sa.ForeignKeyConstraint(["unit_id"], ["location_units.id"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(
+            ["unit_id", "reconciler_version"],
+            ["location_units.id", "location_units.reconciler_version"],
+            ondelete="CASCADE",
+            name="fk_unit_finding_unit_version",
+        ),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("unit_id", "finding_id", name="uq_unit_finding"),
+        sa.UniqueConstraint(
+            "finding_id",
+            "reconciler_version",
+            name="uq_finding_reconciler_version",
+        ),
     )
     op.create_index(
         op.f("ix_unit_findings_finding_id"),
