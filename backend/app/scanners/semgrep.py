@@ -16,7 +16,7 @@ MAX_RULE_BYTES = 2 * 1024 * 1024
 
 
 class FetchCallable(Protocol):
-    def __call__(self, url: str, target: Path, expected_hash: str, max_bytes: int) -> None: ...
+    def __call__(self, url: str, target: Path, expected_hash: str, max_bytes: int, /) -> None: ...
 
 
 def _required_rule_str(rule: Mapping[str, object], key: str) -> str:
@@ -94,3 +94,37 @@ def run_semgrep(
     if record["status"] == "completed" and not complete:
         record["status"] = "partial"
     return record, findings, complete
+
+
+def run_sink_locator(
+    *,
+    binary: str,
+    source: Path,
+    output: Path,
+    rule: Path,
+    jobs: int,
+    timeout_seconds: float,
+    invoke_fn: InvokeCallable = invoke,
+) -> tuple[ProcessRecord, str]:
+    """Run the versioned JavaScript sink-locator rule and return its JSON text."""
+    result = output / "sink-locator-v0.json"
+    argv: list[str | Path] = [
+        binary,
+        "scan",
+        "--metrics=off",
+        "--disable-version-check",
+        "--disable-nosem",
+        "--no-git-ignore",
+        "--jobs",
+        str(jobs),
+        "--json",
+        "--output",
+        result,
+        "--config",
+        rule,
+        ".",
+    ]
+    record = invoke_fn(argv, source, output, "sink-locator-javascript", timeout_seconds)
+    if record["status"] != "completed":
+        raise RuntimeError("JavaScript sink locator failed; see locator logs")
+    return record, result.read_text(encoding="utf-8")

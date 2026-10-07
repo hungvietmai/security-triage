@@ -1,0 +1,15 @@
+{
+  // Pylance and `npx pyright` both read this; it overrides python.analysis.* settings.
+  "include": ["backend", "experiments"],
+  "exclude": ["**/.venv", "**/node_modules", "**/__pycache__", "**/.mypy_cache"],
+  // Hash-pinned analysis inputs: intentionally wrong code, never edited to please a checker.
+  "ignore": ["experiments/fixtures"],
+  // Imports are `app.*` relative to backend/; experiment tests import siblings directly.
+  "extraPaths": ["backend", "experiments"],
+  "venvPath": "backend",
+  "venv": ".venv",
+  "pythonVersion": "3.12",
+  // Scanners use POSIX process groups; the code only runs in Linux containers.
+  "pythonPlatform": "Linux",
+  "typeCheckingMode": "standard"
+}

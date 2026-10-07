@@ -8,23 +8,19 @@ import re
 from collections.abc import Mapping, Sequence
 from typing import Any, cast
 
-from app.triage.reconcile import _argument_role, _normalized_path, _shell_state
+from app.triage.reconcile import (
+    SHELL_COMMAND_KINDS,
+    argument_role,
+    contains,
+    normalized_path,
+    shell_state,
+)
 from app.triage.types import SinkRecord, Span
 
 _COMMAND = re.compile(r"^[A-Za-z0-9_./ -]+$")
 _INTERPRETERS = re.compile(
     r"^(?:sh|bash|dash|ksh|csh|tcsh|zsh|python\d*(?:\.\d+)*|node\d*|perl\d*|ruby\d*|env|eval|exec)$"
 )
-_ALLOWED_SHELL = {
-    "child_process.exec",
-    "child_process.execSync",
-    "shelljs.exec",
-    "os.system",
-    "os.popen",
-    "asyncio.create_subprocess_shell",
-    "subprocess.getoutput",
-    "subprocess.getstatusoutput",
-}
 _SUBPROCESS = {
     "subprocess.run",
     "subprocess.Popen",
@@ -59,13 +55,6 @@ def _span(value: Any) -> Span | None:
     }
 
 
-def _contains(outer: Span, inner: Span) -> bool:
-    return (outer["startLine"], outer["startColumn"]) <= (
-        inner["startLine"],
-        inner["startColumn"],
-    ) and (inner["endLine"], inner["endColumn"]) <= (outer["endLine"], outer["endColumn"])
-
-
 def _source_span(source: str, span: Span) -> str | None:
     lines = source.splitlines(keepends=True)
     a, b = span["startLine"], span["endLine"]
@@ -82,21 +71,19 @@ def _source_span(source: str, span: Span) -> str | None:
 def _argument_span(sink: SinkRecord, endpoint: Span) -> Span | None:
     """Only the execution arguments count: options, mode and wrapper spans never do."""
     kind = sink["sink_kind"]
-    positions = {0} if kind in _ALLOWED_SHELL | _SUBPROCESS | _JS_SPAWN else {0, 1}
-    if kind == "os.popen":
-        positions = {0}
+    positions = {0} if kind in SHELL_COMMAND_KINDS | _SUBPROCESS | _JS_SPAWN else {0, 1}
     if kind.startswith("os.spawn"):
         positions = {1, 2}
     candidates = [
         arg["span"]
         for arg in sink["args"]
-        if arg["position"] in positions and _contains(arg["span"], endpoint)
+        if arg["position"] in positions and contains(arg["span"], endpoint)
     ]
     if len(candidates) != 1:
         return None
     argument = next(arg for arg in sink["args"] if arg["span"] == candidates[0])
     if argument["value_kind"] in {"list", "tuple"}:
-        items = [item for item in argument.get("sequence_items", []) if _contains(item, endpoint)]
+        items = [item for item in argument.get("sequence_items", []) if contains(item, endpoint)]
         return items[0] if len(items) == 1 else None
     return candidates[0]
 
@@ -148,7 +135,7 @@ def _trace(
             for loc in locations:
                 physical = _obj(_obj(loc).get("location")).get("physicalLocation")
                 physical = _obj(physical)
-                path = _normalized_path(_obj(physical.get("artifactLocation")).get("uri"))
+                path = normalized_path(_obj(physical.get("artifactLocation")).get("uri"))
                 region = _span(physical.get("region"))
                 if path is None or region is None:
                     valid = False
@@ -175,10 +162,10 @@ def _trace(
                 candidate["trace_status"] = "coordinate_unverified"
             else:
                 arg = _argument_span(sink, endpoint["span"])
-                if arg is None or not _contains(sink["span"], endpoint["span"]):
+                if arg is None or not contains(sink["span"], endpoint["span"]):
                     candidate["trace_status"] = "endpoint_mismatch"
                 else:
-                    role = _argument_role(sink, endpoint["span"])
+                    role = argument_role(sink, endpoint["span"])
                     candidate.update(endpoint_argument_span=arg, endpoint_role=role)
                     candidate["trace_status"] = (
                         "valid_endpoint"
@@ -207,9 +194,8 @@ def _python_literal(text: str) -> str | None:
     return resolve(tree)
 
 
-_JS_TOKEN = re.compile(
-    r"\s*([()+]|'(?:[^'\\\r\n]|\\[\\'\"nrt])*'|\"(?:[^\"\\\r\n]|\\[\\'\"nrt])*\")"
-)
+_JS_STRING = r"(?:'(?:[^'\\\r\n]|\\[\\'\"nrt])*'|\"(?:[^\"\\\r\n]|\\[\\'\"nrt])*\")"
+_JS_TOKEN = re.compile(rf"\s*([()+]|{_JS_STRING})")
 
 
 def _js_literal(text: str) -> str | None:
@@ -261,7 +247,7 @@ def _literal_proof(sink: SinkRecord | None, source: str | None) -> dict[str, Any
     if sink is None or source is None:
         return None
     kind = sink["sink_kind"]
-    if kind not in _ALLOWED_SHELL | _SUBPROCESS | _JS_SPAWN:
+    if kind not in SHELL_COMMAND_KINDS | _SUBPROCESS | _JS_SPAWN:
         return None
     args = sink["args"]
     if any(_source_span(source, a["span"]) != a["text"] for a in args):
@@ -293,25 +279,17 @@ def _literal_proof(sink: SinkRecord | None, source: str | None) -> dict[str, Any
             argv = rest[0]["text"].strip()
             if not (argv.startswith("[") and argv.endswith("]")):
                 return None
-            literal = r"(?:'(?:[^'\\\r\n]|\\[\\'\"nrt])*'|\"(?:[^\"\\\r\n]|\\[\\'\"nrt])*\")"
             body = argv[1:-1]
-            if re.fullmatch(rf"\s*(?:{literal}(?:\s*,\s*{literal})*)?\s*", body) is None:
+            if re.fullmatch(rf"\s*(?:{_JS_STRING}(?:\s*,\s*{_JS_STRING})*)?\s*", body) is None:
                 return None
-            items = re.findall(literal, body)
+            items = re.findall(_JS_STRING, body)
             if any(not _safe_command(resolver(item)) for item in items):
                 return None
             command = (command or "") + " " + " ".join(resolver(item) or "" for item in items)
         elif len(rest) != 1 or rest[0]["position"] != 1:
             return None
-    elif kind.startswith("os.") or kind.startswith("asyncio."):
-        if len(args) != 1:
-            return None
-    elif kind.startswith("subprocess."):
-        if len(args) != 1:
-            return None
-    elif kind.startswith("child_process.") or kind == "shelljs.exec":
-        if len(args) != 1:
-            return None
+    elif len(args) != 1:
+        return None
     if not _safe_command(command):
         return None
     segment = _source_span(source, sink["span"])
@@ -358,7 +336,7 @@ def build_evidence(
         and s["sink_kind"] == unit.get("sink_kind")
     ]
     sink = matches[0] if len(matches) == 1 else None
-    shell = _shell_state(sink) if sink else "unresolved"
+    shell = shell_state(sink) if sink else "unresolved"
     path = unit.get("path")
     source = sources.get(path) if isinstance(path, str) else None
     proof = _literal_proof(sink, source)

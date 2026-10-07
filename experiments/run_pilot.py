@@ -6,12 +6,12 @@ to the reusable scanner package. No benchmark code/install hooks are executed.
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 import sys
 import tarfile
 import time
-from collections import Counter
 from pathlib import Path
 
 import yaml
@@ -28,13 +28,18 @@ from app.scanners.acquisition import (
     MAX_UNPACKED,
     AcquisitionLimits,
     acquire_source,
+    load_source_texts,
 )
 from app.scanners.pipeline import run_pipeline
 from app.scanners.process import invoke
 from app.scanners.provenance import digest
-from app.triage.claims import classify_claims
-from app.triage.evidence import build_evidence
-from app.triage.policy import apply_policy
+from app.scanners.semgrep import run_sink_locator
+from app.triage.assess import (
+    assert_finding_conservation,
+    assess_units,
+    verified_definitions,
+)
+from app.triage.policy import validate_policy
 from app.triage.reconcile import RECONCILIATION_VERSION, reconcile_findings
 from app.triage.sinks_javascript import parse_javascript_sink_output
 from app.triage.sinks_python import locate_python_sinks
@@ -62,28 +67,7 @@ def runner_files_sha256():
         SPEC_FILE,
         CLAIMS_FILE,
     ]
-    return {str(path.relative_to(ROOT)): digest(path) for path in files}
-
-
-def _load_source_texts(source_root, source_files, language):
-    extensions = {
-        "python": {".py"},
-        "javascript": {".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx"},
-    }[language]
-    root = source_root.resolve()
-    sources = {}
-    for relative in source_files:
-        relative_path = Path(relative)
-        if relative_path.suffix.lower() not in extensions:
-            continue
-        candidate = (root / relative_path).resolve()
-        if not candidate.is_relative_to(root):
-            raise ValueError("Source file escapes acquired source root")
-        try:
-            sources[relative_path.as_posix()] = candidate.read_text()
-        except UnicodeDecodeError:
-            continue
-    return sources
+    return {path.relative_to(ROOT).as_posix(): digest(path) for path in files}
 
 
 def _locate_sinks(
@@ -97,40 +81,23 @@ def _locate_sinks(
     timeout_seconds,
     invoke_fn=invoke,
 ):
-    sources = _load_source_texts(source, source_files, language)
+    sources = load_source_texts(source, source_files, language)
     if language == "python":
         sinks = []
         for path in sorted(sources):
             sinks.extend(locate_python_sinks(path, sources[path]))
         return sinks, sources, {"status": "completed", "raw_findings": len(sinks)}
 
-    locator_output = output / "sink-locator-v0.json"
-    argv = [
-        semgrep_binary,
-        "scan",
-        "--metrics=off",
-        "--disable-version-check",
-        "--disable-nosem",
-        "--no-git-ignore",
-        "--jobs",
-        str(jobs),
-        "--json",
-        "--output",
-        locator_output,
-        "--config",
-        LOCATOR_RULE,
-        ".",
-    ]
-    record = invoke_fn(
-        argv,
-        source,
-        output,
-        "sink-locator-javascript",
-        timeout_seconds,
+    record, text = run_sink_locator(
+        binary=semgrep_binary,
+        source=source,
+        output=output,
+        rule=LOCATOR_RULE,
+        jobs=jobs,
+        timeout_seconds=timeout_seconds,
+        invoke_fn=invoke_fn,
     )
-    if record["status"] != "completed":
-        raise RuntimeError("JavaScript sink locator failed; see locator logs")
-    sinks = parse_javascript_sink_output(locator_output.read_text(), sources)
+    sinks = parse_javascript_sink_output(text, sources)
     record["raw_findings"] = len(sinks)
     return sinks, sources, record
 
@@ -151,67 +118,47 @@ def _write_findings_csv(path, findings):
         writer.writerows(findings)
 
 
-def _assert_finding_conservation(findings, units):
-    """Require reconciliation to preserve every raw finding exactly once."""
-    raw_ids = Counter(str(finding.get("raw_id") or "") for finding in findings)
-    unit_ids = Counter(
-        str(raw_id) for unit in units for raw_id in unit.get("raw_finding_ids", [])
-    )
-    if raw_ids == unit_ids:
-        return
-    missing = sorted((raw_ids - unit_ids).elements())
-    duplicated = sorted((unit_ids - raw_ids).elements())
-    raise RuntimeError(
-        "Reconciliation finding conservation failed: "
-        f"missing={missing}, duplicated={duplicated}"
-    )
-
-
-def _verified_definitions(config, output, result):
-    """Read actual staged rule bytes and verified query-pack bytes from this run."""
-    definitions = []
+def assess_run(config, output, result, findings, units, sinks, sources):
+    """Assess every unit; hashes are taken from the exact bytes that were parsed."""
+    policy_bytes = POLICY_FILE.read_bytes()
+    claims_bytes = CLAIMS_FILE.read_bytes()
+    mapping = json.loads(claims_bytes)
     language = config.get("language", "javascript")
+    staged = []
     for index, rule in enumerate(config["semgrep_rules"]):
-        staged = output / f"rule-{index}.yaml"
-        if not staged.is_file() or digest(staged) != rule["sha256"]:
+        path = output / f"rule-{index}.yaml"
+        if not path.is_file():
+            staged.append((None, None))
             continue
-        definition = yaml.safe_load(staged.read_text())
-        defined_rules = (
-            definition.get("rules", []) if isinstance(definition, dict) else []
-        )
-        if len(defined_rules) != 1 or not isinstance(defined_rules[0].get("id"), str):
-            continue
-        # Read the ID from staged bytes; aliases with a shared ID stay distinct by hash.
-        definitions.append(
-            {
-                "tool": "semgrep",
-                "language": language,
-                "rule_id": defined_rules[0]["id"],
-                "tool_version": config["semgrep_version"],
-                "definition_sha256": digest(staged),
-            }
-        )
-    pack = config.get("codeql_bundle", {}).get(f"{language}_query_pack")
-    observed = result.codeql_query_files or {}
-    if observed == config["codeql_query_sha256"] and pack:
-        for query_path, sha in observed.items():
-            definitions.append(
-                {
-                    "tool": "codeql",
-                    "language": language,
-                    "rule_id": ("js/" if language == "javascript" else "py/")
-                    + (
-                        "command-line-injection"
-                        if query_path.endswith("/CommandInjection.ql")
-                        else "shell-command-constructed-from-input"
-                    ),
-                    "tool_version": config["codeql_version"],
-                    "definition_sha256": sha,
-                    "query_path": query_path,
-                    "query_pack": f"codeql/{language}-queries@{pack}",
-                }
-            )
-    return definitions
+        data = path.read_bytes()
+        sha256 = hashlib.sha256(data).hexdigest()
+        staged.append((sha256, yaml.safe_load(data) if sha256 == rule["sha256"] else None))
+    definitions = verified_definitions(
+        language=language,
+        semgrep_version=config["semgrep_version"],
+        codeql_version=config["codeql_version"],
+        semgrep_rules=config["semgrep_rules"],
+        staged_rules=staged,
+        expected_query_sha256=config["codeql_query_sha256"],
+        observed_query_sha256=result.codeql_query_files,
+        query_pack_version=config.get("codeql_bundle", {}).get(f"{language}_query_pack"),
+    )
+    return assess_units(
+        units,
+        findings,
+        sinks,
+        sources,
+        mapping=mapping,
+        definitions=definitions,
+        policy=validate_policy(yaml.safe_load(policy_bytes)),
+        provenance={
+            "policy_sha256": hashlib.sha256(policy_bytes).hexdigest(),
+            "spec_sha256": digest(SPEC_FILE),
+            "rule_claims_version": mapping["version"],
+            "rule_claims_sha256": hashlib.sha256(claims_bytes).hexdigest(),
+            "reconciler_version": RECONCILIATION_VERSION,
+        },
+    )
 
 
 def main(
@@ -352,27 +299,12 @@ def main(
             )
             report["steps"]["sink-locator"] = locator_record
             units = reconcile_fn(findings, sinks, sources)
-            _assert_finding_conservation(findings, units)
+            assert_finding_conservation(findings, units)
             report["sink_count"] = len(sinks)
             report["unit_count"] = len(units)
-            policy = yaml.safe_load(POLICY_FILE.read_text())
-            mapping = json.loads(CLAIMS_FILE.read_text())
-            definitions = _verified_definitions(config, output, result)
-            claims = classify_claims(mapping, findings, definitions)
-            assessments = [
-                apply_policy(
-                    build_evidence(unit, findings, claims, sinks, sources), policy
-                )
-                for unit in units
-            ]
-            for assessment in assessments:
-                assessment.update(
-                    policy_sha256=digest(POLICY_FILE),
-                    spec_sha256=digest(SPEC_FILE),
-                    rule_claims_version=mapping["version"],
-                    rule_claims_sha256=digest(CLAIMS_FILE),
-                    reconciler_version=RECONCILIATION_VERSION,
-                )
+            assessments = assess_run(
+                config, output, result, findings, units, sinks, sources
+            )
             report["assessment_count"] = len(assessments)
     except (OSError, ValueError, RuntimeError, KeyError, tarfile.TarError) as exc:
         report["status"] = "failed"

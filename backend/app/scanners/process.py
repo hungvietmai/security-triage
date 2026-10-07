@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import signal
@@ -9,19 +10,19 @@ import subprocess
 import time
 from collections.abc import Mapping, MutableMapping, Sequence
 from pathlib import Path
-from typing import Literal, Protocol, TypedDict, cast
+from typing import Literal, NotRequired, Protocol, TypedDict, cast
 
 ToolName = Literal["semgrep", "codeql"]
 
 
-class ProcessRecord(TypedDict, total=False):
-    argv: list[str]
+class ProcessRecord(TypedDict):
     status: str
-    exit_code: int | None
-    error: str
-    seconds: float
-    raw_findings: int
-    sarif_sha256: str
+    argv: NotRequired[list[str]]
+    exit_code: NotRequired[int | None]
+    error: NotRequired[str]
+    seconds: NotRequired[float]
+    raw_findings: NotRequired[int]
+    sarif_sha256: NotRequired[str]
 
 
 class InvokeCallable(Protocol):
@@ -33,6 +34,7 @@ class InvokeCallable(Protocol):
         name: str,
         timeout: float,
         env: Mapping[str, str] | None = None,
+        /,
     ) -> ProcessRecord: ...
 
 
@@ -44,6 +46,7 @@ class ToolVersionCallable(Protocol):
         output: Path,
         tool: ToolName,
         steps: MutableMapping[str, ProcessRecord],
+        /,
         *,
         working_directory: Path,
         invoke_fn: InvokeCallable,
@@ -88,7 +91,9 @@ def invoke(
                 record["exit_code"] = process.wait(timeout=timeout)
                 record["status"] = "completed" if record["exit_code"] == 0 else "failed"
             except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
+                # The group may exit between the timeout and the kill; still a timeout.
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(process.pid, signal.SIGKILL)
                 process.wait()
                 record["status"] = "timeout"
         except OSError as exc:

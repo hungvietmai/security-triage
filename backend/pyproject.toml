@@ -55,6 +55,8 @@ exclude_also = ['if __name__ == "__main__":', "if TYPE_CHECKING:"]
 
 [tool.mypy]
 python_version = "3.12"
+# Scanners use POSIX process groups; the code only runs in Linux containers.
+platform = "linux"
 strict = true
 plugins = ["pydantic.mypy"]
 files = ["app", "scripts", "migrations", "tests"]

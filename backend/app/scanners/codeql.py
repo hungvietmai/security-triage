@@ -59,7 +59,7 @@ def run_codeql(
     if not all(path.is_file() for path in query_paths):
         raise ValueError("Configured CodeQL query missing from pack")
 
-    query_files = {str(path.relative_to(query_pack)): digest(path) for path in query_paths}
+    query_files = {path.relative_to(query_pack).as_posix(): digest(path) for path in query_paths}
     if query_files != dict(expected_query_sha256):
         raise ValueError("CodeQL query digest mismatch")
     pack_manifest = (query_pack / "qlpack.yml").read_text()

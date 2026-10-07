@@ -4,7 +4,6 @@ import uuid
 from typing import Any
 
 from sqlalchemy import (
-    Boolean,
     CheckConstraint,
     ForeignKey,
     ForeignKeyConstraint,
@@ -112,10 +111,15 @@ class UnitAssessment(Identity, Base):
     unit_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("location_units.id", ondelete="CASCADE"), index=True
     )
-    semgrep_flag: Mapped[bool] = mapped_column(Boolean, default=False)
-    codeql_flag: Mapped[bool] = mapped_column(Boolean, default=False)
-    rule_claims: Mapped[dict[str, Any]] = mapped_column(JSON_VALUE, default=dict)
+    # Tools, claims, traces, predicates and unknowns: the evidence record as computed.
     evidence: Mapped[dict[str, Any]] = mapped_column(JSON_VALUE, default=dict)
     priority: Mapped[str] = mapped_column(String(4))
+    decision_id: Mapped[str] = mapped_column(String(48))
+    matched_conditions: Mapped[list[str]] = mapped_column(JSON_VALUE, default=list)
     reason: Mapped[str] = mapped_column(Text)
+    policy_id: Mapped[str] = mapped_column(String(80))
     policy_version: Mapped[str] = mapped_column(String(80))
+    policy_sha256: Mapped[str] = mapped_column(String(64))
+    spec_sha256: Mapped[str] = mapped_column(String(64))
+    rule_claims_version: Mapped[str] = mapped_column(String(80))
+    rule_claims_sha256: Mapped[str] = mapped_column(String(64))

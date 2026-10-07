@@ -19,7 +19,7 @@ class ClaimTests(unittest.TestCase):
             ).read_text()
         )
 
-    def finding(self, rid="path.spawn-shell-true", tool="semgrep"):
+    def finding(self, rid: str | None = "path.spawn-shell-true", tool="semgrep"):
         return {
             "raw_id": "raw:0",
             "tool": tool,

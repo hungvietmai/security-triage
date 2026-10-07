@@ -15,6 +15,17 @@ from app.models import (
     UnitFinding,
 )
 
+ASSESSMENT_PROVENANCE = {
+    "decision_id": "D30_HIGH",
+    "matched_conditions": ["agreement", "execution_candidate"],
+    "policy_id": "command-injection-priority",
+    "policy_version": "0.1",
+    "policy_sha256": "a" * 64,
+    "spec_sha256": "b" * 64,
+    "rule_claims_version": "rule-claims-v2",
+    "rule_claims_sha256": "c" * 64,
+}
+
 
 def add_chain(session):
     project = Project(name="Demo")
@@ -96,13 +107,10 @@ def _add_triage_chain(session):
     )
     assessment = UnitAssessment(
         unit_id=unit.id,
-        semgrep_flag=True,
-        codeql_flag=True,
-        rule_claims={"shell_semantics": False},
         evidence={"tools": ["semgrep", "codeql"]},
         priority="P2",
         reason="paired evidence",
-        policy_version="priority-v0",
+        **ASSESSMENT_PROVENANCE,
     )
     session.add_all([link, assessment])
     session.flush()
@@ -319,13 +327,10 @@ def test_unit_assessment_accepts_frozen_priority_vocabulary(session, priority):
     session.add(
         UnitAssessment(
             unit_id=unit.id,
-            semgrep_flag=False,
-            codeql_flag=True,
-            rule_claims={},
             evidence={},
             priority=priority,
             reason="test",
-            policy_version="priority-v0",
+            **ASSESSMENT_PROVENANCE,
         )
     )
     session.commit()
@@ -345,13 +350,10 @@ def test_unit_assessment_rejects_unknown_priority(session):
     session.add(
         UnitAssessment(
             unit_id=unit.id,
-            semgrep_flag=False,
-            codeql_flag=False,
-            rule_claims={},
             evidence={},
             priority="PX",
             reason="test",
-            policy_version="priority-v0",
+            **ASSESSMENT_PROVENANCE,
         )
     )
 

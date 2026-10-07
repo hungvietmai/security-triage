@@ -24,16 +24,11 @@ from app.scanners.acquisition import (
 )
 from app.scanners.codeql import query_pack_for_language
 from app.scanners.pipeline import PipelineResult
-from app.scanners.sarif import sarif_findings
+from app.scanners.sarif import Finding, sarif_findings
 from app.scanners.semgrep import stage_rule
 
 from experiments import run_batch, run_pilot
-from experiments.run_pilot import (
-    ROOT,
-    _assert_finding_conservation,
-    digest,
-    runner_files_sha256,
-)
+from experiments.run_pilot import ROOT, digest, runner_files_sha256
 
 
 class RunnerTests(unittest.TestCase):
@@ -51,11 +46,11 @@ class RunnerTests(unittest.TestCase):
             "experiments/policy/PRIORITY_V0_1.md",
             "experiments/mappings/rule-claims-v2.json",
             *{
-                str(path.relative_to(ROOT))
+                path.relative_to(ROOT).as_posix()
                 for path in (ROOT / "backend/app/scanners").glob("*.py")
             },
             *{
-                str(path.relative_to(ROOT))
+                path.relative_to(ROOT).as_posix()
                 for path in (ROOT / "backend/app/triage").glob("*.py")
             },
         }
@@ -63,43 +58,6 @@ class RunnerTests(unittest.TestCase):
         for relative, expected_hash in hashes.items():
             self.assertEqual(expected_hash, digest(ROOT / relative))
         self.assertNotIn("runner_sha256", hashes)
-
-    def test_finding_conservation_accepts_one_cross_tool_unit(self):
-        findings = [
-            {"raw_id": "codeql:0:0"},
-            {"raw_id": "semgrep:0:0"},
-        ]
-        units = [
-            {
-                "raw_finding_ids": ["codeql:0:0", "semgrep:0:0"],
-                "tools": ["codeql", "semgrep"],
-            }
-        ]
-        _assert_finding_conservation(findings, units)
-
-    def test_finding_conservation_rejects_loss_or_duplication(self):
-        findings = [
-            {"raw_id": "codeql:0:0"},
-            {"raw_id": "semgrep:0:0"},
-        ]
-        bad_units = [
-            [{"raw_finding_ids": ["codeql:0:0"]}],
-            [
-                {
-                    "raw_finding_ids": [
-                        "codeql:0:0",
-                        "semgrep:0:0",
-                        "semgrep:0:0",
-                    ]
-                }
-            ],
-        ]
-        for units in bad_units:
-            with (
-                self.subTest(units=units),
-                self.assertRaisesRegex(RuntimeError, "finding conservation failed"),
-            ):
-                _assert_finding_conservation(findings, units)
 
     def test_github_identity_is_pinned_and_verified_without_package_json(self):
         with tempfile.TemporaryDirectory() as folder:
@@ -372,7 +330,7 @@ class RunnerTests(unittest.TestCase):
                 transport="verified_local_archive",
                 seconds=0.25,
             )
-            finding = {
+            finding: Finding = {
                 "raw_id": "codeql:0:0",
                 "tool": "codeql",
                 "snapshot_sha256": "d" * 64,
@@ -524,7 +482,7 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(findings, [finding])
             self.assertEqual(units, [unit])
             self.assertEqual(len(assessments), 1)
-            self.assertEqual(assessments[0]["tier"], "U")
+            self.assertEqual(assessments[0]["priority"], "U")
             self.assertEqual(report["sink_count"], 0)
             self.assertEqual(report["unit_count"], 1)
             self.assertEqual(report["mapping_version"], "reconcile-v0.1")

@@ -1,7 +1,10 @@
 import json
 
+import pytest
+
+from app.scanners.process import ProcessRecord
 from app.scanners.provenance import digest
-from app.scanners.semgrep import run_semgrep
+from app.scanners.semgrep import run_semgrep, run_sink_locator
 
 
 def test_run_semgrep_preserves_cli_arguments(tmp_path):
@@ -16,7 +19,7 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
 
     commands = []
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         commands.append([str(item) for item in argv])
         assert cwd == source
         assert output_dir == output
@@ -62,7 +65,7 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
         ]
     ]
     assert record["status"] == "completed"
-    assert record["raw_findings"] == 0
+    assert record.get("raw_findings") == 0
     assert findings == []
     assert complete is True
 
@@ -114,3 +117,44 @@ def test_stage_remote_rule_uses_injected_fetch(tmp_path):
             2 * 1024 * 1024,
         )
     ]
+
+
+def test_run_sink_locator_returns_json_and_fails_closed(tmp_path):
+    output = tmp_path / "output"
+    output.mkdir()
+    rule = tmp_path / "locator.yaml"
+    calls = []
+
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
+        calls.append((argv, cwd, name, timeout))
+        (output_dir / "sink-locator-v0.json").write_text('{"results": []}', encoding="utf-8")
+        return {"argv": [str(a) for a in argv], "status": "completed", "exit_code": 0}
+
+    record, text = run_sink_locator(
+        binary="semgrep",
+        source=tmp_path,
+        output=output,
+        rule=rule,
+        jobs=2,
+        timeout_seconds=9,
+        invoke_fn=fake_invoke,
+    )
+    assert json.loads(text) == {"results": []}
+    assert record["status"] == "completed"
+    argv, cwd, name, timeout = calls[0]
+    assert argv[-3:] == ["--config", rule, "."]
+    assert (cwd, name, timeout) == (tmp_path, "sink-locator-javascript", 9)
+
+    def failing_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
+        return {"argv": [], "status": "failed", "exit_code": 2}
+
+    with pytest.raises(RuntimeError, match="sink locator failed"):
+        run_sink_locator(
+            binary="semgrep",
+            source=tmp_path,
+            output=output,
+            rule=rule,
+            jobs=1,
+            timeout_seconds=1,
+            invoke_fn=failing_invoke,
+        )

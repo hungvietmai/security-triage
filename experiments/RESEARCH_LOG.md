@@ -324,3 +324,39 @@ remains directly reachable from `main`.
   và `alembic check` lần nữa đều đạt. Job Docker scanner lặp lại các số liệu
   curling, R1 và OWASP nêu trên, gồm bảo toàn ID/vị trí và cùng canonical
   `unit_id`. Run #114 chỉ là run trung gian, không dùng làm bằng chứng CI cuối.
+
+## 2026-10-07 — Dọn code sau priority v0.1 (không đổi ngữ nghĩa chính sách)
+
+- Chính sách vẫn là v0.1: không sửa `priority-v0.1.yaml`, `PRIORITY_V0_1.md` hay
+  `rule-claims-v2.json`; chỉ đổi code, nên `runner_files_sha256` đổi theo.
+- Luồng claims → evidence → policy, kiểm tra bảo toàn finding và dựng định nghĩa đã
+  xác minh chuyển sang `backend/app/triage/assess.py` (hàm thuần, chỉ stdlib) để
+  `run_pilot.py`, `probe_r1.py` và task worker ngày 5 dùng chung. Đọc source và chạy
+  sink locator chuyển sang `app/scanners`. Parse YAML vẫn ở phía gọi.
+- Hash policy và rule-claims nay tính trên đúng bytes đã parse, một lần mỗi run.
+  Query CodeQL ngoài hai query đã khóa nay làm run thất bại thay vì bị gán nhầm
+  `shell-command-constructed-from-input`.
+- Assessment chỉ còn trường `priority` (YAML `output.required_fields`); bỏ bản sao
+  `tier`. `probe_r1.py` nay cũng ghi hash policy/rule-claims vào assessment.
+- Migration 0004: `unit_assessments` bỏ `semgrep_flag`, `codeql_flag`, `rule_claims`
+  (đã có trong `evidence`), thêm `decision_id`, `matched_conditions`, `policy_id`,
+  `policy_sha256`, `spec_sha256`, `rule_claims_version`, `rule_claims_sha256`.
+- Kiểm chứng tương đương chạy local bằng image scanner Docker dựng từ `main`
+  (`267764f`) và từ nhánh dọn code, cùng bốn bộ dữ liệu (curling smoke, curling alias,
+  R1, OWASP Python): `findings.json`, `units.json` trùng hoàn toàn; `assessments.json`
+  trùng hoàn toàn sau khi bỏ `tier` (R1: bỏ thêm các trường hash mới). Curling P1 ở cả
+  hai cấu hình, R1 theo từng ca và phân bố OWASP (TP P1=7, P2=4; FP P1=2, P3=5) không
+  đổi. Đây là kiểm tra local, chưa phải CI; cần ghi run CI trên commit cuối.
+- `experiments/reports/owasp-python-development/reproduce.py` đã hỏng từ refactor
+  `38e020d` (import `sarif_findings`, `verify_source_identity` từ `run_pilot` sau khi
+  chúng chuyển sang `app.scanners`); nay import đúng chỗ và chạy lại được. Không đổi
+  logic tái lập báo cáo.
+- Key đường dẫn trong `runner_files_sha256`, `source_files` và hash query CodeQL nay
+  luôn dùng `/` (`as_posix`); trên Linux kết quả không đổi, trên Windows trước đây
+  sinh `\` làm hash query không khớp cấu hình.
+- Chẩn đoán phát triển (một lần đo mỗi cấu hình, image local): `jobs=4` so với
+  `jobs=1` giảm curling 61 s → 37 s, OWASP 179 s → 169 s (tạo CodeQL database cho
+  Python không nhanh hơn). Với OWASP, `jobs=4` giữ nguyên tập finding, unit và mức
+  ưu tiên nhưng **đổi thứ tự kết quả CodeQL nên `raw_id` dạng chỉ số bị gán khác**.
+  Vì vậy cấu hình nghiên cứu giữ `jobs: 1` (gate `on_raw_id_reordering`), và bản ghi
+  database không được dùng `raw_id` làm định danh ổn định giữa các lần quét.

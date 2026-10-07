@@ -2,7 +2,7 @@ import pytest
 
 from app.triage.reconcile import reconcile_findings
 from app.triage.sinks_python import locate_python_sinks
-from app.triage.types import SinkRecord
+from app.triage.types import SinkArgument, SinkRecord
 
 
 def _sink(
@@ -13,7 +13,7 @@ def _sink(
     start_col=1,
     end_col=20,
     kind="child_process.exec",
-):
+) -> SinkRecord:
     return {
         "path": path,
         "span": {
@@ -45,7 +45,7 @@ def _sink(
 def _finding(
     *,
     raw_id="codeql:0:0",
-    path="a.js",
+    path: str | None = "a.js",
     region=None,
     message="",
     raw_result=None,
@@ -325,7 +325,7 @@ def _js_arg(
     *,
     text: str,
     value_kind: str,
-):
+) -> SinkArgument:
     return {
         "position": position,
         "keyword": None,

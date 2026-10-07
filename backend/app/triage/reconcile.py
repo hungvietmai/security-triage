@@ -44,7 +44,7 @@ class ReconciledUnit(TypedDict):
     mappings: list[UnitMapping]
 
 
-_SHELL_COMMAND_KINDS = {
+SHELL_COMMAND_KINDS = {
     "child_process.exec",
     "child_process.execSync",
     "shelljs.exec",
@@ -104,11 +104,11 @@ def _point(span: Span, *, end: bool) -> tuple[int, int]:
     return span["startLine"], span["startColumn"]
 
 
-def _contains(outer: Span, inner: Span, *, strict: bool = False) -> bool:
-    contains = _point(outer, end=False) <= _point(inner, end=False) and _point(
+def contains(outer: Span, inner: Span, *, strict: bool = False) -> bool:
+    inside = _point(outer, end=False) <= _point(inner, end=False) and _point(
         inner, end=True
     ) <= _point(outer, end=True)
-    return contains and (not strict or outer != inner)
+    return inside and (not strict or outer != inner)
 
 
 def _canonical_id(identity: Mapping[str, object]) -> str:
@@ -116,7 +116,7 @@ def _canonical_id(identity: Mapping[str, object]) -> str:
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
-def _normalized_path(value: object) -> str | None:
+def normalized_path(value: object) -> str | None:
     if not isinstance(value, str) or not value:
         return None
     normalized = value.replace("\\", "/")
@@ -129,7 +129,7 @@ def _innermost(sinks: Sequence[SinkRecord]) -> SinkRecord | None:
     candidates = [
         sink
         for sink in sinks
-        if all(sink is other or _contains(other["span"], sink["span"]) for other in sinks)
+        if all(sink is other or contains(other["span"], sink["span"]) for other in sinks)
     ]
     return candidates[0] if len(candidates) == 1 else None
 
@@ -164,7 +164,7 @@ _JS_SHELL_LITERAL = re.compile(
 _JS_SHELL_PRESENT = re.compile(r"(?:^|[,{]\s*)(?:shell|'shell'|\"shell\")(?:\s*:|\s*[,}])")
 
 
-def _shell_state(sink: SinkRecord) -> ShellState:
+def shell_state(sink: SinkRecord) -> ShellState:
     states: set[ShellState] = set()
     for argument in sink["args"]:
         if argument["keyword"] == "shell":
@@ -194,7 +194,7 @@ def _argument_for_evidence(sink: SinkRecord, evidence: Span) -> int | None:
     positions = {
         argument["position"]
         for argument in sink["args"]
-        if argument["position"] is not None and _contains(argument["span"], evidence)
+        if argument["position"] is not None and contains(argument["span"], evidence)
     }
     return positions.pop() if len(positions) == 1 else None
 
@@ -214,21 +214,21 @@ def _sequence_item_for_evidence(
     matches = [
         index
         for index, span in enumerate(argument.get("sequence_items", []))
-        if _contains(span, evidence)
+        if contains(span, evidence)
     ]
     return matches[0] if len(matches) == 1 else None
 
 
-def _argument_role(sink: SinkRecord, evidence: Span) -> str | None:
+def argument_role(sink: SinkRecord, evidence: Span) -> str | None:
     kind = sink["sink_kind"]
-    if kind in _SHELL_COMMAND_KINDS:
+    if kind in SHELL_COMMAND_KINDS:
         return "shell_command"
 
     if kind in _JS_PROCESS_KINDS:
-        shell_state = _shell_state(sink) if kind != "child_process.fork" else "absent"
-        if shell_state == "true":
+        state = shell_state(sink) if kind != "child_process.fork" else "absent"
+        if state == "true":
             return "shell_command"
-        if shell_state == "unresolved":
+        if state == "unresolved":
             return None
         position = _argument_for_evidence(sink, evidence)
         if position == 0:
@@ -238,10 +238,10 @@ def _argument_role(sink: SinkRecord, evidence: Span) -> str | None:
         return None
 
     if kind.startswith("subprocess."):
-        shell_state = _shell_state(sink)
-        if shell_state == "true":
+        state = shell_state(sink)
+        if state == "true":
             return "shell_command"
-        if shell_state == "unresolved":
+        if state == "unresolved":
             return None
 
         position = _argument_for_evidence(sink, evidence)
@@ -312,7 +312,7 @@ def _related_shell_location(finding: Mapping[str, object]) -> tuple[str, Span] |
             continue
         physical = _dictionary(related.get("physicalLocation"))
         artifact = _dictionary(physical.get("artifactLocation"))
-        path = _normalized_path(artifact.get("uri"))
+        path = normalized_path(artifact.get("uri"))
         region = _region(physical.get("region"))
         if path is not None and region is not None:
             matches.append((path, region))
@@ -328,7 +328,7 @@ def _mapped_unit(
     sources: Mapping[str, str],
 ) -> ReconciledUnit:
     snapshot = str(finding.get("snapshot_sha256") or "")
-    path = _normalized_path(sink["path"])
+    path = normalized_path(sink["path"])
     assert path is not None
     raw_id = str(finding.get("raw_id") or "")
     tool = str(finding.get("tool") or "")
@@ -339,7 +339,7 @@ def _mapped_unit(
             method=None,
         )
 
-    role = _argument_role(sink, evidence)
+    role = argument_role(sink, evidence)
     status: MappingStatus = "mapped" if role is not None else "role_unresolved"
     identity: dict[str, object] = {
         "snapshot_sha256": snapshot,
@@ -377,7 +377,7 @@ def _fallback_unit(
     method: MappingMethod | None = None,
 ) -> ReconciledUnit:
     snapshot = str(finding.get("snapshot_sha256") or "")
-    path = _normalized_path(finding.get("reported_path"))
+    path = normalized_path(finding.get("reported_path"))
     raw_region = _dictionary(finding.get("reported_region"))
     raw_id = str(finding.get("raw_id") or "")
     tool = str(finding.get("tool") or "")
@@ -422,8 +422,8 @@ def _match_one(
         related_sinks = [
             sink
             for sink in sinks
-            if _normalized_path(sink["path"]) == related_path
-            and _contains(sink["span"], related_region)
+            if normalized_path(sink["path"]) == related_path
+            and contains(sink["span"], related_region)
         ]
         selected = _innermost(related_sinks)
         if selected is not None:
@@ -435,13 +435,13 @@ def _match_one(
                 sources=sources,
             )
 
-    path = _normalized_path(finding.get("reported_path"))
+    path = normalized_path(finding.get("reported_path"))
     primary = _region(finding.get("reported_region"))
     if path is None or primary is None:
         return _fallback_unit(finding)
 
-    same_path = [sink for sink in sinks if _normalized_path(sink["path"]) == path]
-    containing = [sink for sink in same_path if _contains(sink["span"], primary, strict=True)]
+    same_path = [sink for sink in sinks if normalized_path(sink["path"]) == path]
+    containing = [sink for sink in same_path if contains(sink["span"], primary, strict=True)]
     selected = _innermost(containing)
     if selected is not None:
         return _mapped_unit(

@@ -11,14 +11,16 @@ import yaml  # type: ignore[import-untyped]
 
 from app.triage.claims import classify_claims
 from app.triage.evidence import build_evidence
-from app.triage.policy import PREDICATES, apply_policy
+from app.triage.policy import PREDICATES, apply_policy, validate_policy
 from app.triage.reconcile import reconcile_findings
 from app.triage.sinks_python import locate_python_sinks
 from app.triage.types import SinkRecord
 
 ROOT = Path(__file__).resolve().parents[3]
 MAPPING = json.loads((ROOT / "experiments/mappings/rule-claims-v2.json").read_text())
-POLICY = yaml.safe_load((ROOT / "experiments/policy/priority-v0.1.yaml").read_text())
+POLICY = validate_policy(
+    yaml.safe_load((ROOT / "experiments/policy/priority-v0.1.yaml").read_bytes())
+)
 
 
 def test_all_pinned_rules_and_mismatch():
@@ -151,6 +153,7 @@ def test_trace_to_option_or_argument_list_does_not_prove_flow():
     source = 'import subprocess\nsubprocess.run(["ls", cmd], shell=False)\n'
     sinks = locate_python_sinks("a.py", source)
     list_arg = sinks[0]["args"][0]
+    assert "sequence_items" in list_arg
     finding: dict[str, Any] = {
         "raw_id": "codeql:0:0",
         "tool": "codeql",
@@ -222,7 +225,7 @@ BASE = {key: False for key in PREDICATES}
 
 
 @pytest.mark.parametrize(
-    ("matched", "near_miss", "tier", "decision"),
+    ("matched", "near_miss", "priority", "decision"),
     [
         ({"unresolved_unit": True}, {"unresolved_unit": False}, "U", "D00_UNRESOLVED"),
         (
@@ -252,10 +255,10 @@ BASE = {key: False for key in PREDICATES}
         ({}, {"execution_candidate": True, "shell_semantics": True}, "P4", "D99_DEFAULT"),
     ],
 )
-def test_each_ordered_rule_and_near_miss(matched, near_miss, tier, decision):
+def test_each_ordered_rule_and_near_miss(matched, near_miss, priority, decision):
     evidence = {"predicate_values": {**BASE, **matched}, "source_types": [], "unknown_fields": []}
     result = apply_policy(evidence, POLICY)
-    assert (result["tier"], result["decision_id"]) == (tier, decision)
+    assert (result["priority"], result["decision_id"]) == (priority, decision)
     other = apply_policy({**evidence, "predicate_values": {**BASE, **near_miss}}, POLICY)
     assert other["decision_id"] != decision
     assert result["reason"] and result["matched_conditions"]
@@ -272,7 +275,7 @@ def test_all_1024_signal_combinations_have_one_priority():
             },
             POLICY,
         )
-        assert result["tier"] in {"P1", "P2", "P3", "P4", "U"}
+        assert result["priority"] in {"P1", "P2", "P3", "P4", "U"}
         assert result["decision_id"] in {rule["id"] for rule in POLICY["decisions"]}
 
 
@@ -450,7 +453,7 @@ def test_shell_library_input_strong_flow_remains_p1():
     evidence = build_evidence(unit, [finding], [claim], sinks, sources)
     assert evidence["predicate_values"]["important_unknown"]
     assert evidence["predicate_values"]["strong_flow"]
-    assert apply_policy(evidence, POLICY)["tier"] == "P1"
+    assert apply_policy(evidence, POLICY)["priority"] == "P1"
 
 
 def test_policy_rejects_unknown_enums_and_missing_default():
@@ -458,4 +461,4 @@ def test_policy_rejects_unknown_enums_and_missing_default():
     with pytest.raises(ValueError):
         apply_policy({**evidence, "predicate_values": {**BASE, "other": True}}, POLICY)
     with pytest.raises(ValueError):
-        apply_policy(evidence, {**POLICY, "decisions": POLICY["decisions"][:-1]})
+        validate_policy({**POLICY, "decisions": POLICY["decisions"][:-1]})

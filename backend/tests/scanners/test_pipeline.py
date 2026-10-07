@@ -1,7 +1,7 @@
 import json
 
 from app.scanners.pipeline import run_pipeline
-from app.scanners.process import ToolName
+from app.scanners.process import ProcessRecord, ToolName
 from app.scanners.provenance import digest
 
 
@@ -31,7 +31,7 @@ def test_pipeline_accepts_injected_process_functions(tmp_path):
         version_calls.append((binary, expected, tool, working_directory, invoke_fn))
         steps[tool + "-version"] = {"status": "completed"}
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         invoke_calls.append((name, [str(item) for item in argv]))
         if name == "semgrep":
             (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
@@ -103,7 +103,7 @@ def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
     ):
         steps[tool + "-version"] = {"status": "completed"}
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         if name == "codeql":
             (output / "codeql.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
         return {"status": "completed", "exit_code": 0}
@@ -159,7 +159,7 @@ def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
     )
     assert failed.status == "failed"
     assert failed.steps["codeql"]["status"] == "failed"
-    assert "--javascript-query-pack" in failed.steps["codeql"]["error"]
+    assert "--javascript-query-pack" in failed.steps["codeql"].get("error", "")
 
 
 def test_pipeline_is_partial_when_one_scanner_fails(tmp_path):
@@ -184,7 +184,7 @@ def test_pipeline_is_partial_when_one_scanner_fails(tmp_path):
     ):
         steps[tool + "-version"] = {"status": "completed"}
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         if name == "semgrep":
             (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
         return {"status": "completed", "exit_code": 0}

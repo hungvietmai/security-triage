@@ -96,7 +96,7 @@ jobs:
           assert len(baseline_units) == 1, baseline_units
           baseline_assessments = json.loads((root / "curling-baseline/assessments.json").read_text())
           assert len(baseline_assessments) == 1
-          assert baseline_assessments[0]["tier"] == "P1", baseline_assessments
+          assert baseline_assessments[0]["priority"] == "P1", baseline_assessments
           assert baseline_assessments[0]["predicate_values"]["strong_flow"], baseline_assessments
           assert baseline_assessments[0]["source_types"] == ["library_input"]
           assert baseline_units[0]["unit_id"] == approved_unit, baseline_units
@@ -111,7 +111,7 @@ jobs:
           assert paired_run["raw_findings"] == 7, paired_run
           assert len(paired_units) == 1, paired_units
           paired_assessments = json.loads((root / "curling-paired-alias/assessments.json").read_text())
-          assert len(paired_assessments) == 1 and paired_assessments[0]["tier"] == "P1"
+          assert len(paired_assessments) == 1 and paired_assessments[0]["priority"] == "P1"
           assert paired_assessments[0]["predicate_values"]["agreement"]
           assert paired_units[0]["unit_id"] == approved_unit, paired_units
           assert paired_units[0]["tools"] == ["codeql", "semgrep"], paired_units
@@ -120,8 +120,8 @@ jobs:
 
           print(json.dumps({
               "raw_ids_rules_primary_locations_equal": True,
-              "baseline_priority": baseline_assessments[0]["tier"],
-              "paired_priority": paired_assessments[0]["tier"],
+              "baseline_priority": baseline_assessments[0]["priority"],
+              "paired_priority": paired_assessments[0]["priority"],
               "baseline_raw_findings": baseline_run["raw_findings"],
               "baseline_units": len(baseline_units),
               "paired_raw_findings": paired_run["raw_findings"],

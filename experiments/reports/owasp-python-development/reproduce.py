@@ -13,7 +13,9 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
-from experiments.run_pilot import digest, sarif_findings, verify_source_identity  # noqa: E402
+from experiments.run_pilot import digest  # noqa: E402  (also puts backend/ on sys.path)
+from app.scanners.acquisition import verify_source_identity  # noqa: E402
+from app.scanners.sarif import sarif_findings  # noqa: E402
 
 
 def require(condition, message):
