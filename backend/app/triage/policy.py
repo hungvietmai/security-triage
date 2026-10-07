@@ -38,19 +38,27 @@ def matches(condition: Any, signals: Mapping[str, bool]) -> bool:
     raise ValueError("Invalid decision operator")
 
 
-def apply_policy(evidence: Mapping[str, Any], policy: Mapping[str, Any]) -> dict[str, Any]:
-    signals = evidence["predicate_values"]
-    if set(signals) != PREDICATES or any(type(v) is not bool for v in signals.values()):
-        raise ValueError("Policy needs exactly ten boolean predicates")
+def validate_policy(policy: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Check the ordered decision list once, at load, before any unit is assessed."""
     decisions = policy["decisions"]
     if not decisions or decisions[-1]["when"] != {"always": True}:
         raise ValueError("Ordered policy must end with an unconditional default")
-    outcomes = [(row, matches(row["when"], signals)) for row in decisions]
-    if len({r["id"] for r, _ in outcomes}) != len(outcomes):
+    if len({row["id"] for row in decisions}) != len(decisions):
         raise ValueError("Duplicate decision ID")
-    if any(r["priority"] not in TIERS for r, _ in outcomes):
+    if any(row["priority"] not in TIERS for row in decisions):
         raise ValueError("Unknown priority")
-    row = next(r for r, matched in outcomes if matched)
+    unset = dict.fromkeys(PREDICATES, False)
+    for row in decisions:
+        matches(row["when"], unset)  # walks the whole tree: unknown names/operators raise
+    return policy
+
+
+def apply_policy(evidence: Mapping[str, Any], policy: Mapping[str, Any]) -> dict[str, Any]:
+    """Assess one unit against a policy that already passed validate_policy."""
+    signals = evidence["predicate_values"]
+    if set(signals) != PREDICATES or any(type(v) is not bool for v in signals.values()):
+        raise ValueError("Policy needs exactly ten boolean predicates")
+    row = next(r for r in policy["decisions"] if matches(r["when"], signals))
     conditions = sorted(k for k, v in signals.items() if v)
 
     def clauses(condition: Any) -> list[str]:
@@ -68,7 +76,6 @@ def apply_policy(evidence: Mapping[str, Any], policy: Mapping[str, Any]) -> dict
     conditions = sorted(set(conditions + clauses(row["when"])))
     return {
         **evidence,
-        "tier": row["priority"],
         "priority": row["priority"],
         "policy_id": policy["policy_id"],
         "policy_version": policy["policy_version"],

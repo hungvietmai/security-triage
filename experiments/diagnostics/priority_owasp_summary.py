@@ -27,9 +27,9 @@ def main(argv=None):
             raise ValueError("Assessment order/identity mismatch")
         label = labels.get(unit["path"])
         if label in {"true_positive", "false_positive"}:
-            counts[label][assessment["tier"]] += 1
+            counts[label][assessment["priority"]] += 1
         else:
-            unlabeled[assessment["tier"]] += 1
+            unlabeled[assessment["priority"]] += 1
     claim_unresolved = sum(
         all(
             item["claim_family"] == "classification_unresolved"

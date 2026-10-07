@@ -524,7 +524,7 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(findings, [finding])
             self.assertEqual(units, [unit])
             self.assertEqual(len(assessments), 1)
-            self.assertEqual(assessments[0]["tier"], "U")
+            self.assertEqual(assessments[0]["priority"], "U")
             self.assertEqual(report["sink_count"], 0)
             self.assertEqual(report["unit_count"], 1)
             self.assertEqual(report["mapping_version"], "reconcile-v0.1")

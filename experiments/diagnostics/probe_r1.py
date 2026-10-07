@@ -16,7 +16,7 @@ from app.scanners.pipeline import run_pipeline
 from app.scanners.provenance import digest
 from app.triage.claims import classify_claims
 from app.triage.evidence import build_evidence
-from app.triage.policy import apply_policy
+from app.triage.policy import apply_policy, validate_policy
 from app.triage.reconcile import reconcile_findings
 
 from experiments.run_pilot import (
@@ -87,7 +87,7 @@ def main(argv=None):
     units = reconcile_findings(result.findings, sinks, sources)
     _assert_finding_conservation(result.findings, units)
     mapping = json.loads(CLAIMS_FILE.read_text())
-    policy = yaml.safe_load(POLICY_FILE.read_text())
+    policy = validate_policy(yaml.safe_load(POLICY_FILE.read_text()))
     claims = classify_claims(
         mapping, result.findings, _verified_definitions(config, output, result)
     )
@@ -98,7 +98,7 @@ def main(argv=None):
     by_case = {}
     for case in manifest["cases"]:
         tiers = [
-            a["tier"]
+            a["priority"]
             for u, a in zip(units, assessments, strict=True)
             if u["path"] == case["file"]
         ]
@@ -118,7 +118,7 @@ def main(argv=None):
             "by_case": by_case,
             "steps": result.steps,
             "locator": locator,
-            "counts": dict(Counter(a["tier"] for a in assessments)),
+            "counts": dict(Counter(a["priority"] for a in assessments)),
         },
     )
     print(json.dumps(by_case, sort_keys=True))

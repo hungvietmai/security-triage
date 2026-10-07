@@ -34,7 +34,7 @@ from app.scanners.process import invoke
 from app.scanners.provenance import digest
 from app.triage.claims import classify_claims
 from app.triage.evidence import build_evidence
-from app.triage.policy import apply_policy
+from app.triage.policy import apply_policy, validate_policy
 from app.triage.reconcile import RECONCILIATION_VERSION, reconcile_findings
 from app.triage.sinks_javascript import parse_javascript_sink_output
 from app.triage.sinks_python import locate_python_sinks
@@ -355,7 +355,7 @@ def main(
             _assert_finding_conservation(findings, units)
             report["sink_count"] = len(sinks)
             report["unit_count"] = len(units)
-            policy = yaml.safe_load(POLICY_FILE.read_text())
+            policy = validate_policy(yaml.safe_load(POLICY_FILE.read_text()))
             mapping = json.loads(CLAIMS_FILE.read_text())
             definitions = _verified_definitions(config, output, result)
             claims = classify_claims(mapping, findings, definitions)
