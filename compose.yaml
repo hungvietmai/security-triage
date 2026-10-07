@@ -122,6 +122,8 @@ services:
   test:
     <<: *backend
     profiles: ["test"]
+    volumes:
+      - ./experiments:/experiments:ro
     build:
       context: ./backend
       target: development

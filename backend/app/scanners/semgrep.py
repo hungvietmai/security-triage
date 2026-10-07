@@ -72,6 +72,7 @@ def run_semgrep(
         "--disable-version-check",
         "--disable-nosem",
         "--no-git-ignore",
+        "--dataflow-traces",
         "--jobs",
         str(jobs),
         "--sarif",

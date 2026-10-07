@@ -279,3 +279,48 @@ For future research-significant specification, policy, or freeze changes, retain
 the specification commit as a durable evidence ref before squash-merging, or
 prefer a normal merge commit so the specification-before-implementation order
 remains directly reachable from `main`.
+
+## 2026-10-07 — Chính sách ưu tiên v0.1: đặc tả, triển khai và kiểm tra phát triển
+
+- Đặc tả và bảng rule-claims v2 được commit tại
+  `18d9109ab965dfceb9c22592d45203ffe310cee9`; tag từ xa
+  `evidence/priority-v0.1-spec` đã được đối chiếu đúng SHA trước commit code
+  `d4dba53058c88f65702bc7527441c56c19af46bf`. PR #4 giữ lịch sử bằng
+  merge commit, không squash. Không dùng nhãn thủ công để tính mức ưu tiên.
+- CLI bật vết Semgrep, giữ nguyên cảnh báo thô, xuất một assessment cho mỗi đơn vị,
+  hash code, đặc tả, policy và bảng rule. Rule chỉ được phân loại khi định nghĩa
+  đã đối chiếu hash từ file staged/query pack của chính lần chạy. Bộ gộp và
+  `unit_id` vẫn theo `reconcile-v0.1`; không ghi database.
+- Bốn cấu hình phát triển (SHA-256 file): curling smoke
+  `adf762957905a891e62375d18a0241ee80487bfe0e29c2f5f98f4daced728ea8`,
+  curling alias `850a036d32e91bb41d2a2163cbdc5e700fabe7e71a64e00f10fd0c286c7595ea`,
+  R1 `d1662b74f833c9306d63586a273c45311efcaa95dd50af8de9aacc82168509d2`,
+  OWASP Python `9650f7386ab685ea422c4b1920b10d490508152be2d876086fd8188f382d10ec`.
+- CI #114 (`37567693424`) chạy scanner Docker thật: curling smoke 6 finding →
+  1 đơn vị P1; cấu hình alias 7 finding → cùng đơn vị P1, có đồng thuận hai công
+  cụ. `unit_id` vẫn là
+  `58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb`.
+  ID, rule và vị trí chính của từng cảnh báo trùng baseline cũ; tính bảo toàn
+  finding đạt. So byte giữa các lần chạy không còn là tiêu chí sau khi bật vết.
+- R1 ở cùng run: 01 và 09 không tạo ứng viên; 04 có một đơn vị P4;
+  03 có một đơn vị P1 và 05 một đơn vị P2. Các ca 02 và 08 không có ứng viên;
+  06, 07 lần lượt P2; 10 P1. Không tạo đơn vị giả cho trường hợp scanner im lặng.
+- OWASP Python cùng run: 31 finding → 18 đơn vị, **0 đơn vị U do toàn bộ rule
+  chưa phân loại**. Trong các đơn vị gắn với nhãn đã rà soát: TP có P1=7,
+  P2=4; FP có P1=2, P3=5. Hai FP vẫn lên P1 theo vết luồng và rule CodeQL
+  `py/command-line-injection`; đây là giới hạn thực nghiệm cần phân tích, không
+  được giải thích là đã giảm hết FP hoặc tự sửa chính sách v0.1 theo nhãn đã thấy.
+  Nhãn OWASP đã được rà soát một vòng nhưng chưa có đánh giá độc lập thứ hai;
+  kết quả này chỉ là chẩn đoán trên dữ liệu phát triển.
+- CI #114 có job thực nghiệm, frontend và scanner integration xanh; backend
+  Docker lỗi ở bước thu thập test vì image chỉ chứa `backend/`, còn test mới
+  đọc file đặc tả ở `experiments/`. PR đã thêm mount chỉ đọc cho test và
+  bổ sung kiểm tra cú pháp mảng literal JS; cần xác nhận lại trên HEAD cuối.
+- HEAD code cuối trước log: `4f2ed0b81d3615380e3e1d04f1b64199212c49ff`.
+  CI #115 (`37567998891`) **cả bốn job đều xanh**: 206 backend test qua,
+  coverage nhánh 91,38% (ngưỡng 90%); 33 test thực nghiệm; Ruff, định dạng,
+  mypy (87 file), rà soát phụ thuộc và frontend đạt. Trên PostgreSQL,
+  `alembic check`, downgrade `0003 -> 0002 -> 0001 -> base`, upgrade về head
+  và `alembic check` lần nữa đều đạt. Job Docker scanner lặp lại các số liệu
+  curling, R1 và OWASP nêu trên, gồm bảo toàn ID/vị trí và cùng canonical
+  `unit_id`. Run #114 chỉ là run trung gian, không dùng làm bằng chứng CI cuối.

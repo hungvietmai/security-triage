@@ -2,10 +2,10 @@
 
 import io
 import json
+import sys
 import tarfile
 import tempfile
 import unittest
-import sys
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +26,7 @@ from app.scanners.codeql import query_pack_for_language
 from app.scanners.pipeline import PipelineResult
 from app.scanners.sarif import sarif_findings
 from app.scanners.semgrep import stage_rule
+
 from experiments import run_batch, run_pilot
 from experiments.run_pilot import (
     ROOT,
@@ -46,6 +47,9 @@ class RunnerTests(unittest.TestCase):
         expected = {
             "experiments/run_pilot.py",
             "experiments/locators/sink-locator-v0-javascript.yaml",
+            "experiments/policy/priority-v0.1.yaml",
+            "experiments/policy/PRIORITY_V0_1.md",
+            "experiments/mappings/rule-claims-v2.json",
             *{
                 str(path.relative_to(ROOT))
                 for path in (ROOT / "backend/app/scanners").glob("*.py")
@@ -91,8 +95,9 @@ class RunnerTests(unittest.TestCase):
             ],
         ]
         for units in bad_units:
-            with self.subTest(units=units), self.assertRaisesRegex(
-                RuntimeError, "finding conservation failed"
+            with (
+                self.subTest(units=units),
+                self.assertRaisesRegex(RuntimeError, "finding conservation failed"),
             ):
                 _assert_finding_conservation(findings, units)
 
@@ -106,7 +111,8 @@ class RunnerTests(unittest.TestCase):
                 "repository": "org/fixture",
                 "source_commit": commit,
                 "archive_root": "fixture-" + commit,
-                "artifact_url": "https://codeload.github.com/org/fixture/tar.gz/" + commit,
+                "artifact_url": "https://codeload.github.com/org/fixture/tar.gz/"
+                + commit,
                 "identity_files_sha256": {"app.py": digest(root / "app.py")},
             }
             verify_source_identity(case, root)
@@ -118,7 +124,10 @@ class RunnerTests(unittest.TestCase):
                 ("identity_files_sha256", {"../outside": "0" * 64}),
                 ("identity_files_sha256", {}),
             ):
-                with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                with (
+                    self.subTest(field=field, value=value),
+                    self.assertRaises(ValueError),
+                ):
                     verify_source_identity({**case, field: value}, root)
 
     def test_language_selects_its_own_query_pack(self):
@@ -332,8 +341,12 @@ class RunnerTests(unittest.TestCase):
             report = json.loads((output / "run.json").read_text())
             self.assertEqual((output / "case.json").read_bytes(), case_bytes)
             self.assertEqual((output / "config.json").read_bytes(), config_bytes)
-            self.assertEqual(report["case_manifest_sha256"], digest(output / "case.json"))
-            self.assertEqual(report["configuration_sha256"], digest(output / "config.json"))
+            self.assertEqual(
+                report["case_manifest_sha256"], digest(output / "case.json")
+            )
+            self.assertEqual(
+                report["configuration_sha256"], digest(output / "config.json")
+            )
             self.assertEqual(report["runner_files_sha256"], runner_files_sha256())
             self.assertNotIn("runner_sha256", report)
             self.assertEqual(report["error"], "fixture acquisition stop")
@@ -503,12 +516,15 @@ class RunnerTests(unittest.TestCase):
             report = json.loads((output / "run.json").read_text())
             findings = json.loads((output / "findings.json").read_text())
             units = json.loads((output / "units.json").read_text())
+            assessments = json.loads((output / "assessments.json").read_text())
             self.assertEqual(report["status"], "completed")
             self.assertEqual(report["raw_findings"], 1)
             self.assertEqual(report["snapshot_sha256"], "d" * 64)
             self.assertEqual(report["codeql_query_files"], {"query.ql": "e" * 64})
             self.assertEqual(findings, [finding])
             self.assertEqual(units, [unit])
+            self.assertEqual(len(assessments), 1)
+            self.assertEqual(assessments[0]["tier"], "U")
             self.assertEqual(report["sink_count"], 0)
             self.assertEqual(report["unit_count"], 1)
             self.assertEqual(report["mapping_version"], "reconcile-v0.1")

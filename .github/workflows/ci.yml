@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
+      - name: Install policy parser
+        run: python -m pip install pyyaml==6.0.3
       - name: Run experiment tests
         run: PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v
 
@@ -29,7 +31,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: Build pinned experiment image
         run: docker build -f experiments/Dockerfile -t security-triage-pilot:day3 .
-      - name: Run curling baseline and paired alias control
+      - name: Run priority v0.1 on both curling configurations, R1 and OWASP Python
         run: |
           set -euo pipefail
           mkdir -p /tmp/day3-artifacts
@@ -48,17 +50,41 @@ jobs:
             --config experiments/configs/development-paired-direct-alias.json \
             --configuration-commit "$COMMIT" \
             --output artifacts/curling-paired-alias
-      - name: Verify Day 3 reconciliation acceptance criteria
+          docker run --rm \
+            -v /tmp/day3-artifacts:/app/artifacts \
+            --entrypoint python \
+            security-triage-pilot:day3 \
+            experiments/diagnostics/probe_r1.py \
+            --javascript-query-pack /opt/codeql/qlpacks/codeql/javascript-queries/2.4.6 \
+            --output artifacts/r1-priority
+          docker run --rm \
+            -v /tmp/day3-artifacts:/app/artifacts \
+            security-triage-pilot:day3 \
+            --case experiments/cases/owasp-benchmarkpython-cwe78-v01.json \
+            --config experiments/configs/development-owasp-python-upstream.json \
+            --configuration-commit "$COMMIT" \
+            --output artifacts/owasp-python-priority
+          docker run --rm \
+            -v /tmp/day3-artifacts:/app/artifacts \
+            --entrypoint python \
+            security-triage-pilot:day3 \
+            experiments/diagnostics/priority_owasp_summary.py \
+            --run-directory artifacts/owasp-python-priority
+      - name: Verify reconciliation and priority acceptance criteria
         run: |
           set -euo pipefail
           git fetch --depth=1 origin tmp/scanner-refactor-baseline
           git show FETCH_HEAD:experiments/tmp/pre-refactor-curling/findings.json > /tmp/step1-findings.json
-          cmp /tmp/step1-findings.json /tmp/day3-artifacts/curling-baseline/findings.json
           python - <<'PY'
           import json
           from pathlib import Path
 
           root = Path("/tmp/day3-artifacts")
+          old = json.loads(Path("/tmp/step1-findings.json").read_text())
+          new = json.loads((root / "curling-baseline/findings.json").read_text())
+          def identity(row):
+              return row["raw_id"], row["tool"], row["rule_id"], row["reported_path"], row["reported_region"]
+          assert [identity(row) for row in old] == [identity(row) for row in new]
           approved_unit = "58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb"
 
           baseline_run = json.loads((root / "curling-baseline/run.json").read_text())
@@ -68,6 +94,11 @@ jobs:
           assert baseline_run["steps"]["semgrep"]["raw_findings"] == 0, baseline_run
           assert baseline_run["steps"]["codeql"]["raw_findings"] == 6, baseline_run
           assert len(baseline_units) == 1, baseline_units
+          baseline_assessments = json.loads((root / "curling-baseline/assessments.json").read_text())
+          assert len(baseline_assessments) == 1
+          assert baseline_assessments[0]["tier"] == "P1", baseline_assessments
+          assert baseline_assessments[0]["predicate_values"]["strong_flow"], baseline_assessments
+          assert baseline_assessments[0]["source_types"] == ["library_input"]
           assert baseline_units[0]["unit_id"] == approved_unit, baseline_units
           assert baseline_units[0]["tools"] == ["codeql"], baseline_units
           assert sum(len(unit["raw_finding_ids"]) for unit in baseline_units) == baseline_run["raw_findings"]
@@ -79,13 +110,18 @@ jobs:
           assert paired_run["steps"]["codeql"]["raw_findings"] == 6, paired_run
           assert paired_run["raw_findings"] == 7, paired_run
           assert len(paired_units) == 1, paired_units
+          paired_assessments = json.loads((root / "curling-paired-alias/assessments.json").read_text())
+          assert len(paired_assessments) == 1 and paired_assessments[0]["tier"] == "P1"
+          assert paired_assessments[0]["predicate_values"]["agreement"]
           assert paired_units[0]["unit_id"] == approved_unit, paired_units
           assert paired_units[0]["tools"] == ["codeql", "semgrep"], paired_units
           assert len(paired_units[0]["raw_finding_ids"]) == 7, paired_units
           assert sum(len(unit["raw_finding_ids"]) for unit in paired_units) == paired_run["raw_findings"]
 
           print(json.dumps({
-              "findings_byte_identical": True,
+              "raw_ids_rules_primary_locations_equal": True,
+              "baseline_priority": baseline_assessments[0]["tier"],
+              "paired_priority": paired_assessments[0]["tier"],
               "baseline_raw_findings": baseline_run["raw_findings"],
               "baseline_units": len(baseline_units),
               "paired_raw_findings": paired_run["raw_findings"],
