@@ -41,6 +41,8 @@ used for the recorded second attempt. If code/config changes, pass its actual
 committed revision and rebuild the image; hashes also appear in run.json.
 The experiment image is verified in GitHub Actions. It copies the reusable
 `backend/app/scanners` package into the image and sets `PYTHONPATH=/app/backend`.
+Scanner pins live in `tools/pins.env` and are installed by `tools/install-scanners.sh`,
+shared with the worker image (`backend/Dockerfile.worker`).
 Semgrep 1.178.0 remains dependency-pinned. CodeQL uses the full multi-language
 `codeql-bundle-linux64.tar.zst` release 2.27.1, verified with SHA-256
 `1ec99cfa9420f04c2330784b4ddb8363a0dd67c3e4471cd93963c50e6c433717`.
@@ -195,3 +197,13 @@ The [guard diagnostic](reports/constant-guard-development/REPORT.md) derives
 cannot suppress a warning: the command may be overwritten afterward. Original
 alerts and protocol R1 exclusions are retained. The experiment unit suite now
 has 27 tests; this development evidence is separate from a policy effectiveness result.
+
+## Scan profile
+
+`profiles/command-injection-v0.1/profile.json` is the worker's view of this directory:
+it names the scanner configs, Semgrep rules, sink locator, rule claims and policy that
+a product scan uses, by their paths here, and pins each by SHA-256. There are no copies;
+the only generated file is `priority-v0.1.json`, the policy YAML converted to JSON so
+the worker needs no YAML parser. After changing any pinned file, run
+`python experiments/build_profile.py` and commit the result; CI fails (`test_profile.py`)
+while the profile is stale. Assessments still record the YAML's hash as `policy_sha256`.

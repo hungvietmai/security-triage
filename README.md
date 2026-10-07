@@ -16,7 +16,7 @@ docker compose up --build -d
 docker compose ps -a
 ```
 
-Lần đầu cần tải image và build dependencies. `migrate` và `storage-init` tự chạy;
+Lần đầu cần tải image và build dependencies; image worker tải thêm bundle CodeQL đã pin. `migrate` và `storage-init` tự chạy;
 hai service này kết thúc với `Exited (0)` là bình thường. API chờ migration, bucket
 và Redis sẵn sàng; FE/worker chờ API healthy.
 
@@ -122,6 +122,8 @@ worker, schema drift và test API. Trạng thái CI chỉ xác nhận được s
 | `backend/tests/` | Test theo cấu trúc `app/`, gồm test kiến trúc |
 | `infra/` | Cấu hình SeaweedFS |
 | `rules/` | Vị trí dành cho rule Semgrep và query CodeQL |
+| `profiles/` | Scan profile: manifest pin hash các rule, rule-claims và policy dùng khi quét |
+| `tools/` | Pin phiên bản Semgrep/CodeQL và script cài dùng chung cho các image scanner |
 | `experiments/` | Quy ước dữ liệu và đánh giá |
 | `docs/architecture.md` | Phạm vi đã làm, ranh giới kiến trúc và bước tiếp theo |
 
@@ -149,7 +151,10 @@ không có dữ liệu mẫu hay kết quả quét giả.
 Triển khai **chọn thư mục → xem/lọc file → tự ZIP → upload → lưu source snapshot**.
 Sau đó tích hợp Semgrep trước, CodeQL sau. Không cần thay cấu trúc FE/BE.
 
-Chưa kèm CodeQL CLI, scanner runtime hay bộ dữ liệu lỗ hổng trong image.
+Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep và CodeQL
+theo [`tools/pins.env`](tools/pins.env) và kèm scan profile
+[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json); worker từ chối
+khởi động nếu hash profile hoặc phiên bản scanner lệch pin. Image API không kèm scanner.
 Không commit mã nguồn người dùng, object-store data hoặc CodeQL database vào Git.
 
 ## Tài liệu chính thức

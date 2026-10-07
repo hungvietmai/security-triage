@@ -155,7 +155,8 @@ jobs:
 
   docker-integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The worker image downloads and verifies the pinned CodeQL bundle.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - name: Validate Compose configurations
@@ -183,6 +184,8 @@ jobs:
         run: |
           docker compose exec -T api python -m scripts.export_openapi > frontend/openapi.json
           git diff --exit-code -- frontend/openapi.json
+      - name: Verify worker scanner versions and scan profile hashes
+        run: docker compose exec -T worker python -m scripts.check_worker
       - name: Verify FE proxy, readiness and worker
         run: |
           curl --fail --retry 5 --retry-delay 2 http://localhost:5173/

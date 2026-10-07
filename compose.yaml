@@ -90,9 +90,14 @@ services:
 
   worker:
     <<: *backend
+    # Scanners and the pinned scan profile; the API keeps the light image.
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.worker
     init: true
     restart: unless-stopped
-    command: ["celery", "-A", "app.workers.celery_app:celery_app", "worker", "--loglevel=INFO", "--concurrency=2"]
+    # Refuse to start unless the profile hashes and scanner versions match the pins.
+    command: ["sh", "-c", "python -m scripts.check_worker && exec celery -A app.workers.celery_app:celery_app worker --loglevel=INFO --concurrency=2"]
     # The worker needs the schema, bucket and broker, not the HTTP API.
     depends_on:
       migrate:
@@ -124,6 +129,8 @@ services:
     profiles: ["test"]
     volumes:
       - ./experiments:/experiments:ro
+      - ./profiles:/profiles:ro
+      - ./tools:/tools:ro
     build:
       context: ./backend
       target: development

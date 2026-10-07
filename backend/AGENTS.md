@@ -60,10 +60,10 @@ backend/
 │   │   ├── exceptions.py  # AppError / NotFoundError / ConflictError, ErrorResponse
 │   │   └── storage.py     # Shared S3 (SeaweedFS) client
 │   ├── features/          # One package per domain — see below
-│   ├── scanners/          # Future Semgrep/CodeQL subprocess adapters (see its README)
+│   ├── scanners/          # Semgrep/CodeQL adapters, hash-verified scan profile (see its README)
 │   └── workers/           # Celery app and tasks
 ├── migrations/            # Alembic; versions/NNNN_description.py
-├── scripts/               # One-off CLIs: init_storage, export_openapi
+├── scripts/               # One-off CLIs: init_storage, export_openapi, check_worker
 └── tests/                 # Mirrors app/: core/, features/<f>/, cross-cutting tests at the root
 ```
 

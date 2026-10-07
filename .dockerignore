@@ -1,0 +1,16 @@
+# Root build context (experiments/Dockerfile, backend/Dockerfile.worker): both COPY
+# explicit paths, so exclude only what is large, local or secret.
+.git
+.env
+.env.*
+frontend
+artifacts
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.pyc
+**/.mypy_cache
+**/.pytest_cache
+**/.ruff_cache
+**/.coverage
+**/htmlcov

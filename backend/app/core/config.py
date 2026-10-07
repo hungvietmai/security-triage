@@ -29,6 +29,11 @@ class Settings(BaseSettings):
     cors_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
 
+    # Scan profile: manifest path relative to triage_root, which holds tools/, profiles/
+    # and the pinned experiments/ files. The repository root locally; set in the worker image.
+    triage_root: Path = ROOT_ENV_FILE.parent
+    scan_profile: str = "profiles/command-injection-v0.1/profile.json"
+
     @model_validator(mode="after")
     def derive_local_urls(self) -> "Settings":
         if not self.database_url:
