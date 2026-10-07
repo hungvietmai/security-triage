@@ -293,14 +293,11 @@ def _literal_proof(sink: SinkRecord | None, source: str | None) -> dict[str, Any
             argv = rest[0]["text"].strip()
             if not (argv.startswith("[") and argv.endswith("]")):
                 return None
-            # Split only at commas outside string literals; accepting a narrow list is deliberate.
-            items = re.findall(
-                r"(?:'(?:[^'\\]|\\[\\'\"nrt])*'|\"(?:[^\"\\]|\\[\\'\"nrt])*\")", argv[1:-1]
-            )
-            if re.sub(r"(?:'(?:[^'\\]|\\.)*'|\"(?:[^\"\\]|\\.)*\")", "", argv[1:-1]).strip(
-                " ,\t\r\n"
-            ):
+            literal = r"(?:'(?:[^'\\\r\n]|\\[\\'\"nrt])*'|\"(?:[^\"\\\r\n]|\\[\\'\"nrt])*\")"
+            body = argv[1:-1]
+            if re.fullmatch(rf"\s*(?:{literal}(?:\s*,\s*{literal})*)?\s*", body) is None:
                 return None
+            items = re.findall(literal, body)
             if any(not _safe_command(resolver(item)) for item in items):
                 return None
             command = (command or "") + " " + " ".join(resolver(item) or "" for item in items)

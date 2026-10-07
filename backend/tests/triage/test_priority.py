@@ -351,6 +351,8 @@ def _js_case(arg0, suffix="", *, kind="child_process.exec"):
         ("child_process.exec", '"sh -c echo"', "", False),
         ("child_process.exec", '"echo fixed"', ", opts", False),
         ("child_process.spawn", '"echo"', ', ["fixed"], {shell: true}', True),
+        ("child_process.spawn", '"echo"', ', ["fixed" "other"], {shell: true}', False),
+        ("child_process.spawn", '"echo"', ', ["fixed",, "other"], {shell: true}', False),
         ("child_process.spawn", '"echo"', ", [user], {shell: true}", False),
         ("child_process.spawn", '"echo"', ', ["fixed"], {shell: opts.shell}', False),
         ("child_process.spawn", '"echo"', ", [], {...opts, shell: true}", False),
