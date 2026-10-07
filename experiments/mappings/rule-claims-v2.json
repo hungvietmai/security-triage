@@ -1,0 +1,323 @@
+{
+  "version": "rule-claims-v2",
+  "status": "development_specification_before_priority_implementation",
+  "supersedes": "rule-claims-v1",
+  "prediction_policy": "Preserve all candidates. Claim family, audit metadata and source model are separate facts; none establishes exploitability or permits suppression.",
+  "identity_fields": [
+    "tool",
+    "language",
+    "rule_id",
+    "tool_version",
+    "definition_sha256"
+  ],
+  "codeql_additional_identity_fields": [
+    "query_pack",
+    "query_path"
+  ],
+  "definition_hash_algorithm": "sha256_exact_file_bytes",
+  "semgrep_id_match": "exact_or_dot_delimited_suffix; require one unique hash-qualified match",
+  "unmatched": {
+    "candidate_status": "classification_unresolved",
+    "claim_kind": "classification_unresolved",
+    "claim_family": "classification_unresolved",
+    "source_type": "unknown",
+    "audit_oriented": false
+  },
+  "rules": [
+    {
+      "tool": "semgrep",
+      "rule_id": "detect-child-process",
+      "tool_version": "1.178.0",
+      "definition_sha256": "baee696b05b3c38fa5a82435ae458026ec81ce9a6e6a73116d68dc963496296c",
+      "claim_kind": "conditional_argument_flow",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "command_or_executable",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/detect-child-process.yaml",
+      "language": "javascript",
+      "engine_mode": "taint",
+      "claim_family": "flow",
+      "source_type": "unknown",
+      "audit_oriented": true,
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "dangerous-spawn-shell",
+      "tool_version": "1.178.0",
+      "definition_sha256": "1a81f91e9ad9ea4c62a9b0bda4dcf3cf2fc1bb6f2d9e2580ea3effa6bfe9ba74",
+      "claim_kind": "conditional_interpreter_argument",
+      "upstream_subcategory": "vuln",
+      "focus_role_hint": "interpreter_argument",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/audit/dangerous-spawn-shell.yaml",
+      "language": "javascript",
+      "engine_mode": "taint",
+      "claim_family": "flow",
+      "source_type": "unknown",
+      "audit_oriented": false,
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "spawn-shell-true",
+      "tool_version": "1.178.0",
+      "definition_sha256": "452fb593301edca721a151ed3c051f428ca1df1fc1af613380d58b076601b5ba",
+      "claim_kind": "shell_usage_audit",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "shell_option",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/lang/security/audit/spawn-shell-true.yaml",
+      "language": "javascript",
+      "engine_mode": "search",
+      "claim_family": "audit",
+      "source_type": "unknown",
+      "audit_oriented": true,
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "shelljs-exec-injection",
+      "tool_version": "1.178.0",
+      "definition_sha256": "adfff907f257d82341c060dca56d2361bc2e750c89243b89b781d0d9678000bb",
+      "claim_kind": "conditional_wrapper_call",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "wrapper_command",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/javascript/shelljs/security/shelljs-exec-injection.yaml",
+      "language": "javascript",
+      "engine_mode": "search",
+      "claim_family": "audit",
+      "source_type": "unknown",
+      "audit_oriented": true,
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "codeql",
+      "rule_id": "js/command-line-injection",
+      "tool_version": "2.27.1",
+      "query_path": "Security/CWE-078/CommandInjection.ql",
+      "definition_sha256": "bb85242cf730c85b04826ce914862872c0f83d58540750ae69b1f6a0951bd45c",
+      "claim_kind": "modeled_command_line_flow",
+      "upstream_subcategory": null,
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78",
+        "CWE-88"
+      ],
+      "source": "codeql/javascript-queries@2.4.6/Security/CWE-078/CommandInjection.ql",
+      "language": "javascript",
+      "engine_mode": "path-problem",
+      "claim_family": "flow",
+      "query_pack": "codeql/javascript-queries@2.4.6",
+      "source_type": "remote",
+      "audit_oriented": false,
+      "variant_id": "upstream",
+      "definition_source": "https://github.com/github/codeql/blob/6e9f9e38390175c41b99070a423c875f450759ca/javascript/ql/src/Security/CWE-078/CommandInjection.ql",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "codeql",
+      "rule_id": "js/shell-command-constructed-from-input",
+      "tool_version": "2.27.1",
+      "query_path": "Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "definition_sha256": "77c3cfa9bcf11440035c6c469fc940f2c8bf418b62e60951a9423c0ff16499c4",
+      "claim_kind": "modeled_library_command_construction",
+      "upstream_subcategory": null,
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78",
+        "CWE-88"
+      ],
+      "source": "codeql/javascript-queries@2.4.6/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "language": "javascript",
+      "engine_mode": "path-problem",
+      "claim_family": "flow",
+      "query_pack": "codeql/javascript-queries@2.4.6",
+      "source_type": "library_input",
+      "audit_oriented": false,
+      "variant_id": "upstream",
+      "definition_source": "https://github.com/github/codeql/blob/6e9f9e38390175c41b99070a423c875f450759ca/javascript/ql/src/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "dangerous-subprocess-use",
+      "language": "python",
+      "tool_version": "1.178.0",
+      "definition_sha256": "9aaf4e9fcb13afed4e60c04def4132f9f7f2baac3414dc1d7bbd5dcb29db0586",
+      "definition_path": "experiments/rules/python-upstream/dangerous-subprocess-use.yaml",
+      "claim_kind": "modeled_remote_argument_flow",
+      "engine_mode": "taint",
+      "claim_family": "flow",
+      "audit_oriented": false,
+      "upstream_subcategory": "vuln",
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source_type": "remote",
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/lang/security/dangerous-subprocess-use.yaml",
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "dangerous-system-call",
+      "language": "python",
+      "tool_version": "1.178.0",
+      "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+      "definition_path": "experiments/rules/python-upstream/dangerous-system-call.yaml",
+      "claim_kind": "modeled_remote_argument_flow",
+      "engine_mode": "taint",
+      "claim_family": "flow",
+      "audit_oriented": false,
+      "upstream_subcategory": "vuln",
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source_type": "remote",
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/lang/security/dangerous-system-call.yaml",
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "subprocess-shell-true",
+      "language": "python",
+      "tool_version": "1.178.0",
+      "definition_sha256": "753ba9d29d592b3d7f5086e671e424ee05138acbf75a39b663d92aa3275f5380",
+      "definition_path": "experiments/rules/python-upstream/subprocess-shell-true.yaml",
+      "claim_kind": "shell_usage_audit",
+      "engine_mode": "search",
+      "claim_family": "audit",
+      "audit_oriented": true,
+      "upstream_subcategory": "secure default",
+      "focus_role_hint": "shell_option",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source_type": "unknown",
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/lang/security/audit/subprocess-shell-true.yaml",
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "subprocess-injection",
+      "language": "python",
+      "tool_version": "1.178.0",
+      "definition_sha256": "3999fd54bda682edd0391678e362cd8c70b313d4aeb24252179f374604c73d66",
+      "definition_path": "experiments/rules/python-upstream/subprocess-injection.yaml",
+      "claim_kind": "modeled_remote_argument_flow",
+      "engine_mode": "taint",
+      "claim_family": "flow",
+      "audit_oriented": false,
+      "upstream_subcategory": "vuln",
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source_type": "remote",
+      "source": "https://github.com/semgrep/semgrep-rules/blob/a84ff9cc2453ca91d581380de4b8b3f272f6f4be/python/flask/security/injection/subprocess-injection.yaml",
+      "variant_id": "upstream",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "codeql",
+      "rule_id": "py/command-line-injection",
+      "language": "python",
+      "tool_version": "2.27.1",
+      "query_path": "Security/CWE-078/CommandInjection.ql",
+      "query_pack": "codeql/python-queries@1.8.11",
+      "definition_sha256": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+      "claim_kind": "modeled_command_line_flow",
+      "claim_family": "flow",
+      "engine_mode": "path-problem",
+      "audit_oriented": false,
+      "upstream_subcategory": null,
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78",
+        "CWE-88"
+      ],
+      "source_type": "remote",
+      "source": "codeql/python-queries@1.8.11/Security/CWE-078/CommandInjection.ql",
+      "variant_id": "upstream",
+      "definition_source": "https://github.com/github/codeql/blob/6e9f9e38390175c41b99070a423c875f450759ca/python/ql/src/Security/CWE-078/CommandInjection.ql",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "codeql",
+      "rule_id": "py/shell-command-constructed-from-input",
+      "language": "python",
+      "tool_version": "2.27.1",
+      "query_path": "Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "query_pack": "codeql/python-queries@1.8.11",
+      "definition_sha256": "d3e2a5c45764fe819fcf051d111f9cc1e6f02e2080b7e3ea98d06afcd0ead7fb",
+      "claim_kind": "modeled_library_command_construction",
+      "claim_family": "flow",
+      "engine_mode": "path-problem",
+      "audit_oriented": false,
+      "upstream_subcategory": null,
+      "focus_role_hint": "query_highlight_requires_sink_mapping",
+      "mapped_cwes": [
+        "CWE-78",
+        "CWE-88",
+        "CWE-73"
+      ],
+      "source_type": "library_input",
+      "source": "codeql/python-queries@1.8.11/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "variant_id": "upstream",
+      "definition_source": "https://github.com/github/codeql/blob/6e9f9e38390175c41b99070a423c875f450759ca/python/ql/src/Security/CWE-078/UnsafeShellCommandConstruction.ql",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    },
+    {
+      "tool": "semgrep",
+      "rule_id": "detect-child-process",
+      "tool_version": "1.178.0",
+      "definition_sha256": "a4742d1077e46d15f8a47883061c8f1aeccc84cf05cba3a889bc9698a3fb8483",
+      "claim_kind": "conditional_argument_flow",
+      "upstream_subcategory": "audit",
+      "focus_role_hint": "command_or_executable",
+      "mapped_cwes": [
+        "CWE-78"
+      ],
+      "source": "experiments/rules/detect-child-process-direct-alias.yaml",
+      "language": "javascript",
+      "engine_mode": "taint",
+      "claim_family": "flow",
+      "source_type": "unknown",
+      "audit_oriented": true,
+      "variant_id": "direct-alias-development",
+      "definition_path": "experiments/rules/detect-child-process-direct-alias.yaml",
+      "source_type_basis": "pinned_rule_definition",
+      "source_type_is_observed_trust_boundary": false
+    }
+  ]
+}
