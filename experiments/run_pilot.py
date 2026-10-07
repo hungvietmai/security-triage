@@ -119,8 +119,10 @@ def _write_findings_csv(path, findings):
 
 
 def assess_run(config, output, result, findings, units, sinks, sources):
-    """Assess every unit with the pinned policy and rule claims."""
-    mapping = json.loads(CLAIMS_FILE.read_text())
+    """Assess every unit; hashes are taken from the exact bytes that were parsed."""
+    policy_bytes = POLICY_FILE.read_bytes()
+    claims_bytes = CLAIMS_FILE.read_bytes()
+    mapping = json.loads(claims_bytes)
     language = config.get("language", "javascript")
     staged = []
     for index, rule in enumerate(config["semgrep_rules"]):
@@ -145,12 +147,12 @@ def assess_run(config, output, result, findings, units, sinks, sources):
         sources,
         mapping=mapping,
         definitions=definitions,
-        policy=validate_policy(yaml.safe_load(POLICY_FILE.read_text())),
+        policy=validate_policy(yaml.safe_load(policy_bytes)),
         provenance={
-            "policy_sha256": digest(POLICY_FILE),
+            "policy_sha256": hashlib.sha256(policy_bytes).hexdigest(),
             "spec_sha256": digest(SPEC_FILE),
             "rule_claims_version": mapping["version"],
-            "rule_claims_sha256": digest(CLAIMS_FILE),
+            "rule_claims_sha256": hashlib.sha256(claims_bytes).hexdigest(),
             "reconciler_version": RECONCILIATION_VERSION,
         },
     )

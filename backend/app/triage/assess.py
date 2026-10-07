@@ -11,6 +11,13 @@ from app.triage.evidence import build_evidence
 from app.triage.policy import apply_policy
 from app.triage.types import SinkRecord
 
+# Exact pinned query paths only: an unknown query must fail, not inherit a rule ID.
+_CODEQL_RULES = {
+    "Security/CWE-078/CommandInjection.ql": "command-line-injection",
+    "Security/CWE-078/UnsafeShellCommandConstruction.ql": "shell-command-constructed-from-input",
+}
+_CODEQL_PREFIX = {"javascript": "js/", "python": "py/"}
+
 
 def assert_finding_conservation(
     findings: Sequence[Mapping[str, Any]], units: Sequence[Mapping[str, Any]]
@@ -25,6 +32,14 @@ def assert_finding_conservation(
     raise RuntimeError(
         f"Reconciliation finding conservation failed: missing={missing}, duplicated={duplicated}"
     )
+
+
+def codeql_rule_id(language: str, query_path: str) -> str:
+    rule = _CODEQL_RULES.get(query_path)
+    prefix = _CODEQL_PREFIX.get(language)
+    if rule is None or prefix is None:
+        raise ValueError(f"Unmapped CodeQL query for {language}: {query_path}")
+    return prefix + rule
 
 
 def verified_definitions(
@@ -67,12 +82,7 @@ def verified_definitions(
                 {
                     "tool": "codeql",
                     "language": language,
-                    "rule_id": ("js/" if language == "javascript" else "py/")
-                    + (
-                        "command-line-injection"
-                        if query_path.endswith("/CommandInjection.ql")
-                        else "shell-command-constructed-from-input"
-                    ),
+                    "rule_id": codeql_rule_id(language, query_path),
                     "tool_version": codeql_version,
                     "definition_sha256": sha256,
                     "query_path": query_path,

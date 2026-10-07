@@ -7,6 +7,7 @@ import yaml  # type: ignore[import-untyped]
 from app.triage.assess import (
     assert_finding_conservation,
     assess_units,
+    codeql_rule_id,
     verified_definitions,
 )
 from app.triage.policy import validate_policy
@@ -37,6 +38,18 @@ def test_finding_conservation_rejects_loss_or_duplication(units):
     findings = [{"raw_id": "codeql:0:0"}, {"raw_id": "semgrep:0:0"}]
     with pytest.raises(RuntimeError, match="finding conservation failed"):
         assert_finding_conservation(findings, units)
+
+
+def test_codeql_rule_id_is_exact_and_fails_on_unknown_queries():
+    assert codeql_rule_id("javascript", COMMAND_INJECTION) == "js/command-line-injection"
+    assert (
+        codeql_rule_id("python", "Security/CWE-078/UnsafeShellCommandConstruction.ql")
+        == "py/shell-command-constructed-from-input"
+    )
+    with pytest.raises(ValueError, match="Unmapped CodeQL query"):
+        codeql_rule_id("javascript", "Security/CWE-079/Xss.ql")
+    with pytest.raises(ValueError, match="Unmapped CodeQL query"):
+        codeql_rule_id("go", COMMAND_INJECTION)
 
 
 def _definitions(staged, observed):
