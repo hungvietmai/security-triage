@@ -144,3 +144,22 @@ def test_tool_version_rejects_mismatch(tmp_path):
         assert "version mismatch" in str(exc)
     else:
         raise AssertionError("version mismatch was accepted")
+
+
+def test_invoke_timeout_survives_group_exiting_before_kill(tmp_path, monkeypatch):
+    output = tmp_path / "output"
+    output.mkdir()
+
+    def gone(pid, sig):
+        raise ProcessLookupError(pid)
+
+    monkeypatch.setattr("app.scanners.process.os.killpg", gone)
+    record = invoke(
+        [sys.executable, "-c", "import time; time.sleep(0.3)"],
+        tmp_path,
+        output,
+        "race",
+        0.01,
+        {},
+    )
+    assert record["status"] == "timeout"

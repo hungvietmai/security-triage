@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 import signal
@@ -88,7 +89,9 @@ def invoke(
                 record["exit_code"] = process.wait(timeout=timeout)
                 record["status"] = "completed" if record["exit_code"] == 0 else "failed"
             except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
+                # The group may exit between the timeout and the kill; still a timeout.
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(process.pid, signal.SIGKILL)
                 process.wait()
                 record["status"] = "timeout"
         except OSError as exc:
