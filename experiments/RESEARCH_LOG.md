@@ -251,3 +251,31 @@ Final effective group counts:
 - This corrective acceptance changes role resolution only where reconcile-v0
   was semantically wrong or over-confident. It does not redraw the frozen split,
   inspect a new held-out case, or change the canonical unit key.
+
+
+## 2026-10-07 — preserved reconciliation commit-order evidence
+
+PR #1 and PR #2 were squash-merged, so the intermediate specification and
+implementation commits are not ancestors of `main`. To keep the cited research
+history reachable independently of the merged PR branches, permanent evidence
+refs were created at the exact historical commits:
+
+- `evidence/reconcile-v0-spec` ->
+  `b295c5572cb3091682a637a37d1a161d93489c11`
+- `evidence/reconcile-v0-locators` ->
+  `825229568d6cce3b2653d3ba936abe513b38769a`
+- `evidence/reconcile-v0-implementation` ->
+  `4b2e839f17eb7b40ea3dd731bbe1b597eea1ed61`
+- `evidence/reconcile-v0.1-spec` ->
+  `deb901594954930114c215d4e9792eefc7f39615`
+- `evidence/reconcile-v0.1-implementation` ->
+  `314adc5219acdacde8526434686964f5fea5292d`
+
+Each evidence ref was compared with its target SHA and reported as identical
+(0 commits ahead, 0 behind). These refs are intentionally separate from the
+working PR branches and must not be deleted during ordinary branch cleanup.
+
+For future research-significant specification, policy, or freeze changes, retain
+the specification commit as a durable evidence ref before squash-merging, or
+prefer a normal merge commit so the specification-before-implementation order
+remains directly reachable from `main`.
