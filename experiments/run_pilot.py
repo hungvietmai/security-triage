@@ -5,14 +5,16 @@ to the reusable scanner package. No benchmark code/install hooks are executed.
 """
 
 import argparse
-from collections import Counter
 import csv
 import json
 import re
+import sys
 import tarfile
 import time
-import sys
+from collections import Counter
 from pathlib import Path
+
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 _BACKEND = ROOT / "backend"
@@ -30,6 +32,9 @@ from app.scanners.acquisition import (
 from app.scanners.pipeline import run_pipeline
 from app.scanners.process import invoke
 from app.scanners.provenance import digest
+from app.triage.claims import classify_claims
+from app.triage.evidence import build_evidence
+from app.triage.policy import apply_policy
 from app.triage.reconcile import RECONCILIATION_VERSION, reconcile_findings
 from app.triage.sinks_javascript import parse_javascript_sink_output
 from app.triage.sinks_python import locate_python_sinks
@@ -37,6 +42,9 @@ from app.triage.sinks_python import locate_python_sinks
 SCANNER_ROOT = ROOT / "backend/app/scanners"
 TRIAGE_ROOT = ROOT / "backend/app/triage"
 LOCATOR_RULE = ROOT / "experiments/locators/sink-locator-v0-javascript.yaml"
+POLICY_FILE = ROOT / "experiments/policy/priority-v0.1.yaml"
+SPEC_FILE = ROOT / "experiments/policy/PRIORITY_V0_1.md"
+CLAIMS_FILE = ROOT / "experiments/mappings/rule-claims-v2.json"
 
 
 def write_json(path, value):
@@ -50,6 +58,9 @@ def runner_files_sha256():
         *sorted(SCANNER_ROOT.glob("*.py")),
         *sorted(TRIAGE_ROOT.glob("*.py")),
         LOCATOR_RULE,
+        POLICY_FILE,
+        SPEC_FILE,
+        CLAIMS_FILE,
     ]
     return {str(path.relative_to(ROOT)): digest(path) for path in files}
 
@@ -144,9 +155,7 @@ def _assert_finding_conservation(findings, units):
     """Require reconciliation to preserve every raw finding exactly once."""
     raw_ids = Counter(str(finding.get("raw_id") or "") for finding in findings)
     unit_ids = Counter(
-        str(raw_id)
-        for unit in units
-        for raw_id in unit.get("raw_finding_ids", [])
+        str(raw_id) for unit in units for raw_id in unit.get("raw_finding_ids", [])
     )
     if raw_ids == unit_ids:
         return
@@ -156,6 +165,53 @@ def _assert_finding_conservation(findings, units):
         "Reconciliation finding conservation failed: "
         f"missing={missing}, duplicated={duplicated}"
     )
+
+
+def _verified_definitions(config, output, result):
+    """Read actual staged rule bytes and verified query-pack bytes from this run."""
+    definitions = []
+    language = config.get("language", "javascript")
+    for index, rule in enumerate(config["semgrep_rules"]):
+        staged = output / f"rule-{index}.yaml"
+        if not staged.is_file() or digest(staged) != rule["sha256"]:
+            continue
+        definition = yaml.safe_load(staged.read_text())
+        defined_rules = (
+            definition.get("rules", []) if isinstance(definition, dict) else []
+        )
+        if len(defined_rules) != 1 or not isinstance(defined_rules[0].get("id"), str):
+            continue
+        # Read the ID from staged bytes; aliases with a shared ID stay distinct by hash.
+        definitions.append(
+            {
+                "tool": "semgrep",
+                "language": language,
+                "rule_id": defined_rules[0]["id"],
+                "tool_version": config["semgrep_version"],
+                "definition_sha256": digest(staged),
+            }
+        )
+    pack = config.get("codeql_bundle", {}).get(f"{language}_query_pack")
+    observed = result.codeql_query_files or {}
+    if observed == config["codeql_query_sha256"] and pack:
+        for query_path, sha in observed.items():
+            definitions.append(
+                {
+                    "tool": "codeql",
+                    "language": language,
+                    "rule_id": ("js/" if language == "javascript" else "py/")
+                    + (
+                        "command-line-injection"
+                        if query_path.endswith("/CommandInjection.ql")
+                        else "shell-command-constructed-from-input"
+                    ),
+                    "tool_version": config["codeql_version"],
+                    "definition_sha256": sha,
+                    "query_path": query_path,
+                    "query_pack": f"codeql/{language}-queries@{pack}",
+                }
+            )
+    return definitions
 
 
 def main(
@@ -235,6 +291,7 @@ def main(
 
     findings = []
     units = []
+    assessments = []
     start = time.monotonic()
     try:
         acquired = acquire_source_fn(
@@ -298,6 +355,25 @@ def main(
             _assert_finding_conservation(findings, units)
             report["sink_count"] = len(sinks)
             report["unit_count"] = len(units)
+            policy = yaml.safe_load(POLICY_FILE.read_text())
+            mapping = json.loads(CLAIMS_FILE.read_text())
+            definitions = _verified_definitions(config, output, result)
+            claims = classify_claims(mapping, findings, definitions)
+            assessments = [
+                apply_policy(
+                    build_evidence(unit, findings, claims, sinks, sources), policy
+                )
+                for unit in units
+            ]
+            for assessment in assessments:
+                assessment.update(
+                    policy_sha256=digest(POLICY_FILE),
+                    spec_sha256=digest(SPEC_FILE),
+                    rule_claims_version=mapping["version"],
+                    rule_claims_sha256=digest(CLAIMS_FILE),
+                    reconciler_version=RECONCILIATION_VERSION,
+                )
+            report["assessment_count"] = len(assessments)
     except (OSError, ValueError, RuntimeError, KeyError, tarfile.TarError) as exc:
         report["status"] = "failed"
         report["error"] = str(exc)
@@ -307,6 +383,7 @@ def main(
     write_json(output / "findings.json", findings)
     _write_findings_csv(output / "findings.csv", findings)
     write_json(output / "units.json", units)
+    write_json(output / "assessments.json", assessments)
     write_json(output / "run.json", report)
     print_fn(
         json.dumps(

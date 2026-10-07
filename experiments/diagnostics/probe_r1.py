@@ -1,144 +1,136 @@
-"""Scan fixed synthetic R1 probes with the same pinned rules and common scanner helpers."""
+"""Run pinned R1 source fixtures through both scanners and priority v0.1."""
 
 import argparse
 import json
+import sys
+from collections import Counter
 from pathlib import Path
 
+import yaml
+
+_ROOT = Path(__file__).resolve().parents[2]
+for _IMPORT_ROOT in (_ROOT, _ROOT / "backend"):
+    if str(_IMPORT_ROOT) not in sys.path:
+        sys.path.insert(0, str(_IMPORT_ROOT))
+from app.scanners.pipeline import run_pipeline
+from app.scanners.provenance import digest
+from app.triage.claims import classify_claims
+from app.triage.evidence import build_evidence
+from app.triage.policy import apply_policy
+from app.triage.reconcile import reconcile_findings
+
 from experiments.run_pilot import (
+    CLAIMS_FILE,
+    POLICY_FILE,
     ROOT,
-    digest,
-    invoke,
-    sarif_findings,
-    stage_rule,
-    tool_version,
+    _assert_finding_conservation,
+    _locate_sinks,
+    _verified_definitions,
     write_json,
 )
 
 
-def main():
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--semgrep", required=True)
-    p.add_argument("--codeql", required=True)
-    p.add_argument("--javascript-query-pack", type=Path, required=True)
-    p.add_argument("--output", type=Path, required=True)
-    args = p.parse_args()
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--semgrep", default="semgrep")
+    parser.add_argument("--codeql", default="codeql")
+    parser.add_argument("--javascript-query-pack", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args(argv)
     source = ROOT / "experiments/fixtures/r1-feasibility"
     manifest = json.loads((source / "manifest.json").read_text())
     for case in manifest["cases"]:
         if digest(source / case["file"]) != case["source_sha256"]:
-            raise ValueError("Fixture digest mismatch")
-    for name, expected in manifest["support_files"].items():
-        if digest(source / name) != expected:
-            raise ValueError("Support file digest mismatch")
-    config_path = ROOT / "experiments/configs/development-batch-01-upstream.json"
-    config = json.loads(config_path.read_text())
-    out = args.output.resolve()
-    out.mkdir(parents=True, exist_ok=False)
-    write_json(out / "config.json", config)
-    write_json(out / "manifest.json", manifest)
-    report = {
-        "kind": manifest["kind"],
-        "runner_sha256": digest(Path(__file__)),
-        "manifest_sha256": digest(source / "manifest.json"),
-        "config_sha256": digest(config_path),
-        "steps": {},
-        "metrics": None,
-    }
-    findings = []
-    for tool, binary in [("semgrep", args.semgrep), ("codeql", args.codeql)]:
-        try:
-            tool_version(binary, config[tool + "_version"], out, tool, report["steps"])
-            sarif = out / (tool + ".sarif")
-            if tool == "semgrep":
-                argv = [
-                    binary,
-                    "scan",
-                    "--metrics=off",
-                    "--disable-version-check",
-                    "--disable-nosem",
-                    "--no-git-ignore",
-                    "--jobs",
-                    str(config["jobs"]),
-                    "--sarif",
-                    "--output",
-                    str(sarif),
-                ]
-                for i, spec in enumerate(config["semgrep_rules"]):
-                    rule = out / f"rule-{i}.yaml"
-                    stage_rule(spec, rule)
-                    argv += ["--config", str(rule)]
-                argv += ["."]
-            else:
-                pack = args.javascript_query_pack.resolve()
-                queries = [pack / n for n in config["codeql_queries"]]
-                for q in queries:
-                    if (
-                        digest(q)
-                        != config["codeql_query_sha256"][str(q.relative_to(pack))]
-                    ):
-                        raise ValueError("Query digest mismatch")
-                report["query_pack_manifest"] = (pack / "qlpack.yml").read_text()
-                db = out / "codeql-db"
-                create = invoke(
-                    [
-                        binary,
-                        "database",
-                        "create",
-                        str(db),
-                        "--language=javascript",
-                        "--source-root",
-                        str(source),
-                        "--build-mode=none",
-                        "--threads",
-                        str(config["jobs"]),
-                        "--ram=2048",
-                    ],
-                    source,
-                    out,
-                    "codeql-create",
-                    config["timeout_seconds"],
-                )
-                report["steps"]["codeql-create"] = create
-                if create["status"] != "completed":
-                    raise RuntimeError("CodeQL extraction failed")
-                argv = [
-                    binary,
-                    "database",
-                    "analyze",
-                    str(db),
-                    *map(str, queries),
-                    "--format=sarif-latest",
-                    "--output",
-                    str(sarif),
-                    "--threads",
-                    str(config["jobs"]),
-                    "--ram=2048",
-                ]
-            step = invoke(argv, source, out, tool, config["timeout_seconds"])
-            report["steps"][tool] = step
-            if not sarif.exists():
-                raise RuntimeError("No SARIF output")
-            rows, complete = sarif_findings(sarif, tool, report["manifest_sha256"])
-            findings += rows
-            step["raw_findings"] = len(rows)
-            step["sarif_sha256"] = digest(sarif)
-            if step["status"] == "completed" and not complete:
-                step["status"] = "partial"
-        except (OSError, ValueError, RuntimeError, KeyError) as exc:
-            step = report["steps"].setdefault(tool, {})
-            step["status"] = "timeout" if step.get("status") == "timeout" else "failed"
-            step["error"] = str(exc)
-    report["status"] = (
-        "completed"
-        if all(
-            report["steps"][t]["status"] == "completed" for t in ("semgrep", "codeql")
-        )
-        else "partial"
+            raise ValueError("R1 source digest mismatch: " + case["file"])
+    for path, sha in manifest["support_files"].items():
+        if digest(source / path) != sha:
+            raise ValueError("R1 support digest mismatch: " + path)
+    config = json.loads(
+        (ROOT / "experiments/configs/development-batch-01-upstream.json").read_text()
     )
-    write_json(out / "findings.json", findings)
-    write_json(out / "run.json", report)
-    print(json.dumps({"status": report["status"], "raw_findings": len(findings)}))
-    return 0 if report["status"] == "completed" else 2
+    output = args.output.resolve()
+    output.mkdir(parents=True, exist_ok=False)
+    result = run_pipeline(
+        scanners=config["scanners"],
+        language="javascript",
+        source=source,
+        output=output,
+        snapshot_sha256=digest(source / "manifest.json"),
+        repository_root=ROOT,
+        semgrep_binary=args.semgrep,
+        codeql_binary=args.codeql,
+        semgrep_version=config["semgrep_version"],
+        codeql_version=config["codeql_version"],
+        semgrep_rules=config["semgrep_rules"],
+        codeql_queries=config["codeql_queries"],
+        codeql_query_sha256=config["codeql_query_sha256"],
+        javascript_query_pack=args.javascript_query_pack,
+        python_query_pack=None,
+        jobs=config["jobs"],
+        timeout_seconds=config["timeout_seconds"],
+        codeql_ram_mb=2048,
+    )
+    if result.status != "completed":
+        raise RuntimeError("R1 scanner run incomplete: " + str(result.steps))
+    files = [case["file"] for case in manifest["cases"]] + list(
+        manifest["support_files"]
+    )
+    sinks, sources, locator = _locate_sinks(
+        language="javascript",
+        source=source,
+        output=output,
+        source_files=files,
+        semgrep_binary=args.semgrep,
+        jobs=config["jobs"],
+        timeout_seconds=config["timeout_seconds"],
+    )
+    units = reconcile_findings(result.findings, sinks, sources)
+    _assert_finding_conservation(result.findings, units)
+    mapping = json.loads(CLAIMS_FILE.read_text())
+    policy = yaml.safe_load(POLICY_FILE.read_text())
+    claims = classify_claims(
+        mapping, result.findings, _verified_definitions(config, output, result)
+    )
+    assessments = [
+        apply_policy(build_evidence(u, result.findings, claims, sinks, sources), policy)
+        for u in units
+    ]
+    by_case = {}
+    for case in manifest["cases"]:
+        tiers = [
+            a["tier"]
+            for u, a in zip(units, assessments, strict=True)
+            if u["path"] == case["file"]
+        ]
+        by_case[case["case_id"]] = {
+            "findings": sum(
+                f["reported_path"] == case["file"] for f in result.findings
+            ),
+            "units": len(tiers),
+            "tiers": tiers,
+        }
+    write_json(output / "findings.json", result.findings)
+    write_json(output / "units.json", units)
+    write_json(output / "assessments.json", assessments)
+    write_json(
+        output / "r1-summary.json",
+        {
+            "by_case": by_case,
+            "steps": result.steps,
+            "locator": locator,
+            "counts": dict(Counter(a["tier"] for a in assessments)),
+        },
+    )
+    print(json.dumps(by_case, sort_keys=True))
+    for number in ("01", "04", "09"):
+        case = next(v for k, v in by_case.items() if k.startswith(number + "-"))
+        if "P1" in case["tiers"]:
+            raise RuntimeError("Literal R1 fixture unexpectedly reached P1: " + number)
+    for number in ("03", "05"):
+        case = next(v for k, v in by_case.items() if k.startswith(number + "-"))
+        if not case["units"] or any(t not in {"P1", "P2", "P3"} for t in case["tiers"]):
+            raise RuntimeError("Dynamic R1 fixture missed coverage/priority: " + number)
+    return 0
 
 
 if __name__ == "__main__":

@@ -50,6 +50,7 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
             "--disable-version-check",
             "--disable-nosem",
             "--no-git-ignore",
+            "--dataflow-traces",
             "--jobs",
             "1",
             "--sarif",
