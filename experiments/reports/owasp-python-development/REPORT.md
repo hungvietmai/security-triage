@@ -139,7 +139,7 @@ python experiments/reports/owasp-python-development/reproduce.py \
 `evidence.json` contains gzip-compressed JSON encoded as base64. Verify
 `decoded_sha256` after decompression; inner `files` each contain base64 bytes and
 their SHA-256. Restore these ordinary files into a new run directory, then safely
-extract `source.tgz` using `experiments.run_pilot.unpack` and `case.archive_root`.
+extract `source.tgz` using `app.scanners.acquisition.unpack` and `case.archive_root`.
 The CodeQL database is reproducible and omitted; the entire original source
 archive and both raw SARIF reports are included. `reproduce.py` is report-specific
 AST reconciliation and counting, not an adjudication algorithm.
