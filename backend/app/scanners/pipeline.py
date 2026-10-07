@@ -32,7 +32,7 @@ class PipelineResult:
 
 
 def _status(scanners: Sequence[ToolName], steps: Mapping[str, ProcessRecord]) -> PipelineStatus:
-    statuses = [steps.get(scanner, {}).get("status") for scanner in scanners]
+    statuses = [steps[scanner]["status"] if scanner in steps else None for scanner in scanners]
     if scanners and all(status == "completed" for status in statuses):
         return "completed"
     if any(status in {"completed", "partial"} for status in statuses):
@@ -124,7 +124,7 @@ def run_pipeline(
             codeql_query_files = result.query_files
             codeql_pack_manifest = result.pack_manifest
         except (OSError, RuntimeError, ValueError) as exc:
-            failure = steps.setdefault(tool, {})
+            failure = steps.setdefault(tool, {"status": "failed"})
             failure["status"] = "timeout" if failure.get("status") == "timeout" else "failed"
             failure["error"] = str(exc)
 

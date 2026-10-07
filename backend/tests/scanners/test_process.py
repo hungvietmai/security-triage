@@ -18,7 +18,7 @@ def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
     )
 
     assert record["status"] == "completed"
-    assert record["exit_code"] == 0
+    assert record.get("exit_code") == 0
     assert (output / "probe.stdout.log").read_text().strip() == "ok"
 
 
@@ -28,7 +28,7 @@ def test_tool_version_uses_injected_invoke(tmp_path):
     steps: dict[str, ProcessRecord] = {}
     calls = []
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         calls.append([str(item) for item in argv])
         assert cwd == tmp_path
         assert output_dir == output
@@ -68,7 +68,7 @@ def test_invoke_reports_nonzero_missing_binary_and_timeout(tmp_path):
         {},
     )
     assert failed["status"] == "failed"
-    assert failed["exit_code"] == 3
+    assert failed.get("exit_code") == 3
 
     missing = invoke(
         ["/definitely/missing/binary"],
@@ -126,7 +126,7 @@ def test_tool_version_rejects_mismatch(tmp_path):
     output.mkdir()
     steps: dict[str, ProcessRecord] = {}
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         (output / "semgrep-version.stdout.log").write_text("1.177.0\n")
         return {"status": "completed", "exit_code": 0}
 

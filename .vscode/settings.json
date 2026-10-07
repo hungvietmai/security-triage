@@ -2,8 +2,7 @@
   // Backend: uv-managed virtualenv (Python 3.12, see backend/.python-version).
   // Create or update it with `cd backend && uv sync`.
   "python.defaultInterpreterPath": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
-  // Imports are `app.*` relative to backend/, not to the repository root.
-  "python.analysis.extraPaths": ["backend"],
+  // Pylance analysis settings live in ../pyrightconfig.json.
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "python.testing.cwd": "${workspaceFolder}/backend",

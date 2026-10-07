@@ -127,8 +127,11 @@ def assess_run(config, output, result, findings, units, sinks, sources):
     staged = []
     for index, rule in enumerate(config["semgrep_rules"]):
         path = output / f"rule-{index}.yaml"
-        data = path.read_bytes() if path.is_file() else None
-        sha256 = None if data is None else hashlib.sha256(data).hexdigest()
+        if not path.is_file():
+            staged.append((None, None))
+            continue
+        data = path.read_bytes()
+        sha256 = hashlib.sha256(data).hexdigest()
         staged.append((sha256, yaml.safe_load(data) if sha256 == rule["sha256"] else None))
     definitions = verified_definitions(
         language=language,

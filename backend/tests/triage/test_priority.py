@@ -153,6 +153,7 @@ def test_trace_to_option_or_argument_list_does_not_prove_flow():
     source = 'import subprocess\nsubprocess.run(["ls", cmd], shell=False)\n'
     sinks = locate_python_sinks("a.py", source)
     list_arg = sinks[0]["args"][0]
+    assert "sequence_items" in list_arg
     finding: dict[str, Any] = {
         "raw_id": "codeql:0:0",
         "tool": "codeql",

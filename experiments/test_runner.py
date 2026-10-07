@@ -24,7 +24,7 @@ from app.scanners.acquisition import (
 )
 from app.scanners.codeql import query_pack_for_language
 from app.scanners.pipeline import PipelineResult
-from app.scanners.sarif import sarif_findings
+from app.scanners.sarif import Finding, sarif_findings
 from app.scanners.semgrep import stage_rule
 
 from experiments import run_batch, run_pilot
@@ -330,7 +330,7 @@ class RunnerTests(unittest.TestCase):
                 transport="verified_local_archive",
                 seconds=0.25,
             )
-            finding = {
+            finding: Finding = {
                 "raw_id": "codeql:0:0",
                 "tool": "codeql",
                 "snapshot_sha256": "d" * 64,

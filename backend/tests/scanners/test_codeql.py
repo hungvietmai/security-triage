@@ -1,6 +1,7 @@
 import json
 
 from app.scanners.codeql import query_pack_for_language, run_codeql
+from app.scanners.process import ProcessRecord
 from app.scanners.provenance import digest
 
 
@@ -33,7 +34,7 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
 
     commands = []
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         commands.append((name, [str(item) for item in argv]))
         assert cwd == source
         assert output_dir == output
@@ -96,7 +97,7 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
             ],
         ),
     ]
-    assert result.analyze_record["raw_findings"] == 0
+    assert result.analyze_record.get("raw_findings") == 0
     assert result.findings == []
     assert result.complete is True
     assert result.query_files == {"Security/CWE-078/CommandInjection.ql": digest(query)}
@@ -172,7 +173,7 @@ def test_run_codeql_rejects_failed_database_create(tmp_path):
     query.write_text("select 1\n")
     (pack / "qlpack.yml").write_text("name: test\n")
 
-    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None):
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         return {"status": "failed", "exit_code": 2}
 
     try:

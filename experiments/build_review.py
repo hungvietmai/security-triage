@@ -77,10 +77,11 @@ def source_texts(archive, root):
             name = relative_path(member.name)
             if not name or not name.startswith(root + "/") or not member.isfile():
                 continue
+            stream = bundle.extractfile(member)
+            if stream is None:
+                continue
             try:
-                texts[name[len(root) + 1 :]] = (
-                    bundle.extractfile(member).read().decode()
-                )
+                texts[name[len(root) + 1 :]] = stream.read().decode()
             except UnicodeDecodeError:
                 continue
     return texts
@@ -172,13 +173,17 @@ def build_packet(files, evidence_sha, attempt):
             path.write_bytes(files[name])
             findings, complete = sarif_findings(path, tool, snapshot)
             scanner_status[tool].update(sarif_available=True, sarif_complete=complete)
-            for row in findings:
-                row["raw_reference"] = {
-                    "sarif": name,
-                    "sha256": sha(files[name]),
-                    "raw_id": row["raw_id"],
+            rows.extend(
+                {
+                    **row,
+                    "raw_reference": {
+                        "sarif": name,
+                        "sha256": sha(files[name]),
+                        "raw_id": row["raw_id"],
+                    },
                 }
-            rows.extend(findings)
+                for row in findings
+            )
     packet = {
         "schema_version": VERSION,
         "builder_sha256": sha(Path(__file__).read_bytes()),

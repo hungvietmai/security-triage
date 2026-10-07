@@ -16,7 +16,7 @@ MAX_RULE_BYTES = 2 * 1024 * 1024
 
 
 class FetchCallable(Protocol):
-    def __call__(self, url: str, target: Path, expected_hash: str, max_bytes: int) -> None: ...
+    def __call__(self, url: str, target: Path, expected_hash: str, max_bytes: int, /) -> None: ...
 
 
 def _required_rule_str(rule: Mapping[str, object], key: str) -> str:
