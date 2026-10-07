@@ -430,7 +430,30 @@ Implementation must add CI-runnable tests covering at minimum:
 The real Semgrep JavaScript sink locator is integration-tested in the experiment
 Docker workflow; it is not required for pure-unit tests of the reconciler.
 
-## 11. Non-goals for v0
+## 11. Known limitations of v0/v0.1
+
+The frozen reconciler is intentionally syntax-driven and does not perform general
+data-flow or value inference. In particular:
+
+- a Python command supplied through a variable such as `cmd` cannot be proven to
+  be a string versus a list/tuple, so element-level executable/argument roles may
+  remain unresolved or conservatively approximate the direct-call syntax;
+- JavaScript options passed through a variable such as `opts`, object spread
+  such as `{...opts}`, or dynamically constructed option objects are not
+  evaluated to discover an effective `shell` value;
+- Python list/tuple command forms combined with `shell=True` are treated as
+  shell execution for prioritization, but v0.1 does not model the platform-
+  specific subprocess semantics of how additional sequence elements are passed
+  to the shell;
+- helper wrappers, aliases created through dynamic assignment, constant
+  propagation, and values returned from helper functions are outside the
+  resolver's proof boundary unless the sink form remains syntactically explicit.
+
+These cases are retained rather than treated as evidence of safety. Where the
+frozen rules cannot establish a unique role, the intended outcome is reviewable
+uncertainty such as `role_unresolved`, not a stronger security conclusion.
+
+## 12. Non-goals for v0
 
 Reconciliation v0 does not:
 
