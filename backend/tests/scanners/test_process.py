@@ -1,7 +1,12 @@
 import json
 import sys
 
+import pytest
+
 from app.scanners.process import ProcessRecord, invoke, tool_version
+
+# Timeouts kill the whole process group (os.killpg); scanners only run in Linux containers.
+posix_only = pytest.mark.skipif(sys.platform == "win32", reason="POSIX process groups")
 
 
 def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
@@ -55,6 +60,7 @@ def test_tool_version_uses_injected_invoke(tmp_path):
     assert steps["codeql-version"]["status"] == "completed"
 
 
+@posix_only
 def test_invoke_reports_nonzero_missing_binary_and_timeout(tmp_path):
     output = tmp_path / "output"
     output.mkdir()
@@ -146,6 +152,7 @@ def test_tool_version_rejects_mismatch(tmp_path):
         raise AssertionError("version mismatch was accepted")
 
 
+@posix_only
 def test_invoke_timeout_survives_group_exiting_before_kill(tmp_path, monkeypatch):
     output = tmp_path / "output"
     output.mkdir()

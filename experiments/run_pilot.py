@@ -67,7 +67,7 @@ def runner_files_sha256():
         SPEC_FILE,
         CLAIMS_FILE,
     ]
-    return {str(path.relative_to(ROOT)): digest(path) for path in files}
+    return {path.relative_to(ROOT).as_posix(): digest(path) for path in files}
 
 
 def _locate_sinks(

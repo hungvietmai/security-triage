@@ -215,7 +215,7 @@ def acquire_source(
     )
     verify_source_identity(case, source)
     source_files = [
-        str(path.relative_to(source)) for path in sorted(source.rglob("*")) if path.is_file()
+        path.relative_to(source).as_posix() for path in sorted(source.rglob("*")) if path.is_file()
     ]
     return AcquiredSource(
         source_path=source,

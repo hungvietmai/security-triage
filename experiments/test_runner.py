@@ -46,11 +46,11 @@ class RunnerTests(unittest.TestCase):
             "experiments/policy/PRIORITY_V0_1.md",
             "experiments/mappings/rule-claims-v2.json",
             *{
-                str(path.relative_to(ROOT))
+                path.relative_to(ROOT).as_posix()
                 for path in (ROOT / "backend/app/scanners").glob("*.py")
             },
             *{
-                str(path.relative_to(ROOT))
+                path.relative_to(ROOT).as_posix()
                 for path in (ROOT / "backend/app/triage").glob("*.py")
             },
         }
