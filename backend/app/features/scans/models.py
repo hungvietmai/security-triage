@@ -10,7 +10,7 @@ from app.core.models import JSON_VALUE, Identity
 
 
 class Scan(Identity, Base):
-    """One analysis request over a snapshot. Execution is not implemented yet."""
+    """One analysis request over a snapshot, executed by the run_scan worker task."""
 
     __tablename__ = "scans"
     __table_args__ = (
@@ -28,6 +28,8 @@ class Scan(Identity, Base):
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     error_message: Mapped[str | None] = mapped_column(Text)
+    # Object-storage artifacts of the run: {name: {"key", "sha256", "size"}}.
+    artifacts: Mapped[dict[str, Any]] = mapped_column(JSON_VALUE, default=dict)
 
 
 class ToolRun(Identity, Base):

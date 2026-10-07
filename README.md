@@ -4,7 +4,9 @@ Bộ khung đề án sàng lọc và thẩm định cảnh báo lỗ hổng kế
 hướng tới **JavaScript/TypeScript và Python**.
 
 **Trạng thái:** đã có FE/BE quản lý dự án, 5 bảng dữ liệu, worker và kết nối hạ tầng.
-Upload, chạy Semgrep/CodeQL và thuật toán thẩm định **chưa được triển khai**.
+Task Celery `run_scan` quét một snapshot bằng Semgrep + CodeQL, gộp cảnh báo theo vị trí,
+xếp mức ưu tiên theo policy v0.1 và ghi kết quả trong một transaction; artifact lưu ở
+SeaweedFS (`scans/{scan_id}/…`) kèm sha256. **Upload, API và giao diện kết quả chưa có.**
 
 ## Chạy toàn bộ bằng Docker
 

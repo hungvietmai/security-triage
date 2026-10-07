@@ -33,15 +33,22 @@ def build(manifest_path=MANIFEST):
     policy = manifest["policy"]
     compiled = compile_policy((ROOT / policy["source"]).read_bytes())
     paths = {policy["source"], manifest["specification"], manifest["rule_claims"]}
+    rule_ids = {}
     for entry in manifest["languages"].values():
         paths.add(entry["config"])
         if "sink_locator" in entry:
             paths.add(entry["sink_locator"])
         config = json.loads((ROOT / entry["config"]).read_bytes())
         # KeyError for a URL rule is deliberate: a profile only pins local rule files.
-        paths.update(rule["path"] for rule in config["semgrep_rules"])
+        for rule in config["semgrep_rules"]:
+            paths.add(rule["path"])
+            # The worker has no YAML parser, so the rule ID that claims matching needs is
+            # read here, from the same pinned bytes, and recorded in the manifest.
+            (defined,) = yaml.safe_load((ROOT / rule["path"]).read_bytes())["rules"]
+            rule_ids[rule["path"]] = defined["id"]
     files = {path: _sha256((ROOT / path).read_bytes()) for path in paths}
     files[policy["compiled"]] = _sha256(compiled)
+    manifest["semgrep_rule_ids"] = dict(sorted(rule_ids.items()))
     manifest["files"] = dict(sorted(files.items()))
     rendered = (json.dumps(manifest, indent=2, ensure_ascii=False) + "\n").encode()
     return {policy["compiled"]: compiled, manifest_path: rendered}

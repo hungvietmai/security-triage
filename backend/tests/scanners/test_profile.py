@@ -39,6 +39,7 @@ def _write_profile(root: Path, *, rule_sha: str | None = None) -> dict[str, Any]
         "policy": {"source": "policy.yaml", "compiled": "policy.json"},
         "specification": "spec.md",
         "rule_claims": "claims.json",
+        "semgrep_rule_ids": {"rules/r.yaml": "r"},
         "files": {relative: _sha(data) for relative, data in files.items()},
     }
     (root / "profile.json").write_text(json.dumps(manifest), encoding="utf-8")
@@ -53,6 +54,7 @@ def test_load_profile_returns_verified_contents(tmp_path):
     assert profile.policy == {"policy_id": "p"}
     assert profile.policy_sha256 == _sha(b"policy_id: p\n")  # the YAML, not the JSON
     assert profile.rule_claims == {"version": "c"}
+    assert profile.semgrep_rule_ids == {"rules/r.yaml": "r"}
     assert profile.sink_locators == {"javascript": tmp_path.resolve() / "locator.yaml"}
 
 
@@ -84,6 +86,14 @@ def test_load_profile_rejects_unpinned_missing_and_escaping_files(tmp_path):
 def test_load_profile_rejects_config_rule_pin_disagreement(tmp_path):
     _write_profile(tmp_path, rule_sha="f" * 64)
     with pytest.raises(ProfileError, match="pin rules/r.yaml differently"):
+        load_profile(tmp_path, "profile.json")
+
+
+def test_load_profile_requires_a_rule_id_for_every_config_rule(tmp_path):
+    manifest = _write_profile(tmp_path)
+    manifest["semgrep_rule_ids"] = {}
+    (tmp_path / "profile.json").write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ProfileError, match="no rule ID for rules/r.yaml"):
         load_profile(tmp_path, "profile.json")
 
 

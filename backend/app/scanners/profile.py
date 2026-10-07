@@ -24,6 +24,8 @@ class ScanProfile:
     manifest_sha256: str
     root: Path
     configs: dict[str, dict[str, Any]]
+    # Pinned rule path -> the rule ID its YAML defines (the worker cannot parse YAML).
+    semgrep_rule_ids: dict[str, str]
     sink_locators: dict[str, Path]
     policy: dict[str, Any]
     # The source YAML's hash: what the policy specification requires assessments to record.
@@ -74,6 +76,8 @@ def load_profile(root: Path, manifest: str) -> ScanProfile:
                 pinned(rule["path"])
                 if pins[rule["path"]] != rule["sha256"]:
                     raise ProfileError(f"Config and profile pin {rule['path']} differently")
+                if not isinstance(raw["semgrep_rule_ids"].get(rule["path"]), str):
+                    raise ProfileError(f"Profile names no rule ID for {rule['path']}")
         locators: dict[str, Path] = {}
         for language, entry in raw["languages"].items():
             if "sink_locator" in entry:
@@ -85,6 +89,7 @@ def load_profile(root: Path, manifest: str) -> ScanProfile:
             manifest_sha256=_sha256(manifest_bytes),
             root=root,
             configs=configs,
+            semgrep_rule_ids=dict(raw["semgrep_rule_ids"]),
             sink_locators=locators,
             policy=json.loads(pinned(policy["compiled"])),
             policy_sha256=_sha256(pinned(policy["source"])),

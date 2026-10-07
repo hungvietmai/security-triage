@@ -33,6 +33,8 @@ class Settings(BaseSettings):
     # and the pinned experiments/ files. The repository root locally; set in the worker image.
     triage_root: Path = ROOT_ENV_FILE.parent
     scan_profile: str = "profiles/command-injection-v0.1/profile.json"
+    # CodeQL bundle directory; query packs live under qlpacks/ (tools/install-scanners.sh).
+    codeql_home: Path = Path("/opt/codeql")
 
     @model_validator(mode="after")
     def derive_local_urls(self) -> "Settings":
