@@ -4,6 +4,8 @@ Replaces 0003's tool flags and free-form rule_claims, which the evidence record 
 carries. No writer has used unit_assessments yet, so no rows need migrating.
 """
 
+from typing import Any
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import postgresql
@@ -42,6 +44,16 @@ def downgrade() -> None:
     op.drop_column("unit_assessments", "matched_conditions")
     for name, _ in reversed(STRING_COLUMNS):
         op.drop_column("unit_assessments", name)
-    op.add_column("unit_assessments", sa.Column("rule_claims", _json_value(), nullable=False))
-    op.add_column("unit_assessments", sa.Column("codeql_flag", sa.Boolean(), nullable=False))
-    op.add_column("unit_assessments", sa.Column("semgrep_flag", sa.Boolean(), nullable=False))
+    # Existing rows (written by the scan worker) get placeholder values, then the defaults go,
+    # leaving 0003's schema exactly. Downgrading is lossy: the decision provenance is dropped.
+    restored: list[tuple[str, sa.types.TypeEngine[Any], str]] = [
+        ("rule_claims", _json_value(), "'{}'"),
+        ("codeql_flag", sa.Boolean(), "false"),
+        ("semgrep_flag", sa.Boolean(), "false"),
+    ]
+    for name, column_type, placeholder in restored:
+        op.add_column(
+            "unit_assessments",
+            sa.Column(name, column_type, nullable=False, server_default=sa.text(placeholder)),
+        )
+        op.alter_column("unit_assessments", name, server_default=None)
