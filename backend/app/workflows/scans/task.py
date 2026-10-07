@@ -8,6 +8,7 @@ import hashlib
 import json
 import tarfile
 import tempfile
+import urllib.error
 import uuid
 from collections.abc import Callable
 from datetime import UTC, datetime
@@ -15,7 +16,7 @@ from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING, Any
 
 from botocore.exceptions import BotoCoreError, ClientError
-from celery import Task
+from celery import Task, shared_task
 from sqlalchemy import exc as sa_exc
 from sqlalchemy.orm import Session
 
@@ -32,20 +33,28 @@ from app.scanners.acquisition import (
     list_source_files,
     load_source_texts,
     unpack,
+    verify_source_identity,
 )
 from app.scanners.pipeline import PipelineResult, run_pipeline
 from app.scanners.process import InvokeCallable, invoke
 from app.scanners.profile import ScanProfile, load_profile
 from app.scanners.provenance import digest
 from app.scanners.semgrep import run_sink_locator
+from app.scanners.sources import (
+    Fetch,
+    FetchedArchive,
+    SourceError,
+    fetch_allowlisted,
+    fetch_github,
+    fetch_npm,
+)
 from app.triage.assess import assert_finding_conservation, assess_units, verified_definitions
 from app.triage.policy import validate_policy
 from app.triage.reconcile import RECONCILIATION_VERSION, reconcile_findings
 from app.triage.sinks_javascript import parse_javascript_sink_output
 from app.triage.sinks_python import locate_python_sinks
 from app.triage.types import SinkRecord
-from app.workers.celery_app import celery_app
-from app.workers.scan_results import (
+from app.workflows.scans.persist import (
     LanguageResult,
     ScanResult,
     claim_scan,
@@ -62,6 +71,10 @@ INFRA_ERRORS: tuple[type[Exception], ...] = (
     sa_exc.TimeoutError,
     BotoCoreError,
     ClientError,
+    # Network trouble reaching the registry or codeload; HTTP 4xx is a SourceError instead.
+    urllib.error.URLError,
+    TimeoutError,
+    ConnectionError,
 )
 MAX_RETRIES = 3
 # Per profile language: two version checks (60 s) and four steps bounded by the profile's
@@ -105,6 +118,63 @@ def _archive_root(archive: Path) -> str:
     if first is None:
         raise ValueError("Snapshot archive is empty")
     return PurePosixPath(first.name).parts[0]
+
+
+def _github_repository(snapshot: SourceSnapshot) -> tuple[str, str]:
+    owner, _, repo = (
+        (snapshot.repository_url or "").removeprefix("https://github.com/").partition("/")
+    )
+    return owner, repo
+
+
+def _fetch_named(snapshot: SourceSnapshot, fetch: Fetch) -> FetchedArchive:
+    if snapshot.source_kind == "npm_tarball":
+        return fetch_npm(snapshot.package_name or "", snapshot.package_version or "", fetch=fetch)
+    if snapshot.source_kind == "github_tarball":
+        owner, repo = _github_repository(snapshot)
+        return fetch_github(owner, repo, snapshot.resolved_commit or "", fetch=fetch)
+    raise SourceError(f"Snapshot names no source to acquire (kind {snapshot.source_kind})")
+
+
+def acquire_snapshot(
+    session: Session,
+    snapshot_id: uuid.UUID,
+    *,
+    storage: "S3Client",
+    fetch: Fetch = fetch_allowlisted,
+    now: datetime,
+) -> None:
+    """Download a named source once; its stored bytes are the snapshot from then on.
+
+    The row lock serializes concurrent scans of one new snapshot: the first downloads,
+    the others find it ready. A verification failure marks the snapshot failed.
+    """
+    snapshot = session.get_one(SourceSnapshot, snapshot_id, with_for_update=True)
+    if snapshot.status != "validating":
+        status, reason = snapshot.status, snapshot.error_message
+        session.commit()
+        if status == "ready":
+            return
+        raise SourceError(f"Snapshot is {status}: {reason}")
+    try:
+        archive = _fetch_named(snapshot, fetch)
+        storage.put_object(Bucket=snapshot.bucket, Key=snapshot.object_key, Body=archive.data)
+    except INFRA_ERRORS:
+        session.rollback()
+        raise
+    except Exception as exc:
+        snapshot.status = "failed"
+        snapshot.error_message = f"{type(exc).__name__}: {exc}"[:4000]
+        session.commit()
+        raise
+    snapshot.sha256 = archive.sha256
+    snapshot.size_bytes = len(archive.data)
+    snapshot.artifact_url = archive.artifact_url
+    snapshot.provenance_kind = archive.provenance_kind
+    snapshot.provenance_verified_at = now
+    snapshot.status = "ready"
+    snapshot.error_message = None
+    session.commit()
 
 
 def _write_json(path: Path, value: Any) -> None:
@@ -277,13 +347,24 @@ def scan_snapshot(
         _download(storage, snapshot.bucket, snapshot.object_key, archive)
         if digest(archive) != snapshot.sha256:
             raise ValueError("Snapshot archive does not match its recorded SHA-256")
+        root = _archive_root(archive)
+        if snapshot.source_kind == "github_tarball":
+            owner, repo = _github_repository(snapshot)
+            if root != f"{repo}-{snapshot.resolved_commit}":
+                raise SourceError(f"Archive root {root!r} does not match the requested commit")
         source = unpack(
-            archive,
-            work / "source",
-            _archive_root(archive),
-            max_unpacked_bytes=MAX_UNPACKED,
-            max_files=MAX_FILES,
+            archive, work / "source", root, max_unpacked_bytes=MAX_UNPACKED, max_files=MAX_FILES
         )
+        if snapshot.source_kind == "npm_tarball":
+            # package.json must name the requested package and version.
+            verify_source_identity(
+                {
+                    "source_kind": "npm_tarball",
+                    "package_name": snapshot.package_name,
+                    "package_version": snapshot.package_version,
+                },
+                source,
+            )
         files = list_source_files(source)
         languages = [
             language
@@ -340,18 +421,21 @@ def execute_scan(
     storage: "S3Client | None" = None,
     run_pipeline_fn: RunPipeline = run_pipeline,
     invoke_fn: InvokeCallable = invoke,
+    fetch: Fetch = fetch_allowlisted,
 ) -> str:
     """Run one scan to a final state. Infrastructure errors propagate for the task to retry."""
     with (session_factory or SessionLocal)() as session:
         if not claim_scan(session, scan_id, now=_now()):
             return "skipped"
-        snapshot = session.get_one(SourceSnapshot, session.get_one(Scan, scan_id).snapshot_id)
+        snapshot_id = session.get_one(Scan, scan_id).snapshot_id
+        storage = storage or get_s3_client()
         try:
+            acquire_snapshot(session, snapshot_id, storage=storage, fetch=fetch, now=_now())
             result = scan_snapshot(
                 scan_id,
-                snapshot,
+                session.get_one(SourceSnapshot, snapshot_id),
                 settings=get_settings(),
-                storage=storage or get_s3_client(),
+                storage=storage,
                 run_pipeline_fn=run_pipeline_fn,
                 invoke_fn=invoke_fn,
             )
@@ -365,7 +449,7 @@ def execute_scan(
         return result.status
 
 
-@celery_app.task(
+@shared_task(
     bind=True,
     name="scans.run_scan",
     acks_late=True,

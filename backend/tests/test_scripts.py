@@ -23,6 +23,10 @@ def test_openapi_export_is_deterministic_json_with_every_route():
         "/api/v1/health/ready",
         "/api/v1/projects",
         "/api/v1/projects/{project_id}",
+        "/api/v1/projects/{project_id}/scans",
+        "/api/v1/scans/{scan_id}",
+        "/api/v1/scans/{scan_id}/units",
+        "/api/v1/scans/{scan_id}/units/{unit_id}",
     }
     assert "ErrorResponse" in spec["components"]["schemas"]
 

@@ -5,6 +5,8 @@ from app.core.logging import configure_logging
 from app.core.setup import lifespan, setup_middleware
 from app.features.health.router import router as health_router
 from app.features.projects.router import router as projects_router
+from app.workers.celery_app import celery_app  # noqa: F401  (scan requests are sent through it)
+from app.workflows.scans.router import router as scans_router
 
 API_PREFIX = "/api/v1"
 
@@ -26,6 +28,7 @@ def create_app() -> FastAPI:
     api = APIRouter(prefix=API_PREFIX)
     api.include_router(health_router)
     api.include_router(projects_router)
+    api.include_router(scans_router)
     app.include_router(api)
     return app
 

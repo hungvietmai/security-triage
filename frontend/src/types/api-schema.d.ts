@@ -76,6 +76,86 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/projects/{project_id}/scans": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Create Scan
+     * @description Queue a scan of a named npm package version or GitHub commit; the server builds the URL.
+     */
+    post: operations["create_scan_api_v1_projects__project_id__scans_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/scans/{scan_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get Scan
+     * @description Status with timestamps, tool runs and the number of units per priority.
+     */
+    get: operations["get_scan_api_v1_scans__scan_id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/scans/{scan_id}/units": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List Units
+     * @description Location units in queue order (P1, P2, U, P3, P4, then unit_key).
+     */
+    get: operations["list_units_api_v1_scans__scan_id__units_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/scans/{scan_id}/units/{unit_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get Unit
+     * @description Evidence record, reason, policy provenance and the raw findings of one unit.
+     */
+    get: operations["get_unit_api_v1_scans__scan_id__units__unit_id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -87,6 +167,59 @@ export interface components {
     ErrorResponse: {
       /** Detail */
       detail: string;
+    };
+    /** FindingRead */
+    FindingRead: {
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Tool */
+      tool: string;
+      /** Language */
+      language: string;
+      /** Raw Id */
+      raw_id: string | null;
+      /** Rule Id */
+      rule_id: string;
+      /** Raw Rule Id */
+      raw_rule_id: string | null;
+      /** File Path */
+      file_path: string | null;
+      /** Start Line */
+      start_line: number | null;
+      /** End Line */
+      end_line: number | null;
+      /** Start Column */
+      start_column: number | null;
+      /** End Column */
+      end_column: number | null;
+      /** Message */
+      message: string;
+      /** Cwe Ids */
+      cwe_ids: string[];
+      /** Raw Result */
+      raw_result: {
+        [key: string]: unknown;
+      };
+    };
+    /** GitHubSource */
+    GitHubSource: {
+      /**
+       * @description discriminator enum property added by openapi-typescript
+       * @enum {string}
+       */
+      kind: "github";
+      /** Owner */
+      owner: string;
+      /** Repo */
+      repo: string;
+      /**
+       * Commit
+       * @description Full commit SHA-1
+       */
+      commit: string;
     };
     /** HTTPValidationError */
     HTTPValidationError: {
@@ -101,6 +234,25 @@ export interface components {
        * @constant
        */
       status: "ok";
+    };
+    /** NpmSource */
+    NpmSource: {
+      /**
+       * @description discriminator enum property added by openapi-typescript
+       * @enum {string}
+       */
+      kind: "npm";
+      /**
+       * Package
+       * @example curling
+       */
+      package: string;
+      /**
+       * Version
+       * @description Exact SemVer version
+       * @example 0.2.0
+       */
+      version: string;
     };
     /** ProjectCreate */
     ProjectCreate: {
@@ -166,6 +318,236 @@ export interface components {
        * @enum {string}
        */
       storage: "ok" | "unavailable";
+    };
+    /** ScanAccepted */
+    ScanAccepted: {
+      /**
+       * Scan Id
+       * Format: uuid
+       */
+      scan_id: string;
+      /**
+       * Snapshot Id
+       * Format: uuid
+       */
+      snapshot_id: string;
+      /** Status */
+      status: string;
+    };
+    /** ScanCreate */
+    ScanCreate: {
+      /** Source */
+      source:
+        | components["schemas"]["NpmSource"]
+        | components["schemas"]["GitHubSource"];
+      /**
+       * Profile
+       * @default command-injection-v0.1
+       * @constant
+       */
+      profile: "command-injection-v0.1";
+    };
+    /** ScanRead */
+    ScanRead: {
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /**
+       * Project Id
+       * Format: uuid
+       */
+      project_id: string;
+      /** Status */
+      status: string;
+      /** Profile */
+      profile: string | null;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at: string;
+      /** Started At */
+      started_at: string | null;
+      /** Finished At */
+      finished_at: string | null;
+      /** Error Message */
+      error_message: string | null;
+      /** Reconciler Version */
+      reconciler_version: string | null;
+      /** Policy Version */
+      policy_version: string | null;
+      snapshot: components["schemas"]["SnapshotRead"];
+      /** Tool Runs */
+      tool_runs: components["schemas"]["ToolRunRead"][];
+      /** Unit Counts */
+      unit_counts: {
+        [key: string]: number;
+      };
+    };
+    /** SnapshotRead */
+    SnapshotRead: {
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Status */
+      status: string;
+      /** Source Kind */
+      source_kind: string | null;
+      /** Source Coordinate */
+      source_coordinate: string | null;
+      /** Sha256 */
+      sha256: string | null;
+      /** Provenance Kind */
+      provenance_kind: string | null;
+      /** Error Message */
+      error_message: string | null;
+    };
+    /** ToolRunRead */
+    ToolRunRead: {
+      /** Tool */
+      tool: string;
+      /** Language */
+      language: string;
+      /** Status */
+      status: string;
+      /** Tool Version */
+      tool_version: string | null;
+      /** Exit Code */
+      exit_code: number | null;
+      /** Error Message */
+      error_message: string | null;
+    };
+    /** UnitDetail */
+    UnitDetail: {
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /**
+       * Unit Key
+       * @description Canonical unit ID, comparable with the experiment CLI
+       */
+      unit_key: string;
+      /** Path */
+      path: string | null;
+      /** Start Line */
+      start_line: number | null;
+      /** End Line */
+      end_line: number | null;
+      /** Start Column */
+      start_column: number | null;
+      /** End Column */
+      end_column: number | null;
+      /** Sink Kind */
+      sink_kind: string | null;
+      /** Argument Role */
+      argument_role: string | null;
+      /** Mapping Status */
+      mapping_status: string;
+      /**
+       * Priority
+       * @enum {string}
+       */
+      priority: "P1" | "P2" | "U" | "P3" | "P4";
+      /** Decision Id */
+      decision_id: string;
+      /** Reason */
+      reason: string;
+      /** Tools */
+      tools: string[];
+      /** Matched Conditions */
+      matched_conditions: string[];
+      /** Predicate Values */
+      predicate_values: {
+        [key: string]: boolean;
+      };
+      /** Unknown Fields */
+      unknown_fields: string[];
+      /** Source Types */
+      source_types: string[];
+      /** Blocker Proof */
+      blocker_proof: {
+        [key: string]: unknown;
+      } | null;
+      /** Finding Evidence */
+      finding_evidence: {
+        [key: string]: unknown;
+      }[];
+      /** Policy Id */
+      policy_id: string;
+      /** Policy Version */
+      policy_version: string;
+      /** Policy Sha256 */
+      policy_sha256: string;
+      /** Spec Sha256 */
+      spec_sha256: string;
+      /** Rule Claims Version */
+      rule_claims_version: string;
+      /** Rule Claims Sha256 */
+      rule_claims_sha256: string;
+      /** Reconciler Version */
+      reconciler_version: string;
+      /** Findings */
+      findings: components["schemas"]["FindingRead"][];
+    };
+    /**
+     * UnitPage
+     * @description One page of a scan's location units in queue order.
+     */
+    UnitPage: {
+      /** Items */
+      items: components["schemas"]["UnitSummary"][];
+      /** Total */
+      total: number;
+      /** Limit */
+      limit: number;
+      /** Offset */
+      offset: number;
+    };
+    /** UnitSummary */
+    UnitSummary: {
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /**
+       * Unit Key
+       * @description Canonical unit ID, comparable with the experiment CLI
+       */
+      unit_key: string;
+      /** Path */
+      path: string | null;
+      /** Start Line */
+      start_line: number | null;
+      /** End Line */
+      end_line: number | null;
+      /** Start Column */
+      start_column: number | null;
+      /** End Column */
+      end_column: number | null;
+      /** Sink Kind */
+      sink_kind: string | null;
+      /** Argument Role */
+      argument_role: string | null;
+      /** Mapping Status */
+      mapping_status: string;
+      /**
+       * Priority
+       * @enum {string}
+       */
+      priority: "P1" | "P2" | "U" | "P3" | "P4";
+      /** Decision Id */
+      decision_id: string;
+      /** Reason */
+      reason: string;
+      /** Tools */
+      tools: string[];
     };
     /** ValidationError */
     ValidationError: {
@@ -330,6 +712,178 @@ export interface operations {
         };
       };
       /** @description Project not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  create_scan_api_v1_projects__project_id__scans_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        project_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ScanCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      202: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ScanAccepted"];
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_scan_api_v1_scans__scan_id__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        scan_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ScanRead"];
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_units_api_v1_scans__scan_id__units_get: {
+    parameters: {
+      query?: {
+        tier?: ("P1" | "P2" | "U" | "P3" | "P4") | null;
+        tool?: ("semgrep" | "codeql") | null;
+        /** @description Maximum number of items to return */
+        limit?: number;
+        /** @description Number of items to skip */
+        offset?: number;
+      };
+      header?: never;
+      path: {
+        scan_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["UnitPage"];
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_unit_api_v1_scans__scan_id__units__unit_id__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        unit_id: string;
+        scan_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["UnitDetail"];
+        };
+      };
+      /** @description Not found */
       404: {
         headers: {
           [name: string]: unknown;

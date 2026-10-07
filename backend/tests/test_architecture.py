@@ -8,6 +8,11 @@ APP = Path(__file__).resolve().parents[1] / "app"
 
 # Modules that compose features; nothing below them may import them.
 COMPOSITION = ("app.main", "app.models", "app.workers")
+# Multi-feature flows (scan creation, execution, results). Allowed edges:
+#   workflows -> features, scanners, triage, core
+#   features, core, scanners, triage -> workflows: never
+#   workflows -> composition (main, models, workers): never
+WORKFLOWS = "app.workflows"
 # Feature modules that must stay free of HTTP concerns.
 HTTP_FREE = {"service.py", "models.py", "schemas.py"}
 
@@ -40,14 +45,15 @@ def feature_of(path: Path) -> str:
     return path.relative_to(APP / "features").parts[0]
 
 
-def test_core_is_independent_of_features_and_composition():
+def test_core_is_independent_of_features_workflows_and_composition():
     files = (APP / "core").rglob("*.py")
-    assert violations(files, lambda _, name: within(name, "app.features", *COMPOSITION)) == []
+    forbidden = ("app.features", WORKFLOWS, *COMPOSITION)
+    assert violations(files, lambda _, name: within(name, *forbidden)) == []
 
 
 def test_features_do_not_import_each_other_or_composition():
     def is_violation(path: Path, name: str) -> bool:
-        if within(name, *COMPOSITION):
+        if within(name, WORKFLOWS, *COMPOSITION):
             return True
         return within(name, "app.features") and name.split(".")[2:3] not in (
             [],
@@ -55,6 +61,12 @@ def test_features_do_not_import_each_other_or_composition():
         )
 
     assert violations((APP / "features").rglob("*.py"), is_violation) == []
+
+
+def test_workflows_compose_features_but_never_the_composition_layer():
+    files = list((APP / "workflows").rglob("*.py"))
+    assert files, "no workflow modules found"
+    assert violations(files, lambda _, name: within(name, *COMPOSITION)) == []
 
 
 def test_services_models_and_schemas_stay_free_of_http():

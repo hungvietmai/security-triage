@@ -6,8 +6,12 @@ from app.core.config import get_settings
 from app.core.logging import configure_logging
 
 celery_app = Celery(
-    "security_triage", broker=get_settings().redis_url, include=["app.workers.scan"]
+    "security_triage", broker=get_settings().redis_url, include=["app.workflows.scans.task"]
 )
+# Workflow tasks are shared_task proxies resolved against the current app, which Celery keeps
+# per thread. FastAPI runs sync endpoints in a threadpool, where it would otherwise fall back
+# to an unconfigured default app (amqp://localhost): make this the default for every thread.
+celery_app.set_default()
 celery_app.conf.update(
     task_serializer="json",
     accept_content=["json"],

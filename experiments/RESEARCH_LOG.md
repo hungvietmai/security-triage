@@ -360,3 +360,30 @@ remains directly reachable from `main`.
   ưu tiên nhưng **đổi thứ tự kết quả CodeQL nên `raw_id` dạng chỉ số bị gán khác**.
   Vì vậy cấu hình nghiên cứu giữ `jobs: 1` (gate `on_raw_id_reordering`), và bản ghi
   database không được dùng `raw_id` làm định danh ổn định giữa các lần quét.
+
+## 2026-10-07 — Ngày 5: worker quét theo profile, API và đối chiếu với CLI
+
+- Scan profile `command-injection-v0.1` (`profiles/command-injection-v0.1/profile.json`) là
+  manifest trỏ vào chính các file nghiên cứu (config batch-01 JS và OWASP Python, 8 rule
+  Semgrep, sink locator, rule-claims v2, policy và spec), pin từng file bằng SHA-256; file
+  sinh duy nhất là policy dạng JSON. Assessment vẫn ghi `policy_sha256` của YAML. Worker
+  kiểm tra toàn bộ hash và phiên bản Semgrep 1.178.0 / CodeQL 2.27.1 (`tools/pins.env`)
+  trước khi nhận việc. Config nghiên cứu không đổi; `jobs` vẫn là 1.
+- Đường tải mới cho nguồn do người dùng đặt tên: npm chỉ nhận version chính xác và kiểm
+  tarball bằng `dist.integrity` của registry (`publisher_verified`); GitHub tải thẳng từ
+  codeload theo commit 40 ký tự và tin lần đầu (`tofu`), archive lưu làm snapshot để quét
+  lại dùng đúng bytes. Server tự dựng URL, chỉ tới `registry.npmjs.org` và
+  `codeload.github.com`, không theo redirect. Đường pin hash của thực nghiệm giữ nguyên.
+- Trước khi chạy đối chiếu đã kiểm: chạy CLI với config batch-01 của profile trên
+  `curling@0.2.0` cho 0 Semgrep + 6 CodeQL → 1 đơn vị P1 (D20_STRONG), `unit_id`
+  `58114fb9…` như đã duyệt, tức tiêu chí curling vẫn đúng với bộ rule của profile.
+- Đối chiếu worker/CLI chạy **local** trên commit nền `5928b77f91f032981b386e8325178cda83ce7234` cộng thay đổi chưa commit,
+  stack Docker Compose thật: API quét curling qua đường npm integrity; snapshot SHA-256
+  `e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54` bằng đúng
+  `artifact_sha256` mà CLI dùng qua đường pin; cùng tập `unit_id`, cùng mức (1 đơn vị P1),
+  cùng số cảnh báo thô theo công cụ (codeql 6, semgrep 0) và theo đơn vị, cùng
+  `policy_sha256`. Job CI `scan-parity` lặp lại phép so này; kết quả CI phải được ghi
+  riêng sau khi chạy, không suy ra từ lần chạy local này.
+- Kiểm thử end-to-end trước đó trên mẫu Python+JS qua Celery thật đã phát hiện và sửa hai
+  lỗi chỉ lộ ra ngoài unit test: worker không nạp registry model, và `shared_task` gửi qua
+  app Celery mặc định (amqp) trong threadpool của FastAPI.

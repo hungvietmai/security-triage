@@ -1,7 +1,7 @@
 """Persist one scan's results in a single transaction: replace, never duplicate, never half-write.
 
-Lives with the workers because it writes across features (sources, scans, findings, triage),
-which features themselves may not import.
+Lives in the workflows layer because it writes across features (sources, scans, findings,
+triage), which features themselves may not import.
 """
 
 import uuid
@@ -217,6 +217,8 @@ def persist_scan_result(
         scan.error_message = result.error
         scan.artifacts = result.artifacts
         scan.config = {**scan.config, **result.provenance}
+        scan.reconciler_version = result.provenance["reconciler_version"]
+        scan.policy_version = result.provenance["policy_version"]
         session.commit()
     except BaseException:
         session.rollback()

@@ -6,7 +6,11 @@ hướng tới **JavaScript/TypeScript và Python**.
 **Trạng thái:** đã có FE/BE quản lý dự án, 5 bảng dữ liệu, worker và kết nối hạ tầng.
 Task Celery `run_scan` quét một snapshot bằng Semgrep + CodeQL, gộp cảnh báo theo vị trí,
 xếp mức ưu tiên theo policy v0.1 và ghi kết quả trong một transaction; artifact lưu ở
-SeaweedFS (`scans/{scan_id}/…`) kèm sha256. **Upload, API và giao diện kết quả chưa có.**
+SeaweedFS (`scans/{scan_id}/…`) kèm sha256. API: `POST /projects/{id}/scans` nhận package npm
+(version chính xác) hoặc commit GitHub; server tự dựng URL tới `registry.npmjs.org` /
+`codeload.github.com`, không theo redirect. `GET /scans/{id}`, `/scans/{id}/units` (hàng đợi
+P1→P4) và `/scans/{id}/units/{unit_id}` trả trạng thái, đơn vị và bằng chứng.
+**Upload archive và giao diện kết quả chưa có.**
 
 ## Chạy toàn bộ bằng Docker
 

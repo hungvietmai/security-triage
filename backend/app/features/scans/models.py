@@ -30,6 +30,9 @@ class Scan(Identity, Base):
     error_message: Mapped[str | None] = mapped_column(Text)
     # Object-storage artifacts of the run: {name: {"key", "sha256", "size"}}.
     artifacts: Mapped[dict[str, Any]] = mapped_column(JSON_VALUE, default=dict)
+    # Versions this scan's units and assessments were written with; reads select by them.
+    reconciler_version: Mapped[str | None] = mapped_column(String(80))
+    policy_version: Mapped[str | None] = mapped_column(String(80))
 
 
 class ToolRun(Identity, Base):
