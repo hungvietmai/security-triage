@@ -6,28 +6,16 @@ import sys
 from collections import Counter
 from pathlib import Path
 
-import yaml
-
 _ROOT = Path(__file__).resolve().parents[2]
 for _IMPORT_ROOT in (_ROOT, _ROOT / "backend"):
     if str(_IMPORT_ROOT) not in sys.path:
         sys.path.insert(0, str(_IMPORT_ROOT))
 from app.scanners.pipeline import run_pipeline
 from app.scanners.provenance import digest
-from app.triage.claims import classify_claims
-from app.triage.evidence import build_evidence
-from app.triage.policy import apply_policy, validate_policy
+from app.triage.assess import assert_finding_conservation
 from app.triage.reconcile import reconcile_findings
 
-from experiments.run_pilot import (
-    CLAIMS_FILE,
-    POLICY_FILE,
-    ROOT,
-    _assert_finding_conservation,
-    _locate_sinks,
-    _verified_definitions,
-    write_json,
-)
+from experiments.run_pilot import ROOT, _locate_sinks, assess_run, write_json
 
 
 def main(argv=None):
@@ -85,16 +73,10 @@ def main(argv=None):
         timeout_seconds=config["timeout_seconds"],
     )
     units = reconcile_findings(result.findings, sinks, sources)
-    _assert_finding_conservation(result.findings, units)
-    mapping = json.loads(CLAIMS_FILE.read_text())
-    policy = validate_policy(yaml.safe_load(POLICY_FILE.read_text()))
-    claims = classify_claims(
-        mapping, result.findings, _verified_definitions(config, output, result)
+    assert_finding_conservation(result.findings, units)
+    assessments = assess_run(
+        config, output, result, result.findings, units, sinks, sources
     )
-    assessments = [
-        apply_policy(build_evidence(u, result.findings, claims, sinks, sources), policy)
-        for u in units
-    ]
     by_case = {}
     for case in manifest["cases"]:
         tiers = [

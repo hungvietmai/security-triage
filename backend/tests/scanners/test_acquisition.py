@@ -6,10 +6,13 @@ import shutil
 import tarfile
 import urllib.request
 
+import pytest
+
 import app.scanners.acquisition as acquisition
 from app.scanners.acquisition import (
     AcquisitionLimits,
     acquire_source,
+    load_source_texts,
     unpack,
 )
 from app.scanners.provenance import digest
@@ -232,3 +235,18 @@ def test_acquire_source_rejects_bad_registry_integrity(tmp_path):
         assert str(exc) == "Registry integrity mismatch"
     else:
         raise AssertionError("bad registry integrity was accepted")
+
+
+def test_load_source_texts_filters_language_and_rejects_escape(tmp_path):
+    root = tmp_path / "source"
+    (root / "lib").mkdir(parents=True)
+    (root / "lib" / "a.js").write_text("exec(x)\n", encoding="utf-8")
+    (root / "b.py").write_text("print(1)\n", encoding="utf-8")
+    (root / "c.js").write_bytes(b"\xff\xfe\x00")
+    (tmp_path / "outside.js").write_text("secret\n", encoding="utf-8")
+
+    sources = load_source_texts(root, ["lib/a.js", "b.py", "c.js", "README.md"], "javascript")
+    assert sources == {"lib/a.js": "exec(x)\n"}
+    assert load_source_texts(root, ["b.py"], "python") == {"b.py": "print(1)\n"}
+    with pytest.raises(ValueError, match="escapes"):
+        load_source_texts(root, ["../outside.js"], "javascript")

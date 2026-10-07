@@ -10,7 +10,7 @@ import shutil
 import tarfile
 import time
 import urllib.request
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import cast
@@ -225,3 +225,30 @@ def acquire_source(
         transport=transport,
         seconds=time.monotonic() - begin,
     )
+
+
+SOURCE_EXTENSIONS = {
+    "python": {".py"},
+    "javascript": {".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx"},
+}
+
+
+def load_source_texts(
+    source_root: Path, source_files: Sequence[str], language: str
+) -> dict[str, str]:
+    """Read acquired sources of one language; undecodable files are skipped, not guessed."""
+    extensions = SOURCE_EXTENSIONS[language]
+    root = source_root.resolve()
+    sources = {}
+    for relative in source_files:
+        relative_path = Path(relative)
+        if relative_path.suffix.lower() not in extensions:
+            continue
+        candidate = (root / relative_path).resolve()
+        if not candidate.is_relative_to(root):
+            raise ValueError("Source file escapes acquired source root")
+        try:
+            sources[relative_path.as_posix()] = candidate.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+    return sources

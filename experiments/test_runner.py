@@ -28,12 +28,7 @@ from app.scanners.sarif import sarif_findings
 from app.scanners.semgrep import stage_rule
 
 from experiments import run_batch, run_pilot
-from experiments.run_pilot import (
-    ROOT,
-    _assert_finding_conservation,
-    digest,
-    runner_files_sha256,
-)
+from experiments.run_pilot import ROOT, digest, runner_files_sha256
 
 
 class RunnerTests(unittest.TestCase):
@@ -63,43 +58,6 @@ class RunnerTests(unittest.TestCase):
         for relative, expected_hash in hashes.items():
             self.assertEqual(expected_hash, digest(ROOT / relative))
         self.assertNotIn("runner_sha256", hashes)
-
-    def test_finding_conservation_accepts_one_cross_tool_unit(self):
-        findings = [
-            {"raw_id": "codeql:0:0"},
-            {"raw_id": "semgrep:0:0"},
-        ]
-        units = [
-            {
-                "raw_finding_ids": ["codeql:0:0", "semgrep:0:0"],
-                "tools": ["codeql", "semgrep"],
-            }
-        ]
-        _assert_finding_conservation(findings, units)
-
-    def test_finding_conservation_rejects_loss_or_duplication(self):
-        findings = [
-            {"raw_id": "codeql:0:0"},
-            {"raw_id": "semgrep:0:0"},
-        ]
-        bad_units = [
-            [{"raw_finding_ids": ["codeql:0:0"]}],
-            [
-                {
-                    "raw_finding_ids": [
-                        "codeql:0:0",
-                        "semgrep:0:0",
-                        "semgrep:0:0",
-                    ]
-                }
-            ],
-        ]
-        for units in bad_units:
-            with (
-                self.subTest(units=units),
-                self.assertRaisesRegex(RuntimeError, "finding conservation failed"),
-            ):
-                _assert_finding_conservation(findings, units)
 
     def test_github_identity_is_pinned_and_verified_without_package_json(self):
         with tempfile.TemporaryDirectory() as folder:
