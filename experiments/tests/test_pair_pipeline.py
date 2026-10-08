@@ -38,9 +38,9 @@ class PairPipelineIntegrationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         return result
 
-    def prepare(self, directory):
+    def prepare(self, directory, pair_id=PAIR_ID):
         self.cli("make_pair_manifests.py", "--output", directory)
-        manifest = json.loads((directory / f"{PAIR_ID}.json").read_text())
+        manifest = json.loads((directory / f"{pair_id}.json").read_text())
         vulnerable = b"import os\ndef run(cmd):\n    os.system(cmd)\n"
         fixed = b"import os\ndef run(cmd):\n    os.system('true')\n"
 
@@ -92,6 +92,20 @@ class PairPipelineIntegrationTests(unittest.TestCase):
             self.assertEqual(
                 {item["reason"] for item in patch["ignored"]["vulnerable"]},
                 {"documentation", "test_directory"},
+            )
+
+    def test_held_out_pairs_get_patch_hunks_before_any_scan(self):
+        # Ground truth is fixed before scanner output exists; scanning stays development-only.
+        held_out = "pyvul-abilian-abilian-devtools-9d71b0d3b6b4"
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            cache, locks = self.prepare(directory, held_out)
+            self.assertEqual(json.loads((directory / f"{held_out}.json").read_text())["split"], "held_out")
+            self.cli("patch_hunks.py", "--pair", held_out, "--pairs", directory, "--cache", cache)
+            patch = json.loads((directory / held_out / "patch-hunks.json").read_text())
+            self.assertEqual(
+                patch["snapshot_sha256"],
+                {version: locks[held_out][version]["sha256"] for version in ("vulnerable", "fixed")},
             )
 
     def test_cli_rejects_missing_cache_instead_of_reacquiring_source(self):

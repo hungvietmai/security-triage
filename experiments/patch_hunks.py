@@ -240,8 +240,10 @@ def load_pair(pair_id: str, directory: Path, cache: Path):
         raise ValueError("Unsafe pair ID")
     manifest_path = directory / f"{pair_id}.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest["split"] != "development":
-        raise ValueError("Patch/known-location inspection is development-only")
+    # Ground truth is fixed for held-out pairs too, before any scanner output exists, so the
+    # chosen locations cannot depend on tool results. Scanning stays development-only.
+    if manifest["split"] not in {"development", "held_out"}:
+        raise ValueError("Patch/known-location inspection covers development and held-out only")
     lock = json.loads((directory / "sources.lock.json").read_text(encoding="utf-8"))[pair_id]
     if lock["manifest_sha256"] != sha256(manifest_path):
         raise ValueError("Manifest changed since source locking")

@@ -490,3 +490,12 @@ remains directly reachable from `main`.
   được. Link tuyệt đối hoặc thoát khỏi thư mục gốc vẫn là mục archive không an toàn.
 - Các bộ dữ liệu đã chạy (curling, R1, OWASP) không có symlink, nên kết quả cũ không
   đổi; `runner_files_sha256` đổi theo code `acquisition.py`.
+
+## 2026-10-08 — Trích vị trí lỗi cho cả tập held-out trước khi quét
+
+- `patch_hunks.py`/`known_locations.py` trước đây chỉ nhận cặp phát triển. Nay nhận
+  cả held-out: vị trí lỗi đã biết phải được xác định và commit **trước** khi có bất kỳ
+  output scanner nào cho các cặp này, để việc chọn vị trí không thể phụ thuộc kết quả
+  công cụ. Hiện chưa có output scanner nào cho cặp held-out, nên việc trích là mù.
+- Bộ trích không gọi Semgrep/CodeQL và không thực thi source. Cổng chặn quét
+  (`run_pilot.py`, `run_batch.py`, `build_review.py`) vẫn chỉ cho tập phát triển.
