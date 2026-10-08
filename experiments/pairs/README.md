@@ -1,16 +1,19 @@
 # Frozen pair preparation — pairs-v0
 
-`index.json` lists the **51 usable manifests** from `split_v0.1.json`: 24
-development pairs (23 groups), 16 held-out pairs (15 groups), and 11 reserve pairs
-(11 groups). It also preserves all 32 excluded rows and their reasons. The CSV
-`split` column is v0 metadata, never the effective assignment. Both the frozen
-group assignment and each pair's `scope_verdict` are required.
+`index.json` lists the **51 usable manifests** from `split_v0.2.json`: 35
+development pairs (34 groups) and 16 held-out pairs (15 groups). Split-v0.2 is
+split-v0.1 with its 11 JavaScript reserve groups reassigned to development by
+[Amendment 05](../amendments/AMENDMENT_05_RESERVE_TO_DEVELOPMENT.md); held-out is
+unchanged and no reserve remains. It also preserves all 32 excluded rows and their
+reasons. The CSV `split` column is v0 metadata, never the effective assignment. Both
+the frozen group assignment and each pair's `scope_verdict` are required.
 
 `sources.lock.json` maps pair IDs to vulnerable/fixed archive hashes, provenance,
 source references and acquisition timestamps. **50 pairs / 100 archives** are
 locked. Both Ray archives exceeded the day-5 50 MiB download bound; their failures
-remain recorded in the lock and `sources-report.json`. No replacement or split
-change was performed. Any later replacement must follow the already committed
+remain recorded in the lock and `sources-report.json`. No replacement was
+performed. The 11 reassigned pairs' locks were rebound only for their changed `split`
+field (`--rebind-split`, recorded under `rebinds`); their archives are unchanged. Any later replacement must follow the already committed
 group reserve ordering; this preparation CLI does not perform replacements.
 
 Archive bytes live in the ignored local cache `artifacts/pair-sources/<sha256>.tgz`.

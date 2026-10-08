@@ -461,3 +461,18 @@ remains directly reachable from `main`.
   chưa phải kết quả CI. CI được bổ sung các dependency schema/AST đã pin.
 - File khóa nguồn, manifest, script, test và bằng chứng được commit; tag
   **`pairs-v0`** trỏ commit hoàn tất đợt chuẩn bị. Tag tạo local, chưa push.
+
+## 2026-10-08 — Amendment 05: chuyển 11 nhóm JS dự phòng sang tập phát triển
+
+- Quyết định trước mọi lần quét cặp: 11 nhóm JavaScript `reserve` (CWE chưa xác định)
+  của split-v0.1 trở thành dữ liệu phát triển. Chưa nhóm nào trong số này và chưa cặp
+  held-out nào từng được quét; chúng chỉ được tải và khóa hash ở `pairs-v0`.
+- `split_v0.2.json` sinh tất định từ split-v0.1 (`make_split_v0_2.py`, có `--check`):
+  chỉ 11 nhóm đổi, ghi `previous_assignment: "reserve"`; held-out, loại trừ và thứ tự
+  hash giữ nguyên, không chọn lại, không thay thế. Manifest: phát triển 35 cặp / 34
+  nhóm, held-out 16 / 15 (không đổi), không còn dự phòng.
+- 11 manifest chỉ đổi trường `split`; lock của chúng được gắn lại bằng
+  `--rebind-split`, chỉ chấp nhận khi trả `split` về giá trị cũ thì ra đúng hash đã
+  khóa. Hash cũ, trường đổi và amendment được ghi dưới `rebinds`; archive không đổi.
+- Hệ quả: không còn dự phòng để thay cặp held-out lỗi thu thập/build; các nhóm này vẫn
+  là `cwe_unresolved` trong mọi tổng hợp theo CWE.

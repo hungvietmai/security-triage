@@ -24,7 +24,8 @@ sys.path.insert(0, str(ROOT / "backend"))
 from app.scanners.sources import validate_github, validate_npm
 
 INVENTORY = ROOT / "experiments/inventory/pair-inventory.csv"
-SPLIT = ROOT / "experiments/inventory/split_v0.1.json"
+# Amendment 05: split-v0.2 = split-v0.1 with the JavaScript reserve reassigned to development.
+SPLIT = ROOT / "experiments/inventory/split_v0.2.json"
 SCHEMA = ROOT / "experiments/schemas/pair-manifest.schema.json"
 PAIRS = ROOT / "experiments/pairs"
 VERSIONS = ("vulnerable", "fixed")
@@ -67,8 +68,8 @@ def build_manifests(
     with inventory.open(encoding="utf-8", newline="") as stream:
         rows = list(csv.DictReader(stream))
     split = json.loads(split_path.read_text(encoding="utf-8"))
-    if split["split_id"] != "split-v0.1" or split["status"] != "pre_scan_frozen":
-        raise ValueError("Require the frozen split-v0.1")
+    if split["split_id"] != "split-v0.2" or split["status"] != "pre_scan_frozen":
+        raise ValueError("Require the frozen split-v0.2")
     groups = {group["group_id"]: group for group in split["groups"]}
     if len(groups) != len(split["groups"]):
         raise ValueError("Duplicate split group")
@@ -150,7 +151,7 @@ def build_manifests(
     )
     if group_counts != expected:
         raise ValueError(
-            f"Manifest group counts differ from split-v0.1: {group_counts} != {expected}"
+            f"Manifest group counts differ from {split['split_id']}: {group_counts} != {expected}"
         )
     report = {
         "split_id": split["split_id"],

@@ -143,13 +143,72 @@ def lock_sources(
     return locked
 
 
+def rebind_reassigned_manifests(directory: Path, split_path: Path) -> list[str]:
+    """Rebind locks whose manifest changed only by a split reassignment the split records.
+
+    A lock is never rebound silently: setting the manifest's split back to the group's
+    previous assignment (recorded by the split for exactly the reassigned groups) must
+    reproduce the locked manifest hash, so any other change is refused. Archives and their hashes are untouched; each rebind is recorded.
+    """
+    split = json.loads(split_path.read_text(encoding="utf-8"))
+    reference = split.get("amendment")
+    if not reference:
+        raise ValueError("Split records no amendment that authorizes reassignment")
+    previous = {
+        pair_id: group["previous_assignment"]
+        for group in split["groups"]
+        if "previous_assignment" in group
+        for pair_id in group["pair_ids"]
+    }
+    lock_path = directory / "sources.lock.json"
+    locked = json.loads(lock_path.read_text(encoding="utf-8"))
+    rebound = []
+    for pair_id, frozen in sorted(previous.items()):
+        manifest_path = directory / f"{pair_id}.json"
+        if pair_id not in locked or not manifest_path.is_file():
+            continue
+        entry = locked[pair_id]
+        current = sha256(manifest_path)
+        if entry["manifest_sha256"] == current:
+            continue
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as folder:
+            before = Path(folder) / "manifest.json"
+            write_json(before, {**manifest, "split": frozen})
+            if sha256(before) != entry["manifest_sha256"]:
+                raise ValueError(f"Manifest changed beyond its split assignment: {pair_id}")
+        entry.setdefault("rebinds", []).append(
+            {
+                "previous_manifest_sha256": entry["manifest_sha256"],
+                "field": "split",
+                "from": frozen,
+                "to": manifest["split"],
+                "split_id": split["split_id"],
+                "reference": reference,
+            }
+        )
+        entry["manifest_sha256"] = current
+        rebound.append(pair_id)
+    write_json(lock_path, locked)
+    return rebound
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pairs", type=Path, default=PAIRS)
     parser.add_argument("--cache", type=Path, default=CACHE)
     parser.add_argument("--workers", type=int, choices=range(1, 9), default=4)
     parser.add_argument("--retry-failures", action="store_true")
+    parser.add_argument(
+        "--rebind-split",
+        type=Path,
+        help="rebind locks of pairs this split reassigned (no download); then exit",
+    )
     args = parser.parse_args()
+    if args.rebind_split:
+        for pair_id in rebind_reassigned_manifests(args.pairs, args.rebind_split):
+            print(f"{pair_id}: lock rebound to its reassigned manifest", flush=True)
+        return 0
     manifests = load_manifests(args.pairs)
     locks = lock_sources(
         manifests, args.pairs, args.cache, workers=args.workers, retry_failures=args.retry_failures

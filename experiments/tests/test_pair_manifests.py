@@ -20,20 +20,18 @@ from experiments.make_pair_manifests import INVENTORY, SCHEMA, SPLIT, build_mani
 
 
 class ManifestTests(unittest.TestCase):
-    def test_v01_pair_counts_and_group_counts_by_language(self):
+    def test_v02_pair_counts_and_group_counts_by_language(self):
+        # Amendment 05: split-v0.2 moves the 11 JavaScript reserve groups to development.
         manifests, report = build_manifests()
-        self.assertEqual(
-            report["manifest_counts"], {"development": 24, "held_out": 16, "reserve": 11}
-        )
-        self.assertEqual(report["group_counts"], {"development": 23, "held_out": 15, "reserve": 11})
+        self.assertEqual(report["manifest_counts"], {"development": 35, "held_out": 16})
+        self.assertEqual(report["group_counts"], {"development": 34, "held_out": 15})
         self.assertEqual(report["excluded_count"], 32)
         self.assertEqual(
             Counter((m["language"], m["split"]) for m in manifests),
             Counter(
                 {
-                    ("javascript", "development"): 14,
+                    ("javascript", "development"): 25,
                     ("javascript", "held_out"): 9,
-                    ("javascript", "reserve"): 11,
                     ("python", "development"): 10,
                     ("python", "held_out"): 7,
                 }

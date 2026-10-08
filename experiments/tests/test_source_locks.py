@@ -13,9 +13,15 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "backend"))
 import copy
 import hashlib
+import json
 import tempfile
 
-from experiments.lock_pair_sources import cache_archive, lock_sources, lock_version
+from experiments.lock_pair_sources import (
+    cache_archive,
+    lock_sources,
+    lock_version,
+    rebind_reassigned_manifests,
+)
 from experiments.make_pair_manifests import build_manifests, write_json
 from experiments.tests.archive_fixtures import archive_bytes
 
@@ -124,3 +130,83 @@ class SourceLockTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SplitReassignmentRebindTests(unittest.TestCase):
+    """Amendment 05: a lock follows a manifest only when its split alone was reassigned."""
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.directory = Path(self.temporary.name)
+        manifest = copy.deepcopy(build_manifests()[0][0])
+        self.pair_id = manifest["pair_id"]
+        self.path = self.directory / f"{self.pair_id}.json"
+        write_json(self.path, {**manifest, "split": "reserve"})
+        self.locked_hash = hashlib.sha256(self.path.read_bytes()).hexdigest()
+        self.archive_entry = {"status": "locked", "sha256": "a" * 64}
+        write_json(
+            self.directory / "sources.lock.json",
+            {
+                self.pair_id: {
+                    "manifest_sha256": self.locked_hash,
+                    "vulnerable": self.archive_entry,
+                    "fixed": self.archive_entry,
+                }
+            },
+        )
+        self.manifest = {**manifest, "split": "development"}
+        self.split = self.directory / "split.json"
+        write_json(
+            self.split,
+            {
+                "split_id": "split-test",
+                "amendment": "experiments/amendments/AMENDMENT_05.md",
+                "groups": [
+                    {
+                        "group_id": manifest["group_id"],
+                        "pair_ids": [self.pair_id],
+                        "assignment": "development",
+                        "previous_assignment": "reserve",
+                    }
+                ],
+            },
+        )
+
+    def lock(self):
+        return json.loads((self.directory / "sources.lock.json").read_text(encoding="utf-8"))
+
+    def test_rebinds_a_split_only_change_once_and_records_it(self):
+        write_json(self.path, self.manifest)
+        self.assertEqual(rebind_reassigned_manifests(self.directory, self.split), [self.pair_id])
+        entry = self.lock()[self.pair_id]
+        self.assertEqual(entry["manifest_sha256"], hashlib.sha256(self.path.read_bytes()).hexdigest())
+        self.assertEqual(entry["vulnerable"], self.archive_entry)
+        self.assertEqual(
+            entry["rebinds"],
+            [
+                {
+                    "previous_manifest_sha256": self.locked_hash,
+                    "field": "split",
+                    "from": "reserve",
+                    "to": "development",
+                    "split_id": "split-test",
+                    "reference": "experiments/amendments/AMENDMENT_05.md",
+                }
+            ],
+        )
+        self.assertEqual(rebind_reassigned_manifests(self.directory, self.split), [])
+        self.assertEqual(len(self.lock()[self.pair_id]["rebinds"]), 1)
+
+    def test_refuses_any_change_beyond_the_split(self):
+        write_json(self.path, {**self.manifest, "fixed_ref": "something-else"})
+        with self.assertRaisesRegex(ValueError, "beyond its split assignment"):
+            rebind_reassigned_manifests(self.directory, self.split)
+        self.assertEqual(self.lock()[self.pair_id]["manifest_sha256"], self.locked_hash)
+
+    def test_requires_an_authorizing_amendment(self):
+        split = json.loads(self.split.read_text(encoding="utf-8"))
+        del split["amendment"]
+        write_json(self.split, split)
+        with self.assertRaisesRegex(ValueError, "no amendment"):
+            rebind_reassigned_manifests(self.directory, self.split)
