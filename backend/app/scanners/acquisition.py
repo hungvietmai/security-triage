@@ -149,6 +149,16 @@ def unpack(
     return destination / archive_root
 
 
+def npm_identity_matches(package: Mapping[object, object], name: str, version: str) -> bool:
+    """package.json names the pinned package; npm cleans a leading "v"/"=" on publish."""
+    declared = package.get("version")
+    return (
+        package.get("name") == name
+        and isinstance(declared, str)
+        and declared.strip().lstrip("=v").strip() == version
+    )
+
+
 def verify_source_identity(case: Mapping[str, object], source: Path) -> None:
     """Validate pinned source identity without importing or executing target code."""
     source_kind = _required_str(case, "source_kind")
@@ -157,9 +167,8 @@ def verify_source_identity(case: Mapping[str, object], source: Path) -> None:
         if not isinstance(package_value, dict):
             raise ValueError("package.json must contain an object")
         package = cast(dict[object, object], package_value)
-        if (package.get("name"), package.get("version")) != (
-            _required_str(case, "package_name"),
-            _required_str(case, "package_version"),
+        if not npm_identity_matches(
+            package, _required_str(case, "package_name"), _required_str(case, "package_version")
         ):
             raise ValueError("Package identity mismatch")
         return

@@ -25,6 +25,7 @@ from app.scanners.acquisition import (
     MAX_ARCHIVE,
     MAX_FILES,
     MAX_UNPACKED,
+    npm_identity_matches,
     symlink_stays_in_root,
 )
 
@@ -257,9 +258,8 @@ def load_pair(pair_id: str, directory: Path, cache: Path):
         source = manifest[f"{version}_source"]
         if source["source_kind"] == "npm_tarball":
             identity = json.loads(files["package.json"])
-            if (identity.get("name"), identity.get("version")) != (
-                source["package_name"],
-                source["package_version"],
+            if not npm_identity_matches(
+                identity, source["package_name"], source["package_version"]
             ):
                 raise ValueError("Package identity differs from pinned coordinates")
     return manifest, lock, snapshots

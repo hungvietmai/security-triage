@@ -511,3 +511,7 @@ remains directly reachable from `main`.
 - Ray (`pyvul-ray-project-ray-193ff8c80067`, cả hai archive > 50 MiB) **giữ nguyên là
   lỗi thu thập đã ghi, quyết định cuối cùng**: không nâng giới hạn kích thước cho một
   ca, không có nhóm Python dự phòng để thay; CodeQL trên Ray cũng rất chậm.
+- `secbench-libnmap-0.4.11` (phát triển): `package.json` trong tarball ghi `v0.4.11`,
+  trong khi registry và tọa độ đã pin là `0.4.11` (npm làm sạch tiền tố khi publish;
+  bytes đã xác minh bằng integrity của registry). Kiểm tra danh tính npm nay so sánh
+  version sau khi bỏ tiền tố `v`/`=` như npm; tên và version khác vẫn bị từ chối.

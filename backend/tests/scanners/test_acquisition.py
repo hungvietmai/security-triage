@@ -281,3 +281,25 @@ def test_unpack_rejects_symlinks_that_leave_the_archive(tmp_path, target):
     _archive_with_link(archive, "link", target)
     with pytest.raises(ValueError, match="Unsafe/unsupported archive entry"):
         unpack(archive, tmp_path / "out", "repo", max_unpacked_bytes=10_000, max_files=10)
+
+
+@pytest.mark.parametrize(
+    ("declared", "accepted"),
+    [
+        ({"name": "libnmap", "version": "0.4.11"}, True),
+        # libnmap@0.4.11 ships "v0.4.11"; npm cleans the prefix on publish.
+        ({"name": "libnmap", "version": "v0.4.11"}, True),
+        ({"name": "libnmap", "version": "0.4.12"}, False),
+        ({"name": "libnmap", "version": "v0.4.1"}, False),
+        ({"name": "other", "version": "0.4.11"}, False),
+        ({"name": "libnmap"}, False),
+    ],
+)
+def test_npm_identity_allows_only_npm_version_cleaning(tmp_path, declared, accepted):
+    (tmp_path / "package.json").write_text(json.dumps(declared), encoding="utf-8")
+    case = {"source_kind": "npm_tarball", "package_name": "libnmap", "package_version": "0.4.11"}
+    if accepted:
+        acquisition.verify_source_identity(case, tmp_path)
+    else:
+        with pytest.raises(ValueError, match="Package identity mismatch"):
+            acquisition.verify_source_identity(case, tmp_path)
