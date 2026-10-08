@@ -26,6 +26,11 @@
     "fixed_source"
   ],
   "properties": {
+    "sink_hint": {
+      "type": "string",
+      "pattern": "^[^:]+:[1-9][0-9]*:[1-9][0-9]*$",
+      "description": "Published SecBench sink coordinate, retained verbatim; not a resolved label."
+    },
     "pair_id": {
       "type": "string",
       "minLength": 1
@@ -36,10 +41,7 @@
     },
     "dataset": {
       "type": "string",
-      "enum": [
-        "SecBench.js",
-        "PyVul"
-      ]
+      "enum": ["SecBench.js", "PyVul"]
     },
     "repository": {
       "type": "string",
@@ -51,10 +53,7 @@
     },
     "language": {
       "type": "string",
-      "enum": [
-        "javascript",
-        "python"
-      ]
+      "enum": ["javascript", "python"]
     },
     "dataset_reported_category": {
       "type": "string",
@@ -88,10 +87,7 @@
       }
     },
     "vulnerable_ref": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": ["string", "null"]
     },
     "fix_commit": {
       "oneOf": [
@@ -105,10 +101,7 @@
       ]
     },
     "fixed_ref": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": ["string", "null"]
     },
     "reference_provenance": {
       "type": "array",
@@ -121,19 +114,10 @@
     },
     "split": {
       "type": "string",
-      "enum": [
-        "unassigned",
-        "development",
-        "held_out",
-        "reserve",
-        "excluded"
-      ]
+      "enum": ["unassigned", "development", "held_out", "reserve", "excluded"]
     },
     "exclusion_reason": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": ["string", "null"]
     },
     "vulnerable_source": {
       "$ref": "#/$defs/source_or_null"
@@ -145,11 +129,7 @@
       "oneOf": [
         {
           "type": "string",
-          "enum": [
-            "in_scope",
-            "out_of_scope",
-            "unresolved"
-          ]
+          "enum": ["in_scope", "out_of_scope", "unresolved"]
         },
         {
           "type": "string",
@@ -182,9 +162,7 @@
             "type": "null"
           }
         },
-        "required": [
-          "exclusion_reason"
-        ]
+        "required": ["exclusion_reason"]
       },
       "then": {
         "properties": {
@@ -253,12 +231,7 @@
     "github_source": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "source_kind",
-        "repository",
-        "commit",
-        "source_reference"
-      ],
+      "required": ["source_kind", "repository", "commit", "source_reference"],
       "properties": {
         "source_kind": {
           "const": "github_tarball"

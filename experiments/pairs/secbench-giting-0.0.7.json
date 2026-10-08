@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-giting-0.0.7",
+  "group_id": "secbench:giting",
+  "dataset": "SecBench.js",
+  "repository": "npm:giting",
+  "vulnerability_id": "CVE-2019-10802",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/git.js:223:8; OS Command Injection in giting",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-53XJ-V576-3CH2|https://github.com/MangoRaft/git|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/giting_0.0.7/package.json",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-53XJ-V576-3CH2#CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/giting_0.0.7/package.json",
+    "GHSA_SOURCE:https://github.com/MangoRaft/git"
+  ],
+  "vulnerable_ref": "0.0.7",
+  "fixed_ref": "0.0.8",
+  "fix_commit": "https://github.com/MangoRaft/git/commit/9be41081f547d3dcef25e7d7c957bc2a3be2dfe0",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "held_out",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "giting",
+    "package_version": "0.0.7",
+    "source_reference": "npm:giting@0.0.7"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "giting",
+    "package_version": "0.0.8",
+    "source_reference": "npm:giting@0.0.8"
+  },
+  "sink_hint": "lib/git.js:223:8"
+}

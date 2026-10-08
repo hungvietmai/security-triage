@@ -1,0 +1,365 @@
+{
+  "pair_id": "secbench-dns-sync-0.1.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "05c225bf536afea9103a8f4ef0f0971b208e1593cf22317d8290aad5e56cad4f",
+    "fixed": "a67c099624f116533924160391b5d1df2943c8261d28eb2a02fd88dfd6052a72"
+  },
+  "generator_sha256": "0dabd765f11ed12ef0c5435029bbf21ad74c46bc9821f04b016d9419b3969de0",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/test.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "benchmarks/README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/test.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "Makefile",
+      "new_path": "Makefile",
+      "old_sha256": "c465277e33492f3b710eda5b380281749392f5709deb27f92134a3d8e00286c4",
+      "new_sha256": "05b9ed7256011b7cfcb8f4f5857033d149f554778691e702e2c5094331e94efd",
+      "hunks": [
+        {
+          "old_start": 6,
+          "old_count": 7,
+          "new_start": 6,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 9,
+              "old_count": 1,
+              "new_start": 9,
+              "new_count": 2,
+              "old_lines": [
+                9
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- Makefile\n+++ Makefile\n@@ -6,7 +6,8 @@\n \n test:\n \t@NODE_ENV=test ./node_modules/.bin/mocha \\\n-\t\t--reporter $(REPORTER)\n+\t\t--reporter $(REPORTER) \\\n+\t\t--timeout 10000\n \n lint:\n \t$(JSHINT) index.js --config $(BASE)/.jshintrc && \\\n"
+    },
+    {
+      "old_path": "lib/dns-sync.js",
+      "new_path": "lib/dns-sync.js",
+      "old_sha256": "d03e78cdf88ce0d71304e415e24b5aea4a9f7d6570f0901b277480eb3c865e5a",
+      "new_sha256": "7fdaeb33c30cc7c5bf276a7b6b7625df57bcf00c6b79db35c8bbb377246bbf9e",
+      "hunks": [
+        {
+          "old_start": 6,
+          "old_count": 24,
+          "new_start": 6,
+          "new_count": 36,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 9,
+              "old_count": 0,
+              "new_start": 9,
+              "new_count": 6,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 1,
+              "new_start": 20,
+              "new_count": 4,
+              "old_lines": [
+                14
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 16,
+              "old_count": 2,
+              "new_start": 25,
+              "new_count": 8,
+              "old_lines": [
+                16,
+                17
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 19,
+              "old_count": 1,
+              "new_start": 34,
+              "new_count": 1,
+              "old_lines": [
+                19
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 23,
+              "old_count": 4,
+              "new_start": 38,
+              "new_count": 1,
+              "old_lines": [
+                23,
+                24,
+                25,
+                26
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/dns-sync.js\n+++ lib/dns-sync.js\n@@ -6,24 +6,36 @@\n     shell = require('shelljs'),\n     debug = require('debug')('dns-sync');\n \n+//source - http://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address\n+var ValidHostnameRegex = new RegExp(\"^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$\");\n+\n+function isValidHostName(hostname) {\n+    return ValidHostnameRegex.test(hostname);\n+}\n /**\n  * Resolve hostname to IP address,\n  * returns null in case of error\n  */\n module.exports = {\n-    resolve: function resolve(hostname) {\n+    lookup: function lookup(hostname) {\n+        return module.exports.resolve(hostname);\n+    },\n+    resolve: function resolve(hostname, type) {\n         var output,\n-            nodeBinary = process.execPath,\n-            scriptPath = path.join(__dirname, \"../scripts/dns-lookup-script\"),\n+            nodeBinary = process.execPath;\n+\n+        if (!isValidHostName(hostname)) {\n+            console.error('Invalid hostname:', hostname);\n+            return null;\n+        }\n+\n+        var scriptPath = path.join(__dirname, \"../scripts/dns-lookup-script\"),\n             response,\n-            cmd = util.format('\"%s\" \"%s\" %s', nodeBinary, scriptPath, hostname);\n+            cmd = util.format('\"%s\" \"%s\" %s %s', nodeBinary, scriptPath, hostname, type || '');\n \n         response = shell.exec(cmd, {silent: true});\n         if (response && response.code === 0) {\n-            output = response.output;\n-            if (output && net.isIP(output)) {\n-                return output;\n-            }\n+            return JSON.parse(response.output);\n         }\n         debug('hostname', \"fail to resolve hostname \" + hostname);\n         return null;\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "9fe55c4545fe03bb5904a2ee862513fe5168cd14ed5c96dc423a3ed3870a5633",
+      "new_sha256": "7d676b3d6d9bdad0dbc03e8b854e4ad9099fcd7a4babad3c0bba681e180d5d3f",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 20,
+          "old_count": 11,
+          "new_start": 20,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 23,
+              "old_count": 2,
+              "new_start": 23,
+              "new_count": 2,
+              "old_lines": [
+                23,
+                24
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 27,
+              "old_count": 2,
+              "new_start": 27,
+              "new_count": 2,
+              "old_lines": [
+                27,
+                28
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"dns-sync\",\n-  \"version\": \"0.1.0\",\n+  \"version\": \"0.1.3\",\n   \"description\": \"dns-sync\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n@@ -20,11 +20,11 @@\n   \"license\": \"MIT\",\n   \"readmeFilename\": \"README.md\",\n   \"dependencies\": {\n-    \"debug\" : \"~0.7\",\n-    \"shelljs\": \"~0.2\"\n+    \"debug\" : \"^2\",\n+    \"shelljs\": \"~0.5\"\n   },\n   \"devDependencies\": {\n-    \"mocha\" : \"~1\",\n-    \"jshint\" : \"*\"\n+    \"mocha\" : \"^2\",\n+    \"jshint\" : \"^2\"\n   }\n }\n"
+    },
+    {
+      "old_path": "scripts/dns-lookup-script.js",
+      "new_path": "scripts/dns-lookup-script.js",
+      "old_sha256": "35acb0aba075138003c88e1b31d3b33785e258f8223fc52eba0173424aac6403",
+      "new_sha256": "ed6a9a05015877b6013a5203aeecc6d2c155d4241e5dd73b6b2c7fb06ce6e478",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 15,
+          "new_start": 1,
+          "new_count": 24,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 2,
+              "new_start": 4,
+              "new_count": 2,
+              "old_lines": [
+                4,
+                5
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 1,
+              "new_start": 7,
+              "new_count": 10,
+              "old_lines": [
+                7
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 9,
+              "old_count": 0,
+              "new_start": 18,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "delete",
+              "old_start": 10,
+              "old_count": 1,
+              "new_start": 20,
+              "new_count": 0,
+              "old_lines": [
+                10
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 13,
+              "old_count": 1,
+              "new_start": 22,
+              "new_count": 1,
+              "old_lines": [
+                13
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- scripts/dns-lookup-script.js\n+++ scripts/dns-lookup-script.js\n@@ -1,15 +1,24 @@\n 'use strict';\n \n var dns = require('dns'),\n-    name = process.argv[2],\n-    debug = require('debug')('dns-sync');\n+    debug = require('debug')('dns-sync'),\n+    name, type, fn;\n \n-dns.lookup(name, function (err, ip) {\n+for (var i = 0; i < process.argv.length; i++) {\n+\tif (process.argv[i].indexOf('dns-lookup-script') >= 0) {\n+\t\tname = process.argv[i + 1];\n+\t\ttype = process.argv[i + 2];\n+\t\tfn = type ? dns.resolve.bind(dns, name, type) : dns.lookup.bind(dns, name);\n+\t\tbreak;\n+\t}\n+}\n+\n+fn(function (err, ip) {\n     if (err) {\n+        debug(err);\n         process.exit(1);\n-        debug(err);\n     } else {\n         debug(name, 'resolved to', ip);\n-        process.stdout.write(ip);\n+        process.stdout.write(JSON.stringify(ip));\n     }\n });\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "benchmarks/package.json",
+      "old_sha256": null,
+      "new_sha256": "3dbe567377cce4c7cbf36dd7962b7e2858fd82a35ca769a4c755d4bee1b9354c",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 12,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ benchmarks/package.json\n@@ -0,0 +1,12 @@\n+{\n+  \"name\": \"dns-sync-perf\",\n+  \"description\": \"dns-sync\",\n+  \"version\": \"0.0.1\",\n+  \"devDependencies\": {\n+    \"benchmark\" : \"^1.0.0\",\n+    \"microtime\": \"^1.2.0\"\n+  },\n+  \"scripts\": {\n+    \"test\": \"node perf.js\"\n+  }\n+}"
+    },
+    {
+      "old_path": null,
+      "new_path": "benchmarks/perf.js",
+      "old_sha256": null,
+      "new_sha256": "3a4abde32e359e417637ffc551e8290ae92f4b705446461347c93e0920e0c2a2",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 19,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 19,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ benchmarks/perf.js\n@@ -0,0 +1,19 @@\n+'use strict';\n+\n+var Benchmark = require('benchmark');\n+\n+var dnsSync = require('../index');\n+\n+\n+var suite = new Benchmark.Suite();\n+\n+suite.add('success case', function() {\n+    return dnsSync.resolve('www.example.com');\n+})\n+.add('failure case', function() {\n+  return dnsSync.resolve('www.example.con');\n+})\n+.on('cycle', function(event) {\n+  console.log(String(event.target));\n+})\n+.run({ 'async': true });"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

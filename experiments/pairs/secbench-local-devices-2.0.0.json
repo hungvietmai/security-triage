@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-local-devices-2.0.0",
+  "group_id": "secbench:local-devices",
+  "dataset": "SecBench.js",
+  "repository": "npm:local-devices",
+  "vulnerability_id": "secbench:local-devices@2.0.0",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-77",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink src/index.js:114:13; Command Injection in local-devices",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-W725-67P7-XV22|https://github.com/DylanPiercey/local-devices|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/local-devices_2.0.0/package.json",
+  "reported_cwes": [
+    "CWE-77"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-W725-67P7-XV22#CWE-77"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/local-devices_2.0.0/package.json",
+    "GHSA_SOURCE:https://github.com/DylanPiercey/local-devices"
+  ],
+  "vulnerable_ref": "2.0.0",
+  "fixed_ref": "3.0.0",
+  "fix_commit": null,
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "local-devices",
+    "package_version": "2.0.0",
+    "source_reference": "npm:local-devices@2.0.0"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "local-devices",
+    "package_version": "3.0.0",
+    "source_reference": "npm:local-devices@3.0.0"
+  },
+  "sink_hint": "src/index.js:114:13"
+}

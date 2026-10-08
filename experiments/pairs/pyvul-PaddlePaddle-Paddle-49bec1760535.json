@@ -1,0 +1,44 @@
+{
+  "pair_id": "pyvul-PaddlePaddle-Paddle-49bec1760535",
+  "group_id": "pyvul:paddlepaddle/paddle",
+  "dataset": "PyVul",
+  "repository": "PaddlePaddle/Paddle",
+  "vulnerability_id": "pyvul:49bec176053595975c1941cff9749c55f7203ea9",
+  "language": "python",
+  "dataset_reported_category": "CWE-78",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Input is concatenated into os.popen('echo -n ' + value), a shell command sink.",
+  "sink_kind": "os_shell_command",
+  "os_command_execution_basis": "Input is concatenated into os.popen('echo -n ' + value), a shell command sink.",
+  "scope_review_provenance": "https://github.com/PaddlePaddle/Paddle/commit/49bec176053595975c1941cff9749c55f7203ea9",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json"
+  ],
+  "reference_provenance": [
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+    "https://github.com/PaddlePaddle/Paddle/commit/49bec176053595975c1941cff9749c55f7203ea9"
+  ],
+  "vulnerable_ref": "5252c5d358807edcb5b61b06e4853b894478c0bf",
+  "fixed_ref": "49bec176053595975c1941cff9749c55f7203ea9",
+  "fix_commit": "49bec176053595975c1941cff9749c55f7203ea9",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "github_tarball",
+    "repository": "PaddlePaddle/Paddle",
+    "commit": "5252c5d358807edcb5b61b06e4853b894478c0bf",
+    "source_reference": "github:PaddlePaddle/Paddle@5252c5d358807edcb5b61b06e4853b894478c0bf"
+  },
+  "fixed_source": {
+    "source_kind": "github_tarball",
+    "repository": "PaddlePaddle/Paddle",
+    "commit": "49bec176053595975c1941cff9749c55f7203ea9",
+    "source_reference": "github:PaddlePaddle/Paddle@49bec176053595975c1941cff9749c55f7203ea9"
+  }
+}

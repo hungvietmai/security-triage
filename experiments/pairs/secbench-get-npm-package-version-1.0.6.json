@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-get-npm-package-version-1.0.6",
+  "group_id": "secbench:get-npm-package-version",
+  "dataset": "SecBench.js",
+  "repository": "npm:get-npm-package-version",
+  "vulnerability_id": "CVE-2020-7795",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-77",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink index.js:16:48; get-npm-package-version Command Injection vulnerability; feat: add defence to Command Injection",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-4h66-vghf-xg5x|https://github.com/hoperyy/get-npm-package-version|https://github.com/hoperyy/get-npm-package-version/commit/40b1cf31a0607ea66f9e30a0c3af1383b52b2dec|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/get-npm-package-version_1.0.6/package.json",
+  "reported_cwes": [
+    "CWE-77"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-4h66-vghf-xg5x#CWE-77"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/get-npm-package-version_1.0.6/package.json",
+    "GHSA_SOURCE:https://github.com/hoperyy/get-npm-package-version"
+  ],
+  "vulnerable_ref": "1.0.6",
+  "fixed_ref": "1.0.7",
+  "fix_commit": "https://github.com/hoperyy/get-npm-package-version/commit/40b1cf31a0607ea66f9e30a0c3af1383b52b2dec",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "get-npm-package-version",
+    "package_version": "1.0.6",
+    "source_reference": "npm:get-npm-package-version@1.0.6"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "get-npm-package-version",
+    "package_version": "1.0.7",
+    "source_reference": "npm:get-npm-package-version@1.0.7"
+  },
+  "sink_hint": "index.js:16:48"
+}

@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-dns-sync-0.1.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "05c225bf536afea9103a8f4ef0f0971b208e1593cf22317d8290aad5e56cad4f",
+    "fixed": "a67c099624f116533924160391b5d1df2943c8261d28eb2a02fd88dfd6052a72"
+  },
+  "patch_hunks_sha256": "3ae8f7769412d07d85a87adcbe992acab48b9c397dc068e9dd2f6392e337df61",
+  "generator_sha256": "56ba58aec353350d697267dfad66f62c4755e21709578532d78e5765002efeff",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/dns-sync.js",
+      "span": {
+        "startLine": 21,
+        "startColumn": 20,
+        "endLine": 21,
+        "endColumn": 51
+      },
+      "sink_kind": "shelljs.exec",
+      "callee": "shell.exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/dns-sync.js:21:26",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/dns-sync_0.1.0/package.json",
+          "GHSA_SOURCE:https://github.com/skoranga/node-dns-sync"
+        ],
+        "inventory_basis": "SecBench sink lib/dns-sync.js:21:26; dns-sync command injection vulnerability; adding validation check for hostname",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

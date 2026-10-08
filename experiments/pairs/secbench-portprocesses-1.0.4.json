@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-portprocesses-1.0.4",
+  "group_id": "secbench:portprocesses",
+  "dataset": "SecBench.js",
+  "repository": "npm:portprocesses",
+  "vulnerability_id": "CVE-2021-23348",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "cwe_unresolved",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink exec.js:5:3; Arbitrary Command Injection in portprocesses; Merge pull request from GHSA-vm67-7vmg-66vm",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-VM67-7VMG-66VM|https://github.com/rrainn/PortProcesses/commit/86811216c9b97b01b5722f879f8c88a7aa4214e1|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/portprocesses_1.0.4/package.json",
+  "reported_cwes": [
+    "CWE-77",
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-VM67-7VMG-66VM#CWE-77,CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/portprocesses_1.0.4/package.json"
+  ],
+  "vulnerable_ref": "1.0.4",
+  "fixed_ref": "1.0.5",
+  "fix_commit": "https://github.com/rrainn/PortProcesses/commit/86811216c9b97b01b5722f879f8c88a7aa4214e1",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "portprocesses",
+    "package_version": "1.0.4",
+    "source_reference": "npm:portprocesses@1.0.4"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "portprocesses",
+    "package_version": "1.0.5",
+    "source_reference": "npm:portprocesses@1.0.5"
+  },
+  "sink_hint": "exec.js:5:3"
+}

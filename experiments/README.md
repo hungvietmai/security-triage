@@ -4,6 +4,11 @@ The authoritative design is [EVALUATION_PROTOCOL.md](EVALUATION_PROTOCOL.md).
 Protocol v1.0.0 was committed before development scanning at
 `80db12b6f7b275501f9c0f260c90cd05e818491e`.
 
+Pair preparation (manifest generation, archive locking, offline patch hunks and
+known locations) is documented in [pairs/README.md](pairs/README.md). The
+`pairs-v0` artifacts use the frozen v0.1 split and preserve acquisition failures;
+this preparation does not run vulnerability scanners.
+
 ## Available now
 
 `run_pilot.py` is one configuration-driven CLI. The first implementation supports

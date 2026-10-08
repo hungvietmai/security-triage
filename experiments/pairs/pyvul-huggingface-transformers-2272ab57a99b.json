@@ -1,0 +1,44 @@
+{
+  "pair_id": "pyvul-huggingface-transformers-2272ab57a99b",
+  "group_id": "pyvul:huggingface/transformers",
+  "dataset": "PyVul",
+  "repository": "huggingface/transformers",
+  "vulnerability_id": "pyvul:2272ab57a99bcac972b5252b87c31e24d0b25538",
+  "language": "python",
+  "dataset_reported_category": "CWE-78",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Fix removes shell=True and passes argument list to subprocess.Popen.",
+  "sink_kind": "os_shell_command",
+  "os_command_execution_basis": "Fix removes shell=True and passes argument list to subprocess.Popen.",
+  "scope_review_provenance": "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json"
+  ],
+  "reference_provenance": [
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+    "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538"
+  ],
+  "vulnerable_ref": "87a6cf41d0faa2df5bd464273534e928c6ac6e99",
+  "fixed_ref": "2272ab57a99bcac972b5252b87c31e24d0b25538",
+  "fix_commit": "2272ab57a99bcac972b5252b87c31e24d0b25538",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "github_tarball",
+    "repository": "huggingface/transformers",
+    "commit": "87a6cf41d0faa2df5bd464273534e928c6ac6e99",
+    "source_reference": "github:huggingface/transformers@87a6cf41d0faa2df5bd464273534e928c6ac6e99"
+  },
+  "fixed_source": {
+    "source_kind": "github_tarball",
+    "repository": "huggingface/transformers",
+    "commit": "2272ab57a99bcac972b5252b87c31e24d0b25538",
+    "source_reference": "github:huggingface/transformers@2272ab57a99bcac972b5252b87c31e24d0b25538"
+  }
+}

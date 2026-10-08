@@ -1,0 +1,43 @@
+{
+  "pair_id": "secbench-blamer-0.1.13",
+  "group_id": "secbench:blamer",
+  "dataset": "SecBench.js",
+  "repository": "npm:blamer",
+  "vulnerability_id": "CVE-2019-10807",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-94",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink src/vcs/git.js:24:5; Code injection in blamer; fix(root): Rewrite the project with typescript and fix issue with security of script execution",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-7VM7-J8P7-H346|https://github.com/kucherenko/blamer/commit/5fada8c9b6986ecd28942b724fa682e77ce1e11c|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/blamer_0.1.13/package.json",
+  "reported_cwes": [
+    "CWE-94"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-7VM7-J8P7-H346#CWE-94"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/blamer_0.1.13/package.json"
+  ],
+  "vulnerable_ref": "0.1.13",
+  "fixed_ref": "1.0.1",
+  "fix_commit": "https://github.com/kucherenko/blamer/commit/5fada8c9b6986ecd28942b724fa682e77ce1e11c",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "blamer",
+    "package_version": "0.1.13",
+    "source_reference": "npm:blamer@0.1.13"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "blamer",
+    "package_version": "1.0.1",
+    "source_reference": "npm:blamer@1.0.1"
+  },
+  "sink_hint": "src/vcs/git.js:24:5"
+}

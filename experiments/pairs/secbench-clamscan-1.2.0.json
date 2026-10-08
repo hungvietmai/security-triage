@@ -1,0 +1,45 @@
+{
+  "pair_id": "secbench-clamscan-1.2.0",
+  "group_id": "secbench:clamscan",
+  "dataset": "SecBench.js",
+  "repository": "npm:clamscan",
+  "vulnerability_id": "CVE-2020-7613",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "cwe_unresolved",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink index.js:495:36; Clamscan vulnerable to command injection; Merge pull request #45 from 418sec/master",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-5v25-xr56-phph|https://github.com/kylefarris/clamscan|https://github.com/kylefarris/clamscan/commit/5f557c970817fe8c578ec3f7ad3bcbcef4cf5538|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/clamscan_1.2.0/package.json",
+  "reported_cwes": [
+    "CWE-74",
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-5v25-xr56-phph#CWE-74,CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/clamscan_1.2.0/package.json",
+    "GHSA_SOURCE:https://github.com/kylefarris/clamscan"
+  ],
+  "vulnerable_ref": "1.2.0",
+  "fixed_ref": "1.3.0",
+  "fix_commit": "https://github.com/kylefarris/clamscan/commit/5f557c970817fe8c578ec3f7ad3bcbcef4cf5538",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "clamscan",
+    "package_version": "1.2.0",
+    "source_reference": "npm:clamscan@1.2.0"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "clamscan",
+    "package_version": "1.3.0",
+    "source_reference": "npm:clamscan@1.3.0"
+  },
+  "sink_hint": "index.js:495:36"
+}

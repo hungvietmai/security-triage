@@ -1,0 +1,229 @@
+{
+  "pair_id": "secbench-diskusage-ng-0.2.6",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "216b5dcdc97b341b8e5c9fea7ce77b25d3234939e0ba4133a2c3e490c8cd1c3f",
+    "fixed": "09d9e11028cb8d37758e5bab0a223548d11c8207c0c072637c9a2c5f2c02bf45"
+  },
+  "generator_sha256": "0dabd765f11ed12ef0c5435029bbf21ad74c46bc9821f04b016d9419b3969de0",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/test-posix.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/test-win32.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/index.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/test-posix.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/test-win32.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": ".travis.yml",
+      "new_path": ".travis.yml",
+      "old_sha256": "ee1d87a460580c7565134a1d6dc500da3af7cfdabb24ba155924f26272edffeb",
+      "new_sha256": "5a118e763e8b17437e5887969b94f07a050d796016d3d0ad54bea66f4e0d0065",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 4,
+              "old_lines": []
+            },
+            {
+              "operation": "insert",
+              "old_start": 4,
+              "old_count": 0,
+              "new_start": 8,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .travis.yml\n+++ .travis.yml\n@@ -1,4 +1,12 @@\n+os:\n+  - linux\n+  - osx\n+  - windows\n language: node_js\n node_js:\n   - \"6.11.0\"\n+  - \"8.17.0\"\n+  - \"10.22.0\"\n+  - \"12.18.3\"\n+  - \"14.9.0\"\n \n"
+    },
+    {
+      "old_path": "lib/posix.js",
+      "new_path": "lib/posix.js",
+      "old_sha256": "55b0076c22b46edca2b0212acf634b047da4ba1ac5f980cdb37f7d20dd94a1a0",
+      "new_sha256": "75faba26806fb2df1d3781ec41458df40ffb036bab8cf07b2048caa51923a9f6",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 14,
+          "new_start": 1,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 5,
+              "new_start": 7,
+              "new_count": 1,
+              "old_lines": [
+                7,
+                8,
+                9,
+                10,
+                11
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/posix.js\n+++ lib/posix.js\n@@ -1,14 +1,10 @@\n 'use strict';\n \n-var exec = require('child_process').exec;\n+var execFile = require('child_process').execFile;\n var isDigits = require('./utils').isDigits;\n \n function diskusage(path, cb) {\n-    if (path.indexOf('\"') !== -1) {\n-        return cb(new Error('Paths with double quotes are not supported yet'));\n-    }\n-\n-    exec('df -k \"' + path + '\"', function(err, stdout) {\n+    execFile('df', ['-k', path], function(err, stdout) {\n         if (err) {\n             return cb(err);\n         }\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "06e10831197c1b777c4f04b6e4d2db30c06d0ba4b7af8b5444988aaa4c03ef83",
+      "new_sha256": "a5d3ff6628a38b8c5d1092b37288c441d71c6d17bf037ebe06f6e91fbdabeaf9",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 11,
+          "new_start": 1,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": [
+                8
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 29,
+          "old_count": 6,
+          "new_start": 29,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 32,
+              "old_count": 1,
+              "new_start": 32,
+              "new_count": 1,
+              "old_lines": [
+                32
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,11 +1,11 @@\n {\n   \"name\": \"diskusage-ng\",\n-  \"version\": \"0.2.6\",\n+  \"version\": \"1.0.0\",\n   \"description\": \"Get disk usage info in pure JS via OS built-in tools\",\n   \"main\": \"index.js\",\n   \"types\": \"index.d.ts\",\n   \"scripts\": {\n-    \"test\": \"tape tests/**/test-*.js\"\n+    \"test\": \"tape tests/index.js\"\n   },\n   \"devDependencies\": {\n     \"tape\": \"^4.6.3\"\n@@ -29,6 +29,6 @@\n   \"bugs\": \"https://github.com/iximiuz/node-diskusage-ng/issues\",\n   \"homepage\": \"https://github.com/iximiuz/node-diskusage-ng\",\n   \"engines\": {\n-    \"node\": \">=0.10.0\"\n+    \"node\": \">=6.11.0\"\n   }\n }\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

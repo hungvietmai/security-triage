@@ -403,3 +403,61 @@ remains directly reachable from `main`.
 - Worker có thể chạy Semgrep và CodeQL song song trong một ngôn ngữ (`SCANNER_WORKERS`,
   mặc định 2) và upload artifact song song; thứ tự `steps` và finding giữ theo cấu hình.
   CLI thực nghiệm vẫn tuần tự (`max_workers=1`).
+
+## 2026-10-08 — pairs-v0: manifest, khóa nguồn và vị trí lỗi (chưa quét cặp)
+
+- Sinh **51 manifest**, tất cả hợp lệ theo `schemas/pair-manifest.schema.json`.
+  Nhóm lấy từ `inventory/split_v0.1.json`; cột `split` của CSV vẫn là metadata v0
+  và không được dùng làm assignment. Lọc thêm `scope_verdict` và lỗi nguồn theo
+  từng cặp. `pairs/index.json` giữ danh sách 32 dòng bị loại cùng lý do.
+
+  | Tập | Cặp JavaScript | Cặp Python | Tổng cặp | Tổng nhóm |
+  | --- | ---: | ---: | ---: | ---: |
+  | development | 14 | 10 | 24 | 23 |
+  | held_out | 9 | 7 | 16 | 15 |
+  | reserve | 11 | 0 | 11 | 11 |
+
+- Test xác nhận đúng 16 dòng development/held-out v0 bị loại ở cấp nhóm v0.1,
+  gồm Django; ngoài ra loại đúng 3 cặp ngoài phạm vi trong nhóm hỗn hợp: hai
+  mlflow held-out và một Paddle development. Số nhóm của từng ngôn ngữ khớp
+  `summary_by_language` của split v0.1; số cặp không bị nhầm thành số nhóm.
+- Tải cả hai phiên bản của mọi manifest bằng đường tải ngày 5 trong
+  `app.scanners.sources`, **chỉ tải và ghi hash, không quét**. Khóa thành công
+  **50/51 cặp, 100/102 archive**. `ray-project/ray` vượt giới hạn 50 MiB ở cả hai
+  phiên bản; lỗi và thời điểm thử giữ trong `pairs/sources.lock.json` và
+  `pairs/sources-report.json`. Không thay thế bằng reserve, không vẽ lại split,
+  không đổi ref/repository/nguồn tải để né lỗi.
+- npm dùng integrity SHA-512 của registry (`publisher_verified`); GitHub tải
+  codeload theo commit và TOFU. SHA-256 tính trên nguyên bytes archive; cache
+  nằm ở `artifacts/pair-sources/<sha256>.tgz` (không commit source người dùng).
+  Chạy lại kiểm đủ 100 archive bằng hash/kích thước mà không tải lại. Cache
+  thiếu/hỏng hoặc manifest đổi thì dừng, không nhận archive GitHub tái tạo.
+- Chọn trước **3 cặp development**: PyVul apkleaks; SecBench.js diskusage-ng
+  0.2.6 và dns-sync 0.1.0. Đã trích **13 hunk** (2 + 4 + 7), ghi đầy đủ đường dẫn
+  bỏ qua ở mỗi phiên bản, nhận dạng đổi tên bằng hash nội dung duy nhất. Dòng
+  context/insert không được xem là dòng cũ bị xóa/sửa; đổi tên mơ hồ giữ nguyên
+  trong báo cáo, không đoán.
+- Đã giải quyết **3 vị trí đã biết / 3 cặp**, **0 ca chưa giải quyết trong 3 cặp**:
+  `apkleaks/apkleaks.py:88:3` (`os.system`), `lib/posix.js:11:5`
+  (`child_process.exec`), `lib/dns-sync.js:21:20` (`shelljs.exec`). Với dns-sync,
+  hint gốc `21:26` nằm trong callee, giữ nguyên provenance thay vì sửa hint.
+  **48 cặp còn lại chưa được trích/kiểm vị trí**, không được đếm là giải quyết.
+- PyVul dùng nhãn tên hàm `decompile` ở dòng JSONL 646 của dataset đã pin commit
+  `1172bfd…`, kiểm đúng hash text hàm trước bản vá rồi mới thu hẹp. Hash dataset
+  `73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071` và hash hàm
+  giữ trong `known-locations.json`. Đây là metadata mức hàm của dataset, chưa
+  phải thẩm định lỗ hổng độc lập. JavaScript dùng AST Babel đã pin version,
+  Python dùng AST stdlib hiện có; không dùng Semgrep làm bộ định vị đợt này.
+- Đã tự kiểm tay source lỗi/source vá, toàn bộ diff và danh sách bỏ qua của cả
+  ba cặp; ghi chi tiết trong `pairs/MANUAL_REVIEW.md`. apkleaks quote từng đối số
+  nhưng vẫn gọi `os.system`; diskusage-ng chuyển sang `execFile`; dns-sync thêm
+  kiểm tra hostname nhưng vẫn giữ `shell.exec`. Không tự coi bản vá là nhãn âm.
+- **Chưa chạy scanner trên cặp nào trong đợt pairs-v0: Semgrep = 0, CodeQL = 0.**
+  Không chạy source, exploit hay cài dependencies của source. Các lần quét
+  development cũ (bao gồm curling/open, trường `prior_exposure`) vẫn là lịch sử
+  đã ghi ở trên, không được xóa hoặc diễn giải thành lần quét mới của pairs-v0.
+- Kiểm tra local: **52 test thực nghiệm đạt** (18 test mới); Ruff lint/format
+  cho các script/test mới đạt; kiểm `make_pair_manifests.py --check` đạt. Đây
+  chưa phải kết quả CI. CI được bổ sung các dependency schema/AST đã pin.
+- File khóa nguồn, manifest, script, test và bằng chứng được commit; tag
+  **`pairs-v0`** trỏ commit hoàn tất đợt chuẩn bị. Tag tạo local, chưa push.

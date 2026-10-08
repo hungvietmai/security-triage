@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-diskusage-ng-0.2.6",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "216b5dcdc97b341b8e5c9fea7ce77b25d3234939e0ba4133a2c3e490c8cd1c3f",
+    "fixed": "09d9e11028cb8d37758e5bab0a223548d11c8207c0c072637c9a2c5f2c02bf45"
+  },
+  "patch_hunks_sha256": "93268d24cba9fd3c9d4b4fffa761f38a67b2c7256427bb7125054f47209612eb",
+  "generator_sha256": "56ba58aec353350d697267dfad66f62c4755e21709578532d78e5765002efeff",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/posix.js",
+      "span": {
+        "startLine": 11,
+        "startColumn": 5,
+        "endLine": 21,
+        "endColumn": 7
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/posix.js:11:5",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/diskusage-ng_0.2.6/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/posix.js:11:5; OS Command Injection in diskusage-ng; Use execFile instead of exec",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

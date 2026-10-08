@@ -1,0 +1,44 @@
+{
+  "pair_id": "pyvul-pypa-pip-389cb799d0da",
+  "group_id": "pyvul:pypa/pip",
+  "dataset": "PyVul",
+  "repository": "pypa/pip",
+  "vulnerability_id": "pyvul:389cb799d0da9a840749fcd14878928467ed49b4",
+  "language": "python",
+  "dataset_reported_category": "CWE-77",
+  "adjudicated_cwe": "CWE-77",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Fix changes Mercurial '-r' argument formatting so attacker-controlled revision cannot be interpreted as an option.",
+  "sink_kind": "os_command_argument_injection",
+  "os_command_execution_basis": "Fix changes Mercurial '-r' argument formatting so attacker-controlled revision cannot be interpreted as an option.",
+  "scope_review_provenance": "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4",
+  "reported_cwes": [
+    "CWE-77"
+  ],
+  "cwe_provenance": [
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json"
+  ],
+  "reference_provenance": [
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+    "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+    "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4"
+  ],
+  "vulnerable_ref": "71df02c412998aa07c358ad04388e1573b3c5348",
+  "fixed_ref": "389cb799d0da9a840749fcd14878928467ed49b4",
+  "fix_commit": "389cb799d0da9a840749fcd14878928467ed49b4",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "github_tarball",
+    "repository": "pypa/pip",
+    "commit": "71df02c412998aa07c358ad04388e1573b3c5348",
+    "source_reference": "github:pypa/pip@71df02c412998aa07c358ad04388e1573b3c5348"
+  },
+  "fixed_source": {
+    "source_kind": "github_tarball",
+    "repository": "pypa/pip",
+    "commit": "389cb799d0da9a840749fcd14878928467ed49b4",
+    "source_reference": "github:pypa/pip@389cb799d0da9a840749fcd14878928467ed49b4"
+  }
+}

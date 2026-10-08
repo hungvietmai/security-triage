@@ -1,0 +1,43 @@
+{
+  "pair_id": "secbench-total.js-3.4.6",
+  "group_id": "secbench:total.js",
+  "dataset": "SecBench.js",
+  "repository": "npm:total.js",
+  "vulnerability_id": "CVE-2020-28494",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink image.js:329:12; Command injection in total.js; Fixed \"Command Injection\" in `image.stream()` - thank to Sam Sanoop.",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-4449-HG37-77V8|https://github.com/totaljs/framework/commit/6192491ab2631e7c1d317c221f18ea613e2c18a5|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/total.js_3.4.6/package.json",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-4449-HG37-77V8#CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/total.js_3.4.6/package.json"
+  ],
+  "vulnerable_ref": "3.4.6",
+  "fixed_ref": "3.4.7",
+  "fix_commit": "https://github.com/totaljs/framework/commit/6192491ab2631e7c1d317c221f18ea613e2c18a5",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "held_out",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "total.js",
+    "package_version": "3.4.6",
+    "source_reference": "npm:total.js@3.4.6"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "total.js",
+    "package_version": "3.4.7",
+    "source_reference": "npm:total.js@3.4.7"
+  },
+  "sink_hint": "image.js:329:12"
+}

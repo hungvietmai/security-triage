@@ -1,0 +1,43 @@
+{
+  "pair_id": "secbench-codecov-3.6.4",
+  "group_id": "secbench:codecov",
+  "dataset": "SecBench.js",
+  "repository": "npm:codecov",
+  "vulnerability_id": "CVE-2020-15123",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/codecov.js:419:7; Command injection in codecov (npm package); Switch from execSync to execFileSync (#180)",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-XP63-6VF5-XF3V|https://github.com/codecov/codecov-node/commit/c0711c656686e902af2cd92d6aecc8074de4d83d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/codecov_3.6.4/package.json",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-XP63-6VF5-XF3V#CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/codecov_3.6.4/package.json"
+  ],
+  "vulnerable_ref": "3.6.4",
+  "fixed_ref": "3.7.1",
+  "fix_commit": "https://github.com/codecov/codecov-node/commit/c0711c656686e902af2cd92d6aecc8074de4d83d",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "codecov",
+    "package_version": "3.6.4",
+    "source_reference": "npm:codecov@3.6.4"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "codecov",
+    "package_version": "3.7.1",
+    "source_reference": "npm:codecov@3.7.1"
+  },
+  "sink_hint": "lib/codecov.js:419:7"
+}

@@ -1,0 +1,132 @@
+{
+  "pair_id": "pyvul-dwisiswant0-apkleaks-a966e781499f",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "07d51d7d2fb9e3ac093f5ec081517c51246d4c0becf0a81131a162f9f7a26987",
+    "fixed": "67b7ad92a75667764cc0a522b75e7cf6bfa094f259232a76a684b62d4f58de1f"
+  },
+  "generator_sha256": "0dabd765f11ed12ef0c5435029bbf21ad74c46bc9821f04b016d9419b3969de0",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": ".github/SECURITY.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": ".github/SECURITY.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "apkleaks/apkleaks.py",
+      "new_path": "apkleaks/apkleaks.py",
+      "old_sha256": "88fcd9b62c5e66a9a09061a6ed7e240baf26c5b3596172c90ce3de5631359128",
+      "new_sha256": "feb42b7d7b7b6a3a74265e45f0056df8453cd91ccde7afdf6c0b21d493af1c69",
+      "hunks": [
+        {
+          "old_start": 2,
+          "old_count": 6,
+          "new_start": 2,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 5,
+              "old_count": 0,
+              "new_start": 5,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 84,
+          "old_count": 8,
+          "new_start": 85,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 87,
+              "old_count": 2,
+              "new_start": 88,
+              "new_count": 3,
+              "old_lines": [
+                87,
+                88
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- apkleaks/apkleaks.py\n+++ apkleaks/apkleaks.py\n@@ -2,6 +2,7 @@\n from apkleaks.colors import clr\n from contextlib import closing\n from distutils.spawn import find_executable\n+from pipes import quote\n from pyaxmlparser import APK\n from urllib.request import urlopen\n from zipfile import ZipFile\n@@ -84,8 +85,9 @@\n \t\t\t\t\tclasses.write(zipped.read(\"classes.dex\"))\n \t\t\texcept Exception as e:\n \t\t\t\tsys.exit(self.writeln(str(e), clr.WARNING))\n-\t\tdec = \"%s %s -d %s --deobf\" % (self.jadx, dex, self.tempdir)\n-\t\tos.system(dec)\n+\t\targs = [self.jadx, dex, \"-d\", self.tempdir, \"--deobf\"]\n+\t\tcomm = \"%s\" % (\" \".join(quote(arg) for arg in args))\n+\t\tos.system(comm)\n \t\treturn self.tempdir\n \n \tdef unique(self, list): \n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

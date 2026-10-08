@@ -1,0 +1,43 @@
+{
+  "pair_id": "secbench-thi.ng-egf-0.3.0",
+  "group_id": "secbench:@thi.ng/egf",
+  "dataset": "SecBench.js",
+  "repository": "npm:@thi.ng/egf",
+  "vulnerability_id": "CVE-2021-21412",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/index.js:157:29; [thi.ng/egf] Potential arbitrary code execution of `#gpg`-tagged property values; Merge pull request from GHSA-rj44-gpjc-29r7",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-RJ44-GPJC-29R7|https://github.com/thi-ng/umbrella/commit/88f61656e5f5cfba960013b8133186389efaf243|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/thi.ng-egf_0.3.0/package.json",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-RJ44-GPJC-29R7#CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/thi.ng-egf_0.3.0/package.json"
+  ],
+  "vulnerable_ref": "0.3.0",
+  "fixed_ref": "0.4.0",
+  "fix_commit": "https://github.com/thi-ng/umbrella/commit/88f61656e5f5cfba960013b8133186389efaf243",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "@thi.ng/egf",
+    "package_version": "0.3.0",
+    "source_reference": "npm:@thi.ng/egf@0.3.0"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "@thi.ng/egf",
+    "package_version": "0.4.0",
+    "source_reference": "npm:@thi.ng/egf@0.4.0"
+  },
+  "sink_hint": "lib/index.js:157:29"
+}

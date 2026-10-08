@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-ps-0.0.2",
+  "group_id": "secbench:ps",
+  "dataset": "SecBench.js",
+  "repository": "npm:ps",
+  "vulnerability_id": "CVE-2018-16460",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "cwe_unresolved",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/index.js:8:5; ps Enables OS Command Injection",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-CFHG-9X44-78H2|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/ps_0.0.2/package.json",
+  "reported_cwes": [
+    "CWE-77",
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-CFHG-9X44-78H2#CWE-77,CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/ps_0.0.2/package.json"
+  ],
+  "vulnerable_ref": "0.0.2",
+  "fixed_ref": "1.0.0",
+  "fix_commit": null,
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "ps",
+    "package_version": "0.0.2",
+    "source_reference": "npm:ps@0.0.2"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "ps",
+    "package_version": "1.0.0",
+    "source_reference": "npm:ps@1.0.0"
+  },
+  "sink_hint": "lib/index.js:8:5"
+}

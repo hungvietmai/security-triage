@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-react-dev-utils-11.0.0",
+  "group_id": "secbench:react-dev-utils",
+  "dataset": "SecBench.js",
+  "repository": "npm:react-dev-utils",
+  "vulnerability_id": "CVE-2021-24033",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink getProcessForPort.js:28:10; react-dev-utils OS Command Injection in function `getProcessForPort`",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-5Q6M-3H65-W53X|https://github.com/facebook/create-react-app|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/react-dev-utils_11.0.0/package.json",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-5Q6M-3H65-W53X#CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/react-dev-utils_11.0.0/package.json",
+    "GHSA_SOURCE:https://github.com/facebook/create-react-app"
+  ],
+  "vulnerable_ref": "11.0.0",
+  "fixed_ref": "11.0.4",
+  "fix_commit": null,
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "react-dev-utils",
+    "package_version": "11.0.0",
+    "source_reference": "npm:react-dev-utils@11.0.0"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "react-dev-utils",
+    "package_version": "11.0.4",
+    "source_reference": "npm:react-dev-utils@11.0.4"
+  },
+  "sink_hint": "getProcessForPort.js:28:10"
+}

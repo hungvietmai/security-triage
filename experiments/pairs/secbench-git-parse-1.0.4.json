@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-git-parse-1.0.4",
+  "group_id": "secbench:git-parse",
+  "dataset": "SecBench.js",
+  "repository": "npm:git-parse",
+  "vulnerability_id": "CVE-2021-26543",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-74",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink src/git_diff.js:13:3; Command injection in git-parse",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-m744-2jj8-vpfv|https://github.com/wayfair/git-parse|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/git-parse_1.0.4/package.json",
+  "reported_cwes": [
+    "CWE-74"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-m744-2jj8-vpfv#CWE-74"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/git-parse_1.0.4/package.json",
+    "GHSA_SOURCE:https://github.com/wayfair/git-parse"
+  ],
+  "vulnerable_ref": "1.0.4",
+  "fixed_ref": "1.0.5",
+  "fix_commit": null,
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "git-parse",
+    "package_version": "1.0.4",
+    "source_reference": "npm:git-parse@1.0.4"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "git-parse",
+    "package_version": "1.0.5",
+    "source_reference": "npm:git-parse@1.0.5"
+  },
+  "sink_hint": "src/git_diff.js:13:3"
+}

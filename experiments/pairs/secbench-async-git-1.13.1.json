@@ -1,0 +1,43 @@
+{
+  "pair_id": "secbench-async-git-1.13.1",
+  "group_id": "secbench:async-git",
+  "dataset": "SecBench.js",
+  "repository": "npm:async-git",
+  "vulnerability_id": "CVE-2020-28490",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-78",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/reset/index.js:11:16; Command Injection in async-git; Use spawn with git to avoid shell script vulnerabilities (#14)",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-6QPR-9MC5-7GCH|https://github.com/omrilotan/async-git/commit/d1950a5021f4e19d92f347614be0d85ce991510d|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/async-git_1.13.1/package.json",
+  "reported_cwes": [
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-6QPR-9MC5-7GCH#CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/async-git_1.13.1/package.json"
+  ],
+  "vulnerable_ref": "1.13.1",
+  "fixed_ref": "1.13.2",
+  "fix_commit": "https://github.com/omrilotan/async-git/commit/d1950a5021f4e19d92f347614be0d85ce991510d",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "held_out",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "async-git",
+    "package_version": "1.13.1",
+    "source_reference": "npm:async-git@1.13.1"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "async-git",
+    "package_version": "1.13.2",
+    "source_reference": "npm:async-git@1.13.2"
+  },
+  "sink_hint": "lib/reset/index.js:11:16"
+}

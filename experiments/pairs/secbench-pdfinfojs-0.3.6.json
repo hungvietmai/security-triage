@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-pdfinfojs-0.3.6",
+  "group_id": "secbench:pdfinfojs",
+  "dataset": "SecBench.js",
+  "repository": "npm:pdfinfojs",
+  "vulnerability_id": "CVE-2018-3746",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "cwe_unresolved",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/pdfinfo.js:47:23; Command Injection in pdfinfojs",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-3PXP-6963-46R9|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pdfinfojs_0.3.6/package.json",
+  "reported_cwes": [
+    "CWE-77",
+    "CWE-78"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-3PXP-6963-46R9#CWE-77,CWE-78"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pdfinfojs_0.3.6/package.json"
+  ],
+  "vulnerable_ref": "0.3.6",
+  "fixed_ref": "0.4.1",
+  "fix_commit": null,
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "pdfinfojs",
+    "package_version": "0.3.6",
+    "source_reference": "npm:pdfinfojs@0.3.6"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "pdfinfojs",
+    "package_version": "0.4.1",
+    "source_reference": "npm:pdfinfojs@0.4.1"
+  },
+  "sink_hint": "lib/pdfinfo.js:47:23"
+}

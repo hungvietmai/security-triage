@@ -1,0 +1,45 @@
+{
+  "pair_id": "secbench-growl-1.9.0",
+  "group_id": "secbench:growl",
+  "dataset": "SecBench.js",
+  "repository": "npm:growl",
+  "vulnerability_id": "CVE-2017-16042",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "cwe_unresolved",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/growl.js:289:3; Growl before 1.10.0 vulnerable to Command Injection; Fix to resolve the command injection vulnerability. (#62)",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-QH2H-CHJ9-JFFQ|https://github.com/tj/node-growl|https://github.com/tj/node-growl/commit/d71177d5331c9de4658aca62e0ac921f178b0669|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/growl_1.9.0/package.json",
+  "reported_cwes": [
+    "CWE-78",
+    "CWE-94"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-QH2H-CHJ9-JFFQ#CWE-78,CWE-94"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/growl_1.9.0/package.json",
+    "GHSA_SOURCE:https://github.com/tj/node-growl"
+  ],
+  "vulnerable_ref": "1.9.0",
+  "fixed_ref": "1.10.0",
+  "fix_commit": "https://github.com/tj/node-growl/commit/d71177d5331c9de4658aca62e0ac921f178b0669",
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "reserve",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "growl",
+    "package_version": "1.9.0",
+    "source_reference": "npm:growl@1.9.0"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "growl",
+    "package_version": "1.10.0",
+    "source_reference": "npm:growl@1.10.0"
+  },
+  "sink_hint": "lib/growl.js:289:3"
+}

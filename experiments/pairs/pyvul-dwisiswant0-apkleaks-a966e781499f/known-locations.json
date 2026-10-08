@@ -1,0 +1,70 @@
+{
+  "pair_id": "pyvul-dwisiswant0-apkleaks-a966e781499f",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "07d51d7d2fb9e3ac093f5ec081517c51246d4c0becf0a81131a162f9f7a26987",
+    "fixed": "67b7ad92a75667764cc0a522b75e7cf6bfa094f259232a76a684b62d4f58de1f"
+  },
+  "patch_hunks_sha256": "73ebc8c47c40ee66b20b9a9df602a4b9f92b1171d1d1717a5e87fc41f456419d",
+  "generator_sha256": "56ba58aec353350d697267dfad66f62c4755e21709578532d78e5765002efeff",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "apkleaks/apkleaks.py",
+      "span": {
+        "startLine": 88,
+        "startColumn": 3,
+        "endLine": 88,
+        "endColumn": 17
+      },
+      "sink_kind": "os.system",
+      "callee": "os.system",
+      "provenance": {
+        "kind": "PyVul_deleted_or_modified_lines",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/dwisiswant0/apkleaks/commit/a966e781499ff6fd4eea66876d7532301b13a382"
+        ],
+        "fix_commit": "a966e781499ff6fd4eea66876d7532301b13a382",
+        "patch_lines": [
+          87,
+          88
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "decompile",
+              "normalized_code_before_sha256": "4ed9c3cd8696ac7a98b24d4c96c3171bb32f5cf861dce7de33539ec45432be1c",
+              "dataset_line": 646,
+              "commit": "https://github.com/dwisiswant0/apkleaks/commit/a966e781499ff6fd4eea66876d7532301b13a382"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        },
+        "locator": "app.triage.sinks_python.locate_python_sinks",
+        "locator_sha256": "d37bd7c096e2d348c0992eb05be288995c30998630fa80eec64aca2c352fbe7c",
+        "overlapping_patch_lines": [
+          88
+        ],
+        "matched_function_labels": [
+          {
+            "function_name": "decompile",
+            "normalized_code_before_sha256": "4ed9c3cd8696ac7a98b24d4c96c3171bb32f5cf861dce7de33539ec45432be1c",
+            "dataset_line": 646,
+            "commit": "https://github.com/dwisiswant0/apkleaks/commit/a966e781499ff6fd4eea66876d7532301b13a382"
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

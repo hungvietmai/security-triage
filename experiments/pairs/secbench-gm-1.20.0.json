@@ -1,0 +1,44 @@
+{
+  "pair_id": "secbench-gm-1.20.0",
+  "group_id": "secbench:gm",
+  "dataset": "SecBench.js",
+  "repository": "npm:gm",
+  "vulnerability_id": "CVE-2015-7982",
+  "language": "javascript",
+  "dataset_reported_category": "command-injection",
+  "adjudicated_cwe": "CWE-77",
+  "scope_verdict": "in_scope",
+  "scope_reason": "Pinned SecBench command-injection sink plus advisory/fix evidence supports direct OS process/command execution or command-line argument injection.",
+  "sink_kind": "os_process_command_execution",
+  "os_command_execution_basis": "SecBench sink lib/compare.js:72:5; Command Injection in gm",
+  "scope_review_provenance": "https://github.com/advisories/GHSA-PJH3-JV7W-9JPR|https://github.com/aheckmann/gm|https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/gm_1.20.0/package.json",
+  "reported_cwes": [
+    "CWE-77"
+  ],
+  "cwe_provenance": [
+    "GHSA:https://api.github.com/advisories/GHSA-PJH3-JV7W-9JPR#CWE-77"
+  ],
+  "reference_provenance": [
+    "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/gm_1.20.0/package.json",
+    "GHSA_SOURCE:https://github.com/aheckmann/gm"
+  ],
+  "vulnerable_ref": "1.20.0",
+  "fixed_ref": "1.21.1",
+  "fix_commit": null,
+  "exclusion_reason": null,
+  "prior_exposure": false,
+  "split": "development",
+  "vulnerable_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "gm",
+    "package_version": "1.20.0",
+    "source_reference": "npm:gm@1.20.0"
+  },
+  "fixed_source": {
+    "source_kind": "npm_tarball",
+    "package_name": "gm",
+    "package_version": "1.21.1",
+    "source_reference": "npm:gm@1.21.1"
+  },
+  "sink_hint": "lib/compare.js:72:5"
+}
