@@ -27,7 +27,7 @@ jobs:
       - name: Install pinned JavaScript AST locator
         run: npm --prefix experiments/locators ci --ignore-scripts
       - name: Run experiment tests
-        run: PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v
+        run: PYTHONPATH=backend python -m unittest discover -s experiments/tests -p 'test_*.py' -v
 
   reconciliation-integration:
     runs-on: ubuntu-latest

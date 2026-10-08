@@ -8,7 +8,7 @@ from pathlib import Path
 
 from experiments.build_review import build_packet, load_evidence, propose, sha
 
-EVIDENCE = Path(__file__).parent / "reports/curling-0.2.0/execution-evidence.json"
+EVIDENCE = Path(__file__).resolve().parents[1] / "reports/curling-0.2.0/execution-evidence.json"
 
 
 class ReviewTests(unittest.TestCase):

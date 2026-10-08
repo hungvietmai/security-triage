@@ -88,14 +88,14 @@ Artifacts/ is ignored by Git; compact evidence and report extracts live in repor
 Run the focused runner checks with:
 
 ```bash
-python3 -m unittest experiments.test_runner -v
+python3 -m unittest experiments.tests.test_runner -v
 ```
 
-Run the complete experiment suite (currently 31 tests) with the same command used
+Run the complete experiment suite (currently 54 tests) with the same command used
 by CI:
 
 ```bash
-PYTHONPATH=backend python3 -m unittest discover -s experiments -p 'test_*.py' -v
+PYTHONPATH=backend python3 -m unittest discover -s experiments/tests -p 'test_*.py' -v
 ```
 
 ## Recorded development run

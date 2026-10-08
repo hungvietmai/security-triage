@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-_ROOT = Path(__file__).resolve().parents[1]
+_ROOT = Path(__file__).resolve().parents[2]
 _BACKEND = _ROOT / "backend"
 for _IMPORT_ROOT in (_ROOT, _BACKEND):
     if str(_IMPORT_ROOT) not in sys.path:

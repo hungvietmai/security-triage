@@ -64,7 +64,7 @@ uv run --project backend --with-requirements experiments/requirements-pairs.txt 
 uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/lock_pair_sources.py
 uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/patch_hunks.py --pair pyvul-dwisiswant0-apkleaks-a966e781499f --pair secbench-diskusage-ng-0.2.6 --pair secbench-dns-sync-0.1.0
 uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/known_locations.py --pair pyvul-dwisiswant0-apkleaks-a966e781499f --pair secbench-diskusage-ng-0.2.6 --pair secbench-dns-sync-0.1.0 --pyvul-functions-file artifacts/pair-sources/pyvul-function-level-dataset.out
-uv run --project backend --with-requirements experiments/requirements-pairs.txt python -m unittest discover -s experiments -p 'test_*.py' -v
+uv run --project backend --with-requirements experiments/requirements-pairs.txt python -m unittest discover -s experiments/tests -p 'test_*.py' -v
 ```
 
 Omit `--check` only to regenerate manifests before source locking. A changed
