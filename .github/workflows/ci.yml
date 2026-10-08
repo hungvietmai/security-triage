@@ -19,8 +19,13 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - name: Install policy parser
-        run: python -m pip install pyyaml==6.0.3
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Install policy and pair manifest parsers
+        run: python -m pip install pyyaml==6.0.3 -r experiments/requirements-pairs.txt
+      - name: Install pinned JavaScript AST locator
+        run: npm --prefix experiments/locators ci --ignore-scripts
       - name: Run experiment tests
         run: PYTHONPATH=backend python -m unittest discover -s experiments -p 'test_*.py' -v
 
