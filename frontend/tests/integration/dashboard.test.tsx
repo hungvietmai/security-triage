@@ -4,7 +4,7 @@ import {
   mainContent as main,
   makeProject,
   renderApp,
-} from "@/testing/test-utils";
+} from "@test/support/test-utils";
 
 describe("Dashboard", () => {
   it("shows the project count and the five most recent projects", async () => {

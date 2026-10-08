@@ -6,7 +6,7 @@ import {
   renderApp,
   screen,
   within,
-} from "@/testing/test-utils";
+} from "@test/support/test-utils";
 
 describe("Project detail page", () => {
   it("shows the project's details and breadcrumb", async () => {

@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
-import { server } from "@/testing/mocks/server";
+import { server } from "@test/support/server";
 import { api, ApiError, apiRequest } from "@/lib/api-client";
 
 function respondWith(response: () => Response) {
@@ -76,6 +76,10 @@ describe("apiRequest", () => {
     expect(error.message).toBe(
       "name: String too short; query.limit: Too large",
     );
+    expect(error.validationIssues).toEqual([
+      { loc: ["body", "name"], msg: "String too short", type: "x" },
+      { loc: ["query", "limit"], msg: "Too large", type: "y" },
+    ]);
   });
 
   it("falls back to a generic message for non-JSON server errors", async () => {

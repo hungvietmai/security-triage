@@ -8,7 +8,7 @@ import {
   server,
   waitFor,
   within,
-} from "@/testing/test-utils";
+} from "@test/support/test-utils";
 
 const degraded: Schemas["Readiness"] = {
   status: "degraded",

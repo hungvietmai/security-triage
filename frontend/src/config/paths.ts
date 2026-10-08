@@ -4,6 +4,7 @@ export const paths = {
   projects: { path: "/projects", label: "Dự án" },
   project: { path: "/projects/$projectId", label: "Dự án" },
   scans: { path: "/scans", label: "Lượt quét" },
+  scan: { path: "/scans/$scanId", label: "Chi tiết lượt quét" },
   findings: { path: "/findings", label: "Cảnh báo" },
   system: { path: "/system", label: "Hệ thống" },
 } as const;

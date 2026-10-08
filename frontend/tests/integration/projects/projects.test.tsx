@@ -10,7 +10,7 @@ import {
   server,
   waitFor,
   within,
-} from "@/testing/test-utils";
+} from "@test/support/test-utils";
 
 describe("Projects page", () => {
   it("shows an empty state when there are no projects", async () => {

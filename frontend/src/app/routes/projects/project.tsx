@@ -3,7 +3,6 @@ import {
   ArrowLeftIcon,
   FileArchiveIcon,
   FolderXIcon,
-  ScanSearchIcon,
   ShieldAlertIcon,
 } from "lucide-react";
 import { NotImplemented } from "@/components/common/not-implemented";
@@ -31,6 +30,7 @@ import { paths } from "@/config/paths";
 import { PROJECT_TABS, type ProjectTab } from "@/app/routes/projects/search";
 import { useProject } from "@/features/projects/api/get-project";
 import { ProjectDetails } from "@/features/projects/components/project-details";
+import { CreateScanDialog } from "@/features/scans/components/create-scan-dialog";
 import { isApiError } from "@/lib/api-client";
 
 const route = getRouteApi("/projects/$projectId");
@@ -84,13 +84,15 @@ function NextSteps() {
     <Card>
       <CardHeader>
         <CardTitle>Bước tiếp theo</CardTitle>
-        <CardDescription>Các bước sẽ mở khi backend hỗ trợ.</CardDescription>
+        <CardDescription>
+          Tạo scan từ phiên bản npm hoặc commit GitHub cố định.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
-          <li>Nạp một bản mã nguồn bất biến (manifest hoặc ZIP).</li>
-          <li>Chạy Semgrep, sau đó CodeQL trên cùng bản mã nguồn.</li>
-          <li>Thẩm định từng cảnh báo Semgrep theo chính sách bằng chứng.</li>
+          <li>Chọn nguồn và tạo scan trong thông tin dự án.</li>
+          <li>Theo dõi trạng thái Semgrep và CodeQL trên trang scan.</li>
+          <li>Lọc mức ưu tiên và xem bằng chứng của từng đơn vị.</li>
         </ol>
       </CardContent>
     </Card>
@@ -144,7 +146,10 @@ export function ProjectRoute() {
         <TabsContent value="overview" className="pt-4">
           <div className="grid gap-4 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <ProjectDetails project={data} />
+              <ProjectDetails
+                project={data}
+                scanAction={<CreateScanDialog projectId={projectId} />}
+              />
             </div>
             <NextSteps />
           </div>
@@ -162,15 +167,18 @@ export function ProjectRoute() {
           />
         </TabsContent>
         <TabsContent value="scans" className="pt-4">
-          <NotImplemented
-            icon={ScanSearchIcon}
-            title="Lượt quét"
-            description="Chưa có API tạo lượt quét. Lượt quét sẽ chạy trong worker, không chạy trực tiếp trong API."
-            planned={[
-              "Semgrep trước, CodeQL sau, trên cùng một bản mã nguồn.",
-              "Lưu SARIF thô, log, phiên bản công cụ/rule và các lỗi từng phần.",
-            ]}
-          />
+          <Card>
+            <CardHeader>
+              <CardTitle>Lượt quét</CardTitle>
+              <CardDescription>
+                Tạo scan mới; trang kết quả sẽ mở khi yêu cầu được tiếp nhận.
+                API chưa hỗ trợ danh sách scan theo dự án.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CreateScanDialog projectId={projectId} />
+            </CardContent>
+          </Card>
         </TabsContent>
         <TabsContent value="findings" className="pt-4">
           <NotImplemented

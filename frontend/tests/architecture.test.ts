@@ -6,7 +6,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
-const SRC = fileURLToPath(new URL("../", import.meta.url));
+const SRC = fileURLToPath(new URL("../src/", import.meta.url));
 
 const SHARED = ["components", "config", "hooks", "lib", "types", "utils"];
 
@@ -40,6 +40,11 @@ function violations(check: (file: SourceFile, specifier: string) => boolean) {
 }
 
 describe("architecture", () => {
+  it("keeps test suites in tests/ outside production source", () => {
+    expect(
+      sourceFiles().filter(({ path }) => /\.(test|spec)\.tsx?$/.test(path)),
+    ).toEqual([]);
+  });
   it("scans the source tree", () => {
     expect(sourceFiles().length).toBeGreaterThan(20);
   });
@@ -78,7 +83,7 @@ describe("architecture", () => {
           !path.startsWith("testing/") &&
           // main.tsx lazily starts the dev-only MSW worker.
           !(path === "main.tsx" && specifier === "@/testing/mocks/browser") &&
-          specifier.startsWith("@/testing"),
+          (specifier.startsWith("@/testing") || specifier.startsWith("@test/")),
       ),
     ).toEqual([]);
   });

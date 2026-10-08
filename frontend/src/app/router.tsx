@@ -19,6 +19,8 @@ import { paths } from "@/config/paths";
 import { getReadinessQueryOptions } from "@/features/health/api/get-readiness";
 import { getProjectQueryOptions } from "@/features/projects/api/get-project";
 import { getProjectsQueryOptions } from "@/features/projects/api/get-projects";
+import { getScanQueryOptions } from "@/features/scans/api/get-scan";
+import { scanSearchSchema } from "@/app/routes/scans/search";
 import "@/types/router";
 
 // Pages are split per route. Loaders only start fetching (hover preload
@@ -101,6 +103,20 @@ const findingsRoute = createRoute({
   staticData: { crumb: paths.findings.label },
 });
 
+const scanRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: paths.scan.path,
+  component: lazyRouteComponent(
+    () => import("@/app/routes/scans/scan"),
+    "ScanRoute",
+  ),
+  staticData: { crumb: paths.scan.label },
+  validateSearch: scanSearchSchema,
+  loader: ({ context, params }) => {
+    void context.queryClient.prefetchQuery(getScanQueryOptions(params.scanId));
+  },
+});
+
 const systemRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "system",
@@ -118,6 +134,7 @@ const routeTree = rootRoute.addChildren([
   dashboardRoute,
   projectsRoute.addChildren([projectsIndexRoute, projectRoute]),
   scansRoute,
+  scanRoute,
   findingsRoute,
   systemRoute,
 ]);

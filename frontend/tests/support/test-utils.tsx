@@ -7,7 +7,7 @@ import { createQueryClient, queryConfig } from "@/lib/react-query";
 
 export * from "@testing-library/react";
 export { db, makeProject } from "@/testing/mocks/db";
-export { server } from "@/testing/mocks/server";
+export { server } from "@test/support/server";
 
 /**
  * Render the whole app at `path` — real router, providers and API client,

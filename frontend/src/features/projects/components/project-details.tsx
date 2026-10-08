@@ -19,7 +19,13 @@ function DetailRow({
   );
 }
 
-export function ProjectDetails({ project }: { project: Project }) {
+export function ProjectDetails({
+  project,
+  scanAction,
+}: {
+  project: Project;
+  scanAction?: ReactNode;
+}) {
   return (
     <Card>
       <CardHeader>
@@ -48,6 +54,7 @@ export function ProjectDetails({ project }: { project: Project }) {
             </span>
           </DetailRow>
         </dl>
+        {scanAction && <div className="pt-4">{scanAction}</div>}
       </CardContent>
     </Card>
   );

@@ -9,14 +9,16 @@ Product context and backend scope live in `../README.md` and `../docs/architectu
 
 Run from `frontend/`. Node 24.
 
-| Command                           | Purpose                                                                                          |
-| --------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `npm run dev`                     | Vite dev server on :5173; proxies `/api` to `API_PROXY_TARGET` (default `http://localhost:8000`) |
-| `npm run check`                   | typecheck + lint + format check + tests. **Run before finishing any change.**                    |
-| `npm test` / `npm run test:watch` | Vitest (jsdom)                                                                                   |
-| `npm run format`                  | Prettier, including Tailwind class sorting                                                       |
-| `npm run build`                   | Type-check and production build                                                                  |
-| `npm run gen:api`                 | Regenerate `src/types/api-schema.d.ts` from `openapi.json`                                       |
+| Command                                    | Purpose                                                                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `npm run dev`                              | Vite dev server on :5173; proxies `/api` to `API_PROXY_TARGET` (default `http://localhost:8000`) |
+| `npm run check`                            | typecheck + lint + format check + tests. **Run before finishing any change.**                    |
+| `npm test` / `npm run test:watch`          | Vitest (jsdom)                                                                                   |
+| `npm run test:e2e` / `npm run test:e2e:ui` | Playwright browser tests / interactive UI                                                        |
+| `npm run test:e2e:install`                 | Install the Chromium browser used by E2E tests                                                   |
+| `npm run format`                           | Prettier, including Tailwind class sorting                                                       |
+| `npm run build`                            | Type-check and production build                                                                  |
+| `npm run gen:api`                          | Regenerate `src/types/api-schema.d.ts` from `openapi.json`                                       |
 
 Whole stack: `docker compose -f compose.yaml -f compose.dev.yaml up --build -d`
 from the repo root (FE with HMR on :5173).
@@ -29,7 +31,7 @@ src/
 │   ├── index.tsx        # <App/>: creates QueryClient + router
 │   ├── provider.tsx     # ErrorBoundary, theme, React Query, tooltips, toaster
 │   ├── router.tsx       # Route tree, search validation, loaders
-│   └── routes/          # One file per route; composes features. Tests sit beside them.
+│   └── routes/          # One file per route; composes features
 ├── components/          # Shared, feature-agnostic UI
 │   ├── ui/              # shadcn/ui (generated; see "UI components")
 │   ├── layouts/         # App shell: sidebar, header, breadcrumbs, theme toggle
@@ -39,9 +41,17 @@ src/
 ├── features/            # Feature modules — see below
 ├── hooks/               # Shared hooks
 ├── lib/                 # Preconfigured libraries: api-client.ts, react-query.ts, utils.ts (cn)
-├── testing/             # test-utils, setup, MSW mocks, architecture test
+├── testing/             # Shared MSW fixtures/handlers for opt-in dev mock mode
 ├── types/               # api-schema.d.ts (generated), api.ts, router.ts (route typing)
 └── utils/               # Shared pure helpers (format.ts)
+
+tests/
+├── integration/         # App workflows and HTTP/query integration tests
+├── unit/                # Necessary isolated algorithm/policy regressions only
+├── e2e/                 # Playwright browser workflows (*.spec.ts)
+├── support/             # renderApp, MSW server and browser API fixtures
+├── setup-tests.ts       # Vitest setup
+└── architecture.test.ts # Production import and test separation checks
 ```
 
 ### Features
@@ -58,11 +68,12 @@ src/features/<feature>/
 └── utils/       # Feature helpers
 ```
 
-Current features: `projects` (list, detail, create) and `health` (readiness/liveness).
+Current features: `projects` (list, detail, create), `health` (readiness/liveness),
+and `scans` (create, status polling, units and evidence).
 
 ## Architecture rules
 
-These are enforced by `src/testing/architecture.test.ts`; `npm test` fails on a violation.
+These are enforced by `tests/architecture.test.ts`; `npm test` fails on a violation.
 
 1. **Unidirectional flow: shared → features → app.**
    `components`, `config`, `hooks`, `lib`, `types`, `utils` never import from
@@ -174,26 +185,39 @@ These are enforced by `src/testing/architecture.test.ts`; `npm test` fails on a 
 
 ## Product honesty
 
-The backend only supports projects and health checks today. For anything else
-(sources, scans, findings, adjudication) show `NotImplemented` or "—" with an
-explanation. **Never render sample, placeholder or fake scan data**, and never
+Render projects, health and scan data from the implemented backend endpoints.
+For unsupported capabilities (such as archive upload and scan listing), show
+`NotImplemented` or "—" with an explanation.
+**Never render sample, placeholder or fake scan data**, and never
 imply a missing CodeQL result proves code safe. MSW mock data exists only in
 tests and the opt-in dev mock mode.
 
 ## Testing
 
 - **Integration first.** Render the real app at a URL with `renderApp(path)`
-  from `@/testing/test-utils` — real router, providers and API client — and
+  from `@test/support/test-utils` — real router, providers and API client — and
   assert what the user sees. Scope queries with `mainContent()` to skip the sidebar.
 - **MSW for HTTP**, never mock `fetch` or modules. Default handlers in
   `testing/mocks/handlers/*` serve the in-memory `db` (reset before each test);
   seed with `db.projects = [makeProject({...})]`. Override per test with
   `server.use(http.get(...))`. Unhandled requests fail the test.
-- Unit tests for shared logic (`lib/`, `utils/`) beside the file.
+- Keep all test suites in `tests/`, separate from `src/`, grouped by workflow.
+  Do not add colocated tests to app/routes, features, components, lib or utils.
+- Unit tests belong in `tests/unit/` only when isolated algorithm edge cases or
+  error/retry rules need focused coverage. Prefer integration tests for normal
+  user/API behavior; do not duplicate the same scenario across test layers.
+  E2E coverage is reserved for critical browser behavior (navigation/reload,
+  browser controls, long-running updates), rather than repeating every MSW case.
 - Query by role and label, interact with `user` from `renderApp`, and await
   `findBy*`/`waitFor` for anything async.
-- Test files: `*.test.ts(x)` next to the code. Architecture rules live in
-  `testing/architecture.test.ts`.
+- Vitest discovers `tests/**/*.test.ts(x)`; Playwright discovers
+  `tests/e2e/**/*.spec.ts` separately. Use `@/` for production imports and `@test/`
+  for test support. Both are typechecked; test support is not bundled into the app.
+- E2E uses `@playwright/test`, starts an isolated Vite server on :5174 and runs
+  Chromium. Install it with `npm run test:e2e:install`, then `npm run test:e2e`.
+  Retain traces/screenshots on failures and inspect with `npm run test:e2e:report`.
+  Browser tests stub APIs at the HTTP boundary for deterministic UI workflows;
+  they do not establish that the backend/worker stack passed E2E validation.
 - Dev mock mode: `VITE_APP_ENABLE_API_MOCKING=true npm run dev` answers API
   calls in the browser with the same handlers (dev builds only).
 
@@ -233,11 +257,11 @@ Fix the cause instead of bypassing with `--no-verify`.
 6. Route file in `app/routes/`, registered in `app/router.tsx` with a
    `staticData.crumb`, path/label in `config/paths.ts`, nav entry in
    `components/layouts/app-sidebar.tsx` if it is top-level.
-7. Integration test beside the route; `npm run check` passes.
+7. Integration test under `tests/integration/<feature>/`; `npm run check` passes.
+8. For critical browser workflows, run `npm run test:e2e` and report its result.
 
 ## Not adopted (yet)
 
 Deliberately absent for a local, single-user tool without auth: global state
 library, auth/token refresh, Sentry, CDN deploy config, Storybook, Plop,
-DOMPurify (no raw HTML is rendered — keep it that way), E2E tests
-(Playwright is the planned tool). Add one only with a concrete need.
+DOMPurify (no raw HTML is rendered — keep it that way). Add one only with a concrete need.

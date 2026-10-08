@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mainContent as main, renderApp } from "@/testing/test-utils";
+import { mainContent as main, renderApp } from "@test/support/test-utils";
 
 describe("Not found", () => {
   it("renders inside the layout for unknown paths", async () => {

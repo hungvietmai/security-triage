@@ -181,6 +181,19 @@ jobs:
           git diff --exit-code -- src/types/api-schema.d.ts
       - run: npm test
       - run: npm run build
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+      - name: Run browser E2E workflows
+        run: npm run test:e2e
+      - name: Upload browser test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            frontend/playwright-report/
+            frontend/test-results/
+          retention-days: 7
 
   docker-integration:
     runs-on: ubuntu-latest

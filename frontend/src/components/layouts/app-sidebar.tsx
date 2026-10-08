@@ -50,7 +50,7 @@ const NAV_GROUPS: { label: string; items: NavItem[] }[] = [
   {
     label: "Phân tích",
     items: [
-      { route: paths.scans, icon: ScanSearchIcon, pending: true },
+      { route: paths.scans, icon: ScanSearchIcon },
       { route: paths.findings, icon: ShieldAlertIcon, pending: true },
     ],
   },

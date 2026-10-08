@@ -6,11 +6,17 @@ const TIMEOUT_MS = 15_000;
 /** Error raised for any failed API call; `status` is 0 when the request never reached the API. */
 export class ApiError extends Error {
   readonly status: number;
+  readonly validationIssues: Partial<Schemas["ValidationError"]>[];
 
-  constructor(message: string, status: number) {
+  constructor(
+    message: string,
+    status: number,
+    validationIssues: Partial<Schemas["ValidationError"]>[] = [],
+  ) {
     super(message);
     this.name = "ApiError";
     this.status = status;
+    this.validationIssues = validationIssues;
   }
 }
 
@@ -24,7 +30,7 @@ export function isApiError(error: unknown, status?: number): error is ApiError {
 type ValidationIssue = Partial<Schemas["ValidationError"]>;
 
 /** Turn a FastAPI error body ({detail: string | ValidationIssue[]}) into a readable message. */
-async function errorMessage(response: Response): Promise<string> {
+async function responseError(response: Response): Promise<ApiError> {
   const fallback =
     response.status >= 500
       ? `Máy chủ lỗi (${response.status}). Kiểm tra API và các dịch vụ phụ thuộc.`
@@ -33,19 +39,21 @@ async function errorMessage(response: Response): Promise<string> {
     const { detail } = (await response.json()) as {
       detail?: string | ValidationIssue[];
     };
-    if (typeof detail === "string") return detail;
+    if (typeof detail === "string")
+      return new ApiError(detail, response.status);
     if (Array.isArray(detail) && detail.length) {
-      return detail
+      const message = detail
         .map(({ loc, msg }) => {
           const field = loc?.filter((part) => part !== "body").join(".");
           return field ? `${field}: ${msg ?? ""}` : (msg ?? "");
         })
         .join("; ");
+      return new ApiError(message, response.status, detail);
     }
   } catch {
     // Non-JSON body, e.g. an Nginx 502 page.
   }
-  return fallback;
+  return new ApiError(fallback, response.status);
 }
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
@@ -96,7 +104,7 @@ export async function apiRequest<T>(
     throw new ApiError("Không kết nối được API.", 0);
   }
   if (!response.ok && !acceptStatus.includes(response.status)) {
-    throw new ApiError(await errorMessage(response), response.status);
+    throw await responseError(response);
   }
   return response.json() as Promise<T>;
 }
