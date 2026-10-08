@@ -101,3 +101,22 @@ docs: add conventional commit rules for agents
 
 - Commit, push or open pull requests only when the user asks.
 - Report check results truthfully; never claim a hook or CI step passed without running it.
+
+## Testing policy
+
+- Keep test suites in dedicated test directories: `frontend/tests/`,
+  `backend/tests/`, and `experiments/tests/`. Do not colocate test files with
+  implementation files. Group tests by feature/workflow so each file has one concern.
+- Prefer integration tests covering real user workflows, HTTP contracts, persistence
+  and CLI inputs/outputs. Mock external services at their boundary, keeping application
+  components and business logic real.
+- Add unit tests only when they protect a specific risk that integration tests cannot
+  exercise clearly or economically: pure algorithm edge cases, complex boundary rules
+  or error/retry policy. Avoid tests that repeat implementation details or duplicate
+  an already-covered workflow. Do not delete existing regression coverage just to
+  change the test ratio.
+- Use Playwright (`@playwright/test`) for browser E2E tests in `frontend/tests/e2e/`.
+  Run critical navigation/form/result flows in a real browser. Clearly distinguish
+  browser tests with mocked HTTP APIs from tests against the complete backend stack.
+- Test fixtures and E2E runs must not scan the frozen research pairs or execute their
+  source. Record the actual commands and results, including any skipped checks.

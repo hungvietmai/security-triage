@@ -214,6 +214,12 @@ processing go to Celery tasks in `app/workers/`; the API records state and retur
 - Integration first: call endpoints through the `client` fixture; use the
   `session` fixture for database-level tests. Both share one isolated database
   (`engine` fixture): a fresh PostgreSQL schema in Docker/CI, in-memory SQLite locally.
+- Keep all tests under `tests/`, grouped by feature/workflow; do not put tests
+  beside implementation modules. Prefer endpoint and persistence integration
+  tests over mocking services/internal methods.
+- Add unit tests only for necessary pure algorithm edge cases or complex boundary
+  rules that integration tests cannot cover clearly; avoid implementation-mirroring
+  assertions and duplicated workflow tests.
 - Test behaviour, including error bodies (`{"detail": "Project not found"}`).
 - Patch external systems at the service module boundary
   (`monkeypatch.setattr(service, "get_s3_client", ...)`); use botocore `Stubber`
