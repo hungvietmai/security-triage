@@ -1,0 +1,45 @@
+{
+  "profile_id": "command-injection-v0.1",
+  "languages": {
+    "javascript": {
+      "config": "experiments/configs/development-batch-01-upstream.json",
+      "sink_locator": "experiments/locators/sink-locator-v0-javascript.yaml"
+    },
+    "python": {
+      "config": "experiments/configs/development-owasp-python-upstream.json"
+    }
+  },
+  "policy": {
+    "source": "experiments/policy/priority-v0.1.yaml",
+    "compiled": "profiles/command-injection-v0.1/priority-v0.1.json"
+  },
+  "specification": "experiments/policy/PRIORITY_V0_1.md",
+  "rule_claims": "experiments/mappings/rule-claims-v2.json",
+  "files": {
+    "experiments/configs/development-batch-01-upstream.json": "d1662b74f833c9306d63586a273c45311efcaa95dd50af8de9aacc82168509d2",
+    "experiments/configs/development-owasp-python-upstream.json": "9650f7386ab685ea422c4b1920b10d490508152be2d876086fd8188f382d10ec",
+    "experiments/locators/sink-locator-v0-javascript.yaml": "1b49d27b88f465b405bd62aa4da82bfb49cb6d22a69534087b13ba6896a0fb88",
+    "experiments/mappings/rule-claims-v2.json": "57d7e31f4c46a301b37acf9746fd657d15032c399623a4e88605bb18ed11a144",
+    "experiments/policy/PRIORITY_V0_1.md": "5d86ee7029d03fd381f8144a8ee76e56cf1c2b8cdb16f108968ae4042e425551",
+    "experiments/policy/priority-v0.1.yaml": "07d04c176108f0be778a4808944d84347779b445096d8c211527c9acb91dce05",
+    "experiments/rules/batch-01/dangerous-spawn-shell.yaml": "1a81f91e9ad9ea4c62a9b0bda4dcf3cf2fc1bb6f2d9e2580ea3effa6bfe9ba74",
+    "experiments/rules/batch-01/detect-child-process.yaml": "baee696b05b3c38fa5a82435ae458026ec81ce9a6e6a73116d68dc963496296c",
+    "experiments/rules/batch-01/shelljs-exec-injection.yaml": "adfff907f257d82341c060dca56d2361bc2e750c89243b89b781d0d9678000bb",
+    "experiments/rules/batch-01/spawn-shell-true.yaml": "452fb593301edca721a151ed3c051f428ca1df1fc1af613380d58b076601b5ba",
+    "experiments/rules/python-upstream/dangerous-subprocess-use.yaml": "9aaf4e9fcb13afed4e60c04def4132f9f7f2baac3414dc1d7bbd5dcb29db0586",
+    "experiments/rules/python-upstream/dangerous-system-call.yaml": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+    "experiments/rules/python-upstream/subprocess-injection.yaml": "3999fd54bda682edd0391678e362cd8c70b313d4aeb24252179f374604c73d66",
+    "experiments/rules/python-upstream/subprocess-shell-true.yaml": "753ba9d29d592b3d7f5086e671e424ee05138acbf75a39b663d92aa3275f5380",
+    "profiles/command-injection-v0.1/priority-v0.1.json": "b0585ef46a7710135c45e885d7c5137668e711f6a79f89a13bb0075fadf2f881"
+  },
+  "semgrep_rule_ids": {
+    "experiments/rules/batch-01/dangerous-spawn-shell.yaml": "dangerous-spawn-shell",
+    "experiments/rules/batch-01/detect-child-process.yaml": "detect-child-process",
+    "experiments/rules/batch-01/shelljs-exec-injection.yaml": "shelljs-exec-injection",
+    "experiments/rules/batch-01/spawn-shell-true.yaml": "spawn-shell-true",
+    "experiments/rules/python-upstream/dangerous-subprocess-use.yaml": "dangerous-subprocess-use",
+    "experiments/rules/python-upstream/dangerous-system-call.yaml": "dangerous-system-call",
+    "experiments/rules/python-upstream/subprocess-injection.yaml": "subprocess-injection",
+    "experiments/rules/python-upstream/subprocess-shell-true.yaml": "subprocess-shell-true"
+  }
+}

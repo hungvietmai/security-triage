@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+from pydantic import ValidationError
 from pydantic_settings import SettingsConfigDict
 
 from app.core.config import ROOT_ENV_FILE, Settings
@@ -38,3 +40,25 @@ def test_root_env_file_is_next_to_the_backend_project():
     backend_dir = Path(__file__).resolve().parents[2]
     assert (backend_dir / "pyproject.toml").is_file()
     assert ROOT_ENV_FILE == backend_dir.parent / ".env"
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        {"scanner_workers": 0},
+        {"scanner_workers": 3},
+        {"artifact_upload_workers": 0},
+        {"artifact_upload_workers": 9},
+    ],
+)
+def test_parallel_worker_limits_are_validated(values):
+    with pytest.raises(ValidationError):
+        EnvOnlySettings(**values)
+
+
+def test_parallel_worker_counts_follow_environment(monkeypatch):
+    monkeypatch.setenv("SCANNER_WORKERS", "1")
+    monkeypatch.setenv("ARTIFACT_UPLOAD_WORKERS", "2")
+    settings = EnvOnlySettings()
+    assert settings.scanner_workers == 1
+    assert settings.artifact_upload_workers == 2

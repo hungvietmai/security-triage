@@ -1,5 +1,6 @@
 import pytest
 
+from app.triage import reconcile
 from app.triage.reconcile import reconcile_findings
 from app.triage.sinks_python import locate_python_sinks
 from app.triage.types import SinkArgument, SinkRecord
@@ -414,3 +415,43 @@ def test_missing_source_never_uses_column_matching_automatically():
     assert unit["mapping_status"] == "column_encoding_requires_review"
     assert unit["sink_span"] is None
     assert unit["argument_role"] is None
+
+
+@pytest.mark.parametrize("one_file", [False, True])
+def test_disjoint_sinks_do_not_require_quadratic_matching(monkeypatch, one_file):
+    count = 200
+    sinks = [
+        _sink(path="a.js" if one_file else f"{index}.js", start=index + 1, end=index + 1)
+        for index in range(count)
+    ]
+    findings = [
+        _finding(raw_id=f"codeql:0:{index}", path=sink["path"], region=sink["args"][0]["span"])
+        for index, sink in enumerate(sinks)
+    ]
+    sources = {sink["path"]: "x" * 40 + "\n" for sink in sinks}
+    if one_file:
+        sources["a.js"] *= count
+    else:
+        sources = {path: source * count for path, source in sources.items()}
+    original = reconcile.contains
+    normalize = reconcile.normalized_path
+    comparisons = 0
+    normalizations = 0
+
+    def counted(*args, **kwargs):
+        nonlocal comparisons
+        comparisons += 1
+        return original(*args, **kwargs)
+
+    def counted_path(value):
+        nonlocal normalizations
+        normalizations += 1
+        return normalize(value)
+
+    monkeypatch.setattr(reconcile, "contains", counted)
+    monkeypatch.setattr(reconcile, "normalized_path", counted_path)
+    units = reconcile_findings(findings, sinks, sources)
+    assert len(units) == count
+    assert all(unit["mapping_status"] == "mapped" for unit in units)
+    assert comparisons <= count * 5
+    assert normalizations <= count * 5

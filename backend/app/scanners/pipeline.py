@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
@@ -60,16 +61,22 @@ def run_pipeline(
     jobs: int,
     timeout_seconds: float,
     codeql_ram_mb: int,
+    max_workers: int = 1,
     invoke_fn: InvokeCallable = invoke,
     tool_version_fn: ToolVersionCallable = tool_version,
 ) -> PipelineResult:
     """Run configured scanners while preserving independent partial failures."""
-    steps: dict[str, ProcessRecord] = {}
-    findings: list[Finding] = []
-    codeql_query_files: dict[str, str] | None = None
-    codeql_pack_manifest: str | None = None
+    if max_workers < 1:
+        raise ValueError("Scanner workers must be positive")
 
-    for tool in scanners:
+    def run_one(
+        tool: ToolName, prior_steps: dict[str, ProcessRecord] | None = None
+    ) -> PipelineResult:
+        steps = prior_steps if prior_steps is not None else {}
+        findings: list[Finding] = []
+        codeql_query_files: dict[str, str] | None = None
+        codeql_pack_manifest: str | None = None
+
         try:
             binary = semgrep_binary if tool == "semgrep" else codeql_binary
             expected_version = semgrep_version if tool == "semgrep" else codeql_version
@@ -97,7 +104,13 @@ def run_pipeline(
                 )
                 steps[tool] = record
                 findings.extend(tool_findings)
-                continue
+                return PipelineResult(
+                    status=_status([tool], steps),
+                    steps=steps,
+                    findings=findings,
+                    codeql_query_files=None,
+                    codeql_pack_manifest=None,
+                )
 
             query_pack = query_pack_for_language(
                 language,
@@ -128,10 +141,39 @@ def run_pipeline(
             failure["status"] = "timeout" if failure.get("status") == "timeout" else "failed"
             failure["error"] = str(exc)
 
-    return PipelineResult(
-        status=_status(scanners, steps),
-        steps=steps,
-        findings=findings,
-        codeql_query_files=codeql_query_files,
-        codeql_pack_manifest=codeql_pack_manifest,
-    )
+        return PipelineResult(
+            status=_status([tool], steps),
+            steps=steps,
+            findings=findings,
+            codeql_query_files=codeql_query_files,
+            codeql_pack_manifest=codeql_pack_manifest,
+        )
+
+    def merge(outcomes: Iterable[PipelineResult]) -> PipelineResult:
+        steps: dict[str, ProcessRecord] = {}
+        findings: list[Finding] = []
+        codeql_query_files: dict[str, str] | None = None
+        codeql_pack_manifest: str | None = None
+        for outcome in outcomes:
+            steps.update(outcome.steps)
+            findings.extend(outcome.findings)
+            if outcome.codeql_query_files is not None:
+                codeql_query_files = outcome.codeql_query_files
+                codeql_pack_manifest = outcome.codeql_pack_manifest
+        return PipelineResult(
+            status=_status(scanners, steps),
+            steps=steps,
+            findings=findings,
+            codeql_query_files=codeql_query_files,
+            codeql_pack_manifest=codeql_pack_manifest,
+        )
+
+    # Duplicate tools share output paths and must retain their sequential retry behavior.
+    if max_workers == 1 or len(scanners) < 2 or len(set(scanners)) != len(scanners):
+        steps: dict[str, ProcessRecord] = {}
+        return merge(run_one(tool, steps) for tool in scanners)
+    with ThreadPoolExecutor(
+        max_workers=min(max_workers, len(scanners)), thread_name_prefix="scanner"
+    ) as pool:
+        # map preserves configured tool order even when completion order differs.
+        return merge(pool.map(run_one, scanners))

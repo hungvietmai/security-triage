@@ -5,9 +5,12 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from bisect import bisect_right
+from collections import defaultdict
 from collections.abc import Mapping, Sequence
 from typing import Literal, TypedDict, cast
 
+from app.triage.source import SourceLines
 from app.triage.types import SinkRecord, Span
 
 MappingStatus = Literal[
@@ -143,12 +146,13 @@ def _column_requires_review(
     evidence: Span,
     sink: SinkRecord,
     sources: Mapping[str, str],
+    source_lines: SourceLines,
 ) -> bool:
     """Return True when column-based matching cannot be validated safely."""
     source = sources.get(path)
     if source is None:
         return True
-    lines = source.splitlines()
+    lines = source_lines.get(source)
     line_numbers = set(_relevant_lines(evidence)) | set(_relevant_lines(sink["span"]))
     for line_number in line_numbers:
         if not 1 <= line_number <= len(lines):
@@ -326,13 +330,14 @@ def _mapped_unit(
     *,
     method: MappingMethod,
     sources: Mapping[str, str],
+    source_lines: SourceLines,
 ) -> ReconciledUnit:
     snapshot = str(finding.get("snapshot_sha256") or "")
     path = normalized_path(sink["path"])
     assert path is not None
     raw_id = str(finding.get("raw_id") or "")
     tool = str(finding.get("tool") or "")
-    if _column_requires_review(path, evidence, sink, sources):
+    if _column_requires_review(path, evidence, sink, sources, source_lines):
         return _fallback_unit(
             finding,
             mapping_status="column_encoding_requires_review",
@@ -411,19 +416,50 @@ def _fallback_unit(
     }
 
 
+class _SinkIndex:
+    """Find overlapping sinks without inspecting earlier, disjoint calls in the file."""
+
+    def __init__(self, sinks: Sequence[SinkRecord]) -> None:
+        self.sinks = sorted(sinks, key=lambda sink: _point(sink["span"], end=False))
+        self.starts = [_point(sink["span"], end=False) for sink in self.sinks]
+        self.ends: list[tuple[int, int]] = []
+        maximum = (0, 0)
+        for sink in self.sinks:
+            maximum = max(maximum, _point(sink["span"], end=True))
+            self.ends.append(maximum)
+
+    def candidates(self, region: Span) -> list[SinkRecord]:
+        point = _point(region, end=False)
+        index = bisect_right(self.starts, point) - 1
+        matches = []
+        while index >= 0 and self.ends[index] >= point:
+            sink = self.sinks[index]
+            if _point(sink["span"], end=True) >= point:
+                matches.append(sink)
+            index -= 1
+        return matches
+
+
+def _candidates(
+    indexes: Mapping[str | None, _SinkIndex], path: str, region: Span
+) -> list[SinkRecord]:
+    index = indexes.get(path)
+    return index.candidates(region) if index is not None else []
+
+
 def _match_one(
     finding: Mapping[str, object],
-    sinks: Sequence[SinkRecord],
+    sinks_by_path: Mapping[str | None, _SinkIndex],
     sources: Mapping[str, str],
+    source_lines: SourceLines,
 ) -> ReconciledUnit:
     related = _related_shell_location(finding)
     if related is not None:
         related_path, related_region = related
         related_sinks = [
             sink
-            for sink in sinks
-            if normalized_path(sink["path"]) == related_path
-            and contains(sink["span"], related_region)
+            for sink in _candidates(sinks_by_path, related_path, related_region)
+            if contains(sink["span"], related_region)
         ]
         selected = _innermost(related_sinks)
         if selected is not None:
@@ -433,6 +469,7 @@ def _match_one(
                 related_region,
                 method="explicit_link",
                 sources=sources,
+                source_lines=source_lines,
             )
 
     path = normalized_path(finding.get("reported_path"))
@@ -440,7 +477,7 @@ def _match_one(
     if path is None or primary is None:
         return _fallback_unit(finding)
 
-    same_path = [sink for sink in sinks if normalized_path(sink["path"]) == path]
+    same_path = _candidates(sinks_by_path, path, primary)
     containing = [sink for sink in same_path if contains(sink["span"], primary, strict=True)]
     selected = _innermost(containing)
     if selected is not None:
@@ -450,6 +487,7 @@ def _match_one(
             primary,
             method="containment",
             sources=sources,
+            source_lines=source_lines,
         )
 
     exact = [sink for sink in same_path if sink["span"] == primary]
@@ -460,6 +498,7 @@ def _match_one(
             primary,
             method="exact_span",
             sources=sources,
+            source_lines=source_lines,
         )
     return _fallback_unit(finding)
 
@@ -470,19 +509,27 @@ def reconcile_findings(
     sources: Mapping[str, str],
 ) -> list[ReconciledUnit]:
     """Map raw findings to deterministic canonical units without side effects."""
+    sinks_by_path: dict[str | None, list[SinkRecord]] = defaultdict(list)
+    for sink in sinks:
+        sinks_by_path[normalized_path(sink["path"])].append(sink)
+    indexes = {path: _SinkIndex(records) for path, records in sinks_by_path.items()}
+    source_lines = SourceLines()
     by_id: dict[str, ReconciledUnit] = {}
     for finding in findings:
-        unit = _match_one(finding, sinks, sources)
+        unit = _match_one(finding, indexes, sources, source_lines)
         existing = by_id.get(unit["unit_id"])
         if existing is None:
             by_id[unit["unit_id"]] = unit
             continue
-        existing["raw_finding_ids"] = sorted(
-            set(existing["raw_finding_ids"] + unit["raw_finding_ids"])
-        )
-        existing["tools"] = sorted(set(existing["tools"] + unit["tools"]))
+        existing["raw_finding_ids"].extend(unit["raw_finding_ids"])
+        existing["tools"].extend(unit["tools"])
         existing["mappings"].extend(unit["mappings"])
-        existing["mappings"].sort(key=lambda item: (item["tool"], item["raw_id"]))
+
+    # Sort each completed group once; sorting growing groups on every merge is quadratic.
+    for unit in by_id.values():
+        unit["raw_finding_ids"] = sorted(set(unit["raw_finding_ids"]))
+        unit["tools"] = sorted(set(unit["tools"]))
+        unit["mappings"].sort(key=lambda item: (item["tool"], item["raw_id"]))
 
     return sorted(
         by_id.values(),

@@ -15,6 +15,7 @@ from app.triage.reconcile import (
     normalized_path,
     shell_state,
 )
+from app.triage.source import SourceLines
 from app.triage.types import SinkRecord, Span
 
 _COMMAND = re.compile(r"^[A-Za-z0-9_./ -]+$")
@@ -55,8 +56,8 @@ def _span(value: Any) -> Span | None:
     }
 
 
-def _source_span(source: str, span: Span) -> str | None:
-    lines = source.splitlines(keepends=True)
+def _source_span(source: str, span: Span, source_lines: SourceLines) -> str | None:
+    lines = source_lines.get(source, keepends=True)
     a, b = span["startLine"], span["endLine"]
     if a < 1 or b > len(lines) or any(not lines[i - 1].isascii() for i in range(a, b + 1)):
         return None
@@ -93,6 +94,7 @@ def _trace(
     sink: SinkRecord | None,
     unit: Mapping[str, Any],
     sources: Mapping[str, str],
+    source_lines: SourceLines,
 ) -> dict[str, Any]:
     flows = _obj(finding.get("raw_result")).get("codeFlows")
     initial: dict[str, Any] = {
@@ -156,7 +158,7 @@ def _trace(
                 pass
             elif any(
                 ref["path"] not in sources
-                or _source_span(sources[ref["path"]], ref["span"]) is None
+                or _source_span(sources[ref["path"]], ref["span"], source_lines) is None
                 for ref in refs
             ):
                 candidate["trace_status"] = "coordinate_unverified"
@@ -243,14 +245,16 @@ def _safe_command(value: str | None) -> bool:
     return not _INTERPRETERS.fullmatch(first)
 
 
-def _literal_proof(sink: SinkRecord | None, source: str | None) -> dict[str, Any] | None:
+def _literal_proof(
+    sink: SinkRecord | None, source: str | None, source_lines: SourceLines
+) -> dict[str, Any] | None:
     if sink is None or source is None:
         return None
     kind = sink["sink_kind"]
     if kind not in SHELL_COMMAND_KINDS | _SUBPROCESS | _JS_SPAWN:
         return None
     args = sink["args"]
-    if any(_source_span(source, a["span"]) != a["text"] for a in args):
+    if any(_source_span(source, a["span"], source_lines) != a["text"] for a in args):
         return None
     first = next((a for a in args if a["position"] == 0), None)
     if first is None:
@@ -292,7 +296,7 @@ def _literal_proof(sink: SinkRecord | None, source: str | None) -> dict[str, Any
         return None
     if not _safe_command(command):
         return None
-    segment = _source_span(source, sink["span"])
+    segment = _source_span(source, sink["span"], source_lines)
     if segment is None:
         return None
     return {
@@ -306,6 +310,126 @@ def _literal_proof(sink: SinkRecord | None, source: str | None) -> dict[str, Any
     }
 
 
+type SinkKey = tuple[str, str, tuple[int, int, int, int]]
+
+
+def _sink_key(path: Any, kind: Any, span: Any) -> SinkKey | None:
+    fields = ("startLine", "startColumn", "endLine", "endColumn")
+    if not isinstance(path, str) or not isinstance(kind, str) or not isinstance(span, dict):
+        return None
+    if set(span) != set(fields) or not all(isinstance(span[key], int) for key in fields):
+        return None
+    return path, kind, (span["startLine"], span["startColumn"], span["endLine"], span["endColumn"])
+
+
+class EvidenceIndex:
+    """Reuse finding and sink lookups within one run, retaining ambiguous duplicate sinks."""
+
+    def __init__(
+        self,
+        findings: Sequence[Mapping[str, Any]],
+        claims: Sequence[Mapping[str, Any]],
+        sinks: Sequence[SinkRecord],
+        sources: Mapping[str, str],
+    ) -> None:
+        self.by_id = {finding["raw_id"]: finding for finding in findings}
+        self.by_claim = {claim["raw_id"]: claim for claim in claims}
+        if len(self.by_id) != len(findings) or len(self.by_claim) != len(claims):
+            raise ValueError("Missing or duplicate finding/claim")
+        self.by_sink: dict[SinkKey | None, list[SinkRecord]] = {}
+        for sink in sinks:
+            key = _sink_key(sink["path"], sink["sink_kind"], sink["span"])
+            self.by_sink.setdefault(key, []).append(sink)
+        self.sources = sources
+        self.source_lines = SourceLines()
+
+    def build(self, unit: Mapping[str, Any]) -> dict[str, Any]:
+        """Build one unit's evidence with the same conservative validation as standalone calls."""
+        ids = unit["raw_finding_ids"]
+        if not ids or len(ids) != len(set(ids)):
+            raise ValueError("Unit needs distinct, nonempty findings")
+        by_id, by_claim = self.by_id, self.by_claim
+        if any(i not in by_id or i not in by_claim for i in ids):
+            raise ValueError("Missing or duplicate finding/claim")
+        status, role = unit["mapping_status"], unit["argument_role"]
+        if status not in _STATUSES or role not in _ROLES:
+            raise ValueError("Unknown mapping status or argument role")
+        matches = [
+            s
+            for s in self.by_sink.get(
+                _sink_key(unit.get("path"), unit.get("sink_kind"), unit.get("sink_span")), []
+            )
+            if s["path"] == unit.get("path")
+            and s["span"] == unit.get("sink_span")
+            and s["sink_kind"] == unit.get("sink_kind")
+        ]
+        sink = matches[0] if len(matches) == 1 else None
+        shell = shell_state(sink) if sink else "unresolved"
+        path = unit.get("path")
+        sources = self.sources
+        source = sources.get(path) if isinstance(path, str) else None
+        proof = _literal_proof(sink, source, self.source_lines)
+        records = []
+        for identifier in ids:
+            claim = by_claim[identifier]
+            trace = _trace(by_id[identifier], sink, unit, sources, self.source_lines)
+            records.append({**claim, **trace})
+        unknown = []
+        if role is None:
+            unknown.append("argument_role_null")
+        if shell == "unresolved":
+            unknown.append("shell_unresolved")
+        if sink and any(a["value_kind"] == "name" or "..." in a["text"] for a in sink["args"][1:]):
+            unknown.append("options_variable_or_spread")
+        if any(c["source_type"] in {"unknown", "library_input"} for c in records):
+            unknown.append("source_library_input_or_unknown")
+        if any(
+            c["claim_family"] == "flow" and c["trace_status"] != "valid_endpoint" for c in records
+        ):
+            unknown.append("flow_claim_without_valid_endpoint_trace")
+        if any(c["claim_family"] == "classification_unresolved" for c in records):
+            unknown.append("some_claims_classification_unresolved")
+        if sink is None or source is None:
+            unknown.append("source_or_argument_parsing_unavailable")
+        strong = any(
+            c["claim_family"] == "flow" and c["trace_status"] == "valid_endpoint" for c in records
+        )
+        tools = sorted({by_id[i]["tool"] for i in ids})
+        signals = {
+            "execution_candidate": status in {"mapped", "role_unresolved"},
+            "unresolved_unit": status in {"unmapped", "column_encoding_requires_review"}
+            or all(c["claim_family"] == "classification_unresolved" for c in records),
+            "flow_claim": any(c["claim_family"] == "flow" for c in records),
+            "audit_claim": any(c["audit_oriented"] for c in records),
+            "strong_flow": strong,
+            "shell_semantics": role == "shell_command",
+            "agreement": set(tools) >= {"semgrep", "codeql"},
+            "verified_blocker": proof is not None,
+            "important_unknown": bool(unknown),
+            "evidence_conflict": proof is not None and strong,
+        }
+        lengths = {
+            tool: [r["trace_length"] for r in records if r["tool"] == tool] for tool in tools
+        }
+        return {
+            "unit_id": unit["unit_id"],
+            "mapping_status": status,
+            "argument_role": role,
+            "shell_state": shell,
+            "command_literal": proof is not None,
+            "blocker_proof": proof,
+            "tools": tools,
+            "source_types": sorted({r["source_type"] for r in records}),
+            "trace_lengths_by_tool": lengths,
+            "traces_by_tool": {
+                tool: any(r["has_trace"] for r in records if r["tool"] == tool) for tool in tools
+            },
+            "finding_evidence": records,
+            "unknown_fields": sorted(set(unknown)),
+            "predicate_values": signals,
+        }
+
+
 def build_evidence(
     unit: Mapping[str, Any],
     findings: Sequence[Mapping[str, Any]],
@@ -314,84 +438,4 @@ def build_evidence(
     sources: Mapping[str, str],
 ) -> dict[str, Any]:
     """Join the exact unit, its findings and one sink; ambiguity remains visible."""
-    ids = unit["raw_finding_ids"]
-    if not ids or len(ids) != len(set(ids)):
-        raise ValueError("Unit needs distinct, nonempty findings")
-    by_id = {f["raw_id"]: f for f in findings}
-    by_claim = {c["raw_id"]: c for c in claims}
-    if (
-        len(by_id) != len(findings)
-        or len(by_claim) != len(claims)
-        or any(i not in by_id or i not in by_claim for i in ids)
-    ):
-        raise ValueError("Missing or duplicate finding/claim")
-    status, role = unit["mapping_status"], unit["argument_role"]
-    if status not in _STATUSES or role not in _ROLES:
-        raise ValueError("Unknown mapping status or argument role")
-    matches = [
-        s
-        for s in sinks
-        if s["path"] == unit.get("path")
-        and s["span"] == unit.get("sink_span")
-        and s["sink_kind"] == unit.get("sink_kind")
-    ]
-    sink = matches[0] if len(matches) == 1 else None
-    shell = shell_state(sink) if sink else "unresolved"
-    path = unit.get("path")
-    source = sources.get(path) if isinstance(path, str) else None
-    proof = _literal_proof(sink, source)
-    records = []
-    for identifier in ids:
-        claim = by_claim[identifier]
-        trace = _trace(by_id[identifier], sink, unit, sources)
-        records.append({**claim, **trace})
-    unknown = []
-    if role is None:
-        unknown.append("argument_role_null")
-    if shell == "unresolved":
-        unknown.append("shell_unresolved")
-    if sink and any(a["value_kind"] == "name" or "..." in a["text"] for a in sink["args"][1:]):
-        unknown.append("options_variable_or_spread")
-    if any(c["source_type"] in {"unknown", "library_input"} for c in records):
-        unknown.append("source_library_input_or_unknown")
-    if any(c["claim_family"] == "flow" and c["trace_status"] != "valid_endpoint" for c in records):
-        unknown.append("flow_claim_without_valid_endpoint_trace")
-    if any(c["claim_family"] == "classification_unresolved" for c in records):
-        unknown.append("some_claims_classification_unresolved")
-    if sink is None or source is None:
-        unknown.append("source_or_argument_parsing_unavailable")
-    strong = any(
-        c["claim_family"] == "flow" and c["trace_status"] == "valid_endpoint" for c in records
-    )
-    tools = sorted({by_id[i]["tool"] for i in ids})
-    signals = {
-        "execution_candidate": status in {"mapped", "role_unresolved"},
-        "unresolved_unit": status in {"unmapped", "column_encoding_requires_review"}
-        or all(c["claim_family"] == "classification_unresolved" for c in records),
-        "flow_claim": any(c["claim_family"] == "flow" for c in records),
-        "audit_claim": any(c["audit_oriented"] for c in records),
-        "strong_flow": strong,
-        "shell_semantics": role == "shell_command",
-        "agreement": set(tools) >= {"semgrep", "codeql"},
-        "verified_blocker": proof is not None,
-        "important_unknown": bool(unknown),
-        "evidence_conflict": proof is not None and strong,
-    }
-    lengths = {tool: [r["trace_length"] for r in records if r["tool"] == tool] for tool in tools}
-    return {
-        "unit_id": unit["unit_id"],
-        "mapping_status": status,
-        "argument_role": role,
-        "shell_state": shell,
-        "command_literal": proof is not None,
-        "blocker_proof": proof,
-        "tools": tools,
-        "source_types": sorted({r["source_type"] for r in records}),
-        "trace_lengths_by_tool": lengths,
-        "traces_by_tool": {
-            tool: any(r["has_trace"] for r in records if r["tool"] == tool) for tool in tools
-        },
-        "finding_evidence": records,
-        "unknown_fields": sorted(set(unknown)),
-        "predicate_values": signals,
-    }
+    return EvidenceIndex(findings, claims, sinks, sources).build(unit)

@@ -214,9 +214,7 @@ def acquire_source(
         max_files=limits.max_files,
     )
     verify_source_identity(case, source)
-    source_files = [
-        path.relative_to(source).as_posix() for path in sorted(source.rglob("*")) if path.is_file()
-    ]
+    source_files = list_source_files(source)
     return AcquiredSource(
         source_path=source,
         archive_path=archive,
@@ -225,6 +223,13 @@ def acquire_source(
         transport=transport,
         seconds=time.monotonic() - begin,
     )
+
+
+def list_source_files(source: Path) -> list[str]:
+    """Every regular file under an unpacked source tree, as sorted POSIX relative paths."""
+    return [
+        path.relative_to(source).as_posix() for path in sorted(source.rglob("*")) if path.is_file()
+    ]
 
 
 SOURCE_EXTENSIONS = {

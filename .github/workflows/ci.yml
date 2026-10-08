@@ -131,6 +131,30 @@ jobs:
           }, indent=2))
           PY
 
+  scan-parity:
+    # Heavy: the scanner worker image and the experiment image, each with CodeQL.
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run the CLI on curling with the scan profile's JavaScript configuration
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/parity
+          docker build -f experiments/Dockerfile -t security-triage-pilot:parity .
+          docker run --rm -v /tmp/parity:/app/artifacts security-triage-pilot:parity             --case experiments/cases/secbench-curling-0.2.0.json             --config experiments/configs/development-batch-01-upstream.json             --configuration-commit "$(git rev-parse HEAD)"             --output artifacts/cli
+      - name: Start the stack with the scanner worker
+        run: docker compose up --build -d --wait --wait-timeout 300
+      - name: Scan curling through the API and require the CLI's result
+        run: |
+          python3 experiments/diagnostics/scan_parity.py             --api http://localhost:8000             --case experiments/cases/secbench-curling-0.2.0.json             --cli-run /tmp/parity/cli             --output /tmp/parity/report.json             --expect-tier P1=1
+      - name: Show service logs
+        if: failure()
+        run: docker compose logs --no-color --tail=200 api worker
+      - name: Stop services
+        if: always()
+        run: docker compose down --volumes
+
   frontend:
     runs-on: ubuntu-latest
     defaults:
@@ -155,7 +179,8 @@ jobs:
 
   docker-integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The worker image downloads and verifies the pinned CodeQL bundle.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
       - name: Validate Compose configurations
@@ -183,6 +208,8 @@ jobs:
         run: |
           docker compose exec -T api python -m scripts.export_openapi > frontend/openapi.json
           git diff --exit-code -- frontend/openapi.json
+      - name: Verify worker scanner versions and scan profile hashes
+        run: docker compose exec -T worker python -m scripts.check_worker
       - name: Verify FE proxy, readiness and worker
         run: |
           curl --fail --retry 5 --retry-delay 2 http://localhost:5173/

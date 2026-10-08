@@ -1,6 +1,7 @@
 """Pure hash-qualified claim classification; never mutate raw findings."""
 
 from collections.abc import Mapping, Sequence
+from functools import lru_cache
 from typing import Any
 
 
@@ -13,12 +14,13 @@ def classify_claims(
     ids = [f.get("raw_id") for f in findings]
     if any(not isinstance(i, str) or not i for i in ids) or len(set(ids)) != len(ids):
         raise ValueError("Finding IDs must be nonempty and unique")
-    results = []
-    for finding in findings:
-        rid = finding.get("rule_id")
+
+    # Definitions and mappings are fixed for this invocation; never reuse trust across runs.
+    @lru_cache(maxsize=256)
+    def resolved_rule(tool: str, rid: str) -> Mapping[str, Any] | None:
         candidates = []
         for rule in mapping["rules"]:
-            if rule["tool"] != finding.get("tool") or not isinstance(rid, str):
+            if rule["tool"] != tool:
                 continue
             if rid != rule["rule_id"] and not (
                 rule["tool"] == "semgrep" and rid.endswith("." + rule["rule_id"])
@@ -30,7 +32,13 @@ def classify_claims(
             observed = [d for d in definitions if all(d.get(k) == rule.get(k) for k in fields)]
             if len(observed) == 1:
                 candidates.append(rule)
-        rule = candidates[0] if len(candidates) == 1 else None
+        return candidates[0] if len(candidates) == 1 else None
+
+    results = []
+    for finding in findings:
+        rid = finding.get("rule_id")
+        tool = finding.get("tool")
+        rule = resolved_rule(tool, rid) if isinstance(tool, str) and isinstance(rid, str) else None
         results.append(
             {
                 "raw_id": finding["raw_id"],

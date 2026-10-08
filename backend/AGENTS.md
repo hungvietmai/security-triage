@@ -60,10 +60,12 @@ backend/
 │   │   ├── exceptions.py  # AppError / NotFoundError / ConflictError, ErrorResponse
 │   │   └── storage.py     # Shared S3 (SeaweedFS) client
 │   ├── features/          # One package per domain — see below
-│   ├── scanners/          # Future Semgrep/CodeQL subprocess adapters (see its README)
-│   └── workers/           # Celery app and tasks
+│   ├── scanners/          # Semgrep/CodeQL adapters, scan profile, server-built source downloads
+│   ├── triage/            # Pure reconciliation, evidence and priority policy (stdlib only)
+│   ├── workflows/         # Multi-feature flows: scans/ (API, execution, persistence)
+│   └── workers/           # Celery app (composition); tasks live in workflows/
 ├── migrations/            # Alembic; versions/NNNN_description.py
-├── scripts/               # One-off CLIs: init_storage, export_openapi
+├── scripts/               # One-off CLIs: init_storage, export_openapi, check_worker
 └── tests/                 # Mirrors app/: core/, features/<f>/, cross-cutting tests at the root
 ```
 
@@ -82,19 +84,30 @@ app/features/<feature>/
 
 Create only the modules a feature needs. Current features: `projects`
 (API: create/list/get), `health` (liveness/readiness), and model-only
-`sources`, `scans`, `findings` whose APIs are not implemented yet.
+`sources`, `scans`, `findings`, `triage`. Their scan API lives in
+`app/workflows/scans/`, which uses the same router/service/schemas layout.
+
+The scan worker keeps Celery registration, retries and orchestration in `task.py`.
+`snapshots.py` acquires and validates source archives; `analysis.py` runs scanners
+and triage for one language. `results.py` defines the data passed to `persist.py`,
+which owns the transaction that replaces a scan's persisted results.
+The worker runs up to `SCANNER_WORKERS` independent tools per language (default 2)
+and `ARTIFACT_UPLOAD_WORKERS` streamed artifact uploads (default 4). Languages
+remain sequential; standalone `run_pipeline()` calls default to sequential tools.
+Record concurrency settings with scan provenance when changing execution behavior.
 
 ## Architecture rules
 
 Enforced by `tests/test_architecture.py` and ruff (`TID252`):
 
-1. **core → features → composition.** `app/core` never imports
-   `app.features`, `app.main`, `app.models` or `app.workers`. Features never
-   import `app.main`, `app.models` or `app.workers`.
+1. **core → features → workflows → composition.** `app/core` never imports
+   `app.features`, `app.workflows`, `app.main`, `app.models` or `app.workers`.
+   Features never import `app.workflows`, `app.main`, `app.models` or `app.workers`.
 2. **No cross-feature imports.** Link tables with string foreign keys
-   (`ForeignKey("projects.id")`), not imports. If two features must cooperate,
-   orchestrate in the caller (router composition in `main.py`, a worker task),
-   or move the shared piece to `core/`.
+   (`ForeignKey("projects.id")`), not imports. A flow that needs several features
+   (creating, running and reading scans) lives in `app/workflows/<flow>/`, which may
+   import features, `app.scanners`, `app.triage` and `core`, but never the composition
+   layer (`app.main`, `app.models`, `app.workers`); its Celery tasks use `shared_task`.
 3. **HTTP stays in the router layer.** `service.py`, `models.py` and
    `schemas.py` never import `fastapi`/`starlette`. Services raise domain
    exceptions; `core/exceptions.py` turns them into responses.

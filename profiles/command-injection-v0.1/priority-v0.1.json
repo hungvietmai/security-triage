@@ -1,0 +1,452 @@
+{
+  "policy_id": "command-injection-priority",
+  "policy_version": "0.1",
+  "status": "specified_before_implementation_tag_pending",
+  "date": "2026-10-07",
+  "specification": "experiments/policy/PRIORITY_V0_1.md",
+  "base_commit": "eb6e038d243aa6d9d7ffaccad909ad88326964b5",
+  "reconciler_version": "reconcile-v0.1",
+  "policy_type": "ordered_first_match_decision_list",
+  "weighted_score": false,
+  "levels": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "U"
+  ],
+  "operational_queue_order": [
+    "P1",
+    "P2",
+    "U",
+    "P3",
+    "P4"
+  ],
+  "scope": {
+    "primary_cwe": "CWE-78",
+    "adjacent_cwes_report_separately": [
+      "CWE-77",
+      "CWE-88"
+    ],
+    "languages": [
+      "javascript",
+      "python"
+    ],
+    "threat_model": "Linux/POSIX",
+    "human_labels_allowed_as_features": false,
+    "automatic_suppression": false
+  },
+  "rule_claims": {
+    "path": "experiments/mappings/rule-claims-v2.json",
+    "version": "rule-claims-v2",
+    "sha256": "57d7e31f4c46a301b37acf9746fd657d15032c399623a4e88605bb18ed11a144"
+  },
+  "semgrep": {
+    "version": "1.178.0",
+    "dataflow_traces": true,
+    "cli_flag": "--dataflow-traces",
+    "implementation_in_this_commit": false,
+    "missing_trace": "flow_claim_without_trace; never evidence of safety"
+  },
+  "codeql": {
+    "version": "2.27.1",
+    "javascript_query_pack": "2.4.6",
+    "python_query_pack": "1.8.11"
+  },
+  "evidence_input": {
+    "units": "units.json",
+    "findings": "findings.json",
+    "traces": "raw_result.codeFlows",
+    "sink_args": "sink-locator records joined by snapshot/path/sink_span/sink_kind",
+    "source": "verified snapshot source; do not read human labels",
+    "unit_id_must_not_change": true,
+    "trace_statuses": [
+      "valid_endpoint",
+      "missing",
+      "malformed",
+      "endpoint_unresolved",
+      "endpoint_mismatch",
+      "coordinate_unverified"
+    ]
+  },
+  "source_types": [
+    "remote",
+    "library_input",
+    "unknown"
+  ],
+  "source_type_aggregation": "sorted distinct per-finding values; never collapse library_input into remote",
+  "predicate_contract": {
+    "type": "boolean",
+    "unknown_evidence": "positive proofs false; record uncertainty separately",
+    "empty_findings": "invalid input: abort, never silently drop unit",
+    "definitions_in": "PRIORITY_V0_1.md section 4"
+  },
+  "predicates": {
+    "execution_candidate": {
+      "mapping_status_in": [
+        "mapped",
+        "role_unresolved"
+      ]
+    },
+    "unresolved_unit": {
+      "any": [
+        {
+          "mapping_status_in": [
+            "unmapped",
+            "column_encoding_requires_review"
+          ]
+        },
+        "all_claims_classification_unresolved"
+      ]
+    },
+    "flow_claim": {
+      "any_finding": {
+        "claim_family": "flow",
+        "definition_verified": true
+      }
+    },
+    "audit_claim": {
+      "any_finding": {
+        "audit_oriented": true,
+        "definition_verified": true
+      }
+    },
+    "strong_flow": {
+      "all": [
+        "flow_claim",
+        "same_finding_has_valid_source_to_sink_trace",
+        "trace_endpoint_within_same_unit_command_argument",
+        "endpoint_role_shell_command_or_executable",
+        "compatible_coordinates_verified"
+      ]
+    },
+    "shell_semantics": {
+      "argument_role_equals": "shell_command"
+    },
+    "agreement": {
+      "tools_include": [
+        "semgrep",
+        "codeql"
+      ]
+    },
+    "verified_blocker": {
+      "proof": "whole_command_literal_v1",
+      "scope": "all shell-interpreted command and argument inputs, never executable alone"
+    },
+    "important_unknown": {
+      "any": [
+        "argument_role_null",
+        "shell_unresolved",
+        "options_variable_or_spread",
+        "source_library_input_or_unknown",
+        "flow_claim_without_valid_endpoint_trace",
+        "some_claims_classification_unresolved",
+        "source_or_argument_parsing_unavailable"
+      ]
+    },
+    "evidence_conflict": {
+      "all": [
+        "verified_blocker",
+        "strong_flow"
+      ]
+    }
+  },
+  "decisions": [
+    {
+      "id": "D00_UNRESOLVED",
+      "when": {
+        "any": [
+          "unresolved_unit",
+          "evidence_conflict"
+        ]
+      },
+      "priority": "U",
+      "reason": "Chưa đủ cơ sở gán ưu tiên: {matched_conditions}; cần rà soát {unknown_fields}."
+    },
+    {
+      "id": "D10_LITERAL",
+      "when": {
+        "all": [
+          "execution_candidate",
+          "verified_blocker"
+        ]
+      },
+      "priority": "P4",
+      "reason": "Đã xác minh toàn bộ lệnh thuộc miền literal hẹp: {blocker_proof}; giữ cảnh báo để rà soát, không kết luận an toàn."
+    },
+    {
+      "id": "D20_STRONG",
+      "when": {
+        "all": [
+          "execution_candidate",
+          "strong_flow",
+          {
+            "not": "verified_blocker"
+          },
+          {
+            "any": [
+              "shell_semantics",
+              "agreement"
+            ]
+          }
+        ]
+      },
+      "priority": "P1",
+      "reason": "Ưu tiên rất cao: {matched_conditions}; loại nguồn {source_types}; bất định còn lại {unknown_fields}."
+    },
+    {
+      "id": "D30_HIGH",
+      "when": {
+        "all": [
+          "execution_candidate",
+          {
+            "not": "verified_blocker"
+          },
+          {
+            "any": [
+              "strong_flow",
+              {
+                "all": [
+                  "flow_claim",
+                  "important_unknown"
+                ]
+              },
+              {
+                "all": [
+                  "agreement",
+                  "audit_claim",
+                  {
+                    "not": "strong_flow"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "priority": "P2",
+      "reason": "Ưu tiên cao: {matched_conditions}; còn thiếu {unknown_fields}; nguồn {source_types}."
+    },
+    {
+      "id": "D40_REVIEW",
+      "when": {
+        "all": [
+          "execution_candidate",
+          {
+            "not": "verified_blocker"
+          },
+          {
+            "any": [
+              "flow_claim",
+              "important_unknown",
+              "shell_semantics"
+            ]
+          }
+        ]
+      },
+      "priority": "P3",
+      "reason": "Cần rà soát thủ công: {matched_conditions}; chưa đủ điều kiện P1/P2; thiếu {unknown_fields}."
+    },
+    {
+      "id": "D99_DEFAULT",
+      "when": {
+        "always": true
+      },
+      "priority": "P4",
+      "reason": "Ứng viên audit còn lại: {matched_conditions}; chưa có bằng chứng luồng mạnh; giữ toàn bộ cảnh báo."
+    }
+  ],
+  "literal_proof": {
+    "id": "whole_command_literal_v1",
+    "allowed_expressions": [
+      "string_literal",
+      "parenthesized_string_literal",
+      "binary_plus_of_allowed_expressions"
+    ],
+    "allowed_resolved_command_regex": "^[A-Za-z0-9_./ -]+$",
+    "reject": [
+      "identifier_even_if_const",
+      "call",
+      "template_interpolation",
+      "spread",
+      "unresolved_shell_or_options",
+      "shell_expansion_or_metacharacters",
+      "explicit_interpreter",
+      "python_sequence_with_shell_true",
+      "unsupported_parse"
+    ],
+    "shell_spawn_requires": "literal executable AND every argv element literal, shell exactly true and options fully understood",
+    "direct_execution": "constant executable alone is never a blocker; v0.1 proves only supported shell command forms",
+    "absence_of_proof_means": "verified_blocker=false, not verified unsafe",
+    "guard_sanitizer_extractor_available": false,
+    "require_nonempty_after_strip": true,
+    "interpreter_basenames_rejected": [
+      "sh",
+      "bash",
+      "dash",
+      "ksh",
+      "csh",
+      "tcsh",
+      "zsh",
+      "python",
+      "python2",
+      "python3",
+      "node",
+      "perl",
+      "ruby",
+      "env",
+      "eval",
+      "exec"
+    ],
+    "reject_interpreter_version_suffixes": true,
+    "supported_sinks": [
+      "child_process.exec",
+      "child_process.execSync",
+      "shelljs.exec",
+      "os.system",
+      "os.popen",
+      "asyncio.create_subprocess_shell",
+      "subprocess.getoutput",
+      "subprocess.getstatusoutput",
+      "subprocess.run",
+      "subprocess.Popen",
+      "subprocess.call",
+      "subprocess.check_call",
+      "subprocess.check_output",
+      "child_process.spawn",
+      "child_process.spawnSync"
+    ],
+    "subprocess_requirement": "string command and literal shell=True, except getoutput/getstatusoutput which always use a shell",
+    "js_spawn_options": "only shell:true; no other keys, duplicates, spread or computed keys",
+    "other_options": "no unmodeled command/executable/env/shell override; unsupported overload fails proof"
+  },
+  "output": {
+    "one_record_per_unit": true,
+    "required_fields": [
+      "unit_id",
+      "policy_id",
+      "policy_version",
+      "policy_sha256",
+      "spec_sha256",
+      "rule_claims_version",
+      "rule_claims_sha256",
+      "reconciler_version",
+      "priority",
+      "decision_id",
+      "reason",
+      "matched_conditions",
+      "predicate_values",
+      "unknown_fields",
+      "source_types",
+      "finding_evidence",
+      "blocker_proof"
+    ],
+    "finding_evidence_fields": [
+      "raw_id",
+      "tool",
+      "rule_id",
+      "definition_sha256",
+      "claim_kind",
+      "claim_family",
+      "audit_oriented",
+      "source_type",
+      "trace_status",
+      "trace_ref",
+      "source_location",
+      "endpoint_location",
+      "endpoint_argument_span",
+      "endpoint_role"
+    ],
+    "reason_requires_all_true_predicates": true,
+    "mutate_raw_findings": false,
+    "write_database_in_this_step": false,
+    "matched_conditions_include": "all true predicates and satisfied negated/compound clauses of the winning decision"
+  },
+  "acceptance": {
+    "cross_run_equivalence": [
+      "same_snapshot",
+      "same_scanner_and_rule_versions",
+      "same_counts_per_tool_and_rule",
+      "same_raw_ids",
+      "same_rule_ids_and_primary_locations_per_raw_id",
+      "same_semantic_identity_multiset_including_multiplicity",
+      "same_unit_ids_and_membership"
+    ],
+    "cross_run_byte_identical_findings_required": false,
+    "within_run_findings_byte_identical_before_after_postprocessing_required": true,
+    "on_raw_id_reordering": "fail strict gate; preserve outputs and document cause before accepting any revised comparator",
+    "fresh_output_directory": true,
+    "completed_scanners_required": true
+  },
+  "development_expectations": [
+    {
+      "case": "curling-smoke",
+      "config": "experiments/configs/development-smoke-javascript.json",
+      "expected_priority": "P1",
+      "expected_agreement": false,
+      "expected_source_types": [
+        "library_input"
+      ],
+      "expected_raw_counts": {
+        "semgrep": 0,
+        "codeql": 6
+      },
+      "expected_unit_count": 1
+    },
+    {
+      "case": "curling-direct-alias",
+      "config": "experiments/configs/development-paired-direct-alias.json",
+      "expected_priority": "P1",
+      "expected_agreement": true,
+      "expected_raw_counts": {
+        "semgrep": 1,
+        "codeql": 6
+      },
+      "expected_unit_count": 1
+    },
+    {
+      "case": "r1-literals",
+      "case_ids": [
+        "01-literal-exec",
+        "04-fixed-spawn-shell",
+        "09-shelljs-literal"
+      ],
+      "forbidden_priority": [
+        "P1"
+      ],
+      "if_verified_blocker": "P4",
+      "zero_findings": "no unit; retain zero count; do not fabricate a priority"
+    },
+    {
+      "case": "r1-dynamic-shell",
+      "case_ids": [
+        "03-dynamic-exec",
+        "05-dynamic-spawn-shell"
+      ],
+      "allowed_priorities": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "forbidden_priorities": [
+        "P4",
+        "U"
+      ],
+      "required": "at least one actual mapped unit for each case; zero candidates fails coverage gate"
+    }
+  ],
+  "curling_unit_id": "58114fb901d995f4d95d948c211ef89b82117648db9a34447f2d5fc7e48dfdcb",
+  "freeze": {
+    "required_tag": "evidence/priority-v0.1-spec",
+    "tag_must_exist_on_remote_before_implementation": true,
+    "tag_must_not_be_moved": true,
+    "merge_method": "merge commit, or preserve immutable spec tag before squash",
+    "new_version_required_after_semantic_change": true,
+    "existing_development_data_already_observed": true,
+    "held_out_rescoring_as_preregistered_forbidden": true
+  },
+  "tie_handling": {
+    "research": "expected value under uniform random order within tier",
+    "display": "deterministic unit_id order; not an evaluation advantage"
+  }
+}

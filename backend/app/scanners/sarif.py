@@ -45,41 +45,49 @@ def _list(value: JsonValue | object) -> list[JsonValue]:
     return cast(list[JsonValue], value)
 
 
+def _objects(value: JsonValue | object, field: str) -> list[JsonObject]:
+    """Malformed scanner output must not become an empty, successful analysis."""
+    if not isinstance(value, list) or any(not isinstance(item, dict) for item in value):
+        raise ValueError(f"Invalid SARIF {field}: expected an array of objects")
+    return [_object(item) for item in value]
+
+
 def _text(value: JsonValue | object) -> str | None:
     return value if isinstance(value, str) else None
 
 
 def sarif_findings(path: Path, tool: str, snapshot: str) -> tuple[list[Finding], bool]:
     """Preserve every SARIF result without inferring sink identity or labels."""
-    root_value = cast(object, json.loads(path.read_text()))
+    root_value = cast(object, json.loads(path.read_text(encoding="utf-8")))
     root = _object(root_value)
     if root.get("version") != "2.1.0" or not isinstance(root.get("runs"), list):
         raise ValueError("Invalid SARIF 2.1.0 document")
 
     records: list[Finding] = []
     complete = True
-    for run_index, run_value in enumerate(_list(root.get("runs"))):
-        run = _object(run_value)
-        for invocation_value in _list(run.get("invocations")):
-            invocation = _object(invocation_value)
+    for run_index, run in enumerate(_objects(root.get("runs"), "runs")):
+        # A rule-metadata export may omit results, but it cannot prove a scan completed.
+        if "results" not in run:
+            complete = False
+        for invocation in _objects(run.get("invocations", []), "invocations"):
             if invocation.get("executionSuccessful") is False:
                 complete = False
-            for note_value in _list(invocation.get("toolExecutionNotifications")):
-                note = _object(note_value)
+            for note in _objects(
+                invocation.get("toolExecutionNotifications", []), "toolExecutionNotifications"
+            ):
                 level = _text(note.get("level")) or "warning"
                 if level not in {"none", "note"}:
                     complete = False
 
         driver = _object(_object(run.get("tool")).get("driver"))
-        ordered_rules = [_object(value) for value in _list(driver.get("rules"))]
+        ordered_rules = _objects(driver.get("rules", []), "rules")
         rules: dict[str, JsonObject] = {}
         for rule in ordered_rules:
             rule_id = _text(rule.get("id"))
             if rule_id is not None:
                 rules[rule_id] = rule
 
-        for result_index, result_value in enumerate(_list(run.get("results"))):
-            result = _object(result_value)
+        for result_index, result in enumerate(_objects(run.get("results", []), "results")):
             locations = _list(result.get("locations"))
             location = _object(locations[0]) if locations else {}
             physical = _object(location.get("physicalLocation"))

@@ -1,5 +1,7 @@
 import json
 
+import pytest
+
 from app.scanners.sarif import sarif_findings
 
 
@@ -70,3 +72,58 @@ def test_sarif_rejects_wrong_version(tmp_path):
         assert str(exc) == "Invalid SARIF 2.1.0 document"
     else:
         raise AssertionError("invalid SARIF was accepted")
+
+
+@pytest.mark.parametrize(
+    "run",
+    [
+        None,
+        {"results": {}},
+        {"results": [None]},
+        {"invocations": {}},
+        {"invocations": [False]},
+        {"invocations": [{"toolExecutionNotifications": {}}]},
+        {"invocations": [{"toolExecutionNotifications": [None]}]},
+        {"tool": {"driver": {"rules": {}}}},
+        {"tool": {"driver": {"rules": [None]}}},
+    ],
+)
+def test_sarif_rejects_malformed_arrays_instead_of_reporting_success(tmp_path, run):
+    path = tmp_path / "malformed.sarif"
+    path.write_text(json.dumps({"version": "2.1.0", "runs": [run]}), encoding="utf-8")
+    with pytest.raises(ValueError, match="Invalid SARIF"):
+        sarif_findings(path, "semgrep", "d" * 64)
+
+
+def test_sarif_preserves_utf8_messages_and_paths(tmp_path):
+    result = {
+        "ruleId": "example",
+        "message": {"text": "Lệnh nguy hiểm"},
+        "locations": [{"physicalLocation": {"artifactLocation": {"uri": "mã/ứng-dụng.py"}}}],
+    }
+    path = tmp_path / "result.sarif"
+    path.write_text(
+        json.dumps({"version": "2.1.0", "runs": [{"results": [result]}]}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    findings, complete = sarif_findings(path, "semgrep", "d" * 64)
+    assert complete is True
+    assert findings[0]["message"] == "Lệnh nguy hiểm"
+    assert findings[0]["reported_path"] == "mã/ứng-dụng.py"
+    assert findings[0]["raw_result"] == result
+
+
+def test_sarif_rule_metadata_without_results_is_not_a_completed_scan(tmp_path):
+    path = tmp_path / "rules.sarif"
+    path.write_text(
+        json.dumps(
+            {
+                "version": "2.1.0",
+                "runs": [{"tool": {"driver": {"name": "example", "rules": [{"id": "example"}]}}}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    findings, complete = sarif_findings(path, "semgrep", "d" * 64)
+    assert findings == []
+    assert complete is False
