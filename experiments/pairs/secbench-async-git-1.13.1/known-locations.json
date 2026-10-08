@@ -1,0 +1,34 @@
+{
+  "pair_id": "secbench-async-git-1.13.1",
+  "split": "held_out",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "0db74ccf62e9346fddbafecb947a1b944dcdd0e112507f498da011ca8aba4640",
+    "fixed": "276a491b0d2d96abde65b7c669349cfe63ceeb69eaccb9213f140d3882bdb6f2"
+  },
+  "patch_hunks_sha256": "1102edde75ec307c33145432b7704a4f33fa47da771f64ef5368f37517f8f52a",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "sink_hint_not_uniquely_contained_in_callee",
+      "candidate_count": 0,
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/reset/index.js:11:16",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/async-git_1.13.1/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/reset/index.js:11:16; Command Injection in async-git; Use spawn with git to avoid shell script vulnerabilities (#14)",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

@@ -1,0 +1,641 @@
+{
+  "pair_id": "pyvul-savon-noir-python-libnmap-c36fecde9001",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "13c443625e21f09c1ebc29b6005628d90b21effe1a657d1f62cd7f4c8b8f50e8",
+    "fixed": "0112591f120ff25ad2bc6fd455a7986050d3fa9355eaf54d5d3c472f15d06261"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENCE",
+        "reason": "documentation"
+      },
+      {
+        "path": "NOTICE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/diff.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/cpe.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/nmaphost.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/nmapreport.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/nmapservice.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/os.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/parser.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/plugins_s3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/process.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "libnmap/test/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_host_ping.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner_ports.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner_ports_notsyn.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner_ports_xmas.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_diff.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_down.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_nohostname.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_os_banner_scripts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts_achange.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts_version.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_null_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_tcp_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/defused_et_included.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/defused_et_local_includer.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/diff_1_host_ping_mac_changed.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/dionaea_scan.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/full_sudo5.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/full_sudo6.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/fullscan.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/os_scan5.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/os_scan6.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/test_osclass.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/check_fqp_nmap.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/multi_nmap_process.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/multi_nmap_process_background.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/proc_async.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/proc_nmap_like.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/stop_scan.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/stressback.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/stresstest.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_backend_plugin_factory.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_cpe.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_defusedxml.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_fp.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_host.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_new_parser.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_parser.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_process.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_report.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_report_diff.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_reportjson.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_service.py",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENCE",
+        "reason": "documentation"
+      },
+      {
+        "path": "NOTICE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/diff.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/cpe.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/nmaphost.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/nmapreport.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/nmapservice.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/objects/os.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/parser.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/plugins_s3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/process.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "libnmap/test/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_host_ping.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner_ports.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner_ports_notsyn.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_banner_ports_xmas.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_diff.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_down.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_hosts_nohostname.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/1_os_banner_scripts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts_achange.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_hosts_version.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_null_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/2_tcp_hosts.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/defused_et_included.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/defused_et_local_includer.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/diff_1_host_ping_mac_changed.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/dionaea_scan.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/full_sudo5.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/full_sudo6.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/fullscan.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/os_scan5.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/os_scan6.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/files/test_osclass.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/check_fqp_nmap.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/multi_nmap_process.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/multi_nmap_process_background.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/proc_async.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/proc_nmap_like.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/stop_scan.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/stressback.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/process-stressbox/stresstest.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_backend_plugin_factory.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_cpe.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_defusedxml.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_fp.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_host.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_new_parser.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_parser.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_process.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_report.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_report_diff.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_reportjson.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "libnmap/test/test_service.py",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "libnmap/process.py",
+      "new_path": "libnmap/process.py",
+      "old_sha256": "a577c50f2118cea58a35ef0cab77198147669245b7230557e8c0162cd4689cb7",
+      "new_sha256": "23765ee2d4f1018863edbe059ffa352d357ec11c08322ac4ce6ae66e1797f26d",
+      "hunks": [
+        {
+          "old_start": 4,
+          "old_count": 6,
+          "new_start": 4,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 7,
+              "old_count": 0,
+              "new_start": 7,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 128,
+          "old_count": 6,
+          "new_start": 129,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 131,
+              "old_count": 0,
+              "new_start": 132,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 480,
+          "old_count": 6,
+          "new_start": 484,
+          "new_count": 27,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 483,
+              "old_count": 0,
+              "new_start": 487,
+              "new_count": 21,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- libnmap/process.py\n+++ libnmap/process.py\n@@ -4,6 +4,7 @@\n import os\n import platform\n import shlex\n+import string\n import subprocess\n import warnings\n from threading import Thread\n@@ -128,6 +129,9 @@\n             raise Exception(\n                 \"Supplied target list should be either a string or a list\"\n             )\n+\n+        for target in self.__nmap_targets:\n+            self.__validate_target(target)\n \n         self._nmap_options = set(options.split())\n         if safe_mode and not self._nmap_options.isdisjoint(unsafe_opts):\n@@ -480,6 +484,27 @@\n             cmdline += self.__nmap_targets  # already a list\n         return cmdline\n \n+    @staticmethod\n+    def __validate_target(target):\n+        # See https://nmap.org/book/man-target-specification.html for all the\n+        # ways targets can be specified\n+        allowed_characters = frozenset(\n+            string.ascii_letters + string.digits + \"-.:/% \"\n+        )\n+        if not set(target).issubset(allowed_characters):\n+            raise Exception(\n+                \"Target '{}' contains invalid characters\".format(target)\n+            )\n+        # FQDN can contain dashes anywhere except at the beginning or end\n+        # This check also fixes/prevents CVE-2022-30284, which depends on being\n+        # able to pass options such as --script as a target\n+        elif target.startswith(\"-\") or target.endswith(\"-\"):\n+            raise Exception(\n+                \"Target '{}' cannot begin or end with a dash ('-')\".format(\n+                    target\n+                )\n+            )\n+\n     @property\n     def command(self):\n         \"\"\"\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

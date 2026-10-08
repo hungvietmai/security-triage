@@ -1,0 +1,593 @@
+{
+  "pair_id": "secbench-git-parse-1.0.4",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "face0b5b558a97bf119473aac66d980eccb9fbf5f6bc29067f6357cbcf3f1dae",
+    "fixed": "4db4577ebd13f28263ca65fbbdaae00a12a76ba77910d6f963a5758b359d31ca"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "dist/__tests__/__snapshots__/index.spec.js.snap",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/__snapshots__/parse_commit_spec.js.snap",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/__snapshots__/parse_git_log_spec.js.snap",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/checkout_commit.spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_log_stream_spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/COMMIT_EDITMSG",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/HEAD",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/config",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/description",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/index",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/info/exclude",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/99/402395036c4282de837cd1d2004ee7b11988bb",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/bd/d68b0120ca91384c1606468b4ca81b8f67c728",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/refs/heads/master",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/file.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/index.spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/mock_git_log.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/parse_commit_spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/parse_git_log_spec.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "dist/__tests__/__snapshots__/index.spec.js.snap",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/__snapshots__/parse_commit_spec.js.snap",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/__snapshots__/parse_git_log_spec.js.snap",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/checkout_commit.spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_log_stream_spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/COMMIT_EDITMSG",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/HEAD",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/config",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/description",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/index",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/info/exclude",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/4b/825dc642cb6eb9a060e54bf8d69288fbee4904",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/99/402395036c4282de837cd1d2004ee7b11988bb",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/bd/d68b0120ca91384c1606468b4ca81b8f67c728",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/dot_git/refs/heads/master",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/git_repo/file.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/index.spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/mock_git_log.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/parse_commit_spec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "dist/__tests__/parse_git_log_spec.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "dist/checkout_commit.js",
+      "new_path": "dist/checkout_commit.js",
+      "old_sha256": "da139f29c2b61f5202ac28921e93439a2336a8264d791f6567d498a5c787d015",
+      "new_sha256": "3e138447ac26c7f7f35aece24595e4dc5e3733756762f6589bd38b5bbdc31d47",
+      "hunks": [
+        {
+          "old_start": 38,
+          "old_count": 4,
+          "new_start": 38,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 41,
+              "old_count": 1,
+              "new_start": 41,
+              "new_count": 1,
+              "old_lines": [
+                41
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- dist/checkout_commit.js\n+++ dist/checkout_commit.js\n@@ -38,4 +38,4 @@\n \n var _default = checkoutCommit;\n exports.default = _default;\n-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9jaGVja291dF9jb21taXQuanMiXSwibmFtZXMiOlsiZXhlYyIsImNoaWxkUHJvY2VzcyIsImNoZWNrb3V0Q29tbWl0IiwicGF0aFRvUmVwbyIsImhhc2giLCJvcHRpb25zIiwiZm9yY2UiLCJyZXNvbHZlZFBhdGgiLCJlIiwiUHJvbWlzZSIsInJlamVjdCIsImN3ZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUNBOztBQUNBOzs7O0FBRUEsTUFBTUEsSUFBSSxHQUFHLG1CQUFVQyx1QkFBYUQsSUFBdkIsQ0FBYjtBQUVBOzs7Ozs7QUFLQSxNQUFNRSxjQUFjLEdBQUcsT0FBT0MsVUFBUCxFQUFtQkMsSUFBbkIsRUFBeUJDLE9BQU8sR0FBRztBQUFDQyxFQUFBQSxLQUFLLEVBQUU7QUFBUixDQUFuQyxLQUFzRDtBQUMzRSxRQUFNQyxZQUFZLEdBQUcsd0JBQVlKLFVBQVosQ0FBckI7O0FBRUEsTUFBSTtBQUNGLDZCQUFhSSxZQUFiO0FBQ0QsR0FGRCxDQUVFLE9BQU9DLENBQVAsRUFBVTtBQUNWLFdBQU9DLE9BQU8sQ0FBQ0MsTUFBUixDQUFlRixDQUFmLENBQVA7QUFDRDs7QUFFRCxTQUFPUixJQUFJLENBQUUsZ0JBQWVJLElBQUssSUFBR0MsT0FBTyxDQUFDQyxLQUFSLEdBQWdCLFNBQWhCLEdBQTRCLEVBQUcsRUFBeEQsRUFBMkQ7QUFDcEVLLElBQUFBLEdBQUcsRUFBRUo7QUFEK0QsR0FBM0QsQ0FBWDtBQUdELENBWkQ7O2VBY2VMLGMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgcHJvbWlzaWZ5IGZyb20gJ3V0aWwucHJvbWlzaWZ5JztcbmltcG9ydCBjaGlsZFByb2Nlc3MgZnJvbSAnY2hpbGRfcHJvY2Vzcyc7XG5pbXBvcnQge3ZhbGlkYXRlUGF0aCwgcmVzb2x2ZUhvbWV9IGZyb20gJy4vdXRpbCc7XG5cbmNvbnN0IGV4ZWMgPSBwcm9taXNpZnkoY2hpbGRQcm9jZXNzLmV4ZWMpO1xuXG4vKipcbiAqIENoZWNrcyBvdXQgYSBjb21taXQgZ2l2ZW4gaXRzIHJlcG8gYW5kIGhhc2guXG4gKlxuICogUmV0dXJucyB2b2lkLiBUaHJvd3MgZXJyb3Igb24gZmFpbHVyZS5cbiAqL1xuY29uc3QgY2hlY2tvdXRDb21taXQgPSBhc3luYyAocGF0aFRvUmVwbywgaGFzaCwgb3B0aW9ucyA9IHtmb3JjZTogZmFsc2V9KSA9PiB7XG4gIGNvbnN0IHJlc29sdmVkUGF0aCA9IHJlc29sdmVIb21lKHBhdGhUb1JlcG8pO1xuXG4gIHRyeSB7XG4gICAgdmFsaWRhdGVQYXRoKHJlc29sdmVkUGF0aCk7XG4gIH0gY2F0Y2ggKGUpIHtcbiAgICByZXR1cm4gUHJvbWlzZS5yZWplY3QoZSk7XG4gIH1cblxuICByZXR1cm4gZXhlYyhgZ2l0IGNoZWNrb3V0ICR7aGFzaH0gJHtvcHRpb25zLmZvcmNlID8gJy0tZm9yY2UnIDogJyd9YCwge1xuICAgIGN3ZDogcmVzb2x2ZWRQYXRoXG4gIH0pO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgY2hlY2tvdXRDb21taXQ7XG4iXX0=+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9jaGVja291dF9jb21taXQuanMiXSwibmFtZXMiOlsiZXhlYyIsImNoaWxkUHJvY2VzcyIsImNoZWNrb3V0Q29tbWl0IiwicGF0aFRvUmVwbyIsImhhc2giLCJvcHRpb25zIiwiZm9yY2UiLCJyZXNvbHZlZFBhdGgiLCJlIiwiUHJvbWlzZSIsInJlamVjdCIsImN3ZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUNBOztBQUNBOzs7O0FBRUEsTUFBTUEsSUFBSSxHQUFHLG1CQUFVQyx1QkFBYUQsSUFBdkIsQ0FBYjtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBQ0EsTUFBTUUsY0FBYyxHQUFHLE9BQU9DLFVBQVAsRUFBbUJDLElBQW5CLEVBQXlCQyxPQUFPLEdBQUc7QUFBQ0MsRUFBQUEsS0FBSyxFQUFFO0FBQVIsQ0FBbkMsS0FBc0Q7QUFDM0UsUUFBTUMsWUFBWSxHQUFHLHdCQUFZSixVQUFaLENBQXJCOztBQUVBLE1BQUk7QUFDRiw2QkFBYUksWUFBYjtBQUNELEdBRkQsQ0FFRSxPQUFPQyxDQUFQLEVBQVU7QUFDVixXQUFPQyxPQUFPLENBQUNDLE1BQVIsQ0FBZUYsQ0FBZixDQUFQO0FBQ0Q7O0FBRUQsU0FBT1IsSUFBSSxDQUFFLGdCQUFlSSxJQUFLLElBQUdDLE9BQU8sQ0FBQ0MsS0FBUixHQUFnQixTQUFoQixHQUE0QixFQUFHLEVBQXhELEVBQTJEO0FBQ3BFSyxJQUFBQSxHQUFHLEVBQUVKO0FBRCtELEdBQTNELENBQVg7QUFHRCxDQVpEOztlQWNlTCxjIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHByb21pc2lmeSBmcm9tICd1dGlsLnByb21pc2lmeSc7XG5pbXBvcnQgY2hpbGRQcm9jZXNzIGZyb20gJ2NoaWxkX3Byb2Nlc3MnO1xuaW1wb3J0IHt2YWxpZGF0ZVBhdGgsIHJlc29sdmVIb21lfSBmcm9tICcuL3V0aWwnO1xuXG5jb25zdCBleGVjID0gcHJvbWlzaWZ5KGNoaWxkUHJvY2Vzcy5leGVjKTtcblxuLyoqXG4gKiBDaGVja3Mgb3V0IGEgY29tbWl0IGdpdmVuIGl0cyByZXBvIGFuZCBoYXNoLlxuICpcbiAqIFJldHVybnMgdm9pZC4gVGhyb3dzIGVycm9yIG9uIGZhaWx1cmUuXG4gKi9cbmNvbnN0IGNoZWNrb3V0Q29tbWl0ID0gYXN5bmMgKHBhdGhUb1JlcG8sIGhhc2gsIG9wdGlvbnMgPSB7Zm9yY2U6IGZhbHNlfSkgPT4ge1xuICBjb25zdCByZXNvbHZlZFBhdGggPSByZXNvbHZlSG9tZShwYXRoVG9SZXBvKTtcblxuICB0cnkge1xuICAgIHZhbGlkYXRlUGF0aChyZXNvbHZlZFBhdGgpO1xuICB9IGNhdGNoIChlKSB7XG4gICAgcmV0dXJuIFByb21pc2UucmVqZWN0KGUpO1xuICB9XG5cbiAgcmV0dXJuIGV4ZWMoYGdpdCBjaGVja291dCAke2hhc2h9ICR7b3B0aW9ucy5mb3JjZSA/ICctLWZvcmNlJyA6ICcnfWAsIHtcbiAgICBjd2Q6IHJlc29sdmVkUGF0aFxuICB9KTtcbn07XG5cbmV4cG9ydCBkZWZhdWx0IGNoZWNrb3V0Q29tbWl0O1xuIl19"
+    },
+    {
+      "old_path": "dist/git_diff.js",
+      "new_path": "dist/git_diff.js",
+      "old_sha256": "b565bd8396295a1fe3622860e9b89a3b791151a79608bda4c0f52ff155c1262a",
+      "new_sha256": "f63d9f931acc3e90b1e3204cb9ff486435caac5a02c09f8b96dab7df5caf3ac2",
+      "hunks": [
+        {
+          "old_start": 11,
+          "old_count": 7,
+          "new_start": 11,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 1,
+              "new_start": 14,
+              "new_count": 1,
+              "old_lines": [
+                14
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 19,
+          "old_count": 12,
+          "new_start": 19,
+          "new_count": 18,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 22,
+              "old_count": 5,
+              "new_start": 22,
+              "new_count": 11,
+              "old_lines": [
+                22,
+                23,
+                24,
+                25,
+                26
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 30,
+              "old_count": 1,
+              "new_start": 36,
+              "new_count": 1,
+              "old_lines": [
+                30
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- dist/git_diff.js\n+++ dist/git_diff.js\n@@ -11,7 +11,7 @@\n \n function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n \n-const exec = (0, _util.default)(_child_process.default.exec);\n+const execFile = (0, _util.default)(_child_process.default.execFile);\n /**\n  * Returns a git diff given a path to the repo, a commit,\n  * an optional second commit, and an optional file.\n@@ -19,12 +19,18 @@\n  * Returns the diff as a string.\n  */\n \n-const gitDiff = (pathToRepo, commit1, commit2 = '', file = '') => exec(`git diff ${commit1} ${commit2} -- ${file}`, {\n-  cwd: pathToRepo,\n-  encoding: 'utf8',\n-  maxBuffer: 1024 * 1000\n-}).then(output => output.stdout);\n+const gitDiff = (pathToRepo, commit1, commit2 = \"\", file = \"\") => {\n+  const args = [\"diff\", commit1];\n+  if (commit2) args.push(commit2);\n+  args.push(\"--\");\n+  if (file) args.push(file);\n+  return execFile(\"git\", args, {\n+    cwd: pathToRepo,\n+    encoding: \"utf8\",\n+    maxBuffer: 1024 * 1000\n+  }).then(output => output.stdout);\n+};\n \n var _default = gitDiff;\n exports.default = _default;\n-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9naXRfZGlmZi5qcyJdLCJuYW1lcyI6WyJleGVjIiwiY2hpbGRQcm9jZXNzIiwiZ2l0RGlmZiIsInBhdGhUb1JlcG8iLCJjb21taXQxIiwiY29tbWl0MiIsImZpbGUiLCJjd2QiLCJlbmNvZGluZyIsIm1heEJ1ZmZlciIsInRoZW4iLCJvdXRwdXQiLCJzdGRvdXQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFDQTs7OztBQUVBLE1BQU1BLElBQUksR0FBRyxtQkFBVUMsdUJBQWFELElBQXZCLENBQWI7QUFFQTs7Ozs7OztBQU1BLE1BQU1FLE9BQU8sR0FBRyxDQUFDQyxVQUFELEVBQWFDLE9BQWIsRUFBc0JDLE9BQU8sR0FBRyxFQUFoQyxFQUFvQ0MsSUFBSSxHQUFHLEVBQTNDLEtBQ2ROLElBQUksQ0FBRSxZQUFXSSxPQUFRLElBQUdDLE9BQVEsT0FBTUMsSUFBSyxFQUEzQyxFQUE4QztBQUNoREMsRUFBQUEsR0FBRyxFQUFFSixVQUQyQztBQUVoREssRUFBQUEsUUFBUSxFQUFFLE1BRnNDO0FBR2hEQyxFQUFBQSxTQUFTLEVBQUUsT0FBTztBQUg4QixDQUE5QyxDQUFKLENBSUdDLElBSkgsQ0FJUUMsTUFBTSxJQUFJQSxNQUFNLENBQUNDLE1BSnpCLENBREY7O2VBT2VWLE8iLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgcHJvbWlzaWZ5IGZyb20gJ3V0aWwucHJvbWlzaWZ5JztcbmltcG9ydCBjaGlsZFByb2Nlc3MgZnJvbSAnY2hpbGRfcHJvY2Vzcyc7XG5cbmNvbnN0IGV4ZWMgPSBwcm9taXNpZnkoY2hpbGRQcm9jZXNzLmV4ZWMpO1xuXG4vKipcbiAqIFJldHVybnMgYSBnaXQgZGlmZiBnaXZlbiBhIHBhdGggdG8gdGhlIHJlcG8sIGEgY29tbWl0LFxuICogYW4gb3B0aW9uYWwgc2Vjb25kIGNvbW1pdCwgYW5kIGFuIG9wdGlvbmFsIGZpbGUuXG4gKlxuICogUmV0dXJucyB0aGUgZGlmZiBhcyBhIHN0cmluZy5cbiAqL1xuY29uc3QgZ2l0RGlmZiA9IChwYXRoVG9SZXBvLCBjb21taXQxLCBjb21taXQyID0gJycsIGZpbGUgPSAnJykgPT5cbiAgZXhlYyhgZ2l0IGRpZmYgJHtjb21taXQxfSAke2NvbW1pdDJ9IC0tICR7ZmlsZX1gLCB7XG4gICAgY3dkOiBwYXRoVG9SZXBvLFxuICAgIGVuY29kaW5nOiAndXRmOCcsXG4gICAgbWF4QnVmZmVyOiAxMDI0ICogMTAwMFxuICB9KS50aGVuKG91dHB1dCA9PiBvdXRwdXQuc3Rkb3V0KTtcblxuZXhwb3J0IGRlZmF1bHQgZ2l0RGlmZjtcbiJdfQ==+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9naXRfZGlmZi5qcyJdLCJuYW1lcyI6WyJleGVjRmlsZSIsImNoaWxkUHJvY2VzcyIsImdpdERpZmYiLCJwYXRoVG9SZXBvIiwiY29tbWl0MSIsImNvbW1pdDIiLCJmaWxlIiwiYXJncyIsInB1c2giLCJjd2QiLCJlbmNvZGluZyIsIm1heEJ1ZmZlciIsInRoZW4iLCJvdXRwdXQiLCJzdGRvdXQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFDQTs7OztBQUVBLE1BQU1BLFFBQVEsR0FBRyxtQkFBVUMsdUJBQWFELFFBQXZCLENBQWpCO0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUNBLE1BQU1FLE9BQU8sR0FBRyxDQUFDQyxVQUFELEVBQWFDLE9BQWIsRUFBc0JDLE9BQU8sR0FBRyxFQUFoQyxFQUFvQ0MsSUFBSSxHQUFHLEVBQTNDLEtBQWtEO0FBQ2hFLFFBQU1DLElBQUksR0FBRyxDQUFDLE1BQUQsRUFBU0gsT0FBVCxDQUFiO0FBRUEsTUFBSUMsT0FBSixFQUFhRSxJQUFJLENBQUNDLElBQUwsQ0FBVUgsT0FBVjtBQUViRSxFQUFBQSxJQUFJLENBQUNDLElBQUwsQ0FBVSxJQUFWO0FBRUEsTUFBSUYsSUFBSixFQUFVQyxJQUFJLENBQUNDLElBQUwsQ0FBVUYsSUFBVjtBQUVWLFNBQU9OLFFBQVEsQ0FBQyxLQUFELEVBQVFPLElBQVIsRUFBYztBQUMzQkUsSUFBQUEsR0FBRyxFQUFFTixVQURzQjtBQUUzQk8sSUFBQUEsUUFBUSxFQUFFLE1BRmlCO0FBRzNCQyxJQUFBQSxTQUFTLEVBQUUsT0FBTztBQUhTLEdBQWQsQ0FBUixDQUlKQyxJQUpJLENBSUVDLE1BQUQsSUFBWUEsTUFBTSxDQUFDQyxNQUpwQixDQUFQO0FBS0QsQ0FkRDs7ZUFnQmVaLE8iLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgcHJvbWlzaWZ5IGZyb20gXCJ1dGlsLnByb21pc2lmeVwiO1xuaW1wb3J0IGNoaWxkUHJvY2VzcyBmcm9tIFwiY2hpbGRfcHJvY2Vzc1wiO1xuXG5jb25zdCBleGVjRmlsZSA9IHByb21pc2lmeShjaGlsZFByb2Nlc3MuZXhlY0ZpbGUpO1xuXG4vKipcbiAqIFJldHVybnMgYSBnaXQgZGlmZiBnaXZlbiBhIHBhdGggdG8gdGhlIHJlcG8sIGEgY29tbWl0LFxuICogYW4gb3B0aW9uYWwgc2Vjb25kIGNvbW1pdCwgYW5kIGFuIG9wdGlvbmFsIGZpbGUuXG4gKlxuICogUmV0dXJucyB0aGUgZGlmZiBhcyBhIHN0cmluZy5cbiAqL1xuY29uc3QgZ2l0RGlmZiA9IChwYXRoVG9SZXBvLCBjb21taXQxLCBjb21taXQyID0gXCJcIiwgZmlsZSA9IFwiXCIpID0+IHtcbiAgY29uc3QgYXJncyA9IFtcImRpZmZcIiwgY29tbWl0MV07XG5cbiAgaWYgKGNvbW1pdDIpIGFyZ3MucHVzaChjb21taXQyKTtcblxuICBhcmdzLnB1c2goXCItLVwiKTtcblxuICBpZiAoZmlsZSkgYXJncy5wdXNoKGZpbGUpO1xuXG4gIHJldHVybiBleGVjRmlsZShcImdpdFwiLCBhcmdzLCB7XG4gICAgY3dkOiBwYXRoVG9SZXBvLFxuICAgIGVuY29kaW5nOiBcInV0ZjhcIixcbiAgICBtYXhCdWZmZXI6IDEwMjQgKiAxMDAwLFxuICB9KS50aGVuKChvdXRwdXQpID0+IG91dHB1dC5zdGRvdXQpO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgZ2l0RGlmZjtcbiJdfQ=="
+    },
+    {
+      "old_path": "dist/git_diff.js.flow",
+      "new_path": "dist/git_diff.js.flow",
+      "old_sha256": "e41c7d9c31d4563b4eadbbf0995de503808d44ad92eaf634180067ef3e28d7fc",
+      "new_sha256": "b7a4ceb85d74ebfd90274270af180f4d8623927807969150b07852d229d68ea5",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 7,
+          "new_start": 1,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 2,
+              "new_start": 1,
+              "new_count": 2,
+              "old_lines": [
+                1,
+                2
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 9,
+          "old_count": 11,
+          "new_start": 9,
+          "new_count": 20,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 12,
+              "old_count": 2,
+              "new_start": 12,
+              "new_count": 10,
+              "old_lines": [
+                12,
+                13
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 15,
+              "old_count": 3,
+              "new_start": 23,
+              "new_count": 4,
+              "old_lines": [
+                15,
+                16,
+                17
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- dist/git_diff.js.flow\n+++ dist/git_diff.js.flow\n@@ -1,7 +1,7 @@\n-import promisify from 'util.promisify';\n-import childProcess from 'child_process';\n+import promisify from \"util.promisify\";\n+import childProcess from \"child_process\";\n \n-const exec = promisify(childProcess.exec);\n+const execFile = promisify(childProcess.execFile);\n \n /**\n  * Returns a git diff given a path to the repo, a commit,\n@@ -9,11 +9,20 @@\n  *\n  * Returns the diff as a string.\n  */\n-const gitDiff = (pathToRepo, commit1, commit2 = '', file = '') =>\n-  exec(`git diff ${commit1} ${commit2} -- ${file}`, {\n+const gitDiff = (pathToRepo, commit1, commit2 = \"\", file = \"\") => {\n+  const args = [\"diff\", commit1];\n+\n+  if (commit2) args.push(commit2);\n+\n+  args.push(\"--\");\n+\n+  if (file) args.push(file);\n+\n+  return execFile(\"git\", args, {\n     cwd: pathToRepo,\n-    encoding: 'utf8',\n-    maxBuffer: 1024 * 1000\n-  }).then(output => output.stdout);\n+    encoding: \"utf8\",\n+    maxBuffer: 1024 * 1000,\n+  }).then((output) => output.stdout);\n+};\n \n export default gitDiff;\n"
+    },
+    {
+      "old_path": "dist/git_log_stream.js",
+      "new_path": "dist/git_log_stream.js",
+      "old_sha256": "0a050aadeb0dbc23973233e4bf25f9652ba4cd469ddf11e386d706feee7ba951",
+      "new_sha256": "171ae6fc733b23eb28cf3af3897a2f322dd32a34d97c667c53cb07b91770a0bd",
+      "hunks": [
+        {
+          "old_start": 34,
+          "old_count": 4,
+          "new_start": 34,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 37,
+              "old_count": 1,
+              "new_start": 37,
+              "new_count": 1,
+              "old_lines": [
+                37
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- dist/git_log_stream.js\n+++ dist/git_log_stream.js\n@@ -34,4 +34,4 @@\n \n var _default = gitLogStream;\n exports.default = _default;\n-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9naXRfbG9nX3N0cmVhbS5qcyJdLCJuYW1lcyI6WyJnaXRMb2dGb3JtYXRTdHJpbmciLCJnaXRMb2dDb21taXRNYXJrZXIiLCJnaXRMb2dNZXNzYWdlTWFya2VyIiwiZ2l0TG9nRmlsZU1hcmtlciIsImdpdExvZ1N0cmVhbSIsInBhdGhUb1JlcG8iLCJvcHRpb25zIiwic2luY2VDb21taXQiLCJnaXRQYXJhbXMiLCJmaWx0ZXIiLCJlbHQiLCJnaXRQcm9jZXNzIiwiY2hpbGRQcm9jZXNzIiwic3Bhd24iLCJjd2QiLCJlcnJvckhhbmRsZXJzIiwib24iLCJlIiwiZm9yRWFjaCIsImhhbmRsZXIiLCJzdHJlYW0iLCJzdGRvdXQiLCJhZGRFcnJvckhhbmRsZXIiLCJmbiIsInB1c2giXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFDQTs7OztBQU1BLE1BQU1BLGtCQUFrQixHQUFJLEdBQUVDLDBDQUFtQix3QkFBdUJDLDJDQUFvQixTQUFRQyx3Q0FBaUIsRUFBckg7QUFFQTs7OztBQUdBLE1BQU1DLFlBQVksR0FBRyxDQUFDQyxVQUFELEVBQWFDLE9BQU8sR0FBRyxFQUF2QixLQUE4QjtBQUNqRCxRQUFNQyxXQUFXLEdBQUdELE9BQU8sQ0FBQ0MsV0FBUixHQUF1QixHQUFFRCxPQUFPLENBQUNDLFdBQVksUUFBN0MsR0FBdUQsRUFBM0U7QUFDQSxRQUFNQyxTQUFTLEdBQUcsQ0FDaEIsS0FEZ0IsRUFFZixtQkFBa0JSLGtCQUFtQixFQUZ0QixFQUdoQixlQUhnQixFQUloQk8sV0FKZ0IsRUFLaEIsSUFMZ0IsRUFNaEIsS0FOZ0IsRUFPaEIsZ0JBUGdCLEVBUWhCRSxNQVJnQixDQVFUQyxHQUFHLElBQUlBLEdBQUcsS0FBSyxFQVJOLENBQWxCOztBQVVBLFFBQU1DLFVBQVUsR0FBR0MsdUJBQWFDLEtBQWIsQ0FBbUIsS0FBbkIsRUFBMEJMLFNBQTFCLEVBQXFDO0FBQUNNLElBQUFBLEdBQUcsRUFBRVQ7QUFBTixHQUFyQyxDQUFuQjs7QUFDQSxRQUFNVSxhQUFhLEdBQUcsRUFBdEI7QUFDQUosRUFBQUEsVUFBVSxDQUFDSyxFQUFYLENBQWMsT0FBZCxFQUF1QkMsQ0FBQyxJQUFJRixhQUFhLENBQUNHLE9BQWQsQ0FBc0JDLE9BQU8sSUFBSUEsT0FBTyxDQUFDRixDQUFELENBQXhDLENBQTVCO0FBQ0EsU0FBTztBQUNMRyxJQUFBQSxNQUFNLEVBQUVULFVBQVUsQ0FBQ1UsTUFEZDtBQUVMQyxJQUFBQSxlQUFlLEVBQUVDLEVBQUUsSUFBSVIsYUFBYSxDQUFDUyxJQUFkLENBQW1CRCxFQUFuQjtBQUZsQixHQUFQO0FBSUQsQ0FuQkQ7O2VBcUJlbkIsWSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBjaGlsZFByb2Nlc3MgZnJvbSAnY2hpbGRfcHJvY2Vzcyc7XG5pbXBvcnQge1xuICBnaXRMb2dDb21taXRNYXJrZXIsXG4gIGdpdExvZ01lc3NhZ2VNYXJrZXIsXG4gIGdpdExvZ0ZpbGVNYXJrZXJcbn0gZnJvbSAnLi9jb25zdGFudHMvZ2l0X2xvZ19mb3JtYXRfbWFya2Vycyc7XG5cbmNvbnN0IGdpdExvZ0Zvcm1hdFN0cmluZyA9IGAke2dpdExvZ0NvbW1pdE1hcmtlcn0lbiVIJW4lYW4lbiVhZSVuJWFEJW4ke2dpdExvZ01lc3NhZ2VNYXJrZXJ9JW4lQiVuJHtnaXRMb2dGaWxlTWFya2VyfWA7XG5cbi8qXG4gIFJldHVybnMgYSBzdHJlYW0gb2YgZ2l0IGxvZyBkYXRhIGZyb20gYSBnaXQgcmVwb3NpdG9yeVxuKi9cbmNvbnN0IGdpdExvZ1N0cmVhbSA9IChwYXRoVG9SZXBvLCBvcHRpb25zID0ge30pID0+IHtcbiAgY29uc3Qgc2luY2VDb21taXQgPSBvcHRpb25zLnNpbmNlQ29tbWl0ID8gYCR7b3B0aW9ucy5zaW5jZUNvbW1pdH0uLkhFQURgIDogJyc7XG4gIGNvbnN0IGdpdFBhcmFtcyA9IFtcbiAgICAnbG9nJyxcbiAgICBgLS1wcmV0dHk9Zm9ybWF0OiR7Z2l0TG9nRm9ybWF0U3RyaW5nfWAsXG4gICAgJy0tbmFtZS1zdGF0dXMnLFxuICAgIHNpbmNlQ29tbWl0LFxuICAgICctLScsXG4gICAgJy4vKicsXG4gICAgJzohbm9kZV9tb2R1bGVzJ1xuICBdLmZpbHRlcihlbHQgPT4gZWx0ICE9PSAnJyk7XG5cbiAgY29uc3QgZ2l0UHJvY2VzcyA9IGNoaWxkUHJvY2Vzcy5zcGF3bignZ2l0JywgZ2l0UGFyYW1zLCB7Y3dkOiBwYXRoVG9SZXBvfSk7XG4gIGNvbnN0IGVycm9ySGFuZGxlcnMgPSBbXTtcbiAgZ2l0UHJvY2Vzcy5vbignZXJyb3InLCBlID0+IGVycm9ySGFuZGxlcnMuZm9yRWFjaChoYW5kbGVyID0+IGhhbmRsZXIoZSkpKTtcbiAgcmV0dXJuIHtcbiAgICBzdHJlYW06IGdpdFByb2Nlc3Muc3Rkb3V0LFxuICAgIGFkZEVycm9ySGFuZGxlcjogZm4gPT4gZXJyb3JIYW5kbGVycy5wdXNoKGZuKVxuICB9O1xufTtcblxuZXhwb3J0IGRlZmF1bHQgZ2l0TG9nU3RyZWFtO1xuIl19+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9naXRfbG9nX3N0cmVhbS5qcyJdLCJuYW1lcyI6WyJnaXRMb2dGb3JtYXRTdHJpbmciLCJnaXRMb2dDb21taXRNYXJrZXIiLCJnaXRMb2dNZXNzYWdlTWFya2VyIiwiZ2l0TG9nRmlsZU1hcmtlciIsImdpdExvZ1N0cmVhbSIsInBhdGhUb1JlcG8iLCJvcHRpb25zIiwic2luY2VDb21taXQiLCJnaXRQYXJhbXMiLCJmaWx0ZXIiLCJlbHQiLCJnaXRQcm9jZXNzIiwiY2hpbGRQcm9jZXNzIiwic3Bhd24iLCJjd2QiLCJlcnJvckhhbmRsZXJzIiwib24iLCJlIiwiZm9yRWFjaCIsImhhbmRsZXIiLCJzdHJlYW0iLCJzdGRvdXQiLCJhZGRFcnJvckhhbmRsZXIiLCJmbiIsInB1c2giXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQTs7QUFDQTs7OztBQU1BLE1BQU1BLGtCQUFrQixHQUFJLEdBQUVDLDBDQUFtQix3QkFBdUJDLDJDQUFvQixTQUFRQyx3Q0FBaUIsRUFBckg7QUFFQTtBQUNBO0FBQ0E7O0FBQ0EsTUFBTUMsWUFBWSxHQUFHLENBQUNDLFVBQUQsRUFBYUMsT0FBTyxHQUFHLEVBQXZCLEtBQThCO0FBQ2pELFFBQU1DLFdBQVcsR0FBR0QsT0FBTyxDQUFDQyxXQUFSLEdBQXVCLEdBQUVELE9BQU8sQ0FBQ0MsV0FBWSxRQUE3QyxHQUF1RCxFQUEzRTtBQUNBLFFBQU1DLFNBQVMsR0FBRyxDQUNoQixLQURnQixFQUVmLG1CQUFrQlIsa0JBQW1CLEVBRnRCLEVBR2hCLGVBSGdCLEVBSWhCTyxXQUpnQixFQUtoQixJQUxnQixFQU1oQixLQU5nQixFQU9oQixnQkFQZ0IsRUFRaEJFLE1BUmdCLENBUVRDLEdBQUcsSUFBSUEsR0FBRyxLQUFLLEVBUk4sQ0FBbEI7O0FBVUEsUUFBTUMsVUFBVSxHQUFHQyx1QkFBYUMsS0FBYixDQUFtQixLQUFuQixFQUEwQkwsU0FBMUIsRUFBcUM7QUFBQ00sSUFBQUEsR0FBRyxFQUFFVDtBQUFOLEdBQXJDLENBQW5COztBQUNBLFFBQU1VLGFBQWEsR0FBRyxFQUF0QjtBQUNBSixFQUFBQSxVQUFVLENBQUNLLEVBQVgsQ0FBYyxPQUFkLEVBQXVCQyxDQUFDLElBQUlGLGFBQWEsQ0FBQ0csT0FBZCxDQUFzQkMsT0FBTyxJQUFJQSxPQUFPLENBQUNGLENBQUQsQ0FBeEMsQ0FBNUI7QUFDQSxTQUFPO0FBQ0xHLElBQUFBLE1BQU0sRUFBRVQsVUFBVSxDQUFDVSxNQURkO0FBRUxDLElBQUFBLGVBQWUsRUFBRUMsRUFBRSxJQUFJUixhQUFhLENBQUNTLElBQWQsQ0FBbUJELEVBQW5CO0FBRmxCLEdBQVA7QUFJRCxDQW5CRDs7ZUFxQmVuQixZIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGNoaWxkUHJvY2VzcyBmcm9tICdjaGlsZF9wcm9jZXNzJztcbmltcG9ydCB7XG4gIGdpdExvZ0NvbW1pdE1hcmtlcixcbiAgZ2l0TG9nTWVzc2FnZU1hcmtlcixcbiAgZ2l0TG9nRmlsZU1hcmtlclxufSBmcm9tICcuL2NvbnN0YW50cy9naXRfbG9nX2Zvcm1hdF9tYXJrZXJzJztcblxuY29uc3QgZ2l0TG9nRm9ybWF0U3RyaW5nID0gYCR7Z2l0TG9nQ29tbWl0TWFya2VyfSVuJUglbiVhbiVuJWFlJW4lYUQlbiR7Z2l0TG9nTWVzc2FnZU1hcmtlcn0lbiVCJW4ke2dpdExvZ0ZpbGVNYXJrZXJ9YDtcblxuLypcbiAgUmV0dXJucyBhIHN0cmVhbSBvZiBnaXQgbG9nIGRhdGEgZnJvbSBhIGdpdCByZXBvc2l0b3J5XG4qL1xuY29uc3QgZ2l0TG9nU3RyZWFtID0gKHBhdGhUb1JlcG8sIG9wdGlvbnMgPSB7fSkgPT4ge1xuICBjb25zdCBzaW5jZUNvbW1pdCA9IG9wdGlvbnMuc2luY2VDb21taXQgPyBgJHtvcHRpb25zLnNpbmNlQ29tbWl0fS4uSEVBRGAgOiAnJztcbiAgY29uc3QgZ2l0UGFyYW1zID0gW1xuICAgICdsb2cnLFxuICAgIGAtLXByZXR0eT1mb3JtYXQ6JHtnaXRMb2dGb3JtYXRTdHJpbmd9YCxcbiAgICAnLS1uYW1lLXN0YXR1cycsXG4gICAgc2luY2VDb21taXQsXG4gICAgJy0tJyxcbiAgICAnLi8qJyxcbiAgICAnOiFub2RlX21vZHVsZXMnXG4gIF0uZmlsdGVyKGVsdCA9PiBlbHQgIT09ICcnKTtcblxuICBjb25zdCBnaXRQcm9jZXNzID0gY2hpbGRQcm9jZXNzLnNwYXduKCdnaXQnLCBnaXRQYXJhbXMsIHtjd2Q6IHBhdGhUb1JlcG99KTtcbiAgY29uc3QgZXJyb3JIYW5kbGVycyA9IFtdO1xuICBnaXRQcm9jZXNzLm9uKCdlcnJvcicsIGUgPT4gZXJyb3JIYW5kbGVycy5mb3JFYWNoKGhhbmRsZXIgPT4gaGFuZGxlcihlKSkpO1xuICByZXR1cm4ge1xuICAgIHN0cmVhbTogZ2l0UHJvY2Vzcy5zdGRvdXQsXG4gICAgYWRkRXJyb3JIYW5kbGVyOiBmbiA9PiBlcnJvckhhbmRsZXJzLnB1c2goZm4pXG4gIH07XG59O1xuXG5leHBvcnQgZGVmYXVsdCBnaXRMb2dTdHJlYW07XG4iXX0="
+    },
+    {
+      "old_path": "dist/git_pull.js",
+      "new_path": "dist/git_pull.js",
+      "old_sha256": "6a4f4db21e60bce7d1b762baa29a302980ad1751645dc559127f3213f4ccc419",
+      "new_sha256": "c0367bd250a56022cb6f6915c9dd0417ddc736fd720fd539e342cf50c03eaf44",
+      "hunks": [
+        {
+          "old_start": 36,
+          "old_count": 4,
+          "new_start": 36,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 39,
+              "old_count": 1,
+              "new_start": 39,
+              "new_count": 1,
+              "old_lines": [
+                39
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- dist/git_pull.js\n+++ dist/git_pull.js\n@@ -36,4 +36,4 @@\n \n var _default = gitPull;\n exports.default = _default;\n-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9naXRfcHVsbC5qcyJdLCJuYW1lcyI6WyJleGVjIiwiY2hpbGRQcm9jZXNzIiwiZ2l0UHVsbCIsInBhdGhUb1JlcG8iLCJyZXNvbHZlZFBhdGgiLCJlIiwiUHJvbWlzZSIsInJlamVjdCIsImN3ZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUNBOztBQUNBOzs7O0FBRUEsTUFBTUEsSUFBSSxHQUFHLG1CQUFVQyx1QkFBYUQsSUFBdkIsQ0FBYjtBQUVBOzs7Ozs7QUFLQSxNQUFNRSxPQUFPLEdBQUcsTUFBTUMsVUFBTixJQUFvQjtBQUNsQyxRQUFNQyxZQUFZLEdBQUcsd0JBQVlELFVBQVosQ0FBckI7O0FBRUEsTUFBSTtBQUNGLDZCQUFhQyxZQUFiO0FBQ0QsR0FGRCxDQUVFLE9BQU9DLENBQVAsRUFBVTtBQUNWLFdBQU9DLE9BQU8sQ0FBQ0MsTUFBUixDQUFlRixDQUFmLENBQVA7QUFDRDs7QUFFRCxTQUFPTCxJQUFJLENBQUUsVUFBRixFQUFhO0FBQUNRLElBQUFBLEdBQUcsRUFBRUo7QUFBTixHQUFiLENBQVg7QUFDRCxDQVZEOztlQVllRixPIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHByb21pc2lmeSBmcm9tICd1dGlsLnByb21pc2lmeSc7XG5pbXBvcnQgY2hpbGRQcm9jZXNzIGZyb20gJ2NoaWxkX3Byb2Nlc3MnO1xuaW1wb3J0IHt2YWxpZGF0ZVBhdGgsIHJlc29sdmVIb21lfSBmcm9tICcuL3V0aWwnO1xuXG5jb25zdCBleGVjID0gcHJvbWlzaWZ5KGNoaWxkUHJvY2Vzcy5leGVjKTtcblxuLyoqXG4gKiBQdWxscyBhIHJlcG8gZ2l2ZW4gaXRzIHBhdGguXG4gKlxuICogUmV0dXJucyB2b2lkLiBUaHJvd3MgZXJyb3Igb24gZmFpbHVyZS5cbiAqL1xuY29uc3QgZ2l0UHVsbCA9IGFzeW5jIHBhdGhUb1JlcG8gPT4ge1xuICBjb25zdCByZXNvbHZlZFBhdGggPSByZXNvbHZlSG9tZShwYXRoVG9SZXBvKTtcblxuICB0cnkge1xuICAgIHZhbGlkYXRlUGF0aChyZXNvbHZlZFBhdGgpO1xuICB9IGNhdGNoIChlKSB7XG4gICAgcmV0dXJuIFByb21pc2UucmVqZWN0KGUpO1xuICB9XG5cbiAgcmV0dXJuIGV4ZWMoYGdpdCBwdWxsYCwge2N3ZDogcmVzb2x2ZWRQYXRofSk7XG59O1xuXG5leHBvcnQgZGVmYXVsdCBnaXRQdWxsO1xuIl19+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9naXRfcHVsbC5qcyJdLCJuYW1lcyI6WyJleGVjIiwiY2hpbGRQcm9jZXNzIiwiZ2l0UHVsbCIsInBhdGhUb1JlcG8iLCJyZXNvbHZlZFBhdGgiLCJlIiwiUHJvbWlzZSIsInJlamVjdCIsImN3ZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBOztBQUNBOztBQUNBOzs7O0FBRUEsTUFBTUEsSUFBSSxHQUFHLG1CQUFVQyx1QkFBYUQsSUFBdkIsQ0FBYjtBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBQ0EsTUFBTUUsT0FBTyxHQUFHLE1BQU1DLFVBQU4sSUFBb0I7QUFDbEMsUUFBTUMsWUFBWSxHQUFHLHdCQUFZRCxVQUFaLENBQXJCOztBQUVBLE1BQUk7QUFDRiw2QkFBYUMsWUFBYjtBQUNELEdBRkQsQ0FFRSxPQUFPQyxDQUFQLEVBQVU7QUFDVixXQUFPQyxPQUFPLENBQUNDLE1BQVIsQ0FBZUYsQ0FBZixDQUFQO0FBQ0Q7O0FBRUQsU0FBT0wsSUFBSSxDQUFFLFVBQUYsRUFBYTtBQUFDUSxJQUFBQSxHQUFHLEVBQUVKO0FBQU4sR0FBYixDQUFYO0FBQ0QsQ0FWRDs7ZUFZZUYsTyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBwcm9taXNpZnkgZnJvbSAndXRpbC5wcm9taXNpZnknO1xuaW1wb3J0IGNoaWxkUHJvY2VzcyBmcm9tICdjaGlsZF9wcm9jZXNzJztcbmltcG9ydCB7dmFsaWRhdGVQYXRoLCByZXNvbHZlSG9tZX0gZnJvbSAnLi91dGlsJztcblxuY29uc3QgZXhlYyA9IHByb21pc2lmeShjaGlsZFByb2Nlc3MuZXhlYyk7XG5cbi8qKlxuICogUHVsbHMgYSByZXBvIGdpdmVuIGl0cyBwYXRoLlxuICpcbiAqIFJldHVybnMgdm9pZC4gVGhyb3dzIGVycm9yIG9uIGZhaWx1cmUuXG4gKi9cbmNvbnN0IGdpdFB1bGwgPSBhc3luYyBwYXRoVG9SZXBvID0+IHtcbiAgY29uc3QgcmVzb2x2ZWRQYXRoID0gcmVzb2x2ZUhvbWUocGF0aFRvUmVwbyk7XG5cbiAgdHJ5IHtcbiAgICB2YWxpZGF0ZVBhdGgocmVzb2x2ZWRQYXRoKTtcbiAgfSBjYXRjaCAoZSkge1xuICAgIHJldHVybiBQcm9taXNlLnJlamVjdChlKTtcbiAgfVxuXG4gIHJldHVybiBleGVjKGBnaXQgcHVsbGAsIHtjd2Q6IHJlc29sdmVkUGF0aH0pO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgZ2l0UHVsbDtcbiJdfQ=="
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "a96bea48d9e25cce920c9f6a553f977cb11001dd20d1acfed2ae49f4e8f58624",
+      "new_sha256": "6438e0fa29d703f530dfccaba6655c95b31c03a6ddade5ee2ba57769a0af245f",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 10,
+          "old_count": 7,
+          "new_start": 10,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 13,
+              "old_count": 1,
+              "new_start": 13,
+              "new_count": 1,
+              "old_lines": [
+                13
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 20,
+          "old_count": 15,
+          "new_start": 20,
+          "new_count": 15,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 23,
+              "old_count": 1,
+              "new_start": 23,
+              "new_count": 1,
+              "old_lines": [
+                23
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 26,
+              "old_count": 2,
+              "new_start": 26,
+              "new_count": 2,
+              "old_lines": [
+                26,
+                27
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 30,
+              "old_count": 2,
+              "new_start": 30,
+              "new_count": 2,
+              "old_lines": [
+                30,
+                31
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 36,
+          "old_count": 24,
+          "new_start": 36,
+          "new_count": 24,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 39,
+              "old_count": 10,
+              "new_start": 39,
+              "new_count": 10,
+              "old_lines": [
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 50,
+              "old_count": 4,
+              "new_start": 50,
+              "new_count": 4,
+              "old_lines": [
+                50,
+                51,
+                52,
+                53
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 55,
+              "old_count": 2,
+              "new_start": 55,
+              "new_count": 2,
+              "old_lines": [
+                55,
+                56
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"git-parse\",\n-  \"version\": \"1.0.4\",\n+  \"version\": \"1.0.5\",\n   \"description\": \"Turn a git repository into a javascript object.\",\n   \"main\": \"dist\",\n   \"scripts\": {\n@@ -10,7 +10,7 @@\n   \"author\": \"\",\n   \"dependencies\": {\n     \"byline\": \"5.0.0\",\n-    \"util.promisify\": \"1.0.1\"\n+    \"util.promisify\": \"1.1.1\"\n   },\n   \"license\": \"BSD-2-Clause\",\n   \"contributors\": [\n@@ -20,15 +20,15 @@\n     },\n     {\n       \"name\": \"Morgan Packard\",\n-      \"email\": \"mpackard@wayfair.com\"\n+      \"email\": \"morgan@morganpackard.com\"\n     },\n     {\n-      \"name\": \"Ezra Skolnik\",\n-      \"email\": \"eskolnik@wayfair.com\"\n+      \"name\": \"Gary White\",\n+      \"email\": \"gwhite@wayfair.com\"\n     },\n     {\n-      \"name\": \"Sandy Suh\",\n-      \"email\": \"asuh@wayfair.com\"\n+      \"name\": \"Dan Rowe\",\n+      \"email\": \"drowe@wayfair.com\"\n     }\n   ],\n   \"repository\": {\n@@ -36,24 +36,24 @@\n     \"url\": \"https://github.com/wayfair/git-parse\"\n   },\n   \"devDependencies\": {\n-    \"@babel/cli\": \"^7.8.4\",\n-    \"@babel/plugin-proposal-class-properties\": \"^7.8.3\",\n-    \"@babel/plugin-proposal-object-rest-spread\": \"^7.8.3\",\n-    \"@babel/preset-env\": \"^7.8.7\",\n-    \"@babel/preset-flow\": \"^7.8.3\",\n-    \"babel-eslint\": \"10.1.0\",\n-    \"eslint\": \"6.8.0\",\n-    \"eslint-plugin-flowtype\": \"4.6.0\",\n-    \"eslint-plugin-import\": \"2.20.1\",\n-    \"flow-bin\": \"0.120.1\",\n+    \"@babel/cli\": \"^7.14.8\",\n+    \"@babel/plugin-proposal-class-properties\": \"^7.14.5\",\n+    \"@babel/plugin-proposal-object-rest-spread\": \"^7.14.7\",\n+    \"@babel/preset-env\": \"^7.15.0\",\n+    \"@babel/preset-flow\": \"^7.14.5\",\n+    \"@babel/eslint-parser\": \"^7.15.0\",\n+    \"eslint\": \"7.32.0\",\n+    \"eslint-plugin-flowtype\": \"5.9.0\",\n+    \"eslint-plugin-import\": \"2.24.0\",\n+    \"flow-bin\": \"0.157.0\",\n     \"flow-copy-source\": \"2.0.9\",\n-    \"inquirer\": \"7.1.0\",\n-    \"jest\": \"25.1.0\",\n-    \"lerna\": \"3.20.2\",\n-    \"lodash\": \"4.17.15\",\n+    \"inquirer\": \"8.1.2\",\n+    \"jest\": \"26.6.3\",\n+    \"lerna\": \"4.0.0\",\n+    \"lodash\": \"4.17.21\",\n     \"minimist\": \"1.2.5\",\n-    \"nock\": \"12.0.3\",\n-    \"prettier\": \"1.19.1\"\n+    \"nock\": \"13.1.1\",\n+    \"prettier\": \"2.3.2\"\n   },\n   \"files\": [\n     \"dist\"\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

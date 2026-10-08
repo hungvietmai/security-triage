@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-pidusage-1.0.0",
+  "split": "held_out",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "f3fed8f649315bbb7848aedb54926b62a7e6194f4e99a64192fe356011633f8e",
+    "fixed": "2e0396f0226f0f3a9fb9369823197be1f64cf0e4be1b6d01ccee1c2076b82292"
+  },
+  "patch_hunks_sha256": "3bb941fd2c8b500ac31d5cdd21d5f32b6acfa808cf7fee85128b1703f50d69e1",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/stats.js",
+      "span": {
+        "startLine": 108,
+        "startColumn": 5,
+        "endLine": 119,
+        "endColumn": 7
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/stats.js:108:5",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pidusage_1.0.0/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/stats.js:108:5; Command Injection in pidusage; cast pid as integer",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

@@ -1,0 +1,35 @@
+{
+  "pair_id": "secbench-local-devices-2.0.0",
+  "split": "development",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "420f2521dc7223961ce99ad547bcffb33284fdcbd0d37237149f7a2ee36e9a40",
+    "fixed": "43f3f7bde1ca78430255c0e56a9292b65856805c2877616caa964d8518702c44"
+  },
+  "patch_hunks_sha256": "e33c135ebc7f49f32e891a1fa357c7f0afab4908a92c9561e52319c30ae2b0c2",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "sink_hint_not_uniquely_contained_in_callee",
+      "candidate_count": 0,
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "src/index.js:114:13",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/local-devices_2.0.0/package.json",
+          "GHSA_SOURCE:https://github.com/DylanPiercey/local-devices"
+        ],
+        "inventory_basis": "SecBench sink src/index.js:114:13; Command Injection in local-devices",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

@@ -1,0 +1,303 @@
+{
+  "pair_id": "secbench-whereis-0.4.0",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "d6ab59a2a6cafe407a221659a47d2de426c4777925a95e7539baef6988f2f4c9",
+    "fixed": "a294565225d90e0fb151d81ac83dcab591d4fcca4424d7de40ebc66ca79eb4d3"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "yarn.lock",
+        "reason": "lockfile"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "151275eb7562d61e2c1414f58a4027b8917d3413f60adc6a7b58265338bec08d",
+      "new_sha256": "b80d982f624801f709599cb80076bd7f901b5aa918e3633e3e069ab34cc5f5c9",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 13,
+          "new_start": 1,
+          "new_count": 13,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": [
+                8
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 10,
+              "old_count": 1,
+              "new_start": 10,
+              "new_count": 1,
+              "old_lines": [
+                10
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,13 +1,13 @@\n var cp = require('child_process');\n \n module.exports = function whereis(name, cb) {\n-  cp.exec('which ' + name, function(error, stdout, stderr) {\n+  cp.execFile('which', [name], function(error, stdout, stderr) {\n     stdout = stdout.split('\\n')[0];\n     if (error || stderr || stdout === '' || stdout.charAt(0) !== '/') {\n       stdout = stdout.split('\\n')[0];\n-      cp.exec('whereis ' + name, function(error, stdout, stderr) {\n+      cp.execFile('whereis', [name], function(error, stdout, stderr) {\n         if (error || stderr || stdout === '' || stdout.indexOf( '/' ) === -1) {\n-          cp.exec('where ' + name, function (error, stdout, stderr) { //windows\n+          cp.execFile('where', [name], function (error, stdout, stderr) { //windows\n             if (error || stderr || stdout === '' || stdout.indexOf('\\\\') === -1) {\n               cp.exec('for %i in (' + name + '.exe) do @echo. %~$PATH:i', function (error, stdout, stderr) { //windows xp\n                 if (error || stderr || stdout === '' || stdout.indexOf('\\\\') === -1) {\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "655411fb840e7f64749584771a439db48423b7c3a31ab97a34b23b8b84a804d9",
+      "new_sha256": "71327664c9ce7303b73ba518c34adf8626c46c152f38d08a3701341d17510267",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 7,
+          "new_start": 1,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 2,
+              "new_start": 3,
+              "new_count": 2,
+              "old_lines": [
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 11,
+          "old_count": 9,
+          "new_start": 11,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 14,
+              "old_count": 0,
+              "new_start": 14,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 16,
+              "old_count": 1,
+              "new_start": 17,
+              "new_count": 1,
+              "old_lines": [
+                16
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,7 +1,7 @@\n {\n   \"name\": \"whereis\",\n-  \"version\": \"0.4.0\",\n-  \"author\": \"Vincent Voyer vincent.voyer@gmail.com\",\n+  \"version\": \"0.4.1\",\n+  \"author\": \"Vincent Voyer <vincent@zeroload.net>\",\n   \"description\": \"Which/Whereis easy helper, find if a program exists\",\n   \"keywords\": [\n     \"which\",\n@@ -11,9 +11,10 @@\n     \"bin\",\n     \"path\"\n   ],\n+  \"license\": \"MIT\",\n   \"repository\": \"git://github.com/vvo/node-whereis.git\",\n   \"devDependencies\": {\n-    \"tap\": \"^0.4.12\"\n+    \"tap\": \"0.6.0\"\n   },\n   \"scripts\": {\n     \"test\": \"node test\"\n"
+    },
+    {
+      "old_path": "test.js",
+      "new_path": "test.js",
+      "old_sha256": "dd8b6be87c670273150219a413f7d053ab3e97f087f307121bdc8e8c9430f736",
+      "new_sha256": "04d47448c97adf3a23b22bdabd229f160c0e710e27ff609aaadbc9e2afede271",
+      "hunks": [
+        {
+          "old_start": 4,
+          "old_count": 7,
+          "new_start": 4,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 1,
+              "new_start": 7,
+              "new_count": 1,
+              "old_lines": [
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 16,
+          "old_count": 7,
+          "new_start": 16,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 19,
+              "old_count": 1,
+              "new_start": 19,
+              "new_count": 1,
+              "old_lines": [
+                19
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 33,
+          "old_count": 7,
+          "new_start": 33,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 36,
+              "old_count": 1,
+              "new_start": 36,
+              "new_count": 1,
+              "old_lines": [
+                36
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 49,
+          "old_count": 7,
+          "new_start": 49,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 52,
+              "old_count": 1,
+              "new_start": 52,
+              "new_count": 1,
+              "old_lines": [
+                52
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- test.js\n+++ test.js\n@@ -4,7 +4,7 @@\n   whereis = require('./');\n \n test(\"when which found our program\", function(t) {\n-  cp.exec = function(name, cb) {\n+  cp.execFile = function(program, args, cb) {\n     cb(null, '/etc/bin');\n   };\n \n@@ -16,7 +16,7 @@\n \n test(\"when which did not found, whereis found it\", function(t) {\n   var callcount = 0;\n-  cp.exec = function(name, cb) {\n+  cp.execFile = function(program, args, cb) {\n     if (callcount === 0) {\n       callcount++;\n       cb(null, 'not found bin');\n@@ -33,7 +33,7 @@\n \n test(\"when which did not found, whereis did not found, where will find\", function(t) {\n   var callcount = 0;\n-  cp.exec = function(name, cb) {\n+  cp.execFile = function(program, args, cb) {\n     if (callcount < 2) {\n       callcount++;\n       cb(null, 'not found bin');\n@@ -49,7 +49,7 @@\n });\n \n test(\"when which found it and output has linebreak\", function(t) {\n-  cp.exec = function(name, cb) {\n+  cp.execFile = function(program, args, cb) {\n     cb(null, '/etc/bin\\n');\n   };\n \n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "204f2ad804a26d32bd0696901f37636ec0fb4e87d47c76fbb0d01ed65fac1609",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 15,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 15,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1,15 +0,0 @@\n-lib-cov\n-*.seed\n-*.log\n-*.csv\n-*.dat\n-*.out\n-*.pid\n-*.gz\n-\n-pids\n-logs\n-results\n-\n-node_modules\n-npm-debug.log"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

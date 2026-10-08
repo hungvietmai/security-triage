@@ -1,0 +1,982 @@
+{
+  "pair_id": "secbench-blamer-0.1.13",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "da0c047a9cdc8a03083ecfcc74ac4ad79538261219a178625192c6924a744f96",
+    "fixed": "f4d676f204192b55d81c7f13927be59401e971edc091a4c32b8d889133e0351a"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/BlamerSpec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/_bootstrap.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/vcs/gitSpec.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/vcs/svnSpec.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "9deda09d1cce20ef298365ea4860b72e290a720294aba16cb9323bf5456d43ef",
+      "new_sha256": "b10e8cb6775f11cb5faf74b7936a47c425c083f67d754d40b7b164e1a808dbc1",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 38,
+          "new_start": 1,
+          "new_count": 108,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 5,
+              "old_count": 1,
+              "new_start": 5,
+              "new_count": 6,
+              "old_lines": [
+                5
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 3,
+              "new_start": 12,
+              "new_count": 23,
+              "old_lines": [
+                7,
+                8,
+                9
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 11,
+              "old_count": 3,
+              "new_start": 36,
+              "new_count": 12,
+              "old_lines": [
+                11,
+                12,
+                13
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 15,
+              "old_count": 6,
+              "new_start": 49,
+              "new_count": 3,
+              "old_lines": [
+                15,
+                16,
+                17,
+                18,
+                19,
+                20
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 22,
+              "old_count": 2,
+              "new_start": 53,
+              "new_count": 3,
+              "old_lines": [
+                22,
+                23
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 26,
+              "old_count": 8,
+              "new_start": 58,
+              "new_count": 22,
+              "old_lines": [
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 35,
+              "old_count": 3,
+              "new_start": 81,
+              "new_count": 27,
+              "old_lines": [
+                35,
+                36,
+                37
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,38 +1,108 @@\n {\n   \"name\": \"blamer\",\n-  \"version\": \"0.1.13\",\n+  \"version\": \"1.0.1\",\n   \"description\": \"blamer is a tool for getting information about author of code from version control system\",\n-  \"main\": \"src/index.js\",\n+  \"main\": \"build/main/index.js\",\n+  \"typings\": \"build/main/index.d.ts\",\n+  \"module\": \"build/module/index.js\",\n+  \"repository\": \"https://github.com/kucherenko/blamer\",\n+  \"license\": \"MIT\",\n+  \"keywords\": [],\n   \"scripts\": {\n-    \"test\": \"mocha $(find test -name '*.js')\",\n-    \"ci\": \"COVERAGE=true ./node_modules/mocha/bin/mocha -R mocha-phantom-coverage-reporter $(find test -name '*.js')\",\n-    \"developing\": \"./node_modules/mocha/bin/mocha --watch $(find test -name '*.js')\"\n+    \"describe\": \"npm-scripts-info\",\n+    \"build\": \"run-s clean && run-p build:*\",\n+    \"build:main\": \"tsc -p tsconfig.json\",\n+    \"build:module\": \"tsc -p tsconfig.module.json\",\n+    \"fix\": \"run-s fix:*\",\n+    \"fix:prettier\": \"prettier \\\"src/**/*.ts\\\" --write\",\n+    \"fix:tslint\": \"tslint --fix --project .\",\n+    \"test\": \"run-s build test:*\",\n+    \"test:lint\": \"tslint --project . && prettier \\\"src/**/*.ts\\\" --list-different\",\n+    \"test:unit\": \"nyc ava --verbose\",\n+    \"watch\": \"run-s clean build:main && run-p \\\"build:main -- -w\\\" \\\"test:unit -- --watch\\\"\",\n+    \"cov\": \"run-s build test:unit cov:html && open-cli coverage/index.html\",\n+    \"cov:html\": \"nyc report --reporter=lcov\",\n+    \"cov:send\": \"nyc report --reporter=lcov && codecov\",\n+    \"cov:check\": \"nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100\",\n+    \"doc\": \"run-s doc:html && open-cli build/docs/index.html\",\n+    \"doc:html\": \"typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --out build/docs\",\n+    \"doc:json\": \"typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --json build/docs/typedoc.json\",\n+    \"doc:publish\": \"gh-pages -m \\\"[ci skip] Updates\\\" -d build/docs\",\n+    \"version\": \"standard-version\",\n+    \"reset\": \"git clean -dfx && git reset --hard && npm i\",\n+    \"clean\": \"trash build test\",\n+    \"prepare-release\": \"run-s reset test cov:check doc:html version doc:publish\"\n   },\n-  \"repository\": {\n-    \"type\": \"git\",\n-    \"url\": \"https://github.com/kucherenko/blamer.git\"\n+  \"scripts-info\": {\n+    \"info\": \"Display information about the package scripts\",\n+    \"build\": \"Clean and rebuild the project\",\n+    \"fix\": \"Try to automatically fix any linting problems\",\n+    \"test\": \"Lint and unit test the project\",\n+    \"watch\": \"Watch and rebuild the project on save, then rerun relevant tests\",\n+    \"cov\": \"Rebuild, run tests, then create and open the coverage report\",\n+    \"doc\": \"Generate HTML API documentation and open it in a browser\",\n+    \"doc:json\": \"Generate API documentation in typedoc JSON format\",\n+    \"version\": \"Bump package.json version, update CHANGELOG.md, tag release\",\n+    \"reset\": \"Delete all untracked files and reset the repo to the last commit\",\n+    \"prepare-release\": \"One-step: clean, build, test, publish docs, and prep a release\"\n   },\n-  \"keywords\": [\n-    \"blame\",\n-    \"vcs\",\n-    \"git\",\n-    \"svn\"\n-  ],\n+  \"engines\": {\n+    \"node\": \">=8.9\"\n+  },\n   \"dependencies\": {\n-    \"bluebird\": \"~2.3.x\",\n-    \"xml2js\": \"~0.4.x\"\n+    \"execa\": \"^4.0.0\",\n+    \"which\": \"^2.0.2\",\n+    \"xml2js\": \"^0.4.23\"\n   },\n   \"devDependencies\": {\n-    \"mocha\": \"~2.0.x\",\n-    \"chai\": \"~1.9.x\",\n-    \"sinon\": \"~1.10.x\",\n-    \"sinon-chai\": \"~2.6.x\",\n-    \"proxyquire\": \"~1.0.x\",\n-    \"coveralls\": \"~2.11.x\",\n-    \"jscoverage\": \"~0.5.x\",\n-    \"mocha-phantom-coverage-reporter\": \"~0.1.x\"\n+    \"@bitjson/npm-scripts-info\": \"^1.0.0\",\n+    \"@bitjson/typedoc\": \"^0.15.0-0\",\n+    \"@istanbuljs/nyc-config-typescript\": \"^0.1.3\",\n+    \"@types/sinon\": \"^7.5.2\",\n+    \"@types/which\": \"^1.3.2\",\n+    \"@types/xml2js\": \"^0.4.5\",\n+    \"ava\": \"^3.5.0\",\n+    \"codecov\": \"^3.6.5\",\n+    \"cz-conventional-changelog\": \"^2.1.0\",\n+    \"gh-pages\": \"^2.0.1\",\n+    \"npm-run-all\": \"^4.1.5\",\n+    \"nyc\": \"^14.1.1\",\n+    \"open-cli\": \"^5.0.0\",\n+    \"prettier\": \"^1.18.2\",\n+    \"proxyquire\": \"^2.1.3\",\n+    \"sinon\": \"^9.0.0\",\n+    \"standard-version\": \"^6.0.1\",\n+    \"trash-cli\": \"^3.0.0\",\n+    \"tslint\": \"^5.18.0\",\n+    \"tslint-config-prettier\": \"^1.18.0\",\n+    \"tslint-immutable\": \"^6.0.1\",\n+    \"typescript\": \"^3.5.3\"\n   },\n-  \"readmeFilename\": \"README.md\",\n-  \"author\": \"Andrey Kucherenko\",\n-  \"license\": \"MIT\"\n+  \"ava\": {\n+    \"failFast\": true,\n+    \"files\": [\n+      \"build/main/**/*.spec.js\"\n+    ],\n+    \"ignoredByWatcher\": [\n+      \"build/main/**/*.js\"\n+    ]\n+  },\n+  \"config\": {\n+    \"commitizen\": {\n+      \"path\": \"cz-conventional-changelog\"\n+    }\n+  },\n+  \"prettier\": {\n+    \"singleQuote\": true\n+  },\n+  \"nyc\": {\n+    \"extends\": \"@istanbuljs/nyc-config-typescript\",\n+    \"exclude\": [\n+      \"**/*.spec.js\"\n+    ],\n+    \"reporters\": [\n+      \"lcov\",\n+      \"text-summary\"\n+    ]\n+  }\n }\n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "56afc5599c83016216141695438bc85f3cf9d1708e66ad794174c8823860ed64",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 9,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 9,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1,9 +0,0 @@\n-.tmp\n-.travis.yml\n-.coveralls.yml\n-.git\n-.gitignore\n-npm-debug.log\n-.idea\n-coverage\n-atlassian-ide-plugin.xml"
+    },
+    {
+      "old_path": "src/Blamer.js",
+      "new_path": null,
+      "old_sha256": "d3b4b3452d4ba63342c645737a089c18cd121dfb04fb186ecaa08493d9956df4",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 22,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 22,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/Blamer.js\n+++ /dev/null\n@@ -1,22 +0,0 @@\n-var blamerVCS = {\n-    'git': require(\"./vcs/git\"),\n-    'svn': require(\"./vcs/svn\")\n-};\n-var Blamer = function Blamer(type, args) {\n-    this.args = args;\n-    this.type = type || 'git';\n-};\n-\n-Blamer.prototype.blameByFile = function blameByFile(file, args) {\n-    if (!blamerVCS.hasOwnProperty(this.type)) {\n-        throw new Error('VCS \"' + this.type + '\" don\\'t supported');\n-    }\n-    args = typeof args === 'string' ? args : this.args;\n-    return blamerVCS[this.type](file, args);\n-};\n-\n-Blamer.prototype.getType = function () {\n-    return this.type;\n-};\n-\n-module.exports = Blamer;\n"
+    },
+    {
+      "old_path": "src/index.js",
+      "new_path": null,
+      "old_sha256": "260b62f518342816599787ecb0f358d9c09da318ca56709c540940a78f7b83ea",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 3,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 3,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/index.js\n+++ /dev/null\n@@ -1,3 +0,0 @@\n-var Blamer = require('./Blamer');\n-\n-module.exports = Blamer;"
+    },
+    {
+      "old_path": "src/vcs/git.js",
+      "new_path": null,
+      "old_sha256": "12a2e1536e609f3acf58f3057356ae5473842151c972ab9151d0417e69c94135",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 49,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 49,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/vcs/git.js\n+++ /dev/null\n@@ -1,49 +0,0 @@\n-var exec = require('child_process').exec;\n-var path = require('path');\n-var Promise = require('bluebird');\n-\n-function convertStringToObject(line) {\n-  var commit = {};\n-  var matches = line.match(/(.+)\\s+\\((.+)\\s+(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} (\\+|\\-)\\d{4})\\s+(\\d+)\\)(.*)/);\n-  if (!matches) {\n-    console.log('Wrong format');\n-  }\n-  commit.rev = matches[1];\n-  commit.author = matches[2];\n-  commit.date = matches[3];\n-  commit.line = matches[5];\n-\n-  return commit;\n-}\n-\n-module.exports = function(file, args) {\n-  args = typeof args === 'string' ? args : '-w';\n-  var realFile = path.basename(file);\n-  var cwd = path.dirname(file);\n-  return new Promise(function(resolve, reject) {\n-    exec('git blame ' + args + ' ' + realFile, {\n-      cwd: cwd,\n-      maxBuffer: 1024 * 1024\n-    }, function(error, stdout, stderr) {\n-      var result = {},\n-        lines, res = {};\n-      if (error) {\n-        reject({\n-          error: error,\n-          message: stderr\n-        });\n-      } else {\n-        lines = stdout.split(\"\\n\");\n-        lines.forEach(function(line) {\n-          if (line !== '') {\n-            line = convertStringToObject(line);\n-            result[line.line] = line;\n-          }\n-        });\n-        res[file] = result;\n-        resolve(res);\n-      }\n-    });\n-  });\n-\n-};\n"
+    },
+    {
+      "old_path": "src/vcs/svn.js",
+      "new_path": null,
+      "old_sha256": "504efd9c14d00611ade763ab267a3371f2835f0a198a2faa21ff1e14791370db",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 53,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 53,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/vcs/svn.js\n+++ /dev/null\n@@ -1,53 +0,0 @@\n-var exec = require('child_process').exec;\n-var path = require('path');\n-var Promise = require('bluebird');\n-var xml2js = require(\"xml2js\");\n-\n-\n-module.exports = function(file, args) {\n-  args = typeof args === 'string' ? args : '--xml';\n-  var realFile = path.basename(file);\n-  var cwd = path.dirname(file);\n-\n-  function parseResult(buffer, resolve, reject) {\n-    xml2js.parseString(buffer, function(err, result) {\n-      if (err) {\n-        reject({\n-          error: err\n-        });\n-      } else {\n-        var json = {},\n-          res = {};\n-        if (result.blame.target[0].entry) {\n-          result.blame.target[0].entry.forEach(function(line) {\n-            json[line.$['line-number']] = {\n-              rev: line.commit[0].$.revision,\n-              author: line.commit[0].author[0],\n-              date: line.commit[0].date[0],\n-              line: line.$['line-number']\n-            };\n-          });\n-        }\n-        res[file] = json;\n-        resolve(res);\n-      }\n-    });\n-  }\n-\n-  return new Promise(function(resolve, reject) {\n-    exec('svn blame ' + realFile + ' ' + args, {\n-      cwd: cwd,\n-      maxBuffer: 1024 * 1024\n-    }, function(error, stdout, stderr) {\n-      if (error) {\n-        reject({\n-          error: error,\n-          message: stderr\n-        });\n-      } else {\n-        parseResult(stdout, resolve, reject);\n-      }\n-    });\n-  });\n-\n-};\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/blame-result.interface.d.ts",
+      "old_sha256": null,
+      "new_sha256": "e905c0c86dea7f58cd41ba2e8d82bd472480810b44f8d6e4c6854cc18f35fa58",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 11,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/blame-result.interface.d.ts\n@@ -0,0 +1,11 @@\n+export interface BlamedLine {\n+    rev: string;\n+    author: string;\n+    date: string;\n+    line: string;\n+}\n+export interface BlameResult {\n+    [path: string]: {\n+        [line: string]: BlamedLine;\n+    };\n+}\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/blame-result.interface.js",
+      "old_sha256": null,
+      "new_sha256": "708610f56ceefdd6109a6f77f7c5a13b458326104ff0b5f653364c3849c15427",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/blame-result.interface.js\n@@ -0,0 +1,3 @@\n+\"use strict\";\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmxhbWUtcmVzdWx0LmludGVyZmFjZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ibGFtZS1yZXN1bHQuaW50ZXJmYWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiIifQ=="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/blamer.d.ts",
+      "old_sha256": null,
+      "new_sha256": "0a648988c57c7e5249f6ba16765fbc927989bd7dcf5133dc458090afb92992a2",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 9,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/blamer.d.ts\n@@ -0,0 +1,9 @@\n+import { BlameResult } from './blame-result.interface';\n+declare type VCSType = 'git' | 'svn';\n+export declare class Blamer {\n+    private readonly type;\n+    constructor(type?: VCSType);\n+    blameByFile(path: string): Promise<BlameResult>;\n+    private getVCSBlamer;\n+}\n+export {};\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/blamer.js",
+      "old_sha256": null,
+      "new_sha256": "da9663aaf99f7a45b0e11e8eca537cea5e099e4945a090435c2d0f09a9a4aa89",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 21,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 21,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/blamer.js\n@@ -0,0 +1,21 @@\n+\"use strict\";\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const git_1 = require(\"./vcs/git\");\n+const svn_1 = require(\"./vcs/svn\");\n+class Blamer {\n+    constructor(type = 'git') {\n+        this.type = 'git';\n+        this.type = type;\n+    }\n+    async blameByFile(path) {\n+        return this.getVCSBlamer()(path);\n+    }\n+    getVCSBlamer() {\n+        if (this.type === 'svn') {\n+            return svn_1.svn;\n+        }\n+        return git_1.git;\n+    }\n+}\n+exports.Blamer = Blamer;\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmxhbWVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2JsYW1lci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUNBLG1DQUFnQztBQUNoQyxtQ0FBZ0M7QUFJaEMsTUFBYSxNQUFNO0lBR2pCLFlBQVksT0FBZ0IsS0FBSztRQUZoQixTQUFJLEdBQVksS0FBSyxDQUFDO1FBR3JDLElBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDO0lBQ25CLENBQUM7SUFFTSxLQUFLLENBQUMsV0FBVyxDQUFDLElBQVk7UUFDbkMsT0FBTyxJQUFJLENBQUMsWUFBWSxFQUFFLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDbkMsQ0FBQztJQUVPLFlBQVk7UUFDbEIsSUFBSSxJQUFJLENBQUMsSUFBSSxLQUFLLEtBQUssRUFBRTtZQUN2QixPQUFPLFNBQUcsQ0FBQztTQUNaO1FBQ0QsT0FBTyxTQUFHLENBQUM7SUFDYixDQUFDO0NBQ0Y7QUFqQkQsd0JBaUJDIn0="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/index.d.ts",
+      "old_sha256": null,
+      "new_sha256": "6992e4deba915c520d2ffc9663cf3f944c906388ecbd0b5f0f490e4f87b9f5c6",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/index.d.ts\n@@ -0,0 +1,3 @@\n+import { Blamer } from './blamer';\n+export * from './blame-result.interface';\n+export default Blamer;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/index.js",
+      "old_sha256": null,
+      "new_sha256": "a4ed54d9dd37d21ee2f877fdc3511dfe12e6094ed2652f0df40c30657ac97db3",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 5,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 5,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/index.js\n@@ -0,0 +1,5 @@\n+\"use strict\";\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const blamer_1 = require(\"./blamer\");\n+exports.default = blamer_1.Blamer;\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxxQ0FBa0M7QUFHbEMsa0JBQWUsZUFBTSxDQUFDIn0="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/vcs/git.d.ts",
+      "old_sha256": null,
+      "new_sha256": "4902ce0e17379a536571d77cab3bbabca02c6f5a9a61050a5a772d879ffe28f7",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 2,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 2,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/vcs/git.d.ts\n@@ -0,0 +1,2 @@\n+import { BlameResult } from '../blame-result.interface';\n+export declare function git(path: string): Promise<BlameResult>;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/vcs/git.js",
+      "old_sha256": null,
+      "new_sha256": "ff01879535d31925da19db2a3b04229876e910832b21f8fe49b0111773b9b220",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 37,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 37,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/vcs/git.js\n@@ -0,0 +1,37 @@\n+\"use strict\";\n+var __importDefault = (this && this.__importDefault) || function (mod) {\n+    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n+};\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const execa_1 = __importDefault(require(\"execa\"));\n+const which_1 = __importDefault(require(\"which\"));\n+const convertStringToObject = (sourceLine) => {\n+    const matches = sourceLine.match(/(.+)\\s+\\((.+)\\s+(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} (\\+|\\-)\\d{4})\\s+(\\d+)\\)(.*)/);\n+    const [, rev, author, date, , line] = matches\n+        ? [...matches]\n+        : [null, '', '', '', '', ''];\n+    return {\n+        author,\n+        date,\n+        line,\n+        rev\n+    };\n+};\n+async function git(path) {\n+    const blamedLines = {};\n+    const pathToGit = await which_1.default('git');\n+    const result = execa_1.default.sync(pathToGit, ['blame', '-w', path]);\n+    result.stdout.split('\\n').forEach(line => {\n+        if (line !== '') {\n+            const blamedLine = convertStringToObject(line);\n+            if (blamedLine.line) {\n+                blamedLines[blamedLine.line] = blamedLine;\n+            }\n+        }\n+    });\n+    return {\n+        [path]: blamedLines\n+    };\n+}\n+exports.git = git;\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2l0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3Zjcy9naXQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxrREFBMEI7QUFDMUIsa0RBQTBCO0FBRzFCLE1BQU0scUJBQXFCLEdBQUcsQ0FBQyxVQUFrQixFQUFjLEVBQUU7SUFDL0QsTUFBTSxPQUFPLEdBQUcsVUFBVSxDQUFDLEtBQUssQ0FDOUIsa0ZBQWtGLENBQ25GLENBQUM7SUFDRixNQUFNLENBQUMsRUFBRSxHQUFHLEVBQUUsTUFBTSxFQUFFLElBQUksRUFBRSxBQUFELEVBQUcsSUFBSSxDQUFDLEdBQUcsT0FBTztRQUMzQyxDQUFDLENBQUMsQ0FBQyxHQUFHLE9BQU8sQ0FBQztRQUNkLENBQUMsQ0FBQyxDQUFDLElBQUksRUFBRSxFQUFFLEVBQUUsRUFBRSxFQUFFLEVBQUUsRUFBRSxFQUFFLEVBQUUsRUFBRSxDQUFDLENBQUM7SUFDL0IsT0FBTztRQUNMLE1BQU07UUFDTixJQUFJO1FBQ0osSUFBSTtRQUNKLEdBQUc7S0FDSixDQUFDO0FBQ0osQ0FBQyxDQUFDO0FBRUssS0FBSyxVQUFVLEdBQUcsQ0FBQyxJQUFZO0lBQ3BDLE1BQU0sV0FBVyxHQUFtQyxFQUFFLENBQUM7SUFDdkQsTUFBTSxTQUFTLEdBQVcsTUFBTSxlQUFLLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDN0MsTUFBTSxNQUFNLEdBQUcsZUFBSyxDQUFDLElBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQyxPQUFPLEVBQUUsSUFBSSxFQUFFLElBQUksQ0FBQyxDQUFDLENBQUM7SUFDNUQsTUFBTSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxFQUFFO1FBQ3ZDLElBQUksSUFBSSxLQUFLLEVBQUUsRUFBRTtZQUNmLE1BQU0sVUFBVSxHQUFHLHFCQUFxQixDQUFDLElBQUksQ0FBQyxDQUFDO1lBQy9DLElBQUksVUFBVSxDQUFDLElBQUksRUFBRTtnQkFDbkIsV0FBVyxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsR0FBRyxVQUFVLENBQUM7YUFDM0M7U0FDRjtJQUNILENBQUMsQ0FBQyxDQUFDO0lBQ0gsT0FBTztRQUNMLENBQUMsSUFBSSxDQUFDLEVBQUUsV0FBVztLQUNwQixDQUFDO0FBQ0osQ0FBQztBQWZELGtCQWVDIn0="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/vcs/svn.d.ts",
+      "old_sha256": null,
+      "new_sha256": "366f5aadc1c18bc20fb4db492e9930ecbcba79a68514e1558b62fd8fa26b8003",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 2,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 2,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/vcs/svn.d.ts\n@@ -0,0 +1,2 @@\n+import { BlameResult } from '../blame-result.interface';\n+export declare function svn(path: string): Promise<BlameResult>;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/main/vcs/svn.js",
+      "old_sha256": null,
+      "new_sha256": "ca5bfd8935bd2ba436ffabee17420050e6cf88a246ee590b63545f6ffe0bc15c",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 30,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 30,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/main/vcs/svn.js\n@@ -0,0 +1,30 @@\n+\"use strict\";\n+var __importDefault = (this && this.__importDefault) || function (mod) {\n+    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n+};\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const execa_1 = __importDefault(require(\"execa\"));\n+const which_1 = __importDefault(require(\"which\"));\n+const xml2js_1 = require(\"xml2js\");\n+const parseResult = async (buffer) => {\n+    const result = await xml2js_1.parseStringPromise(buffer);\n+    const json = {};\n+    result.blame.target[0].entry.forEach((line) => {\n+        json[line.$['line-number']] = {\n+            author: line.commit[0].author[0],\n+            date: line.commit[0].date[0],\n+            line: line.$['line-number'],\n+            rev: line.commit[0].$.revision\n+        };\n+    });\n+    return json;\n+};\n+async function svn(path) {\n+    const pathToSvn = await which_1.default('svn');\n+    const result = execa_1.default.sync(pathToSvn, ['blame', '--xml', path]);\n+    return {\n+        [path]: await parseResult(result.stdout)\n+    };\n+}\n+exports.svn = svn;\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3ZuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3Zjcy9zdm4udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxrREFBMEI7QUFDMUIsa0RBQTBCO0FBQzFCLG1DQUE0QztBQUc1QyxNQUFNLFdBQVcsR0FBRyxLQUFLLEVBQ3ZCLE1BQWMsRUFDMkIsRUFBRTtJQUMzQyxNQUFNLE1BQU0sR0FBRyxNQUFNLDJCQUFrQixDQUFDLE1BQU0sQ0FBQyxDQUFDO0lBQ2hELE1BQU0sSUFBSSxHQUFtQyxFQUFFLENBQUM7SUFDaEQsTUFBTSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUMsS0FBSyxDQUFDLE9BQU8sQ0FBQyxDQUFDLElBQVMsRUFBRSxFQUFFO1FBQ2pELElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxDQUFDLEdBQUc7WUFDNUIsTUFBTSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQztZQUNoQyxJQUFJLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDO1lBQzVCLElBQUksRUFBRSxJQUFJLENBQUMsQ0FBQyxDQUFDLGFBQWEsQ0FBQztZQUMzQixHQUFHLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsUUFBUTtTQUMvQixDQUFDO0lBQ0osQ0FBQyxDQUFDLENBQUM7SUFDSCxPQUFPLElBQUksQ0FBQztBQUNkLENBQUMsQ0FBQztBQUVLLEtBQUssVUFBVSxHQUFHLENBQUMsSUFBWTtJQUNwQyxNQUFNLFNBQVMsR0FBVyxNQUFNLGVBQUssQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUM3QyxNQUFNLE1BQU0sR0FBRyxlQUFLLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDLE9BQU8sRUFBRSxPQUFPLEVBQUUsSUFBSSxDQUFDLENBQUMsQ0FBQztJQUMvRCxPQUFPO1FBQ0wsQ0FBQyxJQUFJLENBQUMsRUFBRSxNQUFNLFdBQVcsQ0FBQyxNQUFNLENBQUMsTUFBTSxDQUFDO0tBQ3pDLENBQUM7QUFDSixDQUFDO0FBTkQsa0JBTUMifQ=="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/blame-result.interface.d.ts",
+      "old_sha256": null,
+      "new_sha256": "e905c0c86dea7f58cd41ba2e8d82bd472480810b44f8d6e4c6854cc18f35fa58",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 11,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/blame-result.interface.d.ts\n@@ -0,0 +1,11 @@\n+export interface BlamedLine {\n+    rev: string;\n+    author: string;\n+    date: string;\n+    line: string;\n+}\n+export interface BlameResult {\n+    [path: string]: {\n+        [line: string]: BlamedLine;\n+    };\n+}\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/blame-result.interface.js",
+      "old_sha256": null,
+      "new_sha256": "b299684804906a8add2b3b8fced2484f5d81b9be45c18e36f87cbc40c6cf9f76",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 1,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/blame-result.interface.js\n@@ -0,0 +1 @@\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmxhbWUtcmVzdWx0LmludGVyZmFjZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9ibGFtZS1yZXN1bHQuaW50ZXJmYWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiIifQ=="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/blamer.d.ts",
+      "old_sha256": null,
+      "new_sha256": "0a648988c57c7e5249f6ba16765fbc927989bd7dcf5133dc458090afb92992a2",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 9,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/blamer.d.ts\n@@ -0,0 +1,9 @@\n+import { BlameResult } from './blame-result.interface';\n+declare type VCSType = 'git' | 'svn';\n+export declare class Blamer {\n+    private readonly type;\n+    constructor(type?: VCSType);\n+    blameByFile(path: string): Promise<BlameResult>;\n+    private getVCSBlamer;\n+}\n+export {};\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/blamer.js",
+      "old_sha256": null,
+      "new_sha256": "53a808814f3146afd09ed774f64ff680de0b5df46867061ad445256a24ff4628",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 18,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 18,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/blamer.js\n@@ -0,0 +1,18 @@\n+import { git } from './vcs/git';\n+import { svn } from './vcs/svn';\n+export class Blamer {\n+    constructor(type = 'git') {\n+        this.type = 'git';\n+        this.type = type;\n+    }\n+    async blameByFile(path) {\n+        return this.getVCSBlamer()(path);\n+    }\n+    getVCSBlamer() {\n+        if (this.type === 'svn') {\n+            return svn;\n+        }\n+        return git;\n+    }\n+}\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmxhbWVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2JsYW1lci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQSxPQUFPLEVBQUUsR0FBRyxFQUFFLE1BQU0sV0FBVyxDQUFDO0FBQ2hDLE9BQU8sRUFBRSxHQUFHLEVBQUUsTUFBTSxXQUFXLENBQUM7QUFJaEMsTUFBTSxPQUFPLE1BQU07SUFHakIsWUFBWSxPQUFnQixLQUFLO1FBRmhCLFNBQUksR0FBWSxLQUFLLENBQUM7UUFHckMsSUFBSSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUM7SUFDbkIsQ0FBQztJQUVNLEtBQUssQ0FBQyxXQUFXLENBQUMsSUFBWTtRQUNuQyxPQUFPLElBQUksQ0FBQyxZQUFZLEVBQUUsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNuQyxDQUFDO0lBRU8sWUFBWTtRQUNsQixJQUFJLElBQUksQ0FBQyxJQUFJLEtBQUssS0FBSyxFQUFFO1lBQ3ZCLE9BQU8sR0FBRyxDQUFDO1NBQ1o7UUFDRCxPQUFPLEdBQUcsQ0FBQztJQUNiLENBQUM7Q0FDRiJ9"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/index.d.ts",
+      "old_sha256": null,
+      "new_sha256": "6992e4deba915c520d2ffc9663cf3f944c906388ecbd0b5f0f490e4f87b9f5c6",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/index.d.ts\n@@ -0,0 +1,3 @@\n+import { Blamer } from './blamer';\n+export * from './blame-result.interface';\n+export default Blamer;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/index.js",
+      "old_sha256": null,
+      "new_sha256": "c6504914552886a93cff61688ad9996be4d74a6c11f64ecbc64aad90dd86db2f",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/index.js\n@@ -0,0 +1,3 @@\n+import { Blamer } from './blamer';\n+export default Blamer;\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLE1BQU0sRUFBRSxNQUFNLFVBQVUsQ0FBQztBQUdsQyxlQUFlLE1BQU0sQ0FBQyJ9"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/vcs/git.d.ts",
+      "old_sha256": null,
+      "new_sha256": "4902ce0e17379a536571d77cab3bbabca02c6f5a9a61050a5a772d879ffe28f7",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 2,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 2,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/vcs/git.d.ts\n@@ -0,0 +1,2 @@\n+import { BlameResult } from '../blame-result.interface';\n+export declare function git(path: string): Promise<BlameResult>;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/vcs/git.js",
+      "old_sha256": null,
+      "new_sha256": "9e9be465321a6bf569f5f460f6538f691270188352e3c8a976bb965889dfaec5",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 31,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 31,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/vcs/git.js\n@@ -0,0 +1,31 @@\n+import execa from 'execa';\n+import which from 'which';\n+const convertStringToObject = (sourceLine) => {\n+    const matches = sourceLine.match(/(.+)\\s+\\((.+)\\s+(\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} (\\+|\\-)\\d{4})\\s+(\\d+)\\)(.*)/);\n+    const [, rev, author, date, , line] = matches\n+        ? [...matches]\n+        : [null, '', '', '', '', ''];\n+    return {\n+        author,\n+        date,\n+        line,\n+        rev\n+    };\n+};\n+export async function git(path) {\n+    const blamedLines = {};\n+    const pathToGit = await which('git');\n+    const result = execa.sync(pathToGit, ['blame', '-w', path]);\n+    result.stdout.split('\\n').forEach(line => {\n+        if (line !== '') {\n+            const blamedLine = convertStringToObject(line);\n+            if (blamedLine.line) {\n+                blamedLines[blamedLine.line] = blamedLine;\n+            }\n+        }\n+    });\n+    return {\n+        [path]: blamedLines\n+    };\n+}\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2l0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3Zjcy9naXQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxLQUFLLE1BQU0sT0FBTyxDQUFDO0FBQzFCLE9BQU8sS0FBSyxNQUFNLE9BQU8sQ0FBQztBQUcxQixNQUFNLHFCQUFxQixHQUFHLENBQUMsVUFBa0IsRUFBYyxFQUFFO0lBQy9ELE1BQU0sT0FBTyxHQUFHLFVBQVUsQ0FBQyxLQUFLLENBQzlCLGtGQUFrRixDQUNuRixDQUFDO0lBQ0YsTUFBTSxDQUFDLEVBQUUsR0FBRyxFQUFFLE1BQU0sRUFBRSxJQUFJLEVBQUUsQUFBRCxFQUFHLElBQUksQ0FBQyxHQUFHLE9BQU87UUFDM0MsQ0FBQyxDQUFDLENBQUMsR0FBRyxPQUFPLENBQUM7UUFDZCxDQUFDLENBQUMsQ0FBQyxJQUFJLEVBQUUsRUFBRSxFQUFFLEVBQUUsRUFBRSxFQUFFLEVBQUUsRUFBRSxFQUFFLEVBQUUsQ0FBQyxDQUFDO0lBQy9CLE9BQU87UUFDTCxNQUFNO1FBQ04sSUFBSTtRQUNKLElBQUk7UUFDSixHQUFHO0tBQ0osQ0FBQztBQUNKLENBQUMsQ0FBQztBQUVGLE1BQU0sQ0FBQyxLQUFLLFVBQVUsR0FBRyxDQUFDLElBQVk7SUFDcEMsTUFBTSxXQUFXLEdBQW1DLEVBQUUsQ0FBQztJQUN2RCxNQUFNLFNBQVMsR0FBVyxNQUFNLEtBQUssQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUM3QyxNQUFNLE1BQU0sR0FBRyxLQUFLLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDLE9BQU8sRUFBRSxJQUFJLEVBQUUsSUFBSSxDQUFDLENBQUMsQ0FBQztJQUM1RCxNQUFNLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLEVBQUU7UUFDdkMsSUFBSSxJQUFJLEtBQUssRUFBRSxFQUFFO1lBQ2YsTUFBTSxVQUFVLEdBQUcscUJBQXFCLENBQUMsSUFBSSxDQUFDLENBQUM7WUFDL0MsSUFBSSxVQUFVLENBQUMsSUFBSSxFQUFFO2dCQUNuQixXQUFXLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxHQUFHLFVBQVUsQ0FBQzthQUMzQztTQUNGO0lBQ0gsQ0FBQyxDQUFDLENBQUM7SUFDSCxPQUFPO1FBQ0wsQ0FBQyxJQUFJLENBQUMsRUFBRSxXQUFXO0tBQ3BCLENBQUM7QUFDSixDQUFDIn0="
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/vcs/svn.d.ts",
+      "old_sha256": null,
+      "new_sha256": "366f5aadc1c18bc20fb4db492e9930ecbcba79a68514e1558b62fd8fa26b8003",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 2,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 2,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/vcs/svn.d.ts\n@@ -0,0 +1,2 @@\n+import { BlameResult } from '../blame-result.interface';\n+export declare function svn(path: string): Promise<BlameResult>;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "build/module/vcs/svn.js",
+      "old_sha256": null,
+      "new_sha256": "a2736cade30e2d75e8f811e10a1786cb4abdb40154f9aabb294e7bd0f19d3d05",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 24,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 24,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ build/module/vcs/svn.js\n@@ -0,0 +1,24 @@\n+import execa from 'execa';\n+import which from 'which';\n+import { parseStringPromise } from 'xml2js';\n+const parseResult = async (buffer) => {\n+    const result = await parseStringPromise(buffer);\n+    const json = {};\n+    result.blame.target[0].entry.forEach((line) => {\n+        json[line.$['line-number']] = {\n+            author: line.commit[0].author[0],\n+            date: line.commit[0].date[0],\n+            line: line.$['line-number'],\n+            rev: line.commit[0].$.revision\n+        };\n+    });\n+    return json;\n+};\n+export async function svn(path) {\n+    const pathToSvn = await which('svn');\n+    const result = execa.sync(pathToSvn, ['blame', '--xml', path]);\n+    return {\n+        [path]: await parseResult(result.stdout)\n+    };\n+}\n+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3ZuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3Zjcy9zdm4udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxLQUFLLE1BQU0sT0FBTyxDQUFDO0FBQzFCLE9BQU8sS0FBSyxNQUFNLE9BQU8sQ0FBQztBQUMxQixPQUFPLEVBQUUsa0JBQWtCLEVBQUUsTUFBTSxRQUFRLENBQUM7QUFHNUMsTUFBTSxXQUFXLEdBQUcsS0FBSyxFQUN2QixNQUFjLEVBQzJCLEVBQUU7SUFDM0MsTUFBTSxNQUFNLEdBQUcsTUFBTSxrQkFBa0IsQ0FBQyxNQUFNLENBQUMsQ0FBQztJQUNoRCxNQUFNLElBQUksR0FBbUMsRUFBRSxDQUFDO0lBQ2hELE1BQU0sQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQyxPQUFPLENBQUMsQ0FBQyxJQUFTLEVBQUUsRUFBRTtRQUNqRCxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUMsQ0FBQyxHQUFHO1lBQzVCLE1BQU0sRUFBRSxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUM7WUFDaEMsSUFBSSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQztZQUM1QixJQUFJLEVBQUUsSUFBSSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUM7WUFDM0IsR0FBRyxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLFFBQVE7U0FDL0IsQ0FBQztJQUNKLENBQUMsQ0FBQyxDQUFDO0lBQ0gsT0FBTyxJQUFJLENBQUM7QUFDZCxDQUFDLENBQUM7QUFFRixNQUFNLENBQUMsS0FBSyxVQUFVLEdBQUcsQ0FBQyxJQUFZO0lBQ3BDLE1BQU0sU0FBUyxHQUFXLE1BQU0sS0FBSyxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQzdDLE1BQU0sTUFBTSxHQUFHLEtBQUssQ0FBQyxJQUFJLENBQUMsU0FBUyxFQUFFLENBQUMsT0FBTyxFQUFFLE9BQU8sRUFBRSxJQUFJLENBQUMsQ0FBQyxDQUFDO0lBQy9ELE9BQU87UUFDTCxDQUFDLElBQUksQ0FBQyxFQUFFLE1BQU0sV0FBVyxDQUFDLE1BQU0sQ0FBQyxNQUFNLENBQUM7S0FDekMsQ0FBQztBQUNKLENBQUMifQ=="
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

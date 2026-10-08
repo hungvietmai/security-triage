@@ -1,0 +1,117 @@
+{
+  "pair_id": "pyvul-jaspernbrouwer-powerline-gitstatus-fe8e963b3489",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "dd79686d75365cd1589e3a33968954204ebafd154cf40ae313c86a182f8961e7",
+    "fixed": "4023bfab67860a55e3cff652175e3d2738c2ccfc1155cf452bbd9b50da7cd722"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "powerline_gitstatus/segments.py",
+      "new_path": "powerline_gitstatus/segments.py",
+      "old_sha256": "0f77329cd7fc0fcd7de03f3213a7015a12671445340a4c515ebff74f9c411412",
+      "new_sha256": "1fe67bbc2580162c1aa45096d9871d75608106119243cd553338ae5ffb1046e4",
+      "hunks": [
+        {
+          "old_start": 27,
+          "old_count": 13,
+          "new_start": 27,
+          "new_count": 13,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 30,
+              "old_count": 1,
+              "new_start": 30,
+              "new_count": 1,
+              "old_lines": [
+                30
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 36,
+              "old_count": 1,
+              "new_start": 36,
+              "new_count": 1,
+              "old_lines": [
+                36
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- powerline_gitstatus/segments.py\n+++ powerline_gitstatus/segments.py\n@@ -27,13 +27,13 @@\n \n     def get_base_command(self, cwd, use_dash_c):\n         if use_dash_c:\n-            return ['git', '-C', cwd]\n+            return ['git', '-c', 'core.fsmonitor=', '-C', cwd]\n \n         while cwd and cwd != os.sep:\n             gitdir = os.path.join(cwd, '.git')\n \n             if os.path.isdir(gitdir):\n-                return ['git', '--git-dir=%s' % gitdir, '--work-tree=%s' % cwd]\n+                return ['git', '-c', 'core.fsmonitor=', '--git-dir=%s' % gitdir, '--work-tree=%s' % cwd]\n \n             cwd = os.path.dirname(cwd)\n \n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

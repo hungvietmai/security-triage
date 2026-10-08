@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-kill-port-process-0.0.1",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "6083a974453bdc828a512efc0e3f4f32ce2104dbeb09ef852e56725e0eea987b",
+    "fixed": "f578fce7d1b3d247ee2ac14a5260743ab959a1573e92da6774ec7a6365ce5c46"
+  },
+  "patch_hunks_sha256": "1088f055398a69b976d7ea943f4d3099482ed9661994c505b645f09ba1443d6d",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "src/index.js",
+      "span": {
+        "startLine": 44,
+        "startColumn": 4,
+        "endLine": 50,
+        "endColumn": 6
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "src/index.js:44:4",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/kill-port-process_0.0.1/package.json",
+          "GHSA_SOURCE:https://github.com/hilleer/kill-port-process"
+        ],
+        "inventory_basis": "SecBench sink src/index.js:44:4; OS Command Injection and Command Injection in kill-port-process",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

@@ -1,0 +1,470 @@
+{
+  "pair_id": "secbench-pdfinfojs-0.3.6",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "39b3a900e11361a2d17b6c590e98b848a67d3ee95e30b46fed134fe020f74e63",
+    "fixed": "ab128f0abc719ae4c7ba5dff0459dcc2bb0346b4227a747683fa747edc877456"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "AUTHORS",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/pdfinfo.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/pdfs/sample 1.pdf",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/pdfs/sample.pdf",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "AUTHORS",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/pdfinfo.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/pdfs/sample 1.pdf",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/pdfs/sample.pdf",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": ".travis.yml",
+      "new_path": ".travis.yml",
+      "old_sha256": "dbf3a395e69e772e6d4f69862c3f765ade2ae12008991dd4a43e779bfabce9c6",
+      "new_sha256": "14c3157537a8cb54ef7fd3357e49c83ff28a4b47b9f88bae10267128912c870f",
+      "hunks": [
+        {
+          "old_start": 2,
+          "old_count": 7,
+          "new_start": 2,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 5,
+              "old_count": 2,
+              "new_start": 5,
+              "new_count": 0,
+              "old_lines": [
+                5,
+                6
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 6,
+              "new_count": 2,
+              "old_lines": [
+                8
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .travis.yml\n+++ .travis.yml\n@@ -2,7 +2,6 @@\n before_install:\n   - sudo apt-get install -qq poppler-utils\n node_js:\n-  - 4\n-  - 5\n   - 6\n-  - \"0.10\"\n+  - 8\n+  - 9\n"
+    },
+    {
+      "old_path": "lib/pdfinfo.js",
+      "new_path": "lib/pdfinfo.js",
+      "old_sha256": "808dd8accfd84b7b169842f66a7a4b2b4a64b242677699b616680620198ba317",
+      "new_sha256": "a6132637f2ff1d49c1aeab7477a1dc43430b025e4e3730043bb2c4bf70cf0494",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 12,
+          "new_start": 1,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 5,
+              "new_start": 1,
+              "new_count": 2,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 9,
+              "old_count": 1,
+              "new_start": 6,
+              "new_count": 1,
+              "old_lines": [
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 24,
+          "old_count": 70,
+          "new_start": 21,
+          "new_count": 33,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 27,
+              "old_count": 10,
+              "new_start": 24,
+              "new_count": 6,
+              "old_lines": [
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 40,
+              "old_count": 4,
+              "new_start": 33,
+              "new_count": 0,
+              "old_lines": [
+                40,
+                41,
+                42,
+                43
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 46,
+              "old_count": 4,
+              "new_start": 35,
+              "new_count": 4,
+              "old_lines": [
+                46,
+                47,
+                48,
+                49
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 55,
+              "old_count": 7,
+              "new_start": 44,
+              "new_count": 1,
+              "old_lines": [
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 63,
+              "old_count": 1,
+              "new_start": 46,
+              "new_count": 1,
+              "old_lines": [
+                63
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 68,
+              "old_count": 23,
+              "new_start": 51,
+              "new_count": 0,
+              "old_lines": [
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/pdfinfo.js\n+++ lib/pdfinfo.js\n@@ -1,12 +1,9 @@\n-var shell = require('shelljs');\n-var utils = require('./utils');\n-\n-// shelljs only supports silent globally due to a bug\n-shell.config.silent = true;\n+const { execFile, execFileSync } = require('child_process');\n+const utils = require('./utils');\n \n function pdfinfo (filename, options) {\n   this.options = options || {};\n-  this.options.additional = ['\"' + filename + '\"'];\n+  this.options.additional = [filename];\n \n   pdfinfo.prototype.add_options = function(optionArray) {\n     if (typeof optionArray.length !== undefined) {\n@@ -24,70 +21,33 @@\n   };\n \n   pdfinfo.prototype.getInfoSync = function() {\n-    var self = this;\n-    var child = shell.exec('pdfinfo ' + self.options.additional.join(' '));\n-    if (child.code === 0) {\n-      return utils.parse(child.stdout);\n-    }\n-    else {\n-      if (!shell.which('pdfinfo')) {\n-        throw new Error('Sorry, this script requires pdfinfo.');\n-      }\n-      throw new Error(\"pdfinfo error: \"+ child.stdout);\n+    const self = this;\n+    try {\n+    \tlet data = execFileSync('pdfinfo', self.options.additional).toString('utf8');\n+        return utils.parse(data);\n+    } catch(err) {\n+        throw new Error(\"pdfinfo error: \"+ err.msg);\n     }\n   }\n \n-  pdfinfo.prototype.getSync = function() {\n-    console.warn(\"\\033[31m`getSync` is now obsolete please use `getInfoSync` instead. Eventually `getSync` will be soon removed.\\033[0m\");\n-    return this.getInfoSync();\n-  }\n \n   pdfinfo.prototype.getInfo = function(cb) {\n-    var self = this;\n-    var child = shell.exec('pdfinfo ' + self.options.additional.join(' '), function(code, data) {\n-      if (code === 0) {\n-        data = utils.parse(data);\n+    let self = this;\n+    let child = execFile('pdfinfo', self.options.additional, (error, stdout, stderr) => {\n+      if (!error) {\n+        let data = utils.parse(stdout);\n         if (cb && typeof cb === \"function\") {\n           cb(null, data, self.options.additional);\n         }\n       }\n       else {\n-        var err;\n-        if (!shell.which('pdfinfo')) {\n-          err = new Error('pdfinfo (poppler-utils) is missing. Hint: sudo apt-get install poppler-utils');\n-        }\n-        else {\n-          err = new Error(data);\n-        }\n+        console.info('pdfinfo (poppler-utils) is missing. Hint: sudo apt-get install poppler-utils');\n         if (cb && typeof cb === \"function\") {\n-          cb(err, null, self.options.addtional);\n+          cb(new Error(stderr), null, self.options.addtional);\n         }\n       }\n     });\n   }\n-\n-  pdfinfo.prototype.get = function() {\n-    console.warn(\"\\033[31m`get` is now obsolete please use `getInfo` instead. Eventually `get` will be soon removed.\\033[0m\");\n-    var self = this;\n-    var child = shell.exec('pdfinfo ' + self.options.additional.join(' '), function(code, data) {\n-      if (code === 0) {\n-        if (self.options.success \n-            && typeof self.options.success === \"function\") {\n-          self.options.success(utils.parse(data));\n-        }\n-      }\n-      else {\n-        if (!shell.which('pdfinfo')) {\n-          echo('Sorry, this script requires pdfinfo.');\n-        }\n-        if (self.options.error \n-            && typeof self.options.error === \"function\") {\n-          self.options.error(data);\n-        }\n-      }\n-\n-    });\n-  };\n \n   pdfinfo.prototype.error = function(callback) {\n     this.options.error = callback;\n"
+    },
+    {
+      "old_path": "lib/utils.js",
+      "new_path": "lib/utils.js",
+      "old_sha256": "05bec58893cb07bd725a642db14d008ab2bc00e675c703ac70ad3c95c8902b58",
+      "new_sha256": "8c805087eeee6e14a3f438fcd39200995141ea3e87632ea99e630d7be5f02eea",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 5,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 2,
+              "old_count": 0,
+              "new_start": 2,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 12,
+          "old_count": 15,
+          "new_start": 13,
+          "new_count": 16,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 15,
+              "old_count": 2,
+              "new_start": 16,
+              "new_count": 3,
+              "old_lines": [
+                15,
+                16
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 21,
+              "old_count": 1,
+              "new_start": 23,
+              "new_count": 1,
+              "old_lines": [
+                21
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 24,
+              "old_count": 0,
+              "new_start": 26,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "delete",
+              "old_start": 25,
+              "old_count": 1,
+              "new_start": 28,
+              "new_count": 0,
+              "old_lines": [
+                25
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/utils.js\n+++ lib/utils.js\n@@ -1,4 +1,5 @@\n exports = module.exports.trim = trim;\n+\n function trim(string) {\n   return string.replace(/^\\s*|\\s*$/g, '')\n }\n@@ -12,15 +13,16 @@\n }\n \n exports = module.exports.parse = function parse(data) {\n-  var ret = {};\n-  var lines = data.split(/\\r\\n|\\r|\\n/g);\n+  let ret = {};\n+  let lines = data.split(/\\r\\n|\\r|\\n/g);\n+\n   for (var i=0; i<lines.length-2; i++) {\n     var line = lines[i];\n     var tup = line.split(': ');\n     if (tup.length === 2) {\n-      ret[slugify(tup[0]).toLowerCase()] = trim(tup[1]); \n+      ret[slugify(tup[0]).toLowerCase()] = trim(tup[1]);\n     }\n   }\n+\n   return ret;\n-\n }\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "d42fffe2a41c510263fc700f9550e13b0e8f8675757c33eaf2c3f86d4334050f",
+      "new_sha256": "3c799ac55b498f13847437821ac49edfb1c540771af515ed273dc9f4c9c85588",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 18,
+          "new_start": 1,
+          "new_count": 16,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 10,
+              "old_count": 3,
+              "new_start": 10,
+              "new_count": 1,
+              "old_lines": [
+                10,
+                11,
+                12
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 15,
+              "old_count": 1,
+              "new_start": 13,
+              "new_count": 1,
+              "old_lines": [
+                15
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 21,
+          "old_count": 7,
+          "new_start": 19,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 24,
+              "old_count": 1,
+              "new_start": 22,
+              "new_count": 0,
+              "old_lines": [
+                24
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,18 +1,16 @@\n {\n   \"name\": \"pdfinfojs\",\n-  \"version\": \"0.3.6\",\n+  \"version\": \"0.4.1\",\n   \"description\": \"A pdf meta information extractor\",\n   \"url\": \"https://github.com/fagbokforlaget/pdfinfojs\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n     \"test\": \"make test\"\n   },\n-  \"dependencies\": {\n-    \"shelljs\": \">=0.1.2\"\n-  },\n+  \"dependencies\": {},\n   \"devDependencies\": {\n     \"mocha\": \"*\",\n-    \"jscoverage\": \">=0.3.5\"\n+    \"jscoverage\": \"^0.6.0\"\n   },\n   \"repository\": {\n     \"type\": \"git\",\n@@ -21,7 +19,6 @@\n   \"keywords\": [\n     \"pdf\",\n     \"pdfnifo\",\n-    \"shelljs\",\n     \"mocha\"\n   ],\n   \"author\": \"Deepak Thukral <iapain@iapa.in> http://iapa.in\",\n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "4c9344c5ef85eeab9a512259304087a4711d2c37af2f56a06f5484ad15911888",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 3,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 3,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1,3 +0,0 @@\n-node_modules/*\n-lib-cov/*\n-\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

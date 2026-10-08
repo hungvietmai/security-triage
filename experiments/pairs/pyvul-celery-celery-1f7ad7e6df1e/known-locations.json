@@ -1,0 +1,45 @@
+{
+  "pair_id": "pyvul-celery-celery-1f7ad7e6df1e",
+  "split": "development",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "f724666c5d1e15e5d55f7614d897792fba037144eba4dbd18570efef99d12091",
+    "fixed": "be4731629ec6d4f764ef2af942022927cb97a064243782177f46579500230595"
+  },
+  "patch_hunks_sha256": "9a4b8ab9cf08c01f4ffe6e305937ab730aa6a6ac1de5441a139acea43a696722",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "no_sink_in_deleted_or_modified_lines_and_applicable_function_labels",
+      "provenance": {
+        "kind": "PyVul_patch",
+        "fix_commit": "1f7ad7e6df1e02039b6ab9eec617d283598cad6b",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/celery/celery/commit/1f7ad7e6df1e02039b6ab9eec617d283598cad6b"
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "exception_to_python",
+              "normalized_code_before_sha256": "8960001fa6782a834464c72cd6a5e393f4a7d56ec1f3f6571d97e625fb7e5d80",
+              "dataset_line": 647,
+              "commit": "https://github.com/celery/celery/commit/1f7ad7e6df1e02039b6ab9eec617d283598cad6b"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        }
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

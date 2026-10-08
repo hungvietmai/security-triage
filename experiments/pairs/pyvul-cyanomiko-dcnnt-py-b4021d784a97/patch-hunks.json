@@ -1,0 +1,155 @@
+{
+  "pair_id": "pyvul-cyanomiko-dcnnt-py-b4021d784a97",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "74afe56b88b40366367620bee930f6077435cfdfe2a78d943f48b25553a89457",
+    "fixed": "bc1d3516b09295b544aae5aab72cbb297ef24c705645eab76a61ce750543b001"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "doc/config.md",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "doc/plugins.md",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "doc/protocol.md",
+        "reason": "documentation_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "doc/config.md",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "doc/plugins.md",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "doc/protocol.md",
+        "reason": "documentation_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "dcnnt/plugins/notifications.py",
+      "new_path": "dcnnt/plugins/notifications.py",
+      "old_sha256": "6370b37df5a0e8678b85124d64323b66d7e33bf0bd52d3fc9fefe780fe731627",
+      "new_sha256": "4c5bd82ad651b254e289e07873cb8ae22f2a64225e0a56c3d8de650cc86139dc",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 5,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 3,
+              "old_count": 0,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 53,
+          "old_count": 6,
+          "new_start": 54,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 56,
+              "old_count": 1,
+              "new_start": 57,
+              "new_count": 1,
+              "old_lines": [
+                56
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- dcnnt/plugins/notifications.py\n+++ dcnnt/plugins/notifications.py\n@@ -1,5 +1,6 @@\n import logging\n import subprocess\n+from shlex import quote\n \n from .base import Plugin\n from ..common import *\n@@ -53,6 +54,6 @@\n                         except Exception as e:\n                             self.log(e, logging.WARNING)\n                     icon = icon_path if icon_data else ''\n-                    command = cmd.format(uin=uin, name=name, icon=icon, text=text, title=title, package=package)\n+                    command = cmd.format(uin=quote(uin), name=quote(name), icon=quote(icon), text=quote(text), title=quote(title), package=quote(package))\n                     self.log('Execute: \"{}\"'.format(command))\n                     subprocess.call(command, shell=True)\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

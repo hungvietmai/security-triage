@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-thi.ng-egf-0.3.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "869d8445bc2010d9d6d00f2ed52c735ec6088f0e9340c8df9601cd915f7c273c",
+    "fixed": "b2e37ec851b58ed2ef328d21dded3dc4cef79dfece67fc71bc67722fb69d35b3"
+  },
+  "patch_hunks_sha256": "35bb80f652abce6f0e322846114e007b6b058e41fa01193b1056036ccc0a46c6",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/index.js",
+      "span": {
+        "startLine": 157,
+        "startColumn": 15,
+        "endLine": 157,
+        "endColumn": 71
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "child_process.execSync",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/index.js:157:29",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/thi.ng-egf_0.3.0/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/index.js:157:29; [thi.ng/egf] Potential arbitrary code execution of `#gpg`-tagged property values; Merge pull request from GHSA-rj44-gpjc-29r7",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

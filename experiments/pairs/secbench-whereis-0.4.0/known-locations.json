@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-whereis-0.4.0",
+  "split": "held_out",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "d6ab59a2a6cafe407a221659a47d2de426c4777925a95e7539baef6988f2f4c9",
+    "fixed": "a294565225d90e0fb151d81ac83dcab591d4fcca4424d7de40ebc66ca79eb4d3"
+  },
+  "patch_hunks_sha256": "586e43c36408d7d656feaa7fcbb4d7cebb49cde19031a507d7e57c30aed89736",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 4,
+        "startColumn": 3,
+        "endLine": 30,
+        "endColumn": 5
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "cp.exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:4:6",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/whereis_0.4.0/package.json"
+        ],
+        "inventory_basis": "SecBench sink index.js:4:6; Command Injection in whereis; fix(security): escape arguments when feasible",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

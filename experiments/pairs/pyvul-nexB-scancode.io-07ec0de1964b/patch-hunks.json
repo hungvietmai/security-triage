@@ -1,0 +1,1647 @@
+{
+  "pair_id": "pyvul-nexB-scancode.io-07ec0de1964b",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "dd53d6ae1d1d663056428ea66702ee934e596ed7c5cc1958d4ecb6b6b40e250b",
+    "fixed": "612033a50151d391c64b46a49bd89305a04263875cfdc7cf0a831e5c77744f95"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": ".github/ISSUE_TEMPLATE/blank-issue.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "CHANGELOG.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "NOTICE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/application-settings.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/automation.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/built-in-pipelines.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/changelog.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/command-line-interface.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/custom-pipelines.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/data-models.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/distros-os-images.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/faq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/license-clarity-scan-summary.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-download-results.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-projects-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-xlsx-packages.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-xlsx-resources.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-find-vulnerabilities-extra-data.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-find-vulnerabilities-icon-link.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-find-vulnerabilities-packages-link.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-license-policies-results.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-errors-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-packages-charts.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-packages-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-project-details.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-project-form.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-project-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-projects-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-resources-charts.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-resources-filter.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-run-log-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-archive-action.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-archive-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-create-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-delete-action.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-delete-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-project-details.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-project-list-empty.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-project-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-reset-action.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-reset-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/installation.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/introduction.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/output-files.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/project-configuration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/rest-api.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/scanpipe-concepts.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/scanpipe-pipes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_api_analyze_package_archive.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_cli_analyze_codebase.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_cli_analyze_docker_image.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_license_policies.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_vulnerablecode_integration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_web_ui_analyze_docker_image.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_web_ui_review_scan_results.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user-interface.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "scanpipe/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/alpine_3_15_4.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/alpine_3_15_4_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/archive.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0-py3-none-any.whl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0.spdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_fixtures.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_load_inventory_expected.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_scanpipe_output.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_toolkit_scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_tree.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_walk_test_fixtures.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/basic-rootfs.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/basic-rootfs_root_filesystems.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/centos.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/centos_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/codebase/a.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/codebase/b.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/codebase/c.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/asgiref-3.3.0.cdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/asgiref-3.3.0.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/missing_schema.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/nested.cdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/from/main.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/from/unmain.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/main.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/main.js.map",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/no_path_unmain.js.map",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/unmain.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/unmain.js.map",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/about_files/expected.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/about_files/from-with-about-file.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/about_files/to-with-jar.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/find_java_packages/Baz.class",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/find_java_packages/Baz.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/find_java_packages/Foo.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/jars/from-flume-ng-node-1.9.0.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/jars/to-flume-ng-node-1.9.0.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/daglib-0.6.0-py3-none-any.whl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/daglib-0.6.0-py3-none-any.whl_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/debian.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/debian_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/decompose_l_u_8hpp_source.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-images.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-images.tar.gz-expected-data-1.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-images.tar.gz-expected-data-2.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-alpine.tar.xz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-alpine.tar.xz-docker-scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-debian.tar.xz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-debian.tar.xz-docker-scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/flume-ng-node-d2d.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/foobar.qcow2.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/gcr_io_distroless_base.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/gcr_io_distroless_base_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/Dockerfile",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/README.rst",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/layer_with_links_missing_targets.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar-expected-data-1.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar-expected-data-2.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar-expected-scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0.tgz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0_scan_package.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0_scan_package_summary.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/jvm/common.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/jvm/no-package.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/Django-4.0.8-py3-none-any.whl.ABOUT",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/package.expected.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/package.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/poor_values.ABOUT",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/toml.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/toml.spdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/multiple-is-npm-1.0.0.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/multiple-is-npm-1.0.0_scan_package.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/multiple-is-npm-1.0.0_scan_package_summary.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/notice.NOTICE",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/outputs/asgiref-3.6.0-output.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/outputs/expected_attribution.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/outputs/render_me.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/policies.yml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/scancode/is-npm-1.0.0_summary.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/scancode/package_assembly_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/scancode/package_assembly_codebase.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/settings/scancode-config.yml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/windows-container-rootfs.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/do_nothing.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/profile_step.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/raise_exception.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/register_from_file.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/steps_as_attribute.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_codebase.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_cyclonedx.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_d2d.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_docker.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_fetch.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_flag.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_input.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_js.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_jvm.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_output.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_pathmap.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_pipes.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_resolve.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_rootfs.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_scancode.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_spdx.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_windows.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/regen_test_data.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_api.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_apps.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_auth.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_filters.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_forms.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_licenses.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_pipelines.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_tasks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_views.py",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": ".github/ISSUE_TEMPLATE/blank-issue.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "CHANGELOG.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "NOTICE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/application-settings.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/automation.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/built-in-pipelines.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/changelog.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/command-line-interface.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/custom-pipelines.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/data-models.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/distros-os-images.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/faq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/license-clarity-scan-summary.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-download-results.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-projects-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-xlsx-packages.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/output-files-xlsx-resources.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-find-vulnerabilities-extra-data.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-find-vulnerabilities-icon-link.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-find-vulnerabilities-packages-link.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-license-policies-results.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-errors-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-packages-charts.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-packages-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-project-details.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-project-form.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-project-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-projects-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-resources-charts.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-resources-filter.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/tutorial-web-ui-run-log-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-archive-action.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-archive-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-create-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-delete-action.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-delete-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-project-details.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-project-list-empty.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-project-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-reset-action.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/user-interface-reset-modal.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/installation.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/introduction.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/output-files.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/project-configuration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/rest-api.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/scanpipe-concepts.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/scanpipe-pipes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_api_analyze_package_archive.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_cli_analyze_codebase.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_cli_analyze_docker_image.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_license_policies.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_vulnerablecode_integration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_web_ui_analyze_docker_image.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorial_web_ui_review_scan_results.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user-interface.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "scanpipe/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/alpine_3_15_4.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/alpine_3_15_4_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/archive.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0-py3-none-any.whl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0.spdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_fixtures.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_load_inventory_expected.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_scanpipe_output.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_toolkit_scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_tree.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/asgiref-3.3.0_walk_test_fixtures.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/basic-rootfs.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/basic-rootfs_root_filesystems.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/centos.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/centos_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/codebase/a.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/codebase/b.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/codebase/c.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/asgiref-3.3.0.cdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/asgiref-3.3.0.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/missing_schema.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/cyclonedx/nested.cdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/from/main.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/from/unmain.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/main.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/main.js.map",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/no_path_unmain.js.map",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/unmain.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d-javascript/to/unmain.js.map",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/about_files/expected.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/about_files/from-with-about-file.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/about_files/to-with-jar.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/find_java_packages/Baz.class",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/find_java_packages/Baz.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/find_java_packages/Foo.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/jars/from-flume-ng-node-1.9.0.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/d2d/jars/to-flume-ng-node-1.9.0.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/daglib-0.6.0-py3-none-any.whl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/daglib-0.6.0-py3-none-any.whl_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/debian.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/debian_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/decompose_l_u_8hpp_source.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-images.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-images.tar.gz-expected-data-1.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-images.tar.gz-expected-data-2.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-alpine.tar.xz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-alpine.tar.xz-docker-scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-debian.tar.xz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/docker-mini-with-license-debian.tar.xz-docker-scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/flume-ng-node-d2d.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/foobar.qcow2.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/gcr_io_distroless_base.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/gcr_io_distroless_base_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/Dockerfile",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/README.rst",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/layer_with_links_missing_targets.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar-expected-data-1.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar-expected-data-2.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/image-with-symlinks/minitag.tar-expected-scan.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0.tgz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0_scan_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0_scan_package.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/is-npm-1.0.0_scan_package_summary.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/jvm/common.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/jvm/no-package.java",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/Django-4.0.8-py3-none-any.whl.ABOUT",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/package.expected.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/package.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/poor_values.ABOUT",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/toml.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/manifests/toml.spdx.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/multiple-is-npm-1.0.0.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/multiple-is-npm-1.0.0_scan_package.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/multiple-is-npm-1.0.0_scan_package_summary.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/notice.NOTICE",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/outputs/asgiref-3.6.0-output.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/outputs/expected_attribution.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/outputs/render_me.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/policies.yml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/scancode/is-npm-1.0.0_summary.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/scancode/package_assembly_codebase.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/scancode/package_assembly_codebase.tar.gz",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/settings/scancode-config.yml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/data/windows-container-rootfs.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/do_nothing.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/profile_step.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/raise_exception.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/register_from_file.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipelines/steps_as_attribute.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_codebase.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_cyclonedx.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_d2d.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_docker.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_fetch.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_flag.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_input.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_js.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_jvm.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_output.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_pathmap.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_pipes.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_resolve.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_rootfs.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_scancode.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_spdx.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/pipes/test_windows.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/regen_test_data.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_api.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_apps.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_auth.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_filters.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_forms.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_licenses.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_pipelines.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_tasks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "scanpipe/tests/test_views.py",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": ".VERSION",
+      "new_path": ".VERSION",
+      "old_sha256": "73c2df73dc32b4598d419cf712d57e50e0b57919c79c604d73176160e38f34e6",
+      "new_sha256": "5ec308b07d9e9238d505928dd6fe8c453c71e926bc15ac33a5442282dc7c094d",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 1,
+          "new_start": 1,
+          "new_count": 1,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .VERSION\n+++ .VERSION\n@@ -1 +1 @@\n-v32.5.0-4-g2f5a6cce23+v32.5.0-5-g07ec0de196"
+    },
+    {
+      "old_path": "scanpipe/pipes/__init__.py",
+      "new_path": "scanpipe/pipes/__init__.py",
+      "old_sha256": "39d1ca9399848698a32ad8b797e14414449af4e415c6ad71cda11cf46fd8da25",
+      "new_sha256": "de06ccc16ffd7f900b1383e86e4c7fc152c6709f788b56524adca4684f87a7be",
+      "hunks": [
+        {
+          "old_start": 278,
+          "old_count": 7,
+          "new_start": 278,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 281,
+              "old_count": 1,
+              "new_start": 281,
+              "new_count": 1,
+              "old_lines": [
+                281
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- scanpipe/pipes/__init__.py\n+++ scanpipe/pipes/__init__.py\n@@ -278,7 +278,7 @@\n \n     process = subprocess.Popen(\n         cmd,\n-        shell=True,\n+        shell=False,\n         stdout=subprocess.PIPE,\n         stderr=subprocess.STDOUT,\n         universal_newlines=True,\n"
+    },
+    {
+      "old_path": "scanpipe/pipes/fetch.py",
+      "new_path": "scanpipe/pipes/fetch.py",
+      "old_sha256": "5e02b7955db93d19ed3440aeafd0aacf2b239674358bf1cf6f8f4904116ceaa2",
+      "new_sha256": "a8937a11d7ad3181dfcb0bad6d02d201ed24d3ed2d6981bad0a0f74ee98a222a",
+      "hunks": [
+        {
+          "old_start": 24,
+          "old_count": 6,
+          "new_start": 24,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 27,
+              "old_count": 0,
+              "new_start": 27,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 190,
+          "old_count": 6,
+          "new_start": 191,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 193,
+              "old_count": 0,
+              "new_start": 194,
+              "new_count": 5,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- scanpipe/pipes/fetch.py\n+++ scanpipe/pipes/fetch.py\n@@ -24,6 +24,7 @@\n import json\n import logging\n import os\n+import re\n import tempfile\n from collections import namedtuple\n from pathlib import Path\n@@ -190,6 +191,11 @@\n     Docker references are documented here:\n     https://github.com/containers/skopeo/blob/0faf16017/docs/skopeo.1.md#image-names\n     \"\"\"\n+\n+    whitelist = r\"^docker://[a-zA-Z0-9_.:/@-]+$\"\n+    if not re.match(whitelist, docker_reference):\n+        raise ValueError(\"Invalid Docker reference.\")\n+\n     name = python_safe_name(docker_reference.replace(\"docker://\", \"\"))\n     filename = f\"{name}.tar\"\n     download_directory = to or tempfile.mkdtemp()\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

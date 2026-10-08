@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-codecov-3.6.4",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "c47dd349e1b1dc898fce7b6e0721d7442c46d5485f8e28ee60c9bda255c322f3",
+    "fixed": "83dd2f1af58a5576d227374f581b6b90f1abda6a98095d2b9dccd86e20e834be"
+  },
+  "patch_hunks_sha256": "38fdc1b1458f236dc64dfa85df3a7097fb0a2f1df0432723ffbb4dfa30f26d0a",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/codecov.js",
+      "span": {
+        "startLine": 419,
+        "startColumn": 7,
+        "endLine": 419,
+        "endColumn": 21
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "execSync",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/codecov.js:419:7",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/codecov_3.6.4/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/codecov.js:419:7; Command injection in codecov (npm package); Switch from execSync to execFileSync (#180)",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

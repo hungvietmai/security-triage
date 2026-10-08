@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-portprocesses-1.0.4",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "4b8259c93adc7d9ea176a322b9a8f3d85d93e019a4fe8d7f0617e90f0f259c4f",
+    "fixed": "1f6655112c80248c2f32c87a52fdaa9941284015d97bfd53307fa96131bc7447"
+  },
+  "patch_hunks_sha256": "b90bd665219adb55ec48daa1b96c4c3e5cd4bb7073a8dbe9ff472087d4a5f40b",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "exec.js",
+      "span": {
+        "startLine": 5,
+        "startColumn": 3,
+        "endLine": 11,
+        "endColumn": 5
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "exec.js:5:3",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/portprocesses_1.0.4/package.json"
+        ],
+        "inventory_basis": "SecBench sink exec.js:5:3; Arbitrary Command Injection in portprocesses; Merge pull request from GHSA-vm67-7vmg-66vm",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

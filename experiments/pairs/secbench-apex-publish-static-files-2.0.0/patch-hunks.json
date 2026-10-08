@@ -1,0 +1,434 @@
+{
+  "pair_id": "secbench-apex-publish-static-files-2.0.0",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "5231272bd6ac34344a6975554656609d9494580591c68d681132d48371be7897",
+    "fixed": "20ba77bd4a96d9c9b84c1dd44280d97489d192c62dff1820e660739e00ec0194"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "changelog.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/demo.gif",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "license",
+        "reason": "documentation"
+      },
+      {
+        "path": "readme.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "changelog.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/demo.gif",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "license",
+        "reason": "documentation"
+      },
+      {
+        "path": "readme.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": ".travis.yml",
+      "new_path": ".travis.yml",
+      "old_sha256": "00391501d574e26287c3520a77fcd11d6ba74030acf00482d7ad4c11fc4534ec",
+      "new_sha256": "af8af909e8a0efb56391c466d4bbba7fc15380d01c31f321bdda84c177357550",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 5,
+          "new_start": 1,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 0,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 6,
+              "old_count": 0,
+              "new_start": 5,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .travis.yml\n+++ .travis.yml\n@@ -1,5 +1,8 @@\n language: node_js\n node_js:\n-  - \"6\"\n   - \"8\"\n   - \"9\"\n+  - \"10\"\n+os:\n+  - linux\n+  - osx\n"
+    },
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "a880ed1cd5a655ef4ef6a80598522c208c8fd4b8379467c61040d561df0e189f",
+      "new_sha256": "dd68941a1affb9cf5fda21d4474a8397b13b816081c49dfb47e942e34945b8d6",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 7,
+          "new_start": 1,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 35,
+          "old_count": 44,
+          "new_start": 35,
+          "new_count": 54,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 38,
+              "old_count": 14,
+              "new_start": 38,
+              "new_count": 47,
+              "old_lines": [
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 53,
+              "old_count": 23,
+              "new_start": 86,
+              "new_count": 0,
+              "old_lines": [
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,7 +1,7 @@\n 'use strict';\n \n const path = require('path');\n-const execSync = require('child_process').execSync;\n+const {spawnSync} = require('child_process');\n const fs = require('fs');\n \n module.exports = {\n@@ -35,44 +35,54 @@\n \t\t\tthrow new Error(`Directory ${opts.directory} is not a valid path.`);\n \t\t}\n \n-\t\t// Execute the upload process\n-\t\ttry {\n-\t\t\tswitch (opts.destination.toLowerCase()) {\n-\t\t\t\tcase 'theme':\n-\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - Theme Files...`);\n-\t\t\t\t\tbreak;\n-\t\t\t\tcase 'workspace':\n-\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - Workspace Files...`);\n-\t\t\t\t\tbreak;\n-\t\t\t\tcase 'plugin':\n-\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - ${opts.pluginName} - Plugin Files...`);\n-\t\t\t\t\tbreak;\n-\t\t\t\tdefault:\n-\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - Application Static Files...`);\n+\t\tconst getAllFiles = dir =>\n+\t\t\tfs.readdirSync(dir).reduce((files, file) => {\n+\t\t\t\tconst name = path.join(dir, file);\n+\t\t\t\tconst isDirectory = fs.statSync(name).isDirectory();\n+\t\t\t\treturn isDirectory ? [...files, ...getAllFiles(name)] : [...files, name];\n+\t\t\t}, []);\n+\n+\t\tif (getAllFiles(opts.directory).length === 0) {\n+\t\t\tconsole.log('Directory is empty.');\n+\t\t} else {\n+\t\t\t// Execute the upload process\n+\t\t\ttry {\n+\t\t\t\tswitch (opts.destination.toLowerCase()) {\n+\t\t\t\t\tcase 'theme':\n+\t\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - Theme Files...`);\n+\t\t\t\t\t\tbreak;\n+\t\t\t\t\tcase 'workspace':\n+\t\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - Workspace Files...`);\n+\t\t\t\t\t\tbreak;\n+\t\t\t\t\tcase 'plugin':\n+\t\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - ${opts.pluginName} - Plugin Files...`);\n+\t\t\t\t\t\tbreak;\n+\t\t\t\t\tdefault:\n+\t\t\t\t\t\tconsole.log(`Uploading to ${opts.appID} - Application Static Files...`);\n+\t\t\t\t}\n+\n+\t\t\t\tconst spawnOpts = [\n+\t\t\t\t\topts.connectString, // Connect string (user/pass@server:port/sid)\n+\t\t\t\t\t'@' + path.resolve(__dirname, 'lib/script'), // Sql to execute\n+\t\t\t\t\tpath.resolve(__dirname, 'lib/distUpload.js'), // Param &1 (js to execute)\n+\t\t\t\t\tpath.resolve(opts.directory), // Param &2\n+\t\t\t\t\topts.appID, // Param &3\n+\t\t\t\t\topts.destination, // Param &4\n+\t\t\t\t\topts.pluginName // Param &5\n+\t\t\t\t];\n+\n+\t\t\t\tconst childProcess = spawnSync(\n+\t\t\t\t\topts.sqlclPath, // Sqlcl path\n+\t\t\t\t\tspawnOpts, {\n+\t\t\t\t\t\tencoding: 'utf8'\n+\t\t\t\t\t}\n+\t\t\t\t);\n+\n+\t\t\t\tconsole.log(childProcess.stdout);\n+\t\t\t\tconsole.log('Files were uploaded successfully.');\n+\t\t\t} catch (error) {\n+\t\t\t\tconsole.error(error);\n \t\t\t}\n-\n-\t\t\tconst childProcess = execSync(\n-\t\t\t\t'\"' + opts.sqlclPath + '\"' + // Sqlcl path\n-\t\t\t\t' ' + opts.connectString + // Connect string (user/pass@server:port/sid)\n-\t\t\t\t' @\"' + path.resolve(__dirname, 'lib/script') + '\"' + // Sql to execute\n-\t\t\t\t' \"' + path.resolve(__dirname, 'lib/distUpload.js') + '\"' + // Param &1 (js to execute)\n-\t\t\t\t' \"' + path.resolve(opts.directory) + '\"' + // Param &2\n-\t\t\t\t' ' + opts.appID + // Param &3\n-\t\t\t\t' \"' + opts.destination + '\"' + // Param &4\n-\t\t\t\t' \"' + opts.pluginName + '\"' // Param &5\n-\t\t\t\t, {\n-\t\t\t\t\tencoding: 'utf8'\n-\t\t\t\t}\n-\t\t\t);\n-\n-\t\t\tconsole.log(childProcess);\n-\n-\t\t\tconsole.log('Files were uploaded successfully.');\n-\n-\t\t\treturn true;\n-\t\t} catch (err) {\n-\t\t\tconsole.error(err);\n-\t\t\treturn false;\n \t\t}\n \t}\n };\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "d6f65d0883f9eb90567486d315eb4eb2a35ee9e048353c45ef98e0a33e10579d",
+      "new_sha256": "1313e6e9619339e3618548148a72f27dd13934dbcd22ddcc648214fcb6791d6a",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 24,
+          "old_count": 8,
+          "new_start": 24,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 27,
+              "old_count": 2,
+              "new_start": 27,
+              "new_count": 2,
+              "old_lines": [
+                27,
+                28
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"apex-publish-static-files\",\n-  \"version\": \"2.0.0\",\n+  \"version\": \"2.0.1\",\n   \"author\": \"Vincent Morneau\",\n   \"description\": \"Allows to publish an entire local directory to Oracle APEX Shared Components.\",\n   \"license\": \"MIT\",\n@@ -24,8 +24,8 @@\n     \"url\": \"https://github.com/vincentmorneau/apex-publish-static-files/issues\"\n   },\n   \"devDependencies\": {\n-    \"ava\": \"^0.24.0\",\n-    \"xo\": \"^0.18.0\"\n+    \"ava\": \"^0.25.0\",\n+    \"xo\": \"^0.23.0\"\n   },\n   \"xo\": {\n     \"ignores\": [\n"
+    },
+    {
+      "old_path": "test.js",
+      "new_path": "test.js",
+      "old_sha256": "9b606e27184a7f327359a0a4974b82d8552ee7c4448c4d6243b4cdeff40d2ac3",
+      "new_sha256": "9abb8cf9744b945c34f3b7a3e71de609864cd9f6df49ce178b4cdde332ec5559",
+      "hunks": [
+        {
+          "old_start": 4,
+          "old_count": 9,
+          "new_start": 4,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 3,
+              "new_start": 7,
+              "new_count": 3,
+              "old_lines": [
+                7,
+                8,
+                9
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 15,
+          "old_count": 9,
+          "new_start": 15,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 18,
+              "old_count": 3,
+              "new_start": 18,
+              "new_count": 3,
+              "old_lines": [
+                18,
+                19,
+                20
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 27,
+          "old_count": 9,
+          "new_start": 27,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 30,
+              "old_count": 3,
+              "new_start": 30,
+              "new_count": 3,
+              "old_lines": [
+                30,
+                31,
+                32
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 39,
+          "old_count": 9,
+          "new_start": 39,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 42,
+              "old_count": 3,
+              "new_start": 42,
+              "new_count": 3,
+              "old_lines": [
+                42,
+                43,
+                44
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 50,
+          "old_count": 12,
+          "new_start": 50,
+          "new_count": 44,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 53,
+              "old_count": 3,
+              "new_start": 53,
+              "new_count": 3,
+              "old_lines": [
+                53,
+                54,
+                55
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 62,
+              "old_count": 0,
+              "new_start": 62,
+              "new_count": 32,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- test.js\n+++ test.js\n@@ -4,9 +4,9 @@\n test('application', t => {\n \t_app.publish({\n \t\tsqlclPath: 'sql',\n-\t\tconnectString: 'dev/dev@localhost:32122/orclpdb513.localdomain',\n-\t\tdirectory: './lib',\n-\t\tappID: 111\n+\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\tdirectory: './demo/demo-working/',\n+\t\tappID: 105990\n \t});\n \n \tt.pass();\n@@ -15,9 +15,9 @@\n test('workspace', t => {\n \t_app.publish({\n \t\tsqlclPath: 'sql',\n-\t\tconnectString: 'dev/dev@localhost:32122/orclpdb513.localdomain',\n-\t\tdirectory: './lib',\n-\t\tappID: 111,\n+\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\tdirectory: './demo/demo-working/',\n+\t\tappID: 105990,\n \t\tdestination: 'workspace'\n \t});\n \n@@ -27,9 +27,9 @@\n test('theme', t => {\n \t_app.publish({\n \t\tsqlclPath: 'sql',\n-\t\tconnectString: 'dev/dev@localhost:32122/orclpdb513.localdomain',\n-\t\tdirectory: './lib',\n-\t\tappID: 111,\n+\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\tdirectory: './demo/demo-working/',\n+\t\tappID: 105990,\n \t\tdestination: 'theme'\n \t});\n \n@@ -39,9 +39,9 @@\n test('alias', t => {\n \t_app.publish({\n \t\tsqlclPath: 'sql',\n-\t\tconnectString: 'dev/dev@localhost:32122/orclpdb513.localdomain',\n-\t\tdirectory: './lib',\n-\t\tappID: 'webpack'\n+\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\tdirectory: './demo/demo-working/',\n+\t\tappID: 'DEMO'\n \t});\n \n \tt.pass();\n@@ -50,12 +50,44 @@\n test('plugin', t => {\n \t_app.publish({\n \t\tsqlclPath: 'sql',\n-\t\tconnectString: 'dev/dev@localhost:32122/orclpdb513.localdomain',\n-\t\tdirectory: './lib',\n-\t\tappID: 111,\n+\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\tdirectory: './demo/demo-working/',\n+\t\tappID: 105990,\n \t\tdestination: 'plugin',\n \t\tpluginName: 'ME.VMORNEAU.ANIMAPEX'\n \t});\n \n \tt.pass();\n });\n+\n+test('empty', t => {\n+\ttry {\n+\t\t_app.publish({\n+\t\t\tsqlclPath: 'sql',\n+\t\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\t\tdirectory: './demo/demo-empty/',\n+\t\t\tappID: 105990\n+\t\t});\n+\n+\t\tt.pass();\n+\t} catch (error) {\n+\t\tif (error instanceof Error) {\n+\t\t\tt.pass();\n+\t\t}\n+\t}\n+});\n+\n+test('invalid-path', t => {\n+\ttry {\n+\t\t_app.publish({\n+\t\t\tsqlclPath: 'sql',\n+\t\t\tconnectString: 'dev/dev@localhost:32122/orclpdb1810.localdomain',\n+\t\t\tdirectory: './demo/demo-invalid/',\n+\t\t\tappID: 105990\n+\t\t});\n+\t} catch (error) {\n+\t\tif (error instanceof Error) {\n+\t\t\tt.pass();\n+\t\t}\n+\t}\n+});\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "demo/demo-working/css/app.css",
+      "old_sha256": null,
+      "new_sha256": "dc8002986d5ecf7c7b5dd00ee079ec53761f4a581acb5cd9b9248d21e3796f8c",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ demo/demo-working/css/app.css\n@@ -0,0 +1,3 @@\n+.t-Login-region {\n+    background-color: lightgreen;\n+}\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "demo/demo-working/js/app.js",
+      "old_sha256": null,
+      "new_sha256": "b71b349a72244a95a3ecbf4a8761d67ec27ac47086ab35aa995d3665c7215a8b",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ demo/demo-working/js/app.js\n@@ -0,0 +1,3 @@\n+(function () {\n+\tconsole.log('demo');\n+})();\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

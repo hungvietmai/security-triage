@@ -1,0 +1,51 @@
+{
+  "pair_id": "pyvul-mlflow-mlflow-6dde93758d42",
+  "split": "held_out",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "a05959acfc9bb274311e9c91d94ad375a6017c8e501d30c0f4483eba546bb848",
+    "fixed": "96c739ad99c3103e2d8a672683b58367df6025b7d732c9d23497f68d0b02b045"
+  },
+  "patch_hunks_sha256": "7696d523892bf28a1db70f5e771500df946cb7e740985c233d181404b91be383",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "no_sink_in_deleted_or_modified_lines_and_applicable_function_labels",
+      "provenance": {
+        "kind": "PyVul_patch",
+        "fix_commit": "6dde93758d42455cb90ef324407919ed67668b9b",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/mlflow/mlflow/commit/6dde93758d42455cb90ef324407919ed67668b9b"
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "predict",
+              "normalized_code_before_sha256": "6a615856e264c75c1a217c9a54680c6c318326c3e15e13df6756c447b5ca9f68",
+              "dataset_line": 1232,
+              "commit": "https://github.com/mlflow/mlflow/commit/6dde93758d42455cb90ef324407919ed67668b9b"
+            },
+            {
+              "function_name": "get_cmd",
+              "normalized_code_before_sha256": "3318a2cf80c802be8a26e0674823b5cba2a1e9f4cd65d3286028f93da85094ec",
+              "dataset_line": 1233,
+              "commit": "https://github.com/mlflow/mlflow/commit/6dde93758d42455cb90ef324407919ed67668b9b"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        }
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

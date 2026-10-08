@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-get-npm-package-version-1.0.6",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "cb4ae6eea5337ff3f3e2d4e058dcb17f3b7fe68f962e3d04de9409566a842bf3",
+    "fixed": "af9e6db3d08fb3a29c1a6d1017ce40a44467546852c11d72c0a2391823ab8dc9"
+  },
+  "patch_hunks_sha256": "6bf03536d0c782072365091bdddadf6af259dfd3df00dac00c1e1e431ce588f0",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 16,
+        "startColumn": 23,
+        "endLine": 16,
+        "endColumn": 99
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "require('child_process').execSync",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:16:48",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/get-npm-package-version_1.0.6/package.json",
+          "GHSA_SOURCE:https://github.com/hoperyy/get-npm-package-version"
+        ],
+        "inventory_basis": "SecBench sink index.js:16:48; get-npm-package-version Command Injection vulnerability; feat: add defence to Command Injection",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

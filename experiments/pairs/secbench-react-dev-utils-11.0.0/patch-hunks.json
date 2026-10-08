@@ -1,0 +1,490 @@
+{
+  "pair_id": "secbench-react-dev-utils-11.0.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "cd24020b86a02f9bb86fb6ae3ff3ecdeb3892250dac73ce54c81c3e01e0c6cdf",
+    "fixed": "463ad7bdf4d9a9f286c68acd95e0805110ae865a7474c0ce699702606fbaa399"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "WebpackDevServerUtils.js",
+      "new_path": "WebpackDevServerUtils.js",
+      "old_sha256": "21879025750788da5cd8776b8a5f3c839e4f4b2eae507a42c925bea4b94d290e",
+      "new_sha256": "426f301646799066dab47230584b1630531af293371305b409df228177fcfea7",
+      "hunks": [
+        {
+          "old_start": 13,
+          "old_count": 7,
+          "new_start": 13,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 16,
+              "old_count": 1,
+              "new_start": 16,
+              "new_count": 1,
+              "old_lines": [
+                16
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 467,
+          "old_count": 9,
+          "new_start": 467,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 470,
+              "old_count": 1,
+              "new_start": 470,
+              "new_count": 1,
+              "old_lines": [
+                470
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 472,
+              "old_count": 1,
+              "new_start": 472,
+              "new_count": 1,
+              "old_lines": [
+                472
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- WebpackDevServerUtils.js\n+++ WebpackDevServerUtils.js\n@@ -13,7 +13,7 @@\n const chalk = require('chalk');\n const detect = require('detect-port-alt');\n const isRoot = require('is-root');\n-const inquirer = require('inquirer');\n+const prompts = require('prompts');\n const clearConsole = require('./clearConsole');\n const formatWebpackMessages = require('./formatWebpackMessages');\n const getProcessForPort = require('./getProcessForPort');\n@@ -467,9 +467,9 @@\n                 message +\n                   `${existingProcess ? ` Probably:\\n  ${existingProcess}` : ''}`\n               ) + '\\n\\nWould you like to run the app on another port instead?',\n-            default: true,\n+            initial: true,\n           };\n-          inquirer.prompt(question).then(answer => {\n+          prompts(question).then(answer => {\n             if (answer.shouldChangePort) {\n               resolve(port);\n             } else {\n"
+    },
+    {
+      "old_path": "browsersHelper.js",
+      "new_path": "browsersHelper.js",
+      "old_sha256": "e31c89125f50a25a684823195a360caa84d5e33e4af9beec5afdb6ac22eac11c",
+      "new_sha256": "d6b52eceef646846450500bac473568f13bc5f542968f91fa0a5bab87379f608",
+      "hunks": [
+        {
+          "old_start": 9,
+          "old_count": 7,
+          "new_start": 9,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 12,
+              "old_count": 1,
+              "new_start": 12,
+              "new_count": 1,
+              "old_lines": [
+                12
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 35,
+          "old_count": 10,
+          "new_start": 35,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 38,
+              "old_count": 1,
+              "new_start": 38,
+              "new_count": 1,
+              "old_lines": [
+                38
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 41,
+              "old_count": 1,
+              "new_start": 41,
+              "new_count": 1,
+              "old_lines": [
+                41
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- browsersHelper.js\n+++ browsersHelper.js\n@@ -9,7 +9,7 @@\n const browserslist = require('browserslist');\n const chalk = require('chalk');\n const os = require('os');\n-const inquirer = require('inquirer');\n+const prompts = require('prompts');\n const pkgUp = require('pkg-up');\n const fs = require('fs');\n \n@@ -35,10 +35,10 @@\n       `\\n\\nWould you like to add the defaults to your ${chalk.bold(\n         'package.json'\n       )}?`,\n-    default: true,\n+    initial: true,\n   };\n \n-  return inquirer.prompt(question).then(answer => answer.shouldSetBrowsers);\n+  return prompts(question).then(answer => answer.shouldSetBrowsers);\n }\n \n function checkBrowsers(dir, isInteractive, retry = true) {\n"
+    },
+    {
+      "old_path": "eslintFormatter.js",
+      "new_path": "eslintFormatter.js",
+      "old_sha256": "8360fba0aa83767b852d12788de8721484a4421a64b5646baecfdd2276e666e0",
+      "new_sha256": "923ea3d50773171483d2dd8399804c6f051900992a8f60df5a3a27cee08d7a16",
+      "hunks": [
+        {
+          "old_start": 13,
+          "old_count": 6,
+          "new_start": 13,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 16,
+              "old_count": 0,
+              "new_start": 16,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 38,
+          "old_count": 7,
+          "new_start": 42,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 41,
+              "old_count": 1,
+              "new_start": 45,
+              "new_count": 1,
+              "old_lines": [
+                41
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- eslintFormatter.js\n+++ eslintFormatter.js\n@@ -13,6 +13,10 @@\n const table = require('text-table');\n \n const cwd = process.cwd();\n+\n+const emitErrorsAsWarnings =\n+  process.env.NODE_ENV === 'development' &&\n+  process.env.ESLINT_NO_DEV_ERRORS === 'true';\n \n function isError(message) {\n   if (message.fatal || message.severity === 2) {\n@@ -38,7 +42,7 @@\n \n     messages = messages.map(message => {\n       let messageType;\n-      if (isError(message)) {\n+      if (isError(message) && !emitErrorsAsWarnings) {\n         messageType = 'error';\n         hasErrors = true;\n         if (message.ruleId) {\n"
+    },
+    {
+      "old_path": "formatWebpackMessages.js",
+      "new_path": "formatWebpackMessages.js",
+      "old_sha256": "114ed26f96365c8a3de119f8e3ec514562e60e930f27f39f8f7a2dc7a054e746",
+      "new_sha256": "c00fae0927978583fa0bac23eeb8d2f008a7191d73880cabf73e1309dc4ed4ae",
+      "hunks": [
+        {
+          "old_start": 7,
+          "old_count": 7,
+          "new_start": 7,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 10,
+              "old_count": 1,
+              "new_start": 10,
+              "new_count": 0,
+              "old_lines": [
+                10
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 80,
+          "old_count": 8,
+          "new_start": 79,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 83,
+              "old_count": 2,
+              "new_start": 82,
+              "new_count": 0,
+              "old_lines": [
+                83,
+                84
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- formatWebpackMessages.js\n+++ formatWebpackMessages.js\n@@ -7,7 +7,6 @@\n \n 'use strict';\n \n-const chalk = require('chalk');\n const friendlySyntaxErrorLabel = 'Syntax error:';\n \n function isLikelyASyntaxError(message) {\n@@ -80,8 +79,6 @@\n       'Run `npm install node-sass` or `yarn add node-sass` inside your workspace.';\n   }\n \n-  lines[0] = chalk.inverse(lines[0]);\n-\n   message = lines.join('\\n');\n   // Internal stacks are generally useless so we strip them... with the\n   // exception of stacks containing `webpack:` because they're normally\n"
+    },
+    {
+      "old_path": "getProcessForPort.js",
+      "new_path": "getProcessForPort.js",
+      "old_sha256": "b78c0f1285e3bb4d5626e02c467df23572dbc7b411c80480722b12fb5f57d1eb",
+      "new_sha256": "c89480ce8f20f7a9fb82b12bdb97f33ce38d241c48a9e83fef620d02d89cb224",
+      "hunks": [
+        {
+          "old_start": 9,
+          "old_count": 6,
+          "new_start": 9,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 12,
+              "old_count": 0,
+              "new_start": 12,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 25,
+          "old_count": 7,
+          "new_start": 26,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 28,
+              "old_count": 1,
+              "new_start": 29,
+              "new_count": 1,
+              "old_lines": [
+                28
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- getProcessForPort.js\n+++ getProcessForPort.js\n@@ -9,6 +9,7 @@\n \n var chalk = require('chalk');\n var execSync = require('child_process').execSync;\n+var execFileSync = require('child_process').execFileSync;\n var path = require('path');\n \n var execOptions = {\n@@ -25,7 +26,7 @@\n }\n \n function getProcessIdOnPort(port) {\n-  return execSync('lsof -i:' + port + ' -P -t -sTCP:LISTEN', execOptions)\n+  return execFileSync('lsof', ['-i:' + port, '-P', '-t', '-sTCP:LISTEN'], execOptions)\n     .split('\\n')[0]\n     .trim();\n }\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "115754046e307c95d0194f89da7613853b3da68828b33c0e14c17ed7b9593ec7",
+      "new_sha256": "7bae559027daf856fddef9a725f654d0551ac732608b77b1138743b5eacd2809",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 34,
+          "old_count": 7,
+          "new_start": 34,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 37,
+              "old_count": 1,
+              "new_start": 37,
+              "new_count": 0,
+              "old_lines": [
+                37
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 66,
+          "old_count": 13,
+          "new_start": 65,
+          "new_count": 13,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 69,
+              "old_count": 2,
+              "new_start": 68,
+              "new_count": 1,
+              "old_lines": [
+                69,
+                70
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 75,
+              "old_count": 1,
+              "new_start": 73,
+              "new_count": 2,
+              "old_lines": [
+                75
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 80,
+          "old_count": 10,
+          "new_start": 79,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 83,
+              "old_count": 1,
+              "new_start": 82,
+              "new_count": 1,
+              "old_lines": [
+                83
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 87,
+              "old_count": 2,
+              "new_start": 86,
+              "new_count": 1,
+              "old_lines": [
+                87,
+                88
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"react-dev-utils\",\n-  \"version\": \"11.0.0\",\n+  \"version\": \"11.0.4\",\n   \"description\": \"webpack utilities used by Create React App\",\n   \"repository\": {\n     \"type\": \"git\",\n@@ -34,7 +34,6 @@\n     \"ignoredFiles.js\",\n     \"immer.js\",\n     \"InlineChunkHtmlPlugin.js\",\n-    \"inquirer.js\",\n     \"InterpolateHtmlPlugin.js\",\n     \"launchEditor.js\",\n     \"launchEditorEndpoint.js\",\n@@ -66,13 +65,13 @@\n     \"global-modules\": \"2.0.0\",\n     \"globby\": \"11.0.1\",\n     \"gzip-size\": \"5.1.1\",\n-    \"immer\": \"7.0.9\",\n-    \"inquirer\": \"7.3.3\",\n+    \"immer\": \"8.0.1\",\n     \"is-root\": \"2.1.0\",\n     \"loader-utils\": \"2.0.0\",\n     \"open\": \"^7.0.2\",\n     \"pkg-up\": \"3.1.0\",\n-    \"react-error-overlay\": \"^6.0.8\",\n+    \"prompts\": \"2.4.0\",\n+    \"react-error-overlay\": \"^6.0.9\",\n     \"recursive-readdir\": \"2.2.2\",\n     \"shell-quote\": \"1.7.2\",\n     \"strip-ansi\": \"6.0.0\",\n@@ -80,10 +79,9 @@\n   },\n   \"devDependencies\": {\n     \"cross-env\": \"^7.0.2\",\n-    \"jest\": \"26.4.2\"\n+    \"jest\": \"26.6.0\"\n   },\n   \"scripts\": {\n     \"test\": \"cross-env FORCE_COLOR=true jest\"\n-  },\n-  \"gitHead\": \"ed958938f642007645dd5ac3466db36202f8754e\"\n+  }\n }\n"
+    },
+    {
+      "old_path": "webpackHotDevClient.js",
+      "new_path": "webpackHotDevClient.js",
+      "old_sha256": "08c491b9408e9520c3b50af029793751e54217de6aee756c75530486ffb7be89",
+      "new_sha256": "e6b91fceadf3d941c719f2aa4fadbb83d5dcd835016df3fbb55d67fc19697d92",
+      "hunks": [
+        {
+          "old_start": 243,
+          "old_count": 7,
+          "new_start": 243,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 246,
+              "old_count": 1,
+              "new_start": 246,
+              "new_count": 2,
+              "old_lines": [
+                246
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- webpackHotDevClient.js\n+++ webpackHotDevClient.js\n@@ -243,7 +243,8 @@\n   }\n \n   function handleApplyUpdates(err, updatedModules) {\n-    const hasReactRefresh = process.env.FAST_REFRESH !== 'false';\n+    // NOTE: This var is injected by Webpack's DefinePlugin, and is a boolean instead of string.\n+    const hasReactRefresh = process.env.FAST_REFRESH;\n     const wantsForcedReload = err || !updatedModules || hadRuntimeError;\n     // React refresh can handle hot-reloading over errors.\n     if (!hasReactRefresh && wantsForcedReload) {\n"
+    },
+    {
+      "old_path": "inquirer.js",
+      "new_path": null,
+      "old_sha256": "e225358bf20cc63e2645d170c0774f0af8288d02f7037cd666908d41adcca0fc",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 12,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 12,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- inquirer.js\n+++ /dev/null\n@@ -1,12 +0,0 @@\n-/**\n- * Copyright (c) 2015-present, Facebook, Inc.\n- *\n- * This source code is licensed under the MIT license found in the\n- * LICENSE file in the root directory of this source tree.\n- */\n-\n-'use strict';\n-\n-var inquirer = require('inquirer');\n-\n-module.exports = inquirer;\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

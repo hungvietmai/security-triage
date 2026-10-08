@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-giting-0.0.7",
+  "split": "held_out",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "aba933d41dd70cd45c09be590bffa3ef4c42435391cad4cfe2380a58c59a2d7e",
+    "fixed": "12c5a76bf5738245baa04b7be2b992dd8a6c9d1f0e1e26e5a0d34966e8a33318"
+  },
+  "patch_hunks_sha256": "8094ba8042f5a2fd4f043aa9e8b52d920b2dfe27b79a1c26e7ad3ef6c494bd97",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/git.js",
+      "span": {
+        "startLine": 223,
+        "startColumn": 2,
+        "endLine": 230,
+        "endColumn": 4
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "child.exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/git.js:223:8",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/giting_0.0.7/package.json",
+          "GHSA_SOURCE:https://github.com/MangoRaft/git"
+        ],
+        "inventory_basis": "SecBench sink lib/git.js:223:8; OS Command Injection in giting",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

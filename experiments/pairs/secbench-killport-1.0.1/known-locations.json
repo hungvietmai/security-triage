@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-killport-1.0.1",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "9ce66de79e8601bf48a99b530e7b0c451af7dd7dd5f79f9b95038df0d47ef576",
+    "fixed": "260fc70a140cc2f9e2b2e9b557d60e3eaea4cf3762fab67698d41876f7e03c88"
+  },
+  "patch_hunks_sha256": "04306f966a7b32be22cb3a23c44fc574a92f720400c03cb7cbac45514ba3d61a",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 9,
+        "startColumn": 5,
+        "endLine": 41,
+        "endColumn": 7
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "cp.exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:9:8",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/killport_1.0.1/package.json"
+        ],
+        "inventory_basis": "SecBench sink index.js:9:8; Command Injection in killport; fix a vulnerability issue if a provided port is not a number",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

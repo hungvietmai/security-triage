@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-connection-tester-0.2.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "28c0ff84ab0b8455a41afcff44219c390d12d4ed4b2552ec0b63c9209b0dae19",
+    "fixed": "1961d72139dc39b278e4340c2deace5c51f35163d616cabde5332b856343c821"
+  },
+  "patch_hunks_sha256": "af6d343ac3943f6baf888bce92576d4382712b76b909bac5c025a552111b2c1b",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 15,
+        "startColumn": 22,
+        "endLine": 15,
+        "endColumn": 41
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "shell.execSync",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:15:28",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/connection-tester_0.2.0/package.json"
+        ],
+        "inventory_basis": "SecBench sink index.js:15:28; Command injection in connection-tester",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

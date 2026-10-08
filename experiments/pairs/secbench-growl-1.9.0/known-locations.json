@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-growl-1.9.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "9fa6163e3ac3eace7fc180e0dd59a8f5a7e6958d4c3575379a6ab2cc5a9d5748",
+    "fixed": "d4b5f5d7bcbc760b4b71ace6dcd7f6e1bc175c04619894bd47b86a304f1ca590"
+  },
+  "patch_hunks_sha256": "030ef707402797f3691bed1e65d33b11c896de95a5e07f8779a4e88cd710abb3",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/growl.js",
+      "span": {
+        "startLine": 289,
+        "startColumn": 3,
+        "endLine": 289,
+        "endColumn": 27
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/growl.js:289:3",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/growl_1.9.0/package.json",
+          "GHSA_SOURCE:https://github.com/tj/node-growl"
+        ],
+        "inventory_basis": "SecBench sink lib/growl.js:289:3; Growl before 1.10.0 vulnerable to Command Injection; Fix to resolve the command injection vulnerability. (#62)",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

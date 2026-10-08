@@ -1,0 +1,4183 @@
+{
+  "pair_id": "pyvul-WeblateOrg-weblate-35d59f1f0405",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "ff27919b64618d673bd91c8c3b23f58ab31d412f4f179f1e852d6f417057da6e",
+    "fixed": "d7b9a9a10c8f18dd5a4720a6fc6cdb5347801d70ae8fa70d080773b60aa3fee5"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "BACKERS.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "CONTACT.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "COPYING",
+        "reason": "documentation"
+      },
+      {
+        "path": "ChangeLog",
+        "reason": "symlink",
+        "target": "docs/changes.rst"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "SECURITY.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "ci/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "dev-docker/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_ext/djangodocs.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_templates/footer.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_templates/layout.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/access.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/addons.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/admin.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/announcements.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/auth.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/backup.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/checks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/componentlists.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/config.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/continuous.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/customize.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/deployments.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/docker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/kubernetes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/openshift.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/source.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/adjust-config.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/hw.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-after.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-configure.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-python.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-system-devel.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-system-optional.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-system-server.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-debian.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-macos.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-redhat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-suse.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/languages.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/licensing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/machine.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/management.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/memory.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/optionals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/projects.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/sample.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/support.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/translating.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/upgrade.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/api.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/changes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/about.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/addons.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/code.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/debugging.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/frontend.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/internals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/issues.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/license.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/release.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/schemas.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/security.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/start.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/tests.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/alerts.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/community.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/gettext.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/html.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/integration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/libraries.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/reporting-example.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/reporting.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/review.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/share.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/sphinx.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/starting.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/translations.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/faq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/formats.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/bitbucket-settings.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/cloudron.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/github-protected.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/github-settings.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/install-with-yunohost.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pagure-webhook.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-1.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-2.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-3.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-4.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-5.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/latexindex.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/legal.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ar/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ar_LY/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ars/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ast/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/az/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/be/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/be@latin/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ber/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/bg/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/bn/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/bn_BD/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/br/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ca/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ce/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ckb/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/crh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cs/LC_MESSAGES/docs.mo",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cs/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cv/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cy/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/da/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/de/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/docs.pot",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/dv/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/el/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/en_GB/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/enm/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/eo/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/es/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/et/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/eu/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fa/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fi/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fil/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fur/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fy/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/gl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/he/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hi/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hu/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hy/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ia/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/id/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ie/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/is/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/it/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ja/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/kab/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/kk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/km/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/kmr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ko/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ksh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ln/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/lt/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/lzh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/mk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ml/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/mr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ms/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/my/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/nb/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/nl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/oc/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/or/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pa/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ps/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pt/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pt_BR/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pt_PT/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ro/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ru/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sc/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/si/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sq/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sr_Latn/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sv/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sw/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ta/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/te/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/th/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tlh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tt/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tzm/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ug/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/uk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/uz/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/vi/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/zh_CN",
+        "reason": "symlink",
+        "target": "zh_Hans"
+      },
+      {
+        "path": "docs/locales/zh_Hans/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/zh_Hant/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/zh_TW",
+        "reason": "symlink",
+        "target": "zh_Hant"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/python.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/requirements.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/schemas/weblate-memory.schema.json",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/schemas/weblate-userdata.schema.json",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/about-gpg.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/activity.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/add-component-mono.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/add-component.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/add-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/addon-discovery.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/addons.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/admin-wrench.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/admin.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/alerts.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/announcement-language.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/announcement-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/announcement.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/authentication.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/automatic-translation.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/backups.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/checks.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/component-repository.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/componentlist-add.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/contributor-agreement.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/dashboard-dropdown.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/engage.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/file-download.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/file-upload.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-edit.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-group-edit.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-group-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/format-highlight.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/glossary-browse.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/glossary-component.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/glossary-tools.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/guide.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/labels.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/manage-users.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/memory.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/plurals.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/profile-licenses.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/profile-subscriptions.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/project-access.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/project-overview.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/project-workflow.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/promote.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/query-dropdown.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/query-sort.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/reporting.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/screenshot-context.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/screenshot-ocr.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/search.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/secondary-language.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-information.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-review-detail.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-review-edit.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-review.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/ssh-keys-added.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/ssh-keys.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/strings-to-check.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/support-discovery.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/support.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-component-discovery.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-component-init.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-component.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-project-done.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-billing.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/variants-settings.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/variants-translate.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/visual-keyboard.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/your-translations.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/snippets/basics.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/snippets/not-hosted-libre.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/snippets/oauth-site.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-admin.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-changes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-contrib.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-devel.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-user.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/basic.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/checks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/files.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/glossary.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/profile.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/search.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/translating.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/vcs.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/wlc.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/workflows.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_avatars.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_captcha.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_middleware.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_notifications.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_password_validation.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_registration.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_remove.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_autogroup.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_permissions.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_angularjs_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_chars_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_consistency_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_duplicate_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_flags.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_format_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_glossary_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_icu_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_markup_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_placeholders.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_render_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_same_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_source_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/static/font-droid/README.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "weblate/fonts/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/test_utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_convert.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_exporters.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_external.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_formats.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_txt.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/settings_test.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "weblate/trans/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiFullPage.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiFullPageSource.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiPageProperties.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiPagePropertiesSource.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/components-invalid.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/components.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-CZ.rc",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-badplurals.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-bom.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-flat.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-fuzzy.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-mono.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-mono.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-nested.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-quotes-escaped.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-quotes.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-webext.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.dtd",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ftl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ini",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.joomla.ini",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.mo",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.odt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.php",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.poxliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.pyml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.resx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ryml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.stringsdict",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.tbx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ts",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/en.i18next.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/en.idml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/googlev3.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/gwt.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-cldr.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-custom.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-simple.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-three.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/hello-charset.pot",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/hello.pot",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/hub",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ids-edited.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ids-translated.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ids.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/invalid.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ja.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/known_hosts",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/lab",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/laravel.php",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory-broken.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory-empty.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory-invalid.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory.tmx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory2.tmx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.wsdl0",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd0",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd1",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd2",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd3",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/placeholder-mrk.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/placeholder-x.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/pypi.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/saml.crt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/saml.key",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/screenshot.png",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/short_description.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ssh-keyscan",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/strings-cs.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/strings.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/swing.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms-header.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms.tbx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/test-base-repo.git.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/test-base-repo.hg.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/test-base-repo.svn.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/translations.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/unicode.pot",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/userdata.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users-django.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users-empty.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users-invalid.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/xwiki.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/xwiki_new_language.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_acl.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_agreement.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_alert.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_autofix.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_autotranslate.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_basic_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_changes.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_charts.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_comment.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_component.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_create.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_dashboard.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_debug.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_discovery.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_edit.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_exports.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_files.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_git_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_hooks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_js_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_labels.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_lock.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_manage.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_newlang.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_projecttoken.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_remote.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_reports.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_review.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_search.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_selenium.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_settings.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_sitemaps.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_sort.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_specialchars.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_suggestions.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_tasks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_templatetags.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_util.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_variants.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_widgets.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_xliff_placeholders.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_antispam.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_backup.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_classloader.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_db.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_environment.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_files.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_hash.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_html.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_markdown.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_middleware.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_ratelimit.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_render.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_request.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_search.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_validators.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_version.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/test_gpg.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/test_ssh.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/test_vcs.py",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "BACKERS.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "CONTACT.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "COPYING",
+        "reason": "documentation"
+      },
+      {
+        "path": "ChangeLog",
+        "reason": "symlink",
+        "target": "docs/changes.rst"
+      },
+      {
+        "path": "README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "SECURITY.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "ci/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "dev-docker/README.rst",
+        "reason": "documentation"
+      },
+      {
+        "path": "docs/Makefile",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_ext/djangodocs.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_templates/footer.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/_templates/layout.html",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/access.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/addons.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/admin.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/announcements.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/auth.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/backup.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/checks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/componentlists.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/config.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/continuous.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/customize.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/deployments.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/docker.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/kubernetes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/openshift.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/source.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/adjust-config.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/hw.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-after.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-configure.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-python.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-system-devel.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-system-optional.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/steps/install-system-server.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-debian.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-macos.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-redhat.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/install/venv-suse.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/languages.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/licensing.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/machine.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/management.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/memory.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/optionals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/projects.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/sample.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/support.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/translating.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/admin/upgrade.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/api.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/changes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/conf.py",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/about.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/addons.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/code.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/debugging.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/frontend.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/internals.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/issues.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/license.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/release.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/schemas.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/security.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/start.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/contributing/tests.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/alerts.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/community.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/gettext.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/html.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/integration.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/libraries.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/reporting-example.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/reporting.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/review.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/share.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/sphinx.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/starting.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/devel/translations.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/faq.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/formats.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/bitbucket-settings.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/cloudron.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/github-protected.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/github-settings.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/install-with-yunohost.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pagure-webhook.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-1.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-2.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-3.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-4.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/images/pycharm-5.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/index.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/latexindex.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/legal.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ar/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ar_LY/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ars/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ast/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/az/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/be/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/be@latin/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ber/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/bg/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/bn/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/bn_BD/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/br/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ca/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ce/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ckb/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/crh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cs/LC_MESSAGES/docs.mo",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cs/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cv/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/cy/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/da/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/de/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/docs.pot",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/dv/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/el/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/en_GB/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/enm/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/eo/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/es/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/et/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/eu/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fa/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fi/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fil/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fur/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/fy/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/gl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/he/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hi/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hu/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/hy/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ia/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/id/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ie/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/is/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/it/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ja/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/kab/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/kk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/km/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/kmr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ko/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ksh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ln/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/lt/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/lzh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/mk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ml/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/mr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ms/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/my/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/nb/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/nl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/oc/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/or/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pa/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ps/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pt/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pt_BR/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/pt_PT/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ro/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ru/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sc/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/si/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sl/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sq/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sr_Latn/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sv/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/sw/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ta/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/te/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/th/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tlh/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tr/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tt/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/tzm/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/ug/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/uk/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/uz/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/vi/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/zh_CN",
+        "reason": "symlink",
+        "target": "zh_Hans"
+      },
+      {
+        "path": "docs/locales/zh_Hans/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/zh_Hant/LC_MESSAGES/docs.po",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/locales/zh_TW",
+        "reason": "symlink",
+        "target": "zh_Hant"
+      },
+      {
+        "path": "docs/make.bat",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/python.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/requirements.txt",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/schemas/weblate-memory.schema.json",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/schemas/weblate-userdata.schema.json",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/about-gpg.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/activity.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/add-component-mono.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/add-component.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/add-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/addon-discovery.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/addons.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/admin-wrench.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/admin.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/alerts.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/announcement-language.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/announcement-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/announcement.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/authentication.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/automatic-translation.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/backups.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/checks.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/component-repository.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/componentlist-add.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/contributor-agreement.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/dashboard-dropdown.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/engage.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/file-download.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/file-upload.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-edit.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-group-edit.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-group-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/font-list.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/format-highlight.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/glossary-browse.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/glossary-component.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/glossary-tools.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/guide.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/labels.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/manage-users.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/memory.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/plurals.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/profile-licenses.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/profile-subscriptions.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/project-access.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/project-overview.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/project-workflow.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/promote.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/query-dropdown.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/query-sort.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/reporting.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/screenshot-context.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/screenshot-ocr.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/search.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/secondary-language.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-information.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-review-detail.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-review-edit.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/source-review.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/ssh-keys-added.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/ssh-keys.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/strings-to-check.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/support-discovery.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/support.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-component-discovery.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-component-init.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-component.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-project-done.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-add-project.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/user-billing.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/variants-settings.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/variants-translate.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/visual-keyboard.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/screenshots/your-translations.png",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/snippets/basics.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/snippets/not-hosted-libre.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/snippets/oauth-site.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-admin.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-changes.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-contrib.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-devel.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/toc-user.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/basic.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/checks.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/files.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/glossary.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/profile.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/search.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/user/translating.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/vcs.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/wlc.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "docs/workflows.rst",
+        "reason": "documentation_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_avatars.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_captcha.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_middleware.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_notifications.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_password_validation.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_registration.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_remove.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/accounts/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_autogroup.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/auth/tests/test_permissions.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_angularjs_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_chars_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_consistency_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_duplicate_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_flags.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_format_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_glossary_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_icu_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_markup_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_placeholders.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_render_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_same_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_source_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/checks/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/static/font-droid/README.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "weblate/fonts/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/test_utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/fonts/tests/utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_convert.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_exporters.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_external.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_formats.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/formats/tests/test_txt.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/settings_test.py",
+        "reason": "test_file"
+      },
+      {
+        "path": "weblate/trans/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiFullPage.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiFullPageSource.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiPageProperties.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/XWikiPagePropertiesSource.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/components-invalid.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/components.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-CZ.rc",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-badplurals.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-bom.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-flat.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-fuzzy.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-mono.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-mono.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-nested.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-quotes-escaped.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-quotes.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs-webext.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.dtd",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ftl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.html",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ini",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.joomla.ini",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.mo",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.odt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.php",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.poxliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.pyml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.resx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ryml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.stringsdict",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.tbx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.ts",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/cs.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/en.i18next.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/en.idml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/googlev3.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/gwt.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-cldr.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-custom.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-simple.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/he-three.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/hello-charset.pot",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/hello.pot",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/hub",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ids-edited.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ids-translated.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ids.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/invalid.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ja.xlsx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/known_hosts",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/lab",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/laravel.php",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory-broken.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory-empty.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory-invalid.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory.tmx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/memory2.tmx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.wsdl0",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd0",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd1",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd2",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/microsoftterminology.wsdl.xsd3",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/placeholder-mrk.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/placeholder-x.xliff",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/pypi.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/saml.crt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/saml.key",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/screenshot.png",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/short_description.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/ssh-keyscan",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/strings-cs.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/strings.xml",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/swing.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms-header.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms.csv",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms.po",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/terms.tbx",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/test-base-repo.git.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/test-base-repo.hg.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/test-base-repo.svn.tar",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/translations.zip",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/unicode.pot",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/userdata.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users-django.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users-empty.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users-invalid.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/users.json",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/xwiki.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/data/xwiki_new_language.properties",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_acl.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_agreement.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_alert.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_autofix.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_autotranslate.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_basic_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_changes.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_charts.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_comment.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_component.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_create.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_dashboard.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_debug.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_discovery.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_edit.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_exports.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_files.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_git_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_hooks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_js_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_labels.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_lock.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_manage.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_models.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_newlang.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_projecttoken.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_remote.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_reports.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_review.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_search.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_selenium.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_settings.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_sitemaps.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_sort.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_specialchars.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_suggestions.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_tasks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_templatetags.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_util.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_variants.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_widgets.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/test_xliff_placeholders.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/trans/tests/utils.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_antispam.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_backup.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_checks.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_classloader.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_commands.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_db.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_environment.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_files.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_hash.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_html.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_markdown.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_middleware.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_ratelimit.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_render.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_request.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_search.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_validators.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_version.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/utils/tests/test_views.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/__init__.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/test_gpg.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/test_ssh.py",
+        "reason": "test_directory"
+      },
+      {
+        "path": "weblate/vcs/tests/test_vcs.py",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "weblate/vcs/mercurial.py",
+      "new_path": "weblate/vcs/mercurial.py",
+      "old_sha256": "6f02d209f07565fa089888d358647c2232664c7e904d7022feaed365b240a7c4",
+      "new_sha256": "4f91a3fdb695d3029ca26132f13449422e750291a2d07c72bacb21b494a5b2de",
+      "hunks": [
+        {
+          "old_start": 70,
+          "old_count": 7,
+          "new_start": 70,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 73,
+              "old_count": 1,
+              "new_start": 73,
+              "new_count": 1,
+              "old_lines": [
+                73
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 323,
+          "old_count": 7,
+          "new_start": 323,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 326,
+              "old_count": 1,
+              "new_start": 326,
+              "new_count": 1,
+              "old_lines": [
+                326
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 343,
+          "old_count": 7,
+          "new_start": 343,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 346,
+              "old_count": 1,
+              "new_start": 346,
+              "new_count": 1,
+              "old_lines": [
+                346
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 363,
+          "old_count": 7,
+          "new_start": 363,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 366,
+              "old_count": 1,
+              "new_start": 366,
+              "new_count": 1,
+              "old_lines": [
+                366
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- weblate/vcs/mercurial.py\n+++ weblate/vcs/mercurial.py\n@@ -70,7 +70,7 @@\n     @classmethod\n     def _clone(cls, source: str, target: str, branch: str):\n         \"\"\"Clone repository.\"\"\"\n-        cls._popen([\"clone\", \"--branch\", branch, source, target])\n+        cls._popen([\"clone\", f\"--branch={branch}\", \"--\", source, target])\n \n     def get_config(self, path):\n         \"\"\"Read entry from configuration.\"\"\"\n@@ -323,7 +323,7 @@\n     def configure_branch(self, branch):\n         \"\"\"Configure repository branch.\"\"\"\n         if not self.on_branch(branch):\n-            self.execute([\"update\", branch])\n+            self.execute([\"update\", \"--\", branch])\n         self.branch = branch\n \n     def describe(self):\n@@ -343,7 +343,7 @@\n     def push(self, branch):\n         \"\"\"Push given branch to remote repository.\"\"\"\n         try:\n-            self.execute([\"push\", \"-b\", self.branch])\n+            self.execute([\"push\", f\"--branch={self.branch}\"])\n         except RepositoryException as error:\n             if error.retcode == 1:\n                 # No changes found\n@@ -363,7 +363,7 @@\n \n     def update_remote(self):\n         \"\"\"Update remote repository.\"\"\"\n-        self.execute([\"pull\", \"--branch\", self.branch])\n+        self.execute([\"pull\", f\"--branch={self.branch}\"])\n         self.clean_revision_cache()\n \n     def parse_changed_files(self, lines: List[str]) -> Iterator[str]:\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

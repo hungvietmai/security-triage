@@ -1,4 +1,4 @@
-# Frozen pair preparation — pairs-v0
+# Frozen pair preparation — pairs-v1
 
 `index.json` lists the **51 usable manifests** from `split_v0.2.json`: 35
 development pairs (34 groups) and 16 held-out pairs (15 groups). Split-v0.2 is
@@ -30,13 +30,28 @@ GitHub acquisition uses the first commit-pinned codeload archive (`tofu`). Both
 reuse `backend/app/scanners/sources.py` without redirects. Downloading a source
 does not install its dependencies, extract it, or invoke a scanner.
 
-Only three development pairs have patch/known-location artifacts:
+Every locked pair (50: 34 development, 16 held-out) has `patch-hunks.json` and
+`known-locations.json`, extracted **before any scanner output exists for the
+held-out pairs**, so the chosen locations cannot depend on tool results. Ray has
+no archive and therefore no artifacts.
 
-| Pair | Known vulnerable location | Provenance |
-| --- | --- | --- |
-| `pyvul-dwisiswant0-apkleaks-a966e781499f` | `apkleaks/apkleaks.py:88:3`, `os.system` | Modified old line 88; exact `decompile` function record from PyVul |
-| `secbench-diskusage-ng-0.2.6` | `lib/posix.js:11:5`, `child_process.exec` | Published SecBench sink hint, checked against the imported call |
-| `secbench-dns-sync-0.1.0` | `lib/dns-sync.js:21:20`, `shelljs.exec` | Published hint `21:26` lies within the callee `shell.exec` |
+| Split | Pairs | Resolved | `known_location_unresolved` |
+| --- | ---: | ---: | ---: |
+| development | 34 | 26 | 8 |
+| held_out | 16 | 9 | 7 |
+
+Unresolved development: Paddle `49bec1760535`, celery, pip, python-libnmap,
+clamscan, git-parse, gry, local-devices. Unresolved held-out: both WeblateOrg pairs,
+dcnnt-py, powerline-gitstatus, binderhub, mlflow, async-git. Reasons: no sink in the
+deleted/modified lines and applicable function labels (10), a SecBench sink hint not
+uniquely contained in a callee (4), a hint file missing (1). An unresolved pair keeps
+no substituted location; it is not evidence that the pair is safe or out of scope.
+
+The first three prepared pairs keep their hunks and locations byte-for-byte; only
+their `generator_sha256` (and the dependent `patch_hunks_sha256`) changed with the
+tools. Symlinks whose target stays inside the archive are listed under `ignored`
+with reason `symlink` and are never read; see RESEARCH_LOG for this and the other
+pre-scan preparation decisions.
 
 The JavaScript helper parses ASTs with pinned Babel tooling; it never invokes
 Semgrep/CodeQL or executes source. It supports direct child_process/shelljs
@@ -65,8 +80,8 @@ Run from the repository root with Node 24 and uv/Python 3.12:
 npm --prefix experiments/locators ci --ignore-scripts
 uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/make_pair_manifests.py --check
 uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/lock_pair_sources.py
-uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/patch_hunks.py --pair pyvul-dwisiswant0-apkleaks-a966e781499f --pair secbench-diskusage-ng-0.2.6 --pair secbench-dns-sync-0.1.0
-uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/known_locations.py --pair pyvul-dwisiswant0-apkleaks-a966e781499f --pair secbench-diskusage-ng-0.2.6 --pair secbench-dns-sync-0.1.0 --pyvul-functions-file artifacts/pair-sources/pyvul-function-level-dataset.out
+uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/patch_hunks.py --all-locked
+uv run --project backend --with-requirements experiments/requirements-pairs.txt python experiments/known_locations.py --all-locked --pyvul-functions-file artifacts/pair-sources/pyvul-function-level-dataset.out
 uv run --project backend --with-requirements experiments/requirements-pairs.txt python -m unittest discover -s experiments/tests -p 'test_*.py' -v
 ```
 

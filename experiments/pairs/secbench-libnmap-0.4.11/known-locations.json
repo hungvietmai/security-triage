@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-libnmap-0.4.11",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "3ff36e4db213518c492d3359bf198c89a67880171e298ca86c82ff06ba144612",
+    "fixed": "98879ade4fb0ecec9b9090ef5b56339062f2056fa8674540877990f9ed72e0e0"
+  },
+  "patch_hunks_sha256": "3449af5a957ed8e683984612f1d982cf5f743bea8a7629f5732014ca0b729026",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/classes/tools.js",
+      "span": {
+        "startLine": 114,
+        "startColumn": 25,
+        "endLine": 117,
+        "endColumn": 11
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "proc",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/classes/tools.js:114:25",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/libnmap_0.4.11/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/classes/tools.js:114:25; Command Injection in libnmap; v0.4.16: Version bump & move to a stream object with .spawn()",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

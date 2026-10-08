@@ -1,0 +1,532 @@
+{
+  "pair_id": "secbench-total.js-3.4.6",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "add0ef7dfe86d3b90c5078e9e61071093a140ff91d2a98d079e06a0bfc78ca6c",
+    "fixed": "e38181f84bfcdb391260c3e2ff8467edf076beffc7b15f7d9ad019b9d6a92366"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "license.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "readme.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "license.txt",
+        "reason": "documentation"
+      },
+      {
+        "path": "readme.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "changes.txt",
+      "new_path": "changes.txt",
+      "old_sha256": "43af6c4e309aa90205aec7904d6d5038c3eabb902860aa2d6ecdf450e2aea191",
+      "new_sha256": "aa9e4e096b9faf9064f1e2c7d4cbc7001fb73c152cdfeb3d8ab7542586b65b03",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 3,
+          "new_start": 1,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- changes.txt\n+++ changes.txt\n@@ -1,3 +1,7 @@\n+======= 3.4.7\n+\n+- fixed: `controller.transfer()`\n+\n ======= 3.4.6\n \n - added: a support for Total.js v4 UIDs\n"
+    },
+    {
+      "old_path": "debug.js",
+      "new_path": "debug.js",
+      "old_sha256": "f110e738291dad5849d42e2f3d8645d3e95b1b4a0c942300e296bb3de917203e",
+      "new_sha256": "1b53d1a12dcb81a8b584241dfeaf4edba0be59013e8177b8119db27e339b1d49",
+      "hunks": [
+        {
+          "old_start": 459,
+          "old_count": 22,
+          "new_start": 459,
+          "new_count": 17,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 462,
+              "old_count": 10,
+              "new_start": 462,
+              "new_count": 8,
+              "old_lines": [
+                462,
+                463,
+                464,
+                465,
+                466,
+                467,
+                468,
+                469,
+                470,
+                471
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 473,
+              "old_count": 2,
+              "new_start": 471,
+              "new_count": 0,
+              "old_lines": [
+                473,
+                474
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 476,
+              "old_count": 2,
+              "new_start": 472,
+              "new_count": 1,
+              "old_lines": [
+                476,
+                477
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- debug.js\n+++ debug.js\n@@ -459,22 +459,17 @@\n \t\t\tFs.writeFileSync(pid, process.pid + '');\n \n \t\t\tsetInterval(function() {\n-\t\t\t\tFs.exists(pid, function(e) {\n-\n-\t\t\t\t\tif (e)\n-\t\t\t\t\t\treturn;\n-\n-\t\t\t\t\tFs.unlink(pid, noop);\n-\n-\t\t\t\t\tif (app !== null) {\n-\t\t\t\t\t\tisSkip = true;\n-\t\t\t\t\t\tprocess.kill(app.pid);\n+\t\t\t\tFs.stat(pid, function(err) {\n+\t\t\t\t\tif (err) {\n+\t\t\t\t\t\tFs.unlink(pid, noop);\n+\t\t\t\t\t\tif (app !== null) {\n+\t\t\t\t\t\t\tisSkip = true;\n+\t\t\t\t\t\t\tprocess.kill(app.pid);\n+\t\t\t\t\t\t}\n+\t\t\t\t\t\tprocess.exit(0);\n \t\t\t\t\t}\n-\n-\t\t\t\t\tprocess.exit(0);\n \t\t\t\t});\n-\n-\t\t\t}, 3000);\n+\t\t\t}, 4000);\n \t\t}\n \n \t\trestart();\n"
+    },
+    {
+      "old_path": "image.js",
+      "new_path": "image.js",
+      "old_sha256": "84ef6f78b12517b48a789f4ed2e7862ab8ecb8c171c8affe35ba28880ae255ee",
+      "new_sha256": "e1887c2efcad3c74961c75a574d1207a95e15b10c8447f4e662aef799e5a385a",
+      "hunks": [
+        {
+          "old_start": 38,
+          "old_count": 6,
+          "new_start": 38,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 41,
+              "old_count": 0,
+              "new_start": 41,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 322,
+          "old_count": 7,
+          "new_start": 323,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 325,
+              "old_count": 1,
+              "new_start": 326,
+              "new_count": 1,
+              "old_lines": [
+                325
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- image.js\n+++ image.js\n@@ -38,6 +38,7 @@\n const D = require('os').platform().substring(0, 3).toLowerCase() === 'win' ? '\"' : '\\'';\n const CMD_CONVERT = { gm: 'gm', im: 'convert', magick: 'magick' };\n const CMD_CONVERT2 = { gm: 'gm convert', im: 'convert', magick: 'magick' };\n+const SUPPORTEDIMAGES = { jpg: 1, png: 1, gif: 1, apng: 1, jpeg: 1, heif: 1, heic: 1, webp: 1, ico: 1 };\n \n var CACHE = {};\n var middlewares = {};\n@@ -322,7 +323,7 @@\n \n \t!self.builder.length && self.minify();\n \n-\tif (!type)\n+\tif (!type || !SUPPORTEDIMAGES[type])\n \t\ttype = self.outputType;\n \n \tF.stats.performance.open++;\n"
+    },
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "94cee4ad95712a2cf2ae3901b6e0b600a0c24456d3afcd418b05fa1dc383fc13",
+      "new_sha256": "34a39aaaf4b3fa9f730d0197ee913723ea671151d07564ba1e03d1da57d2532e",
+      "hunks": [
+        {
+          "old_start": 1186,
+          "old_count": 7,
+          "new_start": 1186,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1189,
+              "old_count": 1,
+              "new_start": 1189,
+              "new_count": 1,
+              "old_lines": [
+                1189
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 3941,
+          "old_count": 7,
+          "new_start": 3941,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3944,
+              "old_count": 1,
+              "new_start": 3944,
+              "new_count": 1,
+              "old_lines": [
+                3944
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 8294,
+          "old_count": 6,
+          "new_start": 8294,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 8297,
+              "old_count": 0,
+              "new_start": 8297,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 12525,
+          "old_count": 7,
+          "new_start": 12526,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 12528,
+              "old_count": 1,
+              "new_start": 12529,
+              "new_count": 0,
+              "old_lines": [
+                12528
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 16127,
+          "old_count": 7,
+          "new_start": 16127,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 16130,
+              "old_count": 1,
+              "new_start": 16130,
+              "new_count": 0,
+              "old_lines": [
+                16130
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 16430,
+          "old_count": 9,
+          "new_start": 16429,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 16433,
+              "old_count": 0,
+              "new_start": 16432,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "insert",
+              "old_start": 16436,
+              "old_count": 0,
+              "new_start": 16436,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 17048,
+          "old_count": 7,
+          "new_start": 17049,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 17051,
+              "old_count": 1,
+              "new_start": 17052,
+              "new_count": 1,
+              "old_lines": [
+                17051
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1186,7 +1186,7 @@\n \t\temail: new RegExp('^[a-zA-Z0-9-_.+]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$'),\n \t\turl: /http(s)?:\\/\\/[^,{}\\\\]*$/i,\n \t\tphone: /^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,8}$/im,\n-\t\tzip: /^\\d{5}(?:[-\\s]\\d{4})?$/,\n+\t\tzip: /^[0-9a-z\\-\\s]{3,20}$/i,\n \t\tuid: /^\\d{14,}[a-z]{3}[01]{1}|^\\d{9,14}[a-z]{2}[01]{1}a|^\\d{4,18}[a-z]{2}\\d{1}[01]{1}b|^[0-9a-f]{4,18}[a-z]{2}\\d{1}[01]{1}c|^[0-9a-z]{4,18}[a-z]{2}\\d{1}[01]{1}d$/\n \t};\n \n@@ -3941,7 +3941,7 @@\n \t\t\treturn;\n \t\t}\n \n-\t\tcontent = framework_internal.markup(F.translator(req.$language, framework_internal.modificators(content.toString(ENCODING), filename, 'static')));\n+\t\tcontent = framework_internal.markup(F.translator(req.$language, framework_internal.modificators(content.toString(ENCODING), filename, 'static')), filename);\n \n \t\tFs.lstat(filename, function(err, stats) {\n \n@@ -8294,6 +8294,7 @@\n \t}\n \n \treq.path = framework_internal.routeSplit(req.uri.pathname);\n+\n \treq.processing = 0;\n \treq.isAuthorized = true;\n \treq.xhr = headers['x-requested-with'] === 'XMLHttpRequest';\n@@ -12525,7 +12526,6 @@\n \t\tbreak;\n \t}\n \n-\n \tif (!selected)\n \t\treturn false;\n \n@@ -16127,7 +16127,6 @@\n }\n \n function websocket_close() {\n-\tF.stats.performance.online--;\n \tthis.destroy && this.destroy();\n \tthis.$websocket.$onclose();\n }\n@@ -16430,9 +16429,11 @@\n };\n \n WebSocketClientProto.$onclose = function() {\n+\n \tif (this._isClosed)\n \t\treturn;\n \n+\tF.stats.performance.online--;\n \tthis.isClosed = true;\n \tthis._isClosed = true;\n \n@@ -17048,7 +17049,7 @@\n \t\t\tif (controller.isCanceled)\n \t\t\t\treturn;\n \n-\t\t\tif (this.$total_route.isCACHE && !F.temporary.other[this.uri.pathname])\n+\t\t\tif (!controller.isTransfer && this.$total_route.isCACHE && !F.temporary.other[this.uri.pathname])\n \t\t\t\tF.temporary.other[this.uri.pathname] = this.path;\n \n \t\t\tif (this.$total_route.isGENERATOR)\n"
+    },
+    {
+      "old_path": "internal.js",
+      "new_path": "internal.js",
+      "old_sha256": "895a68e0f91c09cb20203810110255ee340e74415679465030b45373cb3c03b5",
+      "new_sha256": "7db1f6b4dc147afce0437cf5fc9a61e3b7ffa0c7c732eba9a5cf68c7abca2f49",
+      "hunks": [
+        {
+          "old_start": 1267,
+          "old_count": 7,
+          "new_start": 1267,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1270,
+              "old_count": 1,
+              "new_start": 1270,
+              "new_count": 1,
+              "old_lines": [
+                1270
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 1296,
+          "old_count": 7,
+          "new_start": 1296,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1299,
+              "old_count": 1,
+              "new_start": 1299,
+              "new_count": 1,
+              "old_lines": [
+                1299
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 1955,
+          "old_count": 17,
+          "new_start": 1955,
+          "new_count": 21,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1958,
+              "old_count": 1,
+              "new_start": 1958,
+              "new_count": 1,
+              "old_lines": [
+                1958
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 1965,
+              "old_count": 1,
+              "new_start": 1965,
+              "new_count": 2,
+              "old_lines": [
+                1965
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 1968,
+              "old_count": 1,
+              "new_start": 1969,
+              "new_count": 4,
+              "old_lines": [
+                1968
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 1973,
+          "old_count": 6,
+          "new_start": 1977,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1976,
+              "old_count": 0,
+              "new_start": 1980,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 3386,
+          "old_count": 7,
+          "new_start": 3394,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3389,
+              "old_count": 1,
+              "new_start": 3397,
+              "new_count": 1,
+              "old_lines": [
+                3389
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 3433,
+          "old_count": 7,
+          "new_start": 3441,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3436,
+              "old_count": 1,
+              "new_start": 3444,
+              "new_count": 1,
+              "old_lines": [
+                3436
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- internal.js\n+++ internal.js\n@@ -1267,7 +1267,7 @@\n \n \t// Internal markup\n \tif (!nomarkup)\n-\t\tvalue = markup(value);\n+\t\tvalue = markup(value, filename);\n \n \tif (global.F) {\n \t\tvalue = modificators(value, filename, 'style');\n@@ -1296,7 +1296,7 @@\n \n \t// Internal markup\n \tif (!nomarkup)\n-\t\tsource = markup(source);\n+\t\tsource = markup(source, filename);\n \n \tif (global.F) {\n \t\tsource = modificators(source, filename, 'script');\n@@ -1955,17 +1955,21 @@\n \t\t\t\t\t\tif (!a) {\n \t\t\t\t\t\t\tvar isMeta = tmp.indexOf('\\'meta\\'') !== -1;\n \t\t\t\t\t\t\tvar isHead = tmp.indexOf('\\'head\\'') !== -1;\n-\t\t\t\t\t\t\ttmp = tmp.replace(/(\\s)?'(meta|head)'(\\s|,)+/g, '').replace(/(,,|,\\)|\\s{2,})/g, '');\n+\t\t\t\t\t\t\ttmp = tmp.replace(/(\\s)?'(meta|head)'(\\s|,)?/g, '').replace(/(,,|,\\)|\\s{2,})/g, '');\n \t\t\t\t\t\t\tif (isMeta || isHead) {\n \t\t\t\t\t\t\t\tvar tmpimp = '';\n \t\t\t\t\t\t\t\tif (isMeta)\n \t\t\t\t\t\t\t\t\ttmpimp += (isMeta ? '\\'meta\\'' : '');\n \t\t\t\t\t\t\t\tif (isHead)\n \t\t\t\t\t\t\t\t\ttmpimp += (tmpimp ? ',' : '') + (isHead ? '\\'head\\'' : '');\n-\t\t\t\t\t\t\t\tbuilder += '+self.$import(' + tmpimp + ')';\n+\t\t\t\t\t\t\t\tif (tmpimp)\n+\t\t\t\t\t\t\t\t\tbuilder += '+self.$import(' + tmpimp + ')';\n \t\t\t\t\t\t\t}\n \t\t\t\t\t\t}\n-\t\t\t\t\t\tcan = true;\n+\n+\t\t\t\t\t\tif (tmp !== 'self.$import()')\n+\t\t\t\t\t\t\tcan = true;\n+\n \t\t\t\t\t\tbreak;\n \t\t\t\t\t}\n \t\t\t\t}\n@@ -1973,6 +1977,10 @@\n \n \t\t\tif (can && !counter) {\n \t\t\t\ttry {\n+\n+\t\t\t\t\tif (tmp.lastIndexOf(')') === -1)\n+\t\t\t\t\t\ttmp += ')';\n+\n \t\t\t\t\tvar r = (new Function('self', 'config', 'return ' + tmp))(controller, CONF).replace(REG_7, '\\\\\\\\').replace(REG_8, '\\\\\\'');\n \t\t\t\t\tif (r) {\n \t\t\t\t\t\ttxtindex = $VIEWCACHE.indexOf(r);\n@@ -3386,7 +3394,7 @@\n \t}\n }\n \n-function markup(body) {\n+function markup(body, filename) {\n \tbody = body.ROOT();\n \tvar command = view_find_command(body, 0, true);\n \tif (!command)\n@@ -3433,7 +3441,7 @@\n \t\t\ttry {\n \t\t\t\tr.push({ cmd: command.phrase, value: eval('(' + cmd + ')') });\n \t\t\t} catch (e) {\n-\t\t\t\tconsole.log('A markup compilation error -->', cmd, e);\n+\t\t\t\tconsole.log('A markup compilation error -->', cmd, e, '\"' + body.trim().max(0, 150) + '\"', filename);\n \t\t\t}\n \t\t}\n \n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "3cbb6a706a26a4ae65e66aa9c32262c2339e3765ae599ad241ffd92d42b6b0be",
+      "new_sha256": "90e211c01a23d81f23b88d002a74f50b99e3d51d9a754831b8f86c6c819647e0",
+      "hunks": [
+        {
+          "old_start": 66,
+          "old_count": 7,
+          "new_start": 66,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 69,
+              "old_count": 1,
+              "new_start": 69,
+              "new_count": 1,
+              "old_lines": [
+                69
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -66,7 +66,7 @@\n         \"name\": \"Sarp Aykent\",\n         \"email\": \"shackhers@gmail.com\"\n     }],\n-    \"version\": \"3.4.6\",\n+    \"version\": \"3.4.7\",\n     \"homepage\": \"http://www.totaljs.com\",\n     \"bugs\": {\n         \"url\": \"https://github.com/totaljs/framework/issues\",\n"
+    },
+    {
+      "old_path": "utils.js",
+      "new_path": "utils.js",
+      "old_sha256": "cf8e1f125ba5103eefc01d9f73db6ed9765a6b656c2252649fe371e1e4b65144",
+      "new_sha256": "e8c960bba8301d08c6f4b1439a57e71a21ef8123590e950be57414fd8fceab45",
+      "hunks": [
+        {
+          "old_start": 6621,
+          "old_count": 6,
+          "new_start": 6621,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 6624,
+              "old_count": 0,
+              "new_start": 6624,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- utils.js\n+++ utils.js\n@@ -6621,6 +6621,10 @@\n \tvar v = arr[arr.length - 1];\n \tvar ispush = v.lastIndexOf('[]') !== -1;\n \tvar a = builder.join(';') + ';var v=typeof(a)===\\'function\\'?a(U.get(b)):a;w' + (v[0] === '[' ? '' : '.') + (ispush ? v.replace(REGREPLACEARR, '.push(v)') : (v + '=v')) + ';return v';\n+\n+\tif ((/__proto__|constructor|prototype/).test(a))\n+\t\tthrow new Error('Prototype pollution');\n+\n \tvar fn = new Function('w', 'a', 'b', a);\n \tF.temporary.other[cachekey] = fn;\n \tfn(obj, value, path);\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

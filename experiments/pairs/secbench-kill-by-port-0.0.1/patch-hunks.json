@@ -1,0 +1,212 @@
+{
+  "pair_id": "secbench-kill-by-port-0.0.1",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "448dfb0d283dd0df7fec5ebf0d46747cc56a239a6761211eb4cc85eba022763d",
+    "fixed": "9c84484d8681c5dbc2dc65b9382c3fd6afe3114f014167f2ff3335e0ba462c1c"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/resources/port-catcher.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/sanity.test.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/resources/port-catcher.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/sanity.test.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "476d3d9e3cf819d8529406d62c99b4726278da3dd73add83f3cede66e52e6d9d",
+      "new_sha256": "24b655ce9fb6e14c64bd112ba25949e359f2ad4bce6fd0466e94d07a9bb79566",
+      "hunks": [
+        {
+          "old_start": 5,
+          "old_count": 7,
+          "new_start": 5,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": [
+                8
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -5,7 +5,7 @@\n exports.killByPort = function (port) {\n   var processId = null\n   try {\n-    processId = exec(`lsof -t -i:${port}`)\n+    processId = exec(`lsof -t -i:${parseInt(port, 10)}`)\n   } catch (e) {\n \n   }\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "abbb5520a9a5f308d7a78ea127e54ae76747fe002b2a62b1c7f1e9e7a3793fc0",
+      "new_sha256": "d793bfbdcc18df5cdcf1d1c903d0eab1f8564e30eda756c351a5bb7d1096e2b6",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 11,
+          "old_count": 17,
+          "new_start": 11,
+          "new_count": 17,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 2,
+              "new_start": 14,
+              "new_count": 1,
+              "old_lines": [
+                14,
+                15
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 18,
+              "old_count": 1,
+              "new_start": 17,
+              "new_count": 1,
+              "old_lines": [
+                18
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 24,
+              "old_count": 2,
+              "new_start": 23,
+              "new_count": 3,
+              "old_lines": [
+                24,
+                25
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"kill-by-port\",\n-  \"version\": \"0.0.1\",\n+  \"version\": \"0.0.2\",\n   \"description\": \"kills process by port\",\n   \"bin\": \"kill-by-port.js\",\n   \"license\": \"MIT\",\n@@ -11,17 +11,17 @@\n   },\n   \"homepage\": \"https://github.com/GuyMograbi/kill-by-port\",\n   \"dependencies\": {\n-    \"minimist\": \"^1.2.0\",\n-    \"standard\": \"^8.4.0\"\n+    \"minimist\": \"^1.2.0\"\n   },\n   \"scripts\": {\n-    \"test\": \"ava && standard\",\n+    \"test\": \"ava 'tests/**/*.test.js' && standard\",\n     \"lint\": \"standard --fix\",\n     \"standard\": \"standard --fix\",\n     \"ava\": \"ava --watch\"\n   },\n   \"devDependencies\": {\n-    \"ava\": \"^0.16.0\",\n-    \"is-port-busy\": \"^1.0.0\"\n+    \"ava\": \"^3.15.0\",\n+    \"is-port-busy\": \"^1.0.0\",\n+    \"standard\": \"^8.4.0\"\n   }\n }\n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "653e7852c9716affac705229afa113c5faa72edfbb4aeba03daaf62e039791a7",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 4,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1,4 +0,0 @@\n-node_modules\n-.idea\n-out.log\n-err.log\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

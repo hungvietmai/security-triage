@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-macaddress-0.2.8",
+  "split": "held_out",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "1b5dba1b0e7a69327e0a1788504afd30c744d3e8dca238d09421b4e4c280e1a4",
+    "fixed": "76d58ab231919bcce0e739f51f38b7ede9362d7751a0fec302c2f3abfe15071f"
+  },
+  "patch_hunks_sha256": "30cc52d09f719b9510e525b91a616168c3dae4bf1faedefb35588ea5882ab3f5",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/unix.js",
+      "span": {
+        "startLine": 4,
+        "startColumn": 5,
+        "endLine": 15,
+        "endColumn": 7
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/unix.js:4:5",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/macaddress_0.2.8/package.json",
+          "GHSA_SOURCE:https://github.com/scravy/node-macaddress"
+        ],
+        "inventory_basis": "SecBench sink lib/unix.js:4:5; Command Injection in macaddress; Merge pull request #20 from flypapertech/fixCommandInjection",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

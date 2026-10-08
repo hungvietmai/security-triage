@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-kill-by-port-0.0.1",
+  "split": "held_out",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "448dfb0d283dd0df7fec5ebf0d46747cc56a239a6761211eb4cc85eba022763d",
+    "fixed": "9c84484d8681c5dbc2dc65b9382c3fd6afe3114f014167f2ff3335e0ba462c1c"
+  },
+  "patch_hunks_sha256": "fb3cb491a68d1928de07f0852223f3c473669d077ca766d0ba60e951ff92f841",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 8,
+        "startColumn": 17,
+        "endLine": 8,
+        "endColumn": 43
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:8:17",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/kill-by-port_0.0.1/package.json",
+          "GHSA_SOURCE:https://github.com/GuyMograbi/kill-by-port"
+        ],
+        "inventory_basis": "SecBench sink index.js:8:17; Arbitrary code execution in kill-by-port; fix kill by port",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

@@ -1,0 +1,465 @@
+{
+  "pair_id": "secbench-curling-0.2.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "e0e90a2e446bc82282a12b70e21e02cebe7652a93d4259a78adc06e5f1126f54",
+    "fixed": "e7fcd93e20c696971e2e7cbfbc770066db2b1c474cb5d244dd2c0591354d6c55"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/curl-transport.tests.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/curl-transport.tests.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "b18ed75298aec46ee1d09268ecc019a1ea4e717b0f4ab22cea7eee459880c93f",
+      "new_sha256": "643c02371f1e9dee7f13c1c8e45a1f5b89918e6d40672c08f78af147b1b0803a",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 2,
+          "new_start": 1,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 2,
+              "new_start": 1,
+              "new_count": 4,
+              "old_lines": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,2 +1,4 @@\n-exports.connect = require('./lib/curl-transport').connect;\n-exports.run = require('./lib/curl-transport').run;\n+\"use strict\";\n+\n+exports.connect = require(\"./lib/curl-transport\").connect;\n+exports.run = require(\"./lib/curl-transport\").run;"
+    },
+    {
+      "old_path": "lib/curl-transport.js",
+      "new_path": "lib/curl-transport.js",
+      "old_sha256": "debb7b0fde4bc70b530cd90a023549e98acc98cdb5586f9e25cff84c3b0e902b",
+      "new_sha256": "387ae34e2ad408733d137125e6eb58ea0115e9c96a1c20a6c5b302f50aff1353",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 20,
+          "new_start": 1,
+          "new_count": 21,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 2,
+              "old_count": 1,
+              "new_start": 2,
+              "new_count": 2,
+              "old_lines": [
+                2
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 9,
+              "old_count": 9,
+              "new_start": 10,
+              "new_count": 9,
+              "old_lines": [
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 28,
+          "old_count": 11,
+          "new_start": 29,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 31,
+              "old_count": 2,
+              "new_start": 32,
+              "new_count": 2,
+              "old_lines": [
+                31,
+                32
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 35,
+              "old_count": 1,
+              "new_start": 36,
+              "new_count": 1,
+              "old_lines": [
+                35
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 51,
+          "old_count": 19,
+          "new_start": 52,
+          "new_count": 24,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 54,
+              "old_count": 1,
+              "new_start": 55,
+              "new_count": 0,
+              "old_lines": [
+                54
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 56,
+              "old_count": 4,
+              "new_start": 56,
+              "new_count": 11,
+              "old_lines": [
+                56,
+                57,
+                58,
+                59
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 62,
+              "old_count": 0,
+              "new_start": 69,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "delete",
+              "old_start": 65,
+              "old_count": 2,
+              "new_start": 73,
+              "new_count": 0,
+              "old_lines": [
+                65,
+                66
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 82,
+          "old_count": 7,
+          "new_start": 88,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 85,
+              "old_count": 1,
+              "new_start": 91,
+              "new_count": 1,
+              "old_lines": [
+                85
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 106,
+          "old_count": 27,
+          "new_start": 112,
+          "new_count": 27,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 109,
+              "old_count": 1,
+              "new_start": 115,
+              "new_count": 1,
+              "old_lines": [
+                109
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 114,
+              "old_count": 1,
+              "new_start": 120,
+              "new_count": 1,
+              "old_lines": [
+                114
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 119,
+              "old_count": 1,
+              "new_start": 125,
+              "new_count": 1,
+              "old_lines": [
+                119
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 124,
+              "old_count": 1,
+              "new_start": 130,
+              "new_count": 1,
+              "old_lines": [
+                124
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 129,
+              "old_count": 1,
+              "new_start": 135,
+              "new_count": 1,
+              "old_lines": [
+                129
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/curl-transport.js\n+++ lib/curl-transport.js\n@@ -1,20 +1,21 @@\n \"use strict\";\n-var exec = require('child_process').exec;\n+\n+var exec = require(\"child_process\").exec;\n \n function parseStats(stderr) {\n   var lines = [];\n   var items = [];\n   var stats = {};\n   var propMap = [\n-    {index: 1,  name: 'totalSize', val: 0},\n-    {index: 3,  name: 'received', val: 0},\n-    {index: 5,  name: 'xferd', val: 0},\n-    {index: 6,  name: 'averageDownloadSpeed', val: 0},\n-    {index: 7,  name: 'averageUploadSpeed', val: 0},\n-    {index: 8,  name: 'totalTime', val: \"--:--:--\"},\n-    {index: 9,  name: 'timeSpent', val: \"--:--:--\"},\n-    {index: 10, name: 'timeLeft', val: \"--:--:--\"},\n-    {index: 11, name: 'currentSpeed', val: 0}\n+    {index: 1,  name: \"totalSize\", val: 0},\n+    {index: 3,  name: \"received\", val: 0},\n+    {index: 5,  name: \"xferd\", val: 0},\n+    {index: 6,  name: \"averageDownloadSpeed\", val: 0},\n+    {index: 7,  name: \"averageUploadSpeed\", val: 0},\n+    {index: 8,  name: \"totalTime\", val: \"--:--:--\"},\n+    {index: 9,  name: \"timeSpent\", val: \"--:--:--\"},\n+    {index: 10, name: \"timeLeft\", val: \"--:--:--\"},\n+    {index: 11, name: \"currentSpeed\", val: 0}\n   ];\n \n   if (stderr) {\n@@ -28,11 +29,11 @@\n     if (items.length > prop.index) {\n       var val = items[prop.index];\n       if (isNaN(val)) {\n-        if (val.indexOf(':') !== -1) {\n-          if (val === '--:--:--') {\n+        if (val.indexOf(\":\") !== -1) {\n+          if (val === \"--:--:--\") {\n             return 0;\n           }\n-          var parts = val.split(':');\n+          var parts = val.split(\":\");\n           if (parts.length === 3) {\n             return (parts[0] * 24) + (parts[1] * 60) + (parts[2] * 3600);\n           }\n@@ -51,19 +52,24 @@\n   return stats;\n }\n \n-\n exports.run = function (command, cb) {\n-  exec(\"curl \" + command, function (error, stdout, stderr) {\n-    cb(null, {payload: stdout, stats: parseStats(stderr)});\n-  })\n-    .on('error', function (err) {\n+  if(/[`$&{}[;|]/g.test(command)) {\n+    console.log('Input Validation failed, Special Characters found');\n+  } else {\n+    exec(\"curl \" + command, {\n+      maxBuffer: 2048 * 1024\n+    }, function (_error, stdout, stderr) {\n+        cb(null, {\n+          payload: stdout, stats: parseStats(stderr)\n+        });\n+    })\n+    .on(\"error\", function (err) {\n       cb(err, null);\n     });\n+  }\n };\n \n exports.connect = function (connOptions) {\n-\n-  var ctx = this;\n \n   function getEmptyOption(option) {\n     if (option.length === 1) {\n@@ -82,7 +88,7 @@\n       Object.keys(options).forEach(function (option) {\n         var values = options[option];\n         if (!values) {\n-          tmp += getEmptyOption(option)\n+          tmp += getEmptyOption(option);\n         } else if (values.toLowerCase) {\n           tmp += getStringOption(option, values);\n         } else if (Array.isArray(values)) {\n@@ -106,27 +112,27 @@\n   return {\n     head: function (url, options, cb) {\n       var command = \"--HEAD \" + getCommand(url, options);\n-      ctx.run(command, cb);\n+      exports.run(command, cb);\n     },\n \n     get: function (url, options, cb) {\n       var command = \"--GET \" + getCommand(url, options);\n-      ctx.run(command, cb);\n+      exports.run(command, cb);\n     },\n \n     post: function (url, options, cb) {\n       var command = getCommand(url, options);\n-      ctx.run(command, cb);\n+      exports.run(command, cb);\n     },\n \n     put: function (url, options, cb) {\n       var command = \"--request PUT \" + getCommand(url, options);\n-      ctx.run(command, cb);\n+      exports.run(command, cb);\n     },\n \n     del: function (url, options, cb) {\n       var command = \"--include --request DELETE\" + getCommand(url, options);\n-      ctx.run(command, cb, true);\n+      exports.run(command, cb, true);\n     }\n   };\n };\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "7c67aa1caf0d87f2207a407711dda92928e2a4ca041ea730a32f4946e4b2526d",
+      "new_sha256": "04ee44a7fd00dfdb28acb250940d27be6e1ece19f434df94ecfcf5b7df4cc00a",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 19,
+          "new_start": 1,
+          "new_count": 20,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 2,
+              "new_start": 7,
+              "new_count": 3,
+              "old_lines": [
+                7,
+                8
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 3,
+              "new_start": 15,
+              "new_count": 3,
+              "old_lines": [
+                14,
+                15,
+                16
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 23,
+          "old_count": 5,
+          "new_start": 24,
+          "new_count": 14,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 26,
+              "old_count": 0,
+              "new_start": 27,
+              "new_count": 9,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,19 +1,20 @@\n {\n   \"name\": \"curling\",\n-  \"version\": \"0.2.0\",\n+  \"version\": \"1.1.0\",\n   \"description\": \"A simple wrapper around curl with a easy to use interface.\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n-    \"test\": \"mocha tests/*.tests.js -t 15000 -R spec\"\n-   },\n+    \"test\": \"mocha tests/*.tests.js -t 15000 -R spec\",\n+    \"test-w\": \"mocha tests/*.tests.js -t 15000 -R spec -w\"\n+  },\n   \"repository\": {\n     \"type\": \"git\",\n     \"url\": \"git://github.com/hgarcia/curling.git\"\n   },\n   \"devDependencies\": {\n-    \"mocha\": \"1.7.4\",\n-    \"should\": \"1.2.1\",\n-    \"sinon\": \"1.5.2\"\n+    \"mocha\": \"2.0.1\",\n+    \"chai\": \"1.10.0\",\n+    \"sinon\": \"1.12.2\"\n   },\n   \"keywords\": [\n     \"curl\",\n@@ -23,5 +24,14 @@\n     \"https\"\n   ],\n   \"author\": \"Hernan Garcia <hernan@dynamicprogrammer.com> (http://dynamicprogrammer.com)\",\n+  \"contributors\": [\n+    {\n+      \"name\": \"Roman Landenband\",\n+      \"email\": \"roman.land@gmail.com\"\n+    },\n+    {\n+      \"name\": \"Joshua G\"\n+    }\n+  ],\n   \"license\": \"MIT\"\n }\n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "774de870dcb387bfd54ba872642ac72c3e9154443c013b787daf0255d1760142",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 15,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 15,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1,15 +0,0 @@\n-lib-cov\n-*.seed\n-*.log\n-*.csv\n-*.dat\n-*.out\n-*.pid\n-*.gz\n-\n-pids\n-logs\n-results\n-\n-node_modules\n-npm-debug.log\n"
+    },
+    {
+      "old_path": null,
+      "new_path": ".jshintrc",
+      "old_sha256": null,
+      "new_sha256": "f8218fc26fbff0ac9f1bee30dfd55528423d7669bbf7bd3082ceef2e13e8c26f",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 30,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 30,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .jshintrc\n@@ -0,0 +1,30 @@\n+{\n+  // Example: https://github.com/jshint/jshint/blob/master/examples/.jshintrc\n+  // Documentation: http://www.jshint.com/docs/options/\n+  \"browser\": false,\n+  \"bitwise\": true,\n+  \"esnext\": true,\n+  \"globals\": {\n+    \"exports\"    : false\n+  },\n+  \"globalstrict\": true,\n+  \"quotmark\": \"double\",\n+  \"camelcase\": true,\n+  \"curly\": true,\n+  \"eqeqeq\": true,\n+  \"immed\": true,\n+  \"latedef\": true,\n+  \"maxdepth\": 4,\n+  \"maxerr\": 500,\n+  \"newcap\": true,\n+  \"maxstatements\": 25,\n+  \"noarg\": true,\n+  \"nonbsp\": true,\n+  \"nonew\": true,\n+  \"node\": true,\n+  \"mocha\": true,\n+  \"singleGroups\": true,\n+  \"sub\": false,\n+  \"undef\": true,\n+  \"unused\": true\n+}\n"
+    },
+    {
+      "old_path": null,
+      "new_path": ".travis.yml",
+      "old_sha256": null,
+      "new_sha256": "e36b9b52fccb8114b8b8b13bdfbaa87342b07bda069b517ca34db9f85adaa3e3",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 3,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .travis.yml\n@@ -0,0 +1,3 @@\n+language: node_js\n+node_js:\n+  - \"0.10\"\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

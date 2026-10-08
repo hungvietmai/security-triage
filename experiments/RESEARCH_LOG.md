@@ -515,3 +515,20 @@ remains directly reachable from `main`.
   trong khi registry và tọa độ đã pin là `0.4.11` (npm làm sạch tiền tố khi publish;
   bytes đã xác minh bằng integrity của registry). Kiểm tra danh tính npm nay so sánh
   version sau khi bỏ tiền tố `v`/`=` như npm; tên và version khác vẫn bị từ chối.
+
+## 2026-10-08 — pairs-v1: hunk và vị trí lỗi cho toàn bộ 50 cặp, trước khi quét
+
+- Trích `patch-hunks.json` và `known-locations.json` cho mọi cặp đã khóa đủ hai archive
+  (50 cặp; Ray không có archive) bằng công cụ ở commit `eba6ea5`:
+  `patch_hunks.py --all-locked` rồi `known_locations.py --all-locked
+  --pyvul-functions-file artifacts/pair-sources/pyvul-function-level-dataset.out`
+  (metadata PyVul SHA-256 `73eb0e3c…`). Chạy lại cho ra đúng từng byte cả 100 file.
+- `scanner_invocations: 0`. Chưa có output Semgrep/CodeQL nào cho cặp held-out hay cho
+  11 cặp chuyển từ dự phòng, nên việc chọn vị trí là mù đối với kết quả công cụ.
+- Kết quả theo tập: **phát triển 34 cặp — 26 có vị trí, 8 `known_location_unresolved`**
+  (cộng Ray: lỗi thu thập, không có artifact); **held-out 16 cặp — 9 có vị trí, 7
+  `known_location_unresolved`**. Lý do chưa xác định: không có sink trong dòng bị
+  xóa/sửa và nhãn hàm áp dụng được (10), gợi ý sink SecBench không nằm duy nhất trong
+  một callee (4), thiếu file của gợi ý (1). Không thay bằng lời gọi gần nhất.
+- Ba cặp đã chuẩn bị trước đó giữ nguyên hunk và vị trí; chỉ `generator_sha256` (và
+  `patch_hunks_sha256` phụ thuộc vào nó) đổi theo công cụ.

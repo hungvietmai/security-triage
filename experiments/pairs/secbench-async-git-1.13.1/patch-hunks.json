@@ -1,0 +1,635 @@
+{
+  "pair_id": "secbench-async-git-1.13.1",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "0db74ccf62e9346fddbafecb947a1b944dcdd0e112507f498da011ca8aba4640",
+    "fixed": "276a491b0d2d96abde65b7c669349cfe63ceeb69eaccb9213f140d3882bdb6f2"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "8d2b162a1f6dca9ed15a58aa419fc024db7e76fdb75b4219099e35f24f0164af",
+      "new_sha256": "bc9401d0a96ec94edbf4ab2822c9bb431b10c1d3256155428ca29e6ef8953488",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 7,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 0,
+              "old_lines": [
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 30,
+          "old_count": 8,
+          "new_start": 29,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 33,
+              "old_count": 2,
+              "new_start": 32,
+              "new_count": 2,
+              "old_lines": [
+                33,
+                34
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 39,
+          "old_count": 11,
+          "new_start": 38,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 42,
+              "old_count": 5,
+              "new_start": 41,
+              "new_count": 5,
+              "old_lines": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 51,
+          "old_count": 20,
+          "new_start": 50,
+          "new_count": 20,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 54,
+              "old_count": 1,
+              "new_start": 53,
+              "new_count": 1,
+              "old_lines": [
+                54
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 58,
+              "old_count": 1,
+              "new_start": 57,
+              "new_count": 1,
+              "old_lines": [
+                58
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 61,
+              "old_count": 1,
+              "new_start": 60,
+              "new_count": 1,
+              "old_lines": [
+                61
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 64,
+              "old_count": 1,
+              "new_start": 63,
+              "new_count": 1,
+              "old_lines": [
+                64
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 67,
+              "old_count": 1,
+              "new_start": 66,
+              "new_count": 1,
+              "old_lines": [
+                67
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,7 +1,6 @@\n-const exec = require('async-execute');\n+const spawn = require('./helpers/spawn');\n \n const {\n-\tlist,\n \tmodified,\n \tremote,\n \treset,\n@@ -30,8 +29,8 @@\n  * @type {Array[]}\n  */\n const outputs = [\n-\t[ 'branch', 'git rev-parse --abbrev-ref HEAD' ],\n-\t[ 'origin', 'git remote get-url origin' ],\n+\t[ 'branch', 'rev-parse --abbrev-ref HEAD' ],\n+\t[ 'origin', 'remote get-url origin' ],\n ];\n \n /**\n@@ -39,11 +38,11 @@\n  * @type {Array[]}\n  */\n const lists = [\n-\t[ 'changed', 'git diff-tree --no-commit-id --name-only -r HEAD' ],\n-\t[ 'staged', 'git diff --name-only --cached' ],\n-\t[ 'tags', 'git tag' ],\n-\t[ 'unstaged', 'git diff --name-only' ],\n-\t[ 'untracked', 'git ls-files -o --exclude-standard' ],\n+\t[ 'changed', 'diff-tree --no-commit-id --name-only -r HEAD' ],\n+\t[ 'staged', 'diff --name-only --cached' ],\n+\t[ 'tags', 'tag' ],\n+\t[ 'unstaged', 'diff --name-only' ],\n+\t[ 'untracked', 'ls-files -o --exclude-standard' ],\n ];\n \n /**\n@@ -51,20 +50,20 @@\n  */\n const getters = Object.assign(\n \t{\n-\t\tdate: async () => new Date(parseInt(await exec('git show -s --format=%at')) * 1000),\n+\t\tdate: async () => new Date(parseInt(await spawn('show -s --format=%at')) * 1000),\n \t\tname: async () => (await remote()).name,\n \t\towner: async () => (await remote()).owner,\n \t\tunadded,\n-\t\tversion: async () => (await exec('git version')).split(' ').pop(),\n+\t\tversion: async () => (await spawn('version')).split(' ').pop(),\n \t},\n \t...outputs.map(\n-\t\t([ key, value ]) => ({ [key]: exec.bind(null, value) }),\n+\t\t([ key, value ]) => ({ [key]: spawn.bind(null, value) }),\n \t),\n \t...lists.map(\n-\t\t([ key, value ]) => ({ [key]: list.bind(null, value) }),\n+\t\t([ key, value ]) => ({ [key]: async () => (await spawn(value)).split('\\n') }),\n \t),\n \t...formats.map(\n-\t\t([ key, value ]) => ({ [key]: exec.bind(null, `git show -s --format=%${value}`) }),\n+\t\t([ key, value ]) => ({ [key]: spawn.bind(null, `show -s --format=%${value}`) }),\n \t),\n );\n \n"
+    },
+    {
+      "old_path": "lib/index.js",
+      "new_path": "lib/index.js",
+      "old_sha256": "818c579432b6aae1dd554bb8b6fac677b6f61026b1b5ea55416d2714ec99a917",
+      "new_sha256": "e48417383d87d6de04b66216996218648f45a2bc149ccc6640cdac45104a9cbf",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 5,
+          "new_start": 1,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 2,
+              "old_count": 1,
+              "new_start": 2,
+              "new_count": 0,
+              "old_lines": [
+                2
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/index.js\n+++ lib/index.js\n@@ -1,5 +1,4 @@\n module.exports = {\n-\tlist: require('./list'),\n \tmodified: require('./modified'),\n \tremote: require('./remote'),\n \treset: require('./reset'),\n"
+    },
+    {
+      "old_path": "lib/modified/index.js",
+      "new_path": "lib/modified/index.js",
+      "old_sha256": "c89699999ef7e1fe0106f826be679218e2efce36a64b73cb631b6fc7f97f2f80",
+      "new_sha256": "d163aca71c18b90d6cc31f94734186d1361e545db8204a989e4b165e2f70d3de",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 2,
+              "old_count": 1,
+              "new_start": 2,
+              "new_count": 0,
+              "old_lines": [
+                2
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 4,
+              "old_count": 0,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 18,
+          "old_count": 7,
+          "new_start": 18,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 21,
+              "old_count": 1,
+              "new_start": 21,
+              "new_count": 1,
+              "old_lines": [
+                21
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/modified/index.js\n+++ lib/modified/index.js\n@@ -1,6 +1,6 @@\n const { resolve } = require('path');\n-const exec = require('async-execute');\n const exist = require('@does/exist');\n+const spawn = require('../../helpers/spawn');\n \n /**\n  * Create and push a git tag with the last commit message\n@@ -18,7 +18,7 @@\n \t\tthrow new Error(`Could not find file at path \"${absolute}\"`);\n \t}\n \n-\tconst ts = await exec(`git log -1 --format=\"%at\" -- ${path}`);\n+\tconst ts = await spawn(`log -1 --format=\"%at\" -- ${path}`);\n \n \treturn new Date(Number(ts) * 1000);\n };\n"
+    },
+    {
+      "old_path": "lib/remote/index.js",
+      "new_path": "lib/remote/index.js",
+      "old_sha256": "b2c280a9edb24f780d5dbcb6c0b7e1a2a36683e7bc824020fc3499047a0e3407",
+      "new_sha256": "bff9f27fc9f646a307451f6584b9060e2c5ec110586564b8bb0558e0d17b571e",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 11,
+          "new_start": 1,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": [
+                8
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/remote/index.js\n+++ lib/remote/index.js\n@@ -1,11 +1,11 @@\n-const exec = require('async-execute');\n+const spawn = require('../../helpers/spawn');\n \n /**\n  * Get remote repo name and owner\n  * @return {string{}}\n  */\n module.exports = async function remote() {\n-\tconst origin = await exec('git remote get-url origin');\n+\tconst origin = await spawn('remote get-url origin');\n \tconst nosuffix = origin.replace(/\\.git$/, '');\n \tconst [ match ] = nosuffix.match(/[\\w-]*\\/[\\w-]+$/) || [ nosuffix ];\n \n"
+    },
+    {
+      "old_path": "lib/reset/index.js",
+      "new_path": "lib/reset/index.js",
+      "old_sha256": "0818f3c7b00f3c71bd22d9e33307eba5f64e221ac0bc5edb0437a7d8c99df044",
+      "new_sha256": "29986e8593d1240dadd9b7cbdd661ef5d486b69cb91effad9ebe5df58594ab03",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 8,
+          "old_count": 11,
+          "new_start": 8,
+          "new_count": 17,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 11,
+              "old_count": 1,
+              "new_start": 11,
+              "new_count": 7,
+              "old_lines": [
+                11
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 15,
+              "old_count": 1,
+              "new_start": 21,
+              "new_count": 1,
+              "old_lines": [
+                15
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/reset/index.js\n+++ lib/reset/index.js\n@@ -1,4 +1,4 @@\n-const exec = require('async-execute');\n+const spawn = require('../../helpers/spawn');\n \n /**\n  * Reset current HEAD to the specified state\n@@ -8,11 +8,17 @@\n  */\n module.exports = async function(destination, { hard = true } = {}) {\n \tif (destination && typeof destination === 'string') {\n-\t\treturn await exec(`git reset ${JSON.stringify(destination)} ${hard ? '--hard' : ''}`);\n+\t\ttry {\n+\t\t\tawait spawn(`check-ref-format ${destination}`);\n+\t\t} catch (error) {\n+\t\t\tthrow new RangeError('can not reset to illegal ref \"${destination}\"');\n+\t\t}\n+\n+\t\treturn await spawn(`reset ${destination} ${hard ? '--hard' : ''}`);\n \t}\n \n \tif (destination && typeof destination === 'number') {\n-\t\treturn await exec(`git reset HEAD~${Math.abs(destination)} ${hard ? '--hard' : ''}`);\n+\t\treturn await spawn(`reset HEAD~${Math.abs(destination)} ${hard ? '--hard' : ''}`);\n \t}\n \n \tthrow new TypeError(`No case for handling destination ${destination} (${typeof destination})`);\n"
+    },
+    {
+      "old_path": "lib/tag/index.js",
+      "new_path": "lib/tag/index.js",
+      "old_sha256": "9e2040e818cf249d6e9faea7520eb0714a8d76dad8e45eb8985b3a13a1046028",
+      "new_sha256": "3c6a3124c8fbd09b7b8d5f4bdf407c302193779572513688b34d30ecf9c5dc90",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 13,
+          "old_count": 9,
+          "new_start": 13,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 16,
+              "old_count": 2,
+              "new_start": 16,
+              "new_count": 2,
+              "old_lines": [
+                16,
+                17
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 19,
+              "old_count": 2,
+              "new_start": 19,
+              "new_count": 2,
+              "old_lines": [
+                19,
+                20
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/tag/index.js\n+++ lib/tag/index.js\n@@ -1,4 +1,4 @@\n-const exec = require('async-execute');\n+const spawn = require('../../helpers/spawn');\n \n /**\n  * Create and push a git tag with the last commit message\n@@ -13,9 +13,9 @@\n \tconst { message, author, email } = this;\n \n \tawait Promise.all([\n-\t\texec(`git config user.name \"${await author}\"`),\n-\t\texec(`git config user.email \"${await email}\"`),\n+\t\tspawn(`config user.name \"${await author}\"`),\n+\t\tspawn(`config user.email \"${await email}\"`),\n \t]);\n-\tawait exec(`git tag -a ${JSON.stringify(tag)} -m \"${await message}\"`);\n-\tawait exec(`git push origin ${JSON.stringify(`refs/tags/${tag}`)}`);\n+\tawait spawn(`tag -a ${tag} -m \"${await message}\"`);\n+\tawait spawn(`push origin refs/tags/${tag}`);\n };\n"
+    },
+    {
+      "old_path": "lib/unadded/index.js",
+      "new_path": "lib/unadded/index.js",
+      "old_sha256": "bbfc78bcde6f0a37ee0ab8499c703682e205480b3f60b74e2a67888bf1731f6f",
+      "new_sha256": "6a8e2d6743c7020f25172fe045c84943939e4d1139b4d388f1431fc2bdd94803",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 11,
+          "new_start": 1,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": [
+                8
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/unadded/index.js\n+++ lib/unadded/index.js\n@@ -1,11 +1,11 @@\n-const exec = require('async-execute');\n+const spawn = require('../../helpers/spawn');\n \n /**\n  * List all files that would be added by \"add .\"\n  * @return {string[]}\n  */\n module.exports = async function unadded() {\n-\tconst output = await exec('git add --dry-run .');\n+\tconst output = await spawn('add --dry-run .');\n \n \treturn output\n \t\t.split('\\n')\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "a91bae4e21c1dd1592a4b321196bba2bf1ecb8ea2d4b1b807c6a158051b06009",
+      "new_sha256": "38e2cb6eb84e96a3b52a6c2a9ab1b69097a926d477a14ff58df005ac7031210d",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 25,
+          "old_count": 17,
+          "new_start": 25,
+          "new_count": 18,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 28,
+              "old_count": 0,
+              "new_start": 28,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 32,
+              "old_count": 2,
+              "new_start": 33,
+              "new_count": 1,
+              "old_lines": [
+                32,
+                33
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 39,
+              "old_count": 0,
+              "new_start": 39,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"async-git\",\n-  \"version\": \"1.13.1\",\n+  \"version\": \"1.13.2\",\n   \"description\": \"👾 Retrieve data from current git repository\",\n   \"keywords\": [\n     \"git\",\n@@ -25,17 +25,18 @@\n   \"homepage\": \"https://omrilotan.com/async-git/\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n+    \"pretest\": \"echo \\\"content\\\" > unadded.txt\",\n     \"test\": \"mocha '**/spec.js' --require .mocha.js --recursive --exclude 'node_modules'\",\n     \"lint\": \"eslint . --ext .js\"\n   },\n   \"dependencies\": {\n-    \"@does/exist\": \"^1.1.0\",\n-    \"async-execute\": \"^1.1.0\"\n+    \"@does/exist\": \"^1.1.0\"\n   },\n   \"devDependencies\": {\n     \"@lets/wait\": \"^2.0.2\",\n     \"@omrilotan/eslint-config\": \"^1.1.0\",\n     \"abuser\": \"^2.0.2\",\n+    \"async-execute\": \"^1.2.0\",\n     \"chai\": \"^4.2.0\",\n     \"chai-as-promised\": \"^7.1.1\",\n     \"deep-equal-in-any-order\": \"^1.0.21\",\n"
+    },
+    {
+      "old_path": "lib/list/index.js",
+      "new_path": null,
+      "old_sha256": "b7c1dbe5b1f54fe41b7b1b4709479a4bc8f565f8b22beba9a24104611b787c44",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 15,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 15,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/list/index.js\n+++ /dev/null\n@@ -1,15 +0,0 @@\n-const exec = require('async-execute');\n-\n-/**\n- * List the output lines from command\n- * @return {string[]}\n- */\n-module.exports = async function list(command) {\n-\tconst output = await exec(command);\n-\n-\treturn output\n-\t\t.split('\\n')\n-\t\t.map(item => item.trim())\n-\t\t.filter(Boolean)\n-\t;\n-};\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "helpers/spawn/index.js",
+      "old_sha256": null,
+      "new_sha256": "0277c4d4fa6221497272f0fa2f6afbe0924424535a63b0ed7260f8e9301d0326",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 38,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 38,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ helpers/spawn/index.js\n@@ -0,0 +1,38 @@\n+const { spawn } = require('child_process');\n+\n+/**\n+ * Executes git with given arguments string. resolves with the output message\n+ * @param  {String} string\n+ * @return {Promise}\n+ */\n+module.exports = string => new Promise(\n+\t(resolve, reject) => {\n+\t\tconst git = spawn(\n+\t\t\t'git',\n+\t\t\tstring.split(' '),\n+\t\t);\n+\n+\t\tconst outputs = { stdout: [], stderr: [] };\n+\n+\t\tgit.stdout.on(\n+\t\t\t'data',\n+\t\t\tdata => outputs.stdout.push(data.toString()),\n+\t\t);\n+\n+\t\tgit.stderr.on(\n+\t\t\t'data',\n+\t\t\tdata => outputs.stderr.push(data.toString()),\n+\t\t);\n+\n+\t\tgit.on('exit', code => {\n+\t\t\tswitch (code) {\n+\t\t\t\tcase 0:\n+\t\t\t\t\tresolve(outputs.stdout.join('').trim());\n+\t\t\t\t\tbreak;\n+\t\t\t\tdefault:\n+\t\t\t\t\treject(outputs.stderr.join('').trim());\n+\t\t\t\t\tbreak;\n+\t\t\t}\n+\t\t});\n+\t},\n+);\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "unadded.txt",
+      "old_sha256": null,
+      "new_sha256": "434728a410a78f56fc1b5899c3593436e61ab0c731e9072d95e96db290205e53",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 1,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ unadded.txt\n@@ -0,0 +1 @@\n+content\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

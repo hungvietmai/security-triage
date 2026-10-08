@@ -1,0 +1,35 @@
+{
+  "pair_id": "secbench-clamscan-1.2.0",
+  "split": "development",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "1fc75c588abb8395158d6a0b0c7e8129940f64a90f93e55e4898180d73ff50e4",
+    "fixed": "91aeb71d264bcb8740648a448245534f46e5f8d9243fac13d5749b7592b870a8"
+  },
+  "patch_hunks_sha256": "aed8f30d0a53cb47ebd46c1e85fa17eb529ddebe8cc5357cceb21ad3b465f478",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "sink_hint_not_uniquely_contained_in_callee",
+      "candidate_count": 0,
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:495:36",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/clamscan_1.2.0/package.json",
+          "GHSA_SOURCE:https://github.com/kylefarris/clamscan"
+        ],
+        "inventory_basis": "SecBench sink index.js:495:36; Clamscan vulnerable to command injection; Merge pull request #45 from 418sec/master",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

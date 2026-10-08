@@ -1,0 +1,84 @@
+{
+  "pair_id": "pyvul-PaddlePaddle-Paddle-c5f6862d118d",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "ee06506ca29c567151fe41d9bc145d00d6a91c6ff946afaba22446098760ec82",
+    "fixed": "47006997389d254efdebf2621e07e6ce34c58fb4a8e7693d9ac950aa08cc51f1"
+  },
+  "patch_hunks_sha256": "e5aed98a7acec1156a5f2c78ca98df39bf59d061369d89e4ed0d679fd5130bf7",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "python/paddle/utils/download.py",
+      "span": {
+        "startLine": 204,
+        "startColumn": 14,
+        "endLine": 206,
+        "endColumn": 6
+      },
+      "sink_kind": "subprocess.Popen",
+      "callee": "subprocess.Popen",
+      "provenance": {
+        "kind": "PyVul_deleted_or_modified_lines",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/PaddlePaddle/Paddle/commit/c5f6862d118d7d69210f0e73bea1b055f5f21f2b"
+        ],
+        "fix_commit": "c5f6862d118d7d69210f0e73bea1b055f5f21f2b",
+        "patch_lines": [
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          209,
+          210,
+          211,
+          212,
+          214
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "_wget_download",
+              "normalized_code_before_sha256": "61c583febdcd4b9084e414eaa22d598fe6af12804545f7b7ce14b359d3227b11",
+              "dataset_line": 639,
+              "commit": "https://github.com/PaddlePaddle/Paddle/commit/c5f6862d118d7d69210f0e73bea1b055f5f21f2b"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        },
+        "locator": "app.triage.sinks_python.locate_python_sinks",
+        "locator_sha256": "d37bd7c096e2d348c0992eb05be288995c30998630fa80eec64aca2c352fbe7c",
+        "overlapping_patch_lines": [
+          204,
+          205,
+          206
+        ],
+        "matched_function_labels": [
+          {
+            "function_name": "_wget_download",
+            "normalized_code_before_sha256": "61c583febdcd4b9084e414eaa22d598fe6af12804545f7b7ce14b359d3227b11",
+            "dataset_line": 639,
+            "commit": "https://github.com/PaddlePaddle/Paddle/commit/c5f6862d118d7d69210f0e73bea1b055f5f21f2b"
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

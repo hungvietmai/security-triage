@@ -1,0 +1,213 @@
+{
+  "pair_id": "secbench-portprocesses-1.0.4",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "4b8259c93adc7d9ea176a322b9a8f3d85d93e019a4fe8d7f0617e90f0f259c4f",
+    "fixed": "1f6655112c80248c2f32c87a52fdaa9941284015d97bfd53307fa96131bc7447"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "cli.js",
+      "new_path": "cli.js",
+      "old_sha256": "aa67e596c0cea044d9e819eff2e3a9fc72ba9036fadd7d9e1e9bf533870c08fa",
+      "new_sha256": "b3b6d2da6e41d26f79ec5bf225ba224a5f4aa7e675cf5804ed741d0e4a4d1796",
+      "hunks": [
+        {
+          "old_start": 5,
+          "old_count": 13,
+          "new_start": 5,
+          "new_count": 14,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 8,
+              "old_count": 0,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 10,
+              "old_count": 1,
+              "new_start": 11,
+              "new_count": 1,
+              "old_lines": [
+                10
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 1,
+              "new_start": 15,
+              "new_count": 1,
+              "old_lines": [
+                14
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- cli.js\n+++ cli.js\n@@ -5,13 +5,14 @@\n \tconst port = process.argv.pop();\n \tconst command = process.argv.pop();\n \n+\tlet result;\n \tswitch (command) {\n \t\tcase \"kill\":\n-\t\t\tconst result = await main.killAllProcessesOnPort(port);\n+\t\t\tresult = await main.killAllProcessesOnPort(port);\n \t\t\tconsole.log(result.filter(item => !item.success).map(item => `Failed to kill process ${item.pid}`).join('\\n'));\n \t\t\tbreak;\n \t\tcase \"list\":\n-\t\t\tconst result = await main.listProcessesOnPort(port);\n+\t\t\tresult = await main.listProcessesOnPort(port);\n \t\t\tconsole.log(result);\n \t\t\tbreak;\n \t\tdefault:\n"
+    },
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "233122b4215c890f9076088b114c76d3f6e5e39cafae29a0f01cee169849d9ce",
+      "new_sha256": "ee112a0462f2031b33e7206ec65a914206c3c52c69eea417a9d3cd4b32ac1ff7",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 7,
+          "new_start": 1,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 3,
+              "old_count": 0,
+              "new_start": 3,
+              "new_count": 5,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 9,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 19,
+          "old_count": 8,
+          "new_start": 24,
+          "new_count": 14,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 22,
+              "old_count": 0,
+              "new_start": 27,
+              "new_count": 6,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 23,
+              "old_count": 1,
+              "new_start": 34,
+              "new_count": 1,
+              "old_lines": [
+                23
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,7 +1,12 @@\n const exec = require('./exec');\n const listProcessesOnPort = module.exports.listProcessesOnPort = async port => {\n+\tconst portNumber = parseInt(port, 10);\n+\tif (Number.isNaN(portNumber)) {\n+\t\tconsole.error(\"Must provide number for port.\");\n+\t\treturn;\n+\t}\n \ttry {\n-\t\tconst result = (await exec(`lsof -i :${port}`)).output.split('\\n');\n+\t\tconst result = (await exec(`lsof -i :${portNumber}`)).output.split('\\n');\n \t\tconst headers = result.shift().split(' ').filter(item => !!item.trim() && item.trim() !== \"\").map(item => item.toLowerCase());\n \t\treturn result.filter(item => !!item.trim() && item.trim() !== \"\").reduce((accumulator, currentValue) => {\n \t\t\taccumulator.push(currentValue.split(' ').filter(item => !!item.trim() && item.trim() !== \"\").reduce((accumulator, currentValue, index) => {\n@@ -19,8 +24,14 @@\n \t}\n };\n const killProcess = module.exports.killProcess = async pid => {\n+\tconst pidNumber = parseInt(pid, 10);\n+\tif (Number.isNaN(pidNumber)) {\n+\t\tconsole.error(\"Must provide number for process identifier.\");\n+\t\treturn false;\n+\t}\n+\n \ttry {\n-\t\tawait exec(`kill ${pid}`);\n+\t\tawait exec(`kill ${pidNumber}`);\n \t\treturn true;\n \t} catch (e) {\n \t\treturn false;\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "4c1a5f495ca2f2be3a8c91659dbe8b9f69d9ae0faa58f08336ea0e6f5c4aa93c",
+      "new_sha256": "9397f3e216b829ad5c106c5531dc0f79a10f3d2f1892017951042b12538e57bb",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"portprocesses\",\n-  \"version\": \"1.0.4\",\n+  \"version\": \"1.0.5\",\n   \"description\": \"This tool letes you list and kill processes on a specified port.\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

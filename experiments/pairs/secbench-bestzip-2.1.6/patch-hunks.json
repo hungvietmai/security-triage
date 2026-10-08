@@ -1,0 +1,269 @@
+{
+  "pair_id": "secbench-bestzip-2.1.6",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "91a6f1590c5f03ce34b415dd15f545cf808861e516f0b2dc21c320a3b58b3bdc",
+    "fixed": "3a482762a60870274ebd8a860abbe1bdcb9b3762d3312d851aae966d67897688"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "readme.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "readme.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "lib/bestzip.js",
+      "new_path": "lib/bestzip.js",
+      "old_sha256": "01fe9a426a1896e08a91d4da100dd07786acc0027dfc756811548cd46941c621",
+      "new_sha256": "53accec4f94e372462406474772d431edc0c340e97bcde76309b42c461e18f89",
+      "hunks": [
+        {
+          "old_start": 16,
+          "old_count": 32,
+          "new_start": 16,
+          "new_count": 81,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 19,
+              "old_count": 0,
+              "new_start": 19,
+              "new_count": 47,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 21,
+              "old_count": 24,
+              "new_start": 68,
+              "new_count": 26,
+              "old_lines": [
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 56,
+          "old_count": 43,
+          "new_start": 105,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 59,
+              "old_count": 37,
+              "new_start": 108,
+              "new_count": 0,
+              "old_lines": [
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 117,
+          "old_count": 15,
+          "new_start": 129,
+          "new_count": 16,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 120,
+              "old_count": 5,
+              "new_start": 132,
+              "new_count": 1,
+              "old_lines": [
+                120,
+                121,
+                122,
+                123,
+                124
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 128,
+              "old_count": 1,
+              "new_start": 136,
+              "new_count": 6,
+              "old_lines": [
+                128
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/bestzip.js\n+++ lib/bestzip.js\n@@ -16,32 +16,81 @@\n   return Boolean(which.sync(\"zip\", { nothrow: true }));\n }\n \n+function expandSources(cwd, source, done) {\n+  // options to behave more like the native zip's glob support\n+  const globOpts = {\n+    cwd,\n+    dot: false, // ignore .dotfiles\n+    noglobstar: true, // treat ** as *\n+    noext: true, // no (a|b)\n+    nobrace: true // no {a,b}\n+  };\n+  // first handle arrays\n+  if (Array.isArray(source)) {\n+    return async.concat(\n+      source,\n+      (_source, next) => expandSources(cwd, _source, next),\n+      done\n+    );\n+  }\n+  // then expand magic\n+  if (typeof source !== \"string\") {\n+    throw new Error(`source is (${typeof source}) `);\n+  }\n+  if (glob.hasMagic(source, globOpts)) {\n+    // archiver uses this library but somehow ends up with different results on windows:\n+    // archiver.glob('*') will include subdirectories, but omit their contents on windows\n+    // so we'll use glob directly, and add all of the files it finds\n+    glob(source, globOpts, done);\n+  } else {\n+    // or just trigger the callback with the source string if there is no magic\n+    process.nextTick(() => {\n+      // always return an array\n+      done(null, [source]);\n+    });\n+  }\n+}\n+\n+function walkDir(fullPath) {\n+  const files = fs.readdirSync(fullPath).map(f => {\n+    const filePath = path.join(fullPath, f);\n+    const stats = fs.statSync(filePath);\n+    if (stats.isDirectory()) {\n+      return walkDir(filePath);\n+    }\n+    return filePath;\n+  });\n+  return files.reduce((acc, cur) => acc.concat(cur), []);\n+}\n+\n const nativeZip = options =>\n   new Promise((resolve, reject) => {\n-    const sources = Array.isArray(options.source)\n-      ? options.source.join(\" \")\n-      : options.source;\n-    const command = `zip --quiet --recurse-paths ${\n-      options.destination\n-    } ${sources}`;\n-    const zipProcess = cp.exec(command, {\n-      stdio: \"inherit\",\n-      cwd: options.cwd\n-    });\n-    zipProcess.on(\"error\", reject);\n-    zipProcess.on(\"close\", exitCode => {\n-      if (exitCode === 0) {\n-        resolve();\n-      } else {\n-        // exit code 12 means \"nothing to do\" right?\n-        //console.log('rejecting', zipProcess)\n-        reject(\n-          new Error(\n-            `Unexpected exit code from native zip command: ${exitCode}\\n executed command '${command}'\\n executed inin directory '${options.cwd ||\n-              process.cwd()}'`\n-          )\n-        );\n-      }\n+    const cwd = options.cwd || process.cwd();\n+    const command = \"zip\";\n+    expandSources(cwd, options.source, (err, sources) => {\n+      const args = [\"--quiet\", \"--recurse-paths\", options.destination].concat(\n+        sources\n+      );\n+      const zipProcess = cp.spawn(command, args, {\n+        stdio: \"inherit\",\n+        cwd\n+      });\n+      zipProcess.on(\"error\", reject);\n+      zipProcess.on(\"close\", exitCode => {\n+        if (exitCode === 0) {\n+          resolve();\n+        } else {\n+          // exit code 12 means \"nothing to do\" right?\n+          //console.log('rejecting', zipProcess)\n+          reject(\n+            new Error(\n+              `Unexpected exit code from native zip: ${exitCode}\\n executed command '${command} ${args.join(\n+                \" \"\n+              )}'\\n executed in directory '${cwd}'`\n+            )\n+          );\n+        }\n+      });\n     });\n   });\n \n@@ -56,43 +105,6 @@\n     archive.on(\"error\", reject);\n \n     archive.pipe(output);\n-\n-    const globOpts = {\n-      cwd: cwd,\n-      // options to behave more like the native zip's glob support\n-      dot: false, // ignore .dotfiles\n-      noglobstar: true, // treat ** as *\n-      noext: true, // no (a|b)\n-      nobrace: true // no {a,b}\n-    };\n-\n-    function findSource(source, next) {\n-      if (glob.hasMagic(source, globOpts)) {\n-        // archiver uses this library but somehow ends up with different results on windows:\n-        // archiver.glob('*') will include subdirectories, but omit their contents on windows\n-        // so we'll use glob directly, and add all of the files it finds\n-        glob(source, globOpts, function(err, files) {\n-          if (err) {\n-            return next(err);\n-          }\n-          async.forEach(files, addSource, next);\n-        });\n-      } else {\n-        addSource(source, next);\n-      }\n-    }\n-\n-    function walkDir(fullPath) {\n-      const files = fs.readdirSync(fullPath).map(f => {\n-        const filePath = path.join(fullPath, f);\n-        const stats = fs.statSync(filePath);\n-        if (stats.isDirectory()) {\n-          return walkDir(filePath);\n-        }\n-        return filePath;\n-      });\n-      return files.reduce((acc, cur) => acc.concat(cur), []);\n-    }\n \n     function addSource(source, next) {\n       const fullPath = path.resolve(cwd, source);\n@@ -117,15 +129,16 @@\n       });\n     }\n \n-    const sources = Array.isArray(options.source)\n-      ? options.source\n-      : [options.source];\n-\n-    async.forEach(sources, findSource, function(err) {\n+    expandSources(cwd, options.source, (err, expandedSources) => {\n       if (err) {\n         return reject(err);\n       }\n-      archive.finalize();\n+      async.forEach(expandedSources, addSource, err => {\n+        if (err) {\n+          return reject(err);\n+        }\n+        archive.finalize();\n+      });\n     });\n   });\n \n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "e1980e74eb3255eddda4a205f1afe23e00baef4c40a9acbc8f4147ecae93b192",
+      "new_sha256": "00e667d421389295c0d25b3fd2e479595bdd845c4f7c6c4a743c571956daaa77",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 22,
+          "old_count": 7,
+          "new_start": 22,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 25,
+              "old_count": 1,
+              "new_start": 25,
+              "new_count": 1,
+              "old_lines": [
+                25
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"bestzip\",\n-  \"version\": \"2.1.6\",\n+  \"version\": \"2.1.7\",\n   \"description\": \"Uses OS zip command if avaliable (for better performance and speed) or node.js version if there is no system command avaliable. Can be called via node or command line.\",\n   \"main\": \"lib/bestzip.js\",\n   \"bin\": {\n@@ -22,7 +22,7 @@\n   ],\n   \"dependencies\": {\n     \"archiver\": \"^4.0.2\",\n-    \"async\": \"^2.6.1\",\n+    \"async\": \"^3.2.0\",\n     \"glob\": \"^7.1.3\",\n     \"which\": \"^1.3.1\",\n     \"yargs\": \"^13.2.4\"\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

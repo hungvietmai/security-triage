@@ -1,0 +1,420 @@
+{
+  "pair_id": "secbench-kill-port-process-0.0.1",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "6083a974453bdc828a512efc0e3f4f32ce2104dbeb09ef852e56725e0eea987b",
+    "fixed": "f578fce7d1b3d247ee2ac14a5260743ab959a1573e92da6774ec7a6365ce5c46"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/index.spec.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CODE_OF_CONDUCT.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.d.ts",
+      "new_path": "index.d.ts",
+      "old_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "new_sha256": "da496464643146e35e265685f59d9aca7c306305087ac5c9169c7f9276c306eb",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 4,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.d.ts\n+++ index.d.ts\n@@ -0,0 +1,4 @@\n+type Input = number | number[] | string | string[];\n+\n+export type Options = {};\n+export function killPortProcess(input: Input, options?: Options): Promise<void>;"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "52b9496f2d56fb20a2edfa1cbfc3e24745150213e3cf7515d27a7719131b5fbf",
+      "new_sha256": "06183a45986e080c151aed0142a63a556d97ff836dfec634f58bb616fb3987ce",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 20,
+          "new_start": 1,
+          "new_count": 54,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 2,
+              "old_count": 18,
+              "new_start": 2,
+              "new_count": 52,
+              "old_lines": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,20 +1,54 @@\n {\n-  \"name\": \"kill-port-process\",\n-  \"version\": \"0.0.1\",\n-  \"description\": \"module to delete process running on a specific port\",\n-  \"main\": \"src/index.js\",\n-  \"scripts\": {\n-    \"test\": \"mocha\"\n-  },\n-  \"keywords\": [\n-    \"process\",\n-    \"kill\",\n-    \"kill process\",\n-    \"port\"\n-  ],\n-  \"author\": \"Daniel Hillmann\",\n-  \"license\": \"ISC\",\n-  \"dependencies\": {\n-    \"pid-from-port\": \"1.1.3\"\n-  }\n+\t\"name\": \"kill-port-process\",\n+\t\"version\": \"2.2.0\",\n+\t\"description\": \"Easily kill hanging processes on ports - on any platform!\",\n+\t\"main\": \"dist/lib/index.js\",\n+\t\"bin\": {\n+\t\t\"kill-port\": \"dist/bin/kill-port-process.js\"\n+\t},\n+\t\"typings\": \"index.d.ts\",\n+\t\"scripts\": {\n+\t\t\"test\": \"mocha\",\n+\t\t\"pretest\": \"npm run build\",\n+\t\t\"build\": \"tsc\",\n+\t\t\"prepublish\": \"npm run build && npm test\",\n+\t\t\"preversion\": \"npm run build && npm test\",\n+\t\t\"postversion\": \"git push && git push --tags\"\n+\t},\n+\t\"keywords\": [\n+\t\t\"process\",\n+\t\t\"kill\",\n+\t\t\"kill process\",\n+\t\t\"port\",\n+\t\t\"kill port\",\n+\t\t\"kill port process\",\n+\t\t\"CLI\"\n+\t],\n+\t\"author\": \"Daniel Hillmann\",\n+\t\"license\": \"ISC\",\n+\t\"dependencies\": {\n+\t\t\"get-them-args\": \"1.3.2\",\n+\t\t\"pid-from-port\": \"1.1.3\"\n+\t},\n+\t\"devDependencies\": {\n+\t\t\"@types/chai\": \"4.1.7\",\n+\t\t\"@types/mocha\": \"5.2.6\",\n+\t\t\"@types/node\": \"11.13.4\",\n+\t\t\"@types/node-fetch\": \"2.5.0\",\n+\t\t\"@types/pid-from-port\": \"1.1.0\",\n+\t\t\"chai\": \"4.2.0\",\n+\t\t\"mocha\": \"5.2.0\",\n+\t\t\"node-fetch\": \"2.6.0\",\n+\t\t\"ts-node\": \"8.0.3\",\n+\t\t\"tslint\": \"5.18.0\",\n+\t\t\"typescript\": \"3.4.3\"\n+\t},\n+\t\"repository\": {\n+\t\t\"type\": \"git\",\n+\t\t\"url\": \"https://github.com/hilleer/kill-port-process\"\n+\t},\n+\t\"bugs\": {\n+\t\t\"url\": \"https://github.com/hilleer/kill-port-process/issues\",\n+\t\t\"email\": \"hiller@live.dk\"\n+\t}\n }\n"
+    },
+    {
+      "old_path": "src/index.js",
+      "new_path": null,
+      "old_sha256": "515ac9104025a68a30000d2f556f2742345c631a676c66e030781bc55037cbd2",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 80,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 80,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37,
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/index.js\n+++ /dev/null\n@@ -1,80 +0,0 @@\n-const { exec } = require('child_process');\r\n-const os = require('os');\r\n-const pidFromPort = require('pid-from-port');\r\n-\r\n-module.exports = async (input, opts = {}) => {\r\n-\ttry {\r\n-\t\tvalidateInput(input);\r\n-\r\n-\t\tconst defaultOpts = {\r\n-\r\n-\t\t};\r\n-\t\topts = Object.assign(defaultOpts, opts);\r\n-\t\tconst inputArray = arrayifyInput(input);\r\n-\r\n-\t\tif (os.platform() === 'win32') {\r\n-\t\t\tawait win32Kill(inputArray, opts)\r\n-\t\t} else {\r\n-\t\t\tawait defaultKill(inputArray, opts);\r\n-\t\t}\r\n-\t} catch (error) {\r\n-\t\tthrow error;\r\n-\t}\r\n-};\r\n-\r\n-\r\n-function validateInput(input) {\r\n-\tif (input === undefined || input === null) {\r\n-\t\tconsole.log('throwing');\r\n-\t\tthrow new Error('Received undefined or null input');\r\n-\t}\r\n-}\r\n-\r\n-function arrayifyInput(input) {\r\n-\treturn Array.isArray(input) ? input : [input];\r\n-}\r\n-\r\n-async function defaultKill(input, opts) {\r\n-\tconst promises = input.map(killPortProcess);\r\n-\tPromise.all(promises).catch();\r\n-\r\n-\tasync function killPortProcess(input) {\r\n-\t\treturn new Promise((resolve, reject) => {\r\n-\t\t\tconst command = `lsof -i tcp:${input} | grep LISTEN | awk '{print $2}' | xargs kill -9`;\r\n-\t\t\texec(command, (err, stdout, stderr) => {\r\n-\t\t\t\tif (err) {\r\n-\t\t\t\t\treject(err);\r\n-\t\t\t\t}\r\n-\t\t\t\tlog(`Successfully terminated process running on port ${input}`);\r\n-\t\t\t\tresolve();\r\n-\t\t\t});\r\n-\t\t});\r\n-\t}\r\n-}\r\n-\r\n-async function win32Kill(input, opts) {\r\n-\tconst inputs = input.map(parseInput);\r\n-\tconst promises = inputs.map(killPortProcess);\r\n-\tawait Promise.all(promises).catch();\r\n-\r\n-\tasync function killPortProcess(input) {\r\n-\t\tconst { port, pid } = await input;\r\n-\t\treturn new Promise((resolve, reject) => {\r\n-\t\t\texec(`taskkill /PID ${pid} /F`, (err, stdout, stderr) => {\r\n-\t\t\t\tif (err) {\r\n-\t\t\t\t\treject(`Failed to terminate proccess on port ${port} with pid ${pid}`);\r\n-\t\t\t\t}\r\n-\t\t\t\tconsole.log(`Successfully terminated process running on port ${port} with pid ${pid}`);\r\n-\t\t\t\tresolve(stdout);\r\n-\t\t\t})\r\n-\t\t});\r\n-\t}\r\n-}\r\n-\r\n-async function parseInput(input) {\r\n-\tconst pid = await pidFromPort(input);\r\n-\treturn {\r\n-\t\tpid,\r\n-\t\tport: input\r\n-\t}\r\n-}"
+    },
+    {
+      "old_path": "test.js",
+      "new_path": null,
+      "old_sha256": "5aec20a0d235074fb4e72fe63c8d0c4a1e1ea069653f87095070eea23093e56c",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 10,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 10,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- test.js\n+++ /dev/null\n@@ -1,10 +0,0 @@\n-const processKill = require('./src/index');\r\n-\r\n-\r\n-(async () => {\r\n-\ttry {\r\n-\t\tawait processKill([4001, 4002]);\r\n-\t} catch (error) {\r\n-\t\tthrow error;\r\n-\t}\r\n-})();"
+    },
+    {
+      "old_path": null,
+      "new_path": ".wakatime-project",
+      "old_sha256": null,
+      "new_sha256": "127486bd80c6d6ef22877f9e6c16614e3b546eaf5f151ecaae6ed44d686655b8",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 1,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .wakatime-project\n@@ -0,0 +1 @@\n+Black Lab 34"
+    },
+    {
+      "old_path": null,
+      "new_path": "dist/bin/kill-port-process.js",
+      "old_sha256": null,
+      "new_sha256": "bfae3434541ed061ceffa170b05e7de6c784630a0ae022b36274192f82436a62",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 35,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 35,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ dist/bin/kill-port-process.js\n@@ -0,0 +1,35 @@\n+#! /usr/bin/env node\n+\"use strict\";\n+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n+    return new (P || (P = Promise))(function (resolve, reject) {\n+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n+        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }\n+        step((generator = generator.apply(thisArg, _arguments || [])).next());\n+    });\n+};\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const getThemArgs = require(\"get-them-args\");\n+const index_1 = require(\"../lib/index\");\n+(() => __awaiter(this, void 0, void 0, function* () {\n+    const args = getThemArgs(process.argv.slice(2));\n+    if (!args) {\n+        console.error('No args provided');\n+        process.exit(1);\n+    }\n+    const ports = parsePortFromArgs(args);\n+    if (!ports) {\n+        console.error('No port(s) found in provided args');\n+        process.exit(1);\n+    }\n+    yield index_1.killPortProcess(ports);\n+}))();\n+function parsePortFromArgs(args) {\n+    if (args.p) {\n+        return args.p;\n+    }\n+    if (args.port) {\n+        return args.port;\n+    }\n+    return args.unknown;\n+}\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "dist/lib/helpers.js",
+      "old_sha256": null,
+      "new_sha256": "fa3d7fd2ba7f21a78187a761792e3a6ae5c6307791a2b7572c499e4e76cb1d86",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 25,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 25,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ dist/lib/helpers.js\n@@ -0,0 +1,25 @@\n+\"use strict\";\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+function IsInputValid(input) {\n+    if (!input) {\n+        return false;\n+    }\n+    return true;\n+}\n+exports.IsInputValid = IsInputValid;\n+function arrayifyInput(input) {\n+    return Array.isArray(input) ? input : [input];\n+}\n+exports.arrayifyInput = arrayifyInput;\n+function mergeOptions(options) {\n+    const defaultOptions = {};\n+    return Object.assign({}, defaultOptions, options);\n+}\n+exports.mergeOptions = mergeOptions;\n+class InvalidInputError extends Error {\n+    constructor(message, input) {\n+        super(message);\n+        this.input = input;\n+    }\n+}\n+exports.InvalidInputError = InvalidInputError;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "dist/lib/index.js",
+      "old_sha256": null,
+      "new_sha256": "6e33acf287ef973d356dea23eb051198ea2250fe04ae5f03dca55858b948f7d9",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 31,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 31,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ dist/lib/index.js\n@@ -0,0 +1,31 @@\n+\"use strict\";\n+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n+    return new (P || (P = Promise))(function (resolve, reject) {\n+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n+        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }\n+        step((generator = generator.apply(thisArg, _arguments || [])).next());\n+    });\n+};\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const helpers_1 = require(\"./helpers\");\n+const killer_1 = require(\"./killer\");\n+function killPortProcess(input, options = {}) {\n+    return __awaiter(this, void 0, void 0, function* () {\n+        try {\n+            const validInput = helpers_1.IsInputValid(input);\n+            if (!validInput) {\n+                throw new helpers_1.InvalidInputError('Invalid input', input);\n+            }\n+            const mergedOptions = helpers_1.mergeOptions(options);\n+            const toNumber = (value) => Number(value);\n+            const ports = helpers_1.arrayifyInput(input).map(toNumber);\n+            const killer = new killer_1.Killer(ports, mergedOptions);\n+            yield killer.kill();\n+        }\n+        catch (error) {\n+            throw error;\n+        }\n+    });\n+}\n+exports.killPortProcess = killPortProcess;\n"
+    },
+    {
+      "old_path": null,
+      "new_path": "dist/lib/killer.js",
+      "old_sha256": null,
+      "new_sha256": "f80267aaf9c499555c1b42c8938319e7240e772d2c849f0e4495d446306887c5",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 73,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 73,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ dist/lib/killer.js\n@@ -0,0 +1,73 @@\n+\"use strict\";\n+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n+    return new (P || (P = Promise))(function (resolve, reject) {\n+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n+        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }\n+        step((generator = generator.apply(thisArg, _arguments || [])).next());\n+    });\n+};\n+Object.defineProperty(exports, \"__esModule\", { value: true });\n+const child_process_1 = require(\"child_process\");\n+const os_1 = require(\"os\");\n+const pidFromPort = require(\"pid-from-port\");\n+class Killer {\n+    constructor(ports, options) {\n+        this.ports = ports;\n+        this.options = options;\n+    }\n+    kill() {\n+        return __awaiter(this, void 0, void 0, function* () {\n+            const killFunc = os_1.platform() === 'win32' ? this.win32Kill : this.unixKill;\n+            const promises = this.ports.map(killFunc);\n+            return Promise.all(promises);\n+        });\n+    }\n+    win32Kill(port) {\n+        return __awaiter(this, void 0, void 0, function* () {\n+            const pid = yield pidFromPort(port);\n+            return new Promise((resolve, reject) => {\n+                const taskkill = child_process_1.spawn('TASKKILL', ['/f', '/t', '/pid', pid.toString()]);\n+                taskkill.stdout.on('data', (data) => console.log(data.toString()));\n+                taskkill.stderr.on('data', (data) => console.error(data.toString()));\n+                taskkill.on('close', (code, signal) => {\n+                    if (code !== 0) {\n+                        reject(`taskkill process exited with code ${code} and signal ${signal}`);\n+                        return;\n+                    }\n+                    resolve();\n+                });\n+                taskkill.on('error', (err) => reject(err));\n+            });\n+        });\n+    }\n+    unixKill(port) {\n+        return __awaiter(this, void 0, void 0, function* () {\n+            return new Promise((resolve, reject) => {\n+                const lsof = child_process_1.spawn('lsof', ['-i', `tcp:${port}`]);\n+                const grep = child_process_1.spawn('grep', ['LISTEN']);\n+                const awk = child_process_1.spawn('awk', ['{print $2}']);\n+                const xargs = child_process_1.spawn('xargs', ['kill', '-9']);\n+                lsof.stdout.pipe(grep.stdin);\n+                lsof.stderr.on('data', logStderrData('lsof'));\n+                grep.stdout.pipe(awk.stdin);\n+                grep.stderr.on('data', logStderrData('grep'));\n+                awk.stdout.pipe(xargs.stdin);\n+                awk.stderr.on('data', logStderrData('awk'));\n+                xargs.stdout.pipe(process.stdin);\n+                xargs.stderr.on('data', logStderrData('xargs'));\n+                xargs.on('close', (code) => {\n+                    if (code !== 0) {\n+                        reject();\n+                        return;\n+                    }\n+                    resolve();\n+                });\n+                function logStderrData(command) {\n+                    return (data) => console.error(`${command} - ${data.toString()}`);\n+                }\n+            });\n+        });\n+    }\n+}\n+exports.Killer = Killer;\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

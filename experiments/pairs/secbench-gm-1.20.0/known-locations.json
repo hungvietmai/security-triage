@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-gm-1.20.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "e36b66c9b486b11808930d6b2229ce8e7dbe9c0cfbcd9632dff213d20748d767",
+    "fixed": "cb86845c9937b6cecd3a552656ffb3641c49671d9942447b0d3374cbf5ad5c6c"
+  },
+  "patch_hunks_sha256": "97c0cef6afb104bee17e8be67766d9bc39c208f3c61680a70dcd26e55a3a230d",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/compare.js",
+      "span": {
+        "startLine": 72,
+        "startColumn": 5,
+        "endLine": 97,
+        "endColumn": 7
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/compare.js:72:5",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/gm_1.20.0/package.json",
+          "GHSA_SOURCE:https://github.com/aheckmann/gm"
+        ],
+        "inventory_basis": "SecBench sink lib/compare.js:72:5; Command Injection in gm",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

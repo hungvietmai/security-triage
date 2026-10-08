@@ -1,0 +1,45 @@
+{
+  "pair_id": "pyvul-PaddlePaddle-Paddle-49bec1760535",
+  "split": "development",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "4e003011a8d65f96f9b95e358ceca386105885f7ce825f093855ef6cc1f201e1",
+    "fixed": "0fbfcdb0fdbcf67a38c1ec2283ca218d346fe0472bab330fa325ef88f4e35870"
+  },
+  "patch_hunks_sha256": "4d577f3bfa78160cac90ce79a8582902502273198738da38711131eee0943557",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "no_sink_in_deleted_or_modified_lines_and_applicable_function_labels",
+      "provenance": {
+        "kind": "PyVul_patch",
+        "fix_commit": "49bec176053595975c1941cff9749c55f7203ea9",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/PaddlePaddle/Paddle/commit/49bec176053595975c1941cff9749c55f7203ea9"
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "get_online_pass_interval",
+              "normalized_code_before_sha256": "862a50f736aa1a735747d3556f9b0712b708188efffa50ad56d4790d7f5cebd4",
+              "dataset_line": 2038,
+              "commit": "https://github.com/PaddlePaddle/Paddle/commit/49bec176053595975c1941cff9749c55f7203ea9"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        }
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

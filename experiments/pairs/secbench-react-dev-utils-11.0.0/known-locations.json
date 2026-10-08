@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-react-dev-utils-11.0.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "cd24020b86a02f9bb86fb6ae3ff3ecdeb3892250dac73ce54c81c3e01e0c6cdf",
+    "fixed": "463ad7bdf4d9a9f286c68acd95e0805110ae865a7474c0ce699702606fbaa399"
+  },
+  "patch_hunks_sha256": "4fbdbf15380737987425ae0ab4a4ae1710fc2c9a87155463141820ebd148bf7d",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "getProcessForPort.js",
+      "span": {
+        "startLine": 28,
+        "startColumn": 10,
+        "endLine": 28,
+        "endColumn": 74
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "execSync",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "getProcessForPort.js:28:10",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/react-dev-utils_11.0.0/package.json",
+          "GHSA_SOURCE:https://github.com/facebook/create-react-app"
+        ],
+        "inventory_basis": "SecBench sink getProcessForPort.js:28:10; react-dev-utils OS Command Injection in function `getProcessForPort`",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

@@ -1,0 +1,239 @@
+{
+  "pair_id": "secbench-connection-tester-0.2.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "28c0ff84ab0b8455a41afcff44219c390d12d4ed4b2552ec0b63c9209b0dae19",
+    "fixed": "1961d72139dc39b278e4340c2deace5c51f35163d616cabde5332b856343c821"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGELOG.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/test-async.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/test-sync.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "36a76d5fb52da47010bbea818f64ed74aef552430f7169e917aefb4c7a31199e",
+      "new_sha256": "5f5169ce28a6c300766404587b4c6d74e07e26b80138a194cef41df46e0d6baf",
+      "hunks": [
+        {
+          "old_start": 6,
+          "old_count": 6,
+          "new_start": 6,
+          "new_count": 13,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 9,
+              "old_count": 0,
+              "new_start": 9,
+              "new_count": 7,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 75,
+          "old_count": 22,
+          "new_start": 82,
+          "new_count": 48,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 78,
+              "old_count": 1,
+              "new_start": 85,
+              "new_count": 1,
+              "old_lines": [
+                78
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 80,
+              "old_count": 4,
+              "new_start": 87,
+              "new_count": 4,
+              "old_lines": [
+                80,
+                81,
+                82,
+                83
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 85,
+              "old_count": 1,
+              "new_start": 92,
+              "new_count": 30,
+              "old_lines": [
+                85
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 87,
+              "old_count": 1,
+              "new_start": 123,
+              "new_count": 1,
+              "old_lines": [
+                87
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 89,
+              "old_count": 1,
+              "new_start": 125,
+              "new_count": 1,
+              "old_lines": [
+                89
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 91,
+              "old_count": 3,
+              "new_start": 127,
+              "new_count": 0,
+              "old_lines": [
+                91,
+                92,
+                93
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -6,6 +6,13 @@\n const shell = require('child_process');\n \n let SOCKET_TIMEOUT = 1000;   //Setting 1s as max acceptable timeout\n+\n+//source - http://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address\n+var ValidHostnameRegex = new RegExp(\"^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$\");\n+\n+function isValidHostNameOrIP(host) {\n+    return net.isIP(host) || ValidHostnameRegex.test(host);\n+}\n \n function testSync(host, port, connectTimeout) {\n     const nodeBinary = process.execPath;\n@@ -75,22 +82,48 @@\n         return SOCKET_TIMEOUT;\n \n     },\n-    test: function ConnectionTester(host, port, callbackOrConnectTimeout, callback) {\n+    test: function ConnectionTester(host, port, connectTimeout, callback) {\n \n-        // for backward compatibility\n-        if (typeof callbackOrConnectTimeout === 'function') {\n-            console.log('deprecated: Please migrate to the new interface ConnectionTester\\(host, port, timeout, callback\\)');\n-            return testAsync(host, port, SOCKET_TIMEOUT, callbackOrConnectTimeout);\n+        // validate host\n+        if (!isValidHostNameOrIP(host)) {\n+            console.error('[connection-tester] invalid host: ', host);\n+            host = undefined;\n         }\n-        if (typeof callbackOrConnectTimeout === 'number') {\n+        // validate port\n+        var originalPort = port;\n+        port = +port;\n+        if (!port || port < 0 || port > 65535) {\n+            console.error('[connection-tester] invalid port: ', originalPort);\n+            port = undefined;\n+        }\n+\n+        if (typeof connectTimeout === 'function') {\n+            console.error('deprecated: Please migrate to the new interface ConnectionTester\\(host, port, timeout, callback\\)');\n+            callback = connectTimeout;\n+            connectTimeout = SOCKET_TIMEOUT;\n+        }\n+        if (connectTimeout === undefined) {\n+            connectTimeout = SOCKET_TIMEOUT;\n+        }\n+\n+        if (typeof connectTimeout === 'number') {\n+            if (!port || !host) {\n+                var output = {\n+                    success: false,\n+                    error: 'invalid host/port'\n+                };\n+\n+                if (callback) {\n+                    return callback(null, output);\n+                } else {\n+                    return output;\n+                }\n+            }\n             if (callback) {\n-                return testAsync(host, port, callbackOrConnectTimeout, callback);\n+                return testAsync(host, port, connectTimeout, callback);\n             } else {\n-                return testSync(host, port, callbackOrConnectTimeout);\n+                return testSync(host, port, connectTimeout);\n             }\n-        }\n-        if (callbackOrConnectTimeout === undefined) {\n-            return testSync(host, port, SOCKET_TIMEOUT);\n         }\n     }\n };\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "0238ecf23479c3c007565189e9184a5d9a3491c25665765590957953d5049262",
+      "new_sha256": "18047a02c7c398ce0b030b0a58207fc16c1dac834490e038efe338ba9fc49bc5",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 24,
+          "old_count": 7,
+          "new_start": 24,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 27,
+              "old_count": 1,
+              "new_start": 27,
+              "new_count": 2,
+              "old_lines": [
+                27
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"connection-tester\",\n-  \"version\": \"0.2.0\",\n+  \"version\": \"0.2.1\",\n   \"description\": \"test if the connection can be established with the given host and port\",\n   \"main\": \"index.js\",\n   \"author\": \"Sanjeev Koranga\",\n@@ -24,7 +24,8 @@\n   \"readmeFilename\": \"README.md\",\n   \"dependencies\": {},\n   \"devDependencies\": {\n-    \"mocha\": \"^4\",\n+    \"dns-sync\": \"~0.2\",\n+    \"mocha\": \"^8\",\n     \"jshint\": \"^2\"\n   }\n }\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

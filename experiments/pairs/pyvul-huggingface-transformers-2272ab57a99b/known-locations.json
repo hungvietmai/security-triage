@@ -1,0 +1,69 @@
+{
+  "pair_id": "pyvul-huggingface-transformers-2272ab57a99b",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "7327ae0ac42bf816fb395f4d5064cdb3097d76b86744cdaf974c60e980783604",
+    "fixed": "3dc7139b8f2c3a5f47e379fd10429eb0f608b741a5120e58e47d66fd4107ad31"
+  },
+  "patch_hunks_sha256": "1e9281ac6576dd9001fc2ad334ba3fcf13025f0e3613f069a41574a982f9c4d6",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "src/transformers/onnx/__main__.py",
+      "span": {
+        "startLine": 59,
+        "startColumn": 12,
+        "endLine": 59,
+        "endColumn": 84
+      },
+      "sink_kind": "subprocess.Popen",
+      "callee": "subprocess.Popen",
+      "provenance": {
+        "kind": "PyVul_deleted_or_modified_lines",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538"
+        ],
+        "fix_commit": "2272ab57a99bcac972b5252b87c31e24d0b25538",
+        "patch_lines": [
+          59
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "export_with_optimum",
+              "normalized_code_before_sha256": "b40b8028ae9afa3f2a9b035b8fa187ff2381df5d0224816ac61d38396bb05907",
+              "dataset_line": 1664,
+              "commit": "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        },
+        "locator": "app.triage.sinks_python.locate_python_sinks",
+        "locator_sha256": "d37bd7c096e2d348c0992eb05be288995c30998630fa80eec64aca2c352fbe7c",
+        "overlapping_patch_lines": [
+          59
+        ],
+        "matched_function_labels": [
+          {
+            "function_name": "export_with_optimum",
+            "normalized_code_before_sha256": "b40b8028ae9afa3f2a9b035b8fa187ff2381df5d0224816ac61d38396bb05907",
+            "dataset_line": 1664,
+            "commit": "https://github.com/huggingface/transformers/commit/2272ab57a99bcac972b5252b87c31e24d0b25538"
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

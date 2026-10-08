@@ -1,0 +1,910 @@
+{
+  "pair_id": "secbench-codecov-3.6.4",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "c47dd349e1b1dc898fce7b6e0721d7442c46d5485f8e28ee60c9bda255c322f3",
+    "fixed": "83dd2f1af58a5576d227374f581b6b90f1abda6a98095d2b9dccd86e20e834be"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "CODE_OF_CONDUCT.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/detect.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/example.coverage.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/git.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/index.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/appveyor.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/azure-pipelines.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/buildkite.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/circle.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/cirrus.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/codebuild.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/codeship.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/drone.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/gitlab.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/heroku.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/jenkins.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/localGit.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/semaphore.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/semaphore2x.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/shippable.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/snap.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/teamcity.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/travis.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/wercker.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/upload.test.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CODE_OF_CONDUCT.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/detect.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/example.coverage.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/git.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/index.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/appveyor.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/azure-pipelines.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/buildkite.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/circle.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/cirrus.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/codebuild.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/codeship.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/drone.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/gitlab.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/heroku.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/jenkins.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/localGit.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/semaphore.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/semaphore2x.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/shippable.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/snap.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/teamcity.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/travis.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/services/wercker.test.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/upload.test.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": ".travis.yml",
+      "new_path": ".travis.yml",
+      "old_sha256": "f291349f0754086233a53bec3c8e0b0368199bb893f0ca838298260fde89e270",
+      "new_sha256": "d91ceeea3e3d88475611eaf907fc2abc78937f13eeb0fc4950d3176ec254d112",
+      "hunks": [
+        {
+          "old_start": 3,
+          "old_count": 6,
+          "new_start": 3,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 6,
+              "old_count": 0,
+              "new_start": 6,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .travis.yml\n+++ .travis.yml\n@@ -3,6 +3,7 @@\n sudo: false\n \n node_js:\n+  - 'node'\n   - '11'\n   - '10'\n   - '9'\n"
+    },
+    {
+      "old_path": "lib/codecov.js",
+      "new_path": "lib/codecov.js",
+      "old_sha256": "91a13a436241cc001e9ed1f97252f02ba1c89a04e8f308fb6ca69d5f60e97fb0",
+      "new_sha256": "90727e72f69cb99dd959c2e7a1aca652b6001d4f6ec61a7b32c4f351d8461fca",
+      "hunks": [
+        {
+          "old_start": 4,
+          "old_count": 22,
+          "new_start": 4,
+          "new_count": 23,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 7,
+              "old_count": 0,
+              "new_start": 7,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "delete",
+              "old_start": 8,
+              "old_count": 1,
+              "new_start": 9,
+              "new_count": 0,
+              "old_lines": [
+                8
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 2,
+              "new_start": 14,
+              "new_count": 3,
+              "old_lines": [
+                14,
+                15
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 21,
+              "old_count": 2,
+              "new_start": 22,
+              "new_count": 2,
+              "old_lines": [
+                21,
+                22
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 30,
+          "old_count": 7,
+          "new_start": 31,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 33,
+              "old_count": 1,
+              "new_start": 34,
+              "new_count": 1,
+              "old_lines": [
+                33
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 77,
+          "old_count": 9,
+          "new_start": 78,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 80,
+              "old_count": 0,
+              "new_start": 81,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 81,
+              "old_count": 2,
+              "new_start": 83,
+              "new_count": 2,
+              "old_lines": [
+                81,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 137,
+          "old_count": 6,
+          "new_start": 139,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 140,
+              "old_count": 0,
+              "new_start": 142,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 212,
+          "old_count": 7,
+          "new_start": 215,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 215,
+              "old_count": 1,
+              "new_start": 218,
+              "new_count": 0,
+              "old_lines": [
+                215
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 357,
+          "old_count": 7,
+          "new_start": 359,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 360,
+              "old_count": 1,
+              "new_start": 362,
+              "new_count": 1,
+              "old_lines": [
+                360
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 394,
+          "old_count": 13,
+          "new_start": 396,
+          "new_count": 13,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 397,
+              "old_count": 1,
+              "new_start": 399,
+              "new_count": 1,
+              "old_lines": [
+                397
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 401,
+              "old_count": 1,
+              "new_start": 403,
+              "new_count": 1,
+              "old_lines": [
+                401
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 403,
+              "old_count": 1,
+              "new_start": 405,
+              "new_count": 1,
+              "old_lines": [
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 409,
+          "old_count": 14,
+          "new_start": 411,
+          "new_count": 14,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 412,
+              "old_count": 1,
+              "new_start": 414,
+              "new_count": 1,
+              "old_lines": [
+                412
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 414,
+              "old_count": 1,
+              "new_start": 416,
+              "new_count": 1,
+              "old_lines": [
+                414
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 419,
+              "old_count": 1,
+              "new_start": 421,
+              "new_count": 1,
+              "old_lines": [
+                419
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 433,
+          "old_count": 19,
+          "new_start": 435,
+          "new_count": 23,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 436,
+              "old_count": 3,
+              "new_start": 438,
+              "new_count": 1,
+              "old_lines": [
+                436,
+                437,
+                438
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 444,
+              "old_count": 2,
+              "new_start": 444,
+              "new_count": 5,
+              "old_lines": [
+                444,
+                445
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 447,
+              "old_count": 2,
+              "new_start": 450,
+              "new_count": 5,
+              "old_lines": [
+                447,
+                448
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 476,
+          "old_count": 15,
+          "new_start": 482,
+          "new_count": 26,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 479,
+              "old_count": 0,
+              "new_start": 485,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 480,
+              "old_count": 1,
+              "new_start": 487,
+              "new_count": 7,
+              "old_lines": [
+                480
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 487,
+              "old_count": 1,
+              "new_start": 500,
+              "new_count": 5,
+              "old_lines": [
+                487
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 556,
+          "old_count": 7,
+          "new_start": 573,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 559,
+              "old_count": 0,
+              "new_start": 576,
+              "new_count": 4,
+              "old_lines": []
+            },
+            {
+              "operation": "insert",
+              "old_start": 560,
+              "old_count": 0,
+              "new_start": 581,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/codecov.js\n+++ lib/codecov.js\n@@ -4,22 +4,23 @@\n var urlgrey = require('urlgrey')\n var jsYaml = require('js-yaml')\n var walk = require('ignore-walk')\n+var execFileSync = require('child_process').execFileSync\n var execSync = require('child_process').execSync\n-var validator = require('validator')\n \n var detectProvider = require('./detect')\n \n var version = 'v' + require('../package.json').version\n \n-var patterns,\n-  more_patterns = ''\n+var patterns = ''\n+var more_patterns = ''\n+var winPatterns = ''\n \n var isWindows =\n   process.platform.match(/win32/) || process.platform.match(/win64/)\n \n if (!isWindows) {\n-  patterns =\n-    \"-type f \\\\( -name '*coverage.*' \" +\n+  patterns = (\n+    \"-type f -name '*coverage.*' \" +\n     \"-or -name 'nosetests.xml' \" +\n     \"-or -name 'jacoco*.xml' \" +\n     \"-or -name 'clover.xml' \" +\n@@ -30,7 +31,7 @@\n     \"-or -name '*.lcov' \" +\n     \"-or -name 'gcov.info' \" +\n     \"-or -name '*.gcov' \" +\n-    \"-or -name '*.lst' \\\\) \" +\n+    \"-or -name '*.lst' \" +\n     \"-not -name '*.sh' \" +\n     \"-not -name '*.data' \" +\n     \"-not -name '*.py' \" +\n@@ -77,9 +78,10 @@\n     \"-not -path '*/$bower_components/*' \" +\n     \"-not -path '*/node_modules/*' \" +\n     \"-not -path '*/conftest_*.c.gcov'\"\n+  ).split(' ')\n } else {\n-  patterns =\n-    '/a-d /b /s *coverage.* ' +\n+  winPatterns = (\n+    '/a:-d /b /s *coverage.* ' +\n     '/s nosetests.xml ' +\n     '/s jacoco*.xml ' +\n     '/s clover.xml ' +\n@@ -137,6 +139,7 @@\n     '| findstr /i /v \\\\\\\\$bower_components\\\\ ' +\n     '| findstr /i /v \\\\node_modules\\\\ ' +\n     '| findstr /i /v \\\\conftest_.*\\\\.c\\\\.gcov '\n+  ).split(' ')\n }\n \n var sendToCodecovV2 = function(\n@@ -212,7 +215,6 @@\n             body: upload_body,\n             headers: {\n               'Content-Type': 'text/plain',\n-              'x-amz-acl': 'public-read',\n             },\n           },\n           function(err) {\n@@ -357,7 +359,7 @@\n   console.log('==> Building file structure')\n   try {\n     upload +=\n-      execSync('git ls-files || hg locate', { cwd: root })\n+      execFileSync('git', ['ls-files', '||', 'hg', 'locate'], { cwd: root })\n         .toString()\n         .trim() + '\\n<<<<<< network\\n'\n   } catch (err) {\n@@ -394,13 +396,13 @@\n       if (!isWindows) {\n         gcov =\n           'find ' +\n-          (args.options['gcov-root'] || root) +\n+          (sanitizeVar(args.options['gcov-root']) || root) +\n           \" -type f -name '*.gcno' \" +\n           gcg +\n           ' -exec ' +\n-          (validator.escape(args.options['gcov-exec']) || 'gcov') +\n+          (sanitizeVar(args.options['gcov-exec']) || 'gcov') +\n           ' ' +\n-          (validator.escape(args.options['gcov-args']) || '') +\n+          (sanitizeVar(args.options['gcov-args']) || '') +\n           ' {} +'\n       } else {\n         // @TODO support for root\n@@ -409,14 +411,14 @@\n           'for /f \"delims=\" %g in (\\'dir /a-d /b /s *.gcno ' +\n           gcg +\n           \"') do \" +\n-          (args.options['gcov-exec'] || 'gcov') +\n+          (sanitizeVar(args.options['gcov-exec']) || 'gcov') +\n           ' ' +\n-          (args.options['gcov-args'] || '') +\n+          (sanitizeVar(args.options['gcov-args']) || '') +\n           ' %g'\n       }\n       debug.push(gcov)\n       console.log('    $ ' + gcov)\n-      execSync(gcov)\n+      execFileSync(gcov)\n     } catch (e) {\n       console.log('    Failed to run gcov command.')\n     }\n@@ -433,19 +435,23 @@\n       .toString()\n       .trim()\n   } else {\n-    bowerrc = execSync('if exist .bowerrc type .bowerrc', { cwd: root })\n-      .toString()\n-      .trim()\n+    bowerrc = fs.existsSync('.bowerrc')\n   }\n   if (bowerrc) {\n     bowerrc = JSON.parse(bowerrc).directory\n     if (bowerrc) {\n       if (!isWindows) {\n-        more_patterns =\n-          \" -not -path '*/\" + bowerrc.toString().replace(/\\/$/, '') + \"/*'\"\n+        more_patterns = (\n+          \" -not -path '*/\" +\n+          bowerrc.toString().replace(/\\/$/, '') +\n+          \"/*'\"\n+        ).split(' ')\n       } else {\n-        more_patterns =\n-          '| findstr /i /v \\\\' + bowerrc.toString().replace(/\\/$/, '') + '\\\\'\n+        more_patterns = (\n+          '| findstr /i /v \\\\' +\n+          bowerrc.toString().replace(/\\/$/, '') +\n+          '\\\\'\n+        ).split(' ')\n       }\n     }\n   }\n@@ -476,15 +482,26 @@\n   } else if ((args.options.disable || '').split(',').indexOf('search') === -1) {\n     console.log('==> Scanning for reports')\n     var _files\n+    var _findArgs\n     if (!isWindows) {\n-      _files = execSync('find ' + root + ' ' + patterns + more_patterns)\n+      // @TODO support for a root directory\n+      // It's not straightforward due to the nature of the find command\n+      _findArgs = [root].concat(patterns)\n+      if (more_patterns) {\n+        _findArgs.concat(more_patterns)\n+      }\n+      _files = execFileSync('find', _findArgs)\n         .toString()\n         .trim()\n         .split('\\n')\n     } else {\n       // @TODO support for a root directory\n       // It's not straightforward due to the nature of the dir command\n-      _files = execSync('dir ' + patterns + more_patterns)\n+      _findArgs = [root].concat(winPatterns)\n+      if (more_patterns) {\n+        _findArgs.concat(more_patterns)\n+      }\n+      _files = execSync('dir ' + winPatterns.join(' ') + more_patterns)\n         .toString()\n         .trim()\n         .split('\\r\\n')\n@@ -556,7 +573,12 @@\n   }\n }\n \n+function sanitizeVar(arg) {\n+  return arg.replace(/&/g, '')\n+}\n+\n module.exports = {\n+  sanitizeVar: sanitizeVar,\n   upload: upload,\n   version: version,\n   sendToCodecovV2: sendToCodecovV2,\n"
+    },
+    {
+      "old_path": "lib/services/codebuild.js",
+      "new_path": "lib/services/codebuild.js",
+      "old_sha256": "0b0b259d978fd8634990bdb46bc5985575b8015c761625d9bbbc9933835023a9",
+      "new_sha256": "38d17aa50f03e2bd29eb0389cf6e67c7a49a21904590e340f2a5c3e02f5c40aa",
+      "hunks": [
+        {
+          "old_start": 26,
+          "old_count": 7,
+          "new_start": 26,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 29,
+              "old_count": 1,
+              "new_start": 29,
+              "new_count": 4,
+              "old_lines": [
+                29
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/services/codebuild.js\n+++ lib/services/codebuild.js\n@@ -26,7 +26,10 @@\n       return git.branch()\n     }\n     function detectPRNumber() {\n-      if (process.env.CODEBUILD_WEBHOOK_HEAD_REF) {\n+      if (\n+        process.env.CODEBUILD_WEBHOOK_HEAD_REF &&\n+        process.env.CODEBUILD_SOURCE_VERSION.startsWith('pr/')\n+      ) {\n         return process.env.CODEBUILD_SOURCE_VERSION.replace(/^pr\\//, '')\n       }\n       return undefined\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "1567658e79924fba31648e8b59e2cb4125eb04ab3e7a01e48df5dfbc256ca80a",
+      "new_sha256": "9f1818a61d5d612f253863fa58ea4f33cac180c8aa69c14203654da9072544ec",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 35,
+          "old_count": 8,
+          "new_start": 35,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 38,
+              "old_count": 2,
+              "new_start": 38,
+              "new_count": 1,
+              "old_lines": [
+                38,
+                39
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"codecov\",\n-  \"version\": \"3.6.4\",\n+  \"version\": \"3.7.1\",\n   \"description\": \"Uploading report to Codecov: https://codecov.io\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n@@ -35,8 +35,7 @@\n     \"ignore-walk\": \"3.0.3\",\n     \"js-yaml\": \"3.13.1\",\n     \"teeny-request\": \"6.0.1\",\n-    \"urlgrey\": \"0.4.4\",\n-    \"validator\": \"12.2.0\"\n+    \"urlgrey\": \"0.4.4\"\n   },\n   \"devDependencies\": {\n     \"eslint\": \"^5.16.0\",\n"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/codeStyles/Project.xml",
+      "old_sha256": null,
+      "new_sha256": "d65cc487a1ab2fa5f28919614dcf3574c250c0d3d5238e33d9a08315ca3e8ee9",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 47,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 47,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/codeStyles/Project.xml\n@@ -0,0 +1,47 @@\n+<component name=\"ProjectCodeStyleConfiguration\">\n+  <code_scheme name=\"Project\" version=\"173\">\n+    <JSCodeStyleSettings version=\"0\">\n+      <option name=\"USE_SEMICOLON_AFTER_STATEMENT\" value=\"false\" />\n+      <option name=\"FORCE_SEMICOLON_STYLE\" value=\"true\" />\n+      <option name=\"SPACE_BEFORE_FUNCTION_LEFT_PARENTH\" value=\"false\" />\n+      <option name=\"USE_DOUBLE_QUOTES\" value=\"false\" />\n+      <option name=\"FORCE_QUOTE_STYlE\" value=\"true\" />\n+      <option name=\"ENFORCE_TRAILING_COMMA\" value=\"WhenMultiline\" />\n+      <option name=\"SPACES_WITHIN_OBJECT_LITERAL_BRACES\" value=\"true\" />\n+      <option name=\"SPACES_WITHIN_IMPORTS\" value=\"true\" />\n+    </JSCodeStyleSettings>\n+    <TypeScriptCodeStyleSettings version=\"0\">\n+      <option name=\"USE_SEMICOLON_AFTER_STATEMENT\" value=\"false\" />\n+      <option name=\"FORCE_SEMICOLON_STYLE\" value=\"true\" />\n+      <option name=\"SPACE_BEFORE_FUNCTION_LEFT_PARENTH\" value=\"false\" />\n+      <option name=\"USE_DOUBLE_QUOTES\" value=\"false\" />\n+      <option name=\"FORCE_QUOTE_STYlE\" value=\"true\" />\n+      <option name=\"ENFORCE_TRAILING_COMMA\" value=\"WhenMultiline\" />\n+      <option name=\"SPACES_WITHIN_OBJECT_LITERAL_BRACES\" value=\"true\" />\n+      <option name=\"SPACES_WITHIN_IMPORTS\" value=\"true\" />\n+    </TypeScriptCodeStyleSettings>\n+    <codeStyleSettings language=\"HTML\">\n+      <indentOptions>\n+        <option name=\"INDENT_SIZE\" value=\"2\" />\n+        <option name=\"CONTINUATION_INDENT_SIZE\" value=\"4\" />\n+        <option name=\"TAB_SIZE\" value=\"2\" />\n+      </indentOptions>\n+    </codeStyleSettings>\n+    <codeStyleSettings language=\"JavaScript\">\n+      <option name=\"SOFT_MARGINS\" value=\"80\" />\n+      <indentOptions>\n+        <option name=\"INDENT_SIZE\" value=\"2\" />\n+        <option name=\"CONTINUATION_INDENT_SIZE\" value=\"2\" />\n+        <option name=\"TAB_SIZE\" value=\"2\" />\n+      </indentOptions>\n+    </codeStyleSettings>\n+    <codeStyleSettings language=\"TypeScript\">\n+      <option name=\"SOFT_MARGINS\" value=\"80\" />\n+      <indentOptions>\n+        <option name=\"INDENT_SIZE\" value=\"2\" />\n+        <option name=\"CONTINUATION_INDENT_SIZE\" value=\"2\" />\n+        <option name=\"TAB_SIZE\" value=\"2\" />\n+      </indentOptions>\n+    </codeStyleSettings>\n+  </code_scheme>\n+</component>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/codeStyles/codeStyleConfig.xml",
+      "old_sha256": null,
+      "new_sha256": "ee546e9441ecbbb5fdd87776dc403e44f3dccb93ebb43828906ed1f47ebb32ed",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 5,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 5,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/codeStyles/codeStyleConfig.xml\n@@ -0,0 +1,5 @@\n+<component name=\"ProjectCodeStyleConfiguration\">\n+  <state>\n+    <option name=\"USE_PER_PROJECT_SETTINGS\" value=\"true\" />\n+  </state>\n+</component>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/codecov-node.iml",
+      "old_sha256": null,
+      "new_sha256": "035fd8fa90a68984b9c6ae2b35599ec30c045be661882ab8bf638bedfa60e221",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 12,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/codecov-node.iml\n@@ -0,0 +1,12 @@\n+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n+<module type=\"WEB_MODULE\" version=\"4\">\n+  <component name=\"NewModuleRootManager\">\n+    <content url=\"file://$MODULE_DIR$\">\n+      <excludeFolder url=\"file://$MODULE_DIR$/.tmp\" />\n+      <excludeFolder url=\"file://$MODULE_DIR$/temp\" />\n+      <excludeFolder url=\"file://$MODULE_DIR$/tmp\" />\n+    </content>\n+    <orderEntry type=\"inheritedJdk\" />\n+    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\n+  </component>\n+</module>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/inspectionProfiles/Project_Default.xml",
+      "old_sha256": null,
+      "new_sha256": "725960a07196ca7e40f4c7343c9b56132ec0a79956ab048cd6568c27dc68d50c",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 6,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/inspectionProfiles/Project_Default.xml\n@@ -0,0 +1,6 @@\n+<component name=\"InspectionProjectProfileManager\">\n+  <profile version=\"1.0\">\n+    <option name=\"myName\" value=\"Project Default\" />\n+    <inspection_tool class=\"Eslint\" enabled=\"true\" level=\"WARNING\" enabled_by_default=\"true\" />\n+  </profile>\n+</component>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/jsLibraryMappings.xml",
+      "old_sha256": null,
+      "new_sha256": "a1a3559b2655e221884d1f43f781c43c4204e1f61f50fdf008a76348f3ac85ab",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 6,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/jsLibraryMappings.xml\n@@ -0,0 +1,6 @@\n+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n+<project version=\"4\">\n+  <component name=\"JavaScriptLibraryMappings\">\n+    <includedPredefinedLibrary name=\"Node.js Core\" />\n+  </component>\n+</project>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/misc.xml",
+      "old_sha256": null,
+      "new_sha256": "8e20542282cda0edcf55934715b7ae3ea2bb8b682180a12999b82f0475ea8b36",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 6,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/misc.xml\n@@ -0,0 +1,6 @@\n+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n+<project version=\"4\">\n+  <component name=\"JavaScriptSettings\">\n+    <option name=\"languageLevel\" value=\"ES6\" />\n+  </component>\n+</project>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/modules.xml",
+      "old_sha256": null,
+      "new_sha256": "a78d5b51a836a666d4bede8ef51304b32d25a7d43e261c605e84cc5a16c87198",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 8,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/modules.xml\n@@ -0,0 +1,8 @@\n+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n+<project version=\"4\">\n+  <component name=\"ProjectModuleManager\">\n+    <modules>\n+      <module fileurl=\"file://$PROJECT_DIR$/.idea/codecov-node.iml\" filepath=\"$PROJECT_DIR$/.idea/codecov-node.iml\" />\n+    </modules>\n+  </component>\n+</project>"
+    },
+    {
+      "old_path": null,
+      "new_path": ".idea/vcs.xml",
+      "old_sha256": null,
+      "new_sha256": "55768f1f84fb117f1d0fc383e180b5d0aa5e5e6584c8c4a2995c15b4237f0972",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 6,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .idea/vcs.xml\n@@ -0,0 +1,6 @@\n+<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n+<project version=\"4\">\n+  <component name=\"VcsDirectoryMappings\">\n+    <mapping directory=\"$PROJECT_DIR$\" vcs=\"Git\" />\n+  </component>\n+</project>"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-ps-0.0.2",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "e8cd40f71c2b48b624fe1ba1f920c903078410c1e5c6b946bb91c71a668b0126",
+    "fixed": "a9bdb3477d0af5e7cdd10b15f7156851526f811784f3b82f8a7b3b56f47877f2"
+  },
+  "patch_hunks_sha256": "8c133a62e66cecaef361fe702731f2cffa4f7d9cad10eaaa5f29e7a75dc16739",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/index.js",
+      "span": {
+        "startLine": 8,
+        "startColumn": 2,
+        "endLine": 15,
+        "endColumn": 4
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "cp.exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/index.js:8:5",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/ps_0.0.2/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/index.js:8:5; ps Enables OS Command Injection",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

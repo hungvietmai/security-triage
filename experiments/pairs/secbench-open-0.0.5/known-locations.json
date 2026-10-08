@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-open-0.0.5",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "f5e85c2037b9355b7acbdc7459030027555bf08b01cb6d4db6712655dd39060a",
+    "fixed": "8218ae1ab25b7d2f8106f8b3537600e01a6486a9b71e6480aaed2743a17d6676"
+  },
+  "patch_hunks_sha256": "a2bdaf2def6dffa0f4be9e96b6f2bbae55db25e578127932d125bf51fbfce7e9",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "lib/open.js",
+      "span": {
+        "startLine": 58,
+        "startColumn": 10,
+        "endLine": 58,
+        "endColumn": 62
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "lib/open.js:58:10",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/open_0.0.5/package.json"
+        ],
+        "inventory_basis": "SecBench sink lib/open.js:58:10; Command Injection in open",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

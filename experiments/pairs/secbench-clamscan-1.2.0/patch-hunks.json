@@ -1,0 +1,444 @@
+{
+  "pair_id": "secbench-clamscan-1.2.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "1fc75c588abb8395158d6a0b0c7e8129940f64a90f93e55e4898180d73ff50e4",
+    "fixed": "91aeb71d264bcb8740648a448245534f46e5f8d9243fac13d5749b7592b870a8"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "HISTORY.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/bad_files_list.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_files_list.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_scan_dir/empty_file.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_scan_dir/good_file_1.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_scan_dir/good_file_2.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/index.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/test_config.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "HISTORY.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/bad_files_list.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_files_list.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_scan_dir/empty_file.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_scan_dir/good_file_1.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/good_scan_dir/good_file_2.txt",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/index.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/test_config.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "NodeClamTransform.js",
+      "new_path": "NodeClamTransform.js",
+      "old_sha256": "8c03c1f215006c11e26aa743772b4f990d13db661c9c07c17c434c42a5cfdda8",
+      "new_sha256": "89c779f205630b0f9403c3b1644831837d1b31cad277961b623a31aa3ddfa969",
+      "hunks": [
+        {
+          "old_start": 33,
+          "old_count": 9,
+          "new_start": 33,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 36,
+              "old_count": 3,
+              "new_start": 36,
+              "new_count": 5,
+              "old_lines": [
+                36,
+                37,
+                38
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- NodeClamTransform.js\n+++ NodeClamTransform.js\n@@ -33,9 +33,11 @@\n \r\n     _flush(cb) {\r\n         if (this._debug_mode) console.log(\"node-clam: Received final data from stream.\");\r\n-        const size = Buffer.alloc(4);\r\n-        size.writeInt32BE(0, 0);\r\n-        this.push(size);\r\n+        if (!this._readableState.ended) {\r\n+            const size = Buffer.alloc(4);\r\n+            size.writeInt32BE(0, 0);\r\n+            this.push(size);\r\n+        }\r\n         cb();\r\n     }\r\n }\r\n"
+    },
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "668694bd2811b9f14c8a71b2be9c5021bdba184dd4cf7825c033e70df7b769cc",
+      "new_sha256": "31e71d2328fd9613a19f4cf6cc5222b2ed5f340dbb09dff87b4cb62698c86a77",
+      "hunks": [
+        {
+          "old_start": 201,
+          "old_count": 7,
+          "new_start": 201,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 204,
+              "old_count": 1,
+              "new_start": 204,
+              "new_count": 1,
+              "old_lines": [
+                204
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 263,
+          "old_count": 7,
+          "new_start": 263,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 266,
+              "old_count": 1,
+              "new_start": 266,
+              "new_count": 1,
+              "old_lines": [
+                266
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 416,
+          "old_count": 19,
+          "new_start": 416,
+          "new_count": 22,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 419,
+              "old_count": 0,
+              "new_start": 419,
+              "new_count": 3,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 421,
+              "old_count": 1,
+              "new_start": 424,
+              "new_count": 1,
+              "old_lines": [
+                421
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 427,
+              "old_count": 1,
+              "new_start": 430,
+              "new_count": 1,
+              "old_lines": [
+                427
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 431,
+              "old_count": 1,
+              "new_start": 434,
+              "new_count": 1,
+              "old_lines": [
+                431
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 459,
+          "old_count": 13,
+          "new_start": 462,
+          "new_count": 15,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 462,
+              "old_count": 1,
+              "new_start": 465,
+              "new_count": 2,
+              "old_lines": [
+                462
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 466,
+              "old_count": 1,
+              "new_start": 470,
+              "new_count": 1,
+              "old_lines": [
+                466
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 469,
+              "old_count": 0,
+              "new_start": 473,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 491,
+          "old_count": 15,
+          "new_start": 496,
+          "new_count": 15,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 494,
+              "old_count": 2,
+              "new_start": 499,
+              "new_count": 2,
+              "old_lines": [
+                494,
+                495
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 502,
+              "old_count": 1,
+              "new_start": 507,
+              "new_count": 1,
+              "old_lines": [
+                502
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 549,
+          "old_count": 7,
+          "new_start": 554,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 552,
+              "old_count": 1,
+              "new_start": 557,
+              "new_count": 1,
+              "old_lines": [
+                552
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 687,
+          "old_count": 7,
+          "new_start": 692,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 690,
+              "old_count": 1,
+              "new_start": 695,
+              "new_count": 1,
+              "old_lines": [
+                690
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 983,
+          "old_count": 6,
+          "new_start": 988,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 986,
+              "old_count": 0,
+              "new_start": 991,
+              "new_count": 5,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 1029,
+          "old_count": 7,
+          "new_start": 1039,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1032,
+              "old_count": 1,
+              "new_start": 1042,
+              "new_count": 2,
+              "old_lines": [
+                1032
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -201,7 +201,7 @@\n                         if (this.settings.clamdscan.socket || this.settings.clamdscan.host) {\n                             this.settings.clamdscan.local_fallback = false;\n                         } else {\n-                            const err = new NodeClamError('No valid & active virus scanning binaries are active and available and host/socket option provided!');\n+                            const err = new NodeClamError('No valid & active virus scanning binaries are active and available and no host/socket option provided!');\n                             return (has_cb ? cb(err, null) : reject(err));\n                         }\n                     }\n@@ -263,7 +263,7 @@\n                     console.log(`${this.debug_label}: Initially testing socket/tcp connection to clamscan server.`);\n                 try {\n                     await this._ping();\n-                    if (this.settings.debug_mode) console.log(`${this.debug_label}: Established connection to clamscan server for testing!`);\n+                    if (this.settings.debug_mode) console.log(`${this.debug_label}: Established connection to clamscan server!`);\n                 } catch (err) {\n                     return (has_cb ? cb(err, null) : reject(err));\n                 }\n@@ -416,19 +416,22 @@\n             // Create a new Socket connection to Unix socket or remote server (in that order)\n             let client;\n \n+            // Setup socket connection timeout (defualt: 20 seconds).\n+            const timeout = this.settings.clamdscan.timeout ? this.settings.clamdscan.timeout : 20000;\n+\n             // The fastest option is a local Unix socket\n             if (this.settings.clamdscan.socket)\n-                client = net.createConnection({path: this.settings.clamdscan.socket});\n+                client = net.createConnection({path: this.settings.clamdscan.socket, timeout});\n \n             // If a port is specified, we're going to be connecting via TCP\n             else if (this.settings.clamdscan.port) {\n                 // If a host is specified (usually for a remote host)\n                 if (this.settings.clamdscan.host) {\n-                    client = net.createConnection({host: this.settings.clamdscan.host, port: this.settings.clamdscan.port});\n+                    client = net.createConnection({host: this.settings.clamdscan.host, port: this.settings.clamdscan.port, timeout});\n                 }\n                 // Host can be ignored since the default is `localhost`\n                 else {\n-                    client = net.createConnection({port: this.settings.clamdscan.port});\n+                    client = net.createConnection({port: this.settings.clamdscan.port, timeout});\n                 }\n             }\n \n@@ -459,13 +462,15 @@\n                     return resolve(client);\n                 })\n                 .on('timeout', () => {\n-                    if (this.settings.debug_mode) console.log(`${this.debug_label}: Socket connection timed out.`);\n+                    if (this.settings.debug_mode) console.log(`${this.debug_label}: Socket/Host connection timed out.`);\n+                    reject(new Error('Connection to host has timed out.'));\n                     client.end();\n                 })\n                 .on('close', () => {\n-                    if (this.settings.debug_mode) console.log(`${this.debug_label}: Socket connection closed.`);\n+                    if (this.settings.debug_mode) console.log(`${this.debug_label}: Socket/Host connection closed.`);\n                 })\n                 .on('error', (e) => {\n+                    if (this.settings.debug_mode) console.error(`${this.debug_label}: Socket/Host connection failed:`, e);\n                     reject(e);\n                 });\n         });\n@@ -491,15 +496,15 @@\n \n         try {\n             await fs_access(path, fs.constants.R_OK);\n-\n-            const {stdout} = await cp_exec(version_cmds[scanner]);\n+            const version_cmds_exec = version_cmds[scanner].split(' ');\n+            const {stdout} = await cp_execfile(version_cmds_exec[0], [version_cmds_exec[1]]);\n             if (stdout.toString().match(/ClamAV/) === null) {\n                 if (this.settings.debug_mode) console.log(`${this.debug_label}: Could not verify the ${scanner} binary.`);\n                 return false;\n             }\n             return true;\n         } catch (err) {\n-            if (this.settings.debug_mode) console.log(`${this.debug_label}: Could not verify the ${scanner} binary.`);\n+            if (this.settings.debug_mode) console.log(`${this.debug_label}: Could not verify the ${scanner} binary.`, err);\n             return false;\n         }\n     }\n@@ -549,7 +554,7 @@\n             try {\n                 const client = await this._init_socket('test_availability');\n \n-                if (this.settings.debug_mode) console.log(`${this.debug_label}: Established connection to clamscan server for testing!`);\n+                if (this.settings.debug_mode) console.log(`${this.debug_label}: Established connection to clamscan server!`);\n \n                 client.write('PING');\n                 client.on('data', data => {\n@@ -687,7 +692,7 @@\n                     if (this.settings.clamdscan.local_fallback === true) {\n                         return local_fallback();\n                     } else {\n-                        return (has_cb ? cb(err, null) : resolve(err));\n+                        return (has_cb ? cb(err, null) : reject(err));\n                     }\n                 }\n             } else {\n@@ -982,6 +987,11 @@\n                                     _scan_complete = true;\n                                     this.emit('scan-complete', result);\n                                 }\n+                            })\n+                            // If connection timesout.\n+                            .on('timeout', () => {\n+                                this.emit('timeout', new Error('Connection to host/socket has timed out'));\n+                                if (me.settings.debug_mode) console.log(`${me.debug_label}: Connection to host/socket has timed out`);\n                             })\n                             // When the ClamAV socket is ready to receive packets (this will probably never fire here)\n                             .on('ready', () => {\n@@ -1029,7 +1039,8 @@\n                         do_transform();\n                     } catch (err) {\n                         // If there's an issue connecting to the ClamAV socket, this is where that's handled\n-                        console.error(`${me.debug_label}: Error initiating socket to ClamAV: `, err);\n+                        if (me.settings.debug_mode) console.error(`${me.debug_label}: Error initiating socket to ClamAV: `, err);\n+                        handle_error(err);\n                     }\n                 } else {\n                     //if (me.settings.debug_mode) console.log(`${me.debug_label}: Doing transform: ${++counter}`);\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "cfb4ee905c8398ff3029069ef746d159f24067048ed8f2d57bef01cd1d609a0b",
+      "new_sha256": "011290f5c12d155f1563001150e88fdbe3d10a219988ec2f7c116b47d66bf198",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 8,
+          "old_count": 7,
+          "new_start": 8,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 11,
+              "old_count": 1,
+              "new_start": 11,
+              "new_count": 2,
+              "old_lines": [
+                11
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"clamscan\",\n-  \"version\": \"1.2.0\",\n+  \"version\": \"1.3.0\",\n   \"author\": \"Kyle Farris <kfarris@chomponllc.com> (http://chomponllc.com)\",\n   \"description\": \"Use Node JS to scan files on your server with ClamAV's clamscan/clamdscan binary or via TCP to a remote server or local UNIX Domain socket. This is especially useful for scanning uploaded files provided by un-trusted sources.\",\n   \"main\": \"index.js\",\n@@ -8,7 +8,8 @@\n     \"dietervds\",\n     \"nicolaspeixoto\",\n     \"urg <Patrick McAndrew>\",\n-    \"SaltwaterC <Ștefan Rusu>\"\n+    \"SaltwaterC <Ștefan Rusu>\",\n+    \"Sjord <Sjoerd Langkemper>\"\n   ],\n   \"scripts\": {\n     \"test\": \"make test\"\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

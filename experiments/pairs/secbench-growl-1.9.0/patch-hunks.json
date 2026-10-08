@@ -1,0 +1,548 @@
+{
+  "pair_id": "secbench-growl-1.9.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "9fa6163e3ac3eace7fc180e0dd59a8f5a7e6958d4c3575379a6ab2cc5a9d5748",
+    "fixed": "d4b5f5d7bcbc760b4b71ace6dcd7f6e1bc175c04619894bd47b86a304f1ca590"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "History.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "Readme.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "History.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "Readme.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "lib/growl.js",
+      "new_path": "lib/growl.js",
+      "old_sha256": "a617504b914d6efce6d93a1b05febbc4e7177adb58db375ce782d82957f93120",
+      "new_sha256": "071bd133586b40522451df4b835c435831a27da195f20da6b764224e548e933a",
+      "hunks": [
+        {
+          "old_start": 4,
+          "old_count": 12,
+          "new_start": 4,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 1,
+              "new_start": 7,
+              "new_count": 1,
+              "old_lines": [
+                7
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 12,
+              "old_count": 1,
+              "new_start": 12,
+              "new_count": 0,
+              "old_lines": [
+                12
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 22,
+          "old_count": 99,
+          "new_start": 21,
+          "new_count": 101,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 25,
+              "old_count": 3,
+              "new_start": 24,
+              "new_count": 74,
+              "old_lines": [
+                25,
+                26,
+                27
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 29,
+              "old_count": 8,
+              "new_start": 99,
+              "new_count": 7,
+              "old_lines": [
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 38,
+              "old_count": 12,
+              "new_start": 107,
+              "new_count": 1,
+              "old_lines": [
+                38,
+                39,
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48,
+                49
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 56,
+              "old_count": 5,
+              "new_start": 114,
+              "new_count": 0,
+              "old_lines": [
+                56,
+                57,
+                58,
+                59,
+                60
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 64,
+              "old_count": 54,
+              "new_start": 117,
+              "new_count": 2,
+              "old_lines": [
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103,
+                104,
+                105,
+                106,
+                107,
+                108,
+                109,
+                110,
+                111,
+                112,
+                113,
+                114,
+                115,
+                116,
+                117
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 127,
+          "old_count": 7,
+          "new_start": 128,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 130,
+              "old_count": 1,
+              "new_start": 131,
+              "new_count": 1,
+              "old_lines": [
+                130
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 167,
+          "old_count": 6,
+          "new_start": 168,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 170,
+              "old_count": 0,
+              "new_start": 171,
+              "new_count": 2,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 189,
+          "old_count": 18,
+          "new_start": 192,
+          "new_count": 18,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 192,
+              "old_count": 1,
+              "new_start": 195,
+              "new_count": 1,
+              "old_lines": [
+                192
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 195,
+              "old_count": 1,
+              "new_start": 198,
+              "new_count": 1,
+              "old_lines": [
+                195
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 198,
+              "old_count": 1,
+              "new_start": 201,
+              "new_count": 1,
+              "old_lines": [
+                198
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 203,
+              "old_count": 1,
+              "new_start": 206,
+              "new_count": 1,
+              "old_lines": [
+                203
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 230,
+          "old_count": 61,
+          "new_start": 233,
+          "new_count": 85,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 233,
+              "old_count": 2,
+              "new_start": 236,
+              "new_count": 2,
+              "old_lines": [
+                233,
+                234
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 238,
+              "old_count": 1,
+              "new_start": 241,
+              "new_count": 1,
+              "old_lines": [
+                238
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 243,
+              "old_count": 1,
+              "new_start": 246,
+              "new_count": 1,
+              "old_lines": [
+                243
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 247,
+              "old_count": 1,
+              "new_start": 250,
+              "new_count": 1,
+              "old_lines": [
+                247
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 251,
+              "old_count": 1,
+              "new_start": 254,
+              "new_count": 1,
+              "old_lines": [
+                251
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 256,
+              "old_count": 2,
+              "new_start": 259,
+              "new_count": 2,
+              "old_lines": [
+                256,
+                257
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 264,
+              "old_count": 1,
+              "new_start": 267,
+              "new_count": 1,
+              "old_lines": [
+                264
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 266,
+              "old_count": 1,
+              "new_start": 269,
+              "new_count": 1,
+              "old_lines": [
+                266
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 268,
+              "old_count": 1,
+              "new_start": 271,
+              "new_count": 1,
+              "old_lines": [
+                268
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 272,
+              "old_count": 3,
+              "new_start": 275,
+              "new_count": 3,
+              "old_lines": [
+                272,
+                273,
+                274
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 281,
+              "old_count": 2,
+              "new_start": 284,
+              "new_count": 9,
+              "old_lines": [
+                281,
+                282
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 287,
+              "old_count": 0,
+              "new_start": 297,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 288,
+              "old_count": 2,
+              "new_start": 299,
+              "new_count": 18,
+              "old_lines": [
+                288,
+                289
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/growl.js\n+++ lib/growl.js\n@@ -4,12 +4,11 @@\n  * Module dependencies.\n  */\n \n-var exec = require('child_process').exec\n+var spawn = require('child_process').spawn\n   , fs = require('fs')\n   , path = require('path')\n   , exists = fs.existsSync || path.existsSync\n   , os = require('os')\n-  , quote = JSON.stringify\n   , cmd;\n \n function which(name) {\n@@ -22,99 +21,101 @@\n   }\n }\n \n-switch(os.type()) {\n-  case 'Darwin':\n-    if (which('terminal-notifier')) {\n+function setup_cmd() {\n+  switch(os.type()) {\n+    case 'Darwin':\n+      if (which('terminal-notifier')) {\n+        cmd = {\n+            type: \"Darwin-NotificationCenter\"\n+          , pkg: \"terminal-notifier\"\n+          , msg: '-message'\n+          , title: '-title'\n+          , subtitle: '-subtitle'\n+          , icon: '-appIcon'\n+          , sound:  '-sound'\n+          , url: '-open'\n+          , priority: {\n+                cmd: '-execute'\n+              , range: []\n+            }\n+        };\n+      } else {\n+        cmd = {\n+            type: \"Darwin-Growl\"\n+          , pkg: \"growlnotify\"\n+          , msg: '-m'\n+          , sticky: '--sticky'\n+          , priority: {\n+                cmd: '--priority'\n+              , range: [\n+                  -2\n+                , -1\n+                , 0\n+                , 1\n+                , 2\n+                , \"Very Low\"\n+                , \"Moderate\"\n+                , \"Normal\"\n+                , \"High\"\n+                , \"Emergency\"\n+              ]\n+            }\n+        };\n+      }\n+      break;\n+    case 'Linux':\n+      if (which('growl')) {\n+        cmd = {\n+            type: \"Linux-Growl\"\n+          , pkg: \"growl\"\n+          , msg: '-m'\n+          , title: '-title'\n+          , subtitle: '-subtitle'\n+          , host: {\n+              cmd: '-H'\n+            , hostname: '192.168.33.1'\n+          }\n+        };\n+      } else {\n+        cmd = {\n+            type: \"Linux\"\n+          , pkg: \"notify-send\"\n+          , msg: ''\n+          , sticky: '-t 0'\n+          , icon: '-i'\n+          , priority: {\n+              cmd: '-u'\n+            , range: [\n+                \"low\"\n+              , \"normal\"\n+              , \"critical\"\n+            ]\n+          }\n+        };\n+      }\n+      break;\n+    case 'Windows_NT':\n       cmd = {\n-          type: \"Darwin-NotificationCenter\"\n-        , pkg: \"terminal-notifier\"\n-        , msg: '-message'\n-        , title: '-title'\n-        , subtitle: '-subtitle'\n-        , icon: '-appIcon'\n-        , sound:  '-sound'\n-        , url: '-open'\n+          type: \"Windows\"\n+        , pkg: \"growlnotify\"\n+        , msg: ''\n+        , sticky: '/s:true'\n+        , title: '/t:'\n+        , icon: '/i:'\n+        , url: '/cu:'\n         , priority: {\n-              cmd: '-execute'\n-            , range: []\n-          }\n-      };\n-    } else {\n-      cmd = {\n-          type: \"Darwin-Growl\"\n-        , pkg: \"growlnotify\"\n-        , msg: '-m'\n-        , sticky: '--sticky'\n-        , priority: {\n-              cmd: '--priority'\n+              cmd: '/p:'\n             , range: [\n                 -2\n               , -1\n               , 0\n               , 1\n               , 2\n-              , \"Very Low\"\n-              , \"Moderate\"\n-              , \"Normal\"\n-              , \"High\"\n-              , \"Emergency\"\n             ]\n           }\n       };\n-    }\n-    break;\n-  case 'Linux':\n-    if (which('growl')) {\n-      cmd = {\n-          type: \"Linux-Growl\"\n-        , pkg: \"growl\"\n-        , msg: '-m'\n-        , title: '-title'\n-        , subtitle: '-subtitle'\n-        , host: {\n-            cmd: '-H'\n-          , hostname: '192.168.33.1'\n-        }\n-      };\n-    } else {\n-      cmd = {\n-          type: \"Linux\"\n-        , pkg: \"notify-send\"\n-        , msg: ''\n-        , sticky: '-t 0'\n-        , icon: '-i'\n-        , priority: {\n-            cmd: '-u'\n-          , range: [\n-              \"low\"\n-            , \"normal\"\n-            , \"critical\"\n-          ]\n-        }\n-      };\n-    }\n-    break;\n-  case 'Windows_NT':\n-    cmd = {\n-        type: \"Windows\"\n-      , pkg: \"growlnotify\"\n-      , msg: ''\n-      , sticky: '/s:true'\n-      , title: '/t:'\n-      , icon: '/i:'\n-      , url: '/cu:'\n-      , priority: {\n-            cmd: '/p:'\n-          , range: [\n-              -2\n-            , -1\n-            , 0\n-            , 1\n-            , 2\n-          ]\n-        }\n-    };\n-    break;\n+      break;\n+  }\n }\n \n /**\n@@ -127,7 +128,7 @@\n  * Node-growl version.\n  */\n \n-exports.version = '1.4.1'\n+exports.version = '1.9.3'\n \n /**\n  * Send growl notification _msg_ with _options_.\n@@ -167,6 +168,8 @@\n     , options = options || {}\n     , fn = fn || function(){};\n \n+  setup_cmd();\n+\n   if (options.exec) {\n     cmd = {\n         type: \"Custom\"\n@@ -189,18 +192,18 @@\n         flag = flag || /^png|gif|jpe?g$/.test(ext) && 'image'\n         flag = flag || ext && (image = ext) && 'icon'\n         flag = flag || 'icon'\n-        args.push('--' + flag, quote(image))\n+        args.push('--' + flag, image)\n         break;\n       case 'Darwin-NotificationCenter':\n-        args.push(cmd.icon, quote(image));\n+        args.push(cmd.icon, image);\n         break;\n       case 'Linux':\n-        args.push(cmd.icon, quote(image));\n+        args.push(cmd.icon, image);\n         // libnotify defaults to sticky, set a hint for transient notifications\n         if (!options.sticky) args.push('--hint=int:transient:1');\n         break;\n       case 'Windows':\n-        args.push(cmd.icon + quote(image));\n+        args.push(cmd.icon + image);\n         break;\n     }\n   }\n@@ -230,61 +233,85 @@\n   switch(cmd.type) {\n     case 'Darwin-Growl':\n       args.push(cmd.msg);\n-      args.push(quote(msg).replace(/\\\\n/g, '\\n'));\n-      if (options.title) args.push(quote(options.title));\n+      args.push(msg.replace(/\\\\n/g, '\\n'));\n+      if (options.title) args.push(options.title);\n       break;\n     case 'Darwin-NotificationCenter':\n       args.push(cmd.msg);\n-      var stringifiedMsg = quote(msg);\n+      var stringifiedMsg = msg;\n       var escapedMsg = stringifiedMsg.replace(/\\\\n/g, '\\n');\n       args.push(escapedMsg);\n       if (options.title) {\n         args.push(cmd.title);\n-        args.push(quote(options.title));\n+        args.push(options.title);\n       }\n       if (options.subtitle) {\n         args.push(cmd.subtitle);\n-        args.push(quote(options.subtitle));\n+        args.push(options.subtitle);\n       }\n       if (options.url) {\n         args.push(cmd.url);\n-        args.push(quote(options.url));\n+        args.push(options.url);\n       }\n       break;\n     case 'Linux-Growl':\n       args.push(cmd.msg);\n-      args.push(quote(msg).replace(/\\\\n/g, '\\n'));\n-      if (options.title) args.push(quote(options.title));\n+      args.push(msg.replace(/\\\\n/g, '\\n'));\n+      if (options.title) args.push(options.title);\n       if (cmd.host) {\n         args.push(cmd.host.cmd, cmd.host.hostname)\n       }\n       break;\n     case 'Linux':\n       if (options.title) {\n-        args.push(quote(options.title));\n+        args.push(options.title);\n         args.push(cmd.msg);\n-        args.push(quote(msg).replace(/\\\\n/g, '\\n'));\n+        args.push(msg.replace(/\\\\n/g, '\\n'));\n       } else {\n-        args.push(quote(msg).replace(/\\\\n/g, '\\n'));\n+        args.push(msg.replace(/\\\\n/g, '\\n'));\n       }\n       break;\n     case 'Windows':\n-      args.push(quote(msg).replace(/\\\\n/g, '\\n'));\n-      if (options.title) args.push(cmd.title + quote(options.title));\n-      if (options.url) args.push(cmd.url + quote(options.url));\n+      args.push(msg.replace(/\\\\n/g, '\\n'));\n+      if (options.title) args.push(cmd.title + options.title);\n+      if (options.url) args.push(cmd.url + options.url);\n       break;\n     case 'Custom':\n       args[0] = (function(origCommand) {\n         var message = options.title\n           ? options.title + ': ' + msg\n           : msg;\n-        var command = origCommand.replace(/(^|[^%])%s/g, '$1' + quote(message));\n-        if (command === origCommand) args.push(quote(message));\n+        var command = origCommand.replace(/(^|[^%])%s/g, '$1' + message);\n+        var split_cmd = command.split(' ');\n+        if (split_cmd.length > 1){\n+          command = split_cmd.shift();\n+          args.push.apply(args, split_cmd);\n+        }\n+        if (origCommand.indexOf('%s') < 0) {\n+          args.push(message);\n+        }\n         return command;\n       })(args[0]);\n       break;\n   }\n-\n-  // execute\n-  exec(args.join(' '), fn);\n+  var cmd_to_exec = args.shift();\n+\n+  var child = spawn(cmd_to_exec, args);\n+  var out = ''\n+  var err = '';\n+\n+  child.stdout.on('data', function(data) {\n+    out += data;\n+  });\n+\n+  child.stderr.on('data', function(data) {\n+    err += data;\n+  });\n+\n+  child.on('close', function(code) {\n+    var error = code === 0 ?  null : code;\n+    if (typeof fn === 'function') {\n+      fn(error, out, err);\n+    }\n+  });\n };\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "68150b1e4d6705af2c8a8dd7903b962adbc1b32b46f4684d6a18a4573c87b8c9",
+      "new_sha256": "908236e1d263ee5baa76d966d2e9fd8bfa672283e13247e0478947a24704ef69",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 14,
+          "new_start": 1,
+          "new_count": 15,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 7,
+              "old_count": 1,
+              "new_start": 7,
+              "new_count": 2,
+              "old_lines": [
+                7
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 11,
+              "old_count": 1,
+              "new_start": 12,
+              "new_count": 1,
+              "old_lines": [
+                11
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,14 +1,15 @@\n {\n   \"name\": \"growl\",\n-  \"version\": \"1.9.0\",\n+  \"version\": \"1.10.0\",\n   \"description\": \"Growl unobtrusive notifications\",\n   \"author\": \"TJ Holowaychuk <tj@vision-media.ca>\",\n   \"maintainers\": [\n-    \"Joshua Appelman <joshua@jbnicolai.nl>\"\n+    \"Joshua Boy Nicolai Appelman <joshua@jbnicolai.nl>\",\n+    \"Timo Sand <timo.sand@iki.fi>\"\n   ],\n   \"repository\": {\n     \"type\": \"git\",\n-    \"url\": \"git://github.com/visionmedia/node-growl.git\"\n+    \"url\": \"git://github.com/tj/node-growl.git\"\n   },\n   \"main\": \"./lib/growl.js\",\n   \"license\": \"MIT\"\n"
+    },
+    {
+      "old_path": null,
+      "new_path": ".eslintrc.json",
+      "old_sha256": null,
+      "new_sha256": "54d2345f96b45d1b158afde77d8f0e662f4d8928d25fe7c999c328c1603909b7",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 0,
+          "new_start": 1,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 9,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- /dev/null\n+++ .eslintrc.json\n@@ -0,0 +1,9 @@\n+{\n+    \"extends\": \"airbnb-base\",\n+    \"plugins\": [\n+        \"import\"\n+    ],\n+    \"env\": {\n+        \"node\": true\n+    }\n+}\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

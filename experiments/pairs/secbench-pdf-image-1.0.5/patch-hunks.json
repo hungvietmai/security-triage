@@ -1,0 +1,221 @@
+{
+  "pair_id": "secbench-pdf-image-1.0.5",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "2a249e8b1c8b47091e9d48bced71e75338c96731b9a954bf6a4bf68ca614acd4",
+    "fixed": "a6e625541f0609fea2c8459f3bb6896515184d64e202233fa3293cb754603fc9"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/test-main.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "tests/test-main.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "tests/test.pdf",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "1d819b42ee74ce4fd9c9b58c84a5b0d3805c1caeecdf9cf3cdf55da67d53d6c8",
+      "new_sha256": "cdfbd2f06427a011b8b72d7f4ebf65491aa8462e7916a75b37121bd6a6e31f38",
+      "hunks": [
+        {
+          "old_start": 16,
+          "old_count": 6,
+          "new_start": 16,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 19,
+              "old_count": 0,
+              "new_start": 19,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 65,
+          "old_count": 6,
+          "new_start": 66,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 68,
+              "old_count": 0,
+              "new_start": 69,
+              "new_count": 6,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 85,
+          "old_count": 6,
+          "new_start": 92,
+          "new_count": 14,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 88,
+              "old_count": 0,
+              "new_start": 95,
+              "new_count": 8,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 93,
+          "old_count": 6,
+          "new_start": 108,
+          "new_count": 57,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 96,
+              "old_count": 0,
+              "new_start": 111,
+              "new_count": 51,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -16,6 +16,7 @@\n   this.setConvertOptions(options.convertOptions);\n   this.setConvertExtension(options.convertExtension);\n   this.useGM = options.graphicsMagick || false;\n+  this.combinedImage = options.combinedImage || false;\n \n   this.outputDirectory = options.outputDirectory || path.dirname(pdfFilePath);\n }\n@@ -65,6 +66,12 @@\n       this.pdfFileBaseName + \"-\" + pageNumber + \".\" + this.convertExtension\n     );\n   },\n+  getOutputImagePathForFile: function () {\n+    return path.join(\n+      this.outputDirectory,\n+      this.pdfFileBaseName + \".\" + this.convertExtension\n+    );\n+  },\n   setConvertOptions: function (convertOptions) {\n     this.convertOptions = convertOptions || {};\n   },\n@@ -85,6 +92,14 @@\n       pdfFilePath, pageNumber, outputImagePath\n     );\n   },\n+  constructCombineCommandForFile: function (imagePaths) {\n+    return util.format(\n+      \"%s -append %s \\\"%s\\\"\",\n+      this.useGM ? \"gm convert\" : \"convert\",\n+      imagePaths.join(' '),\n+      this.getOutputImagePathForFile()\n+    );\n+  },\n   constructConvertOptions: function () {\n     return Object.keys(this.convertOptions).sort().map(function (optionName) {\n       if (this.convertOptions[optionName] !== null) {\n@@ -93,6 +108,57 @@\n         return optionName;\n       }\n     }, this).join(\" \");\n+  },\n+  combineImages: function(imagePaths) {\n+    var pdfImage = this;\n+    var combineCommand = pdfImage.constructCombineCommandForFile(imagePaths);\n+    return new Promise(function (resolve, reject) {\n+      exec(combineCommand, function (err, stdout, stderr) {\n+        if (err) {\n+          return reject({\n+            message: \"Failed to combine images\",\n+            error: err,\n+            stdout: stdout,\n+            stderr: stderr\n+          });\n+        }\n+        exec(\"rm \"+imagePaths.join(' ')); //cleanUp\n+        return resolve(pdfImage.getOutputImagePathForFile());\n+      });\n+    });\n+  },\n+  convertFile: function () {\n+    var pdfImage = this;\n+    return new Promise(function (resolve, reject) {\n+      pdfImage.numberOfPages().then(function (totalPages) {\n+        var convertPromise = new Promise(function (resolve, reject){\n+          var imagePaths = [];\n+          for (var i = 0; i < totalPages; i++) {\n+            pdfImage.convertPage(i).then(function(imagePath){\n+              imagePaths.push(imagePath);\n+              if (imagePaths.length === parseInt(totalPages)){\n+                imagePaths.sort(); //because of asyc pages we have to reSort pages\n+                resolve(imagePaths);\n+              }\n+            }).catch(function(error){\n+              reject(error);\n+            });\n+          }\n+        });\n+\n+        convertPromise.then(function(imagePaths){\n+          if (pdfImage.combinedImage){\n+            pdfImage.combineImages(imagePaths).then(function(imagePath){\n+              resolve(imagePath);\n+            });\n+          } else {\n+            resolve(imagePaths);\n+          }\n+        }).catch(function(error){\n+          reject(error);\n+        });\n+      });\n+    });\n   },\n   convertPage: function (pageNumber) {\n     var pdfFilePath     = this.pdfFilePath;\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "9b84e8674d545806f312d9c034b0074105478820b6b601e00a05903972fc203d",
+      "new_sha256": "57af833125906c97eedb22dee6db1244cea50dc621e997f13413da6d4b78cd3c",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 11,
+          "old_count": 11,
+          "new_start": 11,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 14,
+              "old_count": 1,
+              "new_start": 14,
+              "new_count": 1,
+              "old_lines": [
+                14
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 17,
+              "old_count": 2,
+              "new_start": 17,
+              "new_count": 2,
+              "old_lines": [
+                17,
+                18
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"pdf-image\",\n-  \"version\": \"1.0.5\",\n+  \"version\": \"2.0.0\",\n   \"main\": \"index.js\",\n   \"repository\": {\n     \"type\": \"git\",\n@@ -11,11 +11,11 @@\n   },\n   \"homepage\": \"https://github.com/mooz/node-pdf-image#readme\",\n   \"dependencies\": {\n-    \"es6-promise\": \"~2.0.0\"\n+    \"es6-promise\": \"~4.2.4\"\n   },\n   \"devDependencies\": {\n-    \"chai\": \"~1.9.2\",\n-    \"mocha\": \"~2.3.4\"\n+    \"chai\": \"~4.1.2\",\n+    \"mocha\": \"~5.1.1\"\n   },\n   \"scripts\": {\n     \"test\": \"mocha tests/*\"\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

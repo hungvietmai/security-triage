@@ -1,0 +1,110 @@
+{
+  "pair_id": "pyvul-pgadmin-org-pgadmin4-35f05e49b363",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "1d6f651a7427714944b40ae5c9e39c253957afe0b3616ef4adf73b9f464ef375",
+    "fixed": "b80ae13f428bc4a118d977d3e0a0556299445c61056ddab73c7b6f6193406eeb"
+  },
+  "patch_hunks_sha256": "acab470f5069d75e8f3b6de6fd7cb5fc4f316500cdd2506a284e45582ace8b7c",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "web/pgadmin/misc/__init__.py",
+      "span": {
+        "startLine": 274,
+        "startColumn": 21,
+        "endLine": 275,
+        "endColumn": 55
+      },
+      "sink_kind": "subprocess.getoutput",
+      "callee": "subprocess.getoutput",
+      "provenance": {
+        "kind": "PyVul_deleted_or_modified_lines",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/pgadmin-org/pgadmin4/commit/35f05e49b3632a0a674b9b36535a7fe2d93dd0c2"
+        ],
+        "fix_commit": "35f05e49b3632a0a674b9b36535a7fe2d93dd0c2",
+        "patch_lines": [
+          16,
+          257,
+          258,
+          259,
+          260,
+          261,
+          262,
+          263,
+          264,
+          265,
+          266,
+          267,
+          268,
+          269,
+          270,
+          271,
+          272,
+          273,
+          274,
+          275,
+          276,
+          277,
+          278,
+          281,
+          282,
+          283,
+          284,
+          285,
+          286,
+          287
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "validate_binary_path",
+              "normalized_code_before_sha256": "8b7056d7e13bb8a232f45b435b359515809dbb3c1aa824a824ee32e02e4caae9",
+              "dataset_line": 1037,
+              "commit": "https://github.com/pgadmin-org/pgadmin4/commit/35f05e49b3632a0a674b9b36535a7fe2d93dd0c2"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        },
+        "locator": "app.triage.sinks_python.locate_python_sinks",
+        "locator_sha256": "d37bd7c096e2d348c0992eb05be288995c30998630fa80eec64aca2c352fbe7c",
+        "overlapping_patch_lines": [
+          274,
+          275
+        ],
+        "matched_function_labels": [
+          {
+            "function_name": "validate_binary_path",
+            "normalized_code_before_sha256": "8b7056d7e13bb8a232f45b435b359515809dbb3c1aa824a824ee32e02e4caae9",
+            "dataset_line": 1037,
+            "commit": "https://github.com/pgadmin-org/pgadmin4/commit/35f05e49b3632a0a674b9b36535a7fe2d93dd0c2"
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": [
+    {
+      "path": "web/pgadmin/utils/__init__.py",
+      "span": {
+        "startLine": 375,
+        "startColumn": 21,
+        "endLine": 375,
+        "endColumn": 78
+      },
+      "reason": "outside_exactly_matched_function_label"
+    }
+  ]
+}

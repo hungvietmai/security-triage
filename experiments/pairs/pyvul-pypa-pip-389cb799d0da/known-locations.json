@@ -1,0 +1,45 @@
+{
+  "pair_id": "pyvul-pypa-pip-389cb799d0da",
+  "split": "development",
+  "status": "known_location_unresolved",
+  "snapshot_sha256": {
+    "vulnerable": "aad93f38c58a795c6a74e291c3307e0a119341520f0daa0ee85322b38781fe80",
+    "fixed": "5e4b7f661d03e371ee7b11a0bccaf3ebc4dc8376a7b9581f34fa5eabac5d84a4"
+  },
+  "patch_hunks_sha256": "c818fb0bf85dd202a647df630f80af08878ee6cb8df2cf7241fe363d680d9413",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [],
+  "unresolved": [
+    {
+      "status": "known_location_unresolved",
+      "reason": "no_sink_in_deleted_or_modified_lines_and_applicable_function_labels",
+      "provenance": {
+        "kind": "PyVul_patch",
+        "fix_commit": "389cb799d0da9a840749fcd14878928467ed49b4",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4"
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "get_base_rev_args",
+              "normalized_code_before_sha256": "39e68524a72053d29d08bf09cadfd3f66183c1494317d0d540d4a98c62193e7f",
+              "dataset_line": 747,
+              "commit": "https://github.com/pypa/pip/commit/389cb799d0da9a840749fcd14878928467ed49b4"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        }
+      }
+    }
+  ],
+  "resolved_location_count": 0,
+  "unresolved_case_count": 1,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

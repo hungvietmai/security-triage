@@ -1,0 +1,285 @@
+{
+  "pair_id": "secbench-local-devices-2.0.0",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "420f2521dc7223961ce99ad547bcffb33284fdcbd0d37237149f7a2ee36e9a40",
+    "fixed": "43f3f7bde1ca78430255c0e56a9292b65856805c2877616caa964d8518702c44"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "CHANGES.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENCE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGES.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENCE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "0283ccc2a2603e945c08becb41c975809a2299594144a74b57e6976ca06ec36e",
+      "new_sha256": "f7a5d0c4bc56682ed69d3e24485d9b5af12495712283c00b6c5cad40ab0bbbe2",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 25,
+          "new_start": 1,
+          "new_count": 42,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 6,
+              "old_count": 1,
+              "new_start": 6,
+              "new_count": 15,
+              "old_lines": [
+                6
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 12,
+              "old_count": 6,
+              "new_start": 26,
+              "new_count": 8,
+              "old_lines": [
+                12,
+                13,
+                14,
+                15,
+                16,
+                17
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 20,
+              "old_count": 1,
+              "new_start": 36,
+              "new_count": 1,
+              "old_lines": [
+                20
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 23,
+              "old_count": 0,
+              "new_start": 39,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 29,
+          "old_count": 23,
+          "new_start": 46,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 32,
+              "old_count": 5,
+              "new_start": 49,
+              "new_count": 0,
+              "old_lines": [
+                32,
+                33,
+                34,
+                35,
+                36
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 41,
+              "old_count": 8,
+              "new_start": 53,
+              "new_count": 0,
+              "old_lines": [
+                41,
+                42,
+                43,
+                44,
+                45,
+                46,
+                47,
+                48
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,25 +1,42 @@\n {\n   \"name\": \"local-devices\",\n   \"description\": \"Find devices connected to the current local network.\",\n-  \"version\": \"2.0.0\",\n+  \"version\": \"3.0.0\",\n   \"author\": \"Dylan Piercey <pierceydylan@gmail.com>\",\n-  \"bugs\": \"https://github.com/DylanPiercey/local-devices/issues\",\n+  \"license\": \"MIT\",\n+  \"main\": \"src/index.js\",\n+  \"files\": [\n+    \"src\"\n+  ],\n+  \"scripts\": {\n+    \"contributors:add\": \"all-contributors add\",\n+    \"contributors:generate\": \"all-contributors generate\",\n+    \"coveralls\": \"jest --coverage && cat ./coverage/lcov.info | coveralls\",\n+    \"lint\": \"standard --verbose | snazzy\",\n+    \"test\": \"jest\",\n+    \"pretest\": \"npm run lint\",\n+    \"watch-test\": \"jest --watch\"\n+  },\n+  \"types\": \"./src/index.d.ts\",\n   \"dependencies\": {\n     \"ip\": \"^1.1.5\",\n     \"mz\": \"^2.7.0\"\n   },\n   \"devDependencies\": {\n-    \"coveralls\": \"3.0.2\",\n-    \"husky\": \"1.2.1\",\n-    \"jest\": \"23.6.0\",\n-    \"lint-staged\": \"8.1.0\",\n-    \"snazzy\": \"7.1.1\",\n-    \"standard\": \"11.0.0\"\n+    \"@types/jest\": \"^24.0.19\",\n+    \"all-contributors-cli\": \"^6.9.3\",\n+    \"coveralls\": \"^3.0.7\",\n+    \"husky\": \"^3.0.9\",\n+    \"jest\": \"^24.9.0\",\n+    \"lint-staged\": \"^9.4.2\",\n+    \"snazzy\": \"^8.0.0\",\n+    \"standard\": \"^14.3.1\"\n   },\n   \"engines\": {\n-    \"node\": \">=8.14.1\"\n+    \"node\": \">=10.17\"\n   },\n   \"homepage\": \"https://github.com/DylanPiercey/local-devices\",\n+  \"bugs\": \"https://github.com/DylanPiercey/local-devices/issues\",\n   \"keywords\": [\n     \"arp\",\n     \"devices\",\n@@ -29,23 +46,10 @@\n     \"mac-address\",\n     \"scan\"\n   ],\n-  \"license\": \"MIT\",\n-  \"main\": \"src/index.js\",\n-  \"files\": [\n-    \"src\"\n-  ],\n   \"repository\": {\n     \"type\": \"git\",\n     \"url\": \"https://github.com/DylanPiercey/local-devices\"\n   },\n-  \"scripts\": {\n-    \"coveralls\": \"jest --coverage && cat ./coverage/lcov.info | coveralls\",\n-    \"lint\": \"standard --verbose | snazzy\",\n-    \"test\": \"jest\",\n-    \"pretest\": \"npm run lint\",\n-    \"watch-test\": \"jest --watch\"\n-  },\n-  \"types\": \"./src/index.d.ts\",\n   \"husky\": {\n     \"hooks\": {\n       \"pre-commit\": \"lint-staged\",\n"
+    },
+    {
+      "old_path": "src/index.js",
+      "new_path": "src/index.js",
+      "old_sha256": "c63917841b4126e95073349884ea8167cdf440dc16fe96fcde88a792c35fa584",
+      "new_sha256": "e290b9c822a1c9dfc5afa4efdf4f9f5b6422f6700ca5c85952481e2b7ec5b781",
+      "hunks": [
+        {
+          "old_start": 9,
+          "old_count": 6,
+          "new_start": 9,
+          "new_count": 13,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 12,
+              "old_count": 0,
+              "new_start": 12,
+              "new_count": 7,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 75,
+          "old_count": 7,
+          "new_start": 82,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 78,
+              "old_count": 1,
+              "new_start": 85,
+              "new_count": 1,
+              "old_lines": [
+                78
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 111,
+          "old_count": 7,
+          "new_start": 118,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 114,
+              "old_count": 1,
+              "new_start": 121,
+              "new_count": 5,
+              "old_lines": [
+                114
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/index.js\n+++ src/index.js\n@@ -9,6 +9,13 @@\n \n var servers = getServers()\n var lock = {}\n+\n+const TEN_MEGA_BYTE = 1024 * 1024 * 10\n+const ONE_MINUTE = 60 * 1000\n+const options = {\n+  maxBuffer: TEN_MEGA_BYTE,\n+  timeout: ONE_MINUTE\n+}\n \n /**\n  * Finds all local devices (ip and mac address) connectd to the current network.\n@@ -75,7 +82,7 @@\n  * Reads the arp table.\n  */\n function arpAll () {\n-  return cp.exec('arp -a').then(parseAll)\n+  return cp.exec('arp -a', options).then(parseAll)\n }\n \n /**\n@@ -111,7 +118,11 @@\n  * Reads the arp table for a single address.\n  */\n function arpOne (address) {\n-  return cp.exec('arp -n ' + address).then(parseOne)\n+  if (!ip.isV4Format(address) && !ip.isV6Format(address)) {\n+    return Promise.reject(new Error('Invalid IP address provided.'))\n+  }\n+\n+  return cp.exec('arp -n ' + address, options).then(parseOne)\n }\n \n /**\n"
+    },
+    {
+      "old_path": "src/parser/win32.js",
+      "new_path": "src/parser/win32.js",
+      "old_sha256": "8dd7831661d7467a5e246e229838653341fedc8aa344deb9f2f1b1eaa799c458",
+      "new_sha256": "e318dadbe313c2771fa9f6f3e2b3b86de7b9423a49fd6ec1a90851ae2b6a05a0",
+      "hunks": [
+        {
+          "old_start": 2,
+          "old_count": 7,
+          "new_start": 2,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 5,
+              "old_count": 1,
+              "new_start": 5,
+              "new_count": 1,
+              "old_lines": [
+                5
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/parser/win32.js\n+++ src/parser/win32.js\n@@ -2,7 +2,7 @@\n  * Parses each row in the arp table into { name, ip, mac } on win32.\n  */\n module.exports = function parseRow (row, servers) {\n-  var chunks = row.split('\\t')\n+  var chunks = row.split(/\\s+/g).filter(function (el) { return el.length > 1 })\n \n   // Parse name.\n   var ipAddress = chunks[0]\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

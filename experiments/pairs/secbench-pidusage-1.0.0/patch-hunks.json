@@ -1,0 +1,604 @@
+{
+  "pair_id": "secbench-pidusage-1.0.0",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "f3fed8f649315bbb7848aedb54926b62a7e6194f4e99a64192fe356011633f8e",
+    "fixed": "2e0396f0226f0f3a9fb9369823197be1f64cf0e4be1b6d01ccee1c2076b82292"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "CHANGELOG.MD",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/README.md",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/bench.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/server.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/stresstest.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/test.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "CHANGELOG.MD",
+        "reason": "documentation"
+      },
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/README.md",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/bench.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/server.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/stresstest.js",
+        "reason": "test_directory"
+      },
+      {
+        "path": "test/test.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "appveyor.yml",
+      "new_path": "appveyor.yml",
+      "old_sha256": "9cb57c197b9b5931ce6423fba400bf04df3191f68c6d86d8bbe1db2202501238",
+      "new_sha256": "49c7c2d26251a7c4041c6e6c5b8455eed712b741963283a8016593d0ff001dce",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 10,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 3,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 7,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 0,
+              "old_lines": [
+                7
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 12,
+          "old_count": 29,
+          "new_start": 8,
+          "new_count": 16,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 15,
+              "old_count": 1,
+              "new_start": 11,
+              "new_count": 8,
+              "old_lines": [
+                15
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 20,
+              "old_count": 17,
+              "new_start": 23,
+              "new_count": 0,
+              "old_lines": [
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                33,
+                34,
+                35,
+                36
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 38,
+              "old_count": 3,
+              "new_start": 24,
+              "new_count": 0,
+              "old_lines": [
+                38,
+                39,
+                40
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- appveyor.yml\n+++ appveyor.yml\n@@ -1,10 +1,6 @@\n-# http://www.appveyor.com/docs/appveyor-yml\n-\n-# Fix line endings in Windows. (runs before repo cloning)\n init:\n   - git config --global core.autocrlf input\n \n-# Test against these versions of Node.js.\n environment:\n   matrix:\n     - nodejs_version: \"0.10\"\n@@ -12,29 +8,16 @@\n     - nodejs_version: \"4\"\n     - nodejs_version: \"5\"\n \n-# Allow failing jobs for bleeding-edge Node.js versions.\n+install:\n+  - ps: Install-Product node $env:nodejs_version\n+  - npm install\n+test_script:\n+  - node --version\n+  - npm --version\n+  - cmd: npm test\n+\n matrix:\n   allow_failures:\n     - nodejs_version: \"0.10\"\n \n-# Install scripts. (runs after repo cloning)\n-install:\n-  # Get the latest stable version of Node 0.STABLE.latest\n-  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)\n-  # Typical npm stuff.\n-  - npm install\n-# Post-install test scripts.\n-test_script:\n-  # Output useful info for debugging.\n-  - node --version\n-  - npm --version\n-  # We test multiple Windows shells because of prior stdout buffering issues\n-  # filed against Grunt. https://github.com/joyent/node/issues/3584\n-  - ps: \"npm test # PowerShell\" # Pass comment to PS for easier debugging\n-  - cmd: npm test\n-\n-# Don't actually build.\n build: off\n-\n-# Set build version format here instead of in the admin panel.\n-version: \"{build}\"\n"
+    },
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "dc0d81f528a7852be635675ab79724617ae1eca50a29d397e1677771496a5b6c",
+      "new_sha256": "67555182e1233b1ff745a5d151092338ead51e9255eda7bed40014195886373b",
+      "hunks": [
+        {
+          "old_start": 18,
+          "old_count": 6,
+          "new_start": 18,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 21,
+              "old_count": 0,
+              "new_start": 21,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -18,6 +18,7 @@\n   darwin: wrapper('ps'),\n   sunos: wrapper('ps'),\n   freebsd: wrapper('ps'),\n+  netbsd: wrapper('proc'),\n   win: wrapper('win'),\n   linux: wrapper('proc'),\n   aix: wrapper('ps'),\n"
+    },
+    {
+      "old_path": "lib/stats.js",
+      "new_path": "lib/stats.js",
+      "old_sha256": "b41982868dcf5bb460465e8cd3195ab573b5b88145a2b1b0c37f85d6faeee432",
+      "new_sha256": "e42660e520537f7cb1f32bdba88aba0f93f1ab02ee68b5167e401280102dcd08",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 9,
+          "new_start": 1,
+          "new_count": 10,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 2,
+              "old_count": 5,
+              "new_start": 2,
+              "new_count": 6,
+              "old_lines": [
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 13,
+          "old_count": 11,
+          "new_start": 14,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 16,
+              "old_count": 1,
+              "new_start": 17,
+              "new_count": 1,
+              "old_lines": [
+                16
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 18,
+              "old_count": 1,
+              "new_start": 19,
+              "new_count": 2,
+              "old_lines": [
+                18
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 20,
+              "old_count": 1,
+              "new_start": 22,
+              "new_count": 1,
+              "old_lines": [
+                20
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 27,
+          "old_count": 8,
+          "new_start": 29,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 30,
+              "old_count": 1,
+              "new_start": 32,
+              "new_count": 1,
+              "old_lines": [
+                30
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 32,
+              "old_count": 0,
+              "new_start": 34,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 36,
+          "old_count": 15,
+          "new_start": 39,
+          "new_count": 16,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 39,
+              "old_count": 0,
+              "new_start": 42,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 45,
+              "old_count": 2,
+              "new_start": 49,
+              "new_count": 1,
+              "old_lines": [
+                45,
+                46
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 48,
+              "old_count": 0,
+              "new_start": 51,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 65,
+          "old_count": 23,
+          "new_start": 69,
+          "new_count": 17,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 68,
+              "old_count": 1,
+              "new_start": 72,
+              "new_count": 0,
+              "old_lines": [
+                68
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 70,
+              "old_count": 5,
+              "new_start": 73,
+              "new_count": 1,
+              "old_lines": [
+                70,
+                71,
+                72,
+                73,
+                74
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 81,
+              "old_count": 1,
+              "new_start": 80,
+              "new_count": 1,
+              "old_lines": [
+                81
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 84,
+              "old_count": 1,
+              "new_start": 83,
+              "new_count": 0,
+              "old_lines": [
+                84
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 99,
+          "old_count": 7,
+          "new_start": 97,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 102,
+              "old_count": 1,
+              "new_start": 100,
+              "new_count": 1,
+              "old_lines": [
+                102
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 122,
+          "old_count": 42,
+          "new_start": 120,
+          "new_count": 67,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 125,
+              "old_count": 6,
+              "new_start": 123,
+              "new_count": 4,
+              "old_lines": [
+                125,
+                126,
+                127,
+                128,
+                129,
+                130
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 132,
+              "old_count": 5,
+              "new_start": 128,
+              "new_count": 5,
+              "old_lines": [
+                132,
+                133,
+                134,
+                135,
+                136
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 138,
+              "old_count": 3,
+              "new_start": 134,
+              "new_count": 3,
+              "old_lines": [
+                138,
+                139,
+                140
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 142,
+              "old_count": 4,
+              "new_start": 138,
+              "new_count": 3,
+              "old_lines": [
+                142,
+                143,
+                144,
+                145
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 147,
+              "old_count": 7,
+              "new_start": 142,
+              "new_count": 3,
+              "old_lines": [
+                147,
+                148,
+                149,
+                150,
+                151,
+                152,
+                153
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 155,
+              "old_count": 3,
+              "new_start": 146,
+              "new_count": 3,
+              "old_lines": [
+                155,
+                156,
+                157
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 159,
+              "old_count": 1,
+              "new_start": 150,
+              "new_count": 32,
+              "old_lines": [
+                159
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 161,
+              "old_count": 0,
+              "new_start": 183,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/stats.js\n+++ lib/stats.js\n@@ -1,9 +1,10 @@\n var os = require('os')\n-  , fs = require('fs')\n-  , p = require('path')\n-  , exec = require('child_process').exec\n-  , spawn = require('child_process').spawn\n-  , helpers = require('./helpers')\n+var fs = require('fs')\n+var p = require('path')\n+var exec = require('child_process').exec\n+var spawn = require('child_process').spawn\n+var helpers = require('./helpers')\n+var format = require('util').format\n \n var stats = {\n   history: {},\n@@ -13,11 +14,12 @@\n \n     if(this.cpu !== null) {\n       fs.readFile('/proc/uptime', 'utf8', function(err, uptime) {\n-        if(err)\n+        if(err) {\n           return done(err, null)\n-        \n+        }\n+\n         if(uptime === undefined) {\n-          console.error(\"We couldn't find uptime from /proc/uptime\")\n+          console.error(\"[pidusage] We couldn't find uptime from /proc/uptime\")\n           self.cpu.uptime = os.uptime()\n         } else {\n           self.cpu.uptime = uptime.split(' ')[0]\n@@ -27,8 +29,9 @@\n       })\n     } else {\n       helpers.cpu(function(err, cpu) {\n-        if(err)\n+        if(err) {\n           return done(err, null)\n+        }\n \n         self.cpu = cpu\n         return self.proc_calc(pid, options, done)\n@@ -36,15 +39,16 @@\n     }\n   },\n   proc_calc: function(pid, options, done) {\n+    pid = parseInt(pid, 10)\n     var history = this.history[pid] ? this.history[pid] : {}\n     var cpu = this.cpu\n     var self = this\n \n     //Arguments to path.join must be strings\n     fs.readFile(p.join('/proc', ''+pid, 'stat'), 'utf8', function(err, infos) {\n-\n-      if(err)\n+      if(err) {\n         return done(err, null)\n+      }\n \n       //https://github.com/arunoda/node-usage/commit/a6ca74ecb8dd452c3c00ed2bde93294d7bb75aa8\n       //preventing process space in name by removing values before last ) (pid (name) ...)\n@@ -65,23 +69,17 @@\n       //http://stackoverflow.com/questions/16726779/total-cpu-usage-of-an-application-from-proc-pid-stat/16736599#16736599\n \n       var childrens = options.childrens ? stat.cutime + stat.cstime : 0\n-      var total = 0;\n \n-      if(history.utime) {\n-        total = (stat.stime - history.stime) + (stat.utime - history.utime) + childrens\n-      } else {\n-        total = stat.stime + stat.utime + childrens\n-      }\n+      var total = stat.stime - (history.stime || 0) + stat.utime - (history.utime || 0) + childrens\n \n       total = total / cpu.clock_tick\n \n       //time elapsed between calls\n       var seconds = history.uptime !== undefined ? cpu.uptime - history.uptime : stat.start - cpu.uptime\n       seconds = Math.abs(seconds)\n-      seconds = seconds === 0 ? 0.1 : seconds //we sure can't divide through 0\n+      seconds = seconds === 0 ? 1 : seconds //we sure can't divide through 0\n \n       self.history[pid] = stat\n-      self.history[pid].seconds = seconds\n       self.history[pid].uptime = cpu.uptime\n \n       return done(null, {\n@@ -99,7 +97,7 @@\n    * on solaris 11 can't figure out a way to do this properly so...\n    */\n   ps: function(pid, options, done) {\n-\n+    pid = parseInt(pid, 10)\n     var cmd = 'ps -o pcpu,rss -p '\n \n     if(os.platform() == 'aix')\n@@ -122,42 +120,67 @@\n    * This is really in a beta stage\n    */\n   win: function(pid, options, done) {\n-      // The code is tested under:\n-      // Windows 7 Ultimate/Enterprise SP1 64bit\n-      // Windows 8.1 Enterprise SP1 64bit\n-      // Windows 10 Professonal 64bit\n-      // Windows Server 2008 R2 64bit\n-      // Windows Server 2012 R2 64bit\n+    pid = parseInt(pid, 10)\n+    var history = this.history[pid] ? this.history[pid] : {}\n+\t\t//  http://social.msdn.microsoft.com/Forums/en-US/469ec6b7-4727-4773-9dc7-6e3de40e87b8/cpu-usage-in-for-each-active-process-how-is-this-best-determined-and-implemented-in-an?forum=csharplanguage\n+    var args = 'PROCESS ' + pid + ' get workingsetsize,usermodetime,kernelmodetime'\n \n-      // Ref:\n-      // https://msdn.microsoft.com/en-us/library/aa394277(v=vs.85).aspx\n-    \n-      // What we get is really a small bunch of data, so exec is better here.\n-      var cmd = 'wmic path Win32_PerfFormattedData_PerfProc_Process WHERE IDProcess=' + pid + ' get PercentProcessorTime, WorkingSet'\n+    var wmic = spawn('wmic', args.split(' '), {detached: true})\n+    var stdout = ''\n+    var stderr = ''\n+    var self = this\n+    var uptime = os.uptime()\n \n-      exec(cmd, function(err, stdout, stderr) {\n-        if(err)\n-          return done(err, null)\n+    wmic.stdout.on('data', function(d) {\n+     stdout += d.toString()\n+    })\n \n-        stdout = stdout.trim()\n-        \n-        if(!stdout)\n-          return done(new Error(pid + ' does not exist', null))\n+    wmic.stderr.on('data', function(d) {\n+      stderr += d.toString()\n+    })\n \n-        // The new line in Windows is '\\r\\r\\n'\n-        var lines = stdout.split(/\\r?\\r\\n/)\n-        // We might need the titles someday.\n-        //var titles = lines[0].trim().split( / +/ ) \n-        var values = lines[1].trim().split(/ +/)\n-        var cpuPercent = parseFloat(values[0])\n-        var memUsage   = parseFloat(values[1])\n+    wmic.on('error', function(err) {\n+      console.error('[pidusage] Command \"wmic ' + args + '\" failed with error %s', err)\n+    })\n \n-        if(isNaN(cpuPercent) || isNaN(memUsage)) {\n-          return done(new Error('Invalid cpu or memory occupation'), null)\n-        }\n+    wmic.on('close', function(code) {\n+      stdout = stdout.trim()\n+      stderr = stderr.trim()\n \n-        return done(null, {cpu : cpuPercent, memory : memUsage})\n+      if(!stdout || code !== 0) {\n+        var error = format('%s Wmic errored, please open an issue on https://github.com/soyuka/pidusage with this message.%s', new Date().toString(), os.EOL)\n+        error += format('Command was \"wmic %s\" %s System informations: %s - release: %s %s - type %s %s', args, os.EOL, os.EOL, os.release(), os.EOL, os.type(), os.EOL)\n+        stderr = error + (stderr ? format('Wmic reported the following error: %s.', stderr) : 'Wmic reported no errors (stderr empty).')\n+        stderr = format('%s%s%sWmic exited with code %d.', os.EOL, stderr, os.EOL, code)\n+        stderr = format('%s%sStdout was %s', stderr, os.EOL, stdout ? stdout : 'empty')\n+\n+        return done(new Error(stderr, null))\n+      }\n+\n+      stdout = stdout.split(os.EOL)[1].replace(/\\s\\s+/g, ' ').split(' ')\n+\n+      var stats = {\n+        kernelmodetime: parseFloat(stdout[0]),\n+        usermodetime: parseFloat(stdout[1]),\n+      }\n+\n+      var workingsetsize = parseFloat(stdout[2])\n+\n+      //process usage since last call\n+      var total = stats.kernelmodetime - (history.kernelmodetime || 0) + stats.usermodetime - (history.usermodetime || 0)\n+      total = total / 10000000\n+\n+      //time elapsed between calls\n+      var seconds = history.uptime !== undefined ? uptime - history.uptime : 0\n+      seconds = Math.abs(seconds)\n+      seconds = seconds === 0 ? 1 : seconds //we sure can't divide through 0\n+\n+      self.history[pid] = stats\n+      self.history[pid].uptime = uptime\n+\n+      return done(null, {cpu: (total / seconds) * 100, memory: workingsetsize})\n     })\n+    wmic.stdin.end()\n   }\n }\n \n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "41cad1a13ede790fcef7a75c38532c9fce5740d2c416fb3a7a8545a828ca293b",
+      "new_sha256": "6b9b3ec351f988d59161705d34fefe3b548874c39169d6714d4008faf3b41ac4",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 15,
+          "new_start": 1,
+          "new_count": 16,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 2,
+              "new_start": 3,
+              "new_count": 2,
+              "old_lines": [
+                3,
+                4
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 9,
+              "old_count": 1,
+              "new_start": 9,
+              "new_count": 2,
+              "old_lines": [
+                9
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 12,
+              "old_count": 1,
+              "new_start": 13,
+              "new_count": 1,
+              "old_lines": [
+                12
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,15 +1,16 @@\n {\n   \"name\": \"pidusage\",\n-  \"version\": \"1.0.0\",\n-  \"description\": \"Process cpu % and memory use of a PID\",\n+  \"version\": \"1.1.5\",\n+  \"description\": \"Cross-platform process cpu % and memory usage of a PID — Edit\",\n   \"main\": \"index.js\",\n   \"dependencies\": {},\n   \"devDependencies\": {\n     \"chai\": \"~3.4.1\",\n-    \"mocha\": \"~2.3.4\"\n+    \"mocha\": \"~2.3.4\",\n+    \"mockery\": \"1.4.0\"\n   },\n   \"scripts\": {\n-    \"test\": \"mocha test/test.js --reporter min\"\n+    \"test\": \"mocha test/test.js --reporter min && node test/stresstest.js\"\n   },\n   \"repository\": {\n     \"type\": \"git\",\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

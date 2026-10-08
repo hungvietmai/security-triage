@@ -1,0 +1,75 @@
+{
+  "pair_id": "pyvul-nexB-scancode.io-07ec0de1964b",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "dd53d6ae1d1d663056428ea66702ee934e596ed7c5cc1958d4ecb6b6b40e250b",
+    "fixed": "612033a50151d391c64b46a49bd89305a04263875cfdc7cf0a831e5c77744f95"
+  },
+  "patch_hunks_sha256": "372d65e5d5edbf4f5ac6dc3b51141ad51e1aa426da613ea5dd15c0c4e3fe624b",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "scanpipe/pipes/__init__.py",
+      "span": {
+        "startLine": 279,
+        "startColumn": 15,
+        "endLine": 285,
+        "endColumn": 6
+      },
+      "sink_kind": "subprocess.Popen",
+      "callee": "subprocess.Popen",
+      "provenance": {
+        "kind": "PyVul_deleted_or_modified_lines",
+        "references": [
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commit_level_dataset.out",
+          "https://github.com/billquan/PyVul/blob/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/commits_cwe_map.json",
+          "https://github.com/nexB/scancode.io/commit/07ec0de1964b14bf085a1c9a27ece2b61ab6105c"
+        ],
+        "fix_commit": "07ec0de1964b14bf085a1c9a27ece2b61ab6105c",
+        "patch_lines": [
+          281
+        ],
+        "function_labels": {
+          "status": "available",
+          "source": "https://raw.githubusercontent.com/billquan/PyVul/1172bfd1579b4ad2a524549412170d08ca618fb3/dataset/function_level_dataset.out",
+          "sha256": "73eb0e3cce41721345d3acca2169266db6888e46f9f33394dad3bed549711071",
+          "labels": [
+            {
+              "function_name": "fetch_docker_image",
+              "normalized_code_before_sha256": "80390b408689c1f2323bde14c21841ce7afe8c58cf14f48ce59e82ef4b6d5869",
+              "dataset_line": 748,
+              "commit": "https://github.com/nexB/scancode.io/commit/07ec0de1964b14bf085a1c9a27ece2b61ab6105c"
+            },
+            {
+              "function_name": "run_command",
+              "normalized_code_before_sha256": "3e8a6a571b999c11f2652452b76232dd4c911635a777a050f53eacb3a3acc23f",
+              "dataset_line": 1277,
+              "commit": "https://github.com/nexB/scancode.io/commit/07ec0de1964b14bf085a1c9a27ece2b61ab6105c"
+            }
+          ],
+          "basis": "published changed-function records; not independent vulnerability adjudication"
+        },
+        "locator": "app.triage.sinks_python.locate_python_sinks",
+        "locator_sha256": "d37bd7c096e2d348c0992eb05be288995c30998630fa80eec64aca2c352fbe7c",
+        "overlapping_patch_lines": [
+          281
+        ],
+        "matched_function_labels": [
+          {
+            "function_name": "run_command",
+            "normalized_code_before_sha256": "3e8a6a571b999c11f2652452b76232dd4c911635a777a050f53eacb3a3acc23f",
+            "dataset_line": 1277,
+            "commit": "https://github.com/nexB/scancode.io/commit/07ec0de1964b14bf085a1c9a27ece2b61ab6105c"
+          }
+        ]
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "excluded_by_function_labels": []
+}

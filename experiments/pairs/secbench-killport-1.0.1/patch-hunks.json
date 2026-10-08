@@ -1,0 +1,151 @@
+{
+  "pair_id": "secbench-killport-1.0.1",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "9ce66de79e8601bf48a99b530e7b0c451af7dd7dd5f79f9b95038df0d47ef576",
+    "fixed": "260fc70a140cc2f9e2b2e9b557d60e3eaea4cf3762fab67698d41876f7e03c88"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "503e3aa6dbf3f89206d6e921aed14fa3e677792e16241244986a086ca1ab0fbe",
+      "new_sha256": "b62401fcb6978d260c6bdee0ec904209d611da792b46dfadac20a8e997a677ce",
+      "hunks": [
+        {
+          "old_start": 5,
+          "old_count": 6,
+          "new_start": 5,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 8,
+              "old_count": 0,
+              "new_start": 8,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -5,6 +5,7 @@\n \n module.exports = function killport(port) {\n   return (new Promise(function(resolve, reject) {\n+    if (!/^\\d+$/.test(port)) throw new Error('port must be a number.');\n     var cmd = 'lsof -i:' + port; \n     cp.exec(cmd, function(err, stdout, stderr){\n       // do not check `err`, if no process found\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "6355033f9c70905b95e94ecc22a495c272ed30fafcf7ddc2b28f15ce6dac66fe",
+      "new_sha256": "87b8ce37e52e1309c501f366ab145b605295b87f8d9bed7ad9b8b299326cc7eb",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"killport\",\n-  \"version\": \"1.0.1\",\n+  \"version\": \"1.0.2\",\n   \"description\": \"a nodejs module to kill any processes base on its port\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 1,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1 +0,0 @@\n-node_modules\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

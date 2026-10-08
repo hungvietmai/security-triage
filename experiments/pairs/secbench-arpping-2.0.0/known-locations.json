@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-arpping-2.0.0",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "dca4fe019d1ed65e4dfca27cea73257481dad6a492300bc8a18125da0d88c61e",
+    "fixed": "949a0dc7e1270ce4f8ece9435af087bec86827b544237a8ef63d1ed0d2619fa7"
+  },
+  "patch_hunks_sha256": "1b43452fedc880e51748289fa28cfa4559e86992a69fde36ae67588f96201faa",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 120,
+        "startColumn": 13,
+        "endLine": 126,
+        "endColumn": 15
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:120:13",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/arpping_2.0.0/package.json"
+        ],
+        "inventory_basis": "SecBench sink index.js:120:13; use execFile to avoid malicious code injection",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

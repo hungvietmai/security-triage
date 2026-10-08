@@ -1,0 +1,548 @@
+{
+  "pair_id": "secbench-macaddress-0.2.8",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "1b5dba1b0e7a69327e0a1788504afd30c744d3e8dca238d09421b4e4c280e1a4",
+    "fixed": "76d58ab231919bcce0e739f51f38b7ede9362d7751a0fec302c2f3abfe15071f"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "LICENSE",
+        "reason": "documentation"
+      },
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": ".travis.yml",
+      "new_path": ".travis.yml",
+      "old_sha256": "f0e8b1d8aad665f0edd372ad8761b9612cd9c1ab745dc9dcff5c30e18278cefc",
+      "new_sha256": "0bbcaf0de33ea7ca1e0cac765df6bc5c519b016e32bdf40f5be1861b9473202b",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 2,
+              "old_count": 0,
+              "new_start": 2,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .travis.yml\n+++ .travis.yml\n@@ -1,4 +1,7 @@\n language: node_js\n+os:\n+  - linux\n+  - osx\n node_js:\n   - stable\n   - \"0.12\"\n"
+    },
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "ca394b0136554a41351da6fe18f0a01c56ce309235ff6996af3a82734e729f65",
+      "new_sha256": "8e93c28780476f554d2fa94d6eb1bda16ce37c6454ea5c6aab9375020cd933d1",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 3,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        },
+        {
+          "old_start": 21,
+          "old_count": 17,
+          "new_start": 24,
+          "new_count": 30,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 24,
+              "old_count": 1,
+              "new_start": 27,
+              "new_count": 1,
+              "old_lines": [
+                24
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 31,
+              "old_count": 1,
+              "new_start": 34,
+              "new_count": 0,
+              "old_lines": [
+                31
+              ]
+            },
+            {
+              "operation": "insert",
+              "old_start": 33,
+              "old_count": 0,
+              "new_start": 35,
+              "new_count": 14,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 34,
+              "old_count": 1,
+              "new_start": 50,
+              "new_count": 1,
+              "old_lines": [
+                34
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 62,
+          "old_count": 11,
+          "new_start": 78,
+          "new_count": 12,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 65,
+              "old_count": 0,
+              "new_start": 81,
+              "new_count": 1,
+              "old_lines": []
+            },
+            {
+              "operation": "replace",
+              "old_start": 67,
+              "old_count": 1,
+              "new_start": 84,
+              "new_count": 1,
+              "old_lines": [
+                67
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 69,
+              "old_count": 1,
+              "new_start": 86,
+              "new_count": 1,
+              "old_lines": [
+                69
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 87,
+          "old_count": 13,
+          "new_start": 104,
+          "new_count": 17,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 90,
+              "old_count": 1,
+              "new_start": 107,
+              "new_count": 3,
+              "old_lines": [
+                90
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 96,
+              "old_count": 1,
+              "new_start": 115,
+              "new_count": 3,
+              "old_lines": [
+                96
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 117,
+          "old_count": 7,
+          "new_start": 138,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 120,
+              "old_count": 1,
+              "new_start": 141,
+              "new_count": 3,
+              "old_lines": [
+                120
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,3 +1,6 @@\n+/* jshint node: true */\n+'use strict';\n+\n var os = require('os');\n \n var lib = {};\n@@ -21,17 +24,30 @@\n     Object.keys(tasks).forEach(function (key) {\n         length += 1;\n         var task = tasks[key];\n-        (global.setImmediate || global.setTimeout)(function () {\n+        (process.nextTick || global.setImmediate || global.setTimeout)(function () {\n             task(doneIt.bind(null, key), 1);\n         });\n     });\n }\n \n lib.networkInterfaces = function () {\n-    var ifaces = os.networkInterfaces();\n     var allAddresses = {};\n+\n+    try {\n+        var ifaces = os.networkInterfaces();\n+    } catch (e) {\n+      // At October 2016 WSL does not support os.networkInterfaces() and throws\n+      // Return empty object as if no interfaces were found\n+      // https://github.com/Microsoft/BashOnWindows/issues/468\n+        if (e.syscall === 'uv_interface_addresses') {\n+            return allAddresses;\n+        } else {\n+            throw e;\n+        };\n+    };\n+\n     Object.keys(ifaces).forEach(function (iface) {\n-        addresses = {};\n+        var addresses = {};\n         var hasAddresses = false;\n         ifaces[iface].forEach(function (address) {\n             if (!address.internal) {\n@@ -62,11 +78,12 @@\n \n     case 'darwin':\n     case 'sunos':\n+    case 'freebsd':\n         _getMacAddress = require('./lib/unix.js');\n         break;\n-        \n+\n     default:\n-        console.warn(\"node-macaddress: Unkown os.platform(), defaulting to `unix'.\");\n+        console.warn(\"node-macaddress: Unknown os.platform(), defaulting to 'unix'.\");\n         _getMacAddress = require('./lib/unix.js');\n         break;\n \n@@ -87,13 +104,17 @@\n         }\n         if (!ifaces[iface]) {\n             if (typeof callback === 'function') {\n-                callback(\"no interfaces found\", null);\n+                process.nextTick(function() {\n+                    callback(new Error(\"no interfaces found\"), null);\n+                });\n             }\n             return null;\n         }\n         if (ifaces[iface].mac) {\n             if (typeof callback === 'function') {\n-                callback(null, ifaces[iface].mac);\n+                process.nextTick(function() {\n+                    callback(null, ifaces[iface].mac);\n+                });\n             }\n             return ifaces[iface].mac;\n         }\n@@ -117,7 +138,9 @@\n \n     if (Object.keys(resolve).length === 0) {\n         if (typeof callback === 'function') {\n-            callback(null, ifaces);\n+            process.nextTick(function(){\n+                callback(null, ifaces);\n+            });\n         }\n         return ifaces;\n     }\n"
+    },
+    {
+      "old_path": "lib/linux.js",
+      "new_path": "lib/linux.js",
+      "old_sha256": "fc700835c240bab03e8d9cdd0573b7eb7fa26147d3cae0f019689605af9f409a",
+      "new_sha256": "9c0e0ccea28803624accb619609bcc6f099943531e31d701bad5e5153b9c96cb",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 11,
+          "new_start": 1,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 11,
+              "old_count": 1,
+              "new_start": 11,
+              "new_count": 1,
+              "old_lines": [
+                11
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/linux.js\n+++ lib/linux.js\n@@ -1,11 +1,11 @@\n-var exec = require('child_process').exec;\n+var execFile = require('child_process').execFile;\n \n module.exports = function (iface, callback) {\n-    exec(\"cat /sys/class/net/\" + iface + \"/address\", function (err, out) {\n+    execFile(\"cat\", [\"/sys/class/net/\" + iface + \"/address\"], function (err, out) {\n         if (err) {\n             callback(err, null);\n             return;\n         }\n         callback(null, out.trim().toLowerCase());\n     });\n-};\n+};"
+    },
+    {
+      "old_path": "lib/unix.js",
+      "new_path": "lib/unix.js",
+      "old_sha256": "33a30d911d142b4bfbcb034631f08f19bcd5c0a2a49ad73eb38f2fc22d47b942",
+      "new_sha256": "9cc2e9b0433e6579b7133c45a1e64ac6f2e13158f1e8635ab3f83b0c99c72587",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 7,
+          "new_start": 1,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 4,
+              "old_count": 1,
+              "new_start": 4,
+              "new_count": 1,
+              "old_lines": [
+                4
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/unix.js\n+++ lib/unix.js\n@@ -1,7 +1,7 @@\n-var exec = require('child_process').exec;\n+var execFile = require('child_process').execFile;\n \n module.exports = function (iface, callback) {\n-    exec(\"ifconfig \" + iface, function (err, out) {\n+    execFile(\"ifconfig\", [iface], function (err, out) {\n         if (err) {\n             callback(err, null);\n             return;\n"
+    },
+    {
+      "old_path": "lib/windows.js",
+      "new_path": "lib/windows.js",
+      "old_sha256": "5f1719be9aeb3aa75120b3c16a678586011a4a39a62e016f1631759ca2958104",
+      "new_sha256": "1aa73343a868c8062fffd76ef3156c413a1ea31d3ec066e81ee3d08da1b95ff5",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 4,
+          "new_start": 1,
+          "new_count": 4,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 1,
+              "old_count": 1,
+              "new_start": 1,
+              "new_count": 1,
+              "old_lines": [
+                1
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 7,
+          "old_count": 7,
+          "new_start": 7,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 10,
+              "old_count": 1,
+              "new_start": 10,
+              "new_count": 1,
+              "old_lines": [
+                10
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/windows.js\n+++ lib/windows.js\n@@ -1,4 +1,4 @@\n-var exec = require('child_process').exec;\n+var execFile = require('child_process').execFile;\n \n var regexRegex = /[-\\/\\\\^$*+?.()|[\\]{}]/g;\n \n@@ -7,7 +7,7 @@\n }\n \n module.exports = function (iface, callback) {\n-    exec(\"ipconfig /all\", function (err, out) {\n+    execFile(\"ipconfig\", [\"/all\"], function (err, out) {\n         if (err) {\n             callback(err, null);\n             return;\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "478cf122c474809bebbaaf479a22ed0e5ce85e32c1f63cdaffa43ff4a790d54e",
+      "new_sha256": "060934b831ca9979f81df525a35c9858a412ff732ef1f97d5ada75948512e583",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"macaddress\",\n-  \"version\": \"0.2.8\",\n+  \"version\": \"0.2.9\",\n   \"description\": \"Get the MAC addresses (hardware addresses) of the hosts network interfaces.\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n"
+    },
+    {
+      "old_path": "test.js",
+      "new_path": "test.js",
+      "old_sha256": "1287338f82a07ca49f9c2236893e8cbc8b33114befb0214249acf6e45a0aacec",
+      "new_sha256": "a164212216faa1397335b026ba7dad78edec6fdee0590c510fdd7da1b883a07b",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 3,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 1,
+              "old_count": 0,
+              "new_start": 1,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- test.js\n+++ test.js\n@@ -1,3 +1,6 @@\n+/* jshint node: true */\n+'use strict';\n+\n var macaddress = require('./index');\n \n var sync = macaddress.one(function (err, mac) {\n"
+    },
+    {
+      "old_path": ".npmignore",
+      "new_path": null,
+      "old_sha256": "38f7243ba59703042b2d4489c8d3358eba144a61840c84ccaa47b7f135a588ff",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 6,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- .npmignore\n+++ /dev/null\n@@ -1,6 +0,0 @@\n-.DS_Store\n-/node_modules\n-.*.swp\n-/.npmcache\n-/dist\n-*.log\n"
+    },
+    {
+      "old_path": "gulpfile.js",
+      "new_path": null,
+      "old_sha256": "b6068785a78ca2e28aa044e98e0e0709277e376991bac91758e8d25850c5192b",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 13,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 13,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- gulpfile.js\n+++ /dev/null\n@@ -1,13 +0,0 @@\n-// vim: set et sw=2 ts=2\n-var gulp = require('gulp');\n-\n-var jshint = require('gulp-jshint');\n-\n-gulp.task('lint', function (done) {\n-  gulp.src([ \"*.js\", \"lib/*.js\" ])\n-      .pipe(jshint())\n-      .pipe(jshint.reporter('default'))\n-      .on('end', done);\n-});\n-\n-gulp.task('default', [ 'lint' ]);\n"
+    },
+    {
+      "old_path": "lib/macosx.js",
+      "new_path": null,
+      "old_sha256": "0f726a25bdeabff243605abd25e08ebf54edf07d3afbd3eb591f61f2e9e6e56d",
+      "new_sha256": null,
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 16,
+          "new_start": 1,
+          "new_count": 0,
+          "changes": [
+            {
+              "operation": "delete",
+              "old_start": 1,
+              "old_count": 16,
+              "new_start": 1,
+              "new_count": 0,
+              "old_lines": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- lib/macosx.js\n+++ /dev/null\n@@ -1,16 +0,0 @@\n-var exec = require('child_process').exec;\n-\n-module.exports = function (iface, callback) {\n-    exec(\"networksetup -getmacaddress \" + iface, function (err, out) {\n-        if (err) {\n-            callback(err, null);\n-            return;\n-        }\n-        var match = /[a-f0-9]{2}(:[a-f0-9]{2}){5}/.exec(out.toLowerCase());\n-        if (!match) {\n-            callback(\"did not find a mac address\", null);\n-            return;\n-        }\n-        callback(null, match[0]);\n-    });\n-};\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

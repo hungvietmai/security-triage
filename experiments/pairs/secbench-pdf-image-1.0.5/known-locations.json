@@ -1,0 +1,42 @@
+{
+  "pair_id": "secbench-pdf-image-1.0.5",
+  "split": "development",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "2a249e8b1c8b47091e9d48bced71e75338c96731b9a954bf6a4bf68ca614acd4",
+    "fixed": "a6e625541f0609fea2c8459f3bb6896515184d64e202233fa3293cb754603fc9"
+  },
+  "patch_hunks_sha256": "c9dbd8a57d1817cf880d64d1879fe173500f556d887c514f029efdf181fad22d",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 43,
+        "startColumn": 7,
+        "endLine": 53,
+        "endColumn": 9
+      },
+      "sink_kind": "child_process.exec",
+      "callee": "exec",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:43:7",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/pdf-image_1.0.5/package.json",
+          "GHSA_SOURCE:https://github.com/roest01/node-pdf-image"
+        ],
+        "inventory_basis": "SecBench sink index.js:43:7; Command Injection in pdf-image; resolve #340208 - Command injection in 'pdf-image', Severity:Medium (6.1) - fix #38 - solution for v2",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}

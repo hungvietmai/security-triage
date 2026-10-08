@@ -1,0 +1,333 @@
+{
+  "pair_id": "pyvul-abilian-abilian-devtools-9d71b0d3b6b4",
+  "split": "held_out",
+  "snapshot_sha256": {
+    "vulnerable": "1feba88542b98639546a52e379d98e79bd75bad658c928bcfaa2507eee502657",
+    "fixed": "80b919d94956c1e3d5e142afbda6190165e447a131966fb7e43f7c73c45908d7"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "Makefile",
+      "new_path": "Makefile",
+      "old_sha256": "a26b643d6050f70f38742eda4564fd21c048c7c89021f118efc7f236aa528e3a",
+      "new_sha256": "2bf06a1fec787d9535eb070669c81908d8424868ca16234396e0fb690f952249",
+      "hunks": [
+        {
+          "old_start": 45,
+          "old_count": 75,
+          "new_start": 45,
+          "new_count": 17,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 48,
+              "old_count": 2,
+              "new_start": 48,
+              "new_count": 2,
+              "old_lines": [
+                48,
+                49
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 51,
+              "old_count": 53,
+              "new_start": 51,
+              "new_count": 0,
+              "old_lines": [
+                51,
+                52,
+                53,
+                54,
+                55,
+                56,
+                57,
+                58,
+                59,
+                60,
+                61,
+                62,
+                63,
+                64,
+                65,
+                66,
+                67,
+                68,
+                69,
+                70,
+                71,
+                72,
+                73,
+                74,
+                75,
+                76,
+                77,
+                78,
+                79,
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100,
+                101,
+                102,
+                103
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 108,
+              "old_count": 3,
+              "new_start": 55,
+              "new_count": 1,
+              "old_lines": [
+                108,
+                109,
+                110
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 112,
+              "old_count": 1,
+              "new_start": 57,
+              "new_count": 1,
+              "old_lines": [
+                112
+              ]
+            },
+            {
+              "operation": "delete",
+              "old_start": 114,
+              "old_count": 3,
+              "new_start": 59,
+              "new_count": 0,
+              "old_lines": [
+                114,
+                115,
+                116
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 139,
+          "old_count": 7,
+          "new_start": 81,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 142,
+              "old_count": 1,
+              "new_start": 84,
+              "new_count": 1,
+              "old_lines": [
+                142
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- Makefile\n+++ Makefile\n@@ -45,75 +45,17 @@\n \trm -fr htmlcov/\n \trm -fr .pytest_cache\n \n-lint/flake8: ## check style with flake8\n-\tflake8 src tests\n+lint:\n+\tadt all\n \n-lint/black: ## check style with black\n-\tblack --check src tests\n-\n-lint: lint/flake8 lint/black ## check style\n-\n-\n-test-with-coverage:\n-\t@echo \"--> Running Python tests\"\n-\tpy.test --cov $(PKG)\n-\t@echo \"\"\n-\n-test-with-typeguard:\n-\t@echo \"--> Running Python tests with typeguard\"\n-\tpytest --typeguard-packages=${PKG}\n-\t@echo \"\"\n-\n-\n-#\n-# Various Checkers\n-#\n-lint-ci: lint\n-\n-lint-all: lint lint-mypy lint-bandit\n-\n-lint-py:\n-\t@echo \"--> Linting Python files /w flake8\"\n-\tflake8 src tests\n-\t@echo \"\"\n-\n-lint-mypy:\n-\t@echo \"--> Typechecking Python files w/ mypy\"\n-\tmypy src tests\n-\t@echo \"\"\n-\n-lint-travis:\n-\t@echo \"--> Linting .travis.yml files\"\n-\ttravis lint --no-interactive\n-\t@echo \"\"\n-\n-lint-rst:\n-\t@echo \"--> Linting .rst files\"\n-\t-rst-lint *.rst\n-\t@echo \"\"\n-\n-lint-doc:\n-\t@echo \"--> Linting doc\"\n-\t@echo \"TODO\"\n-\t#sphinx-build -W -b dummy docs/ docs/_build/\n-\t#sphinx-build -b dummy docs/ docs/_build/\n-\t@echo \"\"\n-\n-lint-js:\n-\techo \"TODO\"\n \n #\n # Formatting\n #\n-format: format-py format-js\n-\n-format-py:\n+format:\n \tdocformatter -i -r src\n-\tblack src tests\n+\tblack src\n \tisort src tests\n-\n-format-js:\n-\techo \"TODO\"\n \n \n #\n@@ -139,7 +81,7 @@\n \t\tdist build pip-wheel-metadata junit-*.xml htmlcov coverage.xml\n \n tidy: clean\n-\trm -rf .tox .nox .dox .travis-solo\n+\trm -rf .nox\n \trm -rf node_modules\n \trm -rf instance\n \n"
+    },
+    {
+      "old_path": "pyproject.toml",
+      "new_path": "pyproject.toml",
+      "old_sha256": "e70c6ddf9580480a4df82b3aa3a452040bc2ea0933605340d95ab46b3a5ba699",
+      "new_sha256": "7c96dbb3033954960bf681b4085d837e850f11b36361a991e10faff3bae938aa",
+      "hunks": [
+        {
+          "old_start": 27,
+          "old_count": 6,
+          "new_start": 27,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 30,
+              "old_count": 0,
+              "new_start": 30,
+              "new_count": 1,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- pyproject.toml\n+++ pyproject.toml\n@@ -27,6 +27,7 @@\n pytest-cov = \"^4\"\n profilehooks = \"*\"\n pytest-xdist = \"*\"\n+pytest-randomly = \"*\"\n # pytest-testmon = \"^1.2.0\"\n nox = \"*\"\n \n"
+    },
+    {
+      "old_path": "src/abilian/devtools/main.py",
+      "new_path": "src/abilian/devtools/main.py",
+      "old_sha256": "a4b68a1a20821d40039f5cf7584a702c9f6aac977070ed1a1061de9d9f835859",
+      "new_sha256": "4a7916c1e8677cf7aecdcfad11bfb2539a5b7c49ce7e298d369b2edf6b7a3cb5",
+      "hunks": [
+        {
+          "old_start": 2,
+          "old_count": 7,
+          "new_start": 2,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 5,
+              "old_count": 1,
+              "new_start": 5,
+              "new_count": 2,
+              "old_lines": [
+                5
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 13,
+          "old_count": 8,
+          "new_start": 14,
+          "new_count": 9,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 16,
+              "old_count": 2,
+              "new_start": 17,
+              "new_count": 3,
+              "old_lines": [
+                16,
+                17
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 28,
+          "old_count": 11,
+          "new_start": 30,
+          "new_count": 11,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 31,
+              "old_count": 1,
+              "new_start": 33,
+              "new_count": 1,
+              "old_lines": [
+                31
+              ]
+            },
+            {
+              "operation": "replace",
+              "old_start": 35,
+              "old_count": 1,
+              "new_start": 37,
+              "new_count": 1,
+              "old_lines": [
+                35
+              ]
+            }
+          ]
+        },
+        {
+          "old_start": 63,
+          "old_count": 9,
+          "new_start": 65,
+          "new_count": 7,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 66,
+              "old_count": 3,
+              "new_start": 68,
+              "new_count": 1,
+              "old_lines": [
+                66,
+                67,
+                68
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- src/abilian/devtools/main.py\n+++ src/abilian/devtools/main.py\n@@ -2,7 +2,8 @@\n #\n # SPDX-License-Identifier: MIT\n \n-import os\n+import shlex\n+import subprocess\n import sys\n from pathlib import Path\n \n@@ -13,8 +14,9 @@\n \n def run(cmd):\n     typer.secho(cmd, fg=typer.colors.GREEN)\n-    result = os.system(cmd)\n-    if result:\n+    args = shlex.split(cmd)\n+    p = subprocess.Popen(args)\n+    if p.returncode != 0:\n         sys.exit()\n \n \n@@ -28,11 +30,11 @@\n         else:\n             args2.append(arg)\n \n-    args_str = ' '.join(args2)\n+    args_str = \" \".join(args2)\n \n     run(f\"ruff {args_str}\")\n     run(f\"flake8 {args_str}\")\n-    run(\"mypy --show-error-codes {args_str}\")\n+    run(f\"mypy --show-error-codes {args_str}\")\n     run(\"pyright\")\n     run(\"vulture --min-confidence 80 .\")\n     run(\"deptry .\")\n@@ -63,9 +65,7 @@\n \n @app.callback()\n def main():\n-    \"\"\"\n-    Abilian Dev Tool command-line runner.\n-    \"\"\"\n+    \"\"\"Abilian Dev Tool command-line runner.\"\"\"\n \n \n if __name__ == \"__main__\":\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

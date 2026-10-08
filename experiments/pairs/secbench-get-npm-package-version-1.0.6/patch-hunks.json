@@ -1,0 +1,132 @@
+{
+  "pair_id": "secbench-get-npm-package-version-1.0.6",
+  "split": "development",
+  "snapshot_sha256": {
+    "vulnerable": "cb4ae6eea5337ff3f3e2d4e058dcb17f3b7fe68f962e3d04de9409566a842bf3",
+    "fixed": "af9e6db3d08fb3a29c1a6d1017ce40a44467546852c11d72c0a2391823ab8dc9"
+  },
+  "generator_sha256": "5c4f82641b9d4c51e01a8c53e48ea4aa355d860a8870c468f64b5b4e5860a66a",
+  "exclusion_policy": {
+    "id": "pair-diff-exclusions-v0",
+    "directories": [
+      "test",
+      "tests",
+      "testing",
+      "__tests__",
+      "spec",
+      "specs",
+      "doc",
+      "docs",
+      "documentation"
+    ],
+    "lockfiles": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "bun.lock",
+      "bun.lockb",
+      "poetry.lock",
+      "uv.lock",
+      "pipfile.lock",
+      "cargo.lock",
+      "composer.lock",
+      "gemfile.lock"
+    ],
+    "document_extensions": [
+      ".md",
+      ".rst",
+      ".adoc"
+    ],
+    "document_names": [
+      "readme",
+      "license",
+      "licence",
+      "notice",
+      "changelog",
+      "contributing",
+      "authors",
+      "history",
+      "copying"
+    ]
+  },
+  "ignored": {
+    "vulnerable": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/index.test.js",
+        "reason": "test_directory"
+      }
+    ],
+    "fixed": [
+      {
+        "path": "README.md",
+        "reason": "documentation"
+      },
+      {
+        "path": "test/index.test.js",
+        "reason": "test_directory"
+      }
+    ]
+  },
+  "files": [
+    {
+      "old_path": "index.js",
+      "new_path": "index.js",
+      "old_sha256": "92cdcff3be59f3bacacb0b7cb87de7bfe5835ed11e2f8678516d5ef603658693",
+      "new_sha256": "f886b93fd7673791ab703100945c6d198d2468175fe4941bb944d1adf06afce6",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 5,
+          "new_start": 1,
+          "new_count": 8,
+          "changes": [
+            {
+              "operation": "insert",
+              "old_start": 3,
+              "old_count": 0,
+              "new_start": 3,
+              "new_count": 3,
+              "old_lines": []
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- index.js\n+++ index.js\n@@ -1,5 +1,8 @@\n module.exports = function (packageName, { registry = '', timeout = null } = {}) {\n     try {\n+        if (/[`$&{}[;|]/g.test(packageName) || /[`$&{}[;|]/g.test(registry)) {\n+            return null\n+        }\n         let version;\n \n         const config = {\n"
+    },
+    {
+      "old_path": "package.json",
+      "new_path": "package.json",
+      "old_sha256": "dd8715438bec47b4e6c038df034b4e3f29333c77685fb7010449f1a8adb2a323",
+      "new_sha256": "04be9cf559c9d0e20e1f9535ba068f7211f0638613ead3b6d7ae94228023e17e",
+      "hunks": [
+        {
+          "old_start": 1,
+          "old_count": 6,
+          "new_start": 1,
+          "new_count": 6,
+          "changes": [
+            {
+              "operation": "replace",
+              "old_start": 3,
+              "old_count": 1,
+              "new_start": 3,
+              "new_count": 1,
+              "old_lines": [
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "unified_diff": "--- package.json\n+++ package.json\n@@ -1,6 +1,6 @@\n {\n   \"name\": \"get-npm-package-version\",\n-  \"version\": \"1.0.6\",\n+  \"version\": \"1.0.7\",\n   \"description\": \"get npm package version\",\n   \"main\": \"index.js\",\n   \"scripts\": {\n"
+    }
+  ],
+  "renames": [],
+  "rename_ambiguities": [],
+  "skipped_changes": []
+}

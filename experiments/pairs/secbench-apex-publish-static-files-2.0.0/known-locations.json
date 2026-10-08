@@ -1,0 +1,41 @@
+{
+  "pair_id": "secbench-apex-publish-static-files-2.0.0",
+  "split": "held_out",
+  "status": "resolved",
+  "snapshot_sha256": {
+    "vulnerable": "5231272bd6ac34344a6975554656609d9494580591c68d681132d48371be7897",
+    "fixed": "20ba77bd4a96d9c9b84c1dd44280d97489d192c62dff1820e660739e00ec0194"
+  },
+  "patch_hunks_sha256": "e5605c0be0ec53d68c11c825852048e68bbef05daadea7298af104ff4f8b75f9",
+  "generator_sha256": "1116c6424cb66de12f363db54a6981651e0bedb05dfee2f110fbc34b78e34131",
+  "locations": [
+    {
+      "status": "resolved",
+      "path": "index.js",
+      "span": {
+        "startLine": 54,
+        "startColumn": 25,
+        "endLine": 66,
+        "endColumn": 5
+      },
+      "sink_kind": "child_process.execSync",
+      "callee": "execSync",
+      "provenance": {
+        "kind": "SecBench.js_sink_hint",
+        "hint": "index.js:54:25",
+        "references": [
+          "https://github.com/cristianstaicu/SecBench.js/blob/5d362353550a8baa42bba34edd26e5fb86d41b60/command-injection/apex-publish-static-files_2.0.0/package.json"
+        ],
+        "inventory_basis": "SecBench sink index.js:54:25; Command Injection in apex-publish-static-files; uses spawn instead of exec",
+        "locator": "pair-javascript-ast-v0",
+        "locator_sha256": "00811a6db9f1299bf4cf4cc7671fb9e4fd276f7733b36612cfba6e4b40814139"
+      }
+    }
+  ],
+  "unresolved": [],
+  "resolved_location_count": 1,
+  "unresolved_case_count": 0,
+  "scanner_invocations": 0,
+  "javascript_parser_version": "7.29.9",
+  "javascript_traverse_version": "7.29.10"
+}
