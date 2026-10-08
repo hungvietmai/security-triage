@@ -220,6 +220,7 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
         "predicate_values": evidence.get("predicate_values", {}),
         "unknown_fields": evidence.get("unknown_fields", []),
         "source_types": evidence.get("source_types", []),
+        "shell_state": evidence.get("shell_state"),
         "blocker_proof": evidence.get("blocker_proof"),
         "finding_evidence": evidence.get("finding_evidence", []),
         "policy_id": assessment.policy_id,

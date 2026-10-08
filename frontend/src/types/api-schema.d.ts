@@ -470,6 +470,8 @@ export interface components {
       unknown_fields: string[];
       /** Source Types */
       source_types: string[];
+      /** Shell State */
+      shell_state: string | null;
       /** Blocker Proof */
       blocker_proof: {
         [key: string]: unknown;

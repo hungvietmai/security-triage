@@ -127,6 +127,7 @@ class UnitDetail(UnitSummary):
     predicate_values: dict[str, bool]
     unknown_fields: list[str]
     source_types: list[str]
+    shell_state: str | None
     blocker_proof: dict[str, Any] | None
     finding_evidence: list[dict[str, Any]]
     policy_id: str

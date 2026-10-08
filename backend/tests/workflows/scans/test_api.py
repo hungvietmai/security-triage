@@ -127,6 +127,7 @@ def test_npm_scan_end_to_end_through_the_api(client, engine, project_id, queued)
     detail = client.get(f"/api/v1/scans/{scan_id}/units/{unit['id']}").json()
     assert detail["unit_key"] == unit["unit_key"]
     assert detail["policy_sha256"] and detail["reason"]
+    assert detail["shell_state"] == "absent"
     assert {f["rule_id"] for f in detail["findings"]} == {
         "dangerous-system-call",
         "py/command-line-injection",
