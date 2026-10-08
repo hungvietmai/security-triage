@@ -11,13 +11,43 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "backend"))
+import io
+import tarfile
 import tempfile
 
 from experiments.patch_hunks import diff_files, exclusion_reason, read_snapshot
 from experiments.tests.archive_fixtures import archive_bytes
 
 
+def _linked_archive(path, target):
+    """Synthetic test data: one source file and one symlink entry next to it."""
+    with tarfile.open(path, "w:gz") as bundle:
+        data = b"x = 1\n"
+        item = tarfile.TarInfo("repo/lib/real.py")
+        item.size = len(data)
+        bundle.addfile(item, io.BytesIO(data))
+        link = tarfile.TarInfo("repo/lib/alias.py")
+        link.type, link.linkname = tarfile.SYMTYPE, target
+        bundle.addfile(link)
+
+
 class PatchTests(unittest.TestCase):
+    def test_in_root_symlinks_are_recorded_and_never_read(self):
+        with tempfile.TemporaryDirectory() as folder:
+            archive = Path(folder) / "linked.tgz"
+            _linked_archive(archive, "real.py")
+            files, ignored = read_snapshot(archive, expected_root="repo")
+        self.assertEqual(files, {"lib/real.py": b"x = 1\n"})
+        self.assertIn({"path": "lib/alias.py", "reason": "symlink", "target": "real.py"}, ignored)
+
+    def test_symlinks_leaving_the_archive_are_rejected(self):
+        for target in ("/etc/passwd", "../../outside.py"):
+            with self.subTest(target=target), tempfile.TemporaryDirectory() as folder:
+                archive = Path(folder) / "escape.tgz"
+                _linked_archive(archive, target)
+                with self.assertRaisesRegex(ValueError, "Unsafe/unsupported archive entry"):
+                    read_snapshot(archive, expected_root="repo")
+
     def test_modified_lines_exclude_context_and_insertions(self):
         result = diff_files(
             {"a.py": b"one\ntwo\nthree\nfour\n"}, {"a.py": b"one\nchanged\ninserted\nthree\nfour\n"}

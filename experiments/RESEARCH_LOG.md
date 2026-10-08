@@ -476,3 +476,17 @@ remains directly reachable from `main`.
   khóa. Hash cũ, trường đổi và amendment được ghi dưới `rebinds`; archive không đổi.
 - Hệ quả: không còn dự phòng để thay cặp held-out lỗi thu thập/build; các nhóm này vẫn
   là `cwe_unresolved` trong mọi tổng hợp theo CWE.
+
+## 2026-10-08 — Quyết định: bỏ qua symlink nằm trong archive
+
+- Lần trích hunk đầu tiên cho toàn bộ cặp dừng ở PaddlePaddle: công cụ từ chối mọi
+  symlink. 10 archive của 5 cặp có symlink — 2 cặp Paddle và 1 cặp transformers (phát
+  triển), 2 cặp WeblateOrg (held-out) — đều trỏ vào file/thư mục khác trong chính repo
+  (`.cu → .cc`, `ChangeLog → docs/changes.rst`, tài liệu `→ ../../../CONTRIBUTING.md`).
+- Quyết định trước mọi lần quét: symlink có đích nằm trong thư mục gốc của archive
+  được bỏ qua — không tạo, không đọc, không đi theo — vì đích của nó đã là một file
+  thường trong archive. `patch_hunks.py` ghi từng link vào danh sách `ignored` kèm
+  `target`; `acquisition.unpack` (dùng khi quét) bỏ qua tương tự, nên 5 cặp vẫn quét
+  được. Link tuyệt đối hoặc thoát khỏi thư mục gốc vẫn là mục archive không an toàn.
+- Các bộ dữ liệu đã chạy (curling, R1, OWASP) không có symlink, nên kết quả cũ không
+  đổi; `runner_files_sha256` đổi theo code `acquisition.py`.

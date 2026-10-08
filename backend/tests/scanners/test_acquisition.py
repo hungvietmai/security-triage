@@ -250,3 +250,34 @@ def test_load_source_texts_filters_language_and_rejects_escape(tmp_path):
     assert load_source_texts(root, ["b.py"], "python") == {"b.py": "print(1)\n"}
     with pytest.raises(ValueError, match="escapes"):
         load_source_texts(root, ["../outside.js"], "javascript")
+
+
+def _archive_with_link(path, link_name: str, target: str) -> None:
+    with tarfile.open(path, "w:gz") as bundle:
+        data = b"int main() { return 0; }\n"
+        source = tarfile.TarInfo("repo/src/real.cc")
+        source.size = len(data)
+        bundle.addfile(source, io.BytesIO(data))
+        link = tarfile.TarInfo(f"repo/{link_name}")
+        link.type, link.linkname = tarfile.SYMTYPE, target
+        bundle.addfile(link)
+
+
+def test_unpack_skips_symlinks_whose_target_stays_in_the_archive(tmp_path):
+    # Paddle, Weblate and transformers archives contain such links (real.cu -> real.cc).
+    for name, target in [("src/real.cu", "real.cc"), ("docs/a/b.md", "../../src/real.cc")]:
+        archive = tmp_path / "links.tgz"
+        _archive_with_link(archive, name, target)
+        destination = tmp_path / "out"
+        source = unpack(archive, destination, "repo", max_unpacked_bytes=10_000, max_files=10)
+        assert (source / "src/real.cc").is_file()
+        assert not (source / name).exists() and not (source / name).is_symlink()
+        shutil.rmtree(destination)
+
+
+@pytest.mark.parametrize("target", ["/etc/passwd", "../outside.txt", "../../x", ""])
+def test_unpack_rejects_symlinks_that_leave_the_archive(tmp_path, target):
+    archive = tmp_path / "escape.tgz"
+    _archive_with_link(archive, "link", target)
+    with pytest.raises(ValueError, match="Unsafe/unsupported archive entry"):
+        unpack(archive, tmp_path / "out", "repo", max_unpacked_bytes=10_000, max_files=10)

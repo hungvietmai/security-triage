@@ -74,6 +74,26 @@ def fetch(url: str, target: Path, expected_hash: str, max_bytes: int) -> None:
     target.write_bytes(data)
 
 
+def symlink_stays_in_root(name: str, target: str) -> bool:
+    """True when a symlink entry's relative target resolves inside the same top directory.
+
+    Such links are skipped, never created or followed: the files they name are already
+    archive members. Absolute or escaping targets remain unsafe archive entries.
+    """
+    path = PurePosixPath(name)
+    if not target or target.startswith("/") or "\\" in target or len(path.parts) < 2:
+        return False
+    parts: list[str] = []
+    for part in (*path.parent.parts, *PurePosixPath(target).parts):
+        if part == "..":
+            if not parts:
+                return False
+            parts.pop()
+        elif part != ".":
+            parts.append(part)
+    return len(parts) >= 2 and parts[0] == path.parts[0]
+
+
 def unpack(
     archive: Path,
     destination: Path,
@@ -96,7 +116,11 @@ def unpack(
                 or "\\" in item.name
                 or not path.parts
                 or path.parts[0] != archive_root
-                or not (item.isfile() or item.isdir())
+                or not (
+                    item.isfile()
+                    or item.isdir()
+                    or (item.issym() and symlink_stays_in_root(item.name, item.linkname))
+                )
             ):
                 raise ValueError(f"Unsafe/unsupported archive entry: {item.name}")
             if path.as_posix() in paths:
@@ -108,6 +132,8 @@ def unpack(
             members.append((item, path))
 
         for item, path in members:
+            if item.issym():
+                continue  # never materialized: its target is an ordinary member
             out = destination.joinpath(*path.parts)
             if item.isdir():
                 out.mkdir(parents=True, exist_ok=True)

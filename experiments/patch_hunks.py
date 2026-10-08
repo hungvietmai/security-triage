@@ -21,7 +21,12 @@ sys.path.insert(0, str(ROOT / "backend"))
 from experiments.lock_pair_sources import CACHE, cache_archive
 from experiments.make_pair_manifests import PAIRS, sha256, write_json
 
-from app.scanners.acquisition import MAX_ARCHIVE, MAX_FILES, MAX_UNPACKED
+from app.scanners.acquisition import (
+    MAX_ARCHIVE,
+    MAX_FILES,
+    MAX_UNPACKED,
+    symlink_stays_in_root,
+)
 
 EXCLUSION_POLICY = {
     "id": "pair-diff-exclusions-v0",
@@ -104,7 +109,11 @@ def read_snapshot(archive: Path, *, expected_root: str | None = None):
                 or ".." in path.parts
                 or "\\" in item.name
                 or not path.parts
-                or not (item.isfile() or item.isdir())
+                or not (
+                    item.isfile()
+                    or item.isdir()
+                    or (item.issym() and symlink_stays_in_root(item.name, item.linkname))
+                )
             ):
                 raise ValueError(f"Unsafe/unsupported archive entry: {item.name}")
             if path.as_posix() in paths:
@@ -119,6 +128,10 @@ def read_snapshot(archive: Path, *, expected_root: str | None = None):
             if len(path.parts) < 2:
                 raise ValueError("Archive file is outside a top-level source directory")
             relative = PurePosixPath(*path.parts[1:]).as_posix()
+            if item.issym():
+                # Never followed or read: its target is an ordinary member of this archive.
+                ignored.append({"path": relative, "reason": "symlink", "target": item.linkname})
+                continue
             reason = exclusion_reason(relative)
             if reason:
                 ignored.append({"path": relative, "reason": reason})
