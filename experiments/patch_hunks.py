@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "backend"))
 
 from experiments.lock_pair_sources import CACHE, cache_archive
-from experiments.make_pair_manifests import PAIRS, sha256, write_json
+from experiments.make_pair_manifests import PAIRS, VERSIONS, sha256, write_json
 
 from app.scanners.acquisition import (
     MAX_ARCHIVE,
@@ -280,13 +280,35 @@ def extract_hunks(pair_id: str, directory: Path = PAIRS, cache: Path = CACHE):
     return result
 
 
+def locked_pair_ids(directory: Path) -> list[str]:
+    """Every pair whose vulnerable and fixed archives are both locked (Ray is not)."""
+    locked = json.loads((directory / "sources.lock.json").read_text(encoding="utf-8"))
+    return sorted(
+        pair_id
+        for pair_id, entry in locked.items()
+        if all(entry.get(version, {}).get("status") == "locked" for version in VERSIONS)
+    )
+
+
+def add_pair_selection(parser: argparse.ArgumentParser) -> None:
+    selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--pair", action="append")
+    selection.add_argument(
+        "--all-locked", action="store_true", help="every pair with both archives locked"
+    )
+
+
+def selected_pairs(args: argparse.Namespace) -> list[str]:
+    return locked_pair_ids(args.pairs) if args.all_locked else args.pair
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--pair", action="append", required=True)
+    add_pair_selection(parser)
     parser.add_argument("--pairs", type=Path, default=PAIRS)
     parser.add_argument("--cache", type=Path, default=CACHE)
     args = parser.parse_args()
-    for pair_id in args.pair:
+    for pair_id in selected_pairs(args):
         result = extract_hunks(pair_id, args.pairs, args.cache)
         print(
             json.dumps(

@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT / "backend"))
 
 from experiments.lock_pair_sources import CACHE
 from experiments.make_pair_manifests import PAIRS, sha256, write_json
-from experiments.patch_hunks import load_pair
+from experiments.patch_hunks import add_pair_selection, load_pair, selected_pairs
 
 from app.triage.sinks_python import locate_python_sinks
 
@@ -308,7 +308,7 @@ def extract_locations(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--pair", action="append", required=True)
+    add_pair_selection(parser)
     parser.add_argument("--pairs", type=Path, default=PAIRS)
     parser.add_argument("--cache", type=Path, default=CACHE)
     parser.add_argument("--pyvul-functions-file", type=Path)
@@ -318,8 +318,13 @@ def main() -> int:
         extract_locations(
             pair_id, args.pairs, args.cache, dataset_path=args.pyvul_functions_file, node=args.node
         )
-        for pair_id in args.pair
+        for pair_id in selected_pairs(args)
     ]
+    by_split: dict[str, dict[str, int]] = {}
+    for result in results:
+        counts = by_split.setdefault(result["split"], {"pairs": 0, "known_location_unresolved": 0})
+        counts["pairs"] += 1
+        counts["known_location_unresolved"] += result["status"] != "resolved"
     print(
         json.dumps(
             {
@@ -328,6 +333,7 @@ def main() -> int:
                 "locations_resolved": sum(result["resolved_location_count"] for result in results),
                 "unresolved_cases": sum(result["unresolved_case_count"] for result in results),
                 "scanner_invocations": 0,
+                "by_split": by_split,
             },
             sort_keys=True,
         )
