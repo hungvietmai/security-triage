@@ -1,3 +1,7 @@
+import ast
+
+import pytest
+
 from app.triage.sinks_python import locate_python_sinks
 
 
@@ -78,3 +82,20 @@ asyncio.sleep(1)
 sqrt(4)
 """
     assert locate_python_sinks("safe.py", source) == []
+
+
+@pytest.mark.parametrize("newline", ["\n", "\r\n", "\r"])
+@pytest.mark.parametrize("prefix", ["", "\f", "label = 'é'; "])
+def test_cached_source_segments_match_ast_with_unicode_and_physical_line_endings(newline, prefix):
+    source = newline.join(["import os", prefix + "os.system(", "    'printf café'", ")", ""])
+    call = next(node for node in ast.walk(ast.parse(source)) if isinstance(node, ast.Call))
+    sink = locate_python_sinks("fixture.py", source)[0]
+    assert sink["callee"] == ast.get_source_segment(source, call.func)
+    assert sink["args"][0]["text"] == ast.get_source_segment(source, call.args[0])
+
+
+def test_python_locator_preserves_multiline_argument_text():
+    source = "import os\nos.system(\n    'printf ' +\n    'fixed'\n)\n"
+    call = next(node for node in ast.walk(ast.parse(source)) if isinstance(node, ast.Call))
+    sink = locate_python_sinks("fixture.py", source)[0]
+    assert sink["args"][0]["text"] == ast.get_source_segment(source, call.args[0])

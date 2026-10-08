@@ -10,7 +10,9 @@ from app.triage.assess import (
     codeql_rule_id,
     verified_definitions,
 )
-from app.triage.policy import validate_policy
+from app.triage.claims import classify_claims
+from app.triage.evidence import EvidenceIndex, build_evidence
+from app.triage.policy import apply_policy, validate_policy
 from app.triage.reconcile import reconcile_findings
 from app.triage.sinks_python import locate_python_sinks
 
@@ -126,3 +128,66 @@ def test_assess_units_stamps_provenance_on_every_assessment():
     assert assessments[0]["unit_id"] == units[0]["unit_id"]
     assert assessments[0]["priority"] == "U"  # every claim is unclassified
     assert assessments[0].items() >= provenance.items()
+
+
+class CountingSource(str):
+    splits = 0
+
+    def splitlines(self, keepends: bool = False) -> list[str]:
+        self.splits += 1
+        return super().splitlines(keepends)
+
+
+def test_assessment_reuses_source_lines_and_preserves_standalone_evidence():
+    source = CountingSource("import os\n" + "os.system(command)\n" * 100)
+    sinks = locate_python_sinks("a.py", str(source))
+    findings = [
+        {
+            "raw_id": f"semgrep:0:{index}",
+            "tool": "semgrep",
+            "rule_id": "unknown.rule",
+            "reported_path": "a.py",
+            "snapshot_sha256": "a" * 64,
+            "reported_region": sink["args"][0]["span"],
+            "raw_result": {},
+        }
+        for index, sink in enumerate(sinks)
+    ]
+    sources = {"a.py": source}
+    units = reconcile_findings(findings, sinks, sources)
+    actual = assess_units(
+        units,
+        findings,
+        sinks,
+        sources,
+        mapping=MAPPING,
+        definitions=[],
+        policy=POLICY,
+        provenance={},
+    )
+    assert source.splits == 2  # One line index per reconciliation/assessment run, not per unit.
+    claims = classify_claims(MAPPING, findings, [])
+    expected = [
+        apply_policy(build_evidence(unit, findings, claims, sinks, sources), POLICY)
+        for unit in units
+    ]
+    assert actual == expected
+
+
+def test_indexed_evidence_keeps_duplicate_sinks_ambiguous():
+    source = "import os\nos.system(command)\n"
+    sinks = locate_python_sinks("a.py", source)
+    finding = {
+        "raw_id": "semgrep:0:0",
+        "tool": "semgrep",
+        "rule_id": "unknown.rule",
+        "reported_path": "a.py",
+        "snapshot_sha256": "a" * 64,
+        "reported_region": sinks[0]["args"][0]["span"],
+        "raw_result": {},
+    }
+    sources = {"a.py": source}
+    unit = reconcile_findings([finding], sinks, sources)[0]
+    claims = classify_claims(MAPPING, [finding], [])
+    indexed = EvidenceIndex([finding], claims, [sinks[0], sinks[0]], sources)
+    assert "source_or_argument_parsing_unavailable" in indexed.build(unit)["unknown_fields"]

@@ -6,4 +6,5 @@ from pathlib import Path
 
 def digest(path: Path) -> str:
     """Return the SHA-256 digest of a file."""
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    with path.open("rb") as source:
+        return hashlib.file_digest(source, "sha256").hexdigest()

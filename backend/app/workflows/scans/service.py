@@ -65,8 +65,10 @@ def create_scan(session: Session, project: Project, data: ScanCreate, *, bucket:
         except IntegrityError:
             # A concurrent request created it first; the unique coordinate makes that one win.
             session.rollback()
-            snapshot = session.scalars(lookup).one()
-    elif snapshot.status == "failed":
+            snapshot = session.scalar(lookup)
+            if snapshot is None:
+                raise
+    if snapshot.status == "failed":
         snapshot.status, snapshot.error_message = "validating", None  # try the download again
     scan = Scan(snapshot_id=snapshot.id, config={"profile": data.profile})
     session.add(scan)
@@ -112,7 +114,9 @@ def describe_scan(session: Session, scan: Scan) -> dict[str, Any]:
     }
 
 
-def _summary(unit: LocationUnit, assessment: UnitAssessment) -> dict[str, Any]:
+def _summary(
+    unit: LocationUnit, *, priority: str, decision_id: str, reason: str, tools: list[str]
+) -> dict[str, Any]:
     return {
         "id": unit.id,
         "unit_key": unit.unit_key,
@@ -124,10 +128,10 @@ def _summary(unit: LocationUnit, assessment: UnitAssessment) -> dict[str, Any]:
         "sink_kind": unit.sink_kind,
         "argument_role": unit.argument_role,
         "mapping_status": unit.mapping_status,
-        "priority": assessment.priority,
-        "decision_id": assessment.decision_id,
-        "reason": assessment.reason,
-        "tools": assessment.evidence.get("tools", []),
+        "priority": priority,
+        "decision_id": decision_id,
+        "reason": reason,
+        "tools": tools,
     }
 
 
@@ -152,17 +156,35 @@ def list_units(
             .where(ToolRun.tool == tool)
         )
     result = paginate(session, statement, page)
-    assessments = {
-        assessment.unit_id: assessment
-        for assessment in session.scalars(
-            select(UnitAssessment).where(
-                UnitAssessment.unit_id.in_([unit.id for unit in result.items]),
-                UnitAssessment.policy_version == scan.policy_version,
+    assessments = {}
+    if result.items:
+        # Lists only need tool names; complete trace/evidence JSON is reserved for detail reads.
+        assessments = {
+            row.unit_id: row
+            for row in session.execute(
+                select(
+                    UnitAssessment.unit_id,
+                    UnitAssessment.priority,
+                    UnitAssessment.decision_id,
+                    UnitAssessment.reason,
+                    UnitAssessment.evidence["tools"].label("tools"),
+                ).where(
+                    UnitAssessment.unit_id.in_([unit.id for unit in result.items]),
+                    UnitAssessment.policy_version == scan.policy_version,
+                )
             )
-        )
-    }
+        }
     return PageResult(
-        items=[_summary(unit, assessments[unit.id]) for unit in result.items],
+        items=[
+            _summary(
+                unit,
+                priority=assessments[unit.id].priority,
+                decision_id=assessments[unit.id].decision_id,
+                reason=assessments[unit.id].reason,
+                tools=assessments[unit.id].tools or [],
+            )
+            for unit in result.items
+        ],
         total=result.total,
         limit=result.limit,
         offset=result.offset,
@@ -187,7 +209,13 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
     ).all()
     evidence = assessment.evidence
     return {
-        **_summary(unit, assessment),
+        **_summary(
+            unit,
+            priority=assessment.priority,
+            decision_id=assessment.decision_id,
+            reason=assessment.reason,
+            tools=evidence.get("tools", []),
+        ),
         "matched_conditions": assessment.matched_conditions,
         "predicate_values": evidence.get("predicate_values", {}),
         "unknown_fields": evidence.get("unknown_fields", []),

@@ -7,7 +7,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 from app.triage.claims import classify_claims
-from app.triage.evidence import build_evidence
+from app.triage.evidence import EvidenceIndex
 from app.triage.policy import apply_policy
 from app.triage.types import SinkRecord
 
@@ -105,10 +105,5 @@ def assess_units(
 ) -> list[dict[str, Any]]:
     """One assessment per unit, stamped with the hashes of the policy bytes that ran."""
     claims = classify_claims(mapping, findings, definitions)
-    return [
-        {
-            **apply_policy(build_evidence(unit, findings, claims, sinks, sources), policy),
-            **provenance,
-        }
-        for unit in units
-    ]
+    evidence = EvidenceIndex(findings, claims, sinks, sources)
+    return [{**apply_policy(evidence.build(unit), policy), **provenance} for unit in units]

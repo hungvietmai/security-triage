@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import ast
-from collections.abc import Mapping
+import re
+from collections.abc import Mapping, Sequence
 
 from app.triage.types import SinkArgument, SinkRecord, Span
 
 _SUPPORTED_MODULES = {"os", "subprocess", "asyncio", "pty"}
+# Match Python's physical lines; str.splitlines() also splits form feeds and Unicode separators.
+_PYTHON_LINES = re.compile(r".*?(?:\r\n|\n|\r|$)")
 
 
 def _span(node: ast.AST) -> Span:
@@ -29,9 +32,18 @@ def _span(node: ast.AST) -> Span:
     }
 
 
-def _segment(source: str, node: ast.AST) -> str:
-    value = ast.get_source_segment(source, node)
-    return value if value is not None else ast.unparse(node)
+def _segment(lines: Sequence[bytes], node: ast.AST) -> str:
+    try:
+        span = _span(node)
+    except ValueError:
+        return ast.unparse(node)
+    start, end = span["startLine"] - 1, span["endLine"] - 1
+    first, last = span["startColumn"] - 1, span["endColumn"] - 1
+    if start == end:
+        return lines[start][first:last].decode("utf-8")
+    return b"".join([lines[start][first:], *lines[start + 1 : end], lines[end][:last]]).decode(
+        "utf-8"
+    )
 
 
 def _value_kind(node: ast.AST) -> str:
@@ -57,7 +69,7 @@ def _value_kind(node: ast.AST) -> str:
 
 
 def _argument(
-    source: str,
+    lines: Sequence[bytes],
     node: ast.AST,
     *,
     position: int | None,
@@ -70,7 +82,7 @@ def _argument(
         "position": position,
         "keyword": keyword,
         "span": _span(node),
-        "text": _segment(source, node),
+        "text": _segment(lines, node),
         "value_kind": _value_kind(node),
         "literal_bool": literal_bool,
     }
@@ -130,6 +142,7 @@ def locate_python_sinks(path: str, source: str) -> list[SinkRecord]:
     deliberately retained because the locator does not judge vulnerability.
     """
     tree = ast.parse(source, filename=path)
+    lines = [match[0].encode("utf-8") for match in _PYTHON_LINES.finditer(source)]
     modules, direct = _imports(tree)
     sinks: list[SinkRecord] = []
 
@@ -140,18 +153,18 @@ def locate_python_sinks(path: str, source: str) -> list[SinkRecord]:
         if canonical is None or not _canonical_supported(canonical):
             continue
         args = [
-            _argument(source, value, position=index, keyword=None)
+            _argument(lines, value, position=index, keyword=None)
             for index, value in enumerate(node.args)
         ]
         args.extend(
-            _argument(source, keyword.value, position=None, keyword=keyword.arg)
+            _argument(lines, keyword.value, position=None, keyword=keyword.arg)
             for keyword in node.keywords
         )
         sinks.append(
             {
                 "path": path,
                 "span": _span(node),
-                "callee": _segment(source, node.func),
+                "callee": _segment(lines, node.func),
                 "sink_kind": canonical,
                 "args": args,
             }
