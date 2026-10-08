@@ -499,3 +499,15 @@ remains directly reachable from `main`.
   công cụ. Hiện chưa có output scanner nào cho cặp held-out, nên việc trích là mù.
 - Bộ trích không gọi Semgrep/CodeQL và không thực thi source. Cổng chặn quét
   (`run_pilot.py`, `run_batch.py`, `build_review.py`) vẫn chỉ cho tập phát triển.
+
+## 2026-10-08 — Quyết định: nâng giới hạn số mục archive lên 20.000
+
+- Ba cặp phát triển Python vượt giới hạn 5.000 mục (file và thư mục) khi đọc archive:
+  hai cặp PaddlePaddle (~14.130 mục, 99 MiB giải nén) và pgadmin4 (6.603 mục, 56 MiB).
+  Không cặp held-out nào vượt; lớn nhất còn lại là transformers (4.700 mục).
+- Quyết định trước mọi lần quét: `MAX_FILES` 5.000 → 20.000 cho cả trích hunk và giải
+  nén khi quét. Giới hạn 50 MiB archive và 200 MiB giải nén giữ nguyên — đây là giới
+  hạn an toàn chính; số mục chỉ là giới hạn phụ.
+- Ray (`pyvul-ray-project-ray-193ff8c80067`, cả hai archive > 50 MiB) **giữ nguyên là
+  lỗi thu thập đã ghi, quyết định cuối cùng**: không nâng giới hạn kích thước cho một
+  ca, không có nhóm Python dự phòng để thay; CodeQL trên Ray cũng rất chậm.

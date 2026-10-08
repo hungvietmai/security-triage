@@ -19,7 +19,8 @@ from app.scanners.provenance import digest
 
 MAX_ARCHIVE = 50 * 1024 * 1024
 MAX_UNPACKED = 200 * 1024 * 1024
-MAX_FILES = 5000
+# Entries (files and directories). PaddlePaddle snapshots have ~14,100; size bounds stay.
+MAX_FILES = 20_000
 
 
 @dataclass(frozen=True, slots=True)
