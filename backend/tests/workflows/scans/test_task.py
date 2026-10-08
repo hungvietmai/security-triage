@@ -7,10 +7,11 @@ import sys
 import uuid
 from collections.abc import Callable, Iterator
 from pathlib import Path
-from typing import Any
+from threading import Barrier, Lock
+from typing import Any, BinaryIO
 
 import pytest
-from sqlalchemy import Engine, func, select
+from sqlalchemy import Engine, event, func, select
 from sqlalchemy.exc import IntegrityError, OperationalError
 from sqlalchemy.orm import Session
 
@@ -22,6 +23,7 @@ from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.scanners.pipeline import PipelineResult
 from app.scanners.profile import load_profile
+from app.scanners.sarif import Finding as SarifFinding
 from app.workers.celery_app import celery_app
 from app.workflows.scans import task as scan_module
 from app.workflows.scans.persist import _coordinates, persist_scan_result
@@ -154,6 +156,49 @@ def test_persist_replaces_results_and_rolls_back_a_failed_write(engine, storage,
         assert session.get_one(Scan, scan_id).status == "completed"
 
 
+def test_many_findings_are_batched_and_keep_every_unit_link(engine, storage, make_scan):
+    def pipeline(**kwargs: Any) -> PipelineResult:
+        result = fake_pipeline()(**kwargs)
+        findings: list[SarifFinding] = [
+            {**finding, "raw_id": f"{finding['tool']}:0:{index}"}
+            for finding in result.findings
+            for index in range(50)
+        ]
+        return dataclasses.replace(result, findings=findings)
+
+    finding_batches: list[int] = []
+    with Session(engine) as session:
+
+        @event.listens_for(session, "before_flush")
+        def record_batch(session: Session, context: Any, instances: Any) -> None:
+            count = sum(isinstance(row, Finding) for row in session.new)
+            if count:
+                finding_batches.append(count)
+
+        scan_id = make_scan()
+        assert (
+            scan_module.execute_scan(
+                scan_id,
+                session_factory=lambda: session,
+                storage=storage,
+                run_pipeline_fn=pipeline,
+            )
+            == "completed"
+        )
+
+        assert sum(finding_batches) == 100
+        assert len(finding_batches) <= 2
+        assert _count(session, Finding) == _count(session, UnitFinding) == 100
+        assert _count(session, LocationUnit) == _count(session, UnitAssessment) == 1
+        for run in session.scalars(select(ToolRun)):
+            indexes = session.scalars(
+                select(Finding.result_index)
+                .where(Finding.tool_run_id == run.id)
+                .order_by(Finding.result_index)
+            ).all()
+            assert indexes == list(range(50))
+
+
 def test_failed_persistence_marks_the_scan_failed(engine, storage, make_scan, monkeypatch):
     scan_id = make_scan()
 
@@ -236,6 +281,39 @@ def test_finished_scans_are_not_claimed_again(engine, storage, make_scan):
     assert _execute(engine, storage, scan_id) == "skipped"
 
 
+def test_storage_initialization_errors_mark_the_scan_failed(engine, make_scan, monkeypatch):
+    def broken_storage() -> Any:
+        raise ValueError("invalid storage configuration")
+
+    monkeypatch.setattr(scan_module, "get_s3_client", broken_storage)
+    scan_id = make_scan()
+    assert (
+        scan_module.execute_scan(
+            scan_id, session_factory=lambda: Session(engine), run_pipeline_fn=fake_pipeline()
+        )
+        == "failed"
+    )
+    with Session(engine) as session:
+        scan = session.get_one(Scan, scan_id)
+        assert scan.status == "failed"
+        assert scan.error_message == "ValueError: invalid storage configuration"
+        assert _count(session, ToolRun) == 0
+
+
+def test_failed_status_write_is_logged_when_infrastructure_is_unavailable(monkeypatch, caplog):
+    def unavailable() -> Session:
+        raise OperationalError("connect", {}, Exception("database unavailable"))
+
+    monkeypatch.setattr(scan_module, "SessionLocal", unavailable)
+    scan_id = uuid.uuid4()
+    scan_module._fail_quietly(scan_id, "retry limit reached")
+    assert len(caplog.records) == 1
+    record = caplog.records[0]
+    assert record.name == "app.workflows.scans.task"
+    assert str(scan_id) in record.getMessage()
+    assert record.exc_info is not None
+
+
 @pytest.fixture
 def eager(engine: Engine, monkeypatch: pytest.MonkeyPatch) -> Iterator[list[str]]:
     calls: list[str] = []
@@ -288,6 +366,9 @@ def test_task_time_limits_cover_every_scanner_timeout_in_the_profile():
         for config in profile.configs.values()
     )
     assert budget < scan_module.SOFT_TIME_LIMIT < scan_module.TIME_LIMIT
+    # After the soft limit, an in-flight parallel scanner may still run to its own timeout.
+    longest_step = max(config["timeout_seconds"] for config in profile.configs.values())
+    assert scan_module.TIME_LIMIT - scan_module.SOFT_TIME_LIMIT > longest_step
     visibility = celery_app.conf.broker_transport_options["visibility_timeout"]
     assert scan_module.TIME_LIMIT < visibility
     assert scan_module.run_scan.acks_late
@@ -320,3 +401,112 @@ def test_a_fresh_worker_process_registers_every_table():
     ).stdout
     for table in ("projects", "source_snapshots", "findings", "unit_assessments"):
         assert f"'{table}'" in output
+
+
+@pytest.mark.parametrize("fails", [False, True])
+def test_artifact_upload_streams_and_closes_files(tmp_path, fails):
+    data = b"scanner log\n"
+    (tmp_path / "scanner.log").write_bytes(data)
+    (tmp_path / "codeql-db").mkdir()
+    bodies: list[BinaryIO] = []
+    uploaded: list[bytes] = []
+
+    class Storage:
+        def put_object(self, *, Bucket: str, Key: str, Body: BinaryIO) -> None:
+            assert not isinstance(Body, bytes)
+            assert not Body.closed
+            bodies.append(Body)
+            if fails:
+                raise ConnectionError("storage unavailable")
+            uploaded.append(Body.read())
+
+    scan_id = uuid.uuid4()
+    if fails:
+        with pytest.raises(ConnectionError):
+            scan_module._upload(Storage(), "sources", scan_id, "python", tmp_path)  # type: ignore[arg-type]
+    else:
+        artifacts = scan_module._upload(
+            Storage(),  # type: ignore[arg-type]
+            "sources",
+            scan_id,
+            "python",
+            tmp_path,
+        )
+        assert uploaded == [data]
+        assert artifacts == {
+            "python/scanner.log": {
+                "key": f"scans/{scan_id}/python/scanner.log",
+                "sha256": hashlib.sha256(data).hexdigest(),
+                "size": len(data),
+            }
+        }
+    assert len(bodies) == 1 and bodies[0].closed
+
+
+@pytest.mark.parametrize("workers", [1, 2, 4])
+def test_uploads_overlap_within_the_worker_limit_and_keep_artifact_order(tmp_path, workers):
+    for index in range(8):
+        (tmp_path / f"{index}.log").write_bytes(str(index).encode())
+    batch = Barrier(workers, timeout=5)
+    lock = Lock()
+    active = 0
+    peak = 0
+    bodies: list[BinaryIO] = []
+    uploaded: dict[str, bytes] = {}
+
+    class Storage:
+        def put_object(self, *, Bucket: str, Key: str, Body: BinaryIO) -> None:
+            nonlocal active, peak
+            with lock:
+                active += 1
+                peak = max(peak, active)
+                bodies.append(Body)
+            try:
+                batch.wait()
+                uploaded[Key] = Body.read()
+            finally:
+                with lock:
+                    active -= 1
+
+    scan_id = uuid.uuid4()
+    artifacts = scan_module._upload(
+        Storage(),  # type: ignore[arg-type]
+        "sources",
+        scan_id,
+        "python",
+        tmp_path,
+        workers=workers,
+    )
+    assert peak == workers
+    assert list(artifacts) == [f"python/{index}.log" for index in range(8)]
+    assert len(uploaded) == 8
+    assert all(body.closed for body in bodies)
+    for index in range(8):
+        key = artifacts[f"python/{index}.log"]["key"]
+        assert uploaded[key] == str(index).encode()
+
+
+def test_parallel_upload_failure_waits_for_active_streams_to_close(tmp_path):
+    for name in ("a.log", "b.log"):
+        (tmp_path / name).write_bytes(b"log")
+    started = Barrier(2, timeout=5)
+    bodies: list[BinaryIO] = []
+
+    class Storage:
+        def put_object(self, *, Bucket: str, Key: str, Body: BinaryIO) -> None:
+            bodies.append(Body)
+            started.wait()
+            if Key.endswith("a.log"):
+                raise ConnectionError("storage unavailable")
+            assert Body.read() == b"log"
+
+    with pytest.raises(ConnectionError):
+        scan_module._upload(
+            Storage(),  # type: ignore[arg-type]
+            "sources",
+            uuid.uuid4(),
+            "python",
+            tmp_path,
+            workers=2,
+        )
+    assert len(bodies) == 2 and all(body.closed for body in bodies)

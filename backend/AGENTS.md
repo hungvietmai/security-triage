@@ -62,7 +62,7 @@ backend/
 │   ├── features/          # One package per domain — see below
 │   ├── scanners/          # Semgrep/CodeQL adapters, scan profile, server-built source downloads
 │   ├── triage/            # Pure reconciliation, evidence and priority policy (stdlib only)
-│   ├── workflows/         # Multi-feature flows: scans/ (API, run_scan task, persistence)
+│   ├── workflows/         # Multi-feature flows: scans/ (API, execution, persistence)
 │   └── workers/           # Celery app (composition); tasks live in workflows/
 ├── migrations/            # Alembic; versions/NNNN_description.py
 ├── scripts/               # One-off CLIs: init_storage, export_openapi, check_worker
@@ -86,6 +86,15 @@ Create only the modules a feature needs. Current features: `projects`
 (API: create/list/get), `health` (liveness/readiness), and model-only
 `sources`, `scans`, `findings`, `triage`. Their scan API lives in
 `app/workflows/scans/`, which uses the same router/service/schemas layout.
+
+The scan worker keeps Celery registration, retries and orchestration in `task.py`.
+`snapshots.py` acquires and validates source archives; `analysis.py` runs scanners
+and triage for one language. `results.py` defines the data passed to `persist.py`,
+which owns the transaction that replaces a scan's persisted results.
+The worker runs up to `SCANNER_WORKERS` independent tools per language (default 2)
+and `ARTIFACT_UPLOAD_WORKERS` streamed artifact uploads (default 4). Languages
+remain sequential; standalone `run_pipeline()` calls default to sequential tools.
+Record concurrency settings with scan provenance when changing execution behavior.
 
 ## Architecture rules
 

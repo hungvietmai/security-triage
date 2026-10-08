@@ -5,7 +5,6 @@ triage), which features themselves may not import.
 """
 
 import uuid
-from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
@@ -16,8 +15,8 @@ from app.features.findings.models import Finding
 from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
-from app.scanners.pipeline import PipelineResult
-from app.triage.reconcile import RECONCILIATION_VERSION, ReconciledUnit
+from app.triage.reconcile import RECONCILIATION_VERSION
+from app.workflows.scans.results import LanguageResult, ScanResult
 
 LOCATOR_VERSION = "sink-locator-v0"
 SCANNERS = ("semgrep", "codeql")
@@ -25,35 +24,16 @@ SCANNERS = ("semgrep", "codeql")
 _TOOL_STATUS = {"completed": "completed", "partial": "partial"}
 
 
-@dataclass(frozen=True, slots=True)
-class LanguageResult:
-    language: str
-    pipeline: PipelineResult
-    tool_versions: dict[str, str]
-    units: list[ReconciledUnit]
-    assessments: list[dict[str, Any]]
-
-
-@dataclass(frozen=True, slots=True)
-class ScanResult:
-    status: str
-    error: str | None
-    languages: list[LanguageResult]
-    # Uploaded objects by name ("python/codeql.sarif"): {"key", "sha256", "size"}.
-    artifacts: dict[str, dict[str, Any]]
-    provenance: dict[str, Any]
-    source_file_count: int
-
-
 def claim_scan(session: Session, scan_id: uuid.UUID, *, now: datetime) -> bool:
     """Mark a queued scan running. A redelivered or retried task may resume a running one."""
-    result = session.execute(
+    claimed_id = session.scalar(
         update(Scan)
         .where(Scan.id == scan_id, Scan.status.in_(("queued", "running")))
         .values(status="running", started_at=now, finished_at=None, error_message=None)
+        .returning(Scan.id)
     )
     session.commit()
-    return bool(result.rowcount)  # type: ignore[attr-defined]
+    return claimed_id is not None
 
 
 def mark_scan_failed(session: Session, scan_id: uuid.UUID, reason: str, *, now: datetime) -> None:
@@ -79,9 +59,13 @@ def _coordinates(region: dict[str, Any]) -> dict[str, int | None]:
         return dict.fromkeys(("start_line", "end_line", "start_column", "end_column"))
     if end_line is not None and end_line < start_line:
         end_line = None
-    if end_line in (None, start_line) and None not in (start_column, end_column):
-        if end_column < start_column:  # type: ignore[operator]
-            end_column = None
+    if (
+        end_line in (None, start_line)
+        and start_column is not None
+        and end_column is not None
+        and end_column < start_column
+    ):
+        end_column = None
     return {
         "start_line": start_line,
         "end_line": end_line,
@@ -90,12 +74,12 @@ def _coordinates(region: dict[str, Any]) -> dict[str, int | None]:
     }
 
 
-def _write_language(
+def _write_findings(
     session: Session,
     scan_id: uuid.UUID,
     result: LanguageResult,
     artifacts: dict[str, dict[str, Any]],
-) -> None:
+) -> dict[str, uuid.UUID]:
     def key(name: str) -> str | None:
         artifact = artifacts.get(f"{result.language}/{name}")
         return artifact["key"] if artifact else None
@@ -107,7 +91,7 @@ def _write_language(
         for record in assessment["finding_evidence"]
         if record.get("canonical_rule_id")
     }
-    finding_ids: dict[str, uuid.UUID] = {}
+    runs: list[ToolRun] = []
     for tool in SCANNERS:
         step = result.pipeline.steps.get(tool)
         if step is None:
@@ -126,9 +110,13 @@ def _write_language(
             error_message=step.get("error")
             or (step["status"] if step["status"] == "timeout" else None),
         )
-        session.add(run)
-        session.flush()
-        tool_findings = [f for f in result.pipeline.findings if f["tool"] == tool]
+        runs.append(run)
+    session.add_all(runs)
+    session.flush()
+
+    findings: list[Finding] = []
+    for run in runs:
+        tool_findings = [f for f in result.pipeline.findings if f["tool"] == run.tool]
         for index, finding in enumerate(tool_findings):
             row = Finding(
                 tool_run_id=run.id,
@@ -145,10 +133,19 @@ def _write_language(
                     "raw_result": finding["raw_result"],
                 },
             )
-            session.add(row)
-            session.flush()
-            finding_ids[finding["raw_id"]] = row.id
+            findings.append(row)
+    # Resolve IDs in one batch before writing unit links, regardless of finding count.
+    session.add_all(findings)
+    session.flush()
+    return {row.evidence["raw_id"]: row.id for row in findings}
 
+
+def _write_units(
+    session: Session,
+    scan_id: uuid.UUID,
+    result: LanguageResult,
+    finding_ids: dict[str, uuid.UUID],
+) -> None:
     units: dict[str, LocationUnit] = {}
     for unit in result.units:
         span = unit["sink_span"]
@@ -207,7 +204,8 @@ def persist_scan_result(
         session.execute(delete(ToolRun).where(ToolRun.scan_id == scan_id))
         session.execute(delete(LocationUnit).where(LocationUnit.scan_id == scan_id))
         for language in result.languages:
-            _write_language(session, scan_id, language, result.artifacts)
+            finding_ids = _write_findings(session, scan_id, language, result.artifacts)
+            _write_units(session, scan_id, language, finding_ids)
         snapshot = session.get_one(SourceSnapshot, scan.snapshot_id)
         snapshot.provenance_verified_at = now
         if snapshot.file_count is None:

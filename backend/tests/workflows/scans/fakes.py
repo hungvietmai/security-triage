@@ -7,7 +7,7 @@ import json
 import tarfile
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, BinaryIO
 
 from app.scanners.pipeline import PipelineResult
 from app.scanners.semgrep import stage_rule
@@ -23,8 +23,8 @@ class FakeStorage:
     def get_object(self, Bucket: str, Key: str) -> dict[str, Any]:  # noqa: N803 (boto3 names)
         return {"Body": io.BytesIO(self.objects[(Bucket, Key)])}
 
-    def put_object(self, Bucket: str, Key: str, Body: bytes) -> None:  # noqa: N803
-        self.objects[(Bucket, Key)] = Body
+    def put_object(self, Bucket: str, Key: str, Body: bytes | BinaryIO) -> None:  # noqa: N803
+        self.objects[(Bucket, Key)] = Body if isinstance(Body, bytes) else Body.read()
 
 
 def make_archive(files: dict[str, str], root: str = "src") -> bytes:

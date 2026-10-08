@@ -90,6 +90,10 @@ services:
 
   worker:
     <<: *backend
+    environment:
+      <<: *backend-env
+      SCANNER_WORKERS: ${SCANNER_WORKERS:-2}
+      ARTIFACT_UPLOAD_WORKERS: ${ARTIFACT_UPLOAD_WORKERS:-4}
     # Scanners and the pinned scan profile; the API keeps the light image.
     build:
       context: .

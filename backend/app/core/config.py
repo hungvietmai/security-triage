@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import quote
 
-from pydantic import SecretStr, model_validator
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Repository-root .env shared with Docker Compose (this file is app/core/config.py);
@@ -35,6 +35,8 @@ class Settings(BaseSettings):
     scan_profile: str = "profiles/command-injection-v0.1/profile.json"
     # CodeQL bundle directory; query packs live under qlpacks/ (tools/install-scanners.sh).
     codeql_home: Path = Path("/opt/codeql")
+    scanner_workers: int = Field(default=2, ge=1, le=2)
+    artifact_upload_workers: int = Field(default=4, ge=1, le=8)
 
     @model_validator(mode="after")
     def derive_local_urls(self) -> "Settings":

@@ -387,3 +387,19 @@ remains directly reachable from `main`.
 - Kiểm thử end-to-end trước đó trên mẫu Python+JS qua Celery thật đã phát hiện và sửa hai
   lỗi chỉ lộ ra ngoài unit test: worker không nạp registry model, và `shared_task` gửi qua
   app Celery mặc định (amqp) trong threadpool của FastAPI.
+
+## 2026-10-07 — Tối ưu hiệu năng triage và worker (không đổi ngữ nghĩa v0.1)
+
+- Gộp đơn vị dùng chỉ mục sink theo file và vị trí, sắp xếp nhóm một lần; bằng chứng dùng
+  chỉ mục theo lần chạy; phân loại claims dùng cache trong phạm vi một lần gọi; định vị sink
+  Python cắt theo byte dòng vật lý thay cho `ast.get_source_segment`. Số đo tổng hợp nằm ở
+  `docs/performance.md`; `runner_files_sha256` đổi theo code.
+- Kiểm tra trên dữ liệu thật (image thực nghiệm local, cùng tên thư mục đầu ra): curling
+  alias, R1 và OWASP Python cho `findings.json`, `units.json`, `assessments.json` trùng hoàn
+  toàn với lần kiểm chứng trước; trạng thái run vẫn `completed`.
+- Thay đổi hành vi có chủ ý ở `sarif.py`: mảng SARIF sai kiểu (runs, results, invocations,
+  notifications, rules) nay là lỗi thay vì bị bỏ qua, và run thiếu `results` bị coi là chưa
+  hoàn tất (`partial`). Không ảnh hưởng các SARIF đã chạy ở trên.
+- Worker có thể chạy Semgrep và CodeQL song song trong một ngôn ngữ (`SCANNER_WORKERS`,
+  mặc định 2) và upload artifact song song; thứ tự `steps` và finding giữ theo cấu hình.
+  CLI thực nghiệm vẫn tuần tự (`max_workers=1`).
