@@ -14,41 +14,41 @@ scanner_runs: 0
 manual_review_log:
 - order_index: 0
   advisory_id: GHSA-vc25-24vv-fxxm
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 1
   advisory_id: GHSA-85v3-4m8g-hrh6
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 2
   advisory_id: GHSA-mq5j-pw29-jcv3
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 3
   advisory_id: GHSA-4vcx-3pj3-44m7
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 4
   advisory_id: GHSA-vj8v-p5vw-m6v5
   decision: excluded:no_python_change (fix only touches C++)
 - order_index: 5
   advisory_id: GHSA-fvgf-6h6h-3322
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 6
   advisory_id: GHSA-2wxc-x7rj-hg8f
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 7
   advisory_id: GHSA-42h5-h8qh-vv9v
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 8
   advisory_id: GHSA-6jrf-rcjf-245r
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 9
   advisory_id: GHSA-f63h-wc26-pmvc
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: 10
   advisory_id: GHSA-8359-h9fx-j6v9
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 - order_index: null
   stratum: CWE-643
   advisory_id: GHSA-8mf9-rmgw-33qc
-  decision: eligible
+  decision: eligible (approved by owner 2026-10-16)
 pairs:
 - pair_id: GHSA-8mf9-rmgw-33qc
   advisory_id: GHSA-8mf9-rmgw-33qc
@@ -71,7 +71,12 @@ pairs:
   sink_class: xpath
   selection_reason: only CWE-643 PyPI advisory with a fix commit; detection-limit test (agent tool source and Selenium
     sink are unlikely to be modelled by CodeQL)
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-vc25-24vv-fxxm
   advisory_id: GHSA-vc25-24vv-fxxm
   aliases:
@@ -93,7 +98,14 @@ pairs:
   sink_class: file_read
   selection_reason: 'hash order #0; fix adds validate_safe_path before reading; fix commit also contains unrelated
     SSRF changes (noted)'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
+  out_of_scope_changes: SSRF hardening in client.py, search.py, servers/*, utils/ssrf_adapter.py, utils/urls.py,
+    utils/ssl.py, utils/oauth*.py; CWE-22 scope = confluence/attachments.py and jira/attachments.py
 - pair_id: GHSA-85v3-4m8g-hrh6
   advisory_id: GHSA-85v3-4m8g-hrh6
   aliases:
@@ -114,7 +126,12 @@ pairs:
   relevant_sink: template root path used for reading/rendering files
   sink_class: path_resolution
   selection_reason: 'hash order #1; fix uses resolve() + is_relative_to()'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-mq5j-pw29-jcv3
   advisory_id: GHSA-mq5j-pw29-jcv3
   aliases:
@@ -137,7 +154,12 @@ pairs:
   sink_class: archive_extraction
   selection_reason: 'hash order #2; Windows absolute-path variant; archive extraction = detection-limit test for
     the CWE-22 query'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-4vcx-3pj3-44m7
   advisory_id: GHSA-4vcx-3pj3-44m7
   aliases:
@@ -158,7 +180,12 @@ pairs:
   relevant_sink: file write of the downloaded image (extension from MIME subtype)
   sink_class: file_write
   selection_reason: 'hash order #3; source is an HTTP client response, not a server request'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-fvgf-6h6h-3322
   advisory_id: GHSA-fvgf-6h6h-3322
   aliases:
@@ -169,9 +196,9 @@ pairs:
   package:
   - Django
   repository: django/django
-  vulnerable_commit: 03a86784d0dbfc5890f5aaba2d2f29c1deb0009d
-  fixed_commit: 02e6592835b4559909aa3aaaf67988fef435f624
-  fix_reference: https://github.com/django/django/commit/02e6592835b4559909aa3aaaf67988fef435f624
+  vulnerable_commit: 6822aa5c6c3fbec7c5393a05e990865ba59fe167
+  fixed_commit: 05413afa8c18cdb978fcdf470e09f7a12b234a23
+  fix_reference: https://github.com/django/django/commit/05413afa8c18cdb978fcdf470e09f7a12b234a23
   all_fix_references:
   - https://github.com/django/django/commit/02e6592835b4559909aa3aaaf67988fef435f624
   - https://github.com/django/django/commit/05413afa8c18cdb978fcdf470e09f7a12b234a23
@@ -181,9 +208,16 @@ pairs:
   relevant_source: archive member names (untrusted archive)
   relevant_sink: file/directory creation during extraction
   sink_class: archive_extraction
-  selection_reason: 'hash order #5; first listed fix commit of four branch backports; fix uses abspath + startswith(target)
-    WITHOUT separator'
-  eligibility: pending_review
+  selection_reason: 'hash order #5; CVE-2021-3281; default-branch fix commit (protocol amendment); fix uses abspath
+    + startswith(target) WITHOUT a separator. Follow-up CVE-2025-59682 (GHSA-q95w-c7qg-hrff, CWE-23 only, not in
+    the CWE-22 filter) replaced it with os.path.commonpath (5.2.x commit ed8fc39d77465eddbde1191a054ae965f6a8a584).
+    The fixed version therefore still has the shared-prefix weakness: alerts on it must not be assumed FP.'
+  eligibility: approved
+  approval: owner 2026-10-16 after CVE/commit verification
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-2wxc-x7rj-hg8f
   advisory_id: GHSA-2wxc-x7rj-hg8f
   aliases:
@@ -204,7 +238,12 @@ pairs:
   relevant_sink: local file write in the target directory
   sink_class: file_write
   selection_reason: 'hash order #6; fix rejects / \ and ".." in the name'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-42h5-h8qh-vv9v
   advisory_id: GHSA-42h5-h8qh-vv9v
   aliases:
@@ -225,7 +264,12 @@ pairs:
   relevant_sink: server-side read of a local source path
   sink_class: file_read
   selection_reason: 'hash order #7; fix rejects file:// and absolute paths for prompt sources'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-6jrf-rcjf-245r
   advisory_id: GHSA-6jrf-rcjf-245r
   aliases:
@@ -246,7 +290,12 @@ pairs:
   relevant_sink: fetch of a file:/ URL (local file read)
   sink_class: url_file_scheme
   selection_reason: 'hash order #8; sink is a URL fetch, not a path API (detection-limit test)'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-f63h-wc26-pmvc
   advisory_id: GHSA-f63h-wc26-pmvc
   aliases:
@@ -267,7 +316,12 @@ pairs:
   relevant_sink: file.save(os.path.join(attachments_dir, filename))
   sink_class: file_write
   selection_reason: 'hash order #9; fix uses basename + resolve() + is_relative_to()'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
 - pair_id: GHSA-8359-h9fx-j6v9
   advisory_id: GHSA-8359-h9fx-j6v9
   aliases:
@@ -290,4 +344,18 @@ pairs:
   relevant_sink: local file read of the referenced path
   sink_class: file_read
   selection_reason: 'hash order #10; fix blocks non-HTTP refs and ../ traversal when remote refs are disabled'
-  eligibility: pending_review
+  eligibility: approved
+  approval: owner 2026-10-16
+  source_coverage: pending_scan
+  sink_coverage: pending_scan
+  baseline_detected: pending_scan
+  evidence_applicable: pending_scan
+tools:
+  codeql: 2.27.1
+  codeql_python_all: 7.2.6
+  codeql_python_queries: 1.8.11
+  semgrep: 1.178.0
+  semgrep_rules: semgrep/semgrep-rules@a84ff9cc2453ca91d581380de4b8b3f272f6f4be (61 Python rules, CWE 22/78/79/643)
+  evidence: SafetyEvidence v0.2 sha256 8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c
+  run_flags: --rerun; full repository; scope tag production vs tests/examples/docs
+locked: '2026-10-16'

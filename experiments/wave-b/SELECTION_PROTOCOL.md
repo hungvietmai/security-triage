@@ -38,6 +38,9 @@ mọi ứng viên đã xét đều được ghi kèm quyết định.
   tham số CLI/API công khai). Ghi loại nguồn trong `relevant_source`.
 - `sink_class`: ghi loại đích (`file_open`, `file_write`, `send_file`, `archive_extraction`, `xpath`, ...).
   `archive_extraction` vẫn đủ điều kiện nhưng được ghi là phép thử giới hạn phát hiện của truy vấn CWE-22.
+- Khi bản tin có nhiều commit vá (backport cho nhiều nhánh), chọn commit nằm trên nhánh mặc định của repo.
+  (Sửa đổi 2026-10-16, trước mọi lần quét; chỉ ảnh hưởng Django GHSA-fvgf-6h6h-3322, trước đó bộ lọc lấy
+  commit đầu theo thứ tự chữ cái là bản backport 3.1.x.)
 - Một cặp gồm `vulnerable_commit` và `fixed_commit`. Nhiều bản tin cùng một commit vá được gộp thành một cặp.
 
 Quyết định: `eligible` hoặc `excluded:<lý do>`. Mọi cặp vào danh sách có `eligibility: pending_review` cho tới khi
@@ -48,3 +51,18 @@ chủ đề án duyệt.
 Danh sách và giao thức này được commit trước lần quét đầu tiên. Mọi cặp đủ điều kiện được quét đồng nhất
 (CodeQL mặc định, v0.2, Semgrep), kể cả khi không có cảnh báo. Không loại cặp vì kết quả quét. Nhãn CVE chỉ dùng cho
 vị trí của CVE; các cảnh báo khác và cảnh báo còn lại sau bản vá được gán nhãn riêng.
+
+## Bảng diễn giải cặp lỗi–vá (chốt trước khi quét)
+
+| Bản lỗi | Bản vá | Kết luận |
+|---|---|---|
+| CodeQL báo | không báo | Phát hiện ở bản lỗi, cảnh báo biến mất sau vá |
+| CodeQL báo | vẫn báo | Kiểm tra cảnh báo sau vá là FP hay lỗi vẫn tồn tại |
+| không báo | không báo | Không cung cấp bằng chứng về giảm FP |
+| không báo | báo | Phân tích nguyên nhân, không tự gán là FP |
+
+Mỗi cảnh báo trong tập hợp nhất được xếp: FP được loại đúng, TP bị loại nhầm, cảnh báo đúng được giữ,
+cảnh báo sai chưa loại được, chưa đủ căn cứ. Một commit vá không làm cả repo an toàn; nhãn chỉ gán sau khi xác
+minh đường truyền hoặc vị trí cụ thể. Mỗi cặp ghi `source_coverage`, `sink_coverage`, `baseline_detected`,
+`evidence_applicable`; cặp mà nguồn hoặc đích không được mô hình hóa vẫn báo cáo nhưng không vào mẫu số đánh giá
+loại FP. Nếu v0.2 loại nhầm TP, sửa phương pháp và coi các cặp đã dùng để sửa là dữ liệu phát triển.
