@@ -1,4 +1,4 @@
-# Full test suites before code leaves the machine. Skip once with `git push --no-verify`.
+# Full test suites before code leaves the machine.
 set -e
 
 echo "pre-push: frontend tests"
@@ -6,4 +6,5 @@ npm --prefix frontend test
 
 echo "pre-push: backend tests"
 cd backend
-uv run pytest -q --cov
+# Avoid shared system-temp directories with stale or inaccessible Windows permissions.
+uv run pytest -q --cov --basetemp=.pytest_cache/pre-push-tmp
