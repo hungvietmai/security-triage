@@ -1,0 +1,10 @@
+# Contract scenario "wrong_root" (expectations/ipg_expectations.csv): every fixture function may
+# access /srv/other only, a root none of them uses. A declared contract is authoritative, so
+# nothing may be suppressed.
+name: security-triage/cex-sink-policy-wrong-root
+version: 0.0.1
+library: true
+extensionTargets:
+  security-triage/python-v03: "*"
+dataExtensions:
+  - model.yml

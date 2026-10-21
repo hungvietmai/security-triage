@@ -1,0 +1,10 @@
+# Contract scenario "conflict" (expectations/ipg_expectations.csv): the declared contract allows
+# /srv/data only, while ipg_14_good's own validator proves containment under /srv/public. Two
+# contracts disagree; the declared one is authoritative, so ipg_14_good must stay reported.
+name: security-triage/cex-sink-policy-conflict
+version: 0.0.1
+library: true
+extensionTargets:
+  security-triage/python-v03: "*"
+dataExtensions:
+  - model.yml

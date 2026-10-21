@@ -1,0 +1,233 @@
+{
+ "tool": "CodeQL 2.27.1, python-queries 1.8.11, python-all 7.2.6; no declared contract (scenario none)",
+ "command": "scripts/run_dev.sh WORK_DIR",
+ "sha256": {
+  "ql/IpgGuard.qll": "ca050f9c2613016fced2bf6f4cbf82608fe2b9e65a69eb5a3fb7f593b9dd3456",
+  "ql/ext/no_contract.model.yml": "5d6028033c161fa17526c74c0e000ce3fd770d142d2c280332a16757ea4b0e35",
+  "ql/qlpack.yml": "a07f95847920513b105ce99c583fe4cbff99112606761042f63affc24fa1af83",
+  "ql/queries/V03Contracts.ql": "d8a2e7777985f3228bf62697bf4e63980aa67ac379fbb85c0767d2f51cdc21a7",
+  "ql/queries/V03Evidence.ql": "c22835aa1712b28b9873a208f32c049e7572d8a38ff717804a07a87367b09772",
+  "ql/queries/V03Summaries.ql": "d6b5da9b8dec10f69ff92fce776838d48dc16359d206cbf7102648be0537226c",
+  "ql/queries/cwe22_v03.ql": "e6f517181184b1a00c5578f105cd54426a049072b0e511cd48e06e9bd6f4213b"
+ },
+ "commits": {
+  "mlflow": "6e801f4259d96804c73107315b24cef0f6aa115a",
+  "django": "05413afa8c18cdb978fcdf470e09f7a12b234a23",
+  "bp": "f1291485808b66e20ddb6b01b10dc71b3df8c8ba"
+ },
+ "subset_chain": [
+  "R(all) ⊆ R(none): ok  |all|=26 |none|=27",
+  "R(v03) ⊆ R(all): ok  |v03|=26 |all|=26",
+  "R(all) ⊆ R(none): ok  |all|=9 |none|=9",
+  "R(v03) ⊆ R(all): ok  |v03|=9 |all|=9",
+  "R(all) ⊆ R(none): ok  |all|=63 |none|=125",
+  "R(v03) ⊆ R(all): ok  |v03|=63 |all|=63"
+ ],
+ "report": [
+  "== mlflow: CWE-22 sink locations default=27 v0.2=26 v0.3=26",
+  "  counts: {'alerts': 26, 'no allowed root': 26, 'containment not proven': 26}",
+  "  TP/unknown alerts kept by v0.3: 4/4",
+  "  CWE-22 default+v0.2 results vs wave B SARIF: identical",
+  "== django: CWE-22 sink locations default=9 v0.2=9 v0.3=9",
+  "  counts: {'alerts': 9, 'no allowed root': 9, 'containment not proven': 9}",
+  "  TP/unknown alerts kept by v0.3: 4/4",
+  "  CWE-22 default+v0.2 results vs wave B SARIF: identical",
+  "== bp: CWE-22 sink locations default=125 v0.2=63 v0.3=63",
+  "  counts: {'alerts': 63, 'no allowed root': 63, 'containment not proven': 63}",
+  "  TP/unknown alerts kept by v0.3: 0/0"
+ ],
+ "repos": {
+  "mlflow": {
+   "suppressed_sinks": [],
+   "sink_contract_rows": [],
+   "summaries_and_untrusted_root_calls_outside_tests": [
+    {
+     "kind": "summary",
+     "file": "mlflow/server/assistant/api.py",
+     "line": "149",
+     "scope": "stream_response",
+     "detail": "param 1 segment"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/spark/__init__.py",
+     "line": "378",
+     "scope": "_mlflowdbfs_path",
+     "detail": "param 1 relative"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/server/assistant/session.py",
+     "line": "106",
+     "scope": "SessionManager.validate_session_id",
+     "detail": "param 0 segment"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/server/assistant/session.py",
+     "line": "121",
+     "scope": "SessionManager.get_session_file",
+     "detail": "param 0 segment"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/server/assistant/session.py",
+     "line": "137",
+     "scope": "SessionManager.save",
+     "detail": "param 0 segment"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/server/assistant/session.py",
+     "line": "187",
+     "scope": "get_process_file",
+     "detail": "param 0 segment"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/server/assistant/session.py",
+     "line": "193",
+     "scope": "save_process_pid",
+     "detail": "param 0 segment"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/utils/uri.py",
+     "line": "487",
+     "scope": "validate_path_is_safe",
+     "detail": "return relative"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/utils/uri.py",
+     "line": "487",
+     "scope": "validate_path_is_safe",
+     "detail": "return nodotdot"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/utils/uri.py",
+     "line": "521",
+     "scope": "validate_path_within_directory",
+     "detail": "return c:can:p0"
+    },
+    {
+     "kind": "summary",
+     "file": "mlflow/utils/uri.py",
+     "line": "521",
+     "scope": "validate_path_within_directory",
+     "detail": "param 1 c:can:p0"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "mlflow/store/artifact/local_artifact_repo.py",
+     "line": "91",
+     "scope": "download_artifacts",
+     "detail": "c:can:p0 root=Attribute (other)"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "mlflow/store/artifact/local_artifact_repo.py",
+     "line": "100",
+     "scope": "list_artifacts",
+     "detail": "c:can:p0 root=Attribute (other)"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "mlflow/store/artifact/local_artifact_repo.py",
+     "line": "116",
+     "scope": "_download_file",
+     "detail": "c:can:p0 root=Attribute (other)"
+    }
+   ]
+  },
+  "django": {
+   "suppressed_sinks": [],
+   "sink_contract_rows": [],
+   "summaries_and_untrusted_root_calls_outside_tests": [
+    {
+     "kind": "summary",
+     "file": "django/utils/_os.py",
+     "line": "9",
+     "scope": "safe_join",
+     "detail": "return c:lex:p0"
+    },
+    {
+     "kind": "summary",
+     "file": "django/urls/converters.py",
+     "line": "28",
+     "scope": "UUIDConverter.to_python",
+     "detail": "param 1 segment"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "django/template/backends/base.py",
+     "line": "77",
+     "scope": "iter_template_filenames",
+     "detail": "c:lex:p0 root=template_dir (other)"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "django/contrib/staticfiles/finders.py",
+     "line": "120",
+     "scope": "find_location",
+     "detail": "c:lex:p0 root=root (parameter)"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "django/core/files/storage.py",
+     "line": "324",
+     "scope": "path",
+     "detail": "c:lex:p0 root=Attribute (other)"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "django/template/loaders/filesystem.py",
+     "line": "36",
+     "scope": "get_template_sources",
+     "detail": "c:lex:p0 root=template_dir (other)"
+    },
+    {
+     "kind": "untrusted-root call",
+     "file": "django/views/static.py",
+     "line": "36",
+     "scope": "serve",
+     "detail": "c:lex:p0 root=document_root (parameter)"
+    }
+   ]
+  },
+  "bp": {
+   "suppressed_sinks": [],
+   "sink_contract_rows": [],
+   "summaries_and_untrusted_root_calls_outside_tests": []
+  }
+ },
+ "benchmarkpython_cwe22": {
+  "development": {
+   "E": {
+    "TP": 24,
+    "FP": 5,
+    "FN": 9,
+    "TN": 47,
+    "P": 0.828,
+    "R": 0.727,
+    "F1": 0.774,
+    "FPR": 0.096
+   },
+   "TP_lost": []
+  },
+  "test": {
+   "E": {
+    "TP": 21,
+    "FP": 4,
+    "FN": 11,
+    "TN": 47,
+    "P": 0.84,
+    "R": 0.656,
+    "F1": 0.737,
+    "FPR": 0.078
+   },
+   "TP_lost": []
+  }
+ }
+}

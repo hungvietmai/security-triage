@@ -1,0 +1,13 @@
+# Sink access contract of the counterexample suites (test data, SPEC §4.0): which roots the file
+# operations of each fixture function may access. Rows are (file, function or "*", root); a
+# function may access the union of its rows. The pilot suite (../owasp-bp-pilot/counterexamples)
+# labels a case dangerous when request data leaves /srv/data (paths.py, web.py) or reaches `open`
+# at all (values.py), so /srv/data is its contract. Written as JSON so check_semantics.py reads
+# the same file without a YAML parser.
+name: security-triage/cex-sink-policy
+version: 0.0.1
+library: true
+extensionTargets:
+  security-triage/python-v03: "*"
+dataExtensions:
+  - cex_sink_policy.model.yml

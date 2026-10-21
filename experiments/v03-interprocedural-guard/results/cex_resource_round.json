@@ -1,0 +1,5535 @@
+{
+ "tool": "CodeQL 2.27.1, python-queries 1.8.11, python-all 7.2.6",
+ "round": "resource-derived contracts (SPEC_RESOURCE.md); v03 = strict, v03s = scoped",
+ "command": "scripts/run_cex.sh WORK_DIR",
+ "sha256": {
+  "SPEC_RESOURCE.md": "07d498f3c15541ab0e154d64e8bf2a4350c403754c7080a0cf46d4217580669e",
+  "counterexamples/ipg.py": "60d2d62826d7b6508e5c8589b2447911bc4200c33542873d84a0165d1725a52d",
+  "counterexamples/resources.py": "c4759ab640e7ae96f0aab5d32bd9bc10ff3dc172c59466a6060ac1c2e4266a1a",
+  "counterexamples/resources_admin.py": "d72d8a1ec1633b2d84283c8bcffa4e707f238e6c4d5a44ef8f507ba27c076ff3",
+  "counterexamples/tests/test_resources.py": "81b0aec0d637095888be8855ae4316408c6faef33533cd07099f6ed74aaf86ee",
+  "counterexamples/validators.py": "385669977ea01df1b2e318383ed5d18023da86e58e570c37c9be0327d2421ea6",
+  "counterexamples_tmpdir/tmpdir_app.py": "b8442c4674be5eaa4753304c3a7ca485f3596136bd605fb2bf78083339a7a82c",
+  "counterexamples_tmpdir/tmpdir_store.py": "6c362edf058acfa7fde68e457e0ae8315ebc0a776a713f59fb5d2d3bc24ad2ce",
+  "expectations/EXPECTATIONS.sha256": "3b361f1be97be6f7cf7a34cf0c81507a547c5a222970965f38b009efabfffff3",
+  "expectations/ipg_expectations.csv": "0812a64bc4e8b66408e556377c4e6bb898407ebb7d0f6cb661cef0e470f0e7ab",
+  "expectations/resources_expectations.csv": "58562385065b63d7c2035977332b5fe38d904f7378d33139ce612d815361dcce",
+  "policy/cex_sink_policy.model.yml": "4843da4e9a7ea2e66c7438a1c266ead37f31f0ab28a395f4d0dafd1031172825",
+  "policy/qlpack.yml": "fdd68b05e5a007c06d4fad1e731685c02d94cff582e548c64e8c8674f3bb0092",
+  "policy_scenarios/conflict/model.yml": "adaa7df0ae4420ffd95fbb37a7410441f8d76e5417a4e1bd056ca2396366d0e3",
+  "policy_scenarios/conflict/qlpack.yml": "299937d4556db844603feaa797d80528b6dfbbebe4db16f59d57864f12763a01",
+  "policy_scenarios/resources/model.yml": "dcc7764189b15aa958745be241afd2b94414662f96e02a5b366b1df2732e8cbb",
+  "policy_scenarios/resources/qlpack.yml": "d90c63a36a954d2cc5b72c6c5d857d7d410b5c6a058160b924134dbaeec5da3e",
+  "policy_scenarios/wrong_root/model.yml": "d2d81cf129bb1aba2c838b6b8710c1ade53bccdb1340d9150624c286cc466344",
+  "policy_scenarios/wrong_root/qlpack.yml": "1a2782bfd61a5832441a1ec7034cf0580edcc52331e9506105be99597733ecd1",
+  "ql/IpgGuard.qll": "8e4d3d0d0f8299a9271b6b1866f858ec01246e773107f045a05b25ea06817cc2",
+  "ql/ext/no_contract.model.yml": "5d6028033c161fa17526c74c0e000ce3fd770d142d2c280332a16757ea4b0e35",
+  "ql/qlpack.yml": "a07f95847920513b105ce99c583fe4cbff99112606761042f63affc24fa1af83",
+  "ql/queries/V03Contracts.ql": "d8a2e7777985f3228bf62697bf4e63980aa67ac379fbb85c0767d2f51cdc21a7",
+  "ql/queries/V03Evidence.ql": "4cfa8741f0e33805abcda08fdbc3d21807b67dc2dd6119753784d0b5bdede727",
+  "ql/queries/V03Resources.ql": "c5709e01bebced7d745d77ad3646a938bd50c17348b2328d773636ad786f42c0",
+  "ql/queries/V03Summaries.ql": "d6b5da9b8dec10f69ff92fce776838d48dc16359d206cbf7102648be0537226c",
+  "ql/queries/cwe22_v03.ql": "1eb513b97078e9e28f9a1eebe31defc78d9d5ddf0129a4a702f987780e0f481b",
+  "ql/queries/cwe22_v03s.ql": "90282a56a3a381781037bca8a476c3c449d57b653d5af438cdb0b56b35d98d9e",
+  "scripts/check_semantics.py": "188022b7d557b6c6c0213b22299c2c05256c4ced2a74bb38db8ee6d28eae1a10",
+  "scripts/contract_report.py": "508849d02f38e906be566a8e78d00bd6845580e3970e61ab9cb1d5a8f1da923e",
+  "scripts/evaluate_scenarios.py": "4905554a5f74de5fdc45a47713cae7b47e0e9818829c5ec21f47dcdfa8779924",
+  "scripts/run_cex.sh": "576ff59c09257045776e927d65e246a9616fac4ef56803c0a930640c7e17574c",
+  "scripts/run_dev.sh": "204aaedef7055f73fc4ef39eabdd154bc9828dd7506e98f6a9f67902d8cadd9a",
+  "scripts/subset_check.py": "1ff18089ab883158c384a8bf526a5fb731c956d88fe001cdcbff44e142abeaef"
+ },
+ "subset_chains": [
+  "R(all) ⊆ R(none): ok  |all|=58 |none|=60",
+  "R(v03) ⊆ R(all): ok  |v03|=39 |all|=58",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=35 |v03|=39",
+  "R(all) ⊆ R(none): ok  |all|=58 |none|=60",
+  "R(v03) ⊆ R(all): ok  |v03|=52 |all|=58",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=48 |v03|=52",
+  "R(all) ⊆ R(none): ok  |all|=58 |none|=60",
+  "R(v03) ⊆ R(all): ok  |v03|=58 |all|=58",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=54 |v03|=58",
+  "R(all) ⊆ R(none): ok  |all|=58 |none|=60",
+  "R(v03) ⊆ R(all): ok  |v03|=40 |all|=58",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=36 |v03|=40",
+  "R(all) ⊆ R(none): ok  |all|=58 |none|=60",
+  "R(v03) ⊆ R(all): ok  |v03|=52 |all|=58",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=49 |v03|=52",
+  "R(all) ⊆ R(none): ok  |all|=1 |none|=1",
+  "R(v03) ⊆ R(all): ok  |v03|=1 |all|=1",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=1 |v03|=1",
+  "R(all) ⊆ R(none): ok  |all|=34 |none|=49",
+  "R(v03) ⊆ R(all): ok  |v03|=25 |all|=34",
+  "R(v03s) ⊆ R(v03): ok  |v03s|=25 |v03|=25"
+ ],
+ "scenarios": {
+  "conflict/v03": {
+   "counts": {
+    "ok": 44,
+    "MISSED": 1
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "may",
+     "safe",
+     true,
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "ipg_12_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "conflict/v03s": {
+   "counts": {
+    "ok": 44,
+    "MISSED": 1
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "may",
+     "safe",
+     true,
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "ipg_12_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "declared/v03": {
+   "counts": {
+    "ok": 44,
+    "MISSED": 1
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "may",
+     "safe",
+     true,
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "ipg_12_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "declared/v03s": {
+   "counts": {
+    "ok": 44,
+    "MISSED": 1
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "may",
+     "safe",
+     true,
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "ipg_12_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "may",
+     "safe",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "none/v03": {
+   "counts": {
+    "ok": 45
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "none/v03s": {
+   "counts": {
+    "ok": 45
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "may",
+     "local-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "res_scoped/v03s": {
+   "counts": {
+    "ok": 11
+   },
+   "rows": [
+    [
+     "res_1_good",
+     "may",
+     "resource-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "res_2_good",
+     "may",
+     "resource-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "res_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_5_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_6_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_8_bad",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_9_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_11_good",
+     "may",
+     "resource-contract",
+     true,
+     true,
+     false,
+     "ok"
+    ]
+   ]
+  },
+  "res_strict/v03": {
+   "counts": {
+    "ok": 11
+   },
+   "rows": [
+    [
+     "res_1_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_2_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_5_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_6_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_8_bad",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_9_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "res_11_good",
+     "keep",
+     "no-contract",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "wrong_root/v03": {
+   "counts": {
+    "ok": 45
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "wrong_root/v03s": {
+   "counts": {
+    "ok": 45
+   },
+   "rows": [
+    [
+     "ipg_1_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_good",
+     "keep",
+     "contract-forbids",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_2_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_3_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_4_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_5_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_6_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_7_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_8_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_9_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_10_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_11_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_12_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_13_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_14_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_15_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_16_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_17_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_18_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_19_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_20_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_21_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_22_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_23_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_24_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_25_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "ipg_26_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "tmpdir_scoped/v03s": {
+   "counts": {
+    "ok": 1
+   },
+   "rows": [
+    [
+     "tmp_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "tmpdir_strict/v03": {
+   "counts": {
+    "ok": 1
+   },
+   "rows": [
+    [
+     "tmp_1_bad",
+     "keep",
+     "escape",
+     true,
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  }
+ },
+ "suppressed_sinks": {
+  "ipg/evidence_conflict.csv": [
+   {
+    "file": "resources.py",
+    "line": "74",
+    "col": "12",
+    "function": "res_1_good",
+    "root": "$TMPDIR/cex-sessions",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for session_file()"
+   },
+   {
+    "file": "resources.py",
+    "line": "82",
+    "col": "13",
+    "function": "res_2_good",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "129",
+    "col": "13",
+    "function": "res_8_bad",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "153",
+    "col": "13",
+    "function": "res_11_good",
+    "root": "$TMPDIR/cex-tested",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "ipg.py",
+    "line": "55",
+    "col": "17",
+    "function": "ipg_1_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "63",
+    "col": "17",
+    "function": "ipg_2_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "71",
+    "col": "17",
+    "function": "ipg_3_good",
+    "root": "/srv/data",
+    "basis": "canonical",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "77",
+    "col": "17",
+    "function": "ipg_4_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_like()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "85",
+    "col": "17",
+    "function": "ipg_5_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "96",
+    "col": "17",
+    "function": "ipg_6_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "104",
+    "col": "17",
+    "function": "ipg_7_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "111",
+    "col": "17",
+    "function": "ipg_8_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "117",
+    "col": "17",
+    "function": "ipg_9_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "129",
+    "col": "17",
+    "function": "ipg_10_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "130",
+    "col": "17",
+    "function": "ipg_10_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "151",
+    "col": "25",
+    "function": "ipg_12_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "158",
+    "col": "17",
+    "function": "ipg_13_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_three()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "174",
+    "col": "17",
+    "function": "ipg_15_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_normcase()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "402",
+    "col": "17",
+    "function": "ipg_16_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "410",
+    "col": "17",
+    "function": "ipg_17_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "418",
+    "col": "17",
+    "function": "ipg_18_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "426",
+    "col": "17",
+    "function": "ipg_19_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   }
+  ],
+  "ipg/evidence_declared.csv": [
+   {
+    "file": "resources.py",
+    "line": "74",
+    "col": "12",
+    "function": "res_1_good",
+    "root": "$TMPDIR/cex-sessions",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for session_file()"
+   },
+   {
+    "file": "resources.py",
+    "line": "82",
+    "col": "13",
+    "function": "res_2_good",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "129",
+    "col": "13",
+    "function": "res_8_bad",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "153",
+    "col": "13",
+    "function": "res_11_good",
+    "root": "$TMPDIR/cex-tested",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "ipg.py",
+    "line": "55",
+    "col": "17",
+    "function": "ipg_1_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "63",
+    "col": "17",
+    "function": "ipg_2_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "71",
+    "col": "17",
+    "function": "ipg_3_good",
+    "root": "/srv/data",
+    "basis": "canonical",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "77",
+    "col": "17",
+    "function": "ipg_4_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_like()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "85",
+    "col": "17",
+    "function": "ipg_5_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "96",
+    "col": "17",
+    "function": "ipg_6_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "104",
+    "col": "17",
+    "function": "ipg_7_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "111",
+    "col": "17",
+    "function": "ipg_8_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "117",
+    "col": "17",
+    "function": "ipg_9_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "129",
+    "col": "17",
+    "function": "ipg_10_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "130",
+    "col": "17",
+    "function": "ipg_10_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "151",
+    "col": "25",
+    "function": "ipg_12_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "158",
+    "col": "17",
+    "function": "ipg_13_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_three()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "167",
+    "col": "17",
+    "function": "ipg_14_good",
+    "root": "/srv/public",
+    "basis": "canonical",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "174",
+    "col": "17",
+    "function": "ipg_15_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_normcase()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "402",
+    "col": "17",
+    "function": "ipg_16_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "410",
+    "col": "17",
+    "function": "ipg_17_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "418",
+    "col": "17",
+    "function": "ipg_18_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "426",
+    "col": "17",
+    "function": "ipg_19_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for Attribute()"
+   }
+  ],
+  "ipg/evidence_none.csv": [
+   {
+    "file": "resources.py",
+    "line": "74",
+    "col": "12",
+    "function": "res_1_good",
+    "root": "$TMPDIR/cex-sessions",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for session_file()"
+   },
+   {
+    "file": "resources.py",
+    "line": "82",
+    "col": "13",
+    "function": "res_2_good",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "129",
+    "col": "13",
+    "function": "res_8_bad",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "153",
+    "col": "13",
+    "function": "res_11_good",
+    "root": "$TMPDIR/cex-tested",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "ipg.py",
+    "line": "71",
+    "col": "17",
+    "function": "ipg_3_good",
+    "root": "/srv/data",
+    "basis": "canonical",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "77",
+    "col": "17",
+    "function": "ipg_4_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_like()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "158",
+    "col": "17",
+    "function": "ipg_13_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_three()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "167",
+    "col": "17",
+    "function": "ipg_14_good",
+    "root": "/srv/public",
+    "basis": "canonical",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "174",
+    "col": "17",
+    "function": "ipg_15_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_normcase()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "322",
+    "col": "17",
+    "function": "ipg_17_bad",
+    "root": "/srv/public",
+    "basis": "canonical",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   }
+  ],
+  "ipg/evidence_resources.csv": [
+   {
+    "file": "resources.py",
+    "line": "74",
+    "col": "12",
+    "function": "res_1_good",
+    "root": "$TMPDIR/cex-sessions",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for session_file()"
+   },
+   {
+    "file": "resources.py",
+    "line": "82",
+    "col": "13",
+    "function": "res_2_good",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "153",
+    "col": "13",
+    "function": "res_11_good",
+    "root": "$TMPDIR/cex-tested",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "ipg.py",
+    "line": "71",
+    "col": "17",
+    "function": "ipg_3_good",
+    "root": "/srv/data",
+    "basis": "canonical",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "77",
+    "col": "17",
+    "function": "ipg_4_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_like()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "158",
+    "col": "17",
+    "function": "ipg_13_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_three()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "167",
+    "col": "17",
+    "function": "ipg_14_good",
+    "root": "/srv/public",
+    "basis": "canonical",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   },
+   {
+    "file": "ipg.py",
+    "line": "174",
+    "col": "17",
+    "function": "ipg_15_good",
+    "root": "/srv/data",
+    "basis": "lexical (A-SYM)",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for safe_join_normcase()"
+   },
+   {
+    "file": "ipg.py",
+    "line": "322",
+    "col": "17",
+    "function": "ipg_17_bad",
+    "root": "/srv/public",
+    "basis": "canonical",
+    "source": "local",
+    "level": "proved",
+    "node": "ControlFlowNode for full"
+   }
+  ],
+  "ipg/evidence_wrong_root.csv": [
+   {
+    "file": "resources.py",
+    "line": "74",
+    "col": "12",
+    "function": "res_1_good",
+    "root": "$TMPDIR/cex-sessions",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for session_file()"
+   },
+   {
+    "file": "resources.py",
+    "line": "82",
+    "col": "13",
+    "function": "res_2_good",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "129",
+    "col": "13",
+    "function": "res_8_bad",
+    "root": "/srv/store",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   },
+   {
+    "file": "resources.py",
+    "line": "153",
+    "col": "13",
+    "function": "res_11_good",
+    "root": "$TMPDIR/cex-tested",
+    "basis": "lexical (A-SYM)",
+    "source": "resource",
+    "level": "scoped",
+    "node": "ControlFlowNode for BinaryExpr"
+   }
+  ],
+  "pilot/evidence_declared.csv": [
+   {
+    "file": "paths.py",
+    "line": "121",
+    "col": "12",
+    "function": "guard_prefix_r2_good",
+    "root": "/srv/data",
+    "basis": "canonical",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for p"
+   },
+   {
+    "file": "paths.py",
+    "line": "130",
+    "col": "12",
+    "function": "guard_prefix_r3_good",
+    "root": "/srv/data",
+    "basis": "canonical",
+    "source": "declared",
+    "level": "proved",
+    "node": "ControlFlowNode for p"
+   }
+  ],
+  "tmpdir/evidence_none.csv": []
+ },
+ "resource_candidates": [
+  {
+   "file": "validators.py",
+   "name": "PUBLIC_ROOT",
+   "root": "/srv/public",
+   "detail": "never created"
+  },
+  {
+   "file": "validators.py",
+   "name": "PUBLIC_ROOT",
+   "root": "/srv/public",
+   "detail": "non-store use at validators.py:151"
+  },
+  {
+   "file": "validators.py",
+   "name": "PUBLIC_ROOT",
+   "root": "/srv/public",
+   "detail": "read by another module at ipg.py:165"
+  },
+  {
+   "file": "validators.py",
+   "name": "PUBLIC_ROOT",
+   "root": "/srv/public",
+   "detail": "read by another module at ipg.py:320"
+  },
+  {
+   "file": "resources.py",
+   "name": "SESSIONS",
+   "root": "$TMPDIR/cex-sessions",
+   "detail": "resource root; created at resources.py:33"
+  },
+  {
+   "file": "resources.py",
+   "name": "STORE",
+   "root": "/srv/store",
+   "detail": "resource root; created at resources.py:34"
+  },
+  {
+   "file": "resources.py",
+   "name": "SECRETS",
+   "root": "/srv/store/secrets",
+   "detail": "resource root; created at resources.py:35"
+  },
+  {
+   "file": "resources.py",
+   "name": "CACHE",
+   "root": "$TMPDIR/cex-cache",
+   "detail": "never created"
+  },
+  {
+   "file": "resources.py",
+   "name": "SHARED",
+   "root": "/srv/shared",
+   "detail": "non-store use at resources.py:54"
+  },
+  {
+   "file": "resources.py",
+   "name": "TESTED",
+   "root": "$TMPDIR/cex-tested",
+   "detail": "resource root; created at resources.py:40"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "never created"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:70"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:77"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:158"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:174"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:293"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:313"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:366"
+  },
+  {
+   "file": "ipg.py",
+   "name": "BASE",
+   "root": "/srv/data",
+   "detail": "non-store use at ipg.py:389"
+  }
+ ],
+ "pilot_declared": {
+  "v02": {
+   "counts": {
+    "ok": 41,
+    "MISSED": 4,
+    "VACUOUS": 2
+   },
+   "rows": [
+    [
+     "guard_prefix_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_2_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_prefix_3_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_prefix_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_6_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_7_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_dotdot_8_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_9_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_r1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_r2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_prefix_r3_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r6_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r7_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r9_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "constbranch_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_6_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "constbranch_7_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_1_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "collection_2_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_5_bad",
+     "bad",
+     false,
+     false,
+     "VACUOUS"
+    ],
+    [
+     "collection_6_bad",
+     "bad",
+     false,
+     false,
+     "VACUOUS"
+    ],
+    [
+     "collection_7_good",
+     "good",
+     false,
+     false,
+     "ok"
+    ],
+    [
+     "route_1_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "route_2_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "route_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "header_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_4_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_quote_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_6_good",
+     "good",
+     false,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_r4_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r7_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r8_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "v03": {
+   "counts": {
+    "ok": 41,
+    "MISSED": 4,
+    "VACUOUS": 2
+   },
+   "rows": [
+    [
+     "guard_prefix_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_2_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_prefix_3_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_prefix_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_6_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_7_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_dotdot_8_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_9_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_r1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_r2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_prefix_r3_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r6_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r7_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r9_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "constbranch_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_6_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "constbranch_7_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_1_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "collection_2_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_5_bad",
+     "bad",
+     false,
+     false,
+     "VACUOUS"
+    ],
+    [
+     "collection_6_bad",
+     "bad",
+     false,
+     false,
+     "VACUOUS"
+    ],
+    [
+     "collection_7_good",
+     "good",
+     false,
+     false,
+     "ok"
+    ],
+    [
+     "route_1_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "route_2_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "route_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "header_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_4_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_quote_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_6_good",
+     "good",
+     false,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_r4_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r7_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r8_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  },
+  "v03s": {
+   "counts": {
+    "ok": 41,
+    "MISSED": 4,
+    "VACUOUS": 2
+   },
+   "rows": [
+    [
+     "guard_prefix_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_2_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_prefix_3_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_prefix_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_6_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_7_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_dotdot_8_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_9_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_r1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_prefix_r2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_prefix_r3_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r6_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r7_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_dotdot_r9_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "constbranch_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "constbranch_6_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "constbranch_7_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_1_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "collection_2_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "collection_5_bad",
+     "bad",
+     false,
+     false,
+     "VACUOUS"
+    ],
+    [
+     "collection_6_bad",
+     "bad",
+     false,
+     false,
+     "VACUOUS"
+    ],
+    [
+     "collection_7_good",
+     "good",
+     false,
+     false,
+     "ok"
+    ],
+    [
+     "route_1_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "route_2_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "route_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "header_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "header_4_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_1_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_2_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_4_good",
+     "good",
+     true,
+     true,
+     "MISSED"
+    ],
+    [
+     "guard_quote_5_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_6_good",
+     "good",
+     false,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r3_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ],
+    [
+     "guard_quote_r4_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r7_good",
+     "good",
+     true,
+     false,
+     "ok"
+    ],
+    [
+     "guard_quote_r8_bad",
+     "bad",
+     true,
+     true,
+     "ok"
+    ]
+   ]
+  }
+ },
+ "strict_vs_frozen_baseline": {
+  "ipg/declared": "identical",
+  "ipg/none": "identical",
+  "ipg/wrong_root": "identical",
+  "ipg/conflict": "identical",
+  "pilot/v02": "identical",
+  "pilot/v03": "identical"
+ }
+}
