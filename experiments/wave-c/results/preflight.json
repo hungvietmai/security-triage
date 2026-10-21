@@ -1,0 +1,230 @@
+{
+  "checks": [
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/tests",
+        "-p",
+        "test_wave_c_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "name": "wave_c_tests",
+      "tests": 21
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/tests",
+        "-p",
+        "test_research_freeze.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "name": "freeze_tests",
+      "tests": 2
+    },
+    {
+      "argv": [
+        "uv",
+        "--cache-dir",
+        "artifacts/uv-cache",
+        "tool",
+        "run",
+        "--offline",
+        "--from",
+        "ruff",
+        "ruff",
+        "format",
+        "--check",
+        "--config",
+        "backend/pyproject.toml",
+        "experiments\\wave-c\\evaluate.py",
+        "experiments\\wave-c\\prepare_sources.py",
+        "experiments\\wave-c\\prepare_toolchain.py",
+        "experiments\\wave-c\\run.py",
+        "experiments\\wave-c\\select_repositories.py",
+        "experiments\\wave-c\\smoke_runner.py",
+        "experiments\\wave-c\\source_support.py",
+        "experiments\\tests\\test_wave_c_evaluation.py",
+        "experiments\\tests\\test_wave_c_runner.py",
+        "experiments\\tests\\test_wave_c_selection.py",
+        "experiments\\tests\\test_wave_c_sources.py"
+      ],
+      "exit_code": 0,
+      "name": "ruff_format",
+      "tests": null
+    },
+    {
+      "argv": [
+        "uv",
+        "--cache-dir",
+        "artifacts/uv-cache",
+        "tool",
+        "run",
+        "--offline",
+        "--from",
+        "ruff",
+        "ruff",
+        "check",
+        "--config",
+        "backend/pyproject.toml",
+        "experiments\\wave-c\\evaluate.py",
+        "experiments\\wave-c\\prepare_sources.py",
+        "experiments\\wave-c\\prepare_toolchain.py",
+        "experiments\\wave-c\\run.py",
+        "experiments\\wave-c\\select_repositories.py",
+        "experiments\\wave-c\\smoke_runner.py",
+        "experiments\\wave-c\\source_support.py",
+        "experiments\\tests\\test_wave_c_evaluation.py",
+        "experiments\\tests\\test_wave_c_runner.py",
+        "experiments\\tests\\test_wave_c_selection.py",
+        "experiments\\tests\\test_wave_c_sources.py"
+      ],
+      "exit_code": 0,
+      "name": "ruff_lint",
+      "tests": null
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/wave-c/prepare_sources.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "name": "source_lock",
+      "tests": null
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/wave-c/prepare_toolchain.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "name": "toolchain_lock",
+      "tests": null
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--metadata",
+        "experiments/v03-interprocedural-guard/FREEZE_v0.3_dual.json"
+      ],
+      "exit_code": 0,
+      "name": "strict_scoped_lock",
+      "tests": null
+    }
+  ],
+  "date": "2026-10-20",
+  "not_run": [
+    "full backend/frontend/experiments suites",
+    "commit/push hooks",
+    "CI",
+    "BenchmarkPython/wave A/B scanner reruns"
+  ],
+  "pending": [
+    "user-authorized commit/push and service-recorded publication",
+    "held-out scans after publication",
+    "near-duplicate review and independent labels"
+  ],
+  "plan": {
+    "executed": false,
+    "path": "artifacts/wave-c/plan-001/plan.json",
+    "repositories_with_commands": 7,
+    "repository_count": 12,
+    "sha256": "724e3a917815d6c82d0287debddf529eb2f86d209e69872cc8c7b3d64c360cd9"
+  },
+  "prepared_repositories": 7,
+  "publication_gate_check": {
+    "expected_exit_code": 1,
+    "observed_exit_code": 1,
+    "reason": "publication.json is absent",
+    "study_output_created": false
+  },
+  "replacements": 0,
+  "selected_repositories": 12,
+  "smoke_runs": [
+    {
+      "command_count": 15,
+      "commands_sha256": "ac3290535c1c18999b2c4252b30626564f1e00244a4b81cfa86dcfa868a9a738",
+      "path": "artifacts/wave-c/smoke-001",
+      "result": {
+        "counts": {
+          "all": 1,
+          "none": 1,
+          "v03": 1,
+          "v03s": 1
+        },
+        "extraction": {
+          "additional_modules": [],
+          "expected_python": 2,
+          "missing_python": [],
+          "observed_python": 2
+        },
+        "status": "passed",
+        "synthetic_only": true,
+        "wall_seconds": 608.362634704
+      },
+      "run_sha256": "594666c3cb9944e18df9439ca11b70e572f3b7e36671d0677b23db6c6df73471",
+      "summary_sha256": "9aae4e9bd62aa6f00367deec3ef953a6e474cee46c176a741fad72b52cd01058"
+    },
+    {
+      "command_count": 15,
+      "commands_sha256": "a9a018e172d4b3a7f5d12d2d808633e54068e3ceddd26902344e709afe43303f",
+      "path": "artifacts/wave-c/smoke-002",
+      "result": {
+        "counts": {
+          "all": 1,
+          "none": 1,
+          "v03": 1,
+          "v03s": 1
+        },
+        "extraction": {
+          "additional_modules": [],
+          "expected_python": 2,
+          "missing_python": [],
+          "observed_python": 2
+        },
+        "status": "passed",
+        "synthetic_only": true,
+        "wall_seconds": 387.23187187400003
+      },
+      "run_sha256": "e2bf6f312bb93c4b589133d89cff10593a759c930ee7f02c4cf65d2a4ec82019",
+      "summary_sha256": "e78c420a84eccb4081852094ee1ec14be2ef27ea8eaa5e3bea263fe8dace258b"
+    }
+  ],
+  "source_lock": {
+    "path": "experiments/wave-c/sources.lock.json",
+    "sha256": "1aaa0085e3ae4014e2b90487f3cee3625d88b033547b238bcbf5644e1398c420"
+  },
+  "source_statuses": {
+    "acquisition_failed": 3,
+    "prepared": 7,
+    "rejected_archive": 2
+  },
+  "status": "preparation_verified_waiting_for_authorized_publication",
+  "study_labels_created": 0,
+  "study_scans_executed": 0,
+  "test_count": 23,
+  "toolchain_lock": {
+    "input_count": 1628,
+    "path": "experiments/wave-c/toolchain.lock.json",
+    "sha256": "b5149acf9a6ea6a5ad63266895d5f8c7cd98ebd3180d2d8c4a7bd9c989124c5d",
+    "versions": {
+      "codeql": "2.27.1",
+      "codeql/python-all": "7.2.6",
+      "codeql/python-queries": "1.8.11"
+    }
+  },
+  "version": "wave-c-preflight-v1"
+}
