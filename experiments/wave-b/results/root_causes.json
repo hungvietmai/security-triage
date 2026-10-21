@@ -1,0 +1,211 @@
+{
+ "_doc": "Root causes and sink -> root cause map for wave B labels. label_evidence null: taken from mlflow_cwe22_labels.csv.",
+ "root_causes": {
+  "RC-M1": {
+   "label": "false_positive",
+   "mechanism_family": "F1 interprocedural guard (validator/containment check that raises)",
+   "label_note": "label unit = the alert as reported (sink + the flows CodeQL reports for it); all reported flows pass the guard; for list_artifacts-based sinks the guard is inside list_artifacts, so unreported callers are covered too",
+   "evidence_type": "code+codeql_paths",
+   "label_evidence": null,
+   "review_status": "owner_accepted_provisional"
+  },
+  "RC-M2": {
+   "label": "false_positive",
+   "mechanism_family": "F3 infeasible flow (context-insensitive higher-order / virtual dispatch)",
+   "label_note": "",
+   "evidence_type": "code+codeql_paths",
+   "label_evidence": null,
+   "review_status": "owner_accepted_provisional"
+  },
+  "RC-M3": {
+   "label": "false_positive",
+   "mechanism_family": "F1 interprocedural guard (validator/containment check that raises)",
+   "label_note": "",
+   "evidence_type": "code+executable_check",
+   "label_evidence": null,
+   "review_status": "owner_accepted"
+  },
+  "RC-M4": {
+   "label": "unknown",
+   "mechanism_family": "U threat model not established",
+   "label_note": "",
+   "evidence_type": "code",
+   "label_evidence": null,
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-M5": {
+   "label": "false_positive",
+   "mechanism_family": "F4 in-function guard (handled by v0.2)",
+   "label_note": "",
+   "evidence_type": "code",
+   "label_evidence": null,
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-M6": {
+   "label": "unknown",
+   "mechanism_family": "U raw value used after validating a transformed copy",
+   "label_note": "possible TP, not verified",
+   "evidence_type": "code+reimplementation_check",
+   "label_evidence": null,
+   "review_status": "owner_accepted (unknown; excluded from rule development, used as negative counterexample)"
+  },
+  "RC-M7": {
+   "label": "false_positive",
+   "mechanism_family": "F6 taint through outbound HTTP response",
+   "label_note": "",
+   "evidence_type": "code+codeql_paths",
+   "label_evidence": "serve_gateway_proxy returns gateway_proxy_handler(): the tainted value is response.json() of a request to the server-configured MLFLOW_DEPLOYMENTS_TARGET; CodeQL propagates taint from the URL argument (gateway_path) to the response object. A dict/list is serialised by Flask as application/json; a str body would require the configured upstream to echo attacker markup as a top-level JSON string. Errors go through catch_mlflow_exception (JSON).",
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-D1": {
+   "label": "true_positive",
+   "mechanism_family": "T unguarded path join",
+   "label_note": "confirmed by later advisory",
+   "evidence_type": "advisory",
+   "label_evidence": "TemplateDetailView: Path(directory) / self.kwargs['template'] then exists()/read_text(), no containment check. Later fixed as GHSA-68w8-qjq3-2gfm / CVE-2021-33203 (affected 3.2 < 3.2.4; scanned commit 05413afa predates it). Precondition: admindocs installed, staff user; by default existence oracle, contents if templates customised.",
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-D2": {
+   "label": "false_positive",
+   "mechanism_family": "F1 interprocedural guard (validator/containment check that raises)",
+   "label_note": "",
+   "evidence_type": "code+codeql_paths",
+   "label_evidence": "django.views.static.serve: fullpath = Path(safe_join(document_root, normpath(path).lstrip('/'))); safe_join raises SuspiciousFileOperation unless abspath(join) startswith abspath(base)+sep (or equals base, or base is the filesystem root). All 4 sinks use the returned value; the only other entry (staticfiles.views.serve) passes finders.find() output and still goes through safe_join.",
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-D3": {
+   "label": "true_positive",
+   "mechanism_family": "T reflected request data in text/html",
+   "label_note": "test fixture; not deployed",
+   "evidence_type": "code",
+   "label_evidence": "Test view returns request data (POST QueryDict str / GET param / URL kwarg / FILES field names / request body) in HttpResponse (text/html) without escaping.",
+   "review_status": "owner_decision_applied (separate technical label)"
+  },
+  "RC-D4": {
+   "label": "false_positive",
+   "mechanism_family": "F5 source cannot carry markup",
+   "label_note": "test fixture",
+   "evidence_type": "code",
+   "label_evidence": "Reflects request.method; an HTTP method is an RFC 9110 token (no '<', '>', quotes).",
+   "review_status": "owner_decision_applied (separate technical label)"
+  },
+  "RC-D5": {
+   "label": "false_positive",
+   "mechanism_family": "F5 source not attacker-controllable cross-origin",
+   "label_note": "test fixture",
+   "evidence_type": "code",
+   "label_evidence": "Reflects a custom request header (X-ARG-CHECK); a cross-origin page cannot set it without a CORS preflight the view does not allow.",
+   "review_status": "owner_decision_applied (separate technical label)"
+  },
+  "RC-D6": {
+   "label": "true_positive",
+   "mechanism_family": "T unguarded path join",
+   "label_note": "test fixture; existence check only",
+   "evidence_type": "code",
+   "label_evidence": "uploaded file name passes os.path.basename only (pre CVE-2021-31542 fix), so a name '..' makes os.path.exists(UPLOAD_TO/..) look outside UPLOAD_TO; effect is a boolean.",
+   "review_status": "owner_decision_applied (separate technical label)"
+  },
+  "RC-D7": {
+   "label": "false_positive",
+   "mechanism_family": "F3 infeasible flow (context-insensitive higher-order / virtual dispatch)",
+   "label_note": "test fixture",
+   "evidence_type": "code+codeql_paths",
+   "label_evidence": "Flow reaches PathNotImplementedStorage.exists via Storage.save -> get_available_name -> self.exists over all Storage subclasses; the test storage is only used as STATICFILES_STORAGE in test_management.py, never with the FileField tests that are the sources.",
+   "review_status": "owner_decision_applied (separate technical label)"
+  },
+  "RC-C1": {
+   "label": "false_positive",
+   "mechanism_family": "F2 allowlist membership of a server-generated key",
+   "label_note": "",
+   "evidence_type": "code+codeql_paths",
+   "label_evidence": "uuid reaches the sink only after membership in datastore.data['watching'] (diff_history_page: lookup raising KeyError -> redirect; edit_page: 'not in' -> redirect; form_delete: 'not in' -> redirect; checkbox ops: .get(uuid) truthy). Keys are str(uuid.uuid4()) (model/__init__.py:68); add_watch deletes 'uuid' from extras. Flask <string:> converter also excludes '/'.",
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-C2": {
+   "label": "true_positive",
+   "mechanism_family": "T unguarded path join",
+   "label_note": "confirmed by later advisory",
+   "evidence_type": "advisory",
+   "label_evidence": "static_content: send_from_directory('static/{}'.format(group), path=filename) with group='..' moves the base to the package directory (unauthenticated source file read). Reported as GHSA-9jj8-v89v-xjvw / CVE-2026-25527 (affected < 0.53.2); scanned commit has no sanitisation of group.",
+   "review_status": "assistant_labeled_with_evidence; owner_review_pending"
+  },
+  "RC-C3": {
+   "label": "TP_conditional",
+   "mechanism_family": "T unguarded path join",
+   "label_note": "boundary crossed; harm requires a file with the fixed name one level above the datastore",
+   "evidence_type": "code+later_fix",
+   "label_evidence": "static_content screenshot / visual_selector_data branches: send_from_directory(os.path.join(datastore_path, filename), <fixed name>) with filename='..' (the <string:> converter forbids '/' only; reachability of '..' in this route is shown by the PoC of GHSA-9jj8-v89v-xjvw) reads <datastore parent>/last-screenshot.png or elements.json (Werkzeug 3.0.6 safe_join only checks the fixed name). Docker default -d /datastore: parent is '/'. The upstream fix for CVE-2026-25527 (9d38b45) sanitises filename to [a-z0-9_] before these branches, removing this crossing as well. Password-gated only if a password is set.",
+   "review_status": "owner_decision_applied"
+  },
+  "RC-C4": {
+   "label": "TP_conditional",
+   "mechanism_family": "T reflected request data in text/html",
+   "label_note": "unescaped reflection present; cross-site delivery requires bypassing CSRF (victim token) or CSRF disabled",
+   "evidence_type": "code",
+   "label_evidence": "ajax_callback_send_notification_test returns f'Error:  {n_url} is not a valid AppRise URL.' (Flask str -> text/html) where n_url comes from request.form['notification_urls'] without escaping. Route is POST-only and login_optionally_required (no login when no password is set). CSRFProtect is global and the view is not exempt, so a cross-site form POST is rejected without the victim's token; the in-app caller displays the body with alert(). CSRF limits delivery, it does not make the output safe: exploitable if CSRF is disabled or the token is obtained, otherwise self-XSS.",
+   "review_status": "owner_decision_applied"
+  },
+  "RC-C5": {
+   "label": "true_positive",
+   "mechanism_family": "T reflected request data in text/html",
+   "label_note": "test fixture; not deployed",
+   "evidence_type": "code",
+   "label_evidence": "test /test-endpoint returns the 'content' query parameter as the body.",
+   "review_status": "owner_decision_applied (separate technical label)"
+  },
+  "RC-C6": {
+   "label": "false_positive",
+   "mechanism_family": "F5 source not attacker-controllable cross-origin",
+   "label_note": "test fixture",
+   "evidence_type": "code",
+   "label_evidence": "Test endpoints echo request headers; a cross-origin attacker cannot inject markup into them (custom headers need CORS; browsers percent-encode '<' '>' in Referer).",
+   "review_status": "owner_decision_applied (separate technical label)"
+  }
+ },
+ "sinks": {
+  "mlflow/server/__init__.py:145:12": "RC-M7",
+  "django/contrib/admindocs/views.py:333:20": "RC-D1",
+  "django/contrib/admindocs/views.py:334:41": "RC-D1",
+  "django/contrib/admindocs/views.py:339:31": "RC-D1",
+  "django/views/static.py:37:8": "RC-D2",
+  "django/views/static.py:41:12": "RC-D2",
+  "django/views/static.py:44:15": "RC-D2",
+  "django/views/static.py:50:29": "RC-D2",
+  "tests/admin_views/views.py:7:25": "RC-D3",
+  "tests/admin_views/views.py:12:25": "RC-D3",
+  "tests/asgi/urls.py:7:25": "RC-D3",
+  "tests/test_client/views.py:386:25": "RC-D3",
+  "tests/test_client_regress/views.py:56:29": "RC-D3",
+  "tests/test_client_regress/views.py:134:25": "RC-D3",
+  "tests/test_client_regress/views.py:139:25": "RC-D3",
+  "tests/test_client_regress/views.py:144:25": "RC-D3",
+  "tests/servers/views.py:50:25": "RC-D4",
+  "tests/test_client_regress/views.py:93:25": "RC-D4",
+  "tests/test_client_regress/views.py:129:25": "RC-D5",
+  "tests/file_uploads/views.py:68:45": "RC-D6",
+  "tests/staticfiles_tests/storage.py:37:31": "RC-D7",
+  "changedetectionio/flask_app.py:1079:76": "RC-C1",
+  "changedetectionio/store.py:245:35": "RC-C1",
+  "changedetectionio/store.py:246:35": "RC-C1",
+  "changedetectionio/store.py:378:24": "RC-C1",
+  "changedetectionio/store.py:378:62": "RC-C1",
+  "changedetectionio/flask_app.py:1284:40": "RC-C2",
+  "changedetectionio/flask_app.py:1253:62": "RC-C3",
+  "changedetectionio/flask_app.py:1272:62": "RC-C3",
+  "changedetectionio/flask_app.py:583:28": "RC-C4",
+  "changedetectionio/tests/util.py:173:38": "RC-C5",
+  "changedetectionio/tests/util.py:203:30": "RC-C6",
+  "changedetectionio/tests/util.py:269:30": "RC-C6"
+ },
+ "redacted_evidence": {
+  "RC-M6": "validate_path_is_safe() checks a decoded/normalised copy and get_logged_model_artifact_handler forwards the raw string; with a non-local artifact store the base download_artifacts() joins the raw string under a temporary directory. Details withheld pending verification and coordinated disclosure (private note in artifacts/)."
+ },
+ "label_definitions": {
+  "true_positive": "a reported flow lets external input reach the sink without a check that blocks the CWE outcome",
+  "TP_conditional": "as true_positive, but harm or delivery depends on a stated condition that is not established (environment, configuration, bypass of an unrelated control)",
+  "false_positive": "no reported flow can produce the CWE outcome: the flow is infeasible, or a check on every reported path blocks it for the value used at the sink",
+  "unknown": "evidence insufficient for either label",
+  "test_code": "alert in test code (not shipped); technical_label gives the flow-level judgement and is reported separately from product metrics",
+  "label_unit": "one alert = one sink location with the flows CodeQL reports for it; flows CodeQL does not report are false negatives of the query, not part of the label"
+ }
+}

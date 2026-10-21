@@ -1,0 +1,192 @@
+{
+ "production": {
+  "alerts": 44,
+  "labels": {
+   "unknown": 4,
+   "false_positive": 33,
+   "TP_conditional": 3,
+   "true_positive": 4
+  },
+  "root_causes": 13,
+  "by_repo": {
+   "dgtlmoon/changedetection.io": {
+    "false_positive": 5,
+    "TP_conditional": 3,
+    "true_positive": 1
+   },
+   "django/django": {
+    "true_positive": 3,
+    "false_positive": 4
+   },
+   "mlflow/mlflow": {
+    "unknown": 4,
+    "false_positive": 24
+   }
+  },
+  "v02": {
+   "unknown": 4,
+   "FP kept": 32,
+   "FP removed": 1,
+   "TP kept": 7
+  }
+ },
+ "test": {
+  "alerts": 16,
+  "labels": {
+   "true_positive": 10,
+   "false_positive": 6
+  },
+  "root_causes": 7,
+  "by_repo": {
+   "dgtlmoon/changedetection.io": {
+    "true_positive": 1,
+    "false_positive": 2
+   },
+   "django/django": {
+    "true_positive": 9,
+    "false_positive": 4
+   }
+  },
+  "v02": {
+   "TP kept": 10,
+   "FP kept": 6
+  }
+ },
+ "families": {
+  "F1 interprocedural guard (validator/containment check that raises)": {
+   "alerts": 19,
+   "production": 19,
+   "repos": [
+    "django",
+    "mlflow"
+   ],
+   "rcs": [
+    "RC-D2",
+    "RC-M1",
+    "RC-M3"
+   ],
+   "v02_removed": 0
+  },
+  "F2 allowlist membership of a server-generated key": {
+   "alerts": 5,
+   "production": 5,
+   "repos": [
+    "changedetection.io"
+   ],
+   "rcs": [
+    "RC-C1"
+   ],
+   "v02_removed": 0
+  },
+  "F3 infeasible flow (context-insensitive higher-order / virtual dispatch)": {
+   "alerts": 8,
+   "production": 7,
+   "repos": [
+    "django",
+    "mlflow"
+   ],
+   "rcs": [
+    "RC-D7",
+    "RC-M2"
+   ],
+   "v02_removed": 0
+  },
+  "F4 in-function guard (handled by v0.2)": {
+   "alerts": 1,
+   "production": 1,
+   "repos": [
+    "mlflow"
+   ],
+   "rcs": [
+    "RC-M5"
+   ],
+   "v02_removed": 1
+  },
+  "F5 source cannot carry markup": {
+   "alerts": 2,
+   "production": 0,
+   "repos": [
+    "django"
+   ],
+   "rcs": [
+    "RC-D4"
+   ],
+   "v02_removed": 0
+  },
+  "F5 source not attacker-controllable cross-origin": {
+   "alerts": 3,
+   "production": 0,
+   "repos": [
+    "changedetection.io",
+    "django"
+   ],
+   "rcs": [
+    "RC-C6",
+    "RC-D5"
+   ],
+   "v02_removed": 0
+  },
+  "F6 taint through outbound HTTP response": {
+   "alerts": 1,
+   "production": 1,
+   "repos": [
+    "mlflow"
+   ],
+   "rcs": [
+    "RC-M7"
+   ],
+   "v02_removed": 0
+  },
+  "T reflected request data in text/html": {
+   "alerts": 10,
+   "production": 1,
+   "repos": [
+    "changedetection.io",
+    "django"
+   ],
+   "rcs": [
+    "RC-C4",
+    "RC-C5",
+    "RC-D3"
+   ],
+   "v02_removed": 0
+  },
+  "T unguarded path join": {
+   "alerts": 7,
+   "production": 6,
+   "repos": [
+    "changedetection.io",
+    "django"
+   ],
+   "rcs": [
+    "RC-C2",
+    "RC-C3",
+    "RC-D1",
+    "RC-D6"
+   ],
+   "v02_removed": 0
+  },
+  "U raw value used after validating a transformed copy": {
+   "alerts": 2,
+   "production": 2,
+   "repos": [
+    "mlflow"
+   ],
+   "rcs": [
+    "RC-M6"
+   ],
+   "v02_removed": 0
+  },
+  "U threat model not established": {
+   "alerts": 2,
+   "production": 2,
+   "repos": [
+    "mlflow"
+   ],
+   "rcs": [
+    "RC-M4"
+   ],
+   "v02_removed": 0
+  }
+ }
+}
