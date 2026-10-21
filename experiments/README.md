@@ -4,6 +4,58 @@ The authoritative design is [EVALUATION_PROTOCOL.md](EVALUATION_PROTOCOL.md).
 Protocol v1.0.0 was committed before development scanning at
 `80db12b6f7b275501f9c0f260c90cd05e818491e`.
 
+## Current CWE-22 study
+
+The [v0.3 strict/scoped freeze](v03-interprocedural-guard/DECISION_2026-10-20.md)
+is evaluated under the separate [Wave C protocol](wave-c/PROTOCOL.md).
+[Scanner results from 2026-10-21](wave-c/results/study-001/RESULTS.md) preserve
+all 12 selected repositories: seven completed scans and five acquisition failures
+or rejected archives. Strict and scoped each remove **zero additional sinks over
+v0.2**, with AllowedRoot coverage **0/5** on the completed scans.
+
+**Acceptance is halted on exploratory self-review labels.**
+[Technical self-review](wave-c/closeout/self-review/REVIEW.md) revises the proposals
+to two conditional FP and six unknown: pre-guard normalization can access filesystem
+metadata. The frozen evaluator returns `failed_acceptance` because v0.2 removed
+one now-unknown alert; this is not a confirmed lost TP. The review also corrects
+the earlier graph JSON ID claim using saved BQRS. Original freezes remain intact.
+
+[The isolated v0.2.1 development correction](v021-normalization/README.md) now
+retains six alerts instead of five on the seven previously scanned repositories,
+restoring the normalization alert at pipecat `run.py:215:18`. Locked synthetic
+expectations pass and no old sink is lost in the measured regressions. This
+development result preserves the original failed acceptance and does not establish
+independent efficacy or confirm the two remaining conditional FP proposals.
+
+[The decision after Wave C](wave-c/DECISION_2026-10-21.md) records zero incremental
+suppression and stops rule expansion. Eight sink units await owner review;
+FP reduction rates and independent efficacy are not confirmed. Use the
+[review guide](wave-c/results/study-001/REVIEW_GUIDE.md) and its blank label template.
+
+[Supplementary source review](wave-c/results/review-001/REVIEW.md) documents the
+eight proposed labels, source hashes and synthetic symlink observations. It adds
+no scanner run or rule change and does not confirm human labels. A
+[draft results discussion](wave-c/results/review-001/THESIS_RESULTS_DRAFT.md)
+keeps the zero incremental effect and outstanding review limits explicit.
+
+[Post-hoc CodeQL paths](wave-c/results/paths-001/PATHS.md) add 18 path exemplars
+for all eight original sink units, with exact source/sink span agreement and
+114 located abstract edge rows. Queries run on database copies; original
+results and proposed labels remain unchanged. These traces support owner review
+and do not enumerate concrete executions or establish safety.
+
+[The proposed next steps](wave-c/NEXT_STEPS_2026-10-21.md) prioritize completing
+owner review and reporting the zero incremental effect. Any later experiment
+with independently justified explicit contracts requires a separate protocol;
+the proposal does not start new scans or change the frozen Wave C method.
+
+[Closeout progress](wave-c/closeout/STATUS.md) now includes a
+[results draft](wave-c/closeout/REPORT.md), a twelve-repository evidence ledger
+and a [blank first-pass review workspace](wave-c/closeout/owner-review/START_HERE.md).
+The [contract feasibility assessment](wave-c/closeout/CONTRACT_FEASIBILITY.md)
+does not support starting a policy-only experiment with the frozen implementation;
+human labels and semantic independence checks remain pending.
+
 Pair preparation (manifest generation, archive locking, offline patch hunks and
 known locations) is documented in [pairs/README.md](pairs/README.md). The
 `pairs-v0` artifacts use the frozen v0.1 split and preserve acquisition failures;

@@ -1,0 +1,590 @@
+[
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 284,
+        "lines": [
+          "### `ATOMIC_AGENTS_ROOT`",
+          "",
+          "Tells the framework where to find your agent vault. **Default: `~/docs/agents`** (suitable for Obsidian-backed deployments; see [`docs/deployment/obsidian.md`](https://github.com/dep0we/atomic-agents-stack/blob/main/docs/deployment/obsidian.md)).",
+          "",
+          "```bash",
+          "export ATOMIC_AGENTS_ROOT=/path/to/your/agents",
+          "```"
+        ],
+        "start_line": 278
+      }
+    ],
+    "file": "README.md",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "624d12794cf98d69a581eac31cf4b7359413acc32223ed5ed61ccc534acb9008",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/README.md"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 30,
+        "lines": [
+          "The following are documented limitations, not vulnerabilities:",
+          "",
+          "- **Path traversal protection is best-effort for MCP server args** (see `atomic_agents/mcp.py:validate_mcp_server_args` \u2014 best-effort heuristic check on path-shaped args; non-path-shaped args are not validated)",
+          "- **Cost guardrails are advisory in runtimes without the shared helper** \u2014 Claude Code skill without the helper installed cannot enforce `tools.md` write paths or cost caps. The framework says so explicitly in `docs/spec/01-anatomy.md` \u00a7\"Policy vs. enforcement.\"",
+          "- **The vault is plain markdown** \u2014 no encryption at rest, no access control beyond filesystem permissions. The operator owns the directory; the framework does not add a security layer on top of `chmod`.",
+          "- **API keys** \u2014 the framework reads keys from environment variables, macOS Keychain, or `~/.config/atomic_agents/keys.json`. It does not protect keys you put in the wrong place (e.g., in a synced Obsidian vault)."
+        ],
+        "start_line": 25
+      }
+    ],
+    "file": "SECURITY.md",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "d03ae0081a4acad364a6c026b3abae248c74409207441d4c4a482cc4499ff535",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/SECURITY.md"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 56,
+        "lines": [
+          "### Global dashboard \u2014 `<agents_root>/_dashboard/index.html`",
+          "",
+          "The \"first page you check\" \u2014 answers \"where am I spending most?\""
+        ],
+        "start_line": 54
+      },
+      {
+        "end_line": 89,
+        "lines": [
+          "### Per-agent dashboard \u2014 `<agents_root>/{agent_name}/dashboard.html`",
+          "",
+          "The drill-down \u2014 answers \"is Caldwell trending up?\" or \"did the model switch save me money?\""
+        ],
+        "start_line": 87
+      },
+      {
+        "end_line": 191,
+        "lines": [
+          "### Live refresh with optional local server",
+          "",
+          "For \"I want to see now\" cases, run:",
+          "",
+          "```bash",
+          "python -m atomic_agents.dashboard serve",
+          "```",
+          "",
+          "Starts a small Flask/FastAPI server on `localhost:8765` with a `/regenerate` endpoint. The Refresh button now triggers an actual aggregation pass and reloads with fresh data. Server is optional and doesn't auto-start."
+        ],
+        "start_line": 183
+      },
+      {
+        "end_line": 355,
+        "lines": [
+          "If you publish or share the dashboard, you're publishing cost and token telemetry, not the agent's actual conversations. But: the `summary` fields are agent-authored and may leak topical context \u2014 review before sharing.",
+          "",
+          "The HTML files are world-readable on disk by default. If your `<agents_root>` is on a shared filesystem, set permissions appropriately."
+        ],
+        "start_line": 353
+      }
+    ],
+    "file": "docs/spec/09-cost-observability.md",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "a176d1e39b4298c1b142abb9bc01f83f79a0158f8eacbe536104bdd02a0307f3",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/docs/spec/09-cost-observability.md"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 28,
+        "lines": [
+          "The dashboard *output* lands in the vault at `<agents_root>/_dashboard/` so the operator can browse it from Obsidian Mobile or any browser."
+        ],
+        "start_line": 28
+      }
+    ],
+    "file": "docs/implementation/cost-dashboard.md",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "a33cfcbd07350dfe73ef20554722e4a195f918443a9c97cf27988d8382613907",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/docs/implementation/cost-dashboard.md"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 43,
+        "lines": [
+          "    \"\"\"Tiny stdlib HTTP server for the dashboard.",
+          "",
+          "    Endpoints:",
+          "      GET /                       \u2192 <agents_root>/_dashboard/index.html",
+          "      GET /<filename>             \u2192 file from <agents_root>/_dashboard/",
+          "      GET /agents/<name>          \u2192 <agents_root>/<name>/dashboard.html",
+          "      POST /regenerate            \u2192 rebuild all dashboards, return 200",
+          "",
+          "    All served paths are routed through safe_resolve_under() against the",
+          "    intended root before any file read, blocking path-traversal attacks.",
+          "    \"\"\"",
+          ""
+        ],
+        "start_line": 32
+      },
+      {
+        "end_line": 84,
+        "lines": [
+          "        if path.startswith(\"/agents/\"):",
+          "            agent_name = path[len(\"/agents/\") :].rstrip(\"/\")",
+          "            # Reject agent names that contain path separators or traversal",
+          "            # segments before resolve \u2014 safe_resolve_under will also catch",
+          "            # these, but an early explicit check avoids leaking which path",
+          "            # component caused the rejection.",
+          "            if \"/\" in agent_name or \"\\\\\" in agent_name or \"..\" in agent_name:",
+          "                self.send_error(404, \"Not found\")",
+          "                return",
+          "            try:",
+          "                resolved = safe_resolve_under(agent_name, self.agents_root)",
+          "            except PathTraversalError:",
+          "                self.send_error(404, \"Not found\")",
+          "                return",
+          "            self._serve_file_contained(resolved / \"dashboard.html\", \"text/html\")"
+        ],
+        "start_line": 70
+      },
+      {
+        "end_line": 116,
+        "lines": [
+          "    def _serve_under_dashboard(self, relative: str, content_type: str) -> None:",
+          "        \"\"\"Resolve *relative* under <agents_root>/_dashboard/ and serve it.",
+          "",
+          "        Returns 404 on PathTraversalError or if the file does not exist.",
+          "        Never leaks which path component caused a traversal rejection.",
+          "        \"\"\"",
+          "        dashboard_root = self.agents_root / \"_dashboard\"",
+          "        try:",
+          "            resolved = safe_resolve_under(relative, dashboard_root)",
+          "        except PathTraversalError:",
+          "            self.send_error(404, \"Not found\")",
+          "            return",
+          "        self._serve_file_contained(resolved, content_type)",
+          "",
+          "    def _serve_file_contained(self, path: Path, content_type: str) -> None:",
+          "        \"\"\"Serve *path* if it exists and is a regular file; 404 otherwise.\"\"\"",
+          "        if not path.exists() or not path.is_file():",
+          "            self.send_error(404, \"Not found\")",
+          "            return",
+          "        self._serve_file(path, content_type)"
+        ],
+        "start_line": 97
+      },
+      {
+        "end_line": 190,
+        "lines": [
+          "def serve(agents_root: Path | None = None, host: str = HOST, port: int = PORT) -> None:",
+          "    \"\"\"Start the dashboard server. Blocks until interrupted (Ctrl-C).\"\"\"",
+          "    agents_root = agents_root or get_agents_root()",
+          "",
+          "    if not agents_root.exists():",
+          "        print(f\"Error: agents_root does not exist: {agents_root}\", file=sys.stderr)",
+          "        print(f\"Set ATOMIC_AGENTS_ROOT or pass --agents-root\", file=sys.stderr)",
+          "        sys.exit(1)",
+          "",
+          "    # Ensure dashboard exists before starting (regenerate it once)",
+          "    dashboard_dir = agents_root / \"_dashboard\"",
+          "    if not (dashboard_dir / \"index.html\").exists():",
+          "        print(f\"No dashboard at {dashboard_dir}/index.html \u2014 generating now...\")",
+          "        render_all(agents_root)",
+          "",
+          "    DashboardHandler.agents_root = agents_root",
+          "    server = ThreadingHTTPServer((host, port), DashboardHandler)",
+          "    print(f\"Atomic Agents dashboard server listening on http://{host}:{port}/\")"
+        ],
+        "start_line": 173
+      }
+    ],
+    "file": "atomic_agents/dashboard/serve.py",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 60,
+        "lines": [
+          "    serve_p = sub.add_parser(\"serve\", help=\"Run a local web server (port 8765)\")",
+          "    serve_p.add_argument(\"--agents-root\", default=None)",
+          "    serve_p.add_argument(\"--host\", default=\"127.0.0.1\")",
+          "    serve_p.add_argument(\"--port\", type=int, default=8765)",
+          "",
+          "    args = parser.parse_args(argv)",
+          "    agents_root = (",
+          "        Path(args.agents_root).expanduser().resolve()",
+          "        if args.agents_root else get_agents_root()",
+          "    )",
+          "",
+          "    if not agents_root.exists():",
+          "        print(f\"Error: agents_root does not exist: {agents_root}\", file=sys.stderr)",
+          "        print(f\"Set ATOMIC_AGENTS_ROOT or pass --agents-root\", file=sys.stderr)",
+          "        return 1",
+          "",
+          "    if args.cmd == \"render\":",
+          "        tab = getattr(args, \"tab\", \"all\")",
+          "        written = render_all(agents_root, tab=tab)",
+          "        if written.get(\"global\"):",
+          "            print(f\"Wrote global dashboard:  {written['global']}\")",
+          "        for path in written.get(\"per_agent\", []):",
+          "            print(f\"Wrote per-agent dashboard: {path}\")",
+          "        for key in (\"activity\", \"quality\", \"memory\", \"goals\"):",
+          "            if written.get(key):",
+          "                print(f\"Wrote {key} dashboard: {written[key]}\")",
+          "        return 0",
+          "",
+          "    if args.cmd == \"serve\":",
+          "        serve_cmd(agents_root, host=args.host, port=args.port)",
+          "        return 0"
+        ],
+        "start_line": 30
+      }
+    ],
+    "file": "atomic_agents/dashboard/__main__.py",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "f1d28c33c92ddc55c207d53646cf0fea3a5e1439ac3c3149481888f5ccebeec1",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/__main__.py"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 26,
+        "lines": [
+          "def get_agents_root() -> Path:",
+          "    \"\"\"Resolve the agents root from env var or default to ~/docs/agents.",
+          "",
+          "    Reads HOME and ATOMIC_AGENTS_ROOT on EVERY call (not at import time) so",
+          "    tests that monkeypatch HOME after framework import see the correct value.",
+          "    \"\"\"",
+          "    env_val = os.environ.get(\"ATOMIC_AGENTS_ROOT\")",
+          "    if env_val:",
+          "        return Path(env_val).expanduser().resolve()",
+          "    return (Path.home() / \"docs\" / \"agents\").expanduser().resolve()"
+        ],
+        "start_line": 17
+      }
+    ],
+    "file": "atomic_agents/_platform.py",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "8bafafac6a74982b0b581dc98b921d5478cc863d17882ea649e71f01f484c1c3",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_platform.py"
+  },
+  {
+    "archive_sha256": "2e71e90984f9d06eaa6a7d512023c2cfc5a23be5ecd93acf35702c4ffc142d8d",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "excerpts": [
+      {
+        "end_line": 120,
+        "lines": [
+          "def safe_resolve_under(child: \"Path | str\", root: Path) -> Path:",
+          "    \"\"\"Resolve `child` under `root` and verify the result stays inside `root`.",
+          "",
+          "    `child` may be a string supplied by a user or operator (roster names, CLI",
+          "    filenames, version names).  A value like ``../other`` or ``/etc/passwd``",
+          "    would normally escape the intended root after ``root / child``.  This",
+          "    helper resolves both sides and enforces containment.",
+          "",
+          "    Returns the resolved absolute Path on success.",
+          "    Raises PathTraversalError if the resolved child is not under root.",
+          "",
+          "    Use this anywhere external input becomes a path component.  Examples:",
+          "    roster agent names (delegate target), CLI note_filename / version_name.",
+          "    \"\"\"",
+          "    resolved = (root / child).resolve()",
+          "    root_resolved = root.resolve()",
+          "    try:",
+          "        resolved.relative_to(root_resolved)",
+          "    except ValueError:",
+          "        raise PathTraversalError(",
+          "            f\"path {child!r} resolves outside {root_resolved}\",",
+          "            child=str(child),",
+          "            root=str(root_resolved),",
+          "        )",
+          "    return resolved"
+        ],
+        "start_line": 96
+      }
+    ],
+    "file": "atomic_agents/_io.py",
+    "matches_locked_archive": true,
+    "repository": "dep0we/atomic-agents-stack",
+    "sha256": "b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00",
+    "source_url": "https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py"
+  },
+  {
+    "archive_sha256": "9c512a0b91a55f9d29afbdca5308c320ebd7c1b88df805da7785549627adb03d",
+    "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+    "excerpts": [
+      {
+        "end_line": 220,
+        "lines": [
+          "def _resolve_download_path(folder: str, filename: str) -> Path:",
+          "    \"\"\"Resolve a download path and ensure it stays within the downloads folder.\"\"\"",
+          "    allowed_base = Path(folder).resolve()",
+          "    file_path = (allowed_base / filename).resolve()",
+          "",
+          "    if not file_path.is_relative_to(allowed_base):",
+          "        raise HTTPException(status_code=403, detail=\"Access denied\")",
+          "",
+          "    return file_path"
+        ],
+        "start_line": 212
+      },
+      {
+        "end_line": 273,
+        "lines": [
+          "    @app.get(\"/files/{filename:path}\")",
+          "    async def download_file(filename: str):",
+          "        \"\"\"Handle file downloads.\"\"\"",
+          "        if not args.folder:",
+          "            logger.warning(f\"Attempting to download {filename}, but downloads folder not setup.\")",
+          "            raise HTTPException(404)",
+          "",
+          "        file_path = _resolve_download_path(args.folder, filename)",
+          "        if not file_path.exists():",
+          "            raise HTTPException(404)",
+          "",
+          "        media_type, _ = mimetypes.guess_type(file_path)",
+          "",
+          "        return FileResponse(path=file_path, media_type=media_type, filename=file_path.name)"
+        ],
+        "start_line": 260
+      },
+      {
+        "end_line": 303,
+        "lines": [
+          "                body=request.request_data,",
+          "                session_id=resolved_session_id,",
+          "            )",
+          "            runner_args.cli_args = args",
+          "            background_tasks.add_task(bot_module.bot, runner_args)",
+          ""
+        ],
+        "start_line": 298
+      },
+      {
+        "end_line": 972,
+        "lines": [
+          "    parser.add_argument(\"-f\", \"--folder\", type=str, help=\"Path to downloads folder\")"
+        ],
+        "start_line": 972
+      },
+      {
+        "end_line": 1060,
+        "lines": [
+          "    RUNNER_DOWNLOADS_FOLDER = args.folder",
+          "    RUNNER_HOST = args.host",
+          "    RUNNER_PORT = args.port",
+          "",
+          "    # Configure the app with transport-specific routes",
+          "    _configure_server_app(args)"
+        ],
+        "start_line": 1055
+      }
+    ],
+    "file": "src/pipecat/runner/run.py",
+    "matches_locked_archive": true,
+    "repository": "pipecat-ai/pipecat",
+    "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c",
+    "source_url": "https://github.com/pipecat-ai/pipecat/blob/7519c26ac5508573c35fa3a9c4717b013993d129/src/pipecat/runner/run.py"
+  },
+  {
+    "archive_sha256": "9c512a0b91a55f9d29afbdca5308c320ebd7c1b88df805da7785549627adb03d",
+    "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+    "excerpts": [
+      {
+        "end_line": 82,
+        "lines": [
+          "        handle_sigterm: Whether the bot should install a SIGTERM handler.",
+          "        pipeline_idle_timeout_secs: Seconds the pipeline may stay idle before",
+          "            shutting down.",
+          "        body: Optional request body data passed from the runner entry point.",
+          "        session_id: Identifier for this bot session.",
+          "        cli_args: Parsed CLI arguments from the runner, when launched via the",
+          "            development runner.",
+          "    \"\"\"",
+          "",
+          "    # Use kw_only so subclasses don't need to worry about ordering.",
+          "    handle_sigint: bool = field(init=False, kw_only=True)",
+          "    handle_sigterm: bool = field(init=False, kw_only=True)",
+          "    pipeline_idle_timeout_secs: int = field(init=False, kw_only=True)",
+          "    body: Any | None = field(default_factory=dict, kw_only=True)",
+          "    session_id: str | None = field(default=None, kw_only=True)",
+          "    cli_args: argparse.Namespace | None = field(default=None, init=False, kw_only=True)",
+          "",
+          "    def __post_init__(self):"
+        ],
+        "start_line": 65
+      }
+    ],
+    "file": "src/pipecat/runner/types.py",
+    "matches_locked_archive": true,
+    "repository": "pipecat-ai/pipecat",
+    "sha256": "fd5d9b91fa583355dcc21897b2bcb1efd12161b45c2731cb74d75bc33875be01",
+    "source_url": "https://github.com/pipecat-ai/pipecat/blob/7519c26ac5508573c35fa3a9c4717b013993d129/src/pipecat/runner/types.py"
+  },
+  {
+    "excerpts": [
+      {
+        "end_line": 106,
+        "lines": [
+          "  private predicate normalizedAbsolute(string v) {",
+          "    v.charAt(0) = \"/\" and",
+          "    v != \"/\" and",
+          "    not exists(int i | i > 0 and v.splitAt(\"/\", i) = [\"\", \".\", \"..\"])",
+          "  }",
+          "",
+          "  /** Static value of a T1 root expression (before the T3/T4 check). */",
+          "  private string rootValue(Expr e) {",
+          "    result = e.(StringLiteral).getText()",
+          "    or",
+          "    exists(GlobalVariable g | e.(Name).uses(g) | result = rootValue(moduleConstant(g)))",
+          "    or",
+          "    exists(Call c | c = e and c = pathCtor().getACall().asExpr() |",
+          "      not exists(c.getArg(1)) and",
+          "      not exists(c.getANamedArg()) and",
+          "      result = rootValue(c.getArg(0))",
+          "    )",
+          "    or",
+          "    exists(Call c | c = e and c = osPath(\"join\").getACall().asExpr() |",
+          "      not exists(c.getArg(2)) and",
+          "      not exists(c.getANamedArg()) and",
+          "      result = joinValue(rootValue(c.getArg(0)), c.getArg(1).(StringLiteral).getText())",
+          "    )",
+          "    or",
+          "    exists(BinaryExpr b | b = e and b.getOp() instanceof Div |",
+          "      result = joinValue(rootValue(b.getLeft()), b.getRight().(StringLiteral).getText())",
+          "    )",
+          "    or",
+          "    exists(Call c | c = e and c = osPath([\"normpath\", \"abspath\"]).getACall().asExpr() |",
+          "      result = rootValue(c.getArg(0)) and normalizedAbsolute(result)",
+          "    )",
+          "  }",
+          "",
+          "  /** `e` is a trusted root (T1-T4) with static value `result`. */",
+          "  string trustedRoot(Expr e) { result = rootValue(e) and normalizedAbsolute(result) }"
+        ],
+        "start_line": 72
+      },
+      {
+        "end_line": 884,
+        "lines": [
+          "  private predicate declared(DataFlow::Node sink, string root) {",
+          "    exists(string file, string function | sinkAllowedRoot(file, function, root) |",
+          "      sink.getLocation().getFile().getRelativePath() = file and",
+          "      (function = \"*\" or sink.getScope().(Function).getName() = function)",
+          "    )",
+          "  }",
+          "",
+          "  /**",
+          "   * AllowedRoot (SPEC \u00a74.0, SPEC_RESOURCE.md): `root` is declared for `sink` by a contract; or no",
+          "   * contract covers `sink` and `root` is the root of a containment check on the sink value",
+          "   * itself (local contract), or a resource root the sink value is a flat entry of (resource",
+          "   * contract). A declared contract is authoritative: no other source adds to it.",
+          "   */",
+          "  predicate allowedRoot(DataFlow::Node sink, string root, string source) {",
+          "    declared(sink, root) and source = \"declared\"",
+          "    or",
+          "    not declared(sink, _) and",
+          "    (",
+          "      contained(sink.asCfgNode(), root, _, \"check\") and source = \"local\"",
+          "      or",
+          "      contained(sink.asCfgNode(), root, _, \"join-segment\") and",
+          "      resourceRoot(_, root) and",
+          "      source = \"resource\"",
+          "    )",
+          "  }",
+          "",
+          "  /** Evidence level of a contract source (SPEC_RESOURCE \u00a71): \"proved\" or \"scoped\". */",
+          "  bindingset[source]",
+          "  string level(string source) {",
+          "    source = [\"declared\", \"local\"] and result = \"proved\"",
+          "    or",
+          "    source = \"resource\" and result = \"scoped\"",
+          "  }",
+          "",
+          "  /** The alert at `sink` is suppressed: ProvenContained(sink value, root) and AllowedRoot(sink, root). */",
+          "  predicate suppressedSink(DataFlow::Node sink, string root, string basis, string source) {",
+          "    exists(string via | contained(sink.asCfgNode(), root, basis, via) |",
+          "      allowedRoot(sink, root, source) and",
+          "      (",
+          "        source = \"declared\"",
+          "        or",
+          "        source = \"local\" and via = \"check\"",
+          "        or",
+          "        source = \"resource\" and via = \"join-segment\"",
+          "      )"
+        ],
+        "start_line": 840
+      }
+    ],
+    "file": "experiments/v03-interprocedural-guard/ql/IpgGuard.qll",
+    "repository": "local frozen method",
+    "sha256": "8e4d3d0d0f8299a9271b6b1866f858ec01246e773107f045a05b25ea06817cc2"
+  },
+  {
+    "excerpts": [
+      {
+        "end_line": 140,
+        "lines": [
+          "`AllowedRoot(sink, B)` (`allowedRoot`): c\u00f3 c\u0103n c\u1ee9 \u0111\u1ed9c l\u1eadp r\u1eb1ng thao t\u00e1c t\u1ea1i sink \u0111\u01b0\u1ee3c ph\u00e9p trong `B`. M\u1ed9t c\u1ea3nh b\u00e1o b\u1ecb lo\u1ea1i",
+          "khi **ch\u00ednh \u0111\u1ed1i s\u1ed1 t\u1ea1i sink** c\u00f3 `ProvenContained(\u00b7, r)` v\u00e0 `AllowedRoot(sink, r)`, v\u1edbi `r` l\u00e0 `trusted_root`. G\u1ed1c d\u00f9ng \u0111\u1ec3",
+          "d\u1ef1ng \u0111\u01b0\u1eddng d\u1eabn **kh\u00f4ng** m\u1eb7c \u0111\u1ecbnh l\u00e0 g\u1ed1c \u0111\u01b0\u1ee3c ph\u00e9p. Kh\u00f4ng c\u00f3 `AllowedRoot` \u21d2 ch\u01b0a \u0111\u1ee7 b\u1eb1ng ch\u1ee9ng \u21d2 gi\u1eef c\u1ea3nh b\u00e1o; c\u1ea3nh b\u00e1o \u0111\u00f3",
+          "c\u0169ng **kh\u00f4ng** \u0111\u01b0\u1ee3c t\u00ednh l\u00e0 TP \u0111\u00e3 x\u00e1c minh.",
+          "",
+          "Ngu\u1ed3n `AllowedRoot`, theo th\u1ee9 t\u1ef1 \u01b0u ti\u00ean:",
+          "",
+          "| M\u1ee9c | Ngu\u1ed3n | Tr\u1ea1ng th\u00e1i |",
+          "|---|---|---|",
+          "| A | API c\u00f3 \u0111\u1ed1i s\u1ed1 g\u1ed1c ri\u00eang, v\u00ed d\u1ee5 `flask.send_from_directory(directory, path)` | kh\u00f4ng c\u00e0i: CodeQL (`Flask.qll`, `getAVulnerablePathArgument`) \u0111\u00e3 lo\u1ea1i \u0111\u1ed1i s\u1ed1 `path`/`filename` kh\u1ecfi sink, n\u00ean kh\u00f4ng c\u00f3 c\u1ea3nh b\u00e1o n\u00e0o \u0111\u1ec3 h\u1ee3p \u0111\u1ed3ng API t\u00e1c \u0111\u1ed9ng. \u0110\u1ed1i s\u1ed1 `directory` v\u1eabn l\u00e0 sink v\u00e0 kh\u00f4ng \u0111\u01b0\u1ee3c lo\u1ea1i: ch\u00ednh n\u00f3 l\u00e0 g\u1ed1c. C\u00e0i khi g\u1eb7p API \u0111\u01b0\u1ee3c CodeQL b\u00e1o m\u00e0 mang g\u1ed1c ri\u00eang |",
+          "| B | h\u1ee3p \u0111\u1ed3ng c\u1ee5c b\u1ed9: g\u1ed1c `r` c\u1ee7a m\u1ed9t ph\u00e9p ki\u1ec3m tra containment (m\u1ee5c 4.1: `safe_join(r, p)`, `resolve(p).is_relative_to(r)`, `abspath(p).startswith(r + sep)`, \u2026) m\u00e0 s\u1ef1 ki\u1ec7n c\u1ee7a n\u00f3 t\u1edbi **ch\u00ednh** gi\u00e1 tr\u1ecb t\u1ea1i sink | c\u00e0i |",
+          "| C | c\u1ea5u h\u00ecnh framework, thu\u1ed9c t\u00ednh \u0111\u1ed1i t\u01b0\u1ee3ng, tham s\u1ed1 qua nhi\u1ec1u h\u00e0m | m\u1ee9c B c\u1ee7a k\u1ebf ho\u1ea1ch (m\u1ee5c 9) |",
+          "| \u2014 | h\u1ee3p \u0111\u1ed3ng khai b\u00e1o `sinkAllowedRoot(t\u1ec7p, h\u00e0m \\| \"*\", g\u1ed1c)` (model pack) | d\u1eef li\u1ec7u ki\u1ec3m th\u1eed c\u1ee7a b\u1ed9 ph\u1ea3n v\u00ed d\u1ee5, ho\u1eb7c khai b\u00e1o tr\u01b0\u1edbc khi qu\u00e9t, c\u00f3 ghi ngu\u1ed3n |",
+          "",
+          "H\u1ee3p \u0111\u1ed3ng c\u1ee5c b\u1ed9 **kh\u00f4ng** \u0111\u1ebfn t\u1eeb ph\u00e9p n\u1ed1i: `SafeRel`/`Segment` n\u1ed1i d\u01b0\u1edbi `B` cho `ProvenContained` nh\u01b0ng kh\u00f4ng cho",
+          "`AllowedRoot` \u2014 kh\u00f4ng coi m\u1ecdi th\u01b0 m\u1ee5c trong `os.path.join()` l\u00e0 th\u01b0 m\u1ee5c \u0111\u01b0\u1ee3c ph\u00e9p. H\u1ee3p \u0111\u1ed3ng c\u1ee5c b\u1ed9 ch\u1ee9ng minh truy c\u1eadp b\u1ecb",
+          "gi\u1edbi h\u1ea1n trong g\u1ed1c \u0111\u00e3 x\u00e1c minh, **kh\u00f4ng** ch\u1ee9ng minh m\u1ecdi ch\u00ednh s\u00e1ch ph\u00e2n quy\u1ec1n c\u1ee7a \u1ee9ng d\u1ee5ng \u0111\u01b0\u1ee3c \u0111\u00e1p \u1ee9ng.",
+          "",
+          "**Xung \u0111\u1ed9t.** H\u1ee3p \u0111\u1ed3ng khai b\u00e1o ph\u1ee7 m\u1ed9t sink l\u00e0 c\u0103n c\u1ee9 duy nh\u1ea5t cho sink \u0111\u00f3: m\u1ed9t ph\u00e9p ki\u1ec3m tra v\u1edbi g\u1ed1c kh\u00e1c kh\u00f4ng th\u00eam g\u1ed1c",
+          "(\u0111\u00f3 l\u00e0 \"b\u1eb1ng ch\u1ee9ng v\u1ec1 ch\u00ednh s\u00e1ch kh\u00e1c xung \u0111\u1ed9t\"). `ipg_17_bad` v\u00e0 `ipg_14_good` c\u00f3 c\u00f9ng m\u00e3 (n\u1ed1i d\u01b0\u1edbi `PUBLIC_ROOT`, ch\u1ee9ng",
+          "minh n\u1eb1m trong `PUBLIC_ROOT` b\u1eb1ng `resolve`). V\u1edbi h\u1ee3p \u0111\u1ed3ng khai b\u00e1o c\u1ee7a b\u1ed9 ph\u1ea3n v\u00ed d\u1ee5, ca 17 ch\u1ec9 \u0111\u01b0\u1ee3c `BASE` \u21d2 gi\u1eef; ca 14",
+          "\u0111\u01b0\u1ee3c th\u00eam `PUBLIC_ROOT` \u21d2 c\u00f3 th\u1ec3 lo\u1ea1i. Kh\u00f4ng c\u00f3 h\u1ee3p \u0111\u1ed3ng khai b\u00e1o, c\u1ea3 hai c\u00f3 h\u1ee3p \u0111\u1ed3ng c\u1ee5c b\u1ed9 `PUBLIC_ROOT` \u21d2 c\u00f3 th\u1ec3 lo\u1ea1i:",
+          "nh\u00e3n \"nguy hi\u1ec3m\" c\u1ee7a ca 17 thu\u1ed9c v\u1ec1 h\u1ee3p \u0111\u1ed3ng khai b\u00e1o, kh\u00f4ng thu\u1ed9c v\u1ec1 m\u00e3.",
+          "",
+          "H\u1ee3p \u0111\u1ed3ng khai b\u00e1o **kh\u00f4ng** \u0111\u01b0\u1ee3c t\u1ea1o sau khi xem m\u1ed9t c\u1ea3nh b\u00e1o FP r\u1ed3i d\u00f9ng ch\u00ednh c\u1ea3nh b\u00e1o \u1ea5y l\u00e0m b\u1eb1ng ch\u1ee9ng hi\u1ec7u qu\u1ea3. Tr\u00ean",
+          "d\u1eef li\u1ec7u \u0111\u00e1nh gi\u00e1, m\u1ed7i h\u1ee3p \u0111\u1ed3ng khai b\u00e1o ph\u1ea3i c\u00f3 tr\u01b0\u1edbc khi qu\u00e9t v\u00e0 ghi ngu\u1ed3n; b\u00e1o c\u00e1o \u0111\u1ebfm ri\u00eang c\u1ea3nh b\u00e1o b\u1ecb lo\u1ea1i theo",
+          "t\u1eebng ngu\u1ed3n (`declared`, `local`).",
+          "",
+          "`SafeRel(v)`/`Segment(v)` t\u1edbi th\u1eb3ng sink m\u00e0 **kh\u00f4ng** qua b\u01b0\u1edbc n\u1ed1i d\u01b0\u1edbi m\u1ed9t `trusted_root` **kh\u00f4ng** lo\u1ea1i c\u1ea3nh b\u00e1o"
+        ],
+        "start_line": 112
+      }
+    ],
+    "file": "experiments/v03-interprocedural-guard/SPEC.md",
+    "repository": "local frozen method",
+    "sha256": "420ba58dec1527953c61c5c893c5fe5af781c2216fbe69a847a47b370638a86c"
+  }
+]

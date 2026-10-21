@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "name": "experiments",
+      "argv": [
+        "uv",
+        "run",
+        "--offline",
+        "--project",
+        "backend",
+        "--with-requirements",
+        "experiments/requirements-pairs.txt",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_at": "2026-10-21T09:18:27.739259+00:00",
+      "wall_seconds": 5.6488903999998,
+      "exit_code": 0
+    },
+    {
+      "name": "execution",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/EXECUTION_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T09:18:33.388418+00:00",
+      "wall_seconds": 0.1342819999990752,
+      "exit_code": 0
+    },
+    {
+      "name": "study",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/study-001/RESULTS_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T09:18:33.522722+00:00",
+      "wall_seconds": 0.25337750000471715,
+      "exit_code": 0
+    },
+    {
+      "name": "review",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/review-001/REVIEW_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T09:18:33.776139+00:00",
+      "wall_seconds": 0.08623020000231918,
+      "exit_code": 0
+    },
+    {
+      "name": "paths",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/paths-001/PATHS_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T09:18:33.862371+00:00",
+      "wall_seconds": 0.11501310000312515,
+      "exit_code": 0
+    },
+    {
+      "name": "dual",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/v03-interprocedural-guard/FREEZE_v0.3_dual.sha256"
+      ],
+      "started_at": "2026-10-21T09:18:33.977403+00:00",
+      "wall_seconds": 0.11434000000008382,
+      "exit_code": 0
+    }
+  ],
+  "evaluator_expectation": "exit 2 on exploratory self-review labels; preserved in evaluation-command.json",
+  "test_scope": "synthetic regression fixtures only; no historical pair scanner execution",
+  "new_codeql_query_runs": 0
+}

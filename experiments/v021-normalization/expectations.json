@@ -1,0 +1,25 @@
+{
+  "classification": "synthetic development regression; expectations fixed before first query",
+  "source": "experiments/tests/fixtures/v021_normalization/app.py",
+  "markers": [
+    {"id": "resolve_metadata", "none": "must", "candidate": "keep", "reason": "metadata access before rejecting guard"},
+    {"id": "checked_content", "none": "must", "candidate": "drop", "reason": "exact checked value after component-wise guard; scoped filesystem assumptions"},
+    {"id": "realpath_metadata", "none": "observe", "candidate": "keep_if_reported", "reason": "known possible baseline model gap; never count absent sink as a non-vacuous success"},
+    {"id": "realpath_content", "none": "observe", "candidate": "drop", "reason": "normalized value checked with boundary; baseline may already block this flow"},
+    {"id": "discarded_metadata", "none": "must", "candidate": "keep", "reason": "normalization metadata occurs before guard"},
+    {"id": "discarded_raw_content", "none": "must", "candidate": "keep", "reason": "checked value discarded; raw value used"},
+    {"id": "swallowed_metadata", "none": "must", "candidate": "keep", "reason": "metadata access precedes guard"},
+    {"id": "swallowed_content", "none": "must", "candidate": "keep", "reason": "rejection exception swallowed"},
+    {"id": "prefix_metadata", "none": "must", "candidate": "keep", "reason": "metadata access before incomplete guard"},
+    {"id": "prefix_content", "none": "must", "candidate": "keep", "reason": "prefix check lacks component boundary"},
+    {"id": "unchecked_metadata", "none": "must", "candidate": "keep", "reason": "uncontrolled normalization without guard"},
+    {"id": "unchecked_content", "none": "must", "candidate": "keep", "reason": "uncontrolled content read"},
+    {"id": "helper_metadata", "none": "must", "candidate": "keep", "reason": "normalization metadata inside exception-based helper"},
+    {"id": "returned_content", "none": "must", "candidate": "drop", "reason": "caller uses exact checked returned value"},
+    {"id": "discarded_return_content", "none": "must", "candidate": "keep", "reason": "caller ignores checked return"},
+    {"id": "lexical_control_content", "none": "observe", "candidate": "legacy", "reason": "lexical abspath behavior left unchanged, conditional on A-SYM"}
+  ],
+  "candidate_modes": ["v021", "v031", "v031s"],
+  "stop_on": ["missing required baseline sink", "candidate removes a must-keep marker", "candidate retains a locked positive-control marker", "candidate loses any frozen-v02 sink", "subset relation failure"],
+  "optional_baseline_absence": "report individually as not exercised or model gap, never as a successful retention test"
+}

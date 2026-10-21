@@ -1,0 +1,40 @@
+rank,entity_id,file,line,column,label,source_line,source_sha256
+03,0,atomic_agents/_io.py,96,24,ControlFlowNode for child,"def safe_resolve_under(child: ""Path | str"", root: Path) -> Path:",b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00
+03,2,atomic_agents/_io.py,110,5,ControlFlowNode for resolved,    resolved = (root / child).resolve(),b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00
+03,3,atomic_agents/_io.py,120,12,ControlFlowNode for resolved,    return resolved,b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00
+03,4,atomic_agents/dashboard/serve.py,58,16,ControlFlowNode for self,    def do_GET(self):,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,5,atomic_agents/dashboard/serve.py,59,25,ControlFlowNode for Attribute,        path = urlparse(self.path).path,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,6,atomic_agents/dashboard/serve.py,59,16,ControlFlowNode for urlparse(),        path = urlparse(self.path).path,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,7,atomic_agents/dashboard/serve.py,59,9,ControlFlowNode for path,        path = urlparse(self.path).path,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,8,atomic_agents/dashboard/serve.py,71,13,ControlFlowNode for agent_name,"            agent_name = path[len(""/agents/"") :].rstrip(""/"")",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,9,atomic_agents/dashboard/serve.py,80,47,ControlFlowNode for agent_name,"                resolved = safe_resolve_under(agent_name, self.agents_root)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,10,atomic_agents/dashboard/serve.py,80,28,ControlFlowNode for safe_resolve_under(),"                resolved = safe_resolve_under(agent_name, self.agents_root)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,11,atomic_agents/dashboard/serve.py,80,17,ControlFlowNode for resolved,"                resolved = safe_resolve_under(agent_name, self.agents_root)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,12,atomic_agents/dashboard/serve.py,84,40,ControlFlowNode for BinaryExpr,"            self._serve_file_contained(resolved / ""dashboard.html"", ""text/html"")",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,13,atomic_agents/dashboard/serve.py,89,13,ControlFlowNode for rel,"            rel = path[len(""/_dashboard/"") :]",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,14,atomic_agents/dashboard/serve.py,90,41,ControlFlowNode for rel,"            self._serve_under_dashboard(rel, _content_type_for(Path(rel)))",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,15,atomic_agents/dashboard/serve.py,94,9,ControlFlowNode for bare,"        bare = path.lstrip(""/"")",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,16,atomic_agents/dashboard/serve.py,95,37,ControlFlowNode for bare,"        self._serve_under_dashboard(bare, _content_type_for(Path(bare)))",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,17,atomic_agents/dashboard/serve.py,97,38,ControlFlowNode for relative,"    def _serve_under_dashboard(self, relative: str, content_type: str) -> None:",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,18,atomic_agents/dashboard/serve.py,105,43,ControlFlowNode for relative,"            resolved = safe_resolve_under(relative, dashboard_root)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,19,atomic_agents/dashboard/serve.py,105,24,ControlFlowNode for safe_resolve_under(),"            resolved = safe_resolve_under(relative, dashboard_root)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,20,atomic_agents/dashboard/serve.py,105,13,ControlFlowNode for resolved,"            resolved = safe_resolve_under(relative, dashboard_root)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,21,atomic_agents/dashboard/serve.py,109,36,ControlFlowNode for resolved,"        self._serve_file_contained(resolved, content_type)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,22,atomic_agents/dashboard/serve.py,111,37,ControlFlowNode for path,"    def _serve_file_contained(self, path: Path, content_type: str) -> None:",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,25,atomic_agents/dashboard/serve.py,116,26,ControlFlowNode for path,"        self._serve_file(path, content_type)",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,26,atomic_agents/dashboard/serve.py,140,27,ControlFlowNode for path,"    def _serve_file(self, path: Path, content_type: str) -> None:",4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,31,atomic_agents/_io.py,110,17,ControlFlowNode for BinaryExpr,    resolved = (root / child).resolve(),b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00
+03,32,atomic_agents/dashboard/serve.py,113,16,ControlFlowNode for path,        if not path.exists() or not path.is_file():,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,33,atomic_agents/dashboard/serve.py,113,37,ControlFlowNode for path,        if not path.exists() or not path.is_file():,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,34,atomic_agents/dashboard/serve.py,141,16,ControlFlowNode for path,        if not path.exists():,4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+03,35,atomic_agents/dashboard/serve.py,145,23,ControlFlowNode for path,            content = path.read_bytes(),4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0
+08,0,src/pipecat/runner/run.py,212,41,ControlFlowNode for filename,"def _resolve_download_path(folder: str, filename: str) -> Path:",375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,2,src/pipecat/runner/run.py,215,5,ControlFlowNode for file_path,    file_path = (allowed_base / filename).resolve(),375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,3,src/pipecat/runner/run.py,220,12,ControlFlowNode for file_path,    return file_path,375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,4,src/pipecat/runner/run.py,261,29,ControlFlowNode for filename,    async def download_file(filename: str):,375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,5,src/pipecat/runner/run.py,267,57,ControlFlowNode for filename,"        file_path = _resolve_download_path(args.folder, filename)",375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,6,src/pipecat/runner/run.py,267,21,ControlFlowNode for _resolve_download_path(),"        file_path = _resolve_download_path(args.folder, filename)",375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,7,src/pipecat/runner/run.py,267,9,ControlFlowNode for file_path,"        file_path = _resolve_download_path(args.folder, filename)",375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,10,src/pipecat/runner/run.py,215,18,ControlFlowNode for BinaryExpr,    file_path = (allowed_base / filename).resolve(),375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,11,src/pipecat/runner/run.py,268,16,ControlFlowNode for file_path,        if not file_path.exists():,375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c
+08,12,src/pipecat/runner/run.py,273,34,ControlFlowNode for file_path,"        return FileResponse(path=file_path, media_type=media_type, filename=file_path.name)",375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c

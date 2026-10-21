@@ -1,0 +1,68 @@
+{
+  "created_at": "2026-10-21T09:10:53.729948+00:00",
+  "python_version": "3.12.3",
+  "pathlib_source": "/usr/lib/python3.12/pathlib.py",
+  "pathlib_sha256": "b43e134bf7479759838b4ecec3d78e0e67fdfde2d671c5c2d7886a47da93885d",
+  "classification": "synthetic standard-library observation; not an application exploit or a new CodeQL scan",
+  "source_imported_or_executed": false,
+  "outside_means": "outside the synthetic allowed directory, still inside the workspace fixture",
+  "cases": [
+    {
+      "shape": "download_helper_shape",
+      "guard_accepts": false,
+      "lstat_synthetic_outside_target_before_guard": true,
+      "lstat_calls": [
+        "/mnt",
+        "/mnt/d",
+        "/mnt/d/github",
+        "/mnt/d/github/security-triage",
+        "/mnt/d/github/security-triage/artifacts",
+        "/mnt/d/github/security-triage/artifacts/wave-c",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/allowed",
+        "/mnt",
+        "/mnt/d",
+        "/mnt/d/github",
+        "/mnt/d/github/security-triage",
+        "/mnt/d/github/security-triage/artifacts",
+        "/mnt/d/github/security-triage/artifacts/wave-c",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/allowed",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/outside",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/outside/marker.txt"
+      ],
+      "file_content_read_by_this_fixture": false,
+      "symlinks_created": false,
+      "concurrent_filesystem_change": false
+    },
+    {
+      "shape": "generic_helper_shape",
+      "guard_accepts": false,
+      "lstat_synthetic_outside_target_before_guard": true,
+      "lstat_calls": [
+        "/mnt",
+        "/mnt/d",
+        "/mnt/d/github",
+        "/mnt/d/github/security-triage",
+        "/mnt/d/github/security-triage/artifacts",
+        "/mnt/d/github/security-triage/artifacts/wave-c",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/allowed",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/outside",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/outside/marker.txt",
+        "/mnt",
+        "/mnt/d",
+        "/mnt/d/github",
+        "/mnt/d/github/security-triage",
+        "/mnt/d/github/security-triage/artifacts",
+        "/mnt/d/github/security-triage/artifacts/wave-c",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001",
+        "/mnt/d/github/security-triage/artifacts/wave-c/self-review-metadata-001/allowed"
+      ],
+      "file_content_read_by_this_fixture": false,
+      "symlinks_created": false,
+      "concurrent_filesystem_change": false
+    }
+  ],
+  "conclusion": "A later containment rejection does not imply the normalization step performed no earlier filesystem access. This alone does not prove an exploitable vulnerability."
+}

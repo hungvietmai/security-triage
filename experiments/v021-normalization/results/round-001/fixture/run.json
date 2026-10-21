@@ -1,0 +1,58 @@
+{
+  "application_source_executed": false,
+  "classification": "development after exposure, not independent evaluation",
+  "commands": [
+    {
+      "argv": [
+        "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+        "database",
+        "create",
+        "/mnt/d/github/security-triage/artifacts/v021-normalization/fixture-001/database",
+        "--language=python",
+        "--build-mode=none",
+        "--source-root=/mnt/d/github/security-triage/artifacts/v021-normalization/fixture-001/source",
+        "--threads=2",
+        "--ram=5000",
+        "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-21T09:59:11.220576+00:00",
+      "status": "ok",
+      "timeout_seconds": 1800,
+      "wall_seconds": 9.656286091000002
+    },
+    {
+      "argv": [
+        "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+        "database",
+        "analyze",
+        "/mnt/d/github/security-triage/artifacts/v021-normalization/fixture-001/database",
+        "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02/queries/cwe22_none.ql",
+        "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02/queries/cwe22_all.ql",
+        "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/cwe22_v03.ql",
+        "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/cwe22_v03s.ql",
+        "/mnt/d/github/security-triage/experiments/v021-normalization/pack/queries/cwe22_v021.ql",
+        "/mnt/d/github/security-triage/experiments/v021-normalization/pack/queries/cwe22_v031.ql",
+        "/mnt/d/github/security-triage/experiments/v021-normalization/pack/queries/cwe22_v031s.ql",
+        "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03:/mnt/d/github/security-triage/experiments/v021-normalization/pack",
+        "--format=sarif-latest",
+        "--output=/mnt/d/github/security-triage/artifacts/v021-normalization/fixture-001/fixture.sarif",
+        "--rerun",
+        "--threads=2",
+        "--ram=5000",
+        "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-21T09:59:20.879304+00:00",
+      "status": "ok",
+      "timeout_seconds": 1200,
+      "wall_seconds": 279.334080933
+    }
+  ],
+  "finished_at": "2026-10-21T10:04:00.237389+00:00",
+  "input_lock_sha256": "22d4c2bd0c8719a9c29374bfe629a58ecddceefc98e3e28150350be2cc76a7b8",
+  "phase": "fixture",
+  "repositories": [],
+  "started_at": "2026-10-21T09:59:11.190771+00:00",
+  "status": "completed"
+}

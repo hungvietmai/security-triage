@@ -1,0 +1,24 @@
+--- frozen-v02/SafetyEvidence.qll
++++ candidate-v021/SafetyEvidence.qll
+@@ -478,8 +478,8 @@
+   }
+ 
+   /**
+-   * Sink exclusion (not a barrier): the receiver of `x.resolve()` / argument of `realpath(x)` is
+-   * not itself a dangerous file access when the canonical result is containment-checked.
++   * Candidate v0.2.1: retain filesystem-normalization sinks before later checks.
++   * Only the existing lexical abspath exclusion remains; all barriers are unchanged.
+    */
+   predicate excludedSink(DataFlow::Node sink, string mech, string cwe) {
+     mech = "guard" and
+@@ -487,9 +487,7 @@
+     exists(Name p, Call c, DataFlow::GuardNode g, ControlFlowNode node |
+       containmentGuard(g, node, _) and node.getNode() = p and c = singleDefinition(p)
+     |
+-      sink.asExpr() = c.getFunc().(Attribute).getObject() and c.getFunc().(Attribute).getName() = "resolve"
+-      or
+-      sink.asExpr() = c.getArg(0) and c.getFunc().(Attribute).getName() = ["realpath", "abspath"]
++      sink.asExpr() = c.getArg(0) and c.getFunc().(Attribute).getName() = "abspath"
+     )
+   }
+ 

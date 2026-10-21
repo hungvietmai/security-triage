@@ -1,0 +1,282 @@
+[
+  {
+    "unit_id": "8dcaf01d7907a8adda39bd13",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-PC-NORMALIZATION",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      },
+      "metadata_access_policy": {
+        "status": "unknown",
+        "evidence": "No frozen Wave C policy explicitly establishes that pre-guard metadata access is harmless or outside the alert scope."
+      }
+    },
+    "label_evidence": "Revised from proposed FP: Path.resolve performs filesystem metadata access before the later containment rejection. The pinned CodeQL FileSystemAccess model includes resolve and exists. Absence of file-content reads is insufficient to label this alert FP under an unspecified metadata-access policy. A workspace-only synthetic observation records lstat of an outside synthetic target before rejection, without symlinks or races. No application exploit or externally observable harm is established, so this is unknown, not a confirmed TP.",
+    "supplemental_source_note": "Normalization does not read file contents, but resolve may follow links and query metadata. The proposed FP is scoped to the stated file-access consequence and needs owner review.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "metadata-observation.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "5859e664e867d805eef70b8c",
+    "technical_label": "false_positive",
+    "scope": "production",
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "label_evidence": "Conditional FP proposal for the post-check operation: the exported path passes through _resolve_download_path, which resolves the complete target, rejects unless is_relative_to the resolved base, and returns that exact Path. exists/FileResponse use the returned value. This relies on a trusted downloads-folder contract and excluded TOCTOU; Namespace sharing with bot callbacks prevents claiming global root immutability. All saved abstract routes and their summary were examined; deployment assumptions remain unknown, so no operational suppression acceptance is asserted.",
+    "supplemental_source_note": "The runner parses folder from CLI, but shares the Namespace through runner_args.cli_args with bot callbacks; no global immutability proof is claimed. Complete-target canonical checking rejects pre-existing escaping links in the synthetic observation. Configuration trust/stability and TOCTOU remain scoped assumptions.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "../../results/review-001/synthetic_observations.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "c295eacf017f952ad64f5391",
+    "technical_label": "false_positive",
+    "scope": "production",
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "label_evidence": "Conditional FP proposal for the post-check operation: the exported path passes through _resolve_download_path, which resolves the complete target, rejects unless is_relative_to the resolved base, and returns that exact Path. exists/FileResponse use the returned value. This relies on a trusted downloads-folder contract and excluded TOCTOU; Namespace sharing with bot callbacks prevents claiming global root immutability. All saved abstract routes and their summary were examined; deployment assumptions remain unknown, so no operational suppression acceptance is asserted.",
+    "supplemental_source_note": "The runner parses folder from CLI, but shares the Namespace through runner_args.cli_args with bot callbacks; no global immutability proof is claimed. Complete-target canonical checking rejects pre-existing escaping links in the synthetic observation. Configuration trust/stability and TOCTOU remain scoped assumptions.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "../../results/review-001/synthetic_observations.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "b99a22ccccd631527dd62004",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-NORMALIZATION",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      },
+      "metadata_access_policy": {
+        "status": "unknown",
+        "evidence": "No frozen Wave C policy explicitly establishes that pre-guard metadata access is harmless or outside the alert scope."
+      }
+    },
+    "label_evidence": "Revised from proposed FP: Path.resolve performs filesystem metadata access before the later containment rejection. The pinned CodeQL FileSystemAccess model includes resolve and exists. Absence of file-content reads is insufficient to label this alert FP under an unspecified metadata-access policy. A workspace-only synthetic observation records lstat of an outside synthetic target before rejection, without symlinks or races. No application exploit or externally observable harm is established, so this is unknown, not a confirmed TP.",
+    "supplemental_source_note": "Normalization does not read file contents, but resolve may follow links and query metadata. The proposed FP is scoped to the stated file-access consequence and needs owner review.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "metadata-observation.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "29973e5cc3b0b49c809a4873",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "All three reported route families were examined. The static-dashboard branches resolve and check the full target; the agents branch checks the parent then appends dashboard.html before the shared exists/is_file/read sinks. The latter requires A-SYM covering pre-existing escaping child symlinks, not only absence of races. Root/deployment and authorization evidence remain incomplete. Under suitable scoped assumptions this may be safe; without that evidence retain unknown. This is not a confirmed exploit.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "../../results/review-001/synthetic_observations.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "788be445943d8a953ce5a232",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "All three reported route families were examined. The static-dashboard branches resolve and check the full target; the agents branch checks the parent then appends dashboard.html before the shared exists/is_file/read sinks. The latter requires A-SYM covering pre-existing escaping child symlinks, not only absence of races. Root/deployment and authorization evidence remain incomplete. Under suitable scoped assumptions this may be safe; without that evidence retain unknown. This is not a confirmed exploit.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "../../results/review-001/synthetic_observations.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "0f3b3e4c8adbc208a0ca43bd",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "All three reported route families were examined. The static-dashboard branches resolve and check the full target; the agents branch checks the parent then appends dashboard.html before the shared exists/is_file/read sinks. The latter requires A-SYM covering pre-existing escaping child symlinks, not only absence of races. Root/deployment and authorization evidence remain incomplete. Under suitable scoped assumptions this may be safe; without that evidence retain unknown. This is not a confirmed exploit.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "../../results/review-001/synthetic_observations.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  },
+  {
+    "unit_id": "1d3c60e0364a3a006fa676d3",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": true,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "All three reported route families were examined. The static-dashboard branches resolve and check the full target; the agents branch checks the parent then appends dashboard.html before the shared exists/is_file/read sinks. The latter requires A-SYM covering pre-existing escaping child symlinks, not only absence of races. Root/deployment and authorization evidence remain incomplete. Under suitable scoped assumptions this may be safe; without that evidence retain unknown. This is not a confirmed exploit.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant technical self-review; not owner or independent confirmation",
+    "source_audit": "../../results/review-001/source_audit.json",
+    "synthetic_evidence": "../../results/review-001/synthetic_observations.json",
+    "prior_proposal_preserved": true,
+    "agent_review": {
+      "actor": "assistant, same exposed reviewer",
+      "completed_at": "2026-10-21T09:14:42.901340+00:00",
+      "independent": false,
+      "reported_artifacts_reviewed": true,
+      "coverage": "eight alerts, eighteen exemplars, full saved finite abstract graphs with thirty-nine nodes and three summary rows; not all concrete executions",
+      "graph_audit": "audit.json"
+    }
+  }
+]

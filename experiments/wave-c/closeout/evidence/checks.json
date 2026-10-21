@@ -1,0 +1,110 @@
+{
+  "commands": [
+    {
+      "name": "experiments",
+      "argv": [
+        "uv",
+        "run",
+        "--offline",
+        "--project",
+        "backend",
+        "--with-requirements",
+        "experiments/requirements-pairs.txt",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_at": "2026-10-21T08:53:56.844381+00:00",
+      "wall_seconds": 5.71327530000417,
+      "exit_code": 0
+    },
+    {
+      "name": "execution",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/EXECUTION_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T08:54:02.557948+00:00",
+      "wall_seconds": 0.13283849999425001,
+      "exit_code": 0
+    },
+    {
+      "name": "study",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/study-001/RESULTS_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T08:54:02.690808+00:00",
+      "wall_seconds": 0.27705520000017714,
+      "exit_code": 0
+    },
+    {
+      "name": "review",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/review-001/REVIEW_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T08:54:02.967902+00:00",
+      "wall_seconds": 0.09029670000018086,
+      "exit_code": 0
+    },
+    {
+      "name": "paths",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/paths-001/PATHS_LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T08:54:03.058202+00:00",
+      "wall_seconds": 0.11918320000404492,
+      "exit_code": 0
+    },
+    {
+      "name": "selection",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/LOCK.sha256"
+      ],
+      "started_at": "2026-10-21T08:54:03.177405+00:00",
+      "wall_seconds": 0.0873528000083752,
+      "exit_code": 0
+    },
+    {
+      "name": "dual",
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/v03-interprocedural-guard/FREEZE_v0.3_dual.sha256",
+        "--metadata",
+        "experiments/v03-interprocedural-guard/FREEZE_v0.3_dual.json"
+      ],
+      "started_at": "2026-10-21T08:54:03.264778+00:00",
+      "wall_seconds": 0.11448969999037217,
+      "exit_code": 0
+    }
+  ],
+  "new_scanner_runs": 0,
+  "test_scope": "experiments synthetic fixtures; no historical frozen pair scanning",
+  "not_run": [
+    "frontend tests",
+    "backend application tests",
+    "application source tests"
+  ],
+  "reason_not_run": "research closeout documents and derived evidence only; application implementation unchanged"
+}
