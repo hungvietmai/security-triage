@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-21T07:52:15.369660+00:00",
+  "commands": [
+    {
+      "argv": [
+        "uv",
+        "run",
+        "--offline",
+        "--project",
+        "backend",
+        "--with-requirements",
+        "experiments/requirements-pairs.txt",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "result": "85 tests passed; synthetic fixtures only"
+    },
+    {
+      "argv": [
+        "python",
+        "experiments/wave-c/evaluate.py",
+        "--run",
+        "experiments/wave-c/results/study-001/evaluation_run.json",
+        "--labels",
+        "experiments/wave-c/results/review-001/labels.proposed.json",
+        "--output",
+        "experiments/wave-c/results/review-001/evaluation"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/study-001/RESULTS_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "verified_inputs": 314
+    },
+    {
+      "argv": [
+        "python",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/EXECUTION_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "verified_inputs": 98
+    }
+  ],
+  "invariants_verified": {
+    "sink_counts": {
+      "none": 8,
+      "all": 5,
+      "v03": 5,
+      "v03s": 5
+    },
+    "human_labels_confirmed": 0,
+    "proposed_labels_only": 8,
+    "fp_reduction_rates_confirmed": null,
+    "full_target_existing_link_rejected": true,
+    "parent_then_append_existing_link_read_outside_synthetic_root": true,
+    "concurrent_change_required_for_parent_append_witness": false,
+    "primary_result_files_changed": 0
+  },
+  "source_audit_reproduces_except_clock_fields": true,
+  "log_representation": "Test log text stored as UTF-8; shell redirection encoding normalized if needed"
+}

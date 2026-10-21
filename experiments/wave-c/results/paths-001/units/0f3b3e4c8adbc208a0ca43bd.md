@@ -1,0 +1,82 @@
+# 0f3b3e4c8adbc208a0ca43bd
+
+Repository: `dep0we/atomic-agents-stack@ec474f458122c5c0ca718d0df3078c8080338b2c`.
+
+Sink: `atomic_agents/dashboard/serve.py:145:23`. 3 path exemplars; 23 located abstract edge rows.
+
+Post-hoc review aid. No label or suppression decision is included in this card.
+Human review and `all_reported_flows_reviewed` remain pending/false.
+
+Raw [SARIF](../inputs/03/paths.sarif), [edge CSV](../inputs/03/edges.csv),
+[edge JSON](../inputs/03/edges.json). Entity IDs in the JSON are local to this query result.
+
+## Path exemplar 1
+
+| Step | Source location | CodeQL node |
+|---:|---|---|
+| 1 | [atomic_agents/dashboard/serve.py:58:16](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L58) | ControlFlowNode for self |
+| 2 | [atomic_agents/dashboard/serve.py:59:25](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for Attribute |
+| 3 | [atomic_agents/dashboard/serve.py:59:16](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for urlparse() |
+| 4 | [atomic_agents/dashboard/serve.py:59:9](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for path |
+| 5 | [atomic_agents/dashboard/serve.py:71:13](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L71) | ControlFlowNode for agent_name |
+| 6 | [atomic_agents/dashboard/serve.py:80:47](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L80) | ControlFlowNode for agent_name |
+| 7 | [atomic_agents/_io.py:96:24](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L96) | ControlFlowNode for child |
+| 8 | [atomic_agents/_io.py:110:5](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L110) | ControlFlowNode for resolved |
+| 9 | [atomic_agents/_io.py:120:12](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L120) | ControlFlowNode for resolved |
+| 10 | [atomic_agents/dashboard/serve.py:80:28](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L80) | ControlFlowNode for safe_resolve_under() |
+| 11 | [atomic_agents/dashboard/serve.py:80:17](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L80) | ControlFlowNode for resolved |
+| 12 | [atomic_agents/dashboard/serve.py:84:40](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L84) | ControlFlowNode for BinaryExpr |
+| 13 | [atomic_agents/dashboard/serve.py:111:37](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L111) | ControlFlowNode for path |
+| 14 | [atomic_agents/dashboard/serve.py:116:26](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L116) | ControlFlowNode for path |
+| 15 | [atomic_agents/dashboard/serve.py:140:27](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L140) | ControlFlowNode for path |
+| 16 | [atomic_agents/dashboard/serve.py:145:23](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L145) | ControlFlowNode for path |
+
+## Path exemplar 2
+
+| Step | Source location | CodeQL node |
+|---:|---|---|
+| 1 | [atomic_agents/dashboard/serve.py:58:16](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L58) | ControlFlowNode for self |
+| 2 | [atomic_agents/dashboard/serve.py:59:25](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for Attribute |
+| 3 | [atomic_agents/dashboard/serve.py:59:16](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for urlparse() |
+| 4 | [atomic_agents/dashboard/serve.py:59:9](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for path |
+| 5 | [atomic_agents/dashboard/serve.py:89:13](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L89) | ControlFlowNode for rel |
+| 6 | [atomic_agents/dashboard/serve.py:90:41](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L90) | ControlFlowNode for rel |
+| 7 | [atomic_agents/dashboard/serve.py:97:38](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L97) | ControlFlowNode for relative |
+| 8 | [atomic_agents/dashboard/serve.py:105:43](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L105) | ControlFlowNode for relative |
+| 9 | [atomic_agents/_io.py:96:24](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L96) | ControlFlowNode for child |
+| 10 | [atomic_agents/_io.py:110:5](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L110) | ControlFlowNode for resolved |
+| 11 | [atomic_agents/_io.py:120:12](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L120) | ControlFlowNode for resolved |
+| 12 | [atomic_agents/dashboard/serve.py:105:24](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L105) | ControlFlowNode for safe_resolve_under() |
+| 13 | [atomic_agents/dashboard/serve.py:105:13](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L105) | ControlFlowNode for resolved |
+| 14 | [atomic_agents/dashboard/serve.py:109:36](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L109) | ControlFlowNode for resolved |
+| 15 | [atomic_agents/dashboard/serve.py:111:37](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L111) | ControlFlowNode for path |
+| 16 | [atomic_agents/dashboard/serve.py:116:26](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L116) | ControlFlowNode for path |
+| 17 | [atomic_agents/dashboard/serve.py:140:27](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L140) | ControlFlowNode for path |
+| 18 | [atomic_agents/dashboard/serve.py:145:23](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L145) | ControlFlowNode for path |
+
+## Path exemplar 3
+
+| Step | Source location | CodeQL node |
+|---:|---|---|
+| 1 | [atomic_agents/dashboard/serve.py:58:16](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L58) | ControlFlowNode for self |
+| 2 | [atomic_agents/dashboard/serve.py:59:25](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for Attribute |
+| 3 | [atomic_agents/dashboard/serve.py:59:16](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for urlparse() |
+| 4 | [atomic_agents/dashboard/serve.py:59:9](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L59) | ControlFlowNode for path |
+| 5 | [atomic_agents/dashboard/serve.py:94:9](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L94) | ControlFlowNode for bare |
+| 6 | [atomic_agents/dashboard/serve.py:95:37](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L95) | ControlFlowNode for bare |
+| 7 | [atomic_agents/dashboard/serve.py:97:38](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L97) | ControlFlowNode for relative |
+| 8 | [atomic_agents/dashboard/serve.py:105:43](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L105) | ControlFlowNode for relative |
+| 9 | [atomic_agents/_io.py:96:24](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L96) | ControlFlowNode for child |
+| 10 | [atomic_agents/_io.py:110:5](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L110) | ControlFlowNode for resolved |
+| 11 | [atomic_agents/_io.py:120:12](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/_io.py#L120) | ControlFlowNode for resolved |
+| 12 | [atomic_agents/dashboard/serve.py:105:24](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L105) | ControlFlowNode for safe_resolve_under() |
+| 13 | [atomic_agents/dashboard/serve.py:105:13](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L105) | ControlFlowNode for resolved |
+| 14 | [atomic_agents/dashboard/serve.py:109:36](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L109) | ControlFlowNode for resolved |
+| 15 | [atomic_agents/dashboard/serve.py:111:37](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L111) | ControlFlowNode for path |
+| 16 | [atomic_agents/dashboard/serve.py:116:26](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L116) | ControlFlowNode for path |
+| 17 | [atomic_agents/dashboard/serve.py:140:27](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L140) | ControlFlowNode for path |
+| 18 | [atomic_agents/dashboard/serve.py:145:23](https://github.com/dep0we/atomic-agents-stack/blob/ec474f458122c5c0ca718d0df3078c8080338b2c/atomic_agents/dashboard/serve.py#L145) | ControlFlowNode for path |
+
+These are selected CodeQL paths, not an enumeration of executions. Located edges can
+include summarized calls or infeasible combinations; missing guard nodes do not prove
+the guard is absent. Read the source alongside each path before assigning a label.

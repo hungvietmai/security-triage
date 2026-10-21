@@ -1,0 +1,210 @@
+[
+  {
+    "unit_id": "8dcaf01d7907a8adda39bd13",
+    "technical_label": "false_positive",
+    "scope": "production",
+    "root_cause_id": "C-PC-NORMALIZATION",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "label_evidence": "Path.resolve() normalizes a filename before the is_relative_to check; it does not read or write file contents. Rejected results raise before return.",
+    "supplemental_source_note": "Normalization does not read file contents, but resolve may follow links and query metadata. The proposed FP is scoped to the stated file-access consequence and needs owner review.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "5859e664e867d805eef70b8c",
+    "technical_label": "false_positive",
+    "scope": "production",
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "label_evidence": "_resolve_download_path normalizes the base and combined path, raises HTTPException unless the result is relative to the base, and returns the exact checked Path. The download handler uses that returned value at exists()/FileResponse. Proposed FP under a trusted operator-configured folder and no concurrent filesystem tampering.",
+    "supplemental_source_note": "The runner parses folder from CLI, but shares the Namespace through runner_args.cli_args with bot callbacks; no global immutability proof is claimed. Complete-target canonical checking rejects pre-existing escaping links in the synthetic observation. Configuration trust/stability and TOCTOU remain scoped assumptions.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "c295eacf017f952ad64f5391",
+    "technical_label": "false_positive",
+    "scope": "production",
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "label_evidence": "_resolve_download_path normalizes the base and combined path, raises HTTPException unless the result is relative to the base, and returns the exact checked Path. The download handler uses that returned value at exists()/FileResponse. Proposed FP under a trusted operator-configured folder and no concurrent filesystem tampering.",
+    "supplemental_source_note": "The runner parses folder from CLI, but shares the Namespace through runner_args.cli_args with bot callbacks; no global immutability proof is claimed. Complete-target canonical checking rejects pre-existing escaping links in the synthetic observation. Configuration trust/stability and TOCTOU remain scoped assumptions.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "b99a22ccccd631527dd62004",
+    "technical_label": "false_positive",
+    "scope": "production",
+    "root_cause_id": "C-AA-NORMALIZATION",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "The sink is Path.resolve() while constructing a path in safe_resolve_under, not a content read/write. Lines 113-119 reject a resolved path outside root before returning. Proposed FP only for the CWE-22 file-access consequence; no assertion about all other filesystem side effects.",
+    "supplemental_source_note": "Normalization does not read file contents, but resolve may follow links and query metadata. The proposed FP is scoped to the stated file-access consequence and needs owner review.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "29973e5cc3b0b49c809a4873",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "788be445943d8a953ce5a232",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "0f3b3e4c8adbc208a0ca43bd",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  },
+  {
+    "unit_id": "1d3c60e0364a3a006fa676d3",
+    "technical_label": "unknown",
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "label_evidence": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "supplemental_source_note": "Two callers feed the same sinks. The static-dashboard route resolves the complete target; the agents route resolves the parent then appends dashboard.html. A pre-existing escaping child symlink requires no concurrent change. Synthetic evidence exercises these Path operations only; not the application. Keep unknown for the overall sink until scope/flows are reviewed.",
+    "proposal_author": "assistant static source audit; not an independent reviewer",
+    "source_audit": "source_audit.json",
+    "synthetic_evidence": "synthetic_observations.json",
+    "prior_proposal_preserved": true
+  }
+]

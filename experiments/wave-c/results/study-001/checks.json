@@ -1,0 +1,61 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/EXECUTION_LOCK.sha256"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--metadata",
+        "experiments/v03-interprocedural-guard/FREEZE_v0.3_dual.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "uv",
+        "run",
+        "--offline",
+        "--project",
+        "backend",
+        "--with-requirements",
+        "experiments/requirements-pairs.txt",
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/wave-c/prepare_sources.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "experiments/wave-c/prepare_toolchain.py",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "no_frozen_research_pair_scanned_for_testing": true,
+  "published_and_original_evaluation_match_except_run_sha256": true
+}

@@ -1,0 +1,18 @@
+{
+  "observed_at": "2026-10-21T04:39:41.315784+00:00",
+  "command": [
+    "wsl",
+    "-d",
+    "Ubuntu",
+    "--exec",
+    "ps",
+    "-eo",
+    "pid,ppid,etime,pcpu,args"
+  ],
+  "relevant_processes": [
+    "    314     313       39:09  0.5 python3 /mnt/d/github/security-triage/experiments/wave-c/run.py --execute --output artifacts/wave-c/study-001",
+    "  10067   10060       00:20 16.1 /mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/tools/linux64/java/bin/java -Dsun.misc.unsafe.memory.access=allow -Dcodeql.chainer.v2=/tmp/codeql.7UQxU5RV --add-modules jdk.unsupported -cp /mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/tools/codeql.jar com.semmle.cli2.CodeQL database create /mnt/d/github/security-triage/artifacts/wave-c/study-001/11/database --language=python --source-root=/mnt/d/github/security-triage/artifacts/wave-c/study-001/11/extracted/bbot-3bc8d3a96f34f312853c9fcf8decee2a4e905f26 --threads=2 --ram=5000 --common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+  ],
+  "python_tracer_processes_observed": 0,
+  "interpretation": "Process count is not a CPU/RAM measurement; CLI flags alone do not verify a hard process-tree limit."
+}

@@ -1,0 +1,42 @@
+{
+  "baseline_expected_sink_counts": {
+    "03": 5,
+    "08": 3
+  },
+  "budgets": {
+    "per_query_timeout_seconds": 1200,
+    "ram_argument_mib": 5000,
+    "same_queries_retry": false,
+    "threads": 2,
+    "total_primary_command_seconds": 3358.157506
+  },
+  "classification": "post-hoc exploratory review aid, not preregistered primary analysis",
+  "created_at": "2026-10-21T08:02:01.579068+00:00",
+  "graph_interpretation": "finite abstract PathGraph edges between reported endpoints; may contain summarized calls, cycles, and infeasible combinations; not all concrete executions",
+  "inputs": {
+    "experiments/wave-c/results/paths-001/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "experiments/wave-c/results/paths-001/.gitignore": "e027cf8ebf80d6dcdacced8a4dbd1c440e2436fb1868ec851db4061cb67bb787",
+    "experiments/wave-c/results/paths-001/pack/ReviewEdges.ql": "8ca3e9697bfa56808ca9b1196af492881d7c8d48df1b268b5e7d2ddfd766e3b7",
+    "experiments/wave-c/results/paths-001/pack/ReviewPaths.ql": "f5dd6bf3a51569a6533b806b2ce1574adc578a2b1759d026dac96ce9721de50f",
+    "experiments/wave-c/results/paths-001/pack/SafetyEvidence.qll": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+    "experiments/wave-c/results/paths-001/pack/codeql-pack.lock.yml": "b4e2a719729f32ab25998458b1a3685fabf1957c48ce6b3c6ff074b17e658a27",
+    "experiments/wave-c/results/paths-001/pack/qlpack.yml": "c144b239e9c14cf5dc8b6d09b331ee49f76e5056964c95112a54a2650b7e80e8",
+    "experiments/wave-c/results/paths-001/tools/run_paths.py": "3b744d4d11de0d7e0b854c8b9322a9b0da3459d9f685d3c1c3c8cb9e72b11944"
+  },
+  "no_label_promotion": true,
+  "no_source_extraction_or_application_execution": true,
+  "no_source_sink_sanitizer_model_changes": true,
+  "primary_results_lock_sha256": "6068762bb6acc6fe40b4175f8f19ef45aadf3e4afc892b7965e3fa2ed6c190b6",
+  "query_relation": "same PathInjectionFlow with identical imports and empty ExtraSanitizer; flowPath replaces reporting via flow only",
+  "repositories_in_original_inventory_order": [
+    "03",
+    "08"
+  ],
+  "review_lock_sha256": "e89c6cbd81e4b9e285d58764ea4ce7828207c86a484dd5679a042f050edc4c99",
+  "success_conditions": [
+    "identical source and sink coordinate pairs to frozen none SARIF",
+    "all eight unit IDs mapped",
+    "no original database/input/label changes"
+  ],
+  "why_these_repositories": "all and only successfully scanned Wave C repositories with baseline alerts"
+}

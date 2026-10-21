@@ -1,0 +1,57 @@
+{
+  "created_at": "2026-10-21T07:43:00.592463+00:00",
+  "kind": "post-hoc supplementary source review",
+  "human_review_confirmed": false,
+  "human_review_seconds": 0,
+  "independent_reviewer": false,
+  "codeql_scan_count": 0,
+  "new_rule_or_model_count": 0,
+  "labels_changed_from_prior_proposals": 0,
+  "primary_results_manifest_sha256": "6068762bb6acc6fe40b4175f8f19ef45aadf3e4afc892b7965e3fa2ed6c190b6",
+  "primary_results_manifest": "experiments/wave-c/results/study-001/RESULTS_LOCK.sha256",
+  "source_audit_python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "synthetic_environment_observed": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "artifacts/wave-c/publication-prep/collect_review_source.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "wsl",
+        "-d",
+        "Ubuntu",
+        "--exec",
+        "python3",
+        "/mnt/d/github/security-triage/artifacts/wave-c/publication-prep/observe_review_boundaries.py",
+        "--workspace",
+        "/mnt/d/github/security-triage",
+        "--output",
+        "artifacts/wave-c/review-boundaries-001"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python",
+        "artifacts/wave-c/publication-prep/collect_review_source.py",
+        "--output",
+        "artifacts/wave-c/source-audit-002"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limits": [
+    "First-pass owner review has not occurred",
+    "This is not a second review pass; no seven-day review interval is claimed",
+    "AST occurrences are lexical candidates, not resolved CodeQL flows",
+    "Synthetic scenarios never import or execute application source"
+  ],
+  "portable_source_audit_reproduction_matches_except_clock_fields": true
+}

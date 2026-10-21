@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-10-21T07:35:35.506954+00:00",
+  "classification": "post-hoc source-informed synthetic boundary observations",
+  "application_imported_or_executed": false,
+  "scanner_executed": false,
+  "outside_means": "Outside the synthetic allowed directory, still inside this new workspace experiment",
+  "cases": [
+    {
+      "case": "full-target-regular",
+      "guard_accepts": true,
+      "read_marker": "INSIDE_SYNTHETIC_MARKER"
+    },
+    {
+      "case": "full-target-existing-link",
+      "guard_accepts": false,
+      "read_marker": null,
+      "concurrent_filesystem_change": false
+    },
+    {
+      "case": "checked-parent-then-append",
+      "parent_guard_accepts": true,
+      "used_path_lexically_inside": true,
+      "used_path_canonically_inside": false,
+      "read_marker": "OUTSIDE_SYNTHETIC_MARKER",
+      "concurrent_filesystem_change": false,
+      "assumption_required": "No pre-existing escaping child symlink (A-SYM), not merely no race"
+    },
+    {
+      "case": "checked-parent-regular-child",
+      "parent_guard_accepts": true,
+      "used_path_canonically_inside": true,
+      "read_marker": "INSIDE_SYNTHETIC_MARKER"
+    },
+    {
+      "case": "replacement-after-canonical-check",
+      "guard_accepts_before_replacement": true,
+      "used_path_canonically_inside_after_replacement": false,
+      "read_marker": "OUTSIDE_SYNTHETIC_MARKER",
+      "simulated_post_check_filesystem_change": true,
+      "excluded_by_frozen_model": "TOCTOU"
+    }
+  ],
+  "limitations": "Mirrors selected Path operations only; not an end-to-end application exploit or independent validation"
+}

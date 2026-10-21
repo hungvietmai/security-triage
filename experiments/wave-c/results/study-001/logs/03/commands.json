@@ -1,0 +1,279 @@
+[
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "create",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "--language=python",
+      "--source-root=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/extracted/atomic-agents-stack-ec474f458122c5c0ca718d0df3078c8080338b2c",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:15:47.506005+00:00",
+    "status": "ok",
+    "timeout_seconds": 1800,
+    "wall_seconds": 40.69620290499995
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "analyze",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02/queries/cwe22_none.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--format=sarif-latest",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/none.sarif",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:16:28.207424+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 55.65110928299998
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "analyze",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02/queries/cwe22_all.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--format=sarif-latest",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/all.sarif",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:17:23.862495+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 47.47200126400014
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "analyze",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/cwe22_v03.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--format=sarif-latest",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/v03.sarif",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:18:11.339308+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 49.327442246000146
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "analyze",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/cwe22_v03s.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--format=sarif-latest",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/v03s.sarif",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:19:00.670393+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 49.43543472800002
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "run-queries",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/V03Contracts.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:19:50.111549+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 39.95508279599994
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "bqrs",
+      "decode",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database/results/security-triage/python-v03/queries/V03Contracts.bqrs",
+      "--format=csv",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/V03Contracts.csv",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:20:30.113424+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 0.8184755990000667
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "run-queries",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/V03Evidence.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:20:30.936131+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 39.367309001999956
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "bqrs",
+      "decode",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database/results/security-triage/python-v03/queries/V03Evidence.bqrs",
+      "--format=csv",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/V03Evidence.csv",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:21:10.349297+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 0.8183242650000011
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "run-queries",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/V03Summaries.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:21:11.172717+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 38.452361755999846
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "bqrs",
+      "decode",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database/results/security-triage/python-v03/queries/V03Summaries.bqrs",
+      "--format=csv",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/V03Summaries.csv",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:21:49.671664+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 0.818761061000032
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "run-queries",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03/queries/V03Resources.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:21:50.494348+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 39.10749888100008
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "bqrs",
+      "decode",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database/results/security-triage/python-v03/queries/V03Resources.bqrs",
+      "--format=csv",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/V03Resources.csv",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:22:29.652392+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 0.8686910740000258
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "database",
+      "run-queries",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database",
+      "/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics/ExtractedPythonFiles.ql",
+      "--additional-packs=/mnt/d/github/security-triage/artifacts/wave-c/toolchain/diagnostics:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v02:/mnt/d/github/security-triage/artifacts/wave-c/toolchain/v03",
+      "--rerun",
+      "--threads=2",
+      "--ram=5000",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:22:30.526348+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 34.59277126700022
+  },
+  {
+    "argv": [
+      "/mnt/d/github/security-triage/artifacts/toolchains/codeql-2.27.1/codeql/codeql",
+      "bqrs",
+      "decode",
+      "/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/database/results/security-triage/wave-c-diagnostics/ExtractedPythonFiles.bqrs",
+      "--format=csv",
+      "--output=/mnt/d/github/security-triage/artifacts/wave-c/study-001/03/ExtractedPythonFiles.csv",
+      "--common-caches=/mnt/d/github/security-triage/artifacts/toolchains/codeql-cache"
+    ],
+    "exit_code": 0,
+    "started_at": "2026-10-21T04:23:05.171316+00:00",
+    "status": "ok",
+    "timeout_seconds": 1200,
+    "wall_seconds": 0.8685723020000751
+  }
+]

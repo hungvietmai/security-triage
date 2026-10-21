@@ -1,0 +1,59 @@
+{"edges":{"columns":[
+   {"name":"a","kind":"Entity"}
+  ,{"name":"b","kind":"Entity"}
+  ,{"name":"key","kind":"String"}
+  ,{"name":"val","kind":"String"}]
+ ,"tuples":[
+   [{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for file_path"},"provenance","AdditionalTaintStep"]
+  ,[{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for BinaryExpr"},"provenance","AdditionalTaintStep"]
+  ,[{"label":"ControlFlowNode for file_path"},{"label":"ControlFlowNode for file_path"},"provenance",""]
+  ,[{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for filename"},"provenance",""]
+  ,[{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for filename"},"provenance",""]
+  ,[{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for _resolve_download_path()"},"provenance","AdditionalTaintStep"]
+  ,[{"label":"ControlFlowNode for _resolve_download_path()"},{"label":"ControlFlowNode for file_path"},"provenance",""]
+  ,[{"label":"ControlFlowNode for file_path"},{"label":"ControlFlowNode for file_path"},"provenance",""]
+  ,[{"label":"ControlFlowNode for file_path"},{"label":"ControlFlowNode for file_path"},"provenance",""]]
+ },"nodes":{"columns":[
+   {"name":"n","kind":"Entity"}
+  ,{"name":"key","kind":"String"}
+  ,{"name":"val","kind":"String"}]
+ ,"tuples":[
+   [{"label":"ControlFlowNode for filename"},"semmle.label","ControlFlowNode for filename"]
+  ,[{"label":"ControlFlowNode for file_path"},"semmle.label","ControlFlowNode for file_path"]
+  ,[{"label":"ControlFlowNode for file_path"},"semmle.label","ControlFlowNode for file_path"]
+  ,[{"label":"ControlFlowNode for filename"},"semmle.label","ControlFlowNode for filename"]
+  ,[{"label":"ControlFlowNode for filename"},"semmle.label","ControlFlowNode for filename"]
+  ,[{"label":"ControlFlowNode for _resolve_download_path()"},"semmle.label","ControlFlowNode for _resolve_download_path()"]
+  ,[{"label":"ControlFlowNode for file_path"},"semmle.label","ControlFlowNode for file_path"]
+  ,[{"label":"ControlFlowNode for BinaryExpr"},"semmle.label","ControlFlowNode for BinaryExpr"]
+  ,[{"label":"ControlFlowNode for file_path"},"semmle.label","ControlFlowNode for file_path"]
+  ,[{"label":"ControlFlowNode for file_path"},"semmle.label","ControlFlowNode for file_path"]]
+ },"subpaths":{"columns":[
+   {"name":"arg","kind":"Entity"}
+  ,{"name":"par","kind":"Entity"}
+  ,{"name":"ret","kind":"Entity"}
+  ,{"name":"out","kind":"Entity"}]
+ ,"tuples":[
+   [{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for filename"},{"label":"ControlFlowNode for file_path"},{"label":"ControlFlowNode for _resolve_download_path()"}]]
+ },"#select":{"columns":[
+   {"name":"source_location","kind":"String"}
+  ,{"name":"sink_location","kind":"String"}
+  ,{"name":"predecessor","kind":"Entity"}
+  ,{"name":"from_location","kind":"String"}
+  ,{"name":"from_callable","kind":"String"}
+  ,{"name":"successor","kind":"Entity"}
+  ,{"name":"to_location","kind":"String"}
+  ,{"name":"to_callable","kind":"String"}]
+ ,"tuples":[
+   ["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:215:18",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:212:41","_resolve_download_path",{"label":"ControlFlowNode for BinaryExpr"},"src/pipecat/runner/run.py:215:18","_resolve_download_path"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:215:18",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:261:29","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:267:57","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:215:18",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:267:57","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:212:41","_resolve_download_path"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:268:16",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:261:29","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:267:57","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:268:16",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:267:57","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for _resolve_download_path()"},"src/pipecat/runner/run.py:267:21","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:268:16",{"label":"ControlFlowNode for _resolve_download_path()"},"src/pipecat/runner/run.py:267:21","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for file_path"},"src/pipecat/runner/run.py:267:9","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:268:16",{"label":"ControlFlowNode for file_path"},"src/pipecat/runner/run.py:267:9","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for file_path"},"src/pipecat/runner/run.py:268:16","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:273:34",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:261:29","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:267:57","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:273:34",{"label":"ControlFlowNode for filename"},"src/pipecat/runner/run.py:267:57","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for _resolve_download_path()"},"src/pipecat/runner/run.py:267:21","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:273:34",{"label":"ControlFlowNode for _resolve_download_path()"},"src/pipecat/runner/run.py:267:21","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for file_path"},"src/pipecat/runner/run.py:267:9","_setup_webrtc_routes.download_file"]
+  ,["src/pipecat/runner/run.py:261:29","src/pipecat/runner/run.py:273:34",{"label":"ControlFlowNode for file_path"},"src/pipecat/runner/run.py:267:9","_setup_webrtc_routes.download_file",{"label":"ControlFlowNode for file_path"},"src/pipecat/runner/run.py:273:34","_setup_webrtc_routes.download_file"]]
+ }}

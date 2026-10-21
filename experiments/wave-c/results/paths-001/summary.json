@@ -1,0 +1,228 @@
+{
+  "classification": "post-hoc exploratory review aid; not primary evaluation",
+  "comparisons": {
+    "03": {
+      "baseline_result_count": 5,
+      "distinct_full_span_source_sink_pairs": 5,
+      "edge_endpoint_pair_agreement_start_coordinates": true,
+      "exact_pair_agreement_including_end_coordinates": true,
+      "located_abstract_edge_rows": 103,
+      "path_exemplar_count": 15,
+      "path_result_count": 5,
+      "sarif_thread_endpoint_agreement_full_span": true
+    },
+    "08": {
+      "baseline_result_count": 3,
+      "distinct_full_span_source_sink_pairs": 3,
+      "edge_endpoint_pair_agreement_start_coordinates": true,
+      "exact_pair_agreement_including_end_coordinates": true,
+      "located_abstract_edge_rows": 11,
+      "path_exemplar_count": 3,
+      "path_result_count": 3,
+      "sarif_thread_endpoint_agreement_full_span": true
+    }
+  },
+  "created_at": "2026-10-21T08:08:40.475418+00:00",
+  "diagnostic_command_wall_seconds": 245.28186273699995,
+  "human_review_seconds": 0,
+  "label_changes": 0,
+  "limitation": "Reported exemplars and located abstract edges are not exhaustive concrete executions or proof of safety; no human label promotion.",
+  "primary_results_lock_sha256": "6068762bb6acc6fe40b4175f8f19ef45aadf3e4afc892b7965e3fa2ed6c190b6",
+  "prior_review_lock_sha256": "e89c6cbd81e4b9e285d58764ea4ce7828207c86a484dd5679a042f050edc4c99",
+  "total_located_abstract_edge_rows": 114,
+  "total_path_exemplars": 18,
+  "total_units": 8,
+  "units": [
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "_resolve_download_path",
+        "_setup_webrtc_routes.download_file"
+      ],
+      "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+      "exemplar_step_counts": [
+        4
+      ],
+      "graph_csv": "inputs/08/edges.csv",
+      "graph_json_with_entity_ids": "inputs/08/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 3,
+      "path_exemplar_count": 1,
+      "primary_trace_available": false,
+      "repository": "pipecat-ai/pipecat",
+      "sarif": "inputs/08/paths.sarif",
+      "sink_location": "src/pipecat/runner/run.py:215:18",
+      "supplemental_trace_available": true,
+      "unit_id": "8dcaf01d7907a8adda39bd13"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "_setup_webrtc_routes.download_file"
+      ],
+      "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+      "exemplar_step_counts": [
+        8
+      ],
+      "graph_csv": "inputs/08/edges.csv",
+      "graph_json_with_entity_ids": "inputs/08/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 4,
+      "path_exemplar_count": 1,
+      "primary_trace_available": false,
+      "repository": "pipecat-ai/pipecat",
+      "sarif": "inputs/08/paths.sarif",
+      "sink_location": "src/pipecat/runner/run.py:268:16",
+      "supplemental_trace_available": true,
+      "unit_id": "5859e664e867d805eef70b8c"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "_setup_webrtc_routes.download_file"
+      ],
+      "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+      "exemplar_step_counts": [
+        8
+      ],
+      "graph_csv": "inputs/08/edges.csv",
+      "graph_json_with_entity_ids": "inputs/08/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 4,
+      "path_exemplar_count": 1,
+      "primary_trace_available": false,
+      "repository": "pipecat-ai/pipecat",
+      "sarif": "inputs/08/paths.sarif",
+      "sink_location": "src/pipecat/runner/run.py:273:34",
+      "supplemental_trace_available": true,
+      "unit_id": "c295eacf017f952ad64f5391"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "DashboardHandler._serve_under_dashboard",
+        "DashboardHandler.do_GET",
+        "safe_resolve_under"
+      ],
+      "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+      "exemplar_step_counts": [
+        8,
+        10,
+        10
+      ],
+      "graph_csv": "inputs/03/edges.csv",
+      "graph_json_with_entity_ids": "inputs/03/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 15,
+      "path_exemplar_count": 3,
+      "primary_trace_available": false,
+      "repository": "dep0we/atomic-agents-stack",
+      "sarif": "inputs/03/paths.sarif",
+      "sink_location": "atomic_agents/_io.py:110:17",
+      "supplemental_trace_available": true,
+      "unit_id": "b99a22ccccd631527dd62004"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "DashboardHandler._serve_file_contained",
+        "DashboardHandler._serve_under_dashboard",
+        "DashboardHandler.do_GET"
+      ],
+      "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+      "exemplar_step_counts": [
+        14,
+        16,
+        16
+      ],
+      "graph_csv": "inputs/03/edges.csv",
+      "graph_json_with_entity_ids": "inputs/03/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 21,
+      "path_exemplar_count": 3,
+      "primary_trace_available": false,
+      "repository": "dep0we/atomic-agents-stack",
+      "sarif": "inputs/03/paths.sarif",
+      "sink_location": "atomic_agents/dashboard/serve.py:113:16",
+      "supplemental_trace_available": true,
+      "unit_id": "29973e5cc3b0b49c809a4873"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "DashboardHandler._serve_file",
+        "DashboardHandler._serve_file_contained",
+        "DashboardHandler._serve_under_dashboard",
+        "DashboardHandler.do_GET"
+      ],
+      "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+      "exemplar_step_counts": [
+        16,
+        18,
+        18
+      ],
+      "graph_csv": "inputs/03/edges.csv",
+      "graph_json_with_entity_ids": "inputs/03/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 23,
+      "path_exemplar_count": 3,
+      "primary_trace_available": false,
+      "repository": "dep0we/atomic-agents-stack",
+      "sarif": "inputs/03/paths.sarif",
+      "sink_location": "atomic_agents/dashboard/serve.py:141:16",
+      "supplemental_trace_available": true,
+      "unit_id": "788be445943d8a953ce5a232"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "DashboardHandler._serve_file",
+        "DashboardHandler._serve_file_contained",
+        "DashboardHandler._serve_under_dashboard",
+        "DashboardHandler.do_GET"
+      ],
+      "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+      "exemplar_step_counts": [
+        16,
+        18,
+        18
+      ],
+      "graph_csv": "inputs/03/edges.csv",
+      "graph_json_with_entity_ids": "inputs/03/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 23,
+      "path_exemplar_count": 3,
+      "primary_trace_available": false,
+      "repository": "dep0we/atomic-agents-stack",
+      "sarif": "inputs/03/paths.sarif",
+      "sink_location": "atomic_agents/dashboard/serve.py:145:23",
+      "supplemental_trace_available": true,
+      "unit_id": "0f3b3e4c8adbc208a0ca43bd"
+    },
+    {
+      "all_reported_flows_reviewed": false,
+      "callables_in_located_edges": [
+        "DashboardHandler._serve_file_contained",
+        "DashboardHandler._serve_under_dashboard",
+        "DashboardHandler.do_GET"
+      ],
+      "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+      "exemplar_step_counts": [
+        14,
+        16,
+        16
+      ],
+      "graph_csv": "inputs/03/edges.csv",
+      "graph_json_with_entity_ids": "inputs/03/edges.json",
+      "human_review_status": "pending",
+      "located_abstract_edge_rows": 21,
+      "path_exemplar_count": 3,
+      "primary_trace_available": false,
+      "repository": "dep0we/atomic-agents-stack",
+      "sarif": "inputs/03/paths.sarif",
+      "sink_location": "atomic_agents/dashboard/serve.py:113:37",
+      "supplemental_trace_available": true,
+      "unit_id": "1d3c60e0364a3a006fa676d3"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+[
+  {
+    "unit_id": "8dcaf01d7907a8adda39bd13",
+    "repository": "pipecat-ai/pipecat",
+    "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+    "file": "src/pipecat/runner/run.py",
+    "line": 215,
+    "column": 18,
+    "scope": "production",
+    "technical_label": "false_positive",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:40:49.679459+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-PC-NORMALIZATION",
+    "evidence": [
+      {
+        "file": "src/pipecat/runner/run.py",
+        "start_line": 212,
+        "end_line": 220,
+        "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c"
+      },
+      {
+        "file": "src/pipecat/runner/run.py",
+        "start_line": 260,
+        "end_line": 273,
+        "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c"
+      }
+    ],
+    "rationale": "Path.resolve() normalizes a filename before the is_relative_to check; it does not read or write file contents. Rejected results raise before return.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "operational_recommendation": "owner review required before accepting baseline suppression"
+  },
+  {
+    "unit_id": "5859e664e867d805eef70b8c",
+    "repository": "pipecat-ai/pipecat",
+    "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+    "file": "src/pipecat/runner/run.py",
+    "line": 268,
+    "column": 16,
+    "scope": "production",
+    "technical_label": "false_positive",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:40:49.680244+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "evidence": [
+      {
+        "file": "src/pipecat/runner/run.py",
+        "start_line": 212,
+        "end_line": 220,
+        "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c"
+      },
+      {
+        "file": "src/pipecat/runner/run.py",
+        "start_line": 260,
+        "end_line": 273,
+        "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c"
+      }
+    ],
+    "rationale": "_resolve_download_path normalizes the base and combined path, raises HTTPException unless the result is relative to the base, and returns the exact checked Path. The download handler uses that returned value at exists()/FileResponse. Proposed FP under a trusted operator-configured folder and no concurrent filesystem tampering.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "operational_recommendation": "owner review required before accepting baseline suppression"
+  },
+  {
+    "unit_id": "c295eacf017f952ad64f5391",
+    "repository": "pipecat-ai/pipecat",
+    "commit": "7519c26ac5508573c35fa3a9c4717b013993d129",
+    "file": "src/pipecat/runner/run.py",
+    "line": 273,
+    "column": 34,
+    "scope": "production",
+    "technical_label": "false_positive",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:40:49.680700+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "evidence": [
+      {
+        "file": "src/pipecat/runner/run.py",
+        "start_line": 212,
+        "end_line": 220,
+        "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c"
+      },
+      {
+        "file": "src/pipecat/runner/run.py",
+        "start_line": 260,
+        "end_line": 273,
+        "sha256": "375834d0c56df21e00c4054acb5ddfa182dae69898a12820a2854592e13f4c3c"
+      }
+    ],
+    "rationale": "_resolve_download_path normalizes the base and combined path, raises HTTPException unless the result is relative to the base, and returns the exact checked Path. The download handler uses that returned value at exists()/FileResponse. Proposed FP under a trusted operator-configured folder and no concurrent filesystem tampering.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "Need owner confirmation of the downloads-folder deployment contract; operator configuration is not independently established for a live deployment."
+      }
+    },
+    "operational_recommendation": "owner review required before accepting baseline suppression"
+  }
+]

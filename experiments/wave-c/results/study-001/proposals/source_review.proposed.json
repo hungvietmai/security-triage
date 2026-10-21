@@ -1,0 +1,292 @@
+[
+  {
+    "unit_id": "b99a22ccccd631527dd62004",
+    "repository": "dep0we/atomic-agents-stack",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "file": "atomic_agents/_io.py",
+    "line": 110,
+    "column": 17,
+    "scope": "production",
+    "technical_label": "false_positive",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:34:09.436553+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-AA-NORMALIZATION",
+    "evidence": [
+      {
+        "file": "atomic_agents/_io.py",
+        "start_line": 96,
+        "end_line": 120,
+        "sha256": "b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 58,
+        "end_line": 116,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 140,
+        "end_line": 154,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 173,
+        "end_line": 189,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      }
+    ],
+    "rationale": "The sink is Path.resolve() while constructing a path in safe_resolve_under, not a content read/write. Lines 113-119 reject a resolved path outside root before returning. Proposed FP only for the CWE-22 file-access consequence; no assertion about all other filesystem side effects.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "operational_recommendation": "keep pending owner review"
+  },
+  {
+    "unit_id": "29973e5cc3b0b49c809a4873",
+    "repository": "dep0we/atomic-agents-stack",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "file": "atomic_agents/dashboard/serve.py",
+    "line": 113,
+    "column": 16,
+    "scope": "production",
+    "technical_label": "unknown",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:34:09.436945+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "evidence": [
+      {
+        "file": "atomic_agents/_io.py",
+        "start_line": 96,
+        "end_line": 120,
+        "sha256": "b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 58,
+        "end_line": 116,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 140,
+        "end_line": 154,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 173,
+        "end_line": 189,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      }
+    ],
+    "rationale": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "operational_recommendation": "keep pending owner review"
+  },
+  {
+    "unit_id": "788be445943d8a953ce5a232",
+    "repository": "dep0we/atomic-agents-stack",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "file": "atomic_agents/dashboard/serve.py",
+    "line": 141,
+    "column": 16,
+    "scope": "production",
+    "technical_label": "unknown",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:34:09.437298+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "evidence": [
+      {
+        "file": "atomic_agents/_io.py",
+        "start_line": 96,
+        "end_line": 120,
+        "sha256": "b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 58,
+        "end_line": 116,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 140,
+        "end_line": 154,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 173,
+        "end_line": 189,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      }
+    ],
+    "rationale": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "operational_recommendation": "keep pending owner review"
+  },
+  {
+    "unit_id": "0f3b3e4c8adbc208a0ca43bd",
+    "repository": "dep0we/atomic-agents-stack",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "file": "atomic_agents/dashboard/serve.py",
+    "line": 145,
+    "column": 23,
+    "scope": "production",
+    "technical_label": "unknown",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:34:09.437673+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "evidence": [
+      {
+        "file": "atomic_agents/_io.py",
+        "start_line": 96,
+        "end_line": 120,
+        "sha256": "b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 58,
+        "end_line": 116,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 140,
+        "end_line": 154,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 173,
+        "end_line": 189,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      }
+    ],
+    "rationale": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "operational_recommendation": "keep pending owner review"
+  },
+  {
+    "unit_id": "1d3c60e0364a3a006fa676d3",
+    "repository": "dep0we/atomic-agents-stack",
+    "commit": "ec474f458122c5c0ca718d0df3078c8080338b2c",
+    "file": "atomic_agents/dashboard/serve.py",
+    "line": 113,
+    "column": 37,
+    "scope": "production",
+    "technical_label": "unknown",
+    "review_status": "proposed",
+    "reviewer": null,
+    "reviewed_at": null,
+    "proposal_created_at": "2026-10-21T04:34:09.438022+00:00",
+    "proposal_author": "assistant static source review",
+    "owner_review_pending": true,
+    "all_reported_flows_reviewed": false,
+    "trace_available": false,
+    "filter_counts_seen_before_review": true,
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "evidence": [
+      {
+        "file": "atomic_agents/_io.py",
+        "start_line": 96,
+        "end_line": 120,
+        "sha256": "b090c4b48c50b6ea1beabf181c65866f841d8e18b6174deb751e7082c2dfcf00"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 58,
+        "end_line": 116,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 140,
+        "end_line": 154,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      },
+      {
+        "file": "atomic_agents/dashboard/serve.py",
+        "start_line": 173,
+        "end_line": 189,
+        "sha256": "4065e2be0aee80c50318b6e01867b075ed7ff841bdec5b2fd265b837024f4ea0"
+      }
+    ],
+    "rationale": "Both local callers of _serve_file_contained first call safe_resolve_under; _serve_under_dashboard returns on PathTraversalError. _serve_file_contained only checks existence/type and relies on callers for containment. The /agents route appends dashboard.html after resolving the agent directory. Final label remains unknown until the reported flows and filesystem/deployment assumptions are reviewed; helper names alone are not safety evidence.",
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": "No deployment evidence excludes concurrent filesystem/symlink changes; no application or exploit was executed."
+      },
+      "root_control": {
+        "status": "unknown",
+        "evidence": "serve() accepts agents_root and host parameters (173-189); the default loopback host does not prove every deployment is loopback-only."
+      }
+    },
+    "operational_recommendation": "keep pending owner review"
+  }
+]
