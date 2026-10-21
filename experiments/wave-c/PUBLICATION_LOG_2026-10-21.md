@@ -37,3 +37,29 @@ Chỉ điền `publication.json` sau khi có SHA commit đã push và run ID th�
 khớp. Chưa có kết quả quét Wave C ở thời điểm ghi nhật ký này. Người dùng đã xác nhận dùng
 nguyên danh tính đang cấu hình `Hung. Mai Viet - CMC ATI <mvhung@cmc.com.vn>` cho đợt commit
 này dù tên khác tên ghi trong `AGENTS.md`; không đổi cấu hình hay ghi đè tác giả.
+
+## Đã công bố
+
+- Nhánh: `feat/research-safety-evidence`.
+- Năm commit: `582ec67` (provenance), `efcd0f8` (nhãn Wave B), `26f078a` (v0.3),
+  `7e37357` (Wave C), `2600de1` (workflow công bố).
+- Commit công bố: [2600de1acf8dfbea17e6b7fc85ac4ca0ecc6eb03](https://github.com/hungvietmai/security-triage/commit/2600de1acf8dfbea17e6b7fc85ac4ca0ecc6eb03).
+- [GitHub Actions run 39541591513](https://github.com/hungvietmai/security-triage/actions/runs/39541591513):
+  `created_at=2026-10-21T03:59:48Z`, `head_sha` khớp commit công bố, kết luận `success`.
+- `publication.json` chỉ dùng các định danh thật trên; không tự tạo dấu thời gian công bố.
+- Đã so Git blob của commit với hash: 98/98 đầu vào execution và 4/4 đầu vào nhãn khớp.
+- Đã chạy `npm run prepare` để khôi phục đường dẫn hook Husky `.husky/_`: đường dẫn cũ
+  trỏ thẳng `.husky` gây `Exec format error` trước khi commit đầu tiên được tạo.
+- Cả năm commit chạy hook pre-commit/commit-msg thành công. `lint-staged` không có task
+  cấu hình cho các tệp nghiên cứu này; không nhận đây là kiểm tra lint toàn bộ nghiên cứu.
+- Push chạy hook pre-push thành công: frontend 62 test, backend 375 passed / 2 skipped,
+  coverage 93,84%. Không bỏ qua hook, không force push.
+
+Sau khi xác minh dấu thời gian dịch vụ, đã khởi chạy lệnh theo giao thức:
+
+```powershell
+wsl -d Ubuntu --exec python3 /mnt/d/github/security-triage/experiments/wave-c/run.py --execute --output artifacts/wave-c/study-001
+```
+
+Trạng thái đang chạy chưa phải kết quả cuối hoặc xác nhận nhãn. Kết quả scanner và các lỗi
+được runner ghi nối tiếp; không sửa phương pháp/khóa sau khi bắt đầu xem output nghiên cứu.
