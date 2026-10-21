@@ -246,3 +246,7 @@ truy vấn sinh ra giống hệt từng byte; bộ phản ví dụ (đổi số 
 
 `scripts/evaluate_evidence.py` cũng đã được thêm tham số đường dẫn SARIF sau lúc đóng băng v0.1 (để chạy v0.2);
 đầu ra v0.1 với tham số mặc định không đổi.
+
+Đính chính 2026-10-16: `ql_v02/gen.py` sau định dạng sinh `table/Evidence.ql` khác bản đã commit (chỉ khác xuống dòng),
+nên câu "các truy vấn sinh ra giống hệt từng byte" chỉ đúng với các truy vấn cảnh báo. Đã chạy lại và đối chiếu mọi phép
+đo: không có thay đổi. Chi tiết và bản khóa mới: `FREEZE_DEVIATION.md`, `FREEZE_v0.2_postformat.sha256`.
