@@ -1,0 +1,21 @@
+name: Research publication receipt
+
+on:
+  push:
+    paths:
+      - .github/workflows/research-publication.yml
+      - experiments/wave-c/EXECUTION_LOCK.sha256
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-published-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify the published Wave C execution freeze
+        run: >-
+          python3 experiments/v03-interprocedural-guard/scripts/verify_freeze.py
+          --manifest experiments/wave-c/EXECUTION_LOCK.sha256
