@@ -1,0 +1,290 @@
+[
+  {
+    "unit_id": "8dcaf01d7907a8adda39bd13",
+    "technical_label": "false_positive",
+    "label_is_conditional": false,
+    "scope": "production",
+    "root_cause_id": "C-PC-NORMALIZATION",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 1,
+    "label_evidence": "Dòng 215 chỉ chuẩn hóa, 217–218 chặn nếu ra ngoài thư mục → FP theo CWE-22. Có khe TOCTOU (CWE-367) từ 215 tới lúc mở file ở 273, nhưng khe này thuộc phía dùng (nhóm 2) và cần kẻ tấn công sửa được hệ thống file → ghi ở nhóm 2."
+  },
+  {
+    "unit_id": "5859e664e867d805eef70b8c",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "scope": "production",
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "supported",
+        "evidence": "Owner accepted threat-model assumption P2: the attacker only sends requests and cannot create files or symlinks on the server."
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 2,
+    "label_evidence": "Điều kiện FP: hệ thống file không bị thay đổi giữa kiểm tra (215–218) và mở file (273). Nếu kẻ tấn công ghi được vào thư mục tải về thì có rủi ro TOCTOU (CWE-367) → báo riêng, không đổi nhãn CWE-22."
+  },
+  {
+    "unit_id": "c295eacf017f952ad64f5391",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "scope": "production",
+    "root_cause_id": "C-PC-DOWNLOAD-CONTAINMENT",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "supported",
+        "evidence": "Owner accepted threat-model assumption P2: the attacker only sends requests and cannot create files or symlinks on the server."
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 2,
+    "label_evidence": "Điều kiện FP: hệ thống file không bị thay đổi giữa kiểm tra (215–218) và mở file (273). Nếu kẻ tấn công ghi được vào thư mục tải về thì có rủi ro TOCTOU (CWE-367) → báo riêng, không đổi nhãn CWE-22."
+  },
+  {
+    "unit_id": "b99a22ccccd631527dd62004",
+    "technical_label": "false_positive",
+    "label_is_conditional": false,
+    "scope": "production",
+    "root_cause_id": "C-AA-NORMALIZATION",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 3,
+    "label_evidence": "_io.py:110 chỉ chuẩn hóa (resolve), 113–115 chặn nếu ra ngoài root. Mối lo symlink/read_bytes thuộc serve.py:145 → xem nhóm 4."
+  },
+  {
+    "unit_id": "29973e5cc3b0b49c809a4873",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "supported",
+        "evidence": "Owner accepted threat-model assumption P2: the attacker only sends requests and cannot create files or symlinks on the server."
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 4,
+    "label_evidence": "Đúng là nhánh agent nối dashboard.html sau khi kiểm tra thư mục, file con không kiểm lại (serve.py:84) → có thể đi theo symlink (CWE-59). Nhưng dashboard.html chỉ do render_agent tạo qua atomic_write (file thường, thay cả symlink cũ); package không tạo symlink; restore dùng tar filter=\"data\"; agents_root là thư mục của người vận hành; server nghe 127.0.0.1. Kẻ tấn công phải có sẵn quyền ghi của người dùng → không vượt ranh giới quyền. Điều kiện: A-SYM (P2), không cấu hình MCP cho phép tạo symlink, host giữ loopback. CWE-59 ghi riêng, không đổi nhãn CWE-22."
+  },
+  {
+    "unit_id": "1d3c60e0364a3a006fa676d3",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "supported",
+        "evidence": "Owner accepted threat-model assumption P2: the attacker only sends requests and cannot create files or symlinks on the server."
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 4,
+    "label_evidence": "Đúng là nhánh agent nối dashboard.html sau khi kiểm tra thư mục, file con không kiểm lại (serve.py:84) → có thể đi theo symlink (CWE-59). Nhưng dashboard.html chỉ do render_agent tạo qua atomic_write (file thường, thay cả symlink cũ); package không tạo symlink; restore dùng tar filter=\"data\"; agents_root là thư mục của người vận hành; server nghe 127.0.0.1. Kẻ tấn công phải có sẵn quyền ghi của người dùng → không vượt ranh giới quyền. Điều kiện: A-SYM (P2), không cấu hình MCP cho phép tạo symlink, host giữ loopback. CWE-59 ghi riêng, không đổi nhãn CWE-22."
+  },
+  {
+    "unit_id": "788be445943d8a953ce5a232",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "supported",
+        "evidence": "Owner accepted threat-model assumption P2: the attacker only sends requests and cannot create files or symlinks on the server."
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 4,
+    "label_evidence": "Đúng là nhánh agent nối dashboard.html sau khi kiểm tra thư mục, file con không kiểm lại (serve.py:84) → có thể đi theo symlink (CWE-59). Nhưng dashboard.html chỉ do render_agent tạo qua atomic_write (file thường, thay cả symlink cũ); package không tạo symlink; restore dùng tar filter=\"data\"; agents_root là thư mục của người vận hành; server nghe 127.0.0.1. Kẻ tấn công phải có sẵn quyền ghi của người dùng → không vượt ranh giới quyền. Điều kiện: A-SYM (P2), không cấu hình MCP cho phép tạo symlink, host giữ loopback. CWE-59 ghi riêng, không đổi nhãn CWE-22."
+  },
+  {
+    "unit_id": "0f3b3e4c8adbc208a0ca43bd",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "scope": "production",
+    "root_cause_id": "C-AA-CALLER-CONTAINMENT",
+    "review_status": "owner_reviewed",
+    "review_mode": "owner_verified_assistant_proposal",
+    "reviewer": "Hùng",
+    "reviewed_at": "2026-10-29T00:40:00+07:00",
+    "all_reported_flows_reviewed": false,
+    "assumptions": {
+      "A-SYM": {
+        "status": "supported",
+        "evidence": "Owner accepted threat-model assumption P2: the attacker only sends requests and cannot create files or symlinks on the server."
+      },
+      "S-ENV": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-PURPOSE": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TEST": {
+        "status": "unknown",
+        "evidence": null
+      },
+      "S-TMP": {
+        "status": "unknown",
+        "evidence": null
+      }
+    },
+    "worksheet_group": 4,
+    "label_evidence": "Đúng là nhánh agent nối dashboard.html sau khi kiểm tra thư mục, file con không kiểm lại (serve.py:84) → có thể đi theo symlink (CWE-59). Nhưng dashboard.html chỉ do render_agent tạo qua atomic_write (file thường, thay cả symlink cũ); package không tạo symlink; restore dùng tar filter=\"data\"; agents_root là thư mục của người vận hành; server nghe 127.0.0.1. Kẻ tấn công phải có sẵn quyền ghi của người dùng → không vượt ranh giới quyền. Điều kiện: A-SYM (P2), không cấu hình MCP cho phép tạo symlink, host giữ loopback. CWE-59 ghi riêng, không đổi nhãn CWE-22."
+  }
+]
