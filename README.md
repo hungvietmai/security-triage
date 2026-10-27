@@ -1,16 +1,34 @@
 # Security Triage
 
-Bộ khung đề án sàng lọc và thẩm định cảnh báo lỗ hổng kết hợp **Semgrep + CodeQL**,
-hướng tới **JavaScript/TypeScript và Python**.
+Đề án nghiên cứu cách **giảm cảnh báo sai (FP) của phân tích tĩnh bảo mật**, dùng Semgrep
+và CodeQL. Repository gồm hai phần:
 
-**Trạng thái:** đã có FE/BE quản lý dự án, 5 bảng dữ liệu, worker và kết nối hạ tầng.
-Task Celery `run_scan` quét một snapshot bằng Semgrep + CodeQL, gộp cảnh báo theo vị trí,
-xếp mức ưu tiên theo policy v0.1 và ghi kết quả trong một transaction; artifact lưu ở
-SeaweedFS (`scans/{scan_id}/…`) kèm sha256. API: `POST /projects/{id}/scans` nhận package npm
-(version chính xác) hoặc commit GitHub; server tự dựng URL tới `registry.npmjs.org` /
-`codeload.github.com`, không theo redirect. `GET /scans/{id}`, `/scans/{id}/units` (hàng đợi
-P1→P4) và `/scans/{id}/units/{unit_id}` trả trạng thái, đơn vị và bằng chứng.
-**Upload archive và giao diện kết quả chưa có.**
+- **Nghiên cứu** ([experiments/](experiments/)): hiện tập trung vào **bằng chứng an toàn viết
+  trong CodeQL cho CWE-22 trên Python**. Trên benchmark tổng hợp, v0.2 loại 92,5% FP mà không
+  mất TP. Trên mã thật, hiệu quả rất thấp: đợt đánh giá độc lập cho thấy v0.3 loại thêm 0 so
+  với v0.2, và nhãn của chủ đề án vẫn đang chờ duyệt.
+  Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
+- **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
+  một commit GitHub bằng Semgrep và CodeQL theo profile `command-injection-v0.1` (CWE-78,
+  JavaScript/Python). Ứng dụng gộp cảnh báo theo vị trí sink, xếp hàng đợi ưu tiên P1→P4 và
+  hiển thị bằng chứng. Phương pháp CWE-22 chưa được tích hợp vào ứng dụng.
+  Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
+
+## Tài liệu
+
+| Tài liệu | Nội dung |
+|---|---|
+| [docs/research.md](docs/research.md) | Câu hỏi nghiên cứu, diễn tiến, kết quả, việc còn mở, quy ước tài liệu |
+| [docs/architecture.md](docs/architecture.md) | Kiến trúc ứng dụng, luồng quét, dữ liệu, API, những gì chưa có |
+| [docs/validation.md](docs/validation.md) | Hook, CI, kết quả kiểm chứng đã ghi nhận, lỗi đã biết |
+| [docs/performance.md](docs/performance.md) | Số đo hiệu năng backend (2026-10-07) |
+| [docs/demo/](docs/demo/README.md) | Demo toàn stack quét `curling@0.2.0` (2026-10-08) |
+| [experiments/README.md](experiments/README.md) | Bản đồ thư mục thực nghiệm, cách chạy, danh sách tài liệu bị khóa |
+| [AGENTS.md](AGENTS.md), [backend/AGENTS.md](backend/AGENTS.md), [frontend/AGENTS.md](frontend/AGENTS.md), [experiments/AGENTS.md](experiments/AGENTS.md) | Quy ước code, commit, test (tiếng Anh) |
+
+[SECURITY_TRIAGE_AGENT_HANDOFF_2026-10-20.md](SECURITY_TRIAGE_AGENT_HANDOFF_2026-10-20.md) là ảnh
+chụp ngày 20/10, đã bị khóa bởi đợt C nên không cập nhật nữa. Trạng thái hiện tại xem ở
+[docs/research.md](docs/research.md).
 
 ## Chạy toàn bộ bằng Docker
 
@@ -117,6 +135,7 @@ nhanh nhưng không kiểm tra hành vi riêng của PostgreSQL. Muốn kiểm t
 service `test` ở trên. CI còn chạy `alembic downgrade base` rồi `upgrade head` để kiểm tra migration hai chiều.
 GitHub Actions có lint/build FE và kiểm tra toàn bộ stack Docker, readiness, proxy,
 worker, schema drift và test API. Trạng thái CI chỉ xác nhận được sau khi repo được push.
+Danh sách job và các kết quả đã ghi nhận: [docs/validation.md](docs/validation.md).
 
 ## Cấu trúc
 
@@ -124,14 +143,15 @@ worker, schema drift và test API. Trạng thái CI chỉ xác nhận được s
 |---|---|
 | `frontend/` | React + TypeScript + Vite, shadcn/ui, TanStack Query/Router; Nginx cho bản build |
 | `backend/app/` | FastAPI theo domain: `core/` (config, DB, S3, lỗi), `features/<domain>/`, Celery. Xem [backend/AGENTS.md](backend/AGENTS.md) |
-| `backend/migrations/` | Alembic, migration 0001–0002 |
+| `backend/app/scanners/`, `backend/app/triage/` | Lõi quét và thẩm định, dùng chung giữa worker và CLI thực nghiệm |
+| `backend/migrations/` | Alembic, migration 0001–0006 |
 | `backend/tests/` | Test theo cấu trúc `app/`, gồm test kiến trúc |
 | `infra/` | Cấu hình SeaweedFS |
-| `rules/` | Vị trí dành cho rule Semgrep và query CodeQL |
-| `profiles/` | Scan profile: manifest pin hash các rule, rule-claims và policy dùng khi quét |
-| `tools/` | Pin phiên bản Semgrep/CodeQL và script cài dùng chung cho các image scanner |
-| `experiments/` | Quy ước dữ liệu và đánh giá |
-| `docs/architecture.md` | Phạm vi đã làm, ranh giới kiến trúc và bước tiếp theo |
+| `rules/codeql/python-evidence/` | Query chẩn đoán guard số nguyên (giai đoạn CWE-78). Các query CWE-22 nằm trong `experiments/` |
+| `profiles/` | Scan profile của worker: manifest ghim hash các config, rule, rule-claims và policy |
+| `tools/` | Ghim phiên bản Semgrep/CodeQL và script cài, dùng chung cho các image scanner |
+| `experiments/` | Toàn bộ nghiên cứu: dữ liệu, query, runner, kết quả, khóa. Xem [experiments/README.md](experiments/README.md) |
+| `docs/` | Tài liệu tổng quan (xem [Tài liệu](#tài-liệu)) |
 
 ## Frontend
 
@@ -149,19 +169,21 @@ npm run gen:api    # sau khi xuất lại openapi.json từ backend
 ```
 
 Trang hiện có: Tổng quan, Dự án (`?page=`), Chi tiết dự án (`?tab=`), Lượt quét,
-Cảnh báo, Hệ thống, 404. Tính năng backend chưa có hiển thị rõ "Chưa triển khai";
-không có dữ liệu mẫu hay kết quả quét giả.
+Chi tiết lượt quét (hàng đợi P1→P4 và bằng chứng), Cảnh báo, Hệ thống, 404. Tính năng mà
+backend chưa có được hiển thị rõ là "Chưa triển khai"; giao diện không dùng dữ liệu mẫu
+hay kết quả quét giả.
 
-## Bước tiếp theo
-
-Triển khai **chọn thư mục → xem/lọc file → tự ZIP → upload → lưu source snapshot**.
-Sau đó tích hợp Semgrep trước, CodeQL sau. Không cần thay cấu trúc FE/BE.
+## Scanner trong worker
 
 Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep và CodeQL
-theo [`tools/pins.env`](tools/pins.env) và kèm scan profile
-[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json); worker từ chối
-khởi động nếu hash profile hoặc phiên bản scanner lệch pin. Image API không kèm scanner.
-Không commit mã nguồn người dùng, object-store data hoặc CodeQL database vào Git.
+theo [`tools/pins.env`](tools/pins.env), kèm scan profile
+[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json). Worker từ chối
+khởi động nếu hash của profile hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
+kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
+
+Các việc còn mở của cả ứng dụng và nghiên cứu được theo dõi ở
+[docs/research.md §5](docs/research.md#5-việc-còn-mở) và
+[docs/architecture.md §7](docs/architecture.md#7-chưa-có).
 
 ## Tài liệu chính thức
 

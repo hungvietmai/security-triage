@@ -1,113 +1,125 @@
-# Architecture and scope
+# Kiến trúc ứng dụng
 
-The web application is a development foundation. A separate experiment CLI now
-runs Semgrep and CodeQL on a pinned JavaScript npm case; it is not yet connected
-to the application. The authoritative research design is
-[the evaluation protocol](../experiments/EVALUATION_PROTOCOL.md).
+Mô tả ứng dụng web như đã cài đặt, cập nhật ngày 2026-10-27. Trạng thái và kết quả nghiên cứu
+nằm ở [research.md](research.md); cách chạy stack nằm ở [README](../README.md).
 
-## Implemented
+## 1. Ứng dụng làm gì
 
-- React/TypeScript project creation and paginated project list; honest loading/error/empty states.
-- FastAPI project creation/list/detail endpoints, liveness and dependency readiness.
-- SQLAlchemy foundation: projects → source_snapshots → scans → tool_runs → findings.
-- Immutable Alembic migration file, UUID keys, foreign keys, uniqueness and status constraints.
-- Redis/Celery worker and diagnostic ping task; S3 client and idempotent bucket initializer.
-- Docker runtime builds, development override, persistent database/broker/object-store volumes.
-- Tests and CI configuration. Readiness checks PostgreSQL/schema, Redis and S3;
-  worker availability is a separate Docker healthcheck.
+Người dùng tạo dự án, rồi yêu cầu quét **một package npm theo version chính xác** hoặc
+**một commit GitHub** (40 ký tự). Worker tải mã nguồn và chạy Semgrep cùng CodeQL theo một
+scan profile đã ghim hash. Sau đó worker gộp cảnh báo theo vị trí sink và xếp mỗi đơn vị
+vào một mức ưu tiên rà soát. Giao diện hiển thị trạng thái lượt quét, hàng đợi P1→P4 và
+bằng chứng của từng đơn vị.
 
-## Next milestones
+Profile duy nhất hiện có là `command-injection-v0.1`: CWE-78 trên JavaScript và Python.
+Đây là sản phẩm của giai đoạn nghiên cứu CWE-78. Phương pháp CWE-22 hiện tại (bằng chứng
+an toàn v0.2/v0.3) **chưa được tích hợp** vào ứng dụng.
 
-The acquisition and raw scanning portions of steps 1–2 have been demonstrated on
-one development case; see the [pilot report](../experiments/reports/curling-0.2.0/REPORT.md).
-Sink mapping, independent labels and policy implementation are the next gates.
+## 2. Thành phần
 
-1. A manifest-driven Python runner fetches one real SecBench.js case at a fixed
-   package version/artifact hash or Git commit and runs Semgrep, preserving raw
-   output, configuration, timing and failures. Reuse its adapters from Celery later.
-2. Persist immutable snapshots and add structured provenance through a new
-   migration. Run CodeQL on the same source; measure database creation and query
-   analysis separately. In parallel, label at least two real cases independently
-   using advisory/patch/source evidence.
-3. Pilot CWE-78 evidence rules on JavaScript and Python, supported by small
-   branch-specific fixtures. Inventory eligible cases and record acquisition,
-   labeling and analysis failures. Target five cases per language for feasibility,
-   not as a sufficient final sample size.
-4. Freeze scope, configurations, policy, grouped development/held-out split and
-   acceptable recall-loss threshold before the final evaluation.
-5. Complete the scan API, worker lifecycle and evidence UI; add folder selection,
-   filter preview, automatic ZIP packaging and bounded upload for the demo.
+| Service (Compose) | Vai trò |
+|---|---|
+| `frontend` | React + TypeScript, phục vụ bằng Nginx; chuyển `/api` vào FastAPI |
+| `api` | FastAPI; ghi trạng thái rồi trả ngay, không chạy việc dài trong request |
+| `worker` | Celery; image riêng cài Semgrep và CodeQL theo [tools/pins.env](../tools/pins.env) |
+| `postgres` | Metadata, cảnh báo đã chuẩn hóa, đơn vị, đánh giá, provenance |
+| `redis` | Broker của Celery |
+| `seaweedfs` | Object store S3: archive mã nguồn, SARIF thô, log, artifact |
+| `migrate`, `storage-init` | Chạy một lần: Alembic upgrade và tạo bucket |
+| `test` (profile `test`) | Chạy pytest/ruff/mypy/pip-audit trong container |
 
-The primary research pipeline only adjudicates Semgrep candidates. CodeQL-only
-findings are retained for an independent baseline and missed-vulnerability
-analysis; they are not added to the primary pipeline output. With identical
-inputs and evaluation mapping, pipeline recall cannot exceed screening recall.
-The objective is higher precision with measured, bounded recall loss.
+Mọi cổng chỉ bind `127.0.0.1`. Ứng dụng dành cho **một người dùng cục bộ, không có đăng nhập**.
 
-Initial policy v0.1 is a design, not implemented behavior:
+## 3. Luồng một lượt quét
 
-- G0: incomplete/failed analysis, unsupported modeling, ambiguous sink matching
-  or conflicting evidence yields `inconclusive`.
-- S1: a modeled untrusted source-to-command path at the same sink and argument
-  yields `supported`.
-- R1: complete positive evidence that every possible command value is a resolved
-  literal/concatenation in a narrowly validated command grammar yields
-  `proposed_reject` for that specific CWE-78 sink. Exclude shell expansion,
-  nested interpreters and unresolved definitions; record trusted-environment
-  assumptions. A missing taint path or a `const` declaration is insufficient.
-- U1: remaining candidates yield `inconclusive`.
+1. `POST /api/v1/projects/{id}/scans` nhận `{"source": {"kind": "npm", …}}` hoặc
+   `{"kind": "github", …}`. Server tự dựng URL tới `registry.npmjs.org` hoặc
+   `codeload.github.com` và không theo redirect. API tạo bản ghi snapshot và scan, đẩy task
+   `run_scan` vào hàng đợi, rồi trả `202`.
+2. **Thu nhận nguồn** (`workflows/scans/snapshots.py`):
+   - Với npm, tarball được kiểm bằng `dist.integrity` của registry (provenance `publisher_verified`).
+   - Với GitHub, archive theo commit được tin ở lần tải đầu (`tofu`).
+   - Archive được lưu vào S3 để các lần quét lại dùng đúng các byte đó.
+   - Khi giải nén: tối đa 50 MiB tải về, 200 MiB giải nén, 20.000 mục. Từ chối path traversal
+     và symlink trỏ ra ngoài; symlink trỏ vào trong archive thì bỏ qua.
+3. **Quét** (`workflows/scans/analysis.py`, `app/scanners/`):
+   - Trước khi nhận việc, worker kiểm hash của mọi file trong profile và phiên bản scanner.
+   - Các ngôn ngữ chạy tuần tự. Trong một ngôn ngữ, Semgrep và CodeQL có thể chạy song song
+     (`SCANNER_WORKERS`, mặc định 2).
+4. **Thẩm định** (`app/triage/`):
+   - Định vị sink bằng AST.
+   - `reconcile-v0.1` gộp cảnh báo thành đơn vị theo `snapshot + đường dẫn + sink + vai trò đối số`;
+     CWE không nằm trong khóa.
+   - `priority v0.1` gán P1–P4 hoặc U kèm mã quyết định và lý do. Mức ưu tiên **không xóa
+     cảnh báo** và không phải nhãn đúng/sai.
+5. **Lưu** (`workflows/scans/persist.py`): kết quả của lượt quét được thay trong một
+   transaction. Artifact được upload song song (`ARTIFACT_UPLOAD_WORKERS`, mặc định 4) dưới
+   `scans/{scan_id}/…`, kèm SHA-256.
+6. **Đọc kết quả:** `GET /api/v1/scans/{id}`, `/scans/{id}/units` (có phân trang, lọc theo
+   công cụ) và `/scans/{id}/units/{unit_id}` (bằng chứng đầy đủ, gồm vết luồng dữ liệu).
 
-Begin with direct shell invocation on Linux/POSIX: Node.js exec/execSync,
-Python os.system and subprocess run/Popen with shell=True. Check exported API
-input models for package cases; HTTP-only sources may miss these entry points.
-Match snapshot, file, sink AST location and command argument. CWE is a label
-attribute, not part of the location key; retain unmapped alerts at their reported
-locations as specified by the evaluation protocol.
+Lõi quét (`app/scanners`) và lõi thẩm định (`app/triage`) được dùng chung với CLI thực nghiệm
+[run_pilot.py](../experiments/run_pilot.py). Job CI `scan-parity` quét `curling@0.2.0` qua cả
+hai đường và yêu cầu kết quả giống nhau.
 
-The primary policy retains `supported` and `inconclusive`. A sensitivity analysis
-retains only `supported`, reporting both FP reduction and lost true positives.
-Pipeline inconclusive states and unresolved independent labels are distinct.
-Measure added adjudication cost first. Query selection is an optional optimization
-experiment; do not claim savings from filtering already-computed output.
+## 4. Dữ liệu
 
-Evaluation initially targets JavaScript and Python. TypeScript evaluation needs
-actual independent TypeScript cases and remains conditional on data availability.
+| Bảng | Nội dung |
+|---|---|
+| `projects` | Dự án |
+| `source_snapshots` | Archive bất biến: tọa độ nguồn, SHA-256, provenance |
+| `scans` | Trạng thái lượt quét, phiên bản scanner/profile, artifact |
+| `tool_runs` | Một lần chạy của một công cụ cho một ngôn ngữ |
+| `findings` | Cảnh báo thô đã chuẩn hóa, giữ nguyên `raw_result` |
+| `location_units`, `unit_findings` | Đơn vị vị trí và liên kết tới cảnh báo |
+| `unit_assessments` | Mức ưu tiên, quyết định, lý do và hash của chính sách |
 
-Both fetched and uploaded archives need size/count limits, traversal and symlink
-validation before extraction. Preserve relevant configuration and lockfiles.
-Do not execute source or automatically install dependencies. The API must not run
-long scans inline. Folder upload is a demo input; versioned manifests are the
-primary experimental input.
+Migration nằm ở `backend/migrations/versions/` (0001–0006) và không được sửa sau khi merge.
+Xóa theo cascade: project → snapshot → scan → tool_run → finding.
 
-## Storage
+## 5. API
 
-- PostgreSQL: metadata, normalized findings, status and provenance.
-- SeaweedFS: source ZIPs, manifests, raw SARIF, logs.
-- Worker-local scratch: extraction and CodeQL databases, disposable after retention policy.
-- Git: application code, rules, migration history, manifests and small curated test fixtures.
+| Phương thức | Đường dẫn (tiền tố `/api/v1`) | Ghi chú |
+|---|---|---|
+| GET | `/health/live`, `/health/ready` | Readiness kiểm PostgreSQL/schema, Redis và S3 |
+| POST, GET | `/projects` | Tạo; liệt kê có phân trang, sắp xếp, tìm kiếm |
+| GET | `/projects/{id}` | Chi tiết dự án |
+| POST | `/projects/{id}/scans` | Tạo lượt quét npm hoặc GitHub |
+| GET | `/scans/{id}`, `/scans/{id}/units`, `/scans/{id}/units/{unit_id}` | Trạng thái, hàng đợi, bằng chứng |
 
-## Planned provenance changes
+Hợp đồng HTTP nằm trong [frontend/openapi.json](../frontend/openapi.json). Kiểu dữ liệu
+TypeScript được sinh từ file này, và CI kiểm tra hai bên khớp nhau.
 
-The existing source_snapshots table stores artifact metadata but lacks structured
-origin fields. Add source_kind, repository_url, resolved_commit, ecosystem,
-package_name, package_version, artifact_url, source_subdirectory, manifest_sha256
-and provenance_verified_at with per-source validation and a fetching state.
-Keep the stored-archive sha256 distinct from upstream checksums or any normalized
-source-tree hash. Preserve the complete acquisition manifest with each snapshot.
-These changes are planned; the current database still has its foundation schema.
+## 6. Giao diện
 
-Research labels are versioned separately and joined by case_id; scanner input must
-not receive ground-truth vulnerability locations. Keep vulnerable/patched versions
-in the same evaluation group. Upload metadata supplied by users is not verified
-Git provenance.
+Các trang:
 
-## Deployment boundary
+- Tổng quan;
+- Dự án (danh sách và chi tiết có tab);
+- Lượt quét (hướng dẫn tạo từ dự án);
+- Chi tiết lượt quét (trạng thái tự làm mới, hàng đợi theo mức, bảng bằng chứng);
+- Cảnh báo, Hệ thống, 404.
 
-This is a single-user, localhost-only development setup without authentication. Ports bind
-to 127.0.0.1. Before any shared deployment, implement authentication/ownership checks,
-TLS, secret management, quotas and isolated scanner workers. Docker for the application
-does not itself make arbitrary uploaded source safe to execute.
+Tính năng mà backend chưa hỗ trợ được ghi rõ là "Chưa triển khai"; giao diện không hiển thị
+dữ liệu mẫu hay kết quả giả. Cấu trúc và quy tắc của frontend: [frontend/AGENTS.md](../frontend/AGENTS.md).
 
-There is no scan POST endpoint yet, no synthetic scanner output, and no pre-labelled claim
-that a missing CodeQL result proves a Semgrep finding false. The five schema tables prepare
-for the next milestones; only project endpoints are exposed in this initial version.
+## 7. Chưa có
+
+- Upload archive hoặc thư mục từ máy người dùng.
+- API liệt kê mọi lượt quét, và trang cảnh báo tổng hợp toàn hệ thống.
+- Profile CWE-22 dùng bằng chứng an toàn v0.2/v0.3.
+- Đăng nhập, phân quyền, TLS, quản lý secret, hạn mức tài nguyên và worker quét cô lập.
+  Đây là điều kiện bắt buộc trước mọi triển khai dùng chung.
+
+Docker không làm cho việc quét mã nguồn tùy ý trở nên an toàn. Ứng dụng không bao giờ thực thi
+mã nguồn được quét hay cài dependency của nó.
+
+## 8. Lưu trữ
+
+- **PostgreSQL:** metadata, cảnh báo đã chuẩn hóa, trạng thái, provenance.
+- **SeaweedFS:** archive mã nguồn, SARIF thô, log, manifest.
+- **Thư mục tạm của worker:** mã nguồn đã giải nén và CodeQL database; xóa sau mỗi lượt quét.
+- **Git:** mã nguồn, rule/query, migration, manifest và fixture nhỏ. Không commit mã nguồn
+  người dùng, dữ liệu object store hay CodeQL database.
+
+Số đo hiệu năng của bộ gộp, truy vấn và upload: [performance.md](performance.md).

@@ -4,7 +4,8 @@ FastAPI + SQLAlchemy 2 + Alembic + Celery on Python 3.12, organized by domain
 after [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-best-practices)
 (the backend counterpart of the frontend's bulletproof-react layout). This file
 is the source of truth for how code in `backend/` is structured and written.
-Product context and research scope live in `../README.md` and `../docs/architecture.md`.
+Product context lives in `../README.md` and `../docs/architecture.md`; research status
+and rules live in `../docs/research.md`.
 
 ## Commands
 
@@ -255,6 +256,9 @@ processing go to Celery tasks in `app/workers/`; the API records state and retur
 - Don't reach into another module's imports in tests (`service.Redis`); patch
   the real object (`Redis.from_url`, `time.sleep`).
 - Line length 100 (ruff).
+- Pass `encoding="utf-8"` to every text-mode `open`, `read_text`, `write_text` and
+  `subprocess` call (`text=True`). The default is the locale encoding, which is
+  cp1252 on Windows and corrupts non-ASCII source, scanner output and reasons.
 - Comments explain *why*. Docstrings on modules and non-obvious functions.
 
 ## Adding a feature (checklist)

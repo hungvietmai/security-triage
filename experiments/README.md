@@ -1,266 +1,154 @@
-# Experiments
+# Thực nghiệm
 
-The authoritative design is [EVALUATION_PROTOCOL.md](EVALUATION_PROTOCOL.md).
-Protocol v1.0.0 was committed before development scanning at
-`80db12b6f7b275501f9c0f260c90cd05e818491e`.
+Trạng thái, kết quả và việc còn mở: [docs/research.md](../docs/research.md).
+File này gồm bản đồ thư mục, cách chạy và quy ước khóa. Quy tắc viết test:
+[AGENTS.md](AGENTS.md).
 
-## Current CWE-22 study
+Ký hiệu 🔒 đánh dấu tài liệu bị khóa bằng SHA-256: không sửa, không đổi tên (xem
+[Tài liệu bị khóa](#tài-liệu-bị-khóa)).
 
-The [v0.3 strict/scoped freeze](v03-interprocedural-guard/DECISION_2026-10-20.md)
-is evaluated under the separate [Wave C protocol](wave-c/PROTOCOL.md).
-[Scanner results from 2026-10-21](wave-c/results/study-001/RESULTS.md) preserve
-all 12 selected repositories: seven completed scans and five acquisition failures
-or rejected archives. Strict and scoped each remove **zero additional sinks over
-v0.2**, with AllowedRoot coverage **0/5** on the completed scans.
+## Bản đồ thư mục
 
-**Acceptance is halted on exploratory self-review labels.**
-[Technical self-review](wave-c/closeout/self-review/REVIEW.md) revises the proposals
-to two conditional FP and six unknown: pre-guard normalization can access filesystem
-metadata. The frozen evaluator returns `failed_acceptance` because v0.2 removed
-one now-unknown alert; this is not a confirmed lost TP. The review also corrects
-the earlier graph JSON ID claim using saved BQRS. Original freezes remain intact.
+### Nghiên cứu hiện tại: CWE-22, bằng chứng an toàn CodeQL (từ 15/10)
 
-[The isolated v0.2.1 development correction](v021-normalization/README.md) now
-retains six alerts instead of five on the seven previously scanned repositories,
-restoring the normalization alert at pipecat `run.py:215:18`. Locked synthetic
-expectations pass and no old sink is lost in the measured regressions. This
-development result preserves the original failed acceptance and does not establish
-independent efficacy or confirm the two remaining conditional FP proposals.
+| Thư mục | Nội dung | Tài liệu chính |
+|---|---|---|
+| [owasp-bp-pilot/](owasp-bp-pilot/) | Thí điểm BenchmarkPython 4 CWE (Semgrep, CodeQL, Bandit). QL v0.1 ở `ql/`, QL v0.2 ở `ql_v02/` (baseline cho mọi bước sau). Bộ 47 phản ví dụ | [README](owasp-bp-pilot/README.md), [FREEZE_DEVIATION](owasp-bp-pilot/FREEZE_DEVIATION.md) 🔒 |
+| [wave-a/](wave-a/) | v0.2 trên Flask-Admin và Paperless-ngx | [README](wave-a/README.md) 🔒 |
+| [wave-b/](wave-b/) | 11 cặp CVE lỗi/vá: chọn mẫu, kết quả, nhãn 60 cảnh báo, query rà soát | [SELECTION_PROTOCOL](wave-b/SELECTION_PROTOCOL.md) 🔒, [RESULTS](wave-b/results/RESULTS.md) |
+| [v03-interprocedural-guard/](v03-interprocedural-guard/) | Đặc tả và QL v0.3 strict/scoped, phản ví dụ, bảng kỳ vọng, khóa dual | [README](v03-interprocedural-guard/README.md) 🔒, [SPEC](v03-interprocedural-guard/SPEC.md) 🔒, [DECISION](v03-interprocedural-guard/DECISION_2026-10-20.md) 🔒 |
+| [wave-c/](wave-c/) | Đánh giá độc lập: giao thức, chọn mẫu, runner, evaluator, kết quả, hồ sơ đóng đợt | [PROTOCOL](wave-c/PROTOCOL.md) 🔒, [DECISION](wave-c/DECISION_2026-10-21.md), [closeout/STATUS](wave-c/closeout/STATUS.md) |
+| [v021-normalization/](v021-normalization/) | Bản thử v0.2.1 (chỉ dùng cho phát triển) | [README](v021-normalization/README.md), [DECISION](v021-normalization/DECISION_2026-10-21.md) |
 
-[The decision after Wave C](wave-c/DECISION_2026-10-21.md) records zero incremental
-suppression and stops rule expansion. Eight sink units await owner review;
-FP reduction rates and independent efficacy are not confirmed. Use the
-[review guide](wave-c/results/study-001/REVIEW_GUIDE.md) and its blank label template.
+Gói kết quả của đợt C:
 
-[Supplementary source review](wave-c/results/review-001/REVIEW.md) documents the
-eight proposed labels, source hashes and synthetic symlink observations. It adds
-no scanner run or rule change and does not confirm human labels. A
-[draft results discussion](wave-c/results/review-001/THESIS_RESULTS_DRAFT.md)
-keeps the zero incremental effect and outstanding review limits explicit.
+- `results/study-001/`: kết quả scanner, hàng đợi rà và template nhãn.
+- `results/review-001/`: hậu kiểm source và bản nháp diễn giải.
+- `results/paths-001/`: 18 đường đi CodeQL mẫu cho 8 sink.
+- `closeout/`: báo cáo tổng hợp, khảo sát hợp đồng, tự rà kỹ thuật và hồ sơ owner review.
 
-[Post-hoc CodeQL paths](wave-c/results/paths-001/PATHS.md) add 18 path exemplars
-for all eight original sink units, with exact source/sink span agreement and
-114 located abstract edge rows. Queries run on database copies; original
-results and proposed labels remain unchanged. These traces support owner review
-and do not enumerate concrete executions or establish safety.
+Các gói `results/*` đều bị khóa.
 
-[The proposed next steps](wave-c/NEXT_STEPS_2026-10-21.md) prioritize completing
-owner review and reporting the zero incremental effect. Any later experiment
-with independently justified explicit contracts requires a separate protocol;
-the proposal does not start new scans or change the frozen Wave C method.
+### Giai đoạn CWE-78 (24/09–08/10, lịch sử)
 
-[Closeout progress](wave-c/closeout/STATUS.md) now includes a
-[results draft](wave-c/closeout/REPORT.md), a twelve-repository evidence ledger
-and a [blank first-pass review workspace](wave-c/closeout/owner-review/START_HERE.md).
-The [contract feasibility assessment](wave-c/closeout/CONTRACT_FEASIBILITY.md)
-does not support starting a policy-only experiment with the frozen implementation;
-human labels and semantic independence checks remain pending.
+Giai đoạn này đã dừng, nhưng mã của nó vẫn được ứng dụng (profile `command-injection-v0.1`)
+và CI (`experiments`, `scan-parity`) sử dụng.
 
-Pair preparation (manifest generation, archive locking, offline patch hunks and
-known locations) is documented in [pairs/README.md](pairs/README.md). The
-`pairs-v0` artifacts use the frozen v0.1 split and preserve acquisition failures;
-this preparation does not run vulnerability scanners.
+| Thư mục / tệp | Nội dung |
+|---|---|
+| [EVALUATION_PROTOCOL.md](EVALUATION_PROTOCOL.md), [amendments/](amendments/) | Giao thức v1.0.0 và Amendment 01–05. `run_pilot.py` ghi hash của giao thức vào `run.json`, nên đừng sửa file này |
+| [RESEARCH_LOG.md](RESEARCH_LOG.md) 🔒 | Nhật ký 24/09–08/10 |
+| `run_pilot.py`, `run_batch.py` | CLI quét theo manifest (npm; GitHub JS/Python): Semgrep và CodeQL, giữ SARIF thô, gộp đơn vị, chạy priority v0.1 |
+| `cases/`, `configs/`, `rules/`, `batches/` | Manifest ca, cấu hình scanner, rule Semgrep (`rules/batch-01/` và `rules/python-upstream/` thuộc profile), danh sách đợt |
+| `locators/`, `mappings/`, `policy/` | Định vị sink JS bằng Babel, rule-claims v1/v2, priority v0 và v0.1 ([PRIORITY_V0_1.md](policy/PRIORITY_V0_1.md) 🔒, được profile của ứng dụng ghim) |
+| [RECONCILIATION_V0.md](RECONCILIATION_V0.md), [REVIEW_WORKFLOW.md](REVIEW_WORKFLOW.md), `build_review.py`, `annotate_claims.py` | Đặc tả bộ gộp và quy trình rà |
+| `build_profile.py` | Sinh `profiles/command-injection-v0.1/` |
+| [reports/](reports/), `fixtures/`, `diagnostics/`, `labels/`, `taxonomy/` | Báo cáo từng đợt phát triển, fixture tổng hợp, script chẩn đoán, nhãn OWASP CWE-78, phân loại nguyên nhân gốc |
+| [inventory/](inventory/), [pairs/](pairs/), `schemas/`, `make_split*.py`, `make_pair_manifests.py`, `lock_pair_sources.py`, `patch_hunks.py`, `known_locations.py`, `fetch_cwe.py`, `audit_pair_inventory.py` | Kho cặp lỗi/vá, split, manifest, khóa nguồn, vị trí lỗi (pairs-v1; chưa quét) |
+| `Dockerfile` | Image thực nghiệm (Semgrep và CodeQL đã ghim) |
 
-## Available now
+`tests/` chứa toàn bộ test của cả hai giai đoạn (85 test tại commit `8e99ecc`).
 
-`run_pilot.py` is one configuration-driven CLI. The first implementation supports
-pinned JavaScript npm tarballs and GitHub JS/Python archives, Semgrep and CodeQL,
-raw SARIF preservation and a
-lossless review ledger/CSV. It rejects non-development cases. It does not yet
-implement adjudication, automatic sink matching, S1 tuning or metric computation.
-The first configuration is an integration smoke test, not the frozen S0/Q0 suite.
-It uses one upstream Semgrep audit rule and two CodeQL command-injection queries;
-no custom rules/models have been added.
+## Cách chạy
 
-Archive identity is checked using SHA-256 and registry integrity. Extraction
-rejects traversal, links, duplicate paths and excessive sizes/file counts. No npm
-install or benchmark exploit is executed. Every failed attempt keeps its report.
-Source labels remain separate from the acquisition/scanner manifest.
+Mọi lệnh chạy từ thư mục gốc của repository. Phiên bản công cụ được ghim ở
+[tools/pins.env](../tools/pins.env).
 
-## Run with Docker
+### Test
 
-From the repository root (Linux x86-64; Docker host required):
+```powershell
+npm --prefix experiments/locators ci --ignore-scripts
+uv run --project backend --with-requirements experiments/requirements-pairs.txt python -m unittest discover -s experiments/tests -p 'test_*.py' -v
+```
+
+Các script bị khóa (v0.3, owasp-bp-pilot, wave-c, `known_locations.py`, `patch_hunks.py`…) vẫn
+đọc/ghi bằng bảng mã mặc định và không được sửa. Trên Windows, đặt `$env:PYTHONUTF8 = "1"`
+trước khi chạy chúng.
+
+### Kiểm tra khóa
+
+```powershell
+python experiments/wave-c/select_repositories.py --check
+python experiments/v03-interprocedural-guard/scripts/verify_freeze.py --metadata experiments/v03-interprocedural-guard/FREEZE_v0.3_dual.json
+python experiments/v03-interprocedural-guard/scripts/verify_freeze.py --manifest experiments/wave-c/LOCK.sha256
+python experiments/v03-interprocedural-guard/scripts/verify_freeze.py --manifest experiments/wave-c/EXECUTION_LOCK.sha256
+```
+
+Lệnh `--metadata` cần archive trong `artifacts/v03/`. Thư mục này bị Git bỏ qua, nên lệnh chỉ
+chạy được trên máy có archive. Workflow `research-publication.yml` chạy lệnh cuối cùng mỗi khi
+`EXECUTION_LOCK.sha256` thay đổi.
+
+### Đợt C: chấm nhãn bằng evaluator đã khóa
+
+Evaluator chỉ đọc kết quả đã lưu, không quét lại. Mỗi lần chạy cần một thư mục output mới:
+
+```powershell
+python experiments/wave-c/evaluate.py --run experiments/wave-c/results/study-001/evaluation_run.json --labels experiments/wave-c/closeout/owner-review/labels.owner-pass1.json --output artifacts/wave-c/owner-review-pass1-001
+```
+
+Mã thoát 2 có thể có nghĩa là `failed_acceptance`. Khi đó giữ nguyên báo cáo, không sửa nhãn.
+Quy trình rà: [START_HERE.md](wave-c/closeout/owner-review/START_HERE.md).
+Cách chạy lại scanner: [EXECUTION_GUIDE.md](wave-c/EXECUTION_GUIDE.md) 🔒.
+Bản thử v0.2.1: [v021-normalization/README.md](v021-normalization/README.md) (chạy qua WSL).
+
+### CLI giai đoạn CWE-78
+
+Chạy qua Docker (Linux x86-64). Thư mục output phải là thư mục mới:
 
 ```bash
 docker build -f experiments/Dockerfile -t security-triage-pilot .
-mkdir -p artifacts
-docker run --rm \
-  -v "$(pwd)/artifacts:/app/artifacts" \
-  security-triage-pilot \
+docker run --rm -v "$(pwd)/artifacts:/app/artifacts" security-triage-pilot \
   --case experiments/cases/secbench-curling-0.2.0.json \
   --config experiments/configs/development-smoke-javascript.json \
   --configuration-commit 8ffd191a4b63d74db3b655aeb08c3ce9aa33a4c5 \
   --output artifacts/curling-local-001
 ```
 
-The output directory must be new. The commit above pins the native runner/config
-used for the recorded second attempt. If code/config changes, pass its actual
-committed revision and rebuild the image; hashes also appear in run.json.
-The experiment image is verified in GitHub Actions. It copies the reusable
-`backend/app/scanners` package into the image and sets `PYTHONPATH=/app/backend`.
-Scanner pins live in `tools/pins.env` and are installed by `tools/install-scanners.sh`,
-shared with the worker image (`backend/Dockerfile.worker`).
-Semgrep 1.178.0 remains dependency-pinned. CodeQL uses the full multi-language
-`codeql-bundle-linux64.tar.zst` release 2.27.1, verified with SHA-256
-`1ec99cfa9420f04c2330784b4ddb8363a0dd67c3e4471cd93963c50e6c433717`.
-The build asserts that JavaScript queries 2.4.6 and Python queries 1.8.11 are
-present, and the entrypoint supplies both pack paths. Verification run
-`37297668652` built the image from candidate commit
-`965ccc489be21842e5c7971db49ac09e99f55240`, verified the native commands with
-`PYTHONPATH` removed, ran all 31 experiment tests, and reproduced the six curling
-findings byte-for-byte against the pre-refactor baseline. Use CodeQL in accordance with its license.
+Chạy native cần Python 3.12+, Semgrep 1.178.0, CodeQL 2.27.1 và query pack đúng ngôn ngữ:
+truyền `--semgrep`, `--codeql` và `--javascript-query-pack` hoặc `--python-query-pack`.
+CLI chỉ nhận ca thuộc tập phát triển.
 
-## Native invocation
+Output gồm archive và source đã giải nén, case/config đã ghim, log phiên bản/tiến trình, SARIF,
+`findings.json`/`.csv`, `units.json`, `assessments.json`, `run.json` và CodeQL database.
+`artifacts/` bị Git bỏ qua.
 
-Use Python 3.12+, Semgrep 1.178.0 and CodeQL 2.27.1. The experiment entry scripts
-bootstrap `backend/` onto `sys.path`, so the commands below work from the
-repository root without manually setting `PYTHONPATH`. CI still sets
-`PYTHONPATH=backend` explicitly as an independent environment check. Native runs
-must supply the query pack that matches the case language; the verified Docker
-image supplies both JavaScript queries 2.4.6 and Python queries 1.8.11
-automatically. For JavaScript:
+### Profile quét của ứng dụng
 
-```bash
-python3 experiments/run_pilot.py \
-  --case experiments/cases/secbench-curling-0.2.0.json \
-  --config experiments/configs/development-smoke-javascript.json \
-  --configuration-commit 8ffd191a4b63d74db3b655aeb08c3ce9aa33a4c5 \
-  --semgrep /path/to/semgrep \
-  --codeql /path/to/codeql/codeql \
-  --javascript-query-pack /path/to/codeql/qlpacks/codeql/javascript-queries/2.4.6 \
-  --output artifacts/curling-local-001
-```
+`profiles/command-injection-v0.1/profile.json` trỏ tới config, rule, locator, rule-claims và
+policy trong thư mục này, kèm SHA-256 của từng file. File sinh ra duy nhất là `priority-v0.1.json`.
 
-Outputs: source archive, extracted source, pinned case/config, fetched rules,
-version/process logs, SARIF, findings.json, findings.csv, run.json and CodeQL DB.
-Raw output is distinct from a reviewed location/label ledger. Do not interpret raw
-finding count as unique vulnerabilities or calculate F1 before mapping and labeling.
-Artifacts/ is ignored by Git; compact evidence and report extracts live in reports/.
+Sau khi đổi một file đã được ghim, chạy `python experiments/build_profile.py` rồi commit kết
+quả; CI (`test_profile.py`) sẽ fail nếu profile lỗi thời. Worker từ chối khởi động nếu hash
+hoặc phiên bản scanner lệch.
 
-Run the focused runner checks with:
+## Tài liệu bị khóa
+
+Một file bị coi là khóa khi SHA-256 hiện tại của nó xuất hiện trong một manifest:
+
+- `*.sha256`: `FREEZE_*`, `LOCK`, `EXECUTION_LOCK`, `LABELS_LOCK`, `RESULTS_LOCK`,
+  `PATHS_LOCK`, `REVIEW_LOCK`, `SELF_REVIEW_LOCK`, `INPUTS_LOCK`, `EXPECTATIONS`;
+- `FREEZE_v0.3_dual.json`;
+- `profiles/command-injection-v0.1/profile.json`.
+
+Sửa một file như vậy sẽ phá kiểm tra khóa, hoặc khiến worker từ chối khởi động. Kiểm tra trước khi sửa:
 
 ```bash
-python3 -m unittest experiments.tests.test_runner -v
+git grep -l "$(sha256sum <file> | cut -c1-64)"
 ```
 
-Run the complete experiment suite (currently 54 tests) with the same command used
-by CI:
+Có kết quả nghĩa là file bị khóa. Khi đó, ghi trạng thái mới vào
+[docs/research.md](../docs/research.md) hoặc một tài liệu mới trong đúng thư mục giai đoạn.
 
-```bash
-PYTHONPATH=backend python3 -m unittest discover -s experiments/tests -p 'test_*.py' -v
-```
+Tài liệu Markdown đang bị khóa (ngày 2026-10-27):
 
-## Recorded development run
+- `../SECURITY_TRIAGE_AGENT_HANDOFF_2026-10-20.md`, `RESEARCH_LOG.md`,
+  `policy/PRIORITY_V0_1.md`, `owasp-bp-pilot/FREEZE_DEVIATION.md`
+- `v03-interprocedural-guard/`: `README.md`, `SPEC.md`, `SPEC_RESOURCE.md`, `DECISION_2026-10-20.md`
+- `v021-normalization/`: `PLAN.md`, `results/round-001/RESULTS.md`
+- `wave-a/README.md`, `wave-b/SELECTION_PROTOCOL.md`
+- `wave-c/`: `README.md`, `PROTOCOL.md`, `EXECUTION_GUIDE.md`, `EXECUTION_LOG.md`,
+  `closeout/self-review/REVIEW.md`, và mọi tệp `.md` trong `results/study-001/`,
+  `results/review-001/`, `results/paths-001/`
 
-See [curling 0.2.0 pilot report](reports/curling-0.2.0/REPORT.md): both tools ran,
-Semgrep returned zero raw findings and CodeQL six. A subsequent
-[source review](reports/curling-0.2.0/SOURCE_REVIEW.md) maps the six alerts to one
-in-scope CWE-78 TP location, with an unblinded assistant first review and independent
-human review pending. This remains a development checkpoint, not an accuracy comparison.
-
-## Sink proposal and review packet
-
-An offline review builder now verifies the preserved evidence and proposes sink
-aliases for the pinned CodeQL shell-command-construction result format. It keeps
-all fallback records and leaves mapping decisions and truth labels unresolved.
-See [REVIEW_WORKFLOW.md](REVIEW_WORKFLOW.md) for commands, limitations and manual
-review fields. Six runner tests plus six review tests pass locally (12 total).
-Application test counts are tracked separately; see the latest batch report.
-
-## Development rule diagnostic
-
-The shared CLI now accepts checksum-pinned repository rules and an optional
-`--source-archive` cache with manifest verification. On the same curling archive,
-the upstream smoke rule returns 0 raw findings and a direct-alias extension returns
-1 at line 56. This is an S1 development candidate, not the frozen tuned baseline;
-the shared location now has a [first-review TP label](reports/curling-0.2.0/SOURCE_REVIEW.md),
-while frozen cross-configuration scoring and effectiveness metrics remain pending. See the
-[paired diagnostic report](reports/curling-direct-alias/REPORT.md). There are now
-14 offline experiment tests, separate from application backend tests.
-
-## Five-package development survey
-
-See [batch 01 report](reports/development-batch-01/REPORT.md) for six raw Semgrep
-alerts and zero CodeQL alerts across five completed paired snapshots. The report
-preserves failed attempts and preliminary capped review; no FP or accuracy gain
-is confirmed. Run further fixed batches with `python -m experiments.run_batch`.
-
-## Application-helper development survey
-
-[Batch 02](reports/development-batch-02/REPORT.md) records four Semgrep and one
-CodeQL alert across three published snapshots. The node-notifier sanitizer
-review is a concrete hypothesis awaiting validation, not a confirmed FP.
-
-## NotifySend path diagnostic
-
-[Follow-up review](reports/development-batch-02/PATH_REVIEW.md) records four CodeQL
-traces and bounded argument-construction checks. The shared sink stays unresolved;
-no accuracy metric or exclusion rule is enabled.
-
-## R1 candidate feasibility
-
-[Ten synthetic probes](reports/r1-feasibility/REPORT.md) check whether the current
-upstream rules leave constant-command candidates for R1. Semgrep emits six alerts
-and CodeQL three; an explicit interpreter probe is Semgrep-only. This is mechanism
-evidence, not real-data FP reduction or recall improvement.
-
-## Rule meaning and CWE annotation
-
-`python -m experiments.annotate_claims` annotates recorded scans without removing
-findings. The [versioned mapping](mappings/README.md) separates API-use warnings
-from modeled flows and preserves unknown classifications. [Results](reports/rule-claims-v1/REPORT.md)
-retain all 11 alerts from the eight real packages and all nine synthetic alerts.
-
-## Platform scope and complete preliminary coverage
-
-[Follow-up review](reports/development-batch-02/SCOPE_REVIEW.md) records the
-Windows-only launch-editor sink as out of the Linux/POSIX threat model, with its
-technical verdict still unresolved. This is not an FP or a policy suppression.
-The previously capped gulp-shell options alert now has source notes: all 11 batch
-alerts have preliminary review, but confirmed in-scope FPs remain zero. R1 still
-has no defensible negative example; no suppressor or effectiveness metric is enabled.
-
-## Recovered application-caller batch
-
-[Batch 03](reports/development-batch-03/REPORT.md) records fresh 2026-10-01 scans
-of nodemon, node-gyp and release-it with the unchanged suite: Semgrep 0/1/1,
-CodeQL 0/0/0. One Windows-only branch is outside scope; no in-scope FP is confirmed.
-The two prior unpushed local attempts were lost during workspace maintenance and
-are explicitly excluded. The recovered run uses the published exact-byte manifest
-fix and passes provenance verification. The focused experiment suite has 22 tests.
-
-## External Python benchmark development
-
-The same CLI now accepts pinned GitHub source archives and a Python CodeQL pack.
-The [selection memo](batches/OWASP_PYTHON_DEVELOPMENT.md) pins all 20 CWE-78 cases
-from OWASP BenchmarkPython, including seven expected negatives. This synthetic
-development source is separate from real npm survey evidence. The verified
-experiment Docker image now uses the full CodeQL 2.27.1 bundle and includes both
-the JavaScript and Python query packs; the memo still documents the earlier native
-Python run for provenance.
-
-The [first paired report](reports/owasp-python-development/REPORT.md) records 18
-Semgrep and 13 CodeQL raw findings. Single-reviewer source labels identify seven
-negative sites flagged by Semgrep, two also flagged by CodeQL; these are external
-synthetic cases, not real-package FPs. CodeQL detects more true sites, and the union
-adds only negative warnings here. No R1 suppression or improvement is claimed.
-The shared runner's focused suite now has 25 tests.
-
-## First Python guard evidence query
-
-The [guard diagnostic](reports/constant-guard-development/REPORT.md) derives
-`208 > 200 = true` in benchmark 01097 and matches all 21 authored mechanism cases
-(9 guard facts, 12 abstentions). It also demonstrates why a constant guard alone
-cannot suppress a warning: the command may be overwritten afterward. Original
-alerts and protocol R1 exclusions are retained. The experiment unit suite now
-has 27 tests; this development evidence is separate from a policy effectiveness result.
-
-## Scan profile
-
-`profiles/command-injection-v0.1/profile.json` is the worker's view of this directory:
-it names the scanner configs, Semgrep rules, sink locator, rule claims and policy that
-a product scan uses, by their paths here, and pins each by SHA-256. There are no copies;
-the only generated file is `priority-v0.1.json`, the policy YAML converted to JSON so
-the worker needs no YAML parser. After changing any pinned file, run
-`python experiments/build_profile.py` and commit the result; CI fails (`test_profile.py`)
-while the profile is stale. Assessments still record the YAML's hash as `policy_sha256`.
+Các báo cáo có ngày khác (thư mục `reports/`, `batches/`, `amendments/`, `inventory/`…) là
+hồ sơ lịch sử: không bị khóa, nhưng cũng không viết lại nội dung.

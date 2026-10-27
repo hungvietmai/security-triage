@@ -1,11 +1,15 @@
 # Security Triage — repository guide for agents
 
 Monorepo: `frontend/` (React + TypeScript) and `backend/` (FastAPI + Python),
-run together with Docker Compose. Read the guide for the part you touch:
+run together with Docker Compose, plus the research in `experiments/`. Read the
+guide for the part you touch:
 
 - [`frontend/AGENTS.md`](frontend/AGENTS.md) — structure, patterns, tests, checks
 - [`backend/AGENTS.md`](backend/AGENTS.md) — structure, core toolkit, migrations, checks
-- [`README.md`](README.md) — running the stack; [`docs/architecture.md`](docs/architecture.md) — scope and research rules
+- [`experiments/AGENTS.md`](experiments/AGENTS.md) — research tests, locks, frozen data
+- [`README.md`](README.md) — running the stack and the documentation map
+- [`docs/research.md`](docs/research.md) — current research question, results, open work
+- [`docs/architecture.md`](docs/architecture.md) — the application as implemented
 
 Git hooks (Husky, root `package.json`) run lint/format/type checks on commit,
 validate the commit message, and run both test suites on push. Fix what they
@@ -101,6 +105,23 @@ docs: add conventional commit rules for agents
 
 - Commit, push or open pull requests only when the user asks.
 - Report check results truthfully; never claim a hook or CI step passed without running it.
+
+## Documentation
+
+- **Living documents** must describe the current state: `README.md`, `docs/*.md`,
+  `experiments/README.md`, the `AGENTS.md` guides and unlocked status files such as
+  `experiments/wave-c/closeout/STATUS.md`. Update them in the same change that alters
+  what they describe.
+- **Locked documents** have their SHA-256 in a lock manifest (`*.sha256`,
+  `FREEZE_v0.3_dual.json`) or in `profiles/*/profile.json`. Never edit or rename
+  them. Before editing anything under `experiments/`, run
+  `git grep -l "$(sha256sum <file> | cut -c1-64)"`; any hit means the file is locked.
+  Record new status in `docs/research.md` or in a new document instead.
+  `experiments/RESEARCH_LOG.md` is locked and ends on 2026-10-08.
+- **Historical records** (dated reports, amendments, decisions) keep their content;
+  later status goes into the living documents.
+- Language: overview and research documents in Vietnamese; agent guides and READMEs
+  next to code in English; historical records keep their original language.
 
 ## Testing policy
 

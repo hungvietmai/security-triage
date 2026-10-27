@@ -23,5 +23,8 @@ không thuộc các gói kết quả lịch sử đã khóa. Không sửa các g
 trạng thái mới.
 
 Việc tiếp theo là mở hồ sơ lượt rà đầu. Agent có thể chấm ngay khi có nhãn thực
-tế được cung cấp; không tự xác nhận thay người rà. Chưa commit/push các thay đổi
-closeout.
+tế được cung cấp; không tự xác nhận thay người rà.
+
+Cập nhật 2026-10-27: hồ sơ closeout đã được commit và push trong `8e99ecc`
+(nhánh `feat/research-safety-evidence`). Đến ngày này, human review vẫn chưa bắt đầu.
+Trạng thái tổng hợp của toàn bộ nghiên cứu: [docs/research.md](../../../docs/research.md).

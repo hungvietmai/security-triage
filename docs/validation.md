@@ -1,79 +1,57 @@
-# Validation evidence
+# Kiểm chứng
 
-Updated 2026-09-29. Application foundation validation and research evaluation are
-separate: the checks below do not establish scanner or adjudication effectiveness.
+Kiểm chứng phần mềm và bằng chứng nghiên cứu là hai việc tách biệt. Test, hook và CI chỉ xác
+nhận mã chạy đúng như thiết kế; chúng **không** chứng minh hiệu quả giảm FP. Phần nào của kết
+quả nghiên cứu đã được phép kết luận: xem [research.md §4](research.md#4-những-gì-được-phép-kết-luận).
 
-## Verified GitHub Actions run
+## 1. Các lớp kiểm tra
 
-- Application commit: `1dbeaf37542aef3c482b7081411c4c8731139595`.
-- Run: https://github.com/hungvietmai/security-triage/actions/runs/36094053941
-- `frontend`: completed successfully (job `107942407548`).
-- `docker-integration`: completed successfully (job `107942407403`).
+| Lớp | Nội dung | Cấu hình |
+|---|---|---|
+| `pre-commit` | Frontend: Prettier, oxlint, `tsc`. Backend: `ruff format`, `ruff check --fix`, `mypy` (chỉ file đã stage) | `.husky/`, `*/lint-staged.config.*` |
+| `commit-msg` | Conventional Commits; chặn `Co-authored-by` và dòng ghi công AI | `commitlint.config.mjs` |
+| `pre-push` | Toàn bộ test frontend (Vitest) và backend (pytest, ngưỡng coverage 90%) | `.husky/pre-push` |
+| CI `experiments` | Toàn bộ test thực nghiệm (85 tại `8e99ecc`) | `.github/workflows/ci.yml` |
+| CI `reconciliation-integration` | Build image thực nghiệm; chạy scanner thật và priority v0.1 trên curling (hai cấu hình), R1 và OWASP Python; kiểm tiêu chí chấp nhận của bộ gộp và chính sách | như trên |
+| CI `scan-parity` | Quét curling qua CLI và qua API/worker; yêu cầu kết quả giống nhau | như trên |
+| CI `frontend` | Lint, format, kiểu API sinh từ `openapi.json`, Vitest, build, E2E Playwright (HTTP giả) | như trên |
+| CI `docker-integration` | Dựng toàn stack; test API trên PostgreSQL; ruff, mypy, pip-audit; migration hai chiều; `openapi.json` khớp API; phiên bản scanner và hash profile của worker; proxy, readiness, worker | như trên |
+| `research-publication` | Kiểm 98 đầu vào của `EXECUTION_LOCK.sha256` khi file này thay đổi | `.github/workflows/research-publication.yml` |
 
-The run successfully built and started the Docker stack, ran the 12 backend tests
-using isolated PostgreSQL schemas, linted Python, checked migration/model drift,
-and verified frontend proxy, API readiness and Celery worker connectivity. The
-frontend job passed dependency installation, lint and production build.
+Kiểm tra khóa nghiên cứu chạy bằng tay: xem
+[experiments/README.md](../experiments/README.md#kiểm-tra-khóa).
 
-The initial run found that a boto3 client could not be used directly as a context
-manager. The application commit above uses `contextlib.closing` and includes
-regression coverage with a real boto3 client and Stubber responses. This tests
-client handling; the Docker readiness check separately exercises SeaweedFS S3.
+## 2. Kết quả đã ghi nhận
 
-These are results for the linked application commit and run, not a claim that any
-future code revision has passed. This documentation update does not rerun Docker.
+Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa chạy lại thì không được coi là đạt.
 
-## Creation workspace checks
+| Ngày | Commit | Môi trường | Kết quả | Nguồn |
+|---|---|---|---|---|
+| 2026-10-07 | `4f2ed0b` | GitHub Actions, CI #115 (run `37567998891`) | Cả 4 job xanh; 206 test backend, coverage nhánh 91,38%; 33 test thực nghiệm; migration `0003 → base → head` | [RESEARCH_LOG.md](../experiments/RESEARCH_LOG.md) |
+| 2026-10-21 | trước `8e99ecc` | Máy cục bộ | 85 test thực nghiệm; khóa execution (98 đầu vào), v0.3 (62), chọn mẫu (17), toolchain (1.628): mọi lệnh exit 0 | [study-001/checks.json](../experiments/wave-c/results/study-001/checks.json) |
+| 2026-10-27 | `8e99ecc` | Windows, cục bộ | Thực nghiệm: 85 test, 1 lỗi `UnicodeEncodeError` do `run_pilot.py` ghi JSON bằng cp1252 (đạt cả 85 khi đặt `PYTHONUTF8=1`) | lần cập nhật tài liệu này |
+| 2026-10-27 | `8e99ecc` | Windows, cục bộ | Khóa `wave-c/LOCK.sha256` (17 file), `EXECUTION_LOCK.sha256` (98 file) và chọn mẫu (12 repository) đạt. Khóa v0.3 `--metadata` không chạy được vì thiếu archive `artifacts/v03/` | lần cập nhật tài liệu này |
+| 2026-10-27 | sau các commit sửa lỗi cùng ngày | Windows, cục bộ | Backend: **375 đạt, 2 bỏ qua** (SQLite, không đặt `TEST_DATABASE_URL`); ruff, format, mypy sạch | lần cập nhật tài liệu này |
+| 2026-10-27 | sau các commit sửa lỗi cùng ngày | Windows, cục bộ | Thực nghiệm: **85 đạt**, không cần `PYTHONUTF8` | lần cập nhật tài liệu này |
+| 2026-10-27 | sau các commit sửa lỗi cùng ngày | Windows, cục bộ | Frontend `npm run check`: typecheck, lint, format, **63 test / 13 file** đạt | lần cập nhật tài liệu này |
 
-The creation workspace had no Docker daemon. Local checks covered frontend build
-and lint, Python lint/format, backend tests, Alembic PostgreSQL SQL generation and
-Compose configuration. The earlier note reporting 10 tests and Docker execution
-as pending described the initial checkpoint; it is superseded by the 12-test
-suite and successful GitHub-hosted Docker run above.
+**Chưa xác minh:**
 
-An upstream Starlette warning about the httpx/httpx2 transition was observed in
-local test dependencies. It was not suppressed.
+- CI của nhánh `feat/research-safety-evidence`, vì máy không có `gh`.
+- Toàn stack Docker trên các commit này.
+- E2E Playwright ở máy cục bộ (chưa cài Chromium).
 
-## Development scanner checkpoint
+## 3. Lỗi đã biết
 
-The manifest-driven CLI acquired pinned npm `curling@0.2.0` and ran Semgrep
-1.178.0 and CodeQL 2.27.1 natively. The successful attempt returned 0 and 6 raw
-findings respectively. Six focused runner tests passed. Raw outputs, failed
-attempt history and configuration hashes are preserved in the
-[pilot report](../experiments/reports/curling-0.2.0/REPORT.md).
+- **Script bị khóa trên Windows:** code chưa khóa đọc/ghi bằng UTF-8. Các script bị khóa (v0.3,
+  owasp-bp-pilot, wave-c, `known_locations.py`, `patch_hunks.py`…) vẫn dùng bảng mã mặc định và
+  không được sửa; trên Windows phải chạy chúng với `PYTHONUTF8=1`. Trên Linux (CI) không bị
+  ảnh hưởng.
+- **Cài lại `node_modules` trên Windows:** `npm ci` có thể lỗi `EPERM` nếu VS Code đang giữ
+  native binding của oxlint. Khi đó đóng tiến trình đang giữ file, hoặc dùng `npm install`.
 
-This is one JavaScript development case with a small smoke configuration. It is
-not a frozen baseline comparison. Sink mapping and independent labels remain
-pending. The dedicated experiment Dockerfile has not been built or tested;
-application CI above does not validate it.
+## 4. Lịch sử
 
-## Not yet validated or implemented
-
-- Python/Git source support in the experiment CLI and complete baseline suites.
-- Source upload and provenance schema extensions.
-- Automatic sink matching, CWE-78 evidence policy or tuned Semgrep configuration.
-- Independent labels, metric computation or held-out evaluation.
-- False-positive reduction, recall retention or runtime improvements.
-
-The next research gate is review of the first case's proposed sink mapping and
-labels, followed by remaining development cases. See the authoritative
-[evaluation protocol](../experiments/EVALUATION_PROTOCOL.md).
-
-## Offline mapping checkpoint (2026-09-29)
-
-The review builder reconstructs the saved evidence with checksum verification.
-For curling it retains all six raw records and proposes one shared sink, with
-zero accepted assignments and unresolved truth/scope labels. Six additional
-review tests pass, for 12 experiment tests total; Python lint passes. Checks cover
-CWE-independent identity, arbitrary message-link IDs, ambiguous/unsafe locations,
-fallback retention and evidence tampering. These do not validate vulnerability
-labels. See [review workflow](../experiments/REVIEW_WORKFLOW.md).
-
-## Semgrep alias diagnostic (2026-09-29)
-
-Two same-input Semgrep configurations completed on curling: unchanged upstream
-rule 0 raw findings; direct exec/execSync alias extension 1 at line 56. Synthetic
-controls returned expected lines (upstream: 7; adjusted: 7, 10, 13), without alerts
-on the literal-command/non-execution controls. Fourteen offline experiment tests
-and Python lint pass. No held-out evaluation or FP-reduction claim is made. See
-[the diagnostic report](../experiments/reports/curling-direct-alias/REPORT.md).
+Các mốc kiểm chứng trước 2026-10-08 (CI đầu tiên của nền ứng dụng, pilot curling, bộ dựng
+review, chẩn đoán alias) được ghi theo ngày trong [RESEARCH_LOG.md](../experiments/RESEARCH_LOG.md)
+và [experiments/reports/](../experiments/reports/). Số đo hiệu năng: [performance.md](performance.md).

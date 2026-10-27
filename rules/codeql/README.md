@@ -1,8 +1,16 @@
 # CodeQL queries
 
-Upstream baseline queries are checksum-pinned in `experiments/configs/` and loaded
-from the matching CodeQL bundles. Keep them distinct from custom evidence queries.
+Upstream baseline queries come from the pinned CodeQL bundle (`tools/pins.env`) and are
+selected by checksum-pinned configurations in `experiments/configs/`. Keep them distinct
+from the custom evidence queries:
 
-The [Python evidence pack](python-evidence/README.md) contains the first bounded
-integer-guard diagnostic. It produces review evidence and authorizes no suppression.
-Its development runner records CLI/library versions, source hashes and raw results.
+| Location | Content | Phase |
+|---|---|---|
+| [python-evidence/](python-evidence/README.md) | Bounded integer-guard diagnostic; produces review evidence and authorizes no suppression | CWE-78 (historical) |
+| `experiments/owasp-bp-pilot/ql/`, `ql_v02/` | Safety-evidence layer v0.1 (rejected) and v0.2 (current baseline) for CWE-22/78/79/643 | CWE-22 |
+| `experiments/v03-interprocedural-guard/ql/` | v0.3 strict/scoped interprocedural guards for CWE-22 | CWE-22 (frozen) |
+| `experiments/v021-normalization/pack/` | v0.2.1 development correction | CWE-22 (development) |
+| `experiments/wave-c/ql/` | Extracted-file coverage check for Wave C | CWE-22 |
+
+The CWE-22 packs are locked by the freeze manifests next to them; see
+`experiments/README.md` and `docs/research.md`.
