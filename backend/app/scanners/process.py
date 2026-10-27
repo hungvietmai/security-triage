@@ -119,7 +119,7 @@ def tool_version(
     if record["status"] != "completed":
         raise RuntimeError(f"{tool} unavailable; see version logs")
 
-    actual = (output / f"{tool}-version.stdout.log").read_text()
+    actual = (output / f"{tool}-version.stdout.log").read_text(encoding="utf-8")
     if tool == "codeql":
         payload = cast(object, json.loads(actual))
         if not isinstance(payload, dict):

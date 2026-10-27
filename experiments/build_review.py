@@ -47,7 +47,7 @@ def relative_path(value):
 
 def load_evidence(path, attempt):
     """Verify original bytes before using the repository-owned evidence bundle."""
-    envelope = json.loads(path.read_text())
+    envelope = json.loads(path.read_text(encoding="utf-8"))
     if envelope.get("format") != "gzip-base64-json-v1":
         raise ValueError("Unsupported evidence envelope")
     decoded = gzip.decompress(base64.b64decode(envelope["payload"], validate=True))

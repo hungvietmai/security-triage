@@ -13,7 +13,7 @@ d = os.path.join(work, f"{owner}__{repo}")
 
 
 def run(*a):
-    return subprocess.run(a, capture_output=True, text=True, cwd=d)
+    return subprocess.run(a, capture_output=True, text=True, cwd=d, encoding="utf-8")
 
 
 if not os.path.isdir(d):

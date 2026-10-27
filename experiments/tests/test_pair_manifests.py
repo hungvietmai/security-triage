@@ -37,7 +37,7 @@ class ManifestTests(unittest.TestCase):
                 }
             ),
         )
-        split = json.loads(SPLIT.read_text())
+        split = json.loads(SPLIT.read_text(encoding="utf-8"))
         actual_groups = Counter(
             (m["language"], m["split"]) for m in {m["group_id"]: m for m in manifests}.values()
         )
@@ -100,7 +100,7 @@ class ManifestTests(unittest.TestCase):
             )
         self.assertEqual(len(list(directory.glob("secbench-*.json"))), 34)
         self.assertEqual(len(list(directory.glob("pyvul-*.json"))), 17)
-        self.assertIn("sink_hint", json.loads(SCHEMA.read_text())["properties"])
+        self.assertIn("sink_hint", json.loads(SCHEMA.read_text(encoding="utf-8"))["properties"])
 
 
 if __name__ == "__main__":

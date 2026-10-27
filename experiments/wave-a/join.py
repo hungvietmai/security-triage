@@ -55,7 +55,7 @@ def scope(path):
 
 
 codeql = defaultdict(set)  # (cwe, variant) -> {(file, line, col)}
-for r in json.load(open(os.path.join(out, "v02.sarif")))["runs"][0]["results"]:
+for r in json.load(open(os.path.join(out, "v02.sarif"), encoding="utf-8"))["runs"][0]["results"]:
     _, cwe, variant = r["ruleId"].split("/")
     loc = r["locations"][0]["physicalLocation"]
     region = loc["region"]
@@ -63,11 +63,11 @@ for r in json.load(open(os.path.join(out, "v02.sarif")))["runs"][0]["results"]:
     codeql[(cwe.split("-")[1], variant)].add(key)
 
 evidence = defaultdict(list)  # (cwe, file, function) -> rows
-with open(os.path.join(out, "evidence.csv"), newline="") as f:
+with open(os.path.join(out, "evidence.csv"), newline="", encoding="utf-8") as f:
     for row in csv.DictReader(f):
         evidence[(row["cwe"], row["file"], row["function"])].append(row)
 
-sem_rules = {r["id"]: (set(r["cwe"]), r["mode"]) for r in json.load(open(rules_path))}
+sem_rules = {r["id"]: (set(r["cwe"]), r["mode"]) for r in json.load(open(rules_path, encoding="utf-8"))}
 rows = []
 for cwe in ["22", "78", "79", "643"]:
     for path, line, col in sorted(codeql[(cwe, "none")]):
@@ -97,7 +97,7 @@ for cwe in ["22", "78", "79", "643"]:
                 review_status="unreviewed",
             )
         )
-for r in json.load(open(os.path.join(out, "semgrep.sarif")))["runs"][0]["results"]:
+for r in json.load(open(os.path.join(out, "semgrep.sarif"), encoding="utf-8"))["runs"][0]["results"]:
     rid = r["ruleId"].split(".")[-1]
     cwes, mode = sem_rules[rid]
     loc = r["locations"][0]["physicalLocation"]
@@ -123,7 +123,7 @@ for r in json.load(open(os.path.join(out, "semgrep.sarif")))["runs"][0]["results
             )
         )
 fields = list(rows[0].keys()) if rows else []
-with open(os.path.join(out, "alerts.csv"), "w", newline="") as f:
+with open(os.path.join(out, "alerts.csv"), "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=fields)
     w.writeheader()
     w.writerows(rows)

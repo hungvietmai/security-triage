@@ -40,7 +40,7 @@ class PairPipelineIntegrationTests(unittest.TestCase):
 
     def prepare(self, directory, pair_id=PAIR_ID):
         self.cli("make_pair_manifests.py", "--output", directory)
-        manifest = json.loads((directory / f"{pair_id}.json").read_text())
+        manifest = json.loads((directory / f"{pair_id}.json").read_text(encoding="utf-8"))
         vulnerable = b"import os\ndef run(cmd):\n    os.system(cmd)\n"
         fixed = b"import os\ndef run(cmd):\n    os.system('true')\n"
 
@@ -79,8 +79,8 @@ class PairPipelineIntegrationTests(unittest.TestCase):
             self.assertEqual(summary["pairs_resolved"], 1)
             self.assertEqual(summary["scanner_invocations"], 0)
             patch_path = directory / PAIR_ID / "patch-hunks.json"
-            patch = json.loads(patch_path.read_text())
-            known = json.loads((directory / PAIR_ID / "known-locations.json").read_text())
+            patch = json.loads(patch_path.read_text(encoding="utf-8"))
+            known = json.loads((directory / PAIR_ID / "known-locations.json").read_text(encoding="utf-8"))
             hashes = {
                 version: locks[PAIR_ID][version]["sha256"] for version in ("vulnerable", "fixed")
             }
@@ -100,9 +100,9 @@ class PairPipelineIntegrationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)
             cache, locks = self.prepare(directory, held_out)
-            self.assertEqual(json.loads((directory / f"{held_out}.json").read_text())["split"], "held_out")
+            self.assertEqual(json.loads((directory / f"{held_out}.json").read_text(encoding="utf-8"))["split"], "held_out")
             self.cli("patch_hunks.py", "--pair", held_out, "--pairs", directory, "--cache", cache)
-            patch = json.loads((directory / held_out / "patch-hunks.json").read_text())
+            patch = json.loads((directory / held_out / "patch-hunks.json").read_text(encoding="utf-8"))
             self.assertEqual(
                 patch["snapshot_sha256"],
                 {version: locks[held_out][version]["sha256"] for version in ("vulnerable", "fixed")},

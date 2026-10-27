@@ -30,7 +30,7 @@ def require(condition, message):
 
 
 def decode_rows(path):
-    result = json.loads(path.read_text())["#select"]
+    result = json.loads(path.read_text(encoding="utf-8"))["#select"]
     names = [c["name"] for c in result["columns"]]
     return [dict(zip(names, values, strict=True)) for values in result["tuples"]]
 
@@ -74,14 +74,14 @@ def main():
         require(step["status"] == "completed", name + " failed; inspect retained logs")
 
     try:
-        original = json.loads((base / "run.json").read_text())
+        original = json.loads((base / "run.json").read_text(encoding="utf-8"))
         require(original["status"] == "completed", "Paired benchmark run must be complete")
         for filename, field in [("case.json", "case_manifest_sha256"),
                                 ("config.json", "configuration_sha256"),
                                 ("source.tgz", "snapshot_sha256")]:
             require(digest(base / filename) == original[field], "Base provenance mismatch: " + filename)
-        case = json.loads((base / "case.json").read_text())
-        target_labels = json.loads(EXPECTATIONS.read_text())
+        case = json.loads((base / "case.json").read_text(encoding="utf-8"))
+        target_labels = json.loads(EXPECTATIONS.read_text(encoding="utf-8"))
         require(case["source_commit"] == target_labels["source_commit"], "Benchmark source mismatch")
         report["base_run_sha256"] = digest(base / "run.json")
         report["base_source_sha256"] = original["snapshot_sha256"]
@@ -116,7 +116,7 @@ def main():
                                   "--threads=1", "--ram=2048", "--warnings=error"])
             run(name + "-decode", [binary, "bqrs", "decode", output / (name + ".bqrs"),
                                    "--format=json", "--output", output / (name + "-results.json")])
-        expectations = json.loads((output / "expectations.json").read_text())
+        expectations = json.loads((output / "expectations.json").read_text(encoding="utf-8"))
         report["fixture_checks"] = check_fixtures(decode_rows(output / "fixture-results.json"), expectations)
         all_rows = decode_rows(output / "benchmark-results.json")
         targets = {r["path"] for r in target_labels["cases"]}

@@ -11,7 +11,7 @@ from collections import Counter
 
 SALT = "security-triage/owasp-bp-split-v1/"
 CWES = {"22", "78", "79", "643"}
-rows = [r for r in csv.reader(open(sys.argv[1])) if r and not r[0].startswith("#")]
+rows = [r for r in csv.reader(open(sys.argv[1], encoding="utf-8")) if r and not r[0].startswith("#")]
 strata = {}
 for name, _category, real, cwe, *_ in rows:
     cwe = cwe.strip()
@@ -31,6 +31,6 @@ for (cwe, real), names in sorted(strata.items()):
             "expected_vulnerable": real,
             "split": "development" if i < k else "test",
         }
-json.dump(out, open(sys.argv[2], "w"), indent=1, sort_keys=True)
+json.dump(out, open(sys.argv[2], "w", encoding="utf-8"), indent=1, sort_keys=True)
 
 print(Counter((v["cwe"], v["expected_vulnerable"], v["split"]) for v in out["cases"].values()))

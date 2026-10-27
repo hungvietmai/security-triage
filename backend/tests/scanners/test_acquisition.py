@@ -145,7 +145,7 @@ def test_verify_github_source_identity(tmp_path):
     source = tmp_path / "repo"
     source.mkdir()
     marker = source / "README.md"
-    marker.write_text("pinned\n")
+    marker.write_text("pinned\n", encoding="utf-8")
     commit = "a" * 40
     case = {
         "source_kind": "github_tarball",

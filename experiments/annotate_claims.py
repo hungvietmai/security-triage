@@ -92,8 +92,8 @@ def annotate(findings, config, mapping):
 def build(run_dir, mapping):
     report_path, config_path = run_dir / "run.json", run_dir / "config.json"
     report, config = (
-        json.loads(report_path.read_text()),
-        json.loads(config_path.read_text()),
+        json.loads(report_path.read_text(encoding="utf-8")),
+        json.loads(config_path.read_text(encoding="utf-8")),
     )
     expected = report.get("configuration_sha256", report.get("config_sha256"))
     if not expected or digest(config_path) != expected:
@@ -148,7 +148,7 @@ def main():
     args = p.parse_args()
     if args.output.exists():
         p.error("Use a new output path")
-    result = build(args.run_directory, json.loads(args.mapping.read_text()))
+    result = build(args.run_directory, json.loads(args.mapping.read_text(encoding="utf-8")))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     write_json(args.output, result)
     print(

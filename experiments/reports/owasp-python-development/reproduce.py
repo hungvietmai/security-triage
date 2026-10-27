@@ -39,11 +39,11 @@ def inside(region, anchor):
 
 
 def build(run_dir, labels_path, expectations_path):
-    run = json.loads((run_dir / "run.json").read_text())
-    case = json.loads((run_dir / "case.json").read_text())
-    config = json.loads((run_dir / "config.json").read_text())
-    labels = json.loads(labels_path.read_text())
-    expected = json.loads(expectations_path.read_text())
+    run = json.loads((run_dir / "run.json").read_text(encoding="utf-8"))
+    case = json.loads((run_dir / "case.json").read_text(encoding="utf-8"))
+    config = json.loads((run_dir / "config.json").read_text(encoding="utf-8"))
+    labels = json.loads(labels_path.read_text(encoding="utf-8"))
+    expected = json.loads(expectations_path.read_text(encoding="utf-8"))
     require(run["status"] == "completed", "Both scans must have completed")
     for filename, key in [("case.json", "case_manifest_sha256"),
                           ("config.json", "configuration_sha256"),
@@ -69,7 +69,7 @@ def build(run_dir, labels_path, expectations_path):
         findings, complete = sarif_findings(sarif, tool, case["artifact_sha256"])
         require(complete, "Partial SARIF")
         rows.extend(findings)
-    require(rows == json.loads((run_dir / "findings.json").read_text()), "Raw ledger mismatch")
+    require(rows == json.loads((run_dir / "findings.json").read_text(encoding="utf-8")), "Raw ledger mismatch")
     units, by_path = [], {}
     for label in labels["units"]:
         require(label["scope_verdict"] == "in_scope" and label["technical_verdict"] in
@@ -78,7 +78,7 @@ def build(run_dir, labels_path, expectations_path):
         require(label["path"] == exp["path"], "Expectation path mismatch")
         path = source / label["path"]
         require(digest(path) == label["source_sha256"] == exp["source_sha256"], "Source mismatch")
-        calls = [n for n in ast.walk(ast.parse(path.read_text()))
+        calls = [n for n in ast.walk(ast.parse(path.read_text(encoding="utf-8")))
                  if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
                  and isinstance(n.func.value, ast.Name) and n.func.value.id == "subprocess"
                  and n.func.attr == "run"]

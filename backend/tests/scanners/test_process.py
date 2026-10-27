@@ -24,7 +24,7 @@ def test_invoke_runs_argument_list_and_captures_logs(tmp_path):
 
     assert record["status"] == "completed"
     assert record.get("exit_code") == 0
-    assert (output / "probe.stdout.log").read_text().strip() == "ok"
+    assert (output / "probe.stdout.log").read_text(encoding="utf-8").strip() == "ok"
 
 
 def test_tool_version_uses_injected_invoke(tmp_path):
@@ -38,7 +38,9 @@ def test_tool_version_uses_injected_invoke(tmp_path):
         assert cwd == tmp_path
         assert output_dir == output
         assert timeout == 60
-        (output / "codeql-version.stdout.log").write_text(json.dumps({"version": "2.27.1"}))
+        (output / "codeql-version.stdout.log").write_text(
+            json.dumps({"version": "2.27.1"}), encoding="utf-8"
+        )
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
@@ -120,7 +122,7 @@ def test_invoke_sanitizes_semgrep_environment(tmp_path):
     )
 
     assert record["status"] == "completed"
-    assert (output / "semgrep-probe.stdout.log").read_text().splitlines() == [
+    assert (output / "semgrep-probe.stdout.log").read_text(encoding="utf-8").splitlines() == [
         "off",
         "0",
         "None",
@@ -133,7 +135,7 @@ def test_tool_version_rejects_mismatch(tmp_path):
     steps: dict[str, ProcessRecord] = {}
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
-        (output / "semgrep-version.stdout.log").write_text("1.177.0\n")
+        (output / "semgrep-version.stdout.log").write_text("1.177.0\n", encoding="utf-8")
         return {"status": "completed", "exit_code": 0}
 
     try:

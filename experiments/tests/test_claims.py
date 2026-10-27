@@ -12,11 +12,11 @@ from experiments.run_pilot import ROOT, digest
 
 class ClaimTests(unittest.TestCase):
     def setUp(self):
-        self.mapping = json.loads(DEFAULT_MAPPING.read_text())
+        self.mapping = json.loads(DEFAULT_MAPPING.read_text(encoding="utf-8"))
         self.config = json.loads(
             (
                 ROOT / "experiments/configs/development-batch-01-upstream.json"
-            ).read_text()
+            ).read_text(encoding="utf-8")
         )
 
     def finding(self, rid: str | None = "path.spawn-shell-true", tool="semgrep"):
@@ -86,7 +86,7 @@ class ClaimTests(unittest.TestCase):
     def test_recorded_sarif_is_verified_and_failures_are_not_zero(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            (root / "config.json").write_text(json.dumps(self.config))
+            (root / "config.json").write_text(json.dumps(self.config), encoding="utf-8")
             sarif = root / "semgrep.sarif"
             sarif.write_text(
                 json.dumps(
@@ -103,7 +103,7 @@ class ClaimTests(unittest.TestCase):
                             }
                         ],
                     }
-                )
+                ), encoding="utf-8"
             )
             report = {
                 "status": "partial",
@@ -114,29 +114,29 @@ class ClaimTests(unittest.TestCase):
                     "codeql": {"status": "failed"},
                 },
             }
-            (root / "run.json").write_text(json.dumps(report))
+            (root / "run.json").write_text(json.dumps(report), encoding="utf-8")
             result = build(root, self.mapping)
             self.assertEqual(result["raw_count"], 1)
             self.assertEqual(result["annotated_count"], 1)
             self.assertIsNone(result["scanner_runs"]["codeql"]["raw_findings"])
-            sarif.write_text(sarif.read_text() + " ")
+            sarif.write_text(sarif.read_text(encoding="utf-8") + " ", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "SARIF digest"):
                 build(root, self.mapping)
 
     def test_missing_sarif_on_completed_run_fails_closed(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            (root / "config.json").write_text(json.dumps(self.config))
+            (root / "config.json").write_text(json.dumps(self.config), encoding="utf-8")
             report = {
                 "configuration_sha256": digest(root / "config.json"),
                 "snapshot_sha256": "a" * 64,
                 "steps": {"semgrep": {"status": "completed"}},
             }
-            (root / "run.json").write_text(json.dumps(report))
+            (root / "run.json").write_text(json.dumps(report), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "missing SARIF"):
                 build(root, self.mapping)
             report["configuration_sha256"] = "0" * 64
-            (root / "run.json").write_text(json.dumps(report))
+            (root / "run.json").write_text(json.dumps(report), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "Configuration digest"):
                 build(root, self.mapping)
 

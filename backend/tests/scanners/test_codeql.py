@@ -29,8 +29,8 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
     pack = tmp_path / "pack"
     query = pack / "Security/CWE-078/CommandInjection.ql"
     query.parent.mkdir(parents=True)
-    query.write_text("select 1\n")
-    (pack / "qlpack.yml").write_text("name: codeql/javascript-queries\n")
+    query.write_text("select 1\n", encoding="utf-8")
+    (pack / "qlpack.yml").write_text("name: codeql/javascript-queries\n", encoding="utf-8")
 
     commands = []
 
@@ -40,7 +40,9 @@ def test_run_codeql_preserves_cli_arguments(tmp_path):
         assert output_dir == output
         assert timeout == 600
         if name == "codeql":
-            (output / "codeql.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
+            (output / "codeql.sarif").write_text(
+                json.dumps({"version": "2.1.0", "runs": []}), encoding="utf-8"
+            )
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
@@ -119,7 +121,7 @@ def test_run_codeql_rejects_missing_query_and_digest_mismatch(tmp_path):
     output.mkdir()
     pack = tmp_path / "pack"
     pack.mkdir()
-    (pack / "qlpack.yml").write_text("name: test\n")
+    (pack / "qlpack.yml").write_text("name: test\n", encoding="utf-8")
 
     try:
         run_codeql(
@@ -141,7 +143,7 @@ def test_run_codeql_rejects_missing_query_and_digest_mismatch(tmp_path):
         raise AssertionError("missing query was accepted")
 
     query = pack / "query.ql"
-    query.write_text("select 1\n")
+    query.write_text("select 1\n", encoding="utf-8")
     try:
         run_codeql(
             binary="codeql",
@@ -170,8 +172,8 @@ def test_run_codeql_rejects_failed_database_create(tmp_path):
     pack = tmp_path / "pack"
     pack.mkdir()
     query = pack / "query.ql"
-    query.write_text("select 1\n")
-    (pack / "qlpack.yml").write_text("name: test\n")
+    query.write_text("select 1\n", encoding="utf-8")
+    (pack / "qlpack.yml").write_text("name: test\n", encoding="utf-8")
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         return {"status": "failed", "exit_code": 2}

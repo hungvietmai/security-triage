@@ -397,7 +397,12 @@ def test_a_fresh_worker_process_registers_every_table():
     )
     backend = Path(__file__).resolve().parents[3]
     output = subprocess.run(
-        [sys.executable, "-c", code], cwd=backend, capture_output=True, text=True, check=True
+        [sys.executable, "-c", code],
+        cwd=backend,
+        capture_output=True,
+        text=True,
+        check=True,
+        encoding="utf-8",
     ).stdout
     for table in ("projects", "source_snapshots", "findings", "unit_assessments"):
         assert f"'{table}'" in output

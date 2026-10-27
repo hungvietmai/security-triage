@@ -26,7 +26,7 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     source = ROOT / "experiments/fixtures/r1-feasibility"
-    manifest = json.loads((source / "manifest.json").read_text())
+    manifest = json.loads((source / "manifest.json").read_text(encoding="utf-8"))
     for case in manifest["cases"]:
         if digest(source / case["file"]) != case["source_sha256"]:
             raise ValueError("R1 source digest mismatch: " + case["file"])
@@ -34,7 +34,7 @@ def main(argv=None):
         if digest(source / path) != sha:
             raise ValueError("R1 support digest mismatch: " + path)
     config = json.loads(
-        (ROOT / "experiments/configs/development-batch-01-upstream.json").read_text()
+        (ROOT / "experiments/configs/development-batch-01-upstream.json").read_text(encoding="utf-8")
     )
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)

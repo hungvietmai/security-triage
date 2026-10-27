@@ -7,7 +7,7 @@ RECORDED = Path(__file__).with_name("fixtures") / "sink-locator-v0-recorded.json
 
 
 def _fixture():
-    payload = RECORDED.read_text()
+    payload = RECORDED.read_text(encoding="utf-8")
     data = json.loads(payload)
     sources = data["sources"]
     return payload, sources

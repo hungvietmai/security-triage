@@ -53,7 +53,7 @@ CLAIMS_FILE = ROOT / "experiments/mappings/rule-claims-v2.json"
 
 
 def write_json(path, value):
-    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n")
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def runner_files_sha256():

@@ -95,7 +95,7 @@ class KnownLocationTests(unittest.TestCase):
         }
         for pair_id, (path, line, kind) in pairs.items():
             directory = ROOT / "experiments/pairs" / pair_id
-            result = json.loads((directory / "known-locations.json").read_text())
+            result = json.loads((directory / "known-locations.json").read_text(encoding="utf-8"))
             self.assertEqual(result["status"], "resolved")
             self.assertEqual(result["scanner_invocations"], 0)
             self.assertEqual(result["resolved_location_count"], 1)

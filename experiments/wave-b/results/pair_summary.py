@@ -19,7 +19,7 @@ from collections import defaultdict
 import yaml
 
 wave = sys.argv[1]
-inv = yaml.safe_load(open(os.path.join(wave, "inventory.yaml")))
+inv = yaml.safe_load(open(os.path.join(wave, "inventory.yaml"), encoding="utf-8"))
 
 
 def affected_files(text):
@@ -31,7 +31,7 @@ def alerts(vid, cwe):
     path = os.path.join(wave, "out", vid, "v02.sarif")
     if not os.path.exists(path):
         return None
-    for r in json.load(open(path))["runs"][0]["results"]:
+    for r in json.load(open(path, encoding="utf-8"))["runs"][0]["results"]:
         _, c, variant = r["ruleId"].split("/")
         if c != f"cwe-{cwe}":
             continue
@@ -48,7 +48,7 @@ def coverage(vid, cwe, files):
     if not os.path.exists(path):
         return None
     roles = defaultdict(int)
-    with open(path, newline="") as f:
+    with open(path, newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             if row["cwe"] == cwe and any(row["file"].endswith(a) for a in files):
                 roles[row["role"]] += 1
@@ -115,7 +115,7 @@ for p in inv["pairs"]:
 fields = sorted(
     {k for r in rows for k in r}, key=lambda k: (k not in ("pair_id", "repository", "cwe"), k)
 )
-with open(os.path.join(wave, "out", "pair_summary.csv"), "w", newline="") as f:
+with open(os.path.join(wave, "out", "pair_summary.csv"), "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=fields)
     w.writeheader()
     w.writerows(rows)

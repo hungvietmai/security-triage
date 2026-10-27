@@ -45,7 +45,8 @@ def test_sarif_preserves_raw_result_and_marks_incomplete(tmp_path):
                     }
                 ],
             }
-        )
+        ),
+        encoding="utf-8",
     )
 
     findings, complete = sarif_findings(path, "codeql", "c" * 64)
@@ -64,7 +65,7 @@ def test_sarif_preserves_raw_result_and_marks_incomplete(tmp_path):
 
 def test_sarif_rejects_wrong_version(tmp_path):
     path = tmp_path / "result.sarif"
-    path.write_text(json.dumps({"version": "2.0.0", "runs": []}))
+    path.write_text(json.dumps({"version": "2.0.0", "runs": []}), encoding="utf-8")
 
     try:
         sarif_findings(path, "semgrep", "d" * 64)

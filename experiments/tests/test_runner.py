@@ -62,7 +62,7 @@ class RunnerTests(unittest.TestCase):
     def test_github_identity_is_pinned_and_verified_without_package_json(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            (root / "app.py").write_text("raise RuntimeError('never execute')\n")
+            (root / "app.py").write_text("raise RuntimeError('never execute')\n", encoding="utf-8")
             commit = "a" * 40
             case = {
                 "source_kind": "github_tarball",
@@ -117,10 +117,10 @@ class RunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             case_data = json.loads(
-                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text()
+                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text(encoding="utf-8")
             )
             case = root / "case.json"
-            case.write_text(json.dumps(case_data))
+            case.write_text(json.dumps(case_data), encoding="utf-8")
             config = ROOT / "experiments/configs/development-smoke-javascript.json"
             output = root / "out"
             source = root / "source"
@@ -166,9 +166,9 @@ class RunnerTests(unittest.TestCase):
                 ),
                 2,
             )
-            report = json.loads((output / "run.json").read_text())
-            findings = json.loads((output / "findings.json").read_text())
-            units = json.loads((output / "units.json").read_text())
+            report = json.loads((output / "run.json").read_text(encoding="utf-8"))
+            findings = json.loads((output / "findings.json").read_text(encoding="utf-8"))
+            units = json.loads((output / "units.json").read_text(encoding="utf-8"))
             self.assertEqual(report["status"], "failed")
             self.assertEqual(report["raw_findings"], 0)
             self.assertEqual(report["steps"]["codeql"]["status"], "failed")
@@ -187,7 +187,7 @@ class RunnerTests(unittest.TestCase):
                         "source_kind": "github_tarball",
                         "language": "python",
                     }
-                )
+                ), encoding="utf-8"
             )
             config = ROOT / "experiments/configs/development-batch-01-upstream.json"
             output = root / "out"
@@ -229,11 +229,11 @@ class RunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             source = json.loads(
-                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text()
+                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text(encoding="utf-8")
             )
             source["split"] = "held_out"
             case = root / "case.json"
-            case.write_text(json.dumps(source))
+            case.write_text(json.dumps(source), encoding="utf-8")
             config = ROOT / "experiments/configs/development-smoke-javascript.json"
             output = root / "out"
             argv = [
@@ -296,7 +296,7 @@ class RunnerTests(unittest.TestCase):
                 ),
                 2,
             )
-            report = json.loads((output / "run.json").read_text())
+            report = json.loads((output / "run.json").read_text(encoding="utf-8"))
             self.assertEqual((output / "case.json").read_bytes(), case_bytes)
             self.assertEqual((output / "config.json").read_bytes(), config_bytes)
             self.assertEqual(
@@ -308,16 +308,16 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(report["runner_files_sha256"], runner_files_sha256())
             self.assertNotIn("runner_sha256", report)
             self.assertEqual(report["error"], "fixture acquisition stop")
-            self.assertEqual(json.loads((output / "units.json").read_text()), [])
+            self.assertEqual(json.loads((output / "units.json").read_text(encoding="utf-8")), [])
 
     def test_cli_delegates_and_writes_all_outputs(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             case_data = json.loads(
-                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text()
+                (ROOT / "experiments/cases/secbench-curling-0.2.0.json").read_text(encoding="utf-8")
             )
             case = root / "case.json"
-            case.write_text(json.dumps(case_data))
+            case.write_text(json.dumps(case_data), encoding="utf-8")
             config = ROOT / "experiments/configs/development-smoke-javascript.json"
             output = root / "out"
             source = root / "source"
@@ -471,10 +471,10 @@ class RunnerTests(unittest.TestCase):
             self.assertEqual(reconcile_calls[0][2], {"index.js": "exec(command);\n"})
             self.assertEqual(len(printed), 1)
 
-            report = json.loads((output / "run.json").read_text())
-            findings = json.loads((output / "findings.json").read_text())
-            units = json.loads((output / "units.json").read_text())
-            assessments = json.loads((output / "assessments.json").read_text())
+            report = json.loads((output / "run.json").read_text(encoding="utf-8"))
+            findings = json.loads((output / "findings.json").read_text(encoding="utf-8"))
+            units = json.loads((output / "units.json").read_text(encoding="utf-8"))
+            assessments = json.loads((output / "assessments.json").read_text(encoding="utf-8"))
             self.assertEqual(report["status"], "completed")
             self.assertEqual(report["raw_findings"], 1)
             self.assertEqual(report["snapshot_sha256"], "d" * 64)
@@ -579,7 +579,7 @@ class RunnerTests(unittest.TestCase):
                             }
                         ],
                     }
-                )
+                ), encoding="utf-8"
             )
             rows, complete = sarif_findings(path, "semgrep", "snapshot")
             self.assertTrue(complete)

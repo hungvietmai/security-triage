@@ -62,7 +62,7 @@ def run_codeql(
     query_files = {path.relative_to(query_pack).as_posix(): digest(path) for path in query_paths}
     if query_files != dict(expected_query_sha256):
         raise ValueError("CodeQL query digest mismatch")
-    pack_manifest = (query_pack / "qlpack.yml").read_text()
+    pack_manifest = (query_pack / "qlpack.yml").read_text(encoding="utf-8")
 
     database = output / "codeql-db"
     create_record = invoke_fn(

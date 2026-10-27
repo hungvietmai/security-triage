@@ -20,7 +20,7 @@ def test_pipeline_accepts_injected_process_functions(tmp_path, runs, expected_st
     output = tmp_path / "output"
     output.mkdir()
     rule = repository_root / "rule.yaml"
-    rule.write_text("rules: []\n")
+    rule.write_text("rules: []\n", encoding="utf-8")
 
     version_calls = []
     invoke_calls = []
@@ -41,7 +41,9 @@ def test_pipeline_accepts_injected_process_functions(tmp_path, runs, expected_st
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         invoke_calls.append((name, [str(item) for item in argv]))
         if name == "semgrep":
-            (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": runs}))
+            (output / "semgrep.sarif").write_text(
+                json.dumps({"version": "2.1.0", "runs": runs}), encoding="utf-8"
+            )
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
@@ -97,8 +99,8 @@ def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
     pack = tmp_path / "pack"
     pack.mkdir()
     query = pack / "query.ql"
-    query.write_text("select 1\n")
-    (pack / "qlpack.yml").write_text("name: codeql/javascript-queries\n")
+    query.write_text("select 1\n", encoding="utf-8")
+    (pack / "qlpack.yml").write_text("name: codeql/javascript-queries\n", encoding="utf-8")
 
     def fake_version(
         binary,
@@ -114,7 +116,9 @@ def test_pipeline_runs_codeql_and_isolates_failure(tmp_path):
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         if name == "codeql":
-            (output / "codeql.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
+            (output / "codeql.sarif").write_text(
+                json.dumps({"version": "2.1.0", "runs": []}), encoding="utf-8"
+            )
         return {"status": "completed", "exit_code": 0}
 
     scanners: list[ToolName] = ["codeql"]
@@ -180,7 +184,7 @@ def test_pipeline_is_partial_when_one_scanner_fails(tmp_path, workers):
     output = tmp_path / "output"
     output.mkdir()
     rule = repository_root / "rule.yaml"
-    rule.write_text("rules: []\n")
+    rule.write_text("rules: []\n", encoding="utf-8")
 
     def fake_version(
         binary,
@@ -196,7 +200,9 @@ def test_pipeline_is_partial_when_one_scanner_fails(tmp_path, workers):
 
     def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
         if name == "semgrep":
-            (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
+            (output / "semgrep.sarif").write_text(
+                json.dumps({"version": "2.1.0", "runs": []}), encoding="utf-8"
+            )
         return {"status": "completed", "exit_code": 0}
 
     scanners: list[ToolName] = ["semgrep", "codeql"]
@@ -237,10 +243,10 @@ def pipeline_input(tmp_path):
     for path in (repository, source, output, pack):
         path.mkdir()
     rule = repository / "rule.yaml"
-    rule.write_text("rules: []\n")
+    rule.write_text("rules: []\n", encoding="utf-8")
     query = pack / "query.ql"
-    query.write_text("select 1\n")
-    (pack / "qlpack.yml").write_text("name: codeql/javascript-queries\n")
+    query.write_text("select 1\n", encoding="utf-8")
+    (pack / "qlpack.yml").write_text("name: codeql/javascript-queries\n", encoding="utf-8")
     return {
         "scanners": ["semgrep", "codeql"],
         "language": "javascript",
@@ -277,7 +283,7 @@ def test_parallel_scanners_overlap_and_merge_in_configured_order(pipeline_input)
         if name in {"semgrep", "codeql"}:
             result = {"ruleId": name, "message": {"text": name}}
             (output / f"{name}.sarif").write_text(
-                json.dumps({"version": "2.1.0", "runs": [{"results": [result]}]})
+                json.dumps({"version": "2.1.0", "runs": [{"results": [result]}]}), encoding="utf-8"
             )
             if name == "codeql":
                 codeql_done.set()
@@ -312,7 +318,7 @@ def test_parallel_scanners_finish_before_an_unexpected_error_propagates(pipeline
     def invoke(argv, cwd, output, name, timeout, env=None) -> ProcessRecord:
         if name == "codeql":
             (output / "codeql.sarif").write_text(
-                json.dumps({"version": "2.1.0", "runs": [{"results": []}]})
+                json.dumps({"version": "2.1.0", "runs": [{"results": []}]}), encoding="utf-8"
             )
             completed.set()
         return {"status": "completed", "exit_code": 0}
@@ -334,7 +340,7 @@ def test_duplicate_scanners_retain_sequential_output_and_failure_history(pipelin
 
     def invoke(argv, cwd, output, name, timeout, env=None) -> ProcessRecord:
         (output / "semgrep.sarif").write_text(
-            json.dumps({"version": "2.1.0", "runs": [{"results": []}]})
+            json.dumps({"version": "2.1.0", "runs": [{"results": []}]}), encoding="utf-8"
         )
         return {"status": "completed", "exit_code": 0, "argv": ["semgrep"]}
 

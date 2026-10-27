@@ -12,12 +12,12 @@ def main(argv=None):
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[2]
     reviewed = json.loads(
-        (root / "experiments/reports/owasp-python-development/summary.json").read_text()
+        (root / "experiments/reports/owasp-python-development/summary.json").read_text(encoding="utf-8")
     )
     labels = {case["path"]: case["technical_verdict"] for case in reviewed["units"]}
-    units = json.loads((args.run_directory / "units.json").read_text())
-    assessments = json.loads((args.run_directory / "assessments.json").read_text())
-    findings = json.loads((args.run_directory / "findings.json").read_text())
+    units = json.loads((args.run_directory / "units.json").read_text(encoding="utf-8"))
+    assessments = json.loads((args.run_directory / "assessments.json").read_text(encoding="utf-8"))
+    findings = json.loads((args.run_directory / "findings.json").read_text(encoding="utf-8"))
     if len(units) != len(assessments):
         raise ValueError("Assessment conservation failed")
     counts = defaultdict(Counter)
@@ -47,7 +47,7 @@ def main(argv=None):
         "note": "Development diagnostics only; single unblinded review is not independent ground truth.",
     }
     (args.run_directory / "priority-owasp-summary.json").write_text(
-        json.dumps(result, indent=2) + "\n"
+        json.dumps(result, indent=2) + "\n", encoding="utf-8"
     )
     print(json.dumps(result, sort_keys=True))
     if claim_unresolved:

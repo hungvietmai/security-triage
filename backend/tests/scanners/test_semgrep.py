@@ -15,7 +15,7 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
     output = tmp_path / "output"
     output.mkdir()
     rule = repository_root / "rule.yaml"
-    rule.write_text("rules: []\n")
+    rule.write_text("rules: []\n", encoding="utf-8")
 
     commands = []
 
@@ -25,7 +25,9 @@ def test_run_semgrep_preserves_cli_arguments(tmp_path):
         assert output_dir == output
         assert name == "semgrep"
         assert timeout == 600
-        (output / "semgrep.sarif").write_text(json.dumps({"version": "2.1.0", "runs": []}))
+        (output / "semgrep.sarif").write_text(
+            json.dumps({"version": "2.1.0", "runs": []}), encoding="utf-8"
+        )
         return {
             "argv": [str(item) for item in argv],
             "status": "completed",
@@ -75,7 +77,7 @@ def test_stage_rule_rejects_path_escape(tmp_path):
 
     target = tmp_path / "target.yaml"
     outside = tmp_path / "outside.yaml"
-    outside.write_text("rules: []\n")
+    outside.write_text("rules: []\n", encoding="utf-8")
     repository_root = tmp_path / "repo"
     repository_root.mkdir()
 
@@ -99,7 +101,7 @@ def test_stage_remote_rule_uses_injected_fetch(tmp_path):
 
     def fake_fetch(url, output, expected_hash, max_bytes):
         calls.append((url, output, expected_hash, max_bytes))
-        output.write_text("rules: []\n")
+        output.write_text("rules: []\n", encoding="utf-8")
 
     stage_rule(
         {"url": "https://example.test/rule.yaml", "sha256": "a" * 64},
@@ -108,7 +110,7 @@ def test_stage_remote_rule_uses_injected_fetch(tmp_path):
         fetch_fn=fake_fetch,
     )
 
-    assert target.read_text() == "rules: []\n"
+    assert target.read_text(encoding="utf-8") == "rules: []\n"
     assert calls == [
         (
             "https://example.test/rule.yaml",

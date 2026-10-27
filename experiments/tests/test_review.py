@@ -99,11 +99,11 @@ class ReviewTests(unittest.TestCase):
         self.assertIn(row["fallback_unit_id"], packet["labels"])
 
     def test_evidence_tampering_is_rejected(self):
-        data = json.loads(EVIDENCE.read_text())
+        data = json.loads(EVIDENCE.read_text(encoding="utf-8"))
         data["decoded_sha256"] = "0" * 64
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "evidence.json"
-            path.write_text(json.dumps(data))
+            path.write_text(json.dumps(data), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "checksum mismatch"):
                 load_evidence(path, "002")
         files = dict(self.files)

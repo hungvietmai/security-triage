@@ -163,7 +163,9 @@ def verify_source_identity(case: Mapping[str, object], source: Path) -> None:
     """Validate pinned source identity without importing or executing target code."""
     source_kind = _required_str(case, "source_kind")
     if source_kind == "npm_tarball":
-        package_value = cast(object, json.loads((source / "package.json").read_text()))
+        package_value = cast(
+            object, json.loads((source / "package.json").read_text(encoding="utf-8"))
+        )
         if not isinstance(package_value, dict):
             raise ValueError("package.json must contain an object")
         package = cast(dict[object, object], package_value)

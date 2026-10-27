@@ -17,7 +17,9 @@ from app.triage.sinks_python import locate_python_sinks
 from app.triage.types import SinkRecord
 
 ROOT = Path(__file__).resolve().parents[3]
-MAPPING = json.loads((ROOT / "experiments/mappings/rule-claims-v2.json").read_text())
+MAPPING = json.loads(
+    (ROOT / "experiments/mappings/rule-claims-v2.json").read_text(encoding="utf-8")
+)
 POLICY = validate_policy(
     yaml.safe_load((ROOT / "experiments/policy/priority-v0.1.yaml").read_bytes())
 )
@@ -32,7 +34,7 @@ def test_all_pinned_rules_and_mismatch():
     ]
     rules = MAPPING["rules"]
     for name in config_paths:
-        config = json.loads((ROOT / "experiments/configs" / name).read_text())
+        config = json.loads((ROOT / "experiments/configs" / name).read_text(encoding="utf-8"))
         language = config.get("language", "javascript")
         for item in config["semgrep_rules"]:
             matching = [
