@@ -173,8 +173,9 @@ def main() -> None:
         ("wave-b.labels.json", wave_b),
         ("session.json", session),
     ):
+        # LF matches .gitattributes, so the evaluator's labels_sha256 matches the committed file.
         (HERE / name).write_text(
-            json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+            json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
         )
     print(f"wave C: {len(wave_c)} labels; wave B: {len(wave_b)} labels")
 
