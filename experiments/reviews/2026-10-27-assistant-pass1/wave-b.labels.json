@@ -1,0 +1,577 @@
+[
+  {
+    "pair_id": "GHSA-42h5-h8qh-vv9v",
+    "repository": "mlflow/mlflow",
+    "cwe": "CWE-22",
+    "sink_location": "mlflow/server/assistant/api.py:311:32",
+    "function": "update_config",
+    "scope": "production",
+    "root_cause_id": "RC-M4",
+    "snapshot_commits": {
+      "vulnerable": "145703f1074e1bcc14ec2a2a38361762b190c433",
+      "fixed": "6e801f4259d96804c73107315b24cef0f6aa115a"
+    },
+    "prior_technical_label": "unknown",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "unknown",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-M4; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "mlflow/server/assistant/api.py:39-66",
+      "mlflow/server/assistant/api.py:276-382"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-42h5-h8qh-vv9v",
+    "repository": "mlflow/mlflow",
+    "cwe": "CWE-22",
+    "sink_location": "mlflow/server/assistant/api.py:371:27",
+    "function": "install_skills_endpoint",
+    "scope": "production",
+    "root_cause_id": "RC-M4",
+    "snapshot_commits": {
+      "vulnerable": "145703f1074e1bcc14ec2a2a38361762b190c433",
+      "fixed": "6e801f4259d96804c73107315b24cef0f6aa115a"
+    },
+    "prior_technical_label": "unknown",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "unknown",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-M4; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "mlflow/server/assistant/api.py:39-66",
+      "mlflow/server/assistant/api.py:276-382"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-42h5-h8qh-vv9v",
+    "repository": "mlflow/mlflow",
+    "cwe": "CWE-22",
+    "sink_location": "mlflow/utils/uri.py:534:29",
+    "function": "validate_path_within_directory",
+    "scope": "production",
+    "root_cause_id": "RC-M5",
+    "snapshot_commits": {
+      "vulnerable": "145703f1074e1bcc14ec2a2a38361762b190c433",
+      "fixed": "6e801f4259d96804c73107315b24cef0f6aa115a"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "unknown",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-M5; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "mlflow/utils/uri.py:521-542"
+    ],
+    "v02_decision_from_locked_record": "proposed_reject",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-42h5-h8qh-vv9v",
+    "repository": "mlflow/mlflow",
+    "cwe": "CWE-79",
+    "sink_location": "mlflow/server/__init__.py:145:12",
+    "function": "serve_gateway_proxy",
+    "scope": "production",
+    "root_cause_id": "RC-M7",
+    "snapshot_commits": {
+      "vulnerable": "145703f1074e1bcc14ec2a2a38361762b190c433",
+      "fixed": "6e801f4259d96804c73107315b24cef0f6aa115a"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "unknown",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-M7; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "mlflow/server/__init__.py:143-145",
+      "mlflow/server/handlers.py:977-994",
+      "mlflow/server/handlers.py:2008-2048"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-6jrf-rcjf-245r",
+    "repository": "dgtlmoon/changedetection.io",
+    "cwe": "CWE-22",
+    "sink_location": "changedetectionio/flask_app.py:1079:76",
+    "function": "diff_history_page",
+    "scope": "production",
+    "root_cause_id": "RC-C1",
+    "snapshot_commits": {
+      "vulnerable": "e0abf0b50507a8a3d0c1d8522ab23519b3e4cdf4",
+      "fixed": "49bc982c697169c98b79698889fb9d26f6b3317f"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "The HTTP attacker cannot modify persisted datastore keys, plugins or the filesystem/symlinks.",
+      "Source membership guards apply to the reported flows; the original path artifacts still require confirmation."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-C1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "changedetectionio/flask_app.py:653-673",
+      "changedetectionio/flask_app.py:1051-1084",
+      "changedetectionio/flask_app.py:1355-1367",
+      "changedetectionio/flask_app.py:1430-1440",
+      "changedetectionio/store.py:64-87",
+      "changedetectionio/store.py:229-247",
+      "changedetectionio/store.py:349-378",
+      "changedetectionio/model/__init__.py:68"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-6jrf-rcjf-245r",
+    "repository": "dgtlmoon/changedetection.io",
+    "cwe": "CWE-22",
+    "sink_location": "changedetectionio/flask_app.py:1284:40",
+    "function": "static_content",
+    "scope": "production",
+    "root_cause_id": "RC-C2",
+    "snapshot_commits": {
+      "vulnerable": "e0abf0b50507a8a3d0c1d8522ab23519b3e4cdf4",
+      "fixed": "49bc982c697169c98b79698889fb9d26f6b3317f"
+    },
+    "prior_technical_label": "true_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "true_positive",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-C2; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "changedetectionio/flask_app.py:1239-1286",
+      "pallets/werkzeug@3.0.6:src/werkzeug/utils.py:538-577",
+      "pallets/werkzeug@3.0.6:src/werkzeug/security.py:131-163"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-6jrf-rcjf-245r",
+    "repository": "dgtlmoon/changedetection.io",
+    "cwe": "CWE-22",
+    "sink_location": "changedetectionio/store.py:245:35",
+    "function": "delete",
+    "scope": "production",
+    "root_cause_id": "RC-C1",
+    "snapshot_commits": {
+      "vulnerable": "e0abf0b50507a8a3d0c1d8522ab23519b3e4cdf4",
+      "fixed": "49bc982c697169c98b79698889fb9d26f6b3317f"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "The HTTP attacker cannot modify persisted datastore keys, plugins or the filesystem/symlinks.",
+      "Source membership guards apply to the reported flows; the original path artifacts still require confirmation."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-C1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "changedetectionio/flask_app.py:653-673",
+      "changedetectionio/flask_app.py:1051-1084",
+      "changedetectionio/flask_app.py:1355-1367",
+      "changedetectionio/flask_app.py:1430-1440",
+      "changedetectionio/store.py:64-87",
+      "changedetectionio/store.py:229-247",
+      "changedetectionio/store.py:349-378",
+      "changedetectionio/model/__init__.py:68"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-6jrf-rcjf-245r",
+    "repository": "dgtlmoon/changedetection.io",
+    "cwe": "CWE-22",
+    "sink_location": "changedetectionio/store.py:246:35",
+    "function": "delete",
+    "scope": "production",
+    "root_cause_id": "RC-C1",
+    "snapshot_commits": {
+      "vulnerable": "e0abf0b50507a8a3d0c1d8522ab23519b3e4cdf4",
+      "fixed": "49bc982c697169c98b79698889fb9d26f6b3317f"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "The HTTP attacker cannot modify persisted datastore keys, plugins or the filesystem/symlinks.",
+      "Source membership guards apply to the reported flows; the original path artifacts still require confirmation."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-C1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "changedetectionio/flask_app.py:653-673",
+      "changedetectionio/flask_app.py:1051-1084",
+      "changedetectionio/flask_app.py:1355-1367",
+      "changedetectionio/flask_app.py:1430-1440",
+      "changedetectionio/store.py:64-87",
+      "changedetectionio/store.py:229-247",
+      "changedetectionio/store.py:349-378",
+      "changedetectionio/model/__init__.py:68"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-6jrf-rcjf-245r",
+    "repository": "dgtlmoon/changedetection.io",
+    "cwe": "CWE-22",
+    "sink_location": "changedetectionio/store.py:378:24",
+    "function": "visualselector_data_is_ready",
+    "scope": "production",
+    "root_cause_id": "RC-C1",
+    "snapshot_commits": {
+      "vulnerable": "e0abf0b50507a8a3d0c1d8522ab23519b3e4cdf4",
+      "fixed": "49bc982c697169c98b79698889fb9d26f6b3317f"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "The HTTP attacker cannot modify persisted datastore keys, plugins or the filesystem/symlinks.",
+      "Source membership guards apply to the reported flows; the original path artifacts still require confirmation."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-C1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "changedetectionio/flask_app.py:653-673",
+      "changedetectionio/flask_app.py:1051-1084",
+      "changedetectionio/flask_app.py:1355-1367",
+      "changedetectionio/flask_app.py:1430-1440",
+      "changedetectionio/store.py:64-87",
+      "changedetectionio/store.py:229-247",
+      "changedetectionio/store.py:349-378",
+      "changedetectionio/model/__init__.py:68"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-6jrf-rcjf-245r",
+    "repository": "dgtlmoon/changedetection.io",
+    "cwe": "CWE-22",
+    "sink_location": "changedetectionio/store.py:378:62",
+    "function": "visualselector_data_is_ready",
+    "scope": "production",
+    "root_cause_id": "RC-C1",
+    "snapshot_commits": {
+      "vulnerable": "e0abf0b50507a8a3d0c1d8522ab23519b3e4cdf4",
+      "fixed": "49bc982c697169c98b79698889fb9d26f6b3317f"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "The HTTP attacker cannot modify persisted datastore keys, plugins or the filesystem/symlinks.",
+      "Source membership guards apply to the reported flows; the original path artifacts still require confirmation."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-C1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "changedetectionio/flask_app.py:653-673",
+      "changedetectionio/flask_app.py:1051-1084",
+      "changedetectionio/flask_app.py:1355-1367",
+      "changedetectionio/flask_app.py:1430-1440",
+      "changedetectionio/store.py:64-87",
+      "changedetectionio/store.py:229-247",
+      "changedetectionio/store.py:349-378",
+      "changedetectionio/model/__init__.py:68"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/contrib/admindocs/views.py:333:20",
+    "function": "get_context_data",
+    "scope": "production",
+    "root_cause_id": "RC-D1",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "true_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "true_positive",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/contrib/admindocs/urls.py:45-48",
+      "django/contrib/admindocs/views.py:33-43",
+      "django/contrib/admindocs/views.py:318-347"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/contrib/admindocs/views.py:334:41",
+    "function": "get_context_data",
+    "scope": "production",
+    "root_cause_id": "RC-D1",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "true_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "true_positive",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/contrib/admindocs/urls.py:45-48",
+      "django/contrib/admindocs/views.py:33-43",
+      "django/contrib/admindocs/views.py:318-347"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/contrib/admindocs/views.py:339:31",
+    "function": "get_context_data",
+    "scope": "production",
+    "root_cause_id": "RC-D1",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "true_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "true_positive",
+    "label_is_conditional": false,
+    "conditions": [],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D1; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/contrib/admindocs/urls.py:45-48",
+      "django/contrib/admindocs/views.py:33-43",
+      "django/contrib/admindocs/views.py:318-347"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/views/static.py:37:8",
+    "function": "serve",
+    "scope": "production",
+    "root_cause_id": "RC-D2",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "document_root is the server-authorised root.",
+      "The threat model excludes attacker-controlled symlinks under that root; safe_join provides lexical, not canonical containment."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D2; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/views/static.py:19-54",
+      "django/utils/_os.py:9-32",
+      "django/contrib/staticfiles/views.py:15-39"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/views/static.py:41:12",
+    "function": "serve",
+    "scope": "production",
+    "root_cause_id": "RC-D2",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "document_root is the server-authorised root.",
+      "The threat model excludes attacker-controlled symlinks under that root; safe_join provides lexical, not canonical containment."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D2; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/views/static.py:19-54",
+      "django/utils/_os.py:9-32",
+      "django/contrib/staticfiles/views.py:15-39"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/views/static.py:44:15",
+    "function": "serve",
+    "scope": "production",
+    "root_cause_id": "RC-D2",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "document_root is the server-authorised root.",
+      "The threat model excludes attacker-controlled symlinks under that root; safe_join provides lexical, not canonical containment."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D2; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/views/static.py:19-54",
+      "django/utils/_os.py:9-32",
+      "django/contrib/staticfiles/views.py:15-39"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  },
+  {
+    "pair_id": "GHSA-fvgf-6h6h-3322",
+    "repository": "django/django",
+    "cwe": "CWE-22",
+    "sink_location": "django/views/static.py:50:29",
+    "function": "serve",
+    "scope": "production",
+    "root_cause_id": "RC-D2",
+    "snapshot_commits": {
+      "vulnerable": "6822aa5c6c3fbec7c5393a05e990865ba59fe167",
+      "fixed": "05413afa8c18cdb978fcdf470e09f7a12b234a23"
+    },
+    "prior_technical_label": "false_positive",
+    "prior_review_status": "assistant_labeled_with_evidence; owner_review_pending",
+    "technical_label": "false_positive",
+    "label_is_conditional": true,
+    "conditions": [
+      "document_root is the server-authorised root.",
+      "The threat model excludes attacker-controlled symlinks under that root; safe_join provides lexical, not canonical containment."
+    ],
+    "review_status": "proposed",
+    "reviewer": "assistant (Codex); exposed technical reviewer; not repository owner",
+    "reviewed_at": "2026-10-27T15:02:19.193092+00:00",
+    "all_reported_flows_reviewed": false,
+    "label_evidence": "wave-b.md: RC-D2; source references below, hashes and URLs in sources.json",
+    "source_references": [
+      "django/views/static.py:19-54",
+      "django/utils/_os.py:9-32",
+      "django/contrib/staticfiles/views.py:15-39"
+    ],
+    "v02_decision_from_locked_record": "keep",
+    "operational_recommendation": "retain_pending_owner_and_scope_review",
+    "limitation": "Original Wave B CodeQL flow artifacts are unavailable locally; source/caller review and locked alert CSV only."
+  }
+]

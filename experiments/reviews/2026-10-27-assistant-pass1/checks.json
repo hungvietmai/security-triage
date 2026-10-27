@@ -1,0 +1,195 @@
+{
+  "recorded_at": "2026-10-27T15:05:58.303672+00:00",
+  "checks": [
+    {
+      "name": "audit",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/reviews/2026-10-27-assistant-pass1/audit_evidence.py",
+        "--sources",
+        "experiments/reviews/2026-10-27-assistant-pass1/sources.json",
+        "--output",
+        "artifacts/review-20261027-001/audit-final.json"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 8 Wave C sinks / 18 exemplars and 17 Wave B sink locations; no scanners run.\n",
+      "stderr": ""
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--project",
+        "backend",
+        "ruff",
+        "check",
+        "experiments/reviews/2026-10-27-assistant-pass1/audit_evidence.py"
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--project",
+        "backend",
+        "ruff",
+        "format",
+        "--check",
+        "experiments/reviews/2026-10-27-assistant-pass1/audit_evidence.py"
+      ],
+      "exit_code": 0,
+      "stdout": "1 file already formatted\n",
+      "stderr": ""
+    },
+    {
+      "name": "wave-c-selection-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 17 files: experiments/wave-c/LOCK.sha256\n",
+      "stderr": ""
+    },
+    {
+      "name": "wave-c-execution-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/EXECUTION_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 98 files: experiments/wave-c/EXECUTION_LOCK.sha256\n",
+      "stderr": ""
+    },
+    {
+      "name": "wave-c-paths-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/paths-001/PATHS_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 64 files: experiments/wave-c/results/paths-001/PATHS_LOCK.sha256\n",
+      "stderr": ""
+    },
+    {
+      "name": "wave-c-self-review-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/closeout/self-review/SELF_REVIEW_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 36 files: experiments/wave-c/closeout/self-review/SELF_REVIEW_LOCK.sha256\n",
+      "stderr": ""
+    },
+    {
+      "name": "v03-dual-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Freeze verification failed: [Errno 2] No such file or directory: 'D:\\\\security-triage\\\\artifacts\\\\v03\\\\v03_strict_baseline.tar.gz'\n"
+    },
+    {
+      "name": "wave-b-labels-lock",
+      "manifest": "experiments/wave-b/results/LABELS_LOCK.sha256",
+      "exit_code": 0,
+      "verified_files": 4,
+      "verification": "SHA-256, manifest-relative, comment header skipped"
+    },
+    {
+      "name": "wave-c-primary-results-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/study-001/RESULTS_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 314 files: experiments/wave-c/results/study-001/RESULTS_LOCK.sha256\n",
+      "stderr": ""
+    },
+    {
+      "name": "wave-c-source-review-lock",
+      "argv": [
+        "C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "experiments/v03-interprocedural-guard/scripts/verify_freeze.py",
+        "--manifest",
+        "experiments/wave-c/results/review-001/REVIEW_LOCK.sha256"
+      ],
+      "exit_code": 0,
+      "stdout": "Verified 17 files: experiments/wave-c/results/review-001/REVIEW_LOCK.sha256\n",
+      "stderr": ""
+    }
+  ],
+  "experiments_tests": {
+    "argv": [
+      "uv",
+      "run",
+      "--project",
+      "backend",
+      "--with-requirements",
+      "experiments/requirements-pairs.txt",
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "environment": {
+      "PYTHONUTF8": "1"
+    },
+    "exit_code": 0,
+    "tests": 85,
+    "duration_seconds": 4.135,
+    "raw_log": "Tool execution output in this session; not captured to a local file."
+  },
+  "evaluator": "evaluation-command.json",
+  "skipped": [
+    "No new scanner runs or exploit/target-code execution.",
+    "Full frontend/backend suites and Docker not rerun: no application code changes.",
+    "No human second pass; required elapsed time and actual human first pass are absent.",
+    "Original Wave B CodeQL path artifacts unavailable."
+  ],
+  "v03_available_inputs": {
+    "verified": 61,
+    "missing": [
+      "artifacts/v03/v03_strict_baseline.tar.gz"
+    ],
+    "complete": false,
+    "note": "No replacement archive was generated and no historical lock was edited."
+  },
+  "packet_integrity": {
+    "historical_inputs_unchanged": 13,
+    "wave_c_units": 8,
+    "wave_b_units": 17,
+    "all_new_labels_proposed": true,
+    "human_labels_promoted": 0,
+    "evaluator_counts_match": true,
+    "evaluator_failed_acceptance_preserved": true
+  },
+  "markdown_links": {
+    "files": 6,
+    "local_links_checked": 102,
+    "broken": 0
+  },
+  "overall": "checks_passed_except_full_v03_freeze_unavailable_missing_archives; evaluator_failed_acceptance_expected"
+}
