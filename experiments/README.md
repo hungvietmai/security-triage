@@ -19,6 +19,8 @@ Ký hiệu 🔒 đánh dấu tài liệu bị khóa bằng SHA-256: không sửa
 | [v03-interprocedural-guard/](v03-interprocedural-guard/) | Đặc tả và QL v0.3 strict/scoped, phản ví dụ, bảng kỳ vọng, khóa dual | [README](v03-interprocedural-guard/README.md) 🔒, [SPEC](v03-interprocedural-guard/SPEC.md) 🔒, [DECISION](v03-interprocedural-guard/DECISION_2026-10-20.md) 🔒 |
 | [wave-c/](wave-c/) | Đánh giá độc lập: giao thức, chọn mẫu, runner, evaluator, kết quả, hồ sơ đóng đợt | [PROTOCOL](wave-c/PROTOCOL.md) 🔒, [DECISION](wave-c/DECISION_2026-10-21.md), [closeout/STATUS](wave-c/closeout/STATUS.md) |
 | [v021-normalization/](v021-normalization/) | Bản thử v0.2.1 (chỉ dùng cho phát triển) | [README](v021-normalization/README.md), [DECISION](v021-normalization/DECISION_2026-10-21.md) |
+| [reviews/2026-10-27-assistant-pass1/](reviews/2026-10-27-assistant-pass1/) | Assistant rà kỹ thuật 8 sink C và 17 cảnh báo B; nhãn đề xuất và evaluator, không thay human review | [README](reviews/2026-10-27-assistant-pass1/README.md) |
+| [reviews/owner-verification/](reviews/owner-verification/) | Chủ đề án xác minh các nhãn đề xuất (28–29/10); nhãn đợt C và B, kết quả evaluator | [README](reviews/owner-verification/README.md) |
 
 Gói kết quả của đợt C:
 

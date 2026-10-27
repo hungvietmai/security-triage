@@ -5,8 +5,8 @@ và CodeQL. Repository gồm hai phần:
 
 - **Nghiên cứu** ([experiments/](experiments/)): hiện tập trung vào **bằng chứng an toàn viết
   trong CodeQL cho CWE-22 trên Python**. Trên benchmark tổng hợp, v0.2 loại 92,5% FP mà không
-  mất TP. Trên mã thật, hiệu quả rất thấp: đợt đánh giá độc lập cho thấy v0.3 loại thêm 0 so
-  với v0.2, và nhãn của chủ đề án vẫn đang chờ duyệt.
+  mất TP. Trên mã thật, theo nhãn đã được chủ đề án xác minh, v0.2 vẫn không loại nhầm TP nào
+  nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
   một commit GitHub bằng Semgrep và CodeQL theo profile `command-injection-v0.1` (CWE-78,

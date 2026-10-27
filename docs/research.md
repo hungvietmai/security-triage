@@ -1,8 +1,7 @@
 # Tổng quan nghiên cứu
 
-Điểm vào duy nhất cho trạng thái nghiên cứu. Cập nhật ngày 2026-10-27, ứng với commit
-`8e99ecc` (nhánh `feat/research-safety-evidence`). Mọi số liệu dưới đây dẫn từ báo cáo
-đã commit; mỗi mục có liên kết tới nguồn.
+Điểm vào duy nhất cho trạng thái nghiên cứu. Cập nhật ngày 29/10/2026 trên nhánh
+`feat/research-safety-evidence`. Mọi số liệu dẫn từ báo cáo đã commit; mỗi mục có liên kết tới nguồn.
 
 Nhiều tài liệu nghiên cứu bị khóa bằng SHA-256 và không được sửa, kể cả
 [RESEARCH_LOG.md](../experiments/RESEARCH_LOG.md) (dừng ở mục ngày 2026-10-08). Vì vậy,
@@ -32,10 +31,12 @@ trạng thái mới chỉ được cập nhật ở đây và trong các tài li
 | 2 | BenchmarkPython, 4 CWE, ba công cụ | 15/10 | FP tập trung ở CodeQL (CWE-22/643); Semgrep không bổ sung bằng chứng | Hoàn tất |
 | 3 | Bằng chứng an toàn v0.1 → v0.2 | 15–16/10 | v0.1 loại nhầm 10 phản ví dụ nên bị bỏ; v0.2 không loại nhầm | v0.2 là baseline |
 | 4 | Đợt A: 2 dự án thật | 16/10 | Quá ít cảnh báo, chạm điều kiện dừng | Hoàn tất |
-| 5 | Đợt B: 11 cặp CVE lỗi/vá | 16–21/10 | CodeQL không báo vị trí CVE nào; v0.2 loại 1/33 FP | 17/60 nhãn chờ duyệt |
+| 5 | Đợt B: 11 cặp CVE lỗi/vá | 16–21/10 | CodeQL không báo vị trí CVE nào; v0.2 loại 1 FP | Nhãn đã đủ (xác minh 29/10) |
 | 6 | v0.3 strict/scoped (guard liên thủ tục) | 17–20/10 | Dev: strict loại thêm 0, scoped loại 8 (một nguyên nhân gốc) | Đóng băng |
-| 7 | Đợt C: đánh giá độc lập, công bố giao thức trước khi quét | 21/10 | v0.3 loại thêm **0** so với v0.2 | Chờ owner review |
+| 7 | Đợt C: đánh giá độc lập, công bố giao thức trước khi quét | 21/10 | v0.3 loại thêm **0** so với v0.2 | Nhãn đã xác minh 29/10 |
 | 8 | Tự rà kỹ thuật + bản thử v0.2.1 | 21/10 | `failed_acceptance` trên nhãn tự rà; v0.2.1 giữ lại ca bị loại | Chỉ là dữ liệu phát triển |
+| 9 | Assistant rà 8 sink C và 17 cảnh báo B | 27/10 | C: 2 FP có điều kiện / 6 unknown; B: 4 TP / 9 FP có điều kiện / 4 unknown, đều là đề xuất | Không thay owner review |
+| 10 | Chủ đề án xác minh đề xuất của assistant | 28–29/10 | C: 8 FP, v0.2 đạt, v0.3 loại thêm 0/5 FP. Mã thật gộp: v0.2 loại 4/43 FP, không mất TP | Một người, một lượt, không mù |
 
 ## 3. Kết quả theo giai đoạn
 
@@ -128,8 +129,8 @@ Nguồn: [wave-b/results/RESULTS.md](../experiments/wave-b/results/RESULTS.md); 
 - 19/33 FP của mã sản phẩm do **guard liên thủ tục** (mlflow, Django). Đây là lý do làm v0.3.
 - **RC-M6** (mlflow, 2 unknown) có thể là lỗ hổng thật. Chi tiết được giữ ngoài Git cho tới
   khi xác minh và báo kín cho maintainer.
-- **Trạng thái nhãn:** 43/60 cảnh báo đã có quyết định của chủ đề án (14 trong số đó là tạm
-  thời); 17 vẫn chờ duyệt.
+- **Trạng thái nhãn:** bảng trên là nhãn đã khóa ngày 16/10. Ngày 29/10, chủ đề án xác minh
+  17 cảnh báo còn chờ; số liệu cập nhật ở [mục 3.10](#310-chủ-đề-án-xác-minh-nhãn-282910).
 
 ### 3.6 v0.3 strict/scoped (17–20/10)
 
@@ -175,28 +176,108 @@ Nguồn: [v021-normalization/README.md](../experiments/v021-normalization/README
   của đợt C. Không mất sink cũ trong các hồi quy đã chạy.
 - Vì dữ liệu đợt C đã được dùng để sửa, kết quả này **không** được tính là kiểm chứng độc lập.
 
+### 3.9 Lượt rà assistant 27/10
+
+Nguồn: [gói rà mới](../experiments/reviews/2026-10-27-assistant-pass1/README.md),
+[đợt C](../experiments/reviews/2026-10-27-assistant-pass1/wave-c.md),
+[đợt B](../experiments/reviews/2026-10-27-assistant-pass1/wave-b.md).
+
+- Đã đọc/đánh giá kỹ thuật cả 8 sink C và 17 cảnh báo B còn chờ. Đây là assistant đã
+  thấy kết quả trước, không phải human review hoặc reviewer độc lập; không tăng số nhãn owner.
+- C: đề xuất 2 FP có điều kiện / 6 unknown. Đối chiếu lại 18 path exemplar, 39 node và
+  3 summary với source đúng hash. Evaluator đã khóa exit 2, `failed_acceptance`; mức loại
+  thêm v0.3 vẫn bằng 0, tỷ lệ FP human-confirmed vẫn N/A.
+- B: đề xuất 4 TP / 9 FP có điều kiện / 4 unknown. RC-M5 và RC-M7 đổi từ FP thành unknown:
+  normalization trước guard chưa xác lập phạm vi metadata; JSON response upstream chưa có
+  ràng buộc kiểu. RC-M5 là ca duy nhất v0.2 loại trong bảng lịch sử B.
+- Source B chứa 17 sink giống nhau từng byte giữa commit lỗi/vá. Thiếu artifact đường đi
+  CodeQL gốc B trên máy này, nên `all_reported_flows_reviewed=false` cho cả 17 đề xuất.
+- Giữ nguyên template owner và nhãn/khóa lịch sử. Lượt này không bắt đầu đồng hồ human;
+  hai lượt human vẫn phải cách ít nhất bảy ngày. Hồ sơ thời gian assistant được ghi riêng.
+
+### 3.10 Chủ đề án xác minh nhãn (28–29/10)
+
+Nguồn: [gói xác minh](../experiments/reviews/owner-verification/README.md),
+[báo cáo evaluator](../experiments/reviews/owner-verification/evaluation/report.json).
+
+**Cách làm.** Chủ đề án mở mã nguồn ở đúng commit và kiểm từng dữ kiện mà lượt rà assistant
+(mục 3.9) nêu ra, rồi đồng ý hoặc sửa nhãn. Thời gian làm thực: 180 phút.
+
+- Đây là rà **không mù**, một người, một lượt. Chưa có lượt hai cách 7 ngày như giao thức yêu
+  cầu; đó là độ lệch giao thức.
+- `all_reported_flows_reviewed = false` cho mọi nhãn.
+
+**Ba quyết định chính sách**, chốt sau khi đã biết ảnh hưởng của chúng tới kết quả:
+
+| | Quyết định | Áp dụng cho |
+|---|---|---|
+| P1 | `resolve()` chạy trước bước kiểm tra, chỉ tra metadata, **không** tính là lỗ hổng CWE-22 | pipecat `:215`, atomic `_io.py:110`, mlflow RC-M5 |
+| P2 | Chấp nhận A-SYM: kẻ tấn công chỉ gửi request, không tạo được file hay symlink | các nhãn FP có điều kiện về symlink và TOCTOU |
+| — | mlflow RC-M4 là FP vì **sai loại CWE** (cố ý cho chọn đường dẫn tùy ý, không có thư mục giới hạn); rủi ro phân quyền theo IP (CWE-291/862) ghi riêng | 2 cảnh báo |
+
+**Kết quả theo nhãn đã xác minh (kịch bản chính):**
+
+| | Nhãn | v0.2 | v0.3 strict/scoped |
+|---|---|---|---|
+| Đợt C, 8 sink | 8 FP (6 có điều kiện) | Loại 3, đều là FP; evaluator đã khóa exit 0, `no_observed_safety_failure` | **Loại thêm 0/5 FP**; `AllowedRoot` 0/5 |
+| Đợt B, 44 cảnh báo mã sản phẩm | 35 FP, 1 TP, 6 TP có điều kiện, 2 unknown (RC-M6) | Loại 1 (RC-M5), là FP; không loại TP nào | — |
+| **Gộp mã thật** | 43 FP, 7 TP/TP có điều kiện | **Loại 4/43 FP (khoảng 9%)**, giữ 7/7 TP | 0 FP thêm |
+
+So với RESULTS.md của đợt B: RC-M4 chuyển từ unknown sang FP; RC-D1 chuyển từ TP sang TP có
+điều kiện (chỉ tài khoản staff khai thác được; nội dung file chỉ lộ khi template bị tùy biến).
+
+**Kịch bản thận trọng.** Coi mọi nhãn phụ thuộc P1 hoặc mang điều kiện là unknown:
+
+| | Nhãn | v0.2 |
+|---|---|---|
+| Đợt C | 8 unknown | Loại 3 unknown → `failed_acceptance`; v0.3 không kiểm định được |
+| Đợt B, mã sản phẩm | 24 FP, 13 unknown, 7 TP/TP có điều kiện | Loại 1 unknown (RC-M5) |
+
+Kết luận "v0.2 an toàn trên mã thật" **phụ thuộc vào P1 và giả định A-SYM**. Luận văn phải
+trình bày cả hai kịch bản.
+
+**Ghi riêng, ngoài phạm vi CWE-22:**
+- TOCTOU (CWE-367) ở pipecat;
+- đi theo symlink (CWE-59) ở atomic dashboard;
+- phân quyền theo IP (CWE-291/862) ở mlflow assistant;
+- khuyến nghị gia cố cho RC-M7: kiểm tra kiểu hoặc luôn `jsonify` phản hồi của gateway.
+
 ## 4. Những gì được phép kết luận
 
 **Có thể nói, kèm điều kiện:**
 
 - Trên benchmark tổng hợp, v0.2 loại 92,5% FP của CodeQL ở nửa kiểm tra mà không mất TP.
 - Guard ngây thơ là không an toàn: v0.1 loại nhầm 10 phản ví dụ nguy hiểm.
-- Trên mã thật, bằng chứng an toàn loại được rất ít FP: đợt B 1/33; đợt C v0.2 loại 3/8 sink
-  (nhãn chưa duyệt) và v0.3 loại thêm 0.
+- Trên mã thật, theo nhãn chủ đề án đã xác minh: v0.2 loại **4/43 FP (khoảng 9%)** và không
+  loại nhầm TP nào, kể cả hai lỗ hổng về sau thành CVE. Kết luận về an toàn phụ thuộc vào P1
+  và A-SYM (mục 3.10, kịch bản thận trọng).
+- **Khoảng cách benchmark – thực tế:** 92,5% trên benchmark so với khoảng 9% trên mã thật.
+  FP trên mã thật chủ yếu cần lập luận liên thủ tục hoặc ngữ nghĩa (guard ở hàm khác, khóa do
+  server sinh, luồng gọi không khả thi), không phải guard cục bộ mà v0.2 nhận ra.
+- v0.3 không loại được FP nào trong 5 FP còn lại của đợt C. Đây là kết quả âm tính có kiểm
+  định, gắn với nút thắt `AllowedRoot` (0/5).
 - Hai nút thắt quan sát được: độ phủ mô hình nguồn/sink của CodeQL (0/11 vị trí CVE ở đợt B)
   và việc chứng minh gốc hợp lệ của sink (`AllowedRoot` 0/5 ở đợt C).
 
 **Chưa thể nói:**
 
-- Tỷ lệ giảm FP trên mã thật: chưa có mẫu số FP đã được duyệt, nên giá trị là N/A (không phải 0%).
+- Tỷ lệ 9% có tính đại diện: mẫu nhỏ, đợt C chỉ có 2 repository có cảnh báo, và 28/44 cảnh
+  báo của đợt B thuộc mlflow.
+- Nhãn đã được kiểm chứng độc lập: chỉ một người rà, không mù.
 - v0.2 hoặc v0.3 an toàn tổng quát, hoặc tổng quát hóa ra ngoài các mẫu đã đo.
 
 ## 5. Việc còn mở
 
-1. **Owner review đợt C**, theo [START_HERE.md](../experiments/wave-c/closeout/owner-review/START_HERE.md).
-   - Lượt 1: rà 8 sink rồi chạy evaluator đã khóa.
-   - Lượt 2: sau ít nhất 7 ngày kể từ lượt 1, rồi hòa giải hai lượt.
-2. **Đợt B:** duyệt 17 cảnh báo còn chờ (RC-M4, M5, M7, D1, D2, C1, C2).
+1. **Độ lệch giao thức về nhãn:** nhãn đã được xác minh (mục 3.10) nhưng không mù và chỉ một
+   lượt. Hai cách tăng độ tin cậy, đều không bắt buộc:
+   - một người rà thứ hai độc lập dùng template trống trong
+     [owner-review/](../experiments/wave-c/closeout/owner-review/START_HERE.md);
+   - lượt hai của chủ đề án, sớm nhất từ 05/11.
+
+   Nếu không làm, ghi rõ độ lệch này trong phần hạn chế của luận văn.
+2. **Bảng nhãn đợt B phiên bản 2:** nhãn xác minh đang nằm trong
+   [wave-b.labels.json](../experiments/reviews/owner-verification/wave-b.labels.json).
+   `wave_b_labels.csv` bị khóa, nên không sửa file đó.
 3. **RC-M6:** xác minh trong môi trường cô lập; nếu đúng là lỗ hổng, báo kín cho mlflow.
 4. **Đợt C:** kiểm tra near-duplicate ở mức ngữ nghĩa giữa các snapshot.
 5. **Chọn baseline v0.2 hay v0.2.1.** Mọi đánh giá mới cần giao thức mới và dữ liệu chưa từng xem.
