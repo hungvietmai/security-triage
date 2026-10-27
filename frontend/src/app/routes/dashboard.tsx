@@ -32,22 +32,23 @@ const PIPELINE: { title: string; detail: string; done: boolean }[] = [
   { title: "Quản lý dự án", detail: "Tạo, liệt kê và xem dự án", done: true },
   {
     title: "Nạp mã nguồn",
-    detail: "Manifest có phiên bản cố định, upload ZIP có giới hạn",
-    done: false,
+    detail:
+      "Package npm hoặc commit GitHub cố định, lưu snapshot có SHA-256; chưa có upload ZIP",
+    done: true,
   },
   {
-    title: "Quét Semgrep",
-    detail: "Lưu SARIF thô, cấu hình, thời gian và lỗi",
-    done: false,
+    title: "Quét Semgrep và CodeQL",
+    detail: "Phiên bản đã ghim, lưu SARIF thô, log, thời gian và lỗi",
+    done: true,
   },
   {
-    title: "Quét CodeQL",
-    detail: "Baseline độc lập, đo riêng tạo DB và chạy query",
-    done: false,
+    title: "Xếp ưu tiên CWE-78",
+    detail: "Gộp cảnh báo theo vị trí sink, xếp P1–P4 theo chính sách v0.1",
+    done: true,
   },
   {
-    title: "Thẩm định CWE-78",
-    detail: "Chính sách bằng chứng: supported / inconclusive / proposed_reject",
+    title: "Bằng chứng an toàn CWE-22",
+    detail: "Đang nghiên cứu, chưa tích hợp vào ứng dụng",
     done: false,
   },
 ];
@@ -122,7 +123,7 @@ export function DashboardRoute() {
     <>
       <PageHeader
         title="Tổng quan"
-        description="Sàng lọc và thẩm định cảnh báo lỗ hổng từ Semgrep và CodeQL cho JavaScript/TypeScript và Python."
+        description="Sàng lọc và xếp ưu tiên cảnh báo lỗ hổng từ Semgrep và CodeQL cho JavaScript và Python."
         actions={<CreateProjectDialog />}
       />
 
@@ -138,19 +139,19 @@ export function DashboardRoute() {
           title="Bản mã nguồn"
           icon={FileArchiveIcon}
           value="—"
-          hint="Chưa triển khai nạp mã nguồn"
+          hint="Chưa có API thống kê; xem trên trang lượt quét"
         />
         <StatCard
           title="Lượt quét"
           icon={ScanSearchIcon}
           value="—"
-          hint="Chưa triển khai chạy công cụ"
+          hint="Chưa có API thống kê; tạo lượt quét từ dự án"
         />
         <StatCard
-          title="Cảnh báo cần thẩm định"
+          title="Cảnh báo cần rà soát"
           icon={ShieldAlertIcon}
           value="—"
-          hint="Chưa triển khai thẩm định"
+          hint="Chưa có API thống kê; xem hàng đợi P1–P4 của từng lượt quét"
         />
       </div>
 

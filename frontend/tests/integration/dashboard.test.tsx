@@ -17,12 +17,16 @@ describe("Dashboard", () => {
     expect(main().getByText("7")).toBeInTheDocument();
   });
 
-  it("does not invent numbers for features that do not exist yet", async () => {
+  it("does not invent numbers the API cannot provide", async () => {
     await renderApp("/");
     await main().findByText("Chưa có dự án");
-    expect(
-      main().getByText("Chưa triển khai nạp mã nguồn"),
-    ).toBeInTheDocument();
-    expect(main().getByText("Chưa triển khai thẩm định")).toBeInTheDocument();
+    expect(main().getAllByText(/^Chưa có API thống kê/)).toHaveLength(3);
+  });
+
+  it("marks only the unintegrated pipeline step as missing", async () => {
+    await renderApp("/");
+    await main().findByText("Chưa có dự án");
+    expect(main().getAllByText("Chưa có", { exact: true })).toHaveLength(1);
+    expect(main().getByText("Bằng chứng an toàn CWE-22")).toBeInTheDocument();
   });
 });

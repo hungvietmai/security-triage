@@ -7,17 +7,16 @@ export function FindingsRoute() {
     <>
       <PageHeader
         title="Cảnh báo"
-        description="Rà soát cảnh báo Semgrep kèm bằng chứng và quyết định thẩm định."
+        description="Cảnh báo Semgrep và CodeQL đã gộp theo vị trí sink, kèm mức ưu tiên và bằng chứng."
       />
       <NotImplemented
         icon={ShieldAlertIcon}
-        title="Chưa có cảnh báo"
-        description="Chưa có công cụ nào được chạy nên chưa có cảnh báo để thẩm định."
+        title="Danh sách cảnh báo toàn hệ thống"
+        description="Cảnh báo hiện được xem theo từng lượt quét: mở một dự án, tạo hoặc mở lượt quét để xem hàng đợi P1–P4 và bằng chứng của từng đơn vị."
         planned={[
-          "Phạm vi đầu tiên: CWE-78 (command injection) cho JavaScript và Python.",
-          "Kết quả thẩm định: supported, inconclusive hoặc proposed_reject, kèm bằng chứng.",
-          "Cảnh báo chỉ có ở CodeQL được giữ làm baseline độc lập, không đưa vào kết quả chính.",
-          "Không có cảnh báo CodeQL không có nghĩa là mã an toàn.",
+          "API liệt kê cảnh báo của mọi lượt quét, lọc theo dự án, công cụ, mức ưu tiên và CWE.",
+          "Mức ưu tiên là thứ tự rà soát, không phải nhãn đúng/sai; không mức nào xóa cảnh báo.",
+          "Không có cảnh báo không có nghĩa là mã an toàn.",
         ]}
       />
     </>

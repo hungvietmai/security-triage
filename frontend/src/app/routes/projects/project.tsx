@@ -158,10 +158,10 @@ export function ProjectRoute() {
           <NotImplemented
             icon={FileArchiveIcon}
             title="Bản mã nguồn"
-            description="Chưa thể nạp mã nguồn cho dự án. Mỗi bản sẽ là một snapshot bất biến, có hash và nguồn gốc rõ ràng."
+            description="Mỗi lượt quét tạo một snapshot bất biến từ package npm hoặc commit GitHub, có SHA-256 và nguồn gốc; xem trên trang của lượt quét. API chưa hỗ trợ liệt kê snapshot theo dự án."
             planned={[
-              "Nạp từ manifest có phiên bản/commit cố định (đầu vào chính cho thực nghiệm).",
-              "Chọn thư mục, xem và lọc file, tự đóng gói ZIP rồi upload (bản demo).",
+              "Danh sách snapshot của dự án và quét lại trên cùng snapshot.",
+              "Chọn thư mục, xem và lọc file, tự đóng gói ZIP rồi upload.",
               "Kiểm tra kích thước, số file, path traversal và symlink trước khi giải nén.",
             ]}
           />
@@ -184,10 +184,10 @@ export function ProjectRoute() {
           <NotImplemented
             icon={ShieldAlertIcon}
             title="Cảnh báo"
-            description="Chưa có cảnh báo vì chưa chạy công cụ nào. Không có dữ liệu mẫu hay kết quả giả."
+            description="Cảnh báo được xem theo từng lượt quét, gồm hàng đợi P1–P4 và bằng chứng. API chưa hỗ trợ tổng hợp cảnh báo theo dự án."
             planned={[
-              "Chuẩn hóa vị trí theo đúng bản mã nguồn đã quét.",
-              "Tách riêng: sự đồng thuận giữa công cụ, quyết định thẩm định và nhãn đánh giá độc lập.",
+              "Tổng hợp cảnh báo của mọi lượt quét trong dự án.",
+              "Tách riêng: sự đồng thuận giữa công cụ, mức ưu tiên và nhãn đánh giá độc lập.",
             ]}
           />
         </TabsContent>
