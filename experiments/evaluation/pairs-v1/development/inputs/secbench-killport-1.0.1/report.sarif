@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "d3c2508c-dcd0-48fd-97f8-e29957d60557"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "port"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 6,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "port"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 8,
+                            "startColumn": 28
+                          },
+                          "artifactLocation": {
+                            "uri": "index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "index.js"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 15,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 6,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 41,
+                  "endColumn": 7,
+                  "startLine": 9,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 6,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 32,
+                  "startLine": 8,
+                  "startColumn": 28
+                },
+                "artifactLocation": {
+                  "uri": "index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "5346d39f8dee88e0:1",
+            "primaryLocationStartColumnFingerprint": "10"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6c0207f91a42f8a183d1fa7cd261d2a56f272537ff9a1e8c2b9b3a2913d19a42",
+              "unitKey": "1c78be2dd3f560e2ee1aa781d0d517f43bbf8e939a6065b0d0c68ef7c07b8b3d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "d3c2508c-dcd0-48fd-97f8-e29957d60557"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "index.js"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 5,
+                  "endLine": 41,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6c0207f91a42f8a183d1fa7cd261d2a56f272537ff9a1e8c2b9b3a2913d19a42",
+              "unitKey": "1c78be2dd3f560e2ee1aa781d0d517f43bbf8e939a6065b0d0c68ef7c07b8b3d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "index.js"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 9,
+                  "endLine": 37,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6c0207f91a42f8a183d1fa7cd261d2a56f272537ff9a1e8c2b9b3a2913d19a42",
+              "unitKey": "1c78be2dd3f560e2ee1aa781d0d517f43bbf8e939a6065b0d0c68ef7c07b8b3d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "d3c2508c-dcd0-48fd-97f8-e29957d60557"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `port`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "index.js"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 13,
+                  "endLine": 9,
+                  "endColumn": 16
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6c0207f91a42f8a183d1fa7cd261d2a56f272537ff9a1e8c2b9b3a2913d19a42",
+              "unitKey": "1c78be2dd3f560e2ee1aa781d0d517f43bbf8e939a6065b0d0c68ef7c07b8b3d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `pid`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "index.js"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 17,
+                  "endLine": 29,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "50831618a7a930a1af6c60361611e4cdbe8e8c101c5f115b324cbeb94304b2f8",
+              "unitKey": "fb4cf00ce45661307a302e0c24b1bc3cf91c6664072e74196ff2a4e6e1116399",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

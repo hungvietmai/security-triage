@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "b3642aa3-1260-4416-bbc9-17a243fbe7fd"
+      },
+      "results": [
+        {
+          "ruleId": "shelljs-exec-injection",
+          "message": {
+            "text": "If unverified user data can reach the `exec` method it can result in Remote Code Execution"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/pdfinfo.js"
+                },
+                "region": {
+                  "startLine": 28,
+                  "startColumn": 17,
+                  "endLine": 28,
+                  "endColumn": 75
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "cc25f57b5fad3a1fa743164e17caf9e33073b72a86a84e344d4da45c395225b9",
+              "unitKey": "17cc0f548adcd5dabd21b7af795e6fe95c04f4933e42d649b25908e1323af2ab",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "shelljs-exec-injection",
+          "message": {
+            "text": "If unverified user data can reach the `exec` method it can result in Remote Code Execution"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/pdfinfo.js"
+                },
+                "region": {
+                  "startLine": 47,
+                  "startColumn": 17,
+                  "endLine": 66,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "3b0427b19ac9bb9080188aa83562b6707b48e084fc93ca705214d03220f60005",
+              "unitKey": "8d9d17d685e78c8be521c7d6ec08871b20cd325fda4393be5d383c9888566adf",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "shelljs-exec-injection",
+          "message": {
+            "text": "If unverified user data can reach the `exec` method it can result in Remote Code Execution"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/pdfinfo.js"
+                },
+                "region": {
+                  "startLine": 72,
+                  "startColumn": 17,
+                  "endLine": 89,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "711144bf74fb6bb47b2db7babfc1fd58f3886d3998689c7cf94534ce570af0a3",
+              "unitKey": "8758abb8897f1157ecea39aa04bdb4e299277b90c931a8109cec8c9ad5655d0a",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

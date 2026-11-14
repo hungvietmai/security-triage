@@ -1,0 +1,890 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "f673679f-06ea-4a14-9b62-da449bac5fb8"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 4,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 22,
+                            "startLine": 8,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 4,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 6,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args.join(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 24,
+                            "startLine": 6,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 7,
+                            "startLine": 6,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 22,
+                            "startLine": 8,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 18,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 18,
+                            "startLine": 23,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 10,
+                            "startLine": 23,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 27,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[ '-p', ... ormat ] [1]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 27,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args [1]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 4,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 22,
+                            "startLine": 8,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 18,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 19,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "query.f ...  'comm'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 49,
+                            "startLine": 19,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 56,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 17,
+                            "startLine": 60,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "item"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 35,
+                            "startLine": 60,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "item"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 61,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "item + '='"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 61,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format. ... =';\\n\\t}) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 62,
+                            "endColumn": 4,
+                            "startLine": 60,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 60,
+                            "startColumn": 2
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 15,
+                            "startLine": 63,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format.join(' -o ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 63,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "parseFo ... 'comm')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 50,
+                            "startLine": 19,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 19,
+                            "startColumn": 6
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 27,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[ '-p', ... ormat ] [3]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 27,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args [3]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 4,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 22,
+                            "startLine": 8,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 10,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 41,
+                  "startLine": 4,
+                  "startColumn": 37
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 15,
+                  "endColumn": 4,
+                  "startLine": 8,
+                  "startColumn": 2
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 32,
+                  "startLine": 18,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 41,
+                  "startLine": 4,
+                  "startColumn": 37
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 22,
+                  "startLine": 8,
+                  "startColumn": 18
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 32,
+                  "startLine": 18,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "2305e2813bd1e43b:1",
+            "primaryLocationStartColumnFingerprint": "8"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "90a8c5a97e560b7952feb07456ed17030e9fd8687b5bd36ccee730bef3a6ddba",
+              "unitKey": "dba4f43c5cb0df91f5824921c411e36435cb8fb482b50c868d55e87ecc66e9b9",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "f673679f-06ea-4a14-9b62-da449bac5fb8"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 2,
+                  "endLine": 15,
+                  "endColumn": 4
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "90a8c5a97e560b7952feb07456ed17030e9fd8687b5bd36ccee730bef3a6ddba",
+              "unitKey": "dba4f43c5cb0df91f5824921c411e36435cb8fb482b50c868d55e87ecc66e9b9",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "f673679f-06ea-4a14-9b62-da449bac5fb8"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `args`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 10,
+                  "endLine": 8,
+                  "endColumn": 22
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "90a8c5a97e560b7952feb07456ed17030e9fd8687b5bd36ccee730bef3a6ddba",
+              "unitKey": "dba4f43c5cb0df91f5824921c411e36435cb8fb482b50c868d55e87ecc66e9b9",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

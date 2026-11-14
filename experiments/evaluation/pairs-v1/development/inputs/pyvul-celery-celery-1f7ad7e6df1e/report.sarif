@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "8e2e6bb5-0620-459b-9b88-b11db841dde9"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "celery/apps/multi.py"
+                },
+                "region": {
+                  "startLine": 217,
+                  "startColumn": 16,
+                  "endLine": 217,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "b5f3b12b067b63a5e9cf0f2e1417c8d17580698ddc4f60f96f3a2c2fdb565629",
+              "unitKey": "fa382d8ad1f400ddcf0ea4cfe173070683e546e3d2279a45fef3002390cb7d38",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B606",
+          "message": {
+            "text": "Starting a process without a shell."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "celery/apps/worker.py"
+                },
+                "region": {
+                  "startLine": 342,
+                  "startColumn": 5,
+                  "endLine": 342,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "MEDIUM",
+            "securityTriage": {
+              "candidateKey": "98842a80c8c5a4061e49caae7d3f57c6929b3b48db00c7f68a88db302ef5681c",
+              "unitKey": "e132f126826b2022e917dab2c21a719bd4534567b83c4e20822b725c5ebb4c63",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B606",
+          "message": {
+            "text": "Starting a process without a shell."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "celery/bin/worker.py"
+                },
+                "region": {
+                  "startLine": 125,
+                  "startColumn": 13,
+                  "endLine": 125,
+                  "endColumn": 42
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "MEDIUM",
+            "securityTriage": {
+              "candidateKey": "12f83d08cbb9dfe3f28948bcbaa6a62702e7a6f2c83db4f8188fa172ac78fd55",
+              "unitKey": "2fb113e7d1fc46be159a60a4431f34a3216bc7f589aa03a5c1d80ee526b2c2b9",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

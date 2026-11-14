@@ -1,0 +1,116 @@
+{
+  "scan_id": "86fedb39-9d4a-412a-be34-aa33fe11fc9f",
+  "status": "partial",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "13f4bdc3-e6c4-4830-9a4e-337216e016e9",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:libnmap@0.4.11",
+    "sha256": "3ff36e4db213518c492d3359bf198c89a67880171e298ca86c82ff06ba144612",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T19:25:10.409744Z",
+  "finished_at": "2026-11-14T19:25:25.730811Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 8.0515,
+        "raw_findings": 3
+      },
+      "eslint": {
+        "status": "partial",
+        "seconds": 0.4649,
+        "raw_findings": 1
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2161,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0159,
+        "raw_findings": 1
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.5731
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4147
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1145
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7661
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 3,
+    "eslint": 1
+  },
+  "stages": {
+    "raw_alerts": 4,
+    "units": 1,
+    "candidates": 1,
+    "main_list": 1,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 1,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 1,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 1,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "31954702552dde72979f5401db1033edac050c5491393e964afb6a6066ed9ac6",
+      "basis": "same_call_site",
+      "path": "lib/classes/tools.js",
+      "start_line": 114,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "8816f2dd-1854-4cb9-a22f-fdac1f32e286"
+      ],
+      "raw_alerts": 4
+    }
+  ]
+}

@@ -1,0 +1,2367 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "94d865f9-75e4-4817-abd9-c9a56395e97d"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This path concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis path concatenation which depends on [library input](1) is later used in a [shell command](3)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args.op ...  || '.'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 65,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 338,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args.op ...  || '.'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 65,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 336,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args.op ...  || '.'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 65,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/codecov.js"
+                },
+                "region": {
+                  "startLine": 356,
+                  "startColumn": 27,
+                  "endColumn": 65
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 21,
+                  "startLine": 419,
+                  "startColumn": 7
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 73,
+                  "startLine": 480,
+                  "startColumn": 16
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "c8495df750492cab:1",
+            "primaryLocationStartColumnFingerprint": "24"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "f0c452e60d9c87e3606ec21395accd5bf4b5df82901ad9cd20a994ca4a6e4aad",
+              "unitKey": "f0c452e60d9c87e3606ec21395accd5bf4b5df82901ad9cd20a994ca4a6e4aad",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 397,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(args.o ... | root)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 397,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.re ... || '.')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 66,
+                            "startLine": 356,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 356,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 397,
+                            "startColumn": 41
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(args.o ... | root)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 397,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 375,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 375,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... it(' ') [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 379,
+                            "endColumn": 24,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 380,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 381,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "\"-not - ... p + \"'\""
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 381,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ...      }) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 382,
+                            "endColumn": 15,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... in(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 383,
+                            "endColumn": 23,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 378,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 399,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 372,
+                            "startColumn": 8
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 375,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 375,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... it(' ') [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 386,
+                            "endColumn": 24,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 387,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 388,
+                            "startColumn": 44
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "'^| fin ... v ' + p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 388,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ...      }) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 389,
+                            "endColumn": 15,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... in(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 390,
+                            "endColumn": 23,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 385,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 399,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/codecov.js"
+                },
+                "region": {
+                  "startLine": 396,
+                  "startColumn": 11,
+                  "endLine": 404,
+                  "endColumn": 18
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 21,
+                  "startLine": 419,
+                  "startColumn": 7
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 46,
+                  "startLine": 397,
+                  "startColumn": 11
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 14,
+                  "startLine": 399,
+                  "startColumn": 11
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "ab601ae099324413:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "9fdd26457e66b1991b6df8bc9f9ffa784b898e6aee9cc38bc2dad1f7a32f4377",
+              "unitKey": "95d9b47a732d0bb163686c631614e59c68e96451ae05e2fe5ebaae0793aad52b",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 375,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 375,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... it(' ') [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 379,
+                            "endColumn": 24,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 380,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 381,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "\"-not - ... p + \"'\""
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 381,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ...      }) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 382,
+                            "endColumn": 15,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... in(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 383,
+                            "endColumn": 23,
+                            "startLine": 378,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 378,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 410,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 372,
+                            "startColumn": 8
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 375,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 375,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... it(' ') [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 386,
+                            "endColumn": 24,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 387,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 388,
+                            "startColumn": 44
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "'^| fin ... v ' + p"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 388,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ...      }) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 389,
+                            "endColumn": 15,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg\\n    ... in(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 390,
+                            "endColumn": 23,
+                            "startLine": 385,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 385,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "gcg"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 410,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 412,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(args.o ... 'gcov')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 48,
+                            "startLine": 412,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 414,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(args.o ...  || '')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 414,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/codecov.js"
+                },
+                "region": {
+                  "startLine": 409,
+                  "startColumn": 11,
+                  "endLine": 415,
+                  "endColumn": 16
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 21,
+                  "startLine": 419,
+                  "startColumn": 7
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 14,
+                  "startLine": 410,
+                  "startColumn": 11
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 48,
+                  "startLine": 412,
+                  "startColumn": 11
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 414,
+                  "startColumn": 11
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "25f43628137fd1de:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "9fdd26457e66b1991b6df8bc9f9ffa784b898e6aee9cc38bc2dad1f7a32f4377",
+              "unitKey": "95d9b47a732d0bb163686c631614e59c68e96451ae05e2fe5ebaae0793aad52b",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.re ... || '.')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 66,
+                            "startLine": 356,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 356,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 480,
+                            "startColumn": 35
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 336,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.re ... || '.')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 66,
+                            "startLine": 356,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 356,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 480,
+                            "startColumn": 35
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 239,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 338,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 356,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.re ... || '.')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 66,
+                            "startLine": 356,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 356,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "root"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 480,
+                            "startColumn": 35
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/codecov.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/codecov.js"
+                },
+                "region": {
+                  "startLine": 480,
+                  "startColumn": 25,
+                  "endColumn": 72
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 73,
+                  "startLine": 480,
+                  "startColumn": 16
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 27,
+                  "startLine": 239,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 39,
+                  "startLine": 480,
+                  "startColumn": 35
+                },
+                "artifactLocation": {
+                  "uri": "lib/codecov.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "3efc64a59e408eda:1",
+            "primaryLocationStartColumnFingerprint": "18"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "1e47299fb818db2e889951476da5a7ef7f33ab3e0cd09d8b972ff1287f8db708",
+              "unitKey": "385abfc5c5be7b11535ea2218ca08684c8fd8686f7ef7a33bfb51b77b447e145",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

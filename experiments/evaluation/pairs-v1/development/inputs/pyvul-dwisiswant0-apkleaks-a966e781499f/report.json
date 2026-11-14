@@ -1,0 +1,121 @@
+{
+  "scan_id": "d9475df0-34e3-4890-b9fb-d479379501b9",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "5ed87d0f-587e-4a32-9bd9-be1bc886bf11",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:dwisiswant0/apkleaks@8577b7af6224bf0a5455b552963c46721308d2ff",
+    "sha256": "07d51d7d2fb9e3ac093f5ec081517c51246d4c0becf0a81131a162f9f7a26987",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T19:07:09.042035Z",
+  "finished_at": "2026-11-14T19:07:23.809789Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.1642,
+        "raw_findings": 1
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 5.626,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.3711,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 1
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 3.0697
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1645
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.5649
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 4.6237,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8164
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0667,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 1
+  },
+  "stages": {
+    "raw_alerts": 1,
+    "units": 1,
+    "candidates": 1,
+    "main_list": 1,
+    "filtered": 0,
+    "demoted": 1
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 1,
+      "only": 1
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 1,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "7246e1143f85eae5685e44508f0f3669793afc3d472e60519a6d61c207b24d77",
+      "basis": "same_call_site",
+      "path": "apkleaks/apkleaks.py",
+      "start_line": 88,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "5b80a773-65f0-422f-9e86-ab4978e2330b"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

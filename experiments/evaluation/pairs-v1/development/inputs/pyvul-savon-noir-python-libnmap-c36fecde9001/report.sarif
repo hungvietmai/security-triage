@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "e1b85e41-9af3-413a-ab2d-4e77fd678495"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "libnmap/process.py"
+                },
+                "region": {
+                  "startLine": 293,
+                  "startColumn": 32,
+                  "endLine": 294,
+                  "endColumn": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "40f227c01f871cb54e93b82a59b1ae82ea0c0ac9a640fee4234e84c7a84003d6",
+              "unitKey": "f9b468b6bf3d05b4b0c76f3498d35bee37fdd0574d0bcaace519ba42db7aabaa",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

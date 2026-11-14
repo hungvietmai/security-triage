@@ -801,13 +801,45 @@ class PairsRunKitTests(unittest.TestCase):
         self.assertEqual(freeze.changed(record, dict(record)), [])
         self.assertEqual(freeze.changed(record, {"a": "1", "b": "x", "d": "4"}), ["b", "c", "d"])
 
-    def test_committed_frozen_configuration_still_matches_the_files(self):
+    def test_committed_labels_come_from_the_locked_manifests(self):
+        # FROZEN_CONFIGURATION.json describes the files at the commit of the development run
+        # (f1e7c0c). Amendment 07 lifted that freeze, so later versions of those files differ.
         record = json.loads((PAIRS_KIT / "FROZEN_CONFIGURATION.json").read_bytes())
-        self.assertEqual(freeze.changed(record["sha256"], freeze.hashes()), [])
+        self.assertEqual(len(record["sha256"]), 46)
         for split, pairs in (("development", 34), ("held_out", 16)):
             labels = json.loads((PAIRS_KIT / split / "labels.json").read_bytes())
             self.assertEqual(labels, pair_labels.build(split))
             self.assertEqual(len(labels["sources"]), pairs)
+
+
+class PairsDevelopmentResultTests(unittest.TestCase):
+    """The committed development-split result of pairs-v1 (Amendment 06, pipeline v0.2)."""
+
+    RUN = PAIRS_KIT / "development"
+
+    def test_result_is_reproduced_and_every_pair_was_scanned_from_the_locked_bytes(self):
+        labels = json.loads((self.RUN / "labels.json").read_bytes())
+        expected = json.loads((self.RUN / "result.json").read_bytes())
+        self.assertEqual(score_pairs.score(labels, self.RUN / "inputs"), expected)
+        self.assertEqual((expected["pairs"], expected["scored_pairs"]), (34, 34))
+        self.assertEqual(expected["left_out"], [])
+        self.assertEqual(expected["result"]["configurations"]["lost_to_filtering"], 0)
+
+    def test_saved_exports_match_their_manifests(self):
+        import hashlib
+
+        folders = sorted(path for path in (self.RUN / "inputs").iterdir() if path.is_dir())
+        self.assertEqual(len(folders), 34)
+        for folder in folders:
+            manifest = json.loads((folder / "manifest.json").read_bytes())
+            for name, sha256 in manifest["files"].items():
+                with self.subTest(folder=folder.name, file=name):
+                    actual = hashlib.sha256((folder / name).read_bytes()).hexdigest()
+                    self.assertEqual(actual, sha256)
+
+    def test_no_held_out_pair_has_been_scanned(self):
+        self.assertFalse((PAIRS_KIT / "held_out" / "inputs").exists())
+        self.assertFalse((PAIRS_KIT / "HELD_OUT_GATE.json").exists())
 
 
 if __name__ == "__main__":

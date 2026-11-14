@@ -1,17 +1,18 @@
 # Evaluation of the product pipeline on pairs-v1
 
-Governed by [Amendment 06](../../amendments/AMENDMENT_06_PRODUCT_PIPELINE_ON_PAIRS_V1.md),
-adopted by the project owner on 2026-11-15: the development split is scanned first as a
-rehearsal, then the held-out split once. Only vulnerable versions are scanned; the result is
-coverage of known vulnerable locations, never precision.
+Governed by [Amendment 06](../../amendments/AMENDMENT_06_PRODUCT_PIPELINE_ON_PAIRS_V1.md) and
+[Amendment 07](../../amendments/AMENDMENT_07_HELD_OUT_POSTPONED.md), both adopted by the project
+owner on 2026-11-15: the development split was scanned as a rehearsal with v0.2; the held-out
+split stays closed for the next pipeline version. Only vulnerable versions are scanned; the
+result is coverage of known vulnerable locations, never precision.
 
 ## Status
 
 | Step | State |
 |---|---|
 | Amendment, scoring kit, labels of both splits, frozen configuration committed | Done before any scan |
-| Development split (34 pairs, 26 known locations) | See `development/` |
-| Held-out split (16 pairs, 9 known locations) | See `held_out/`; opened only after `freeze.py gate` |
+| Development split (34 pairs, 26 known locations) | **Scanned on 2026-11-15 with v0.2**: all 34 pairs from the locked bytes, 30 completed, 4 partial. In completed scans the union of all sources reports 21 of 22 known locations (CodeQL alone 18, Semgrep alone 11); 25 of 26 counting partial scans; none filtered. `development/result.json` |
+| Held-out split (16 pairs, 9 known locations) | **Not scanned.** [Amendment 07](../../amendments/AMENDMENT_07_HELD_OUT_POSTPONED.md) keeps its single use for the next pipeline version; a new amendment and a new freeze are needed before it is opened |
 
 ## Files
 
