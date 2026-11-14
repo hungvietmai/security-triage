@@ -40,6 +40,9 @@ rule_test_labels = _load("rule_test_labels", LABELED / "build_labels.py")
 FILTER = ROOT / "experiments" / "evaluation" / "independent-filter"
 filtered_candidates = _load("filtered_candidates", FILTER / "filtered_candidates.py")
 verify_filtered = _load("verify_filtered", FILTER / "verify_filtered.py")
+PAIRS_KIT = ROOT / "experiments" / "evaluation" / "pairs-v1"
+score_pairs = _load("score_pairs", PAIRS_KIT / "score_pairs.py")
+freeze = _load("freeze", PAIRS_KIT / "freeze.py")
 
 EVALUATION = ROOT / "experiments" / "evaluation"
 
@@ -755,6 +758,56 @@ class FilterCheckResultsTests(unittest.TestCase):
             with self.subTest(file=relative):
                 actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
                 self.assertEqual(actual, registered)
+
+
+class PairsRunKitTests(unittest.TestCase):
+    """Scoring of a pairs-v1 run and the freeze gate, without scanning any pair."""
+
+    def test_only_pairs_scanned_from_the_locked_bytes_are_scored(self):
+        import shutil
+        import tempfile
+
+        labels = pair_labels.build("development")
+        labels["sources"] = [
+            s
+            for s in labels["sources"]
+            if s["id"] in {"secbench-curling-0.2.0", "secbench-arpping-2.0.0", "secbench-gm-1.20.0"}
+        ]
+        saved = EVALUATION / "inputs" / "npm-curling-0.2.0-v0.2" / "report.json"
+        with tempfile.TemporaryDirectory() as folder:
+            inputs = Path(folder)
+            (inputs / "secbench-curling-0.2.0").mkdir()
+            shutil.copy(saved, inputs / "secbench-curling-0.2.0" / "report.json")
+            # A report produced from other bytes must not be scored as this pair.
+            (inputs / "secbench-arpping-2.0.0").mkdir()
+            (inputs / "secbench-arpping-2.0.0" / "report.json").write_text(
+                json.dumps(_report([])), encoding="utf-8"
+            )
+            scored = score_pairs.score(labels, inputs)
+        self.assertEqual((scored["pairs"], scored["scored_pairs"]), (3, 1))
+        self.assertEqual(
+            {row["id"]: row["reason"] for row in scored["left_out"]},
+            {
+                "secbench-arpping-2.0.0": "scanned archive differs from the locked bytes",
+                "secbench-gm-1.20.0": "no exported report",
+            },
+        )
+        block = scored["result"]["configurations"]
+        self.assertEqual(block["documented_sites_scanned"], 1)
+        self.assertEqual(block["reported_by_configuration"]["all sources"], 1)
+
+    def test_freeze_reports_changed_added_and_removed_files(self):
+        record = {"a": "1", "b": "2", "c": "3"}
+        self.assertEqual(freeze.changed(record, dict(record)), [])
+        self.assertEqual(freeze.changed(record, {"a": "1", "b": "x", "d": "4"}), ["b", "c", "d"])
+
+    def test_committed_frozen_configuration_still_matches_the_files(self):
+        record = json.loads((PAIRS_KIT / "FROZEN_CONFIGURATION.json").read_bytes())
+        self.assertEqual(freeze.changed(record["sha256"], freeze.hashes()), [])
+        for split, pairs in (("development", 34), ("held_out", 16)):
+            labels = json.loads((PAIRS_KIT / split / "labels.json").read_bytes())
+            self.assertEqual(labels, pair_labels.build(split))
+            self.assertEqual(len(labels["sources"]), pairs)
 
 
 if __name__ == "__main__":
