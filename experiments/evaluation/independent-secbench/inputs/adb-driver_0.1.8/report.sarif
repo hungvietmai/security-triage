@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "2dae6449-2b39-46ef-a445-2b549cc9b163"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "build/AdbDriver.js"
+                },
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 9,
+                  "endLine": 31,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "93d778663b1ead34a2d4106a551e6e2bebc87941f1a957616dcdd94977be404c",
+              "unitKey": "93d778663b1ead34a2d4106a551e6e2bebc87941f1a957616dcdd94977be404c",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "0efc302b-6565-4ad7-9558-db6e80b2a869"
+      },
+      "results": [
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "haxor_news/haxor.py"
+                },
+                "region": {
+                  "startLine": 207,
+                  "startColumn": 13,
+                  "endLine": 207,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "713f705e157e9477f95248068dd0a849c59fad731876691b657ff22cd24d6e6e",
+              "unitKey": "f1eff4e9d220895731135e4d73bd72ed8fde98498b5e13e27ba225df7357165b",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "B604",
+          "message": {
+            "text": "Function call with shell=True parameter identified, possible security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_haxor.py"
+                },
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 9,
+                  "endLine": 52,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "MEDIUM",
+            "issue_confidence": "LOW",
+            "securityTriage": {
+              "candidateKey": "2f5786097ac966e41ec88918e1704feb75b48b2266ede41b5c58da8732cc8b94",
+              "unitKey": "2f5786097ac966e41ec88918e1704feb75b48b2266ede41b5c58da8732cc8b94",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "B604",
+          "message": {
+            "text": "Function call with shell=True parameter identified, possible security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_haxor.py"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 9,
+                  "endLine": 56,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "MEDIUM",
+            "issue_confidence": "LOW",
+            "securityTriage": {
+              "candidateKey": "4ff41513a7e8f14ad1c10749553ae83b1d5e9625c52c089eacd57d63bfc3d92f",
+              "unitKey": "4ff41513a7e8f14ad1c10749553ae83b1d5e9625c52c089eacd57d63bfc3d92f",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "0efc302b-6565-4ad7-9558-db6e80b2a869"
+      },
+      "results": [
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'call' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "haxor_news/haxor.py"
+                },
+                "region": {
+                  "startLine": 207,
+                  "startColumn": 41,
+                  "endLine": 207,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "713f705e157e9477f95248068dd0a849c59fad731876691b657ff22cd24d6e6e",
+              "unitKey": "f1eff4e9d220895731135e4d73bd72ed8fde98498b5e13e27ba225df7357165b",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

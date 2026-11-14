@@ -1,0 +1,1981 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "fca7ee08-9e2c-47aa-ad0b-5fc1358ebff5"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/click_web/resources/cmd_exec.py"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 15,
+                  "endLine": 66,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "b492f448988a696b0c9e5a715c6dada04069d15dcefcee8d00f1af12ab4d2800",
+              "unitKey": "514b208d2091b6c13820f506871bc24f6f2f63559ecedf5e9b53b948845e0b6a",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B606",
+          "message": {
+            "text": "Starting a process without a shell."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/data.py"
+                },
+                "region": {
+                  "startLine": 422,
+                  "startColumn": 9,
+                  "endLine": 422,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "MEDIUM",
+            "securityTriage": {
+              "candidateKey": "91bd2cb555a18e5e7db2accbf9ff0db93e6ca8cc39c4f5ddf7adff1a7f6e4d3c",
+              "unitKey": "91bd2cb555a18e5e7db2accbf9ff0db93e6ca8cc39c4f5ddf7adff1a7f6e4d3c",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/data.py"
+                },
+                "region": {
+                  "startLine": 424,
+                  "startColumn": 9,
+                  "endLine": 424,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "19a6133b33f70805b60d5ec5414f125cf2ad0a27d6e0e7ebeacfc915430910a4",
+              "unitKey": "c7d46bf0b77ac4915dd3e0f4896bf03b4c79b25ca64ea6c098d006ac42999542",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/data.py"
+                },
+                "region": {
+                  "startLine": 424,
+                  "startColumn": 9,
+                  "endLine": 424,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "19a6133b33f70805b60d5ec5414f125cf2ad0a27d6e0e7ebeacfc915430910a4",
+              "unitKey": "c7d46bf0b77ac4915dd3e0f4896bf03b4c79b25ca64ea6c098d006ac42999542",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/data.py"
+                },
+                "region": {
+                  "startLine": 426,
+                  "startColumn": 9,
+                  "endLine": 426,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "11e48352fb0d2b8087ffe8fac0cb992db7de4ffa1d6a439a0f9963b82d13c92b",
+              "unitKey": "8dd49549b777ed77edd7fbdd9becf0868c4daab1393d9cf64fa0651b3febce84",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/data.py"
+                },
+                "region": {
+                  "startLine": 426,
+                  "startColumn": 9,
+                  "endLine": 426,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "11e48352fb0d2b8087ffe8fac0cb992db7de4ffa1d6a439a0f9963b82d13c92b",
+              "unitKey": "8dd49549b777ed77edd7fbdd9becf0868c4daab1393d9cf64fa0651b3febce84",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/search.py"
+                },
+                "region": {
+                  "startLine": 124,
+                  "startColumn": 10,
+                  "endLine": 124,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "982ee2426864815db7582fd45ae0a006f042a9df8cd4a8c3475a2c32685ea696",
+              "unitKey": "108e4f524fb3120e0688edc5d18409010ff31792216f597022cab854f14697a5",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/search.py"
+                },
+                "region": {
+                  "startLine": 161,
+                  "startColumn": 10,
+                  "endLine": 161,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "72753b92726444ad8b48eb1a02c8b67f49689991f04b6b4b3f9ba0e6b3da2429",
+              "unitKey": "60ae47497cbc8828674911c925b4f04e8dda8548606e3d6580801164b29bbb00",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/search.py"
+                },
+                "region": {
+                  "startLine": 192,
+                  "startColumn": 10,
+                  "endLine": 192,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "d5f9e6c0ace197486fa65b0e13d9a3c110badfe710d7a3966f4af887a25cb061",
+              "unitKey": "f68bdea1bbab4c7a9573b46edf765b9843fbefe9c9df58b3c1f9f28a3e6b960f",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "fca7ee08-9e2c-47aa-ad0b-5fc1358ebff5"
+      },
+      "results": [
+        {
+          "ruleId": "py/command-line-injection",
+          "message": {
+            "text": "This command line depends on a [user-provided value](1)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ImportMember"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 175,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "AdditionalTaintStep",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for arg_values"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 175,
+                            "startColumn": 21
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for arg_values"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 51,
+                            "startLine": 190,
+                            "startColumn": 41
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 190,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 191,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute() [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 34,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 34,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 72,
+                            "startLine": 44,
+                            "startColumn": 69
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 55,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 66,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ImportMember"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 194,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "AdditionalTaintStep",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for vals"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 194,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for val"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 219,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for val"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 30,
+                            "startLine": 221,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Yield [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 30,
+                            "startLine": 221,
+                            "startColumn": 21
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute() [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 166,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 166,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 191,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute() [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 51,
+                            "startLine": 39,
+                            "startColumn": 20
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 39,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 72,
+                            "startLine": 44,
+                            "startColumn": 69
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 55,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 66,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ImportMember"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 175,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "AdditionalTaintStep",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for arg_values"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 175,
+                            "startColumn": 21
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for value"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 182,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for values"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 183,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for values"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 51,
+                            "startLine": 187,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 187,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 191,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute() [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 34,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 34,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 72,
+                            "startLine": 44,
+                            "startColumn": 69
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 55,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 66,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ImportMember"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 10,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 194,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "AdditionalTaintStep",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for vals"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 194,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for off_flag"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 206,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for flag_on_cmd_line"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 207,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for flag_on_cmd_line"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 35,
+                            "startLine": 213,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Yield [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 35,
+                            "startLine": 213,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute() [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 166,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 166,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for args [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 191,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute() [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 34,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "list.extend",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "[post] ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 34,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 72,
+                            "startLine": 44,
+                            "startColumn": 69
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 55,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 66,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/click_web/resources/cmd_exec.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/click_web/resources/cmd_exec.py"
+                },
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 9,
+                  "endColumn": 12
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "user-provided value"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 10,
+                  "startColumn": 29
+                },
+                "artifactLocation": {
+                  "uri": "archivy/click_web/resources/cmd_exec.py",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 10,
+                  "startColumn": 29
+                },
+                "artifactLocation": {
+                  "uri": "archivy/click_web/resources/cmd_exec.py",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "83ca05151b7964ad:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "b492f448988a696b0c9e5a715c6dada04069d15dcefcee8d00f1af12ab4d2800",
+              "unitKey": "5d60419a38c91b26f02dd49d4956f6b7c4d39b2977ddb34448ff7c60c7fc21fa",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "py/command-line-injection",
+          "message": {
+            "text": "This command line depends on a [user-provided value](1)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ImportMember"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 1,
+                            "startColumn": 38
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 1,
+                            "startColumn": 38
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for request"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 228,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "AdditionalTaintStep",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 228,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "dict.get",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 228,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 10,
+                            "startLine": 228,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 229,
+                            "startColumn": 29
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/api.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 17,
+                            "startLine": 205,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 35,
+                            "startLine": 214,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 24,
+                            "startLine": 112,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for query"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 63,
+                            "startLine": 123,
+                            "startColumn": 58
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for List [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 85,
+                            "startLine": 123,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for rg_cmd [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 123,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for rg_cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 124,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "archivy/search.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "archivy/search.py"
+                },
+                "region": {
+                  "startLine": 124,
+                  "startColumn": 14,
+                  "endColumn": 20
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "user-provided value"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 45,
+                  "startLine": 1,
+                  "startColumn": 38
+                },
+                "artifactLocation": {
+                  "uri": "archivy/api.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 45,
+                  "startLine": 1,
+                  "startColumn": 38
+                },
+                "artifactLocation": {
+                  "uri": "archivy/api.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "3d41dae83d8076ca:1",
+            "primaryLocationStartColumnFingerprint": "9"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "982ee2426864815db7582fd45ae0a006f042a9df8cd4a8c3475a2c32685ea696",
+              "unitKey": "f9d5595c9c7f57cf6aef7843f5e06d255ca912c4f8785d9a6ef9a17717821e9e",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

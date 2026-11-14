@@ -1,0 +1,572 @@
+{
+  "scan_id": "1af4a4f5-2966-4ed3-8e7b-48fbb7ad6476",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "b2a0fbfe-6ddf-465f-baa5-92b045a822cb",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:OWASP-Benchmark/BenchmarkPython@f1291485808b66e20ddb6b01b10dc71b3df8c8ba",
+    "sha256": "0defda4cce2ea7675fbeae5b059b4d7cca7d49232529367133feb1adfb529096",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T13:57:03.086068Z",
+  "finished_at": "2026-11-14T13:57:55.943357Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 1.9183,
+        "raw_findings": 20
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 10.0922,
+        "raw_findings": 13
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.968,
+        "raw_findings": 18
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 20
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 12.3984
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1645
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4145
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 10.3869,
+        "raw_findings": 24
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7661
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 3.5698,
+        "raw_findings": 66
+      }
+    },
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.4306,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.6654,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2661,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.066,
+        "raw_findings": 0
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 6.5268
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4147
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1145
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8163
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 20,
+    "codeql": 13,
+    "semgrep": 18
+  },
+  "stages": {
+    "raw_alerts": 51,
+    "units": 24,
+    "candidates": 20,
+    "main_list": 18,
+    "filtered": 2,
+    "demoted": 7
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 20,
+      "only": 2
+    },
+    "codeql": {
+      "candidates": 13,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 14,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 7,
+    "P2": 4,
+    "U": 0,
+    "P3": 7,
+    "P4": 0
+  },
+  "filtered_by_rule": {
+    "G3_SEMGREP_DEAD_BRANCH": 1,
+    "G1_CODEQL_SAFETY_EVIDENCE": 2
+  },
+  "candidates": [
+    {
+      "candidate_key": "df0087c2432f76c39e0513df6ce7d4e610f3576d89f696ad3a13376d81efe411",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00166.py",
+      "start_line": 53,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "1a51c459-750a-4a21-a09f-059a0dad7a4d"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "e4576d89046818b76f5c77cc4be557d49dc25143715134c397481efe3c2153d5",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00167.py",
+      "start_line": 53,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "f50b48ab-3b87-4b08-9da9-239502476852"
+      ],
+      "raw_alerts": 5
+    },
+    {
+      "candidate_key": "e35f6339d536861be8aede799f1a9378ebba4160bebe02a7b67814ae4e0c73bf",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00168.py",
+      "start_line": 60,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "edd7dc1d-eefd-456c-af08-0d1baaba2aff"
+      ],
+      "raw_alerts": 5
+    },
+    {
+      "candidate_key": "f81822be538e00682238a2a731ae95bf16b5425333347ddabb0f67be42a9f13a",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00431.py",
+      "start_line": 51,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "464c2cab-6851-4fc4-9ad6-ed6c07cc60af"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "ff53380803b0f0761e5c0ecebec696cd47a736b0148fce923c4dddd40ca4ccd7",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00432.py",
+      "start_line": 53,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "d0248faf-19ce-496e-9bc2-8abd28527b08"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "23c87fec4ae5b89f16424eb6bed982a89416b0e73ff4d4bd8e62ba6c43c93c39",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00606.py",
+      "start_line": 51,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "5448bf50-de57-4c91-a2e6-3ee659e66039"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "d248e658c5d8631b26d8fe40dfcc23c336458ff95fd9b3d3d3001f43dc0a256d",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00607.py",
+      "start_line": 54,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "deeb77f7-a67c-4c08-8a2b-9c63fab9b3eb"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "c20a9495720468581e320e4ab8e5a99127d9099ec345473b3bcda6c0750791d9",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00165.py",
+      "start_line": 57,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "a21bde2f-a684-42a9-9dbc-115b7a534ad6",
+        "b6c6e467-82c7-4add-b3ae-bbe7a40d6fd6"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "3cddc444f0b98e5fd8d2561387d39ef92660b47767008ca3217cb41f5e3fea45",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00267.py",
+      "start_line": 55,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "1a6ce62b-6251-4780-9ffe-e8454776dff4",
+        "743dee32-56b8-418c-b369-4e55e77fee99"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "5d612df803eb43c945313b2fdbe2403beffd821229c1eb519f93be98069f1638",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00268.py",
+      "start_line": 55,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "560ed4c3-c95f-4d10-99b4-8bde3a624310",
+        "95932d3b-69ad-42d0-a903-b31e79310abf"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "34148aeb7148d0bcc91bfc1d1047371d42fc2ac41e7251d24db58c1241345451",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00511.py",
+      "start_line": 57,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "13aeabc5-2dc3-4edd-a9be-9d8eb41093d2",
+        "e461dabb-1084-4fcb-8c1c-d32759c5a2d7"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "be9e294f1d72a0ac131348d67b65a669ba2c7b5941debf44accf608d647f6ae1",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00350.py",
+      "start_line": 58,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "7f4e0caa-7446-41a6-8d3c-8491914649a4"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "94167c5d836622032a4d91e6af30f8ddc12387177aee7b2ca2c597f9b3bae4b8",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00512.py",
+      "start_line": 56,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "20ca51f3-91c9-425a-a136-77bc5565f380"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "8a84098066285b2a45ab1695ca8dba783a51f11216201ea1d6ff9285ba214abb",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00736.py",
+      "start_line": 55,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "9cfa061e-fdf8-4e8a-a8fb-58d8f58a2875"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "ed632a3ede614e8371815a406f54a6e59cb28e5a9958b2cea4d867f893ad45b4",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00899.py",
+      "start_line": 64,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "a68ed1d4-4db8-4dca-bbfc-53635eb65a65"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "02c414c0d48ab76838163053cbc28468f9199d65d17f662ee7cf8ed31f6e4a1e",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest00900.py",
+      "start_line": 59,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "d11080fc-23c7-4577-9c41-ded0bcecaec0"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "2e11e5e7e29fb914092c7f05e100b8344cf86c81fbe27ea29905c82a90d8ef9e",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest01173.py",
+      "start_line": 51,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "d365f87c-0dfb-4c37-a836-870b4a8b7b38"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "5670d524994d62d8bd4b5cb4fb7562c97faf933cd42dd6e9ff703f539da506ce",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest01191.py",
+      "start_line": 52,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "6bb281e9-debd-4cf1-9965-9a2147e591cd"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "5d301dc623e5aeb2d6f85f1f3daaee67426e84cea4d1a4028312fcb091e1adf6",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest01097.py",
+      "start_line": 55,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "filtered",
+      "filter_rule": "G3_SEMGREP_DEAD_BRANCH",
+      "filter_rules": [
+        "G3_SEMGREP_DEAD_BRANCH",
+        "G1_CODEQL_SAFETY_EVIDENCE"
+      ],
+      "reason": "Đã gạn khỏi danh sách rà chính: Semgrep chứng minh phép gán đưa dữ liệu đầu vào tới lệnh này nằm trong nhánh không bao giờ chạy (điều kiện là phép so sánh số nguyên hằng). Luật đối chứng của Semgrep có báo luồng tới lệnh, luật có bằng chứng không còn báo, và mọi đường đi mà công cụ khác báo đều đi qua nhánh đó. Cảnh báo gốc được giữ để xem lại. Quy tắc khác cũng thỏa: G1_CODEQL_SAFETY_EVIDENCE.",
+      "unit_ids": [
+        "b358884a-3bcb-4d76-85b6-cbfd2039f238"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "71d8569aa836c02dd5ab855a9c0cf3a56888a98ad41d775aeefdb7189bbedf62",
+      "basis": "same_call_site",
+      "path": "testcode/BenchmarkTest01098.py",
+      "start_line": 53,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "filtered",
+      "filter_rule": "G1_CODEQL_SAFETY_EVIDENCE",
+      "filter_rules": [
+        "G1_CODEQL_SAFETY_EVIDENCE"
+      ],
+      "reason": "Đã gạn khỏi danh sách rà chính: truy vấn gốc của CodeQL có báo luồng tới lời gọi này, nhưng truy vấn có bằng chứng an toàn (st/cwe-78/all) không còn báo luồng nào. Không công cụ nào khác khẳng định luồng dữ liệu ở đây; các cảnh báo còn lại chỉ bắt mẫu cú pháp. Cảnh báo gốc được giữ để xem lại.",
+      "unit_ids": [
+        "66f6a6e7-8108-4cc5-8b0c-cffa8836a832"
+      ],
+      "raw_alerts": 3
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "934c0a76-a5d0-4d88-b86c-7a594d0aaf7b"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/process-promises.js"
+                },
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 28,
+                  "endLine": 55,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "ad98ecb5f2e3cea12b689ee88972294904f422d79e4617478bb69812aeb1cd32",
+              "unitKey": "ccf37b0a55430c62707525a32fdde77efbfe08bf6dff68ab95584ef9e88b7f93",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "934c0a76-a5d0-4d88-b86c-7a594d0aaf7b"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/process-promises.js"
+                },
+                "region": {
+                  "startLine": 45,
+                  "startColumn": 36,
+                  "endLine": 45,
+                  "endColumn": 43
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "ad98ecb5f2e3cea12b689ee88972294904f422d79e4617478bb69812aeb1cd32",
+              "unitKey": "ccf37b0a55430c62707525a32fdde77efbfe08bf6dff68ab95584ef9e88b7f93",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `command`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/process-promises.js"
+                },
+                "region": {
+                  "startLine": 83,
+                  "startColumn": 37,
+                  "endLine": 83,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "b989aaac8504e8c9d77424babf8215c91410faea9fa6cede96d6f34729fc6855",
+              "unitKey": "6626c0735423668d5683a60e55d67876c0ce1b40b2e19cee74e89d74a05ce549",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

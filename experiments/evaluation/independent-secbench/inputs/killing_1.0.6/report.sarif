@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "b4d7d0fb-6cb4-4720-a8f7-6af26366c2fb"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "name"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 30,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/killing.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "name"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 35,
+                            "startLine": 35,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/killing.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/killing.js"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 12,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 31,
+                  "startLine": 30,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "lib/killing.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 65,
+                  "endColumn": 9,
+                  "startLine": 35,
+                  "startColumn": 7
+                },
+                "artifactLocation": {
+                  "uri": "lib/killing.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 31,
+                  "startLine": 30,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "lib/killing.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 35,
+                  "startLine": 35,
+                  "startColumn": 31
+                },
+                "artifactLocation": {
+                  "uri": "lib/killing.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "d8a8d474bc1a1eeb:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4a8e618166fa414519dadf7e5dc28b3df05735a1c4e74e4d8831697e03405f9e",
+              "unitKey": "cfbcfd9e124f147a4164c2054fccef4f3e6b08dbef9ee4e90a9c817bdb9b11d5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "b4d7d0fb-6cb4-4720-a8f7-6af26366c2fb"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/killing.js"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 7,
+                  "endLine": 65,
+                  "endColumn": 9
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4a8e618166fa414519dadf7e5dc28b3df05735a1c4e74e4d8831697e03405f9e",
+              "unitKey": "cfbcfd9e124f147a4164c2054fccef4f3e6b08dbef9ee4e90a9c817bdb9b11d5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/killing.js"
+                },
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 9,
+                  "endLine": 64,
+                  "endColumn": 11
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4a8e618166fa414519dadf7e5dc28b3df05735a1c4e74e4d8831697e03405f9e",
+              "unitKey": "cfbcfd9e124f147a4164c2054fccef4f3e6b08dbef9ee4e90a9c817bdb9b11d5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

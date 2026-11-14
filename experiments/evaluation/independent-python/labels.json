@@ -1,0 +1,78 @@
+{
+  "description": "Documented CWE-78 sites in three public, deliberately vulnerable Python applications. Positives only: no site in these applications is labeled safe.",
+  "prepared": "2026-11-14, before any scan of these sources by this project",
+  "sources": [
+    {
+      "id": "vulnerable-api",
+      "language": "python",
+      "kind": "github",
+      "owner": "mattvaldes",
+      "repo": "vulnerable-api",
+      "commit": "4b050235e20bc272e646fa62e14cb8f015ec2592",
+      "sites": [
+        {
+          "path": "ansible/roles/api/files/vAPI.py",
+          "line": 232,
+          "code": "output = os.popen(command).read()",
+          "basis": "documented_with_exploit",
+          "evidence": "README.md lists \"11. Command Injection\" and documents GET /uptime/FLAG as passing command line flags into the system call; display_uptime builds \"uptime -\" + flag and this is the only process call in the file"
+        }
+      ]
+    },
+    {
+      "id": "vulnerable-flask-app",
+      "language": "python",
+      "kind": "github",
+      "owner": "videvelopers",
+      "repo": "Vulnerable-Flask-App",
+      "commit": "155a9d4020cd6382e7cef2a4166a714c54af3441",
+      "sites": [
+        {
+          "path": "vulnerable-flask-app-linux.py",
+          "line": 58,
+          "code": "data = subprocess.check_output(command, shell=True)",
+          "basis": "documented_category_located_by_reading",
+          "evidence": "README.md lists \"Command Injection\" without naming a file; get_users builds \"dig \" + request.args.get('hostname')"
+        },
+        {
+          "path": "vulnerable-flask-app-linux.py",
+          "line": 119,
+          "code": "data=subprocess.check_output(command,shell=True)",
+          "basis": "documented_category_located_by_reading",
+          "evidence": "README.md lists \"Command Injection\"; run_file builds \"/bin/bash \" + request.args.get(\"filename\")"
+        },
+        {
+          "path": "vulnerable-flask-app-windows.py",
+          "line": 58,
+          "code": "data = subprocess.check_output(command, shell=True)",
+          "basis": "documented_category_located_by_reading",
+          "evidence": "Windows variant of the same route: \"nslookup \" + request.args.get('hostname')"
+        },
+        {
+          "path": "vulnerable-flask-app-windows.py",
+          "line": 119,
+          "code": "data=subprocess.check_output(command,shell=True)",
+          "basis": "documented_category_located_by_reading",
+          "evidence": "Windows variant of the same route: \"cmd /c \" + request.args.get(\"filename\")"
+        }
+      ]
+    },
+    {
+      "id": "shiftleft-python-demo",
+      "language": "python",
+      "kind": "github",
+      "owner": "ShiftLeftSecurity",
+      "repo": "shiftleft-python-demo",
+      "commit": "6ea30ac8b456623f0f2dc4cdf249c9f63a844fa0",
+      "sites": [
+        {
+          "path": "flask_webgoat/actions.py",
+          "line": 44,
+          "code": "res = subprocess.run([\"ps aux | grep \" + name + \" | awk '{print $11}'\"], shell=True, ...",
+          "basis": "documented_with_code",
+          "evidence": "README.md names ./flask_webgoat/actions.py:43, the comment \"# vulnerability: Remote Code Execution\" on the line above this call"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "scan_id": "530fbb52-1b21-4a11-9a51-83ee3793e618",
+  "status": "completed",
+  "profile": "path-traversal-v0.2",
+  "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+  "policy_version": "0.2",
+  "reconciler_version": "safety-evidence-units-v1",
+  "snapshot": {
+    "id": "ac6f30f9-1205-49f3-9f55-1b88af5666aa",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:pallets-eco/flask-admin@4f8be4580b082c6047492baa801f3f08642c9a75",
+    "sha256": "fa8b0da2322f2779ba9d037a1d90513cdd410c93a18be3ca4a68f7446d204184",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T14:03:53.325531Z",
+  "finished_at": "2026-11-14T14:04:33.071022Z",
+  "tool_versions": {
+    "python/codeql": "2.27.1"
+  },
+  "steps": {
+    "python": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 32.948,
+        "raw_findings": 6
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 5.9497
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4145
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 6
+  },
+  "stages": {
+    "raw_alerts": 6,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 3,
+      "only": 3
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 3,
+    "P2": 0,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "97d2211ac43f479d480e18eced306d70789b06911ed0ff43ef108f2fa6e990f1",
+      "basis": "single_location",
+      "path": "flask_admin/contrib/fileadmin/__init__.py",
+      "start_line": 151,
+      "sink_kind": "codeql-path-injection-sink",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "unit_ids": [
+        "7e4e7304-f256-41df-82da-1dffb278d854"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "d9e1fccda2859e94cfe080037f6c523f0097216643be13ada0e8acc18439cebc",
+      "basis": "single_location",
+      "path": "flask_admin/contrib/fileadmin/__init__.py",
+      "start_line": 175,
+      "sink_kind": "codeql-path-injection-sink",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "unit_ids": [
+        "f2921d5d-524a-4781-b04b-05e6cc2f1782"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "945310d96ae41305f4f6a33ccc78c44ca77e63195fffe7cb77bfddd4a78cf34f",
+      "basis": "single_location",
+      "path": "flask_admin/contrib/fileadmin/__init__.py",
+      "start_line": 182,
+      "sink_kind": "codeql-path-injection-sink",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "unit_ids": [
+        "e37f36ca-361f-45d2-8986-dbf94817e319"
+      ],
+      "raw_alerts": 2
+    }
+  ]
+}

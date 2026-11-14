@@ -1,0 +1,849 @@
+{
+  "scan_id": "f9da2138-c120-4a53-88b5-64e252e47e8c",
+  "status": "partial",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "172490b4-c4ed-4897-85e6-245d66ed6bdf",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:donnemartin/gitsome@d7c57abc7cb66e9c910a844f15d4536866da3310",
+    "sha256": "393b3f2bff131c5ed962dc81f08ed015b5979d24db7ac546280c92fd899da99d",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T15:28:59.955850Z",
+  "finished_at": "2026-11-14T15:29:31.894945Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 2.1186,
+        "raw_findings": 48
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 12.5915,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 2.2182,
+        "raw_findings": 1
+      },
+      "sink-locator": {
+        "status": "partial",
+        "raw_findings": 35
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 8.9499
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1647
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4647
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 5.9787,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7661
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 6.9293,
+        "raw_findings": 22
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 48,
+    "semgrep": 1
+  },
+  "stages": {
+    "raw_alerts": 49,
+    "units": 39,
+    "candidates": 39,
+    "main_list": 39,
+    "filtered": 0,
+    "demoted": 32
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 39,
+      "only": 38
+    },
+    "semgrep": {
+      "candidates": 1,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 7,
+    "P3": 32,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "8ac59024ced043d5642e4c3a550b0f91fb09b477b2a39a22bcd3b9ad3295b2ca",
+      "basis": "unmatched_location",
+      "path": "xonsh/aliases.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "260fe71b-1dbb-4337-b2b1-68590826e154"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "2658f36feaeaef97cb2d53fb4974a7af8f2679072936f7df74ee8eb99f9240e4",
+      "basis": "unmatched_location",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "7308c5aa-31b6-4d97-a52c-1b5db33664f0"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "42f68f08ff851e552a05561655066e8d96960e02fa06601011df694463a1a9cb",
+      "basis": "unmatched_location",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "f00be09d-5370-4024-a740-fc576e086bcc"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "6f11d3db38baf160aada1a5635b45d0f252be6aad1d4508fde7b10ad1f2103c8",
+      "basis": "unmatched_location",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "440fecba-d7b3-4cd1-b5f5-a84d07252b58"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "75381e9dbe3da194835eb64dfd80ef147ac02f7fd1901ef5d6067e626e272bae",
+      "basis": "unmatched_location",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "61b223d3-986c-4507-82ad-868df907276c"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "92973527b7b24e2845ef709f2ad0ec04904a1e12c55c472ceaf621cf879814aa",
+      "basis": "unmatched_location",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "81ab4874-93c4-4785-92c9-a8d90f8ecbbf"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "b27701f556bfe43fb5251c665d4fdcd916aaf3378f5cdb08900e16514225e9d4",
+      "basis": "unmatched_location",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "a14e0185-4c4a-4a28-b480-10830c47d96d"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "dfb6368134765f4af6b33dcb4ceba440ae7e56d4cbcdf10fa24d71ef236d9eff",
+      "basis": "same_call_site",
+      "path": "xonsh/aliases.py",
+      "start_line": 638,
+      "sink_kind": "os.execvpe",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "c7c062b7-7371-4232-9d2d-b215be592806"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "690e2762a8eac3912e9f770edf795b9b00c684a113193b44074c2fbb7c3ff0ab",
+      "basis": "same_call_site",
+      "path": "xonsh/completers/bash_completion.py",
+      "start_line": 41,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "6e02a3ba-cb6c-452a-871f-97466e2ac8df"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "81ebdfc9d0c34d2901de2aba6f5516bbd9ff5f64d3cf957f51aa1fd7a9df7064",
+      "basis": "same_call_site",
+      "path": "xonsh/completers/bash_completion.py",
+      "start_line": 349,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "0b205b9d-8103-4fa6-abb6-8c68531038ac"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "ad16b718cacc906a798776410b91c0aee38e1dfa2473b0f6e97f41eb574efb88",
+      "basis": "same_call_site",
+      "path": "xonsh/completers/man.py",
+      "start_line": 44,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "4924deed-2509-4097-b7ea-445819246ed5"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "5e80e65e73d39fef7d288906d06bde14268adc9bae33055eabafb01be90ae2d7",
+      "basis": "same_call_site",
+      "path": "xonsh/completers/man.py",
+      "start_line": 48,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "48cbded7-775e-41d4-85b0-c2342d509f97"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "730ada3f03f499c57ae69f25de18bdd193215317fb30c2be147935c8c1cb53c6",
+      "basis": "same_call_site",
+      "path": "xonsh/completers/pip.py",
+      "start_line": 24,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "c0c8d0ac-7dba-4e0c-aae9-8856ff8ce8e3"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "7eab2ba982bb46a9baa4d28b095bccf9d14d64001396645a9f6aa6acd6e1ba5a",
+      "basis": "same_call_site",
+      "path": "xonsh/completers/pip.py",
+      "start_line": 43,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "5b95b699-8305-4c7b-832b-6fe9c938441f"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "ada77b6ad19b5175ceaa715bf8e768a60e5ef3f7229ef8c5a99d16c56447f8d5",
+      "basis": "same_call_site",
+      "path": "xonsh/dirstack.py",
+      "start_line": 97,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "3d5e7dff-4113-41ba-aae2-d5ee6a98ace0"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "4508711d70bfd6982d5c9619a20170237fc9161ffb38c8bb1db28efee0f2541a",
+      "basis": "same_call_site",
+      "path": "xonsh/dirstack.py",
+      "start_line": 124,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "f5b7de33-6d50-4a7d-8fd0-202cd530839b"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "e9299a3be37b5bab533f142f0dad9b3f053387ae1302fc7f66195546a40e768d",
+      "basis": "same_call_site",
+      "path": "xonsh/environ.py",
+      "start_line": 429,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "a6259334-5758-42a7-b5f7-f724d23dc652"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "608d236f1745a2a0d8c39ea99770fbb38a2ee13193f4b7feb317cc709368a042",
+      "basis": "same_call_site",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": 284,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "a7f1f8e5-c46a-4dcd-9a3a-e54bba560f19"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "7414cd5463fdff355a22e46bccb7229bcb9cec67033e85fc2d5b3a41933607b6",
+      "basis": "same_call_site",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": 479,
+      "sink_kind": "subprocess.check_call",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "8cbeeb5b-697d-4e38-936a-ed5891b4ea0c"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "f95891a2b44f9e624f1928d2199d84eb3f16cff44ba2236129cea24a47d4951d",
+      "basis": "same_call_site",
+      "path": "xonsh/foreign_shells.py",
+      "start_line": 482,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "d2743bcc-d309-4196-babb-09684fc25642"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "3bc0f27cb9e521b1ca1f8b0cd341586c1a522f29189db0cf4b46fb0f4e670b26",
+      "basis": "same_call_site",
+      "path": "xonsh/jobs.py",
+      "start_line": 74,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "0762e308-1d27-442d-9f2e-aa87af8a0119"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "9d5794df82d8e7dcea5418601410b83025ecc65ccdff6c9a98aa0d8d4a13840a",
+      "basis": "same_call_site",
+      "path": "xonsh/main.py",
+      "start_line": 396,
+      "sink_kind": "os.execlp",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "4f7ea7da-489a-4d6e-8966-86386b8ba5f4"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "b8a640cb47a776680a8fa658793fcbc8e6b2ec655221ea79802af2d2f101e0fd",
+      "basis": "same_call_site",
+      "path": "xonsh/platform.py",
+      "start_line": 398,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "b554c4ed-cc1d-4a17-8b1e-d1930189653c"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "be494d5e45574ade6a603cf4775c6404a3e5092d22b2325ffad67c1e5d74b084",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 386,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "d04f935c-2fe8-4e13-9d6e-93253cb5b0ac"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "1cfea6f159482b69a42e8fb78abd483ce6b981b04ec194fcd26fb6d804eefb41",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 398,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "4f09cbb7-d72f-4748-8a99-35e73da7aa98"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "b2e31f4f730d2e8a745e28428b92bc87a0a0447eeb33f0589ec4b5533c0debb9",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 442,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "92a65f93-1307-4f6c-85b2-f9df1a210f76"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "ea155c787671e7a0daa699e3a9d7e1d2783791fd063e47ecb44a94321066cff2",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 452,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "bd0ef53d-d25a-451d-8c5b-5e26d2a7d3c2"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "c3be981226da262b2519726b0ee531836a9bfbe011b506a80df2371fb873efdd",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 494,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "2e28850f-9ecb-4d9c-8fc2-dcb8c20d71a3"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "c5c7b4ce0807eda58b0f9100255fc12297d641b9f51861a97877196af1335ef7",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 505,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "7e85c28f-0a30-4356-a26f-0694627434c9"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "4596aa688e41bc7a8512a3f7d187cdd01fa0f23a43f45ff65342cd83fc28ce72",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 560,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "5d1bc86a-e40f-4b93-aa45-70f5711f636f"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "423263cd31df71db084e9b2aae2348ef352d741173ab95db78c4687635583cd5",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 571,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "1bf43b99-0a20-4169-89d3-094ece771e21"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "b7a7e9855436c8b35090fb2a4f0f19e8a94224b65a8e5f13330f21ad99a53bc0",
+      "basis": "same_call_site",
+      "path": "xonsh/ply/test/testlex.py",
+      "start_line": 622,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "bc708cfe-63d6-4dd9-836a-0c0b2eb66634"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "a30502feb5fb577cb6dae9b39dad70c953df5150a8f3d477c58f43a4cbddac30",
+      "basis": "same_call_site",
+      "path": "xonsh/proc.py",
+      "start_line": 582,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "a48bb172-39f8-4376-a4de-622e29ed3605"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "c52acfee661a55ae93b43ce0babe691268d49ef53a327e6728a5d5b2b1c046f3",
+      "basis": "same_call_site",
+      "path": "xonsh/prompt/gitstatus.py",
+      "start_line": 39,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "ee6483df-f5a2-4576-b737-1329abf05d1a"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "5f06753cb9078a6a75036b2ce856b0f0f123223e0254703e2d38d9f52f52cd56",
+      "basis": "same_call_site",
+      "path": "xonsh/prompt/vc.py",
+      "start_line": 19,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "c9179810-e8f8-48cf-bcfe-d6614e9a09a6"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "c954323a1e398ec54b74d45d61be712b398d88c3304ddfd6acb382b573bed786",
+      "basis": "same_call_site",
+      "path": "xonsh/prompt/vc.py",
+      "start_line": 168,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "853461b2-2564-4fee-97b4-8efc036f380f"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "f5a419dc9030b18e5d85f4adca42dc1012c0bc5c0c4b3e7ad6fcaeda31ae0591",
+      "basis": "same_call_site",
+      "path": "xonsh/prompt/vc.py",
+      "start_line": 203,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "d0c58e2b-3cfd-427c-96ba-7be2115a64a6"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "a4350389ef42c2b9dd5b23d7e34c3e0d0d42b3d5f51b5c027176e0c9e928925e",
+      "basis": "same_call_site",
+      "path": "xonsh/readline_shell.py",
+      "start_line": 655,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "7973848d-9607-48b2-a87f-494ba8913dfb"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "01a61ad3b98dc52d7012942034ffb1d9a1ce924c8a92f7dbc8c49781410a3d08",
+      "basis": "same_call_site",
+      "path": "xonsh/tools.py",
+      "start_line": 838,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "16c98fae-e8d8-4af0-864d-b59ff113e200"
+      ],
+      "raw_alerts": 2
+    }
+  ]
+}

@@ -1,0 +1,653 @@
+{
+  "scan_id": "34b8fca2-c800-491d-8e18-120919373546",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "a910e432-d668-4911-9c53-2157579ee991",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:kislyuk/yq@a98d746b96d3e6e60d3cc6e9e38a57e5005482c6",
+    "sha256": "42ac38158a151ae7c8e205dc8ecfee1c8f2dd6725d0e00b88cfd994d34cf4f0d",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T15:34:01.305926Z",
+  "finished_at": "2026-11-14T15:34:19.115720Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.3645,
+        "raw_findings": 36
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 6.6305,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.4669,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 29
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.4272
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1644
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4648
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 5.0291,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8159
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.3208,
+        "raw_findings": 2
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 36
+  },
+  "stages": {
+    "raw_alerts": 36,
+    "units": 29,
+    "candidates": 29,
+    "main_list": 29,
+    "filtered": 0,
+    "demoted": 29
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 29,
+      "only": 29
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 29,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "e4da36bb92c751153a38f1bea3c5351a7514c6153a9e04852a40264fed47ac17",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 146,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "16bf03ab-9cfc-4c66-97cb-d4062dc08814"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "9e0703c6df52e6ffee7bcfd1f8cca46d4afd09327dd8dec40a93d3d5ad1ca474",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 171,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "2fe21bc6-484d-447c-bd39-8b0a05729d21"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "ecbcc94287af6ef711abe3a8edca791128824893dde3efd900c7577e80e95436",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 271,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "dae0fe06-ff0a-41df-b0a7-8009365e15e2"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "664d06c07666eef659439dffe5cbf68795afe4741265d5d1f2257ec0cb8748d4",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 291,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "95088fe7-c356-43cd-9008-8f6592af56b3"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "f5cd174081f4bfcf8085aea475ffb574b01a35a1df075359cd51859eba3c3bfd",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 292,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "14c0c1f3-a6d9-4a8d-81db-c9736ea9b468"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "e58a816c34d5440c1a33ffaf062903bda60b42908d8d6ba52ef8863cc39602d9",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 303,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "639ad321-40c2-4f77-a828-adb6c4e25819"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "275fcf64de88167f3c7f9525eb6d94424379920c6840f1d28862078f73deaa53",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 369,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "1fa1b80f-27bf-490a-898a-d752411880a9"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "46f192c341e5e948f89d64e83c299f36867e0c748475267fbea22eb7e5ddc672",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 370,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "609d575c-3da4-4e24-8a06-691a6158d6b5"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "ee855f603ac1ff417188e22a6a2ebccdbf7463b966a550869cd2443776c36b96",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 488,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "1477f616-f250-4a4a-9dec-2eeebeed66ec"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "51d6bcde4d767901a175e4d1e3f449984fc87ed7cc50aa164b44def735792e57",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 514,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "64d48bb8-478d-45af-a71f-eb753e582012"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "b9cddf23562cc83fd7bd00a4e55b0e0892285f432b79bdeafb7788364893cf33",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 529,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "8898a981-7ed0-4599-9413-42d3cd7382da"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "50b2d0b6fede8e4f3d218699818e5a3dcf482e54d13856baaa232710674b4a4a",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 576,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "f3d9e7ac-338c-4a70-9202-35bda5ea9ae7"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "e574c9e891fb5cb6307f72605f04cdb3cee1eb9a4eb91134d81e95ec4504f1d9",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 612,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "c26aa711-b2b6-4062-a035-1c3b8d1f8fb7"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "f1fe9c9ce0e6100d2854a1f2973f0159b250045e08db6057e41359ec582d74f2",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 628,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "6c6eb6a7-1d0b-4cf2-80f1-aec1647cdaf0"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "860099ae36d2288a78b48cf0cb08a0af58ffeee7e36e09aa1a70c019e518715c",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 648,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "6b668eb1-dde8-472a-99e6-4b86e9b4da80"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "8f3e814ba372a9c5270f7d37f823b0283703af47e9c1965729c7e89983890ba9",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 664,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "7260f30e-45cf-4680-aff7-f08bcf515580"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "cd65882243222f409393c0e37d04f40feabd6a3168c981d8139aec96e4d19894",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 726,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "9aa4b050-d9df-43b1-b569-8bf62ee5c766"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "fc3539af54fd8b56856f7893cb4995fc26bcd3adbd271619feafa349784433ae",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 736,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "18915b33-36a9-411a-916d-585bac0197fe"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "1f271c3415a7dbe9b673ab858ca356d0e47360d42ebc59326266ea62283908da",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 752,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "bd248fa7-d08d-4acb-b149-072493f93073"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "d4063f27dfb4480b3a4130ca22747aa7b87a0575e66c6baa6a626ddc383e5dd6",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 777,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "4081706d-8dbd-4692-824b-af874c27aee6"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "31d3dfa65ea22dd58e795a834241b6a13420c0ade7e634ead8fb462e690498d2",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 804,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "a73fc637-b2a8-4822-ac00-b3c17221a700"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "c755b377681bc461c7c14eb56bb9f86a9edd31d98db75adede60da62c1ee0869",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 868,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "a8d87d23-5f03-4c05-ba4b-9e428360ac37"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "8efcda4bee1a946c468457a456040d9034bca3c89d02ee3abbc815e28216fc08",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 903,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "be9acf2b-e626-4bfe-995d-640d8f275da6"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "b150b8f4a08d9af4fe36520c85bcfd2d9f995d2e470b6ed9a7dcaebb2d6d5a6e",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 1273,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "0229eac1-f1d5-4d85-915b-40f61f9e3537"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "8630d3ca56b410902ace343eeda3c3efb7634a13ab7fb197a303a0be480ca7a9",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 1281,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "468db58a-3726-4f2d-b1b5-7a0f7e4876ef"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "4378175da50f046fd11b1b973b92e5528de5598487b314ddbd12ca4e81734c45",
+      "basis": "same_call_site",
+      "path": "test/test.py",
+      "start_line": 1386,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "b34174a3-9f1d-4ed0-b620-b9e062d92d97"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "819b0c5f8cd56a46199d46347ec6e1cd911d7310ca5af332eee3a9a335ebd1e4",
+      "basis": "same_call_site",
+      "path": "yq/__init__.py",
+      "start_line": 568,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "56187c5d-2f48-4cb1-bedc-bccd73aaaca7"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "168e0203bee59d45890e8fe8b8145bd3b2bc66ef7fa618ac47e6e0ba88114ddf",
+      "basis": "same_call_site",
+      "path": "yq/parser.py",
+      "start_line": 74,
+      "sink_kind": "subprocess.check_call",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "290ac292-4dab-40f6-b9d4-7b6590d8508e"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "dd6d10d5cf62ab4de7c0d9c0398b31f61e4018efc7c3b413033ddd8fc2dc19e6",
+      "basis": "same_call_site",
+      "path": "yq/parser.py",
+      "start_line": 83,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "8c5ce8cd-4335-47fa-9e8f-cd35c325b805"
+      ],
+      "raw_alerts": 2
+    }
+  ]
+}

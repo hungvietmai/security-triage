@@ -1,0 +1,234 @@
+{
+  "scan_id": "a48f20b8-6e41-4f55-9883-5c4e43b651c4",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "954d39a8-d1a2-44da-b7f2-2a053ea6c38a",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:videvelopers/Vulnerable-Flask-App@155a9d4020cd6382e7cef2a4166a714c54af3441",
+    "sha256": "8794ee2024d358832c4fbfabfc77f1dff03cb1b44be9655f1ccab4a7e7cd646f",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T14:44:18.547076Z",
+  "finished_at": "2026-11-14T14:44:33.815044Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.1641,
+        "raw_findings": 6
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 5.8766,
+        "raw_findings": 4
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.3164,
+        "raw_findings": 12
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 6
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 2.7707
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1645
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4647
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 5.225,
+        "raw_findings": 8
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8165
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0658,
+        "raw_findings": 8
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 6,
+    "codeql": 4,
+    "semgrep": 12
+  },
+  "stages": {
+    "raw_alerts": 22,
+    "units": 6,
+    "candidates": 6,
+    "main_list": 6,
+    "filtered": 0,
+    "demoted": 2
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 6,
+      "only": 2
+    },
+    "codeql": {
+      "candidates": 4,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 4,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 4,
+    "P2": 0,
+    "U": 0,
+    "P3": 2,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "21d0bf46e74fb339defcf75172c6c69bcaf4b7dd86f2236877e2e9bbe99d8a00",
+      "basis": "same_call_site",
+      "path": "vulnerable-flask-app-linux.py",
+      "start_line": 58,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "6c3568b7-5308-4bd8-83f2-ae489acfb803"
+      ],
+      "raw_alerts": 5
+    },
+    {
+      "candidate_key": "a7834065558fe51f88c697dbadb03f515a7f54103c8237690df84003ad34f6f6",
+      "basis": "same_call_site",
+      "path": "vulnerable-flask-app-linux.py",
+      "start_line": 119,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "d4021b2c-e418-4d3b-8bf4-dfc3707170da"
+      ],
+      "raw_alerts": 5
+    },
+    {
+      "candidate_key": "9ad65bcd1c6b753ee01e4832c9b16102c61f81f048e046d74dd35dec0d428eef",
+      "basis": "same_call_site",
+      "path": "vulnerable-flask-app-windows.py",
+      "start_line": 58,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "10bda930-5209-4088-8175-962c3165ae2f"
+      ],
+      "raw_alerts": 5
+    },
+    {
+      "candidate_key": "925c85ddd14f00e790b542e3282f5f5ffee7146ff876c655660f75d061b71ee0",
+      "basis": "same_call_site",
+      "path": "vulnerable-flask-app-windows.py",
+      "start_line": 119,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "9309fb93-5a30-48f7-a707-45f8ab60b373"
+      ],
+      "raw_alerts": 5
+    },
+    {
+      "candidate_key": "a186bf3abbaba7f72abb50b3c6d1239277de620df107a42f17eebd8fe209dc4d",
+      "basis": "same_call_site",
+      "path": "vulnerable-flask-app-linux.py",
+      "start_line": 68,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "4bfc233f-0882-4c50-850b-4be8106220ea"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "dfc8bebf7d88dc3a5012bc0686b4f5f76a17f0f7607e9bdbcf1970c39b413f3b",
+      "basis": "same_call_site",
+      "path": "vulnerable-flask-app-windows.py",
+      "start_line": 68,
+      "sink_kind": "subprocess.check_output",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "8ea0bc5d-25e1-49c0-b6bf-0afa848fbb48"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

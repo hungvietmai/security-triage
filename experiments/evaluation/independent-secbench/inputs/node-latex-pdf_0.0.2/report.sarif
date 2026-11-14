@@ -1,0 +1,917 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "5303ea90-4f3d-4c1c-b2de-134d0fa575cd"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 6,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 68,
+                            "startLine": 10,
+                            "startColumn": 60
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 6,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 8,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 68,
+                            "startLine": 10,
+                            "startColumn": 60
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "dest_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 6,
+                            "startColumn": 35
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "dest_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 51,
+                            "startLine": 10,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 10,
+                  "endColumn": 68
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 6,
+                  "startColumn": 26
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 24,
+                  "endColumn": 7,
+                  "startLine": 10,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 6,
+                  "startColumn": 35
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 6,
+                  "startColumn": 26
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 68,
+                  "startLine": 10,
+                  "startColumn": 60
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 6,
+                  "startColumn": 35
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 51,
+                  "startLine": 10,
+                  "startColumn": 42
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "23ac61a234e06269:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c7dfbef3421d55f7a6ddc5ed20119a8bd1c1b0905ba5f4a247272545a5556342",
+              "unitKey": "06ee19a987ce973cdbc6188d9c27d1d4d0c080572a35132723b478dc9eb7a847",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 6,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 68,
+                            "startLine": 10,
+                            "startColumn": 60
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 76,
+                            "startLine": 15,
+                            "startColumn": 68
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 6,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 8,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 68,
+                            "startLine": 10,
+                            "startColumn": 60
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "src_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 76,
+                            "startLine": 15,
+                            "startColumn": 68
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "dest_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 6,
+                            "startColumn": 35
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "dest_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 51,
+                            "startLine": 10,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "dest_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 59,
+                            "startLine": 15,
+                            "startColumn": 50
+                          },
+                          "artifactLocation": {
+                            "uri": "node-latex-pdf.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 18,
+                  "endColumn": 76
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 6,
+                  "startColumn": 26
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 22,
+                  "endColumn": 15,
+                  "startLine": 15,
+                  "startColumn": 13
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 6,
+                  "startColumn": 35
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 6,
+                  "startColumn": 26
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 76,
+                  "startLine": 15,
+                  "startColumn": 68
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 6,
+                  "startColumn": 35
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 59,
+                  "startLine": 15,
+                  "startColumn": 50
+                },
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "23ac61a234e06269:2",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "e4fad85daee0ecad88a1cee205e94d3f71f7360fa1b2f3023981389ddc21df7a",
+              "unitKey": "b73808ef28f31998d796a7f83349eed8555a5756b659bee193716aef05bd1c00",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "5303ea90-4f3d-4c1c-b2de-134d0fa575cd"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 5,
+                  "endLine": 24,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c7dfbef3421d55f7a6ddc5ed20119a8bd1c1b0905ba5f4a247272545a5556342",
+              "unitKey": "06ee19a987ce973cdbc6188d9c27d1d4d0c080572a35132723b478dc9eb7a847",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 13,
+                  "endLine": 22,
+                  "endColumn": 15
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c7dfbef3421d55f7a6ddc5ed20119a8bd1c1b0905ba5f4a247272545a5556342",
+              "unitKey": "06ee19a987ce973cdbc6188d9c27d1d4d0c080572a35132723b478dc9eb7a847",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "5303ea90-4f3d-4c1c-b2de-134d0fa575cd"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `dest_file`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 10,
+                  "endLine": 10,
+                  "endColumn": 68
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c7dfbef3421d55f7a6ddc5ed20119a8bd1c1b0905ba5f4a247272545a5556342",
+              "unitKey": "06ee19a987ce973cdbc6188d9c27d1d4d0c080572a35132723b478dc9eb7a847",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `src_file`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 10,
+                  "endLine": 10,
+                  "endColumn": 68
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c7dfbef3421d55f7a6ddc5ed20119a8bd1c1b0905ba5f4a247272545a5556342",
+              "unitKey": "06ee19a987ce973cdbc6188d9c27d1d4d0c080572a35132723b478dc9eb7a847",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `dest_file`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 18,
+                  "endLine": 15,
+                  "endColumn": 76
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "e4fad85daee0ecad88a1cee205e94d3f71f7360fa1b2f3023981389ddc21df7a",
+              "unitKey": "b73808ef28f31998d796a7f83349eed8555a5756b659bee193716aef05bd1c00",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `src_file`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node-latex-pdf.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 18,
+                  "endLine": 15,
+                  "endColumn": 76
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "e4fad85daee0ecad88a1cee205e94d3f71f7360fa1b2f3023981389ddc21df7a",
+              "unitKey": "b73808ef28f31998d796a7f83349eed8555a5756b659bee193716aef05bd1c00",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

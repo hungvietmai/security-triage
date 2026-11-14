@@ -1,0 +1,912 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "a7ea4ee5-9744-4560-b682-d42907f74324"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 3,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 9,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 95,
+                            "startColumn": 44
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 100,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 3,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 9,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 95,
+                            "startColumn": 44
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 96,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 100,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 3,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 9,
+                            "startColumn": 26
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 13,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 37,
+                  "startLine": 3,
+                  "startColumn": 34
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 33,
+                  "endColumn": 7,
+                  "startLine": 9,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 47,
+                  "startLine": 95,
+                  "startColumn": 44
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 37,
+                  "startLine": 3,
+                  "startColumn": 34
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 29,
+                  "startLine": 9,
+                  "startColumn": 26
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 47,
+                  "startLine": 95,
+                  "startColumn": 44
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "b38116008ba414a:1",
+            "primaryLocationStartColumnFingerprint": "8"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6e748399d1dff4b1abb66a13237a311d50aad73e406c4accafb9343d5eccd7ae",
+              "unitKey": "8c9d2cfa913a628d664753a63213a9fcefeb9f88b4313523c3d1743a5e83f272",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "port"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 52,
+                            "startLine": 36,
+                            "startColumn": 48
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "port"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 37,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 13,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 52,
+                  "startLine": 36,
+                  "startColumn": 48
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 67,
+                  "endColumn": 7,
+                  "startLine": 37,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 52,
+                  "startLine": 36,
+                  "startColumn": 48
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 37,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "556f2b86bd2f30f2:1",
+            "primaryLocationStartColumnFingerprint": "8"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4f0d1d858593d2e78d249aec1f1d92dbfac078c56876eff19f535cf7603f59e7",
+              "unitKey": "f787a912baf7def9df499425ddbb346546f688419c447a7906ab22ea67f05600",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "port"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 52,
+                            "startLine": 70,
+                            "startColumn": 48
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "port"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 71,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/lsof.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 13,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 52,
+                  "startLine": 70,
+                  "startColumn": 48
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 92,
+                  "endColumn": 7,
+                  "startLine": 71,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 52,
+                  "startLine": 70,
+                  "startColumn": 48
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 71,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "lib/lsof.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "4069bd48858d4a40:1",
+            "primaryLocationStartColumnFingerprint": "8"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "9ca9b238c3fd1c4bdbe092a49755483161b4757b6a996613d6c00f2492a1accf",
+              "unitKey": "7ffa176e83c7e72f0938fa98b870765b62f234aed5758eaa5a0bc4c16045b70e",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "a7ea4ee5-9744-4560-b682-d42907f74324"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 5,
+                  "endLine": 33,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6e748399d1dff4b1abb66a13237a311d50aad73e406c4accafb9343d5eccd7ae",
+              "unitKey": "8c9d2cfa913a628d664753a63213a9fcefeb9f88b4313523c3d1743a5e83f272",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 5,
+                  "endLine": 67,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4f0d1d858593d2e78d249aec1f1d92dbfac078c56876eff19f535cf7603f59e7",
+              "unitKey": "f787a912baf7def9df499425ddbb346546f688419c447a7906ab22ea67f05600",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 5,
+                  "endLine": 92,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "9ca9b238c3fd1c4bdbe092a49755483161b4757b6a996613d6c00f2492a1accf",
+              "unitKey": "7ffa176e83c7e72f0938fa98b870765b62f234aed5758eaa5a0bc4c16045b70e",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "a7ea4ee5-9744-4560-b682-d42907f74324"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `pid`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 13,
+                  "endLine": 9,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6e748399d1dff4b1abb66a13237a311d50aad73e406c4accafb9343d5eccd7ae",
+              "unitKey": "8c9d2cfa913a628d664753a63213a9fcefeb9f88b4313523c3d1743a5e83f272",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `port`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 13,
+                  "endLine": 37,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4f0d1d858593d2e78d249aec1f1d92dbfac078c56876eff19f535cf7603f59e7",
+              "unitKey": "f787a912baf7def9df499425ddbb346546f688419c447a7906ab22ea67f05600",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `port`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/lsof.js"
+                },
+                "region": {
+                  "startLine": 71,
+                  "startColumn": 13,
+                  "endLine": 71,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "9ca9b238c3fd1c4bdbe092a49755483161b4757b6a996613d6c00f2492a1accf",
+              "unitKey": "7ffa176e83c7e72f0938fa98b870765b62f234aed5758eaa5a0bc4c16045b70e",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

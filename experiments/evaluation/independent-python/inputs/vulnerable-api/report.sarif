@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "bc656447-2ff1-4dd0-ab67-fd8d959ffd49"
+      },
+      "results": [
+        {
+          "level": "error",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell, possible injection detected, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "ansible/roles/api/files/vAPI.py"
+                },
+                "region": {
+                  "startLine": 232,
+                  "startColumn": 14,
+                  "endLine": 232,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "416a8340ffc00c209cc84c18d8db4b589864625948ded6bb69bd744485dde996",
+              "unitKey": "6c14dce917ea26ac5bd629dd2e925fcef7c4b2362657778aea71e4cc0897fe70",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "bc656447-2ff1-4dd0-ab67-fd8d959ffd49"
+      },
+      "results": [
+        {
+          "ruleId": "dangerous-system-call",
+          "message": {
+            "text": "Found user-controlled data used in a system call. This could allow a malicious actor to execute commands. Use the 'subprocess' module instead, which is easier to use without accidentally exposing a command injection vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "ansible/roles/api/files/vAPI.py"
+                },
+                "region": {
+                  "startLine": 232,
+                  "startColumn": 14,
+                  "endLine": 232,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "416a8340ffc00c209cc84c18d8db4b589864625948ded6bb69bd744485dde996",
+              "unitKey": "6c14dce917ea26ac5bd629dd2e925fcef7c4b2362657778aea71e4cc0897fe70",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

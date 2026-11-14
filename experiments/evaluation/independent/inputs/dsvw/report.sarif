@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "92cf6ad6-bf0a-4225-9d64-26cae573873f"
+      },
+      "results": [
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "dsvw.py"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 31,
+                  "endLine": 31,
+                  "endColumn": 191
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "cd0d60ff139d13d9b1a0aa6d78e2dc829ae8d755e03490459161e1a904ecde0e",
+              "unitKey": "ae2559267edd4dce1f776ece4668b1972a8499f3cec082016988288caed36d0c",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/harness.py"
+                },
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 24,
+                  "endLine": 89,
+                  "endColumn": 125
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "72daf6dbac52f5becaf7bb912638e099e3298a475cc5e1308da12f13352b40a0",
+              "unitKey": "c53da8f7924f2e7dabefbf4c9018c11d468b7208d0dbbbcef43aac58a0e2e6b3",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/harness.py"
+                },
+                "region": {
+                  "startLine": 155,
+                  "startColumn": 21,
+                  "endLine": 155,
+                  "endColumn": 110
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "b3255d82a9d7e35d9a5dc62c95937dbc1fda40952698a2dd803a7e184c5ddc09",
+              "unitKey": "2be69ce7594d39147394459bcaf4f1396936fca12aed88d126b0f08452c52307",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_exploitability.py"
+                },
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 23,
+                  "endLine": 43,
+                  "endColumn": 151
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "8ee8b25e384e6b54cc0e005093d6b7ff97da0d07c6aa3ebcc2ba22976d54dbd7",
+              "unitKey": "a41f1086a817381350e29c462b70e9df9be84b91b901bead21f2d0c88c84d40a",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "92cf6ad6-bf0a-4225-9d64-26cae573873f"
+      },
+      "results": [
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'run' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "dsvw.py"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 84,
+                  "endLine": 31,
+                  "endColumn": 88
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "cd0d60ff139d13d9b1a0aa6d78e2dc829ae8d755e03490459161e1a904ecde0e",
+              "unitKey": "ae2559267edd4dce1f776ece4668b1972a8499f3cec082016988288caed36d0c",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

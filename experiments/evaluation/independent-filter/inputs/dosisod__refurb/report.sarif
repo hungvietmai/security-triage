@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "5590a428-138f-43fe-9542-2c3ce779691c"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "refurb/gen.py"
+                },
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 15,
+                  "endLine": 58,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "428b1682d77ed1b079b4036b7d15b3fd063d38b94ae78ba21928d9588a28ab64",
+              "unitKey": "48c06f1de158a29ce3e8a879feb2b503875dd8f5a3f315f681a7f98b45daaeea",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "refurb/gen.py"
+                },
+                "region": {
+                  "startLine": 57,
+                  "startColumn": 15,
+                  "endLine": 58,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "428b1682d77ed1b079b4036b7d15b3fd063d38b94ae78ba21928d9588a28ab64",
+              "unitKey": "48c06f1de158a29ce3e8a879feb2b503875dd8f5a3f315f681a7f98b45daaeea",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

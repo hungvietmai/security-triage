@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "1a5ede33-269d-4ecf-b676-745aa23091a0"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/utils.js"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 17,
+                  "endLine": 19,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "6f82e05f760fd1f783416f485ee551b1cb07c1524eb39ee3fabe1c2a2d969a28",
+              "unitKey": "b7b713ea3e08aee8b56998f3b8734a9fc6bc73e90f17a674f1204d97df43ceb1",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

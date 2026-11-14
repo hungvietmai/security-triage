@@ -1,0 +1,178 @@
+{
+  "note": "Post-hoc rescans of the two sources whose registered scan failed with 'Located JavaScript sink is not a call expression', after the line-ending fix in backend/app/scanners/acquisition.py. Not part of the registered result.",
+  "summary": {
+    "documented_sites": 2,
+    "reported": 1,
+    "in_first_tiers": 1,
+    "filtered": 0,
+    "missed": 1
+  },
+  "sources": [
+    {
+      "id": "buns_1.1.6",
+      "source": "npm:buns@1.1.6",
+      "snapshot_sha256": "dbd47de343df0b7bb221cc4c4e959a7718bc006b9a4b7e549311d538b93ef4e8",
+      "scan_status": "partial",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 678,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 81.3,
+        "steps": {
+          "codeql": 73.8,
+          "eslint": 0.7,
+          "semgrep": 1.3,
+          "sink-locator": 1.1,
+          "codeql-create": 5.1
+        }
+      }
+    },
+    {
+      "id": "ts-process-promises_1.0.2",
+      "source": "npm:ts-process-promises@1.0.2",
+      "snapshot_sha256": "de415395b45e65793c36e0a9a5931db99bd340950381cafbbef6582f22691591",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 3,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/process-promises.js",
+          "line": 45,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            45,
+            83
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 1,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 2,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.0,
+        "steps": {
+          "codeql": 7.2,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.7
+        }
+      }
+    }
+  ],
+  "scan_statuses": {
+    "partial": 1,
+    "completed": 1
+  },
+  "configurations": {
+    "documented_sites_scanned": 1,
+    "reported_by_configuration": {
+      "semgrep": 1,
+      "codeql": 0,
+      "eslint": 1,
+      "semgrep ∪ codeql": 1,
+      "all sources": 1,
+      "all sources, after filtering": 1,
+      "first tiers (P1+P2), after filtering": 1
+    },
+    "reported_by_one_tool_only": {
+      "semgrep": 0,
+      "codeql": 0,
+      "eslint": 0,
+      "bandit": 0
+    },
+    "lost_to_filtering": 0,
+    "kept_sites_by_priority": {
+      "P1": 0,
+      "P2": 1,
+      "U": 0,
+      "P3": 0,
+      "P4": 0
+    }
+  },
+  "unlabeled": {
+    "total": 1,
+    "filtered": 0,
+    "main_list_by_priority": {
+      "P1": 0,
+      "P2": 1,
+      "U": 0,
+      "P3": 0,
+      "P4": 0
+    }
+  },
+  "wall_seconds": {
+    "scans": 2,
+    "total": 95.3,
+    "median": 81.3,
+    "max": 81.3
+  }
+}

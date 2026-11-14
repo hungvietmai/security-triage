@@ -1,0 +1,165 @@
+{
+  "scan_id": "0efc302b-6565-4ad7-9558-db6e80b2a869",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "4594a834-8781-4f90-860f-859f4bb1ebca",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:donnemartin/haxor-news@8294e4498858f036a344b06e82f08b834c2a8270",
+    "sha256": "3cb3cf6fdbefbed0904b663728f78525515c7d3ccbe4f0a3a3957efb92b4612a",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T15:31:16.533091Z",
+  "finished_at": "2026-11-14T15:31:34.024213Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.2645,
+        "raw_findings": 3
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 6.679,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.4664,
+        "raw_findings": 1
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 1
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 3.671
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1645
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4646
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 4.9246,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7657
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.1666,
+        "raw_findings": 2
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 3,
+    "semgrep": 1
+  },
+  "stages": {
+    "raw_alerts": 4,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 1
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 3,
+      "only": 2
+    },
+    "semgrep": {
+      "candidates": 1,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 2,
+    "P3": 1,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "2f5786097ac966e41ec88918e1704feb75b48b2266ede41b5c58da8732cc8b94",
+      "basis": "unmatched_location",
+      "path": "tests/test_haxor.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "26d97a78-e169-43e5-a62b-3c97b6387f91"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "4ff41513a7e8f14ad1c10749553ae83b1d5e9625c52c089eacd57d63bfc3d92f",
+      "basis": "unmatched_location",
+      "path": "tests/test_haxor.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "c722f037-a24b-450d-a913-3b5f7fbfe0a5"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "713f705e157e9477f95248068dd0a849c59fad731876691b657ff22cd24d6e6e",
+      "basis": "same_call_site",
+      "path": "haxor_news/haxor.py",
+      "start_line": 207,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "ecda93c3-fb6b-4e51-8357-3e1d7d112f62"
+      ],
+      "raw_alerts": 2
+    }
+  ]
+}

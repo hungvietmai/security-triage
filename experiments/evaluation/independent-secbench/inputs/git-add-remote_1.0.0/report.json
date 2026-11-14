@@ -1,0 +1,141 @@
+{
+  "scan_id": "71c3d857-2348-4f75-8f5f-fd6004bc48c5",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "e3a5ae13-86e4-407a-a2b2-109a092d6ecc",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:git-add-remote@1.0.0",
+    "sha256": "1254ab1b84a8ad66b5a001cec4e476bfe6288b07d0668b941888203ef3e66f87",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T14:28:58.276226Z",
+  "finished_at": "2026-11-14T14:29:12.608763Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.2803,
+        "raw_findings": 1
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.3645,
+        "raw_findings": 1
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2161,
+        "raw_findings": 4
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 0.9659,
+        "raw_findings": 2
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.4731
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1143
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7659
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 1,
+    "eslint": 1,
+    "semgrep": 4
+  },
+  "stages": {
+    "raw_alerts": 6,
+    "units": 2,
+    "candidates": 2,
+    "main_list": 2,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 1,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 1,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 2,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 1,
+    "P2": 1,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "8edffe2bde4e06929faf70d5e6ba2508cffc467f45b38e8029b2251ec6f91403",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 31,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "48b408e2-f269-44be-9018-5875ec3400f9"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "3cd9e41c842a0be2091c556328a4556531f15c02eaf95b81a41a85156f79da53",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 21,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "e38b4b8c-327e-4b73-9e92-98c91206ec3e"
+      ],
+      "raw_alerts": 3
+    }
+  ]
+}

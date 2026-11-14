@@ -1,0 +1,131 @@
+{
+  "scan_id": "4ac9f73e-887a-42ad-9c3e-d11a82184e55",
+  "status": "completed",
+  "profile": "path-traversal-v0.2",
+  "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+  "policy_version": "0.2",
+  "reconciler_version": "safety-evidence-units-v1",
+  "snapshot": {
+    "id": "2e7c1ea9-3385-440d-8e2b-02446e2e3920",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:pipecat-ai/pipecat@7519c26ac5508573c35fa3a9c4717b013993d129",
+    "sha256": "9c512a0b91a55f9d29afbdca5308c320ebd7c1b88df805da7785549627adb03d",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T14:04:46.033224Z",
+  "finished_at": "2026-11-14T14:05:20.794153Z",
+  "tool_versions": {
+    "python/codeql": "2.27.1"
+  },
+  "steps": {
+    "python": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 21.6164,
+        "raw_findings": 3
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 12.3989
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4145
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 3
+  },
+  "stages": {
+    "raw_alerts": 3,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 0,
+    "filtered": 3,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 3,
+      "only": 3
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {
+    "G1_CODEQL_SAFETY_EVIDENCE": 3
+  },
+  "candidates": [
+    {
+      "candidate_key": "2062299b6dccc89071a4ccaf5df053ab14a82fe9836d5f5a529b97ca39d7dd2b",
+      "basis": "single_location",
+      "path": "src/pipecat/runner/run.py",
+      "start_line": 215,
+      "sink_kind": "codeql-path-injection-sink",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P4",
+      "disposition": "filtered",
+      "filter_rule": "G1_CODEQL_SAFETY_EVIDENCE",
+      "filter_rules": [
+        "G1_CODEQL_SAFETY_EVIDENCE"
+      ],
+      "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+      "unit_ids": [
+        "3767d031-e6fc-4258-bab1-28f05f881502"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "c5190c91cab7bb6b859bbbcfbf1a80b9f3cdc9fc7cc8becbf389140254a7d115",
+      "basis": "single_location",
+      "path": "src/pipecat/runner/run.py",
+      "start_line": 268,
+      "sink_kind": "codeql-path-injection-sink",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P4",
+      "disposition": "filtered",
+      "filter_rule": "G1_CODEQL_SAFETY_EVIDENCE",
+      "filter_rules": [
+        "G1_CODEQL_SAFETY_EVIDENCE"
+      ],
+      "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+      "unit_ids": [
+        "ab22deac-9137-448d-a56f-769c62fe1a25"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "6dee4b88a2a28479782bed266d6209d530c85041faa9eabbbb21af55d9759e8e",
+      "basis": "single_location",
+      "path": "src/pipecat/runner/run.py",
+      "start_line": 273,
+      "sink_kind": "codeql-path-injection-sink",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P4",
+      "disposition": "filtered",
+      "filter_rule": "G1_CODEQL_SAFETY_EVIDENCE",
+      "filter_rules": [
+        "G1_CODEQL_SAFETY_EVIDENCE"
+      ],
+      "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+      "unit_ids": [
+        "becfe065-6b90-4985-bbe8-28544a84edc7"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

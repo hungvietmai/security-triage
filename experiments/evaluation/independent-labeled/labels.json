@@ -1,0 +1,2340 @@
+{
+  "description": "Vulnerable and safe lines stated by the rule authors of semgrep-rules for taint rules tagged CWE-78. Built mechanically; see build_labels.py.",
+  "source": {
+    "kind": "github",
+    "owner": "semgrep",
+    "repo": "semgrep-rules",
+    "commit": "a84ff9cc2453ca91d581380de4b8b3f272f6f4be"
+  },
+  "archive_sha256": "b227c2d234ffd9c84c4dbd6619a5897a7192637c141baeace3bfc37b0715a887",
+  "rules": [
+    {
+      "rule_file": "javascript/aws-lambda/security/detect-child-process.yaml",
+      "rule_ids": [
+        "detect-child-process"
+      ],
+      "test_files": [
+        "javascript/aws-lambda/security/detect-child-process.js"
+      ]
+    },
+    {
+      "rule_file": "javascript/deno/security/audit/deno-dangerous-run.yaml",
+      "rule_ids": [
+        "deno-dangerous-run"
+      ],
+      "test_files": [
+        "javascript/deno/security/audit/deno-dangerous-run.js"
+      ]
+    },
+    {
+      "rule_file": "javascript/lang/security/audit/dangerous-spawn-shell.yaml",
+      "rule_ids": [
+        "dangerous-spawn-shell"
+      ],
+      "test_files": [
+        "javascript/lang/security/audit/dangerous-spawn-shell.js"
+      ]
+    },
+    {
+      "rule_file": "javascript/lang/security/detect-child-process.yaml",
+      "rule_ids": [
+        "detect-child-process"
+      ],
+      "test_files": [
+        "javascript/lang/security/detect-child-process.js",
+        "javascript/lang/security/detect-child-process.ts"
+      ]
+    },
+    {
+      "rule_file": "python/aws-lambda/security/dangerous-asyncio-create-exec.yaml",
+      "rule_ids": [
+        "dangerous-asyncio-create-exec"
+      ],
+      "test_files": [
+        "python/aws-lambda/security/dangerous-asyncio-create-exec.py"
+      ]
+    },
+    {
+      "rule_file": "python/aws-lambda/security/dangerous-asyncio-exec.yaml",
+      "rule_ids": [
+        "dangerous-asyncio-exec"
+      ],
+      "test_files": [
+        "python/aws-lambda/security/dangerous-asyncio-exec.py"
+      ]
+    },
+    {
+      "rule_file": "python/aws-lambda/security/dangerous-asyncio-shell.yaml",
+      "rule_ids": [
+        "dangerous-asyncio-shell"
+      ],
+      "test_files": [
+        "python/aws-lambda/security/dangerous-asyncio-shell.py"
+      ]
+    },
+    {
+      "rule_file": "python/aws-lambda/security/dangerous-spawn-process.yaml",
+      "rule_ids": [
+        "dangerous-spawn-process"
+      ],
+      "test_files": [
+        "python/aws-lambda/security/dangerous-spawn-process.py"
+      ]
+    },
+    {
+      "rule_file": "python/aws-lambda/security/dangerous-subprocess-use.yaml",
+      "rule_ids": [
+        "dangerous-subprocess-use"
+      ],
+      "test_files": [
+        "python/aws-lambda/security/dangerous-subprocess-use.py"
+      ]
+    },
+    {
+      "rule_file": "python/aws-lambda/security/dangerous-system-call.yaml",
+      "rule_ids": [
+        "dangerous-system-call"
+      ],
+      "test_files": [
+        "python/aws-lambda/security/dangerous-system-call.py"
+      ]
+    },
+    {
+      "rule_file": "python/django/security/injection/command/subprocess-injection.yaml",
+      "rule_ids": [
+        "subprocess-injection"
+      ],
+      "test_files": [
+        "python/django/security/injection/command/subprocess-injection.py"
+      ]
+    },
+    {
+      "rule_file": "python/flask/security/injection/subprocess-injection.yaml",
+      "rule_ids": [
+        "subprocess-injection"
+      ],
+      "test_files": [
+        "python/flask/security/injection/subprocess-injection.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-asyncio-create-exec-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-asyncio-create-exec-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-asyncio-create-exec-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-asyncio-exec-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-asyncio-exec-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-asyncio-exec-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-asyncio-shell-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-asyncio-shell-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-asyncio-shell-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-os-exec-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-os-exec-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-os-exec-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/dangerous-system-call-tainted-env-args.yaml",
+      "rule_ids": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "test_files": [
+        "python/lang/security/audit/dangerous-system-call-tainted-env-args.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/audit/subprocess-list-passed-as-string.yaml",
+      "rule_ids": [
+        "subprocess-list-passed-as-string"
+      ],
+      "test_files": [
+        "python/lang/security/audit/subprocess-list-passed-as-string.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/dangerous-os-exec.yaml",
+      "rule_ids": [
+        "dangerous-os-exec"
+      ],
+      "test_files": [
+        "python/lang/security/dangerous-os-exec.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/dangerous-spawn-process.yaml",
+      "rule_ids": [
+        "dangerous-spawn-process"
+      ],
+      "test_files": [
+        "python/lang/security/dangerous-spawn-process.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/dangerous-subprocess-use.yaml",
+      "rule_ids": [
+        "dangerous-subprocess-use"
+      ],
+      "test_files": [
+        "python/lang/security/dangerous-subprocess-use.py"
+      ]
+    },
+    {
+      "rule_file": "python/lang/security/dangerous-system-call.yaml",
+      "rule_ids": [
+        "dangerous-system-call"
+      ],
+      "test_files": [
+        "python/lang/security/dangerous-system-call.py"
+      ]
+    },
+    {
+      "rule_file": "typescript/mcp/security/mcp-command-injection-typescript.yaml",
+      "rule_ids": [
+        "mcp-command-injection-typescript"
+      ],
+      "test_files": [
+        "typescript/mcp/security/mcp-command-injection-typescript.ts"
+      ]
+    }
+  ],
+  "sites": [
+    {
+      "path": "javascript/aws-lambda/security/detect-child-process.js",
+      "line": 5,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "javascript/aws-lambda/security/detect-child-process.js",
+      "line": 10,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "javascript/aws-lambda/security/detect-child-process.js",
+      "line": 13,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "javascript/deno/security/audit/deno-dangerous-run.js",
+      "line": 12,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "deno-dangerous-run"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "javascript/deno/security/audit/deno-dangerous-run.js",
+      "line": 23,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "deno-dangerous-run"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "javascript/lang/security/audit/dangerous-spawn-shell.js",
+      "line": 7,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "dangerous-spawn-shell"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/audit/dangerous-spawn-shell.js",
+      "line": 12,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "dangerous-spawn-shell"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/audit/dangerous-spawn-shell.js",
+      "line": 18,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "dangerous-spawn-shell"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.js",
+      "line": 6,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.js",
+      "line": 13,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.js",
+      "line": 17,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.js",
+      "line": 29,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.ts",
+      "line": 6,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.ts",
+      "line": 13,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.ts",
+      "line": 17,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "javascript/lang/security/detect-child-process.ts",
+      "line": 29,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "detect-child-process"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-create-exec.py",
+      "line": 17,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-create-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-create-exec.py",
+      "line": 24,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-create-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-create-exec.py",
+      "line": 31,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-create-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-exec.py",
+      "line": 24,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-exec.py",
+      "line": 33,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-exec.py",
+      "line": 41,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-shell.py",
+      "line": 23,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-shell.py",
+      "line": 28,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-shell.py",
+      "line": 37,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-asyncio-shell.py",
+      "line": 41,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 7,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 10,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 13,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 16,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 19,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 22,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 25,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 28,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 31,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 34,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-spawn-process.py",
+      "line": 37,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 7,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 10,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 13,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 16,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 20,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 23,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 26,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 29,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 37,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 40,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 43,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-subprocess-use.py",
+      "line": 46,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-system-call.py",
+      "line": 5,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-system-call.py",
+      "line": 8,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/aws-lambda/security/dangerous-system-call.py",
+      "line": 11,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 9,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 14,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 21,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 27,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 32,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 42,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 47,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 55,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 65,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 70,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 75,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/django/security/injection/command/subprocess-injection.py",
+      "line": 80,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 11,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 17,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 22,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 28,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 35,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 41,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 52,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 58,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 64,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/flask/security/injection/subprocess-injection.py",
+      "line": 75,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-injection"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-create-exec-tainted-env-args.py",
+      "line": 30,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-create-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-create-exec-tainted-env-args.py",
+      "line": 39,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-create-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-exec-tainted-env-args.py",
+      "line": 39,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-exec-tainted-env-args.py",
+      "line": 51,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-shell-tainted-env-args.py",
+      "line": 29,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-shell-tainted-env-args.py",
+      "line": 61,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-asyncio-shell-tainted-env-args.py",
+      "line": 71,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-asyncio-shell-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-os-exec-tainted-env-args.py",
+      "line": 6,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-os-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-os-exec-tainted-env-args.py",
+      "line": 9,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-os-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-os-exec-tainted-env-args.py",
+      "line": 23,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-os-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-os-exec-tainted-env-args.py",
+      "line": 27,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-os-exec-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 7,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 10,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 13,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 16,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 48,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 51,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 54,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 57,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 60,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 63,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-spawn-process-tainted-env-args.py",
+      "line": 71,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 9,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 12,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 15,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 18,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 21,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 27,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 32,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 37,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 42,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 47,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 52,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-subprocess-use-tainted-env-args.py",
+      "line": 58,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 4,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 7,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 26,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 28,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 30,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 35,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 37,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 39,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 44,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 46,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 48,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 62,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 64,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 66,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 81,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 83,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 85,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 89,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 91,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 93,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 109,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 111,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 113,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 116,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 118,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 120,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 124,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 126,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 128,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 134,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 136,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 138,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 142,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 144,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/dangerous-system-call-tainted-env-args.py",
+      "line": 146,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call-tainted-env-args"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/subprocess-list-passed-as-string.py",
+      "line": 6,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "subprocess-list-passed-as-string"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/audit/subprocess-list-passed-as-string.py",
+      "line": 9,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "subprocess-list-passed-as-string"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-os-exec.py",
+      "line": 11,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-os-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-os-exec.py",
+      "line": 21,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-os-exec"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 7,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 10,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 13,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 16,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 48,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 51,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 54,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 57,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 60,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 63,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-spawn-process.py",
+      "line": 71,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-spawn-process"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 13,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 16,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 19,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 22,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 32,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 35,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-subprocess-use.py",
+      "line": 38,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-subprocess-use"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 4,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 7,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 31,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 33,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 35,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 37,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 48,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 50,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 52,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 65,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 67,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 69,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 78,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 80,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 82,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 97,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 99,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 101,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 116,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 118,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 120,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 128,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 130,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 132,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 146,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 148,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 150,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 158,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 160,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 162,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 179,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 181,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 183,
+      "label": "vulnerable",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 194,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 196,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "python/lang/security/dangerous-system-call.py",
+      "line": 198,
+      "label": "safe",
+      "language": "python",
+      "rules": [
+        "dangerous-system-call"
+      ],
+      "profile_rule": true
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 11,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 17,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 23,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 32,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 39,
+      "label": "vulnerable",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 46,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 52,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 58,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    },
+    {
+      "path": "typescript/mcp/security/mcp-command-injection-typescript.ts",
+      "line": 64,
+      "label": "safe",
+      "language": "javascript",
+      "rules": [
+        "mcp-command-injection-typescript"
+      ],
+      "profile_rule": false
+    }
+  ]
+}

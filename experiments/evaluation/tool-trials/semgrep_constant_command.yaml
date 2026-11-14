@@ -1,0 +1,14 @@
+rules:
+  # Trial only (not part of any scan profile): can Semgrep CE's constant propagation serve as
+  # evidence that a command is a compile-time constant? "..." matches a string literal and any
+  # expression Semgrep proves constant within the function.
+  - id: trial-constant-shell-command
+    languages: [python]
+    severity: INFO
+    message: The shell command is a compile-time constant string.
+    pattern-either:
+      - pattern: subprocess.$FUNC("...", ..., shell=True, ...)
+      - pattern: os.system("...")
+      - pattern: os.popen("...", ...)
+      - pattern: subprocess.getoutput("...")
+      - pattern: subprocess.getstatusoutput("...")

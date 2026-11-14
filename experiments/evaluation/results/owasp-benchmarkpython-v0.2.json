@@ -1,0 +1,165 @@
+{
+  "scan_status": "completed",
+  "profile": "command-injection-v0.2",
+  "snapshot_sha256": "0defda4cce2ea7675fbeae5b059b4d7cca7d49232529367133feb1adfb529096",
+  "source": "github:OWASP-Benchmark/BenchmarkPython@f1291485808b66e20ddb6b01b10dc71b3df8c8ba",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "stages": {
+    "raw_alerts": 51,
+    "units": 24,
+    "candidates": 20,
+    "main_list": 18,
+    "filtered": 2,
+    "demoted": 7
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 20,
+      "only": 2
+    },
+    "codeql": {
+      "candidates": 13,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 14,
+      "only": 0
+    }
+  },
+  "candidates_per_configuration": {
+    "semgrep": 14,
+    "codeql": 13,
+    "bandit": 20,
+    "semgrep+codeql": 18,
+    "all sources": 20,
+    "all sources, open-source filter": 19,
+    "all sources, filtered": 18,
+    "first tiers (P1+P2), filtered": 11
+  },
+  "step_seconds": {
+    "bandit": 1.9,
+    "codeql": 17.5,
+    "semgrep": 3.3,
+    "codeql-create": 18.9,
+    "codeql-evidence": 10.4,
+    "semgrep-evidence": 3.6,
+    "eslint": 0.7,
+    "sink-locator": 1.1
+  },
+  "labeled_sites": {
+    "vulnerable": 13,
+    "safe": 7
+  },
+  "scores": {
+    "semgrep": {
+      "tp": 7,
+      "fp": 7,
+      "fn": 6,
+      "unlabeled": 0,
+      "precision": 0.5,
+      "recall": 0.5385,
+      "f1": 0.5185
+    },
+    "codeql": {
+      "tp": 11,
+      "fp": 2,
+      "fn": 2,
+      "unlabeled": 0,
+      "precision": 0.8462,
+      "recall": 0.8462,
+      "f1": 0.8462
+    },
+    "bandit": {
+      "tp": 13,
+      "fp": 7,
+      "fn": 0,
+      "unlabeled": 0,
+      "precision": 0.65,
+      "recall": 1.0,
+      "f1": 0.7879
+    },
+    "semgrep+codeql": {
+      "tp": 11,
+      "fp": 7,
+      "fn": 2,
+      "unlabeled": 0,
+      "precision": 0.6111,
+      "recall": 0.8462,
+      "f1": 0.7097
+    },
+    "all sources": {
+      "tp": 13,
+      "fp": 7,
+      "fn": 0,
+      "unlabeled": 0,
+      "precision": 0.65,
+      "recall": 1.0,
+      "f1": 0.7879
+    },
+    "all sources, open-source filter": {
+      "tp": 13,
+      "fp": 6,
+      "fn": 0,
+      "unlabeled": 0,
+      "precision": 0.6842,
+      "recall": 1.0,
+      "f1": 0.8125
+    },
+    "all sources, filtered": {
+      "tp": 13,
+      "fp": 5,
+      "fn": 0,
+      "unlabeled": 0,
+      "precision": 0.7222,
+      "recall": 1.0,
+      "f1": 0.8387
+    },
+    "first tiers (P1+P2), filtered": {
+      "tp": 11,
+      "fp": 0,
+      "fn": 2,
+      "unlabeled": 0,
+      "precision": 1.0,
+      "recall": 0.8462,
+      "f1": 0.9167
+    }
+  },
+  "filter_effect": {
+    "filtered": {
+      "true": 0,
+      "false": 2,
+      "unlabeled": 0
+    },
+    "filtered_by_rule": {
+      "G1_CODEQL_SAFETY_EVIDENCE": {
+        "true": 0,
+        "false": 2,
+        "unlabeled": 0
+      },
+      "G3_SEMGREP_DEAD_BRANCH": {
+        "true": 0,
+        "false": 1,
+        "unlabeled": 0
+      }
+    },
+    "demoted_p3_p4": {
+      "true": 2,
+      "false": 5,
+      "unlabeled": 0
+    },
+    "first_tiers": {
+      "true": 11,
+      "false": 0,
+      "unlabeled": 0
+    }
+  }
+}

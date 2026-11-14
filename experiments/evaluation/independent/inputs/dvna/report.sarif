@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "bcdb0f9e-8b11-4f95-90e0-b4c75c2a1b00"
+      },
+      "results": [
+        {
+          "ruleId": "js/command-line-injection",
+          "message": {
+            "text": "This command line depends on a [user-provided value](1)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "req.body"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 30,
+                            "startLine": 39,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "core/appHandler.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "'ping - ... address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 39,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "core/appHandler.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 7,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "user-provided value"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 30,
+                  "startLine": 39,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 30,
+                  "startLine": 39,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "core/appHandler.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "131031fc7176b618:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "8f972cf1003876aee7881dcc580f78eb7071476427fc908d11faf51292d7a5c0",
+              "unitKey": "89726c3d6dcae1eabaf0cc6bed9fbb8f6a48397f3ff08b6b4405a7787ee289d5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "bcdb0f9e-8b11-4f95-90e0-b4c75c2a1b00"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "core/appHandler.js"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 2,
+                  "endLine": 44,
+                  "endColumn": 4
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "8f972cf1003876aee7881dcc580f78eb7071476427fc908d11faf51292d7a5c0",
+              "unitKey": "89726c3d6dcae1eabaf0cc6bed9fbb8f6a48397f3ff08b6b4405a7787ee289d5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

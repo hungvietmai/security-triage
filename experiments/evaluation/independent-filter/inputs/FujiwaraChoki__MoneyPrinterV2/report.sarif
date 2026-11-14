@@ -1,0 +1,572 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "5d30d1b0-38f2-4d3b-90bd-e17700f4171c"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 29,
+                  "endLine": 32,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "aeb3d2add34c32f66cfed694021a169074e984f54fe12ff71e402cc03517586a",
+              "unitKey": "918db4ef46abb5a998f4776f02d059027c97a551f6663f5cb5072b9247134e91",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 32,
+                  "startColumn": 29,
+                  "endLine": 32,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "aeb3d2add34c32f66cfed694021a169074e984f54fe12ff71e402cc03517586a",
+              "unitKey": "918db4ef46abb5a998f4776f02d059027c97a551f6663f5cb5072b9247134e91",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 13,
+                  "endLine": 58,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "6baedb4efae33ca588eae8467169eb64795adcd5e00d67034e9a1011aaf14c4e",
+              "unitKey": "13df02c19babc0689847415084d4c8f622eb69af483ac040b7055b7651bd56cd",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 13,
+                  "endLine": 58,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "6baedb4efae33ca588eae8467169eb64795adcd5e00d67034e9a1011aaf14c4e",
+              "unitKey": "13df02c19babc0689847415084d4c8f622eb69af483ac040b7055b7651bd56cd",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 107,
+                  "startColumn": 9,
+                  "endLine": 107,
+                  "endColumn": 79
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "101deb124acabc3fe6a2fe7cd07bcec514d0ac79d2ce23d078c6795dcf4b0e17",
+              "unitKey": "a8477f06a8ad90988f166cf061fffcd592bbdcfff21f83f7127d3dae3ee162bd",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 107,
+                  "startColumn": 9,
+                  "endLine": 107,
+                  "endColumn": 79
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "101deb124acabc3fe6a2fe7cd07bcec514d0ac79d2ce23d078c6795dcf4b0e17",
+              "unitKey": "a8477f06a8ad90988f166cf061fffcd592bbdcfff21f83f7127d3dae3ee162bd",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 108,
+                  "startColumn": 9,
+                  "endLine": 108,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "5e326a1d3a8ccefef008cd004091f437153656831ea3cc8dfd826e8536057fb7",
+              "unitKey": "0751e3bc170ad1663fd1c8265ebd3ddedab1a935750187782627e6d6be530231",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 108,
+                  "startColumn": 9,
+                  "endLine": 108,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "5e326a1d3a8ccefef008cd004091f437153656831ea3cc8dfd826e8536057fb7",
+              "unitKey": "0751e3bc170ad1663fd1c8265ebd3ddedab1a935750187782627e6d6be530231",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/classes/Outreach.py"
+                },
+                "region": {
+                  "startLine": 135,
+                  "startColumn": 31,
+                  "endLine": 135,
+                  "endColumn": 78
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "45027fdbe3c56e44afa628a7b3124047d550c0be0197386f348000bde862296d",
+              "unitKey": "239d67bd8a4162979b2e5506463b7de79187a5016aeecb0c4c9663b1e2cdb388",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/main.py"
+                },
+                "region": {
+                  "startLine": 232,
+                  "startColumn": 29,
+                  "endLine": 232,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "277b8dec3bbee6170b0f09a95fa46937cb68d53a9899e791556e2ea4ff9a2ddb",
+              "unitKey": "8745b725367112dd0c7c3f183480ae1360179a60ca06329ec862855c354e8a01",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/main.py"
+                },
+                "region": {
+                  "startLine": 363,
+                  "startColumn": 29,
+                  "endLine": 363,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "368d9933b17707c5fa929fcc6bda367ebe6899ee5cb8590c463c661e08d74412",
+              "unitKey": "2181e46f150a64f12efec58cfcc996859c32c2e9f87e7ce1cf378d83b279490e",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utils.py"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 13,
+                  "endLine": 25,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "22db5a518a5a6ba3b8e73e3c89bae6c6beaa8e58abdbf065f869a052842bdb47",
+              "unitKey": "87f6625b43717ee093169cd3a4085084aec5ee97182df325b966ed424ee91e83",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utils.py"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 13,
+                  "endLine": 25,
+                  "endColumn": 53
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "22db5a518a5a6ba3b8e73e3c89bae6c6beaa8e58abdbf065f869a052842bdb47",
+              "unitKey": "87f6625b43717ee093169cd3a4085084aec5ee97182df325b966ed424ee91e83",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "note",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utils.py"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 13,
+                  "endLine": 27,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "98405aea8f0471548f8402af647d98448f718a80cf3e73bdf3aefa04a6a3301f",
+              "unitKey": "0804e41fcb61ae6c5b878000791e2dda3f76c87825a009424c81c03c8533084d",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/utils.py"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 13,
+                  "endLine": 27,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "98405aea8f0471548f8402af647d98448f718a80cf3e73bdf3aefa04a6a3301f",
+              "unitKey": "0804e41fcb61ae6c5b878000791e2dda3f76c87825a009424c81c03c8533084d",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "description": "Documented CWE-78 sites in three public, deliberately vulnerable applications. Positives only: no site in these applications is labeled safe.",
+  "prepared": "2026-11-14, before any scan of these sources by this project",
+  "sources": [
+    {
+      "id": "dvna",
+      "language": "javascript",
+      "kind": "github",
+      "owner": "appsecco",
+      "repo": "dvna",
+      "commit": "9ba473add536f66ac9007966acb2a775dd31277a",
+      "sites": [
+        {
+          "path": "core/appHandler.js",
+          "line": 39,
+          "code": "exec('ping -c 2 ' + req.body.address, function (err, stdout, stderr) {",
+          "basis": "documented_with_code",
+          "evidence": "docs/solution/a1-injection.md, section \"Command Injection\": names core/appHandler.js, quotes this call and shows the exploit \"x ; id\""
+        }
+      ]
+    },
+    {
+      "id": "dsvw",
+      "language": "python",
+      "kind": "github",
+      "owner": "stamparm",
+      "repo": "DSVW",
+      "commit": "9ca3c9acf3defa0a6148d40e5f5cebeb5dcbb908",
+      "sites": [
+        {
+          "path": "dsvw.py",
+          "line": 31,
+          "code": "content = subprocess.run(\"nslookup \" + params[\"domain\"], shell=True, ...",
+          "basis": "documented_with_exploit",
+          "evidence": "dsvw.py, CASES entry \"Arbitrary Code Execution\" with the exploit \"/?domain=www.google.com; ifconfig\"; this is the only use of the domain parameter"
+        }
+      ]
+    },
+    {
+      "id": "nodejs-goof",
+      "language": "javascript",
+      "kind": "github",
+      "owner": "snyk-labs",
+      "repo": "nodejs-goof",
+      "commit": "add14ba59e98240d9e00a235dd7d42cd61ae9912",
+      "sites": [
+        {
+          "path": "routes/index.js",
+          "line": 174,
+          "code": "exec('identify ' + url, function (err, stdout, stderr) {",
+          "basis": "documented_category_located_by_reading",
+          "evidence": "README.md, \"Vulnerabilities in code\" lists \"Command execution\" without naming a file; this is the only command built from request data in the application's own code, located by reading the source"
+        }
+      ]
+    }
+  ]
+}

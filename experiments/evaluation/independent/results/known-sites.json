@@ -1,0 +1,170 @@
+{
+  "summary": {
+    "documented_sites": 3,
+    "reported": 3,
+    "in_first_tiers": 2,
+    "filtered": 0,
+    "missed": 0
+  },
+  "sources": [
+    {
+      "id": "dvna",
+      "source": "github:appsecco/dvna@9ba473add536f66ac9007966acb2a775dd31277a",
+      "snapshot_sha256": "34936c8f3fbff44f60c691e7600e7fb109d11c49be308b04ad5b823e10e48944",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "core/appHandler.js",
+          "line": 39,
+          "basis": "documented_with_code",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      }
+    },
+    {
+      "id": "dsvw",
+      "source": "github:stamparm/DSVW@9ca3c9acf3defa0a6148d40e5f5cebeb5dcbb908",
+      "snapshot_sha256": "96690f62ac0fba8a4f0aeac22f2370853bc02b96fb3efd1b8fc3a39398bf302b",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 5,
+        "units": 4,
+        "candidates": 4,
+        "main_list": 4,
+        "filtered": 0,
+        "demoted": 4
+      },
+      "sites": [
+        {
+          "path": "dsvw.py",
+          "line": 31,
+          "basis": "documented_with_exploit",
+          "reported": true,
+          "tools": [
+            "bandit",
+            "semgrep"
+          ],
+          "priority": "P3",
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": []
+        }
+      ],
+      "unlabeled": {
+        "total": 3,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 3,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "bandit": {
+          "candidates": 4,
+          "only": 3
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      }
+    },
+    {
+      "id": "nodejs-goof",
+      "source": "github:snyk-labs/nodejs-goof@add14ba59e98240d9e00a235dd7d42cd61ae9912",
+      "snapshot_sha256": "154eab51d9394b6f87b62974f4c30523bafa2296be4cc5a7dd374c25c82d80ca",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "routes/index.js",
+          "line": 174,
+          "basis": "documented_category_located_by_reading",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      }
+    }
+  ]
+}

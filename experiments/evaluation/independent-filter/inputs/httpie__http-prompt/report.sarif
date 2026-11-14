@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "5bc9642b-6872-4110-bc23-0e70b6b88dee"
+      },
+      "results": [
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http_prompt/execution.py"
+                },
+                "region": {
+                  "startLine": 310,
+                  "startColumn": 26,
+                  "endLine": 310,
+                  "endColumn": 73
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "db992be08f42b759dbeb7b41d8503e906629187d3f3c3536ace43d4f11af6cc7",
+              "unitKey": "81749391fade1da7bf787a36212610f48b66bd315e56e75e65e012e29357a839",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http_prompt/execution.py"
+                },
+                "region": {
+                  "startLine": 536,
+                  "startColumn": 13,
+                  "endLine": 536,
+                  "endColumn": 48
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "aff095db9b0aa8ac33481c4e8df4d49c13e4712cfde2ed60568efdbbb97edb1d",
+              "unitKey": "31698df3f4bd44c62a57b2f0de8376d8a6910cb6ed17025458de8960765c29ba",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/test_installation.py"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 9,
+                  "endLine": 16,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "8331876396f471a8c1979e9df1d31131b166e61e5be8cff0869e2fc24957bd26",
+              "unitKey": "8e3db7e13f3a7f6d152965b489c16a23713d6219c99da15102432ae8c9b25b85",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "5bc9642b-6872-4110-bc23-0e70b6b88dee"
+      },
+      "results": [
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'Popen' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http_prompt/execution.py"
+                },
+                "region": {
+                  "startLine": 310,
+                  "startColumn": 43,
+                  "endLine": 310,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "db992be08f42b759dbeb7b41d8503e906629187d3f3c3536ace43d4f11af6cc7",
+              "unitKey": "81749391fade1da7bf787a36212610f48b66bd315e56e75e65e012e29357a839",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'Popen' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http_prompt/execution.py"
+                },
+                "region": {
+                  "startLine": 536,
+                  "startColumn": 30,
+                  "endLine": 536,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "aff095db9b0aa8ac33481c4e8df4d49c13e4712cfde2ed60568efdbbb97edb1d",
+              "unitKey": "31698df3f4bd44c62a57b2f0de8376d8a6910cb6ed17025458de8960765c29ba",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

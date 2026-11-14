@@ -1,0 +1,1335 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "288f00ee-b49f-40fd-bead-6d958b321265"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 71,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 109,
+                            "startLine": 72,
+                            "startColumn": 105
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(path i ... : path)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 110,
+                            "startLine": 72,
+                            "startColumn": 71
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 71,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 76,
+                            "startLine": 72,
+                            "startColumn": 72
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 109,
+                            "startLine": 72,
+                            "startColumn": 105
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(path i ... : path)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 110,
+                            "startLine": 72,
+                            "startColumn": 71
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js"
+                },
+                "region": {
+                  "startLine": 72,
+                  "startColumn": 14,
+                  "endColumn": 110
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 71,
+                  "startColumn": 32
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 87,
+                  "endColumn": 5,
+                  "startLine": 77,
+                  "startColumn": 17
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 71,
+                  "startColumn": 32
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 110,
+                  "startLine": 72,
+                  "startColumn": 71
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "c34bedf76d555ff1:1",
+            "primaryLocationStartColumnFingerprint": "12"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "b8f369ceb9d0ae0e2b0d572f1f808c99c3efea764c9b402b4442de32bd9accc2",
+              "unitKey": "cc4079cf5887a02942b6f7cbf8f99e3d84e788d3f41672699fd2cf819ab098a2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This formatted string which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 111,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 76,
+                            "startLine": 119,
+                            "startColumn": 69
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "Object. ... format)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 84,
+                            "startLine": 119,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 159,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 160,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "acc [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 49,
+                            "startLine": 160,
+                            "startColumn": 46
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "acc [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 164,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "Object. ... \\t}, []) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 165,
+                            "endColumn": 8,
+                            "startLine": 160,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strings [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 15,
+                            "startLine": 160,
+                            "startColumn": 8
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strings [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 167,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strings.join(',')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 30,
+                            "startLine": 167,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "`{${str ... ',')}}`"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 167,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "stringi ... ormat))"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 85,
+                            "startLine": 119,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 111,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 76,
+                            "startLine": 119,
+                            "startColumn": 69
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "Object. ... format)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 84,
+                            "startLine": 119,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 159,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 160,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "format"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 161,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "val"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 161,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "val"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 74,
+                            "startLine": 162,
+                            "startColumn": 71
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 17,
+                            "startLine": 162,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 163,
+                            "startColumn": 28
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "`\\\\\"${k ... Value}`"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 163,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] acc [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 6,
+                            "startLine": 163,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "acc [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 164,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "Object. ... \\t}, []) [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 165,
+                            "endColumn": 8,
+                            "startLine": 160,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strings [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 15,
+                            "startLine": 160,
+                            "startColumn": 8
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strings [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 167,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "strings.join(',')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 30,
+                            "startLine": 167,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "`{${str ... ',')}}`"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 167,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "stringi ... ormat))"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 85,
+                            "startLine": 119,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js"
+                },
+                "region": {
+                  "startLine": 119,
+                  "startColumn": 3,
+                  "endColumn": 85
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 43,
+                  "startLine": 111,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 149,
+                  "endColumn": 5,
+                  "startLine": 127,
+                  "startColumn": 17
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 43,
+                  "startLine": 111,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "ac022dd5cd1a1a1f:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "443200884c727126a351ce05af40b5845ff268a8f5d5c1bb93a1846cb6b1c81e",
+              "unitKey": "666bc22a338bc09f752a2f4e199222578e50fd4a7d59bda98cafab020c9c2574",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This formatted string which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 111,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 121,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path in ...  : path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 121,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 111,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 7,
+                            "startLine": 121,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 121,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path in ...  : path"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 121,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/imagickal.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js"
+                },
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 3,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 111,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 149,
+                  "endColumn": 5,
+                  "startLine": 127,
+                  "startColumn": 17
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 111,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "cd0c47ed3e42bd55:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "443200884c727126a351ce05af40b5845ff268a8f5d5c1bb93a1846cb6b1c81e",
+              "unitKey": "666bc22a338bc09f752a2f4e199222578e50fd4a7d59bda98cafab020c9c2574",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "288f00ee-b49f-40fd-bead-6d958b321265"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/commands.js"
+                },
+                "region": {
+                  "startLine": 276,
+                  "startColumn": 17,
+                  "endLine": 282,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "066cbde57dc9d0a9a6b1150b3e6b79e0f206478d3e666e165ba5f130ab32dd03",
+              "unitKey": "a4d614d01ddc444f1c9a0847eb9f5ef6ab9242036dc8183054d2eecdcd3406af",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js"
+                },
+                "region": {
+                  "startLine": 77,
+                  "startColumn": 17,
+                  "endLine": 87,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "b8f369ceb9d0ae0e2b0d572f1f808c99c3efea764c9b402b4442de32bd9accc2",
+              "unitKey": "cc4079cf5887a02942b6f7cbf8f99e3d84e788d3f41672699fd2cf819ab098a2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/imagickal.js"
+                },
+                "region": {
+                  "startLine": 127,
+                  "startColumn": 17,
+                  "endLine": 149,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "443200884c727126a351ce05af40b5845ff268a8f5d5c1bb93a1846cb6b1c81e",
+              "unitKey": "666bc22a338bc09f752a2f4e199222578e50fd4a7d59bda98cafab020c9c2574",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

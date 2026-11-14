@@ -1,0 +1,203 @@
+{
+  "scan_id": "cae87a69-452e-4367-af8c-1d893a16763a",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "d4a7995c-8bcd-4a92-b37d-d80bd98a3560",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:TheR1D/shell_gpt@a082bd5327ce0c4ef5a0284d9060e833be9444a6",
+    "sha256": "05e270b41ec5c6738cc5d81a894f2be8928249833a24bd45e2252aec46ff65a0",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T15:27:00.762216Z",
+  "finished_at": "2026-11-14T15:27:16.676412Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.2643,
+        "raw_findings": 5
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 6.2778,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.4176,
+        "raw_findings": 1
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 5
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 3.2755
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1646
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4147
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 4.8824,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7658
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.1161,
+        "raw_findings": 8
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 5,
+    "semgrep": 1
+  },
+  "stages": {
+    "raw_alerts": 6,
+    "units": 5,
+    "candidates": 5,
+    "main_list": 5,
+    "filtered": 0,
+    "demoted": 5
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 5,
+      "only": 4
+    },
+    "semgrep": {
+      "candidates": 1,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 5,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "a22d4c457d162948359882f377413fb7ff965242d81928ce5093d42ef32e1b3c",
+      "basis": "same_call_site",
+      "path": "sgpt/llm_functions/common/execute_shell.py",
+      "start_line": 20,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "24636b3e-f777-442d-9931-6f4c8a8c28f6"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "d67f1503862fe9315d0db69559e6d37bbc32d52c4c93f5db443778c87e0b0e16",
+      "basis": "same_call_site",
+      "path": "sgpt/llm_functions/mac/apple_script.py",
+      "start_line": 23,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "b6f599c5-0d62-47bb-a780-96c4c2afb5dc"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "e6d9777ac0e10f07a74f92476a2c90d646dc5508273dbc5d0e77173a1c21d1bc",
+      "basis": "same_call_site",
+      "path": "sgpt/utils.py",
+      "start_line": 26,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "b4009e69-8c5d-4408-bff8-ae684551639c"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "29df6296ac79ba781f39e3128581a037338b0fcd815e9a64b5a3eb53ce7bb5d5",
+      "basis": "same_call_site",
+      "path": "sgpt/utils.py",
+      "start_line": 53,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "d3d1be05-a4be-454b-99b0-9061e0ea0d53"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "d77f3942cb1ebb6c6a401065fd9c8845ec2d3765aa69fe3897020239e1b6bc6b",
+      "basis": "same_call_site",
+      "path": "tests/_integration.py",
+      "start_line": 113,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "b6b54c47-34eb-4061-86a1-fd0c806f2d3c"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

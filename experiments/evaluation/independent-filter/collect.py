@@ -1,0 +1,50 @@
+"""Scan every source of sources.json once through the running stack and save its exports.
+
+Calls ../collect_report.py (unchanged) per source, in list order, and appends what it printed
+to collection.log. A source that already has a folder is skipped: nothing is scanned twice.
+
+    python experiments/evaluation/independent-filter/collect.py
+"""
+
+import json
+import subprocess
+import sys
+from datetime import UTC, datetime
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PROFILE = "command-injection-v0.2"
+
+
+def main():
+    sources = json.loads((HERE / "sources.json").read_bytes())
+    log = HERE / "collection.log"
+    for source in sources["sources"]:
+        folder = HERE / "inputs" / source["id"]
+        if folder.exists():
+            continue
+        command = [
+            sys.executable,
+            str(HERE.parent / "collect_report.py"),
+            str(folder),
+            PROFILE,
+            "github",
+            source["owner"],
+            source["repo"],
+            source["commit"],
+        ]
+        done = subprocess.run(
+            command, capture_output=True, text=True, encoding="utf-8", check=False
+        )
+        line = (
+            f"{datetime.now(UTC).isoformat(timespec='seconds')} {source['id']} "
+            f"exit={done.returncode} {(done.stdout + done.stderr).strip()}"
+        )
+        with log.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.write(line + "\n")
+        print(line, flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,285 @@
+{
+  "scan_id": "fca7ee08-9e2c-47aa-ad0b-5fc1358ebff5",
+  "status": "completed",
+  "profile": "command-injection-v0.2",
+  "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "2293c5fb-a579-47aa-b83a-e347ebbe26a3",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:archivy/archivy@bdcdd39ac6cf9f7b3709b984d8be2f0fa898139e",
+    "sha256": "e248eea5d2ca4613286b4f6ea8a4e2b9331b7821c9ca08b83aaec61a90cb1f61",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T15:33:15.622825Z",
+  "finished_at": "2026-11-14T15:33:51.554468Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.3144,
+        "raw_findings": 9
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.029,
+        "raw_findings": 2
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.3663,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 6
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 3.5274
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1644
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4147
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 6.3287,
+        "raw_findings": 4
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7657
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.2723,
+        "raw_findings": 8
+      }
+    },
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 8.2827,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 1.7679,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.4168,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.066,
+        "raw_findings": 0
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 5.5337
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1144
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8164
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 9,
+    "codeql": 2
+  },
+  "stages": {
+    "raw_alerts": 11,
+    "units": 9,
+    "candidates": 7,
+    "main_list": 7,
+    "filtered": 0,
+    "demoted": 4
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 7,
+      "only": 5
+    },
+    "codeql": {
+      "candidates": 2,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 2,
+    "U": 1,
+    "P3": 4,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "b492f448988a696b0c9e5a715c6dada04069d15dcefcee8d00f1af12ab4d2800",
+      "basis": "same_call_site",
+      "path": "archivy/click_web/resources/cmd_exec.py",
+      "start_line": 65,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit",
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "52cafc19-c1ba-4da2-8c54-4057bfee15a3",
+        "4e5c62cd-682d-454e-8eae-3cafaba7af9e"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "982ee2426864815db7582fd45ae0a006f042a9df8cd4a8c3475a2c32685ea696",
+      "basis": "same_call_site",
+      "path": "archivy/search.py",
+      "start_line": 124,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit",
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+      "unit_ids": [
+        "8ccb049b-f7ee-4b2c-a1cb-19feee4c07ef",
+        "f5f47f63-d7eb-4f88-9aca-303aa4ebc73a"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "91bd2cb555a18e5e7db2accbf9ff0db93e6ca8cc39c4f5ddf7adff1a7f6e4d3c",
+      "basis": "unmatched_location",
+      "path": "archivy/data.py",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "bandit"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "73561924-017d-421d-98f8-f08eb0d2d881"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "19a6133b33f70805b60d5ec5414f125cf2ad0a27d6e0e7ebeacfc915430910a4",
+      "basis": "same_call_site",
+      "path": "archivy/data.py",
+      "start_line": 424,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "714a0a35-791e-4123-b0d0-5b59193f9770"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "11e48352fb0d2b8087ffe8fac0cb992db7de4ffa1d6a439a0f9963b82d13c92b",
+      "basis": "same_call_site",
+      "path": "archivy/data.py",
+      "start_line": 426,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "810300c1-1036-44d9-bba6-c591df9030fa"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "72753b92726444ad8b48eb1a02c8b67f49689991f04b6b4b3f9ba0e6b3da2429",
+      "basis": "same_call_site",
+      "path": "archivy/search.py",
+      "start_line": 161,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "776cdb95-4909-4916-97b3-fbf48ff04f68"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "d5f9e6c0ace197486fa65b0e13d9a3c110badfe710d7a3966f4af887a25cb061",
+      "basis": "same_call_site",
+      "path": "archivy/search.py",
+      "start_line": 192,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "a4177e6e-e6c8-4d1d-a3a9-338e4431521e"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

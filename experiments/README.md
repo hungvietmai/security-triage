@@ -44,7 +44,8 @@ và CI (`experiments`, `scan-parity`) sử dụng.
 | `cases/`, `configs/`, `rules/`, `batches/` | Manifest ca, cấu hình scanner, rule Semgrep (`rules/batch-01/` và `rules/python-upstream/` thuộc profile), danh sách đợt |
 | `locators/`, `mappings/`, `policy/` | Định vị sink JS bằng Babel, rule-claims v1/v2, priority v0 và v0.1 ([PRIORITY_V0_1.md](policy/PRIORITY_V0_1.md) 🔒, được profile của ứng dụng ghim) |
 | [RECONCILIATION_V0.md](RECONCILIATION_V0.md), [REVIEW_WORKFLOW.md](REVIEW_WORKFLOW.md), `build_review.py`, `annotate_claims.py` | Đặc tả bộ gộp và quy trình rà |
-| `build_profile.py` | Sinh `profiles/command-injection-v0.1/` |
+| `build_profile.py` | Sinh hash và policy đã biên dịch cho `profiles/command-injection-v0.1/` và `profiles/command-injection-v0.2/` |
+| [evaluation/](evaluation/README.md) | Đánh giá trước–sau của quy trình sản phẩm (phát hiện rộng, gộp, gạn) từ báo cáo do ứng dụng xuất: dữ liệu phát triển, ba đợt kiểm tra trên mã chưa từng xem (giao thức băm trước khi quét), và bộ chấm cho `pairs-v1` (chưa chạy) |
 | [reports/](reports/), `fixtures/`, `diagnostics/`, `labels/`, `taxonomy/` | Báo cáo từng đợt phát triển, fixture tổng hợp, script chẩn đoán, nhãn OWASP CWE-78, phân loại nguyên nhân gốc |
 | [inventory/](inventory/), [pairs/](pairs/), `schemas/`, `make_split*.py`, `make_pair_manifests.py`, `lock_pair_sources.py`, `patch_hunks.py`, `known_locations.py`, `fetch_cwe.py`, `audit_pair_inventory.py` | Kho cặp lỗi/vá, split, manifest, khóa nguồn, vị trí lỗi (pairs-v1; chưa quét) |
 | `Dockerfile` | Image thực nghiệm (Semgrep và CodeQL đã ghim) |
@@ -119,8 +120,14 @@ Output gồm archive và source đã giải nén, case/config đã ghim, log phi
 `profiles/command-injection-v0.1/profile.json` trỏ tới config, rule, locator, rule-claims và
 policy trong thư mục này, kèm SHA-256 của từng file. File sinh ra duy nhất là `priority-v0.1.json`.
 
-Sau khi đổi một file đã được ghim, chạy `python experiments/build_profile.py` rồi commit kết
-quả; CI (`test_profile.py`) sẽ fail nếu profile lỗi thời. Worker từ chối khởi động nếu hash
+`profiles/command-injection-v0.2/` là profile sản phẩm thêm Bandit và ESLint vào bước sàng lọc.
+Cấu hình ngôn ngữ, chính sách v0.2, đặc tả và `rule-claims-v3.json` nằm ngay trong thư mục
+profile; nó dùng lại các rule Semgrep và bộ định vị sink ở thư mục này, và ghim thêm
+`tools/bandit/bandit.ini`, `tools/eslint/eslint.config.mjs` và `tools/eslint/package-lock.json`.
+CLI `run_pilot.py` chưa chạy Bandit hay ESLint.
+
+Sau khi đổi một file đã được ghim, chạy `python experiments/build_profile.py` (sinh lại cả hai
+profile ưu tiên) rồi commit kết quả; CI (`test_profile.py`) sẽ fail nếu profile lỗi thời. Worker từ chối khởi động nếu hash
 hoặc phiên bản scanner lệch.
 
 `profiles/path-traversal-v0.2/profile.json` (viết tay, loại `safety-evidence`) ghim pack CodeQL
@@ -136,7 +143,8 @@ Một file bị coi là khóa khi SHA-256 hiện tại của nó xuất hiện t
 - `*.sha256`: `FREEZE_*`, `LOCK`, `EXECUTION_LOCK`, `LABELS_LOCK`, `RESULTS_LOCK`,
   `PATHS_LOCK`, `REVIEW_LOCK`, `SELF_REVIEW_LOCK`, `INPUTS_LOCK`, `EXPECTATIONS`;
 - `FREEZE_v0.3_dual.json`;
-- `profiles/command-injection-v0.1/profile.json` và `profiles/path-traversal-v0.2/profile.json`.
+- `profiles/command-injection-v0.1/profile.json`, `profiles/command-injection-v0.2/profile.json`
+  và `profiles/path-traversal-v0.2/profile.json`.
 
 Sửa một file như vậy sẽ phá kiểm tra khóa, hoặc khiến worker từ chối khởi động. Kiểm tra trước khi sửa:
 

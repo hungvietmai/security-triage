@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "078510a9-d4b9-46f9-9cc7-012f1dc76ae7"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/monitor/run.js"
+                },
+                "region": {
+                  "startLine": 346,
+                  "startColumn": 9,
+                  "endLine": 346,
+                  "endColumn": 54
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "065d3c38f4438b865bfc25fb466e7a1d9521c351faf29df674d521450a2c5a97",
+              "unitKey": "065d3c38f4438b865bfc25fb466e7a1d9521c351faf29df674d521450a2c5a97",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/monitor/run.js"
+                },
+                "region": {
+                  "startLine": 430,
+                  "startColumn": 36,
+                  "endLine": 430,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "a096c9ff49fd09c05857b4f3303a30dcf6f0be2336c5d1e359691c1db5b24d98",
+              "unitKey": "a096c9ff49fd09c05857b4f3303a30dcf6f0be2336c5d1e359691c1db5b24d98",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/monitor/run.js"
+                },
+                "region": {
+                  "startLine": 434,
+                  "startColumn": 9,
+                  "endLine": 434,
+                  "endColumn": 52
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "efd3758a9e7b5dfc1be2648bc79744028c9441ad9ec2c4ecc7afdf00e569c0da",
+              "unitKey": "efd3758a9e7b5dfc1be2648bc79744028c9441ad9ec2c4ecc7afdf00e569c0da",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/version.js"
+                },
+                "region": {
+                  "startLine": 79,
+                  "startColumn": 5,
+                  "endLine": 85,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "5bb2cc8994961ad5a37d2bf2d73228a3ad64895809f0f5b4db8ebd7b99862f99",
+              "unitKey": "87194fe7f3f40bffed083ec25e760be682888ac61be66ac4782cff33632bd4ca",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

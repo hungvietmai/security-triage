@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "33242370-0bb4-48e1-90cd-5f416dc1325a"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 26,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 48,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "build/umount.js"
+                },
+                "region": {
+                  "startLine": 48,
+                  "startColumn": 12,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 26,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 69,
+                  "startLine": 52,
+                  "startColumn": 10
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 26,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 25,
+                  "startLine": 48,
+                  "startColumn": 19
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "b717aa29240706:1",
+            "primaryLocationStartColumnFingerprint": "9"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "82057124d0edde7212d760006a6d4fbf85c9c999b7613a9478297546afe36146",
+              "unitKey": "82057124d0edde7212d760006a6d4fbf85c9c999b7613a9478297546afe36146",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 26,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 48,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 9,
+                            "startLine": 48,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 52,
+                            "startColumn": 52
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 26,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 48,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 9,
+                            "startLine": 48,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 50,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 50,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "device"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 52,
+                            "startColumn": 52
+                          },
+                          "artifactLocation": {
+                            "uri": "build/umount.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "build/umount.js"
+                },
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 29,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 26,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 69,
+                  "startLine": 52,
+                  "startColumn": 10
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 26,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 58,
+                  "startLine": 52,
+                  "startColumn": 52
+                },
+                "artifactLocation": {
+                  "uri": "build/umount.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "8f479bcd275ce7d3:1",
+            "primaryLocationStartColumnFingerprint": "26"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c33c32cc0970d9c9ffffb71c8986bdac53090517b56548783304831677a8ab8c",
+              "unitKey": "c33c32cc0970d9c9ffffb71c8986bdac53090517b56548783304831677a8ab8c",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

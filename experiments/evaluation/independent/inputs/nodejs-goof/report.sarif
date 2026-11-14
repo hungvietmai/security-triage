@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "533190b6-dbdf-41e2-ad74-21a664772ca1"
+      },
+      "results": [
+        {
+          "ruleId": "js/command-line-injection",
+          "message": {
+            "text": "This command line depends on a [user-provided value](1)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "req.body"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 22,
+                            "startLine": 168,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "item"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 168,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "item"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 171,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "item.match(imgRegex)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 35,
+                            "startLine": 171,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 171,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 174,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "'identify ' + url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 174,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "routes/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "routes/index.js"
+                },
+                "region": {
+                  "startLine": 174,
+                  "startColumn": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "user-provided value"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 22,
+                  "startLine": 168,
+                  "startColumn": 14
+                },
+                "artifactLocation": {
+                  "uri": "routes/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 22,
+                  "startLine": 168,
+                  "startColumn": 14
+                },
+                "artifactLocation": {
+                  "uri": "routes/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "991e9a0753e9f429:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "27230b7880663e6800c460a43052599ba5b6ed808d79d07f0fc390f6e5f19f86",
+              "unitKey": "6b2f501b39f5f5318b0d998070d9686f6f256ac33a34cf02751248e168e160d3",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "533190b6-dbdf-41e2-ad74-21a664772ca1"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "routes/index.js"
+                },
+                "region": {
+                  "startLine": 174,
+                  "startColumn": 5,
+                  "endLine": 179,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "27230b7880663e6800c460a43052599ba5b6ed808d79d07f0fc390f6e5f19f86",
+              "unitKey": "6b2f501b39f5f5318b0d998070d9686f6f256ac33a34cf02751248e168e160d3",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

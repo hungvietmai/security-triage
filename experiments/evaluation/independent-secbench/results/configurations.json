@@ -1,0 +1,3305 @@
+{
+  "summary": {
+    "documented_sites": 52,
+    "reported": 35,
+    "in_first_tiers": 30,
+    "filtered": 0,
+    "missed": 17
+  },
+  "sources": [
+    {
+      "id": "aaptjs_1.3.1",
+      "source": "npm:aaptjs@1.3.1",
+      "snapshot_sha256": "360b61371ad123e48a50bc4f5d3e34a3d94cd71108cf211249952e8e86e6a93b",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 18,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 14.6,
+        "steps": {
+          "codeql": 7.2,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "adb-driver_0.1.8",
+      "source": "npm:adb-driver@0.1.8",
+      "snapshot_sha256": "5ef5e3ee07d6a3b2fb947a83ddd81bbaae035a480a6f23ec155ee3be1304be95",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "build/AdbDriver.js",
+          "line": 26,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 1,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 15.3,
+        "steps": {
+          "codeql": 7.2,
+          "eslint": 0.4,
+          "semgrep": 1.4,
+          "sink-locator": 1.0,
+          "codeql-create": 5.1
+        }
+      }
+    },
+    {
+      "id": "apiconnect-cli-plugins_6.0.2",
+      "source": "npm:apiconnect-cli-plugins@6.0.2",
+      "snapshot_sha256": "f78ec7e4bad60be44cd9b63968dab6f35b9b77b6f1dd54192cc64dc69038e616",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/plugin-loader.js",
+          "line": 181,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            181
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 15.6,
+        "steps": {
+          "codeql": 8.1,
+          "eslint": 0.5,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.8
+        }
+      }
+    },
+    {
+      "id": "buns_1.1.6",
+      "source": "npm:buns@1.1.6",
+      "snapshot_sha256": "dbd47de343df0b7bb221cc4c4e959a7718bc006b9a4b7e549311d538b93ef4e8",
+      "scan_status": "failed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": null,
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 678,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 15.6,
+        "steps": {}
+      }
+    },
+    {
+      "id": "compass-compile_0.0.1",
+      "source": "npm:compass-compile@0.0.1",
+      "snapshot_sha256": "06c877fa9526242cb5b8f975db33bb873f8736a0a0b84d034da638b8f2fb827e",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 1
+      },
+      "sites": [
+        {
+          "path": "lib/compass.js",
+          "line": 25,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint"
+          ],
+          "priority": "P3",
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            25
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 13.9,
+        "steps": {
+          "codeql": 7.0,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "corenlp-js-interface_1.0.3",
+      "source": "npm:corenlp-js-interface@1.0.3",
+      "snapshot_sha256": null,
+      "scan_status": "failed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": null,
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 5,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 0.4,
+        "steps": {}
+      }
+    },
+    {
+      "id": "corenlp-js-prefab_1.0.1",
+      "source": "npm:corenlp-js-prefab@1.0.1",
+      "snapshot_sha256": null,
+      "scan_status": "failed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": null,
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 10,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 0.4,
+        "steps": {}
+      }
+    },
+    {
+      "id": "curljs_0.1.2",
+      "source": "npm:curljs@0.1.2",
+      "snapshot_sha256": "520a643e2d9e4580937b8e02b6e9a3415a921f84f6fe153152b218de7600e6f9",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 4,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 37,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            37
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "deferred-exec_0.3.1",
+      "source": "npm:deferred-exec@0.3.1",
+      "snapshot_sha256": "729f74d03bd83f2d4834894bbb20676cbbcdaf755851c4de8534a6b8bc555421",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 3,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/deferred-exec.js",
+          "line": 42,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            42,
+            46
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 1,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 2,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.2,
+        "steps": {
+          "codeql": 7.1,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "effect_1.0.4",
+      "source": "npm:effect@1.0.4",
+      "snapshot_sha256": null,
+      "scan_status": "failed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": null,
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "helper.js",
+          "line": 24,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 0.7,
+        "steps": {}
+      }
+    },
+    {
+      "id": "enpeem_2.2.0",
+      "source": "npm:enpeem@2.2.0",
+      "snapshot_sha256": "b00042a9479088849871c29cbe1b13288ab0877955810155ce5205aa767a3a46",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 1
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 71,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            114
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 1,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "eslint-fixer_0.1.5",
+      "source": "npm:eslint-fixer@0.1.5",
+      "snapshot_sha256": "6f0ba6044aafe95e731deb193d5b8f4b15d04f508a241e891efe3ff417a454b1",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 3,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 24,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            24
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.7,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "ffmpeg-sdk_0.0.5",
+      "source": "npm:ffmpeg-sdk@0.0.5",
+      "snapshot_sha256": "c0f084e107cee02db50408e07e71fbfb85cb3447f2584e433aaf4e8d6bf8837c",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 5,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 9,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            9
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "source": "npm:ffmpegdotjs@0.0.4",
+      "snapshot_sha256": "3bd777f2c837290b80c2739f75afce90fbec5505931ada174465a311d02e948b",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 59,
+        "units": 11,
+        "candidates": 11,
+        "main_list": 11,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 191,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            8,
+            27,
+            46,
+            65,
+            83,
+            101,
+            119,
+            137,
+            155,
+            173,
+            191
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 10,
+        "main_list_by_priority": {
+          "P1": 10,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 11,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 11,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 11,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.7,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "freespace_1.0.4",
+      "source": "npm:freespace@1.0.4",
+      "snapshot_sha256": "8601f9ca5f575d7b0f0afa3a15df584747b769f3baf4dbf4992c19336b3bd64c",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 9,
+        "units": 4,
+        "candidates": 4,
+        "main_list": 4,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 51,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            49,
+            51,
+            65,
+            67
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 3,
+        "main_list_by_priority": {
+          "P1": 2,
+          "P2": 1,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 3,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 2,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 4,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "geojson2kml_0.1.1",
+      "source": "npm:geojson2kml@0.1.1",
+      "snapshot_sha256": "3459afb1d498e56d534befe432b5923b93e177c17ed54d55a55f408e3a467231",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 6,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            6
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.2,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "git-add-remote_1.0.0",
+      "source": "npm:git-add-remote@1.0.0",
+      "snapshot_sha256": "1254ab1b84a8ad66b5a001cec4e476bfe6288b07d0668b941888203ef3e66f87",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 6,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 21,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            21,
+            31
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 1,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 2,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "git-dummy-commit_1.3.0",
+      "source": "npm:git-dummy-commit@1.3.0",
+      "snapshot_sha256": "2f541ef54277c474310431c7d735879229208d99fd6779d21e319c75bd689d21",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 4,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 37,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "semgrep"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            37
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.6,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "source": "npm:git-lib@1.6.0",
+      "snapshot_sha256": "39e81ba2682bae6c8ad8592c1f8bb8b354cdd5f414b42e491982520cde0a2aef",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 12,
+        "units": 6,
+        "candidates": 6,
+        "main_list": 6,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "git.js",
+          "line": 13,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            13,
+            27,
+            126,
+            223,
+            236,
+            249
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 5,
+        "main_list_by_priority": {
+          "P1": 5,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 6,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 6,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 15.1,
+        "steps": {
+          "codeql": 7.7,
+          "eslint": 0.5,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "git-tags-remote_1.0.2",
+      "source": "npm:git-tags-remote@1.0.2",
+      "snapshot_sha256": "e78cf371e1dc64ff979d9f28c7b4bcf55d7d3f0772c33c827d7592b0f086f623",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 3,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 5,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            5
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.8,
+        "steps": {
+          "codeql": 7.6,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "git_0.1.5",
+      "source": "npm:git@0.1.5",
+      "snapshot_sha256": "4cf4d76a463bfe9751850f96223d21b3a02cd6001fcf802fd2dace10c48ffccc",
+      "scan_status": "partial",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 2
+      },
+      "sites": [
+        {
+          "path": "lib/git/git.js",
+          "line": 232,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint"
+          ],
+          "priority": "P3",
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            232
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 1,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 2,
+          "only": 2
+        }
+      },
+      "seconds": {
+        "wall": 17.0,
+        "steps": {
+          "codeql": 8.5,
+          "eslint": 0.8,
+          "semgrep": 1.3,
+          "sink-locator": 1.1,
+          "codeql-create": 5.6
+        }
+      }
+    },
+    {
+      "id": "gitblame_0.1.1",
+      "source": "npm:gitblame@0.1.1",
+      "snapshot_sha256": "610835007f05a9f730dda9ed2ed4ef10109c8b8e4751815e537f44a1caaf761e",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/gitblame.js",
+          "line": 15,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            15
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.4,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "gity_1.0.5",
+      "source": "npm:gity@1.0.5",
+      "snapshot_sha256": null,
+      "scan_status": "failed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": null,
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 90,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 0.3,
+        "steps": {}
+      }
+    },
+    {
+      "id": "google-cloudstorage-commands_0.0.1",
+      "source": "npm:google-cloudstorage-commands@0.0.1",
+      "snapshot_sha256": "1e1a882302a7341c9b6558535115bcd44045783ba8012e049266c611aa2b00af",
+      "scan_status": "partial",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 7,
+        "units": 3,
+        "candidates": 3,
+        "main_list": 3,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 11,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            11,
+            22,
+            39
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 2,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 2,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 3,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 3,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.4,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "heroku-env_0.2.0",
+      "source": "npm:heroku-env@0.2.0",
+      "snapshot_sha256": "2f01c045d429cdcca225ed4ed8d93bc3f44ace60f87d2c8e04be1ae94bd7bdd0",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/get.js",
+          "line": 3,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            3
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "imagickal_5.0.1",
+      "source": "npm:imagickal@5.0.1",
+      "snapshot_sha256": "088f006d9ae28d5d5a82a686544953e070e9fbc1f55739ff9780c6d9ad608f18",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 6,
+        "units": 3,
+        "candidates": 3,
+        "main_list": 3,
+        "filtered": 0,
+        "demoted": 1
+      },
+      "sites": [
+        {
+          "path": "lib/imagickal.js",
+          "line": 127,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            77,
+            127
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 2,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 1,
+          "U": 0,
+          "P3": 1,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 2,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 3,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 15.3,
+        "steps": {
+          "codeql": 8.0,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "kill-process-by-name_1.0.5",
+      "source": "npm:kill-process-by-name@1.0.5",
+      "snapshot_sha256": "1b74555a4fda0378456598c88e64109beda8a3995f70e623f30971abd6890e46",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 4,
+        "units": 4,
+        "candidates": 4,
+        "main_list": 4,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 12,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 4,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 4,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 2,
+          "only": 2
+        },
+        "eslint": {
+          "candidates": 2,
+          "only": 2
+        }
+      },
+      "seconds": {
+        "wall": 14.0,
+        "steps": {
+          "codeql": 7.0,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "killing_1.0.6",
+      "source": "npm:killing@1.0.6",
+      "snapshot_sha256": "f1ad7d302581fb7119c26681b7ad9ccf21a452c8df9c7b17d8a6109f756c7d0a",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 3,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/killing.js",
+          "line": 35,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            35
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "lsof_0.1.0",
+      "source": "npm:lsof@0.1.0",
+      "snapshot_sha256": "ca8b6229528efecd6b47f6b67a98c22c90aed6122d005f0d0d4da49117812ec5",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 9,
+        "units": 3,
+        "candidates": 3,
+        "main_list": 3,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/lsof.js",
+          "line": 37,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            9,
+            37,
+            71
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 2,
+        "main_list_by_priority": {
+          "P1": 2,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 3,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 3,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 3,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.4,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "lycwed-spritesheetjs_1.2.5",
+      "source": "npm:lycwed-spritesheetjs@1.2.5",
+      "snapshot_sha256": "6f25bdb9ef863f11a071f58d8e947a590b1ac67a2dfcb0bebd14eb0041d787ee",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/generator.js",
+          "line": 85,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 15.2,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.5,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.7
+        }
+      }
+    },
+    {
+      "id": "monorepo-build_0.1.9",
+      "source": "npm:monorepo-build@0.1.9",
+      "snapshot_sha256": "231a903d1b52a185705d10d1e751868188da871e76be5f87384dacf8be2465eb",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 6,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/util/exec.js",
+          "line": 4,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            4
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 1,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 2,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.6,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.7
+        }
+      }
+    },
+    {
+      "id": "node-df_0.1.4",
+      "source": "npm:node-df@0.1.4",
+      "snapshot_sha256": "2a46eb115e83ea57c76b28d0e7d388313c77e8945dafac81cbc096c4347c8364",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 41,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            41
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.6,
+        "steps": {
+          "codeql": 7.5,
+          "eslint": 0.5,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "node-key-sender_1.0.11",
+      "source": "npm:node-key-sender@1.0.11",
+      "snapshot_sha256": "24602a99c97a4bbe212059a761e418ad3f419484cb65fa2d4d5ccf57f64fe08f",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 6,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "key-sender.js",
+          "line": 117,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            117
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.9,
+        "steps": {
+          "codeql": 8.0,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "node-latex-pdf_0.0.2",
+      "source": "npm:node-latex-pdf@0.0.2",
+      "snapshot_sha256": "5898cf3c29927e55e98758085581a475cee76ce565604c486ce185b4cd75aebe",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 8,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "node-latex-pdf.js",
+          "line": 10,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            10,
+            15
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 1,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 2,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 2,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.4,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "node-mpv_0.12.2",
+      "source": "npm:node-mpv@0.12.2",
+      "snapshot_sha256": "caefa0155bc5e61c337567c329418d24854dd3affa3240065e6e979466fb4298",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/mpv/mpv.js",
+          "line": 45,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.0,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "node-ps_0.0.2",
+      "source": "npm:node-ps@0.0.2",
+      "snapshot_sha256": "c7fbf3de832ec733bd2296e853fc3272c4959d8399763034c6f73e2c63ef0592",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 72,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            72
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.5,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "node-unrar_0.1.0",
+      "source": "npm:node-unrar@0.1.0",
+      "snapshot_sha256": "53b3582fa5be1feb6c3dbe81d5412acbcd049d711b0778e467a7362fcda63eb7",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 23,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 2,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 2,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 1
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "npm-git-publish_0.2.4-beta",
+      "source": "npm:npm-git-publish@0.2.4-beta",
+      "snapshot_sha256": "9ad4831414058c24f3b49203f743109fb13da5ad563ae058555324ea17c92545",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 9,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/publish.js",
+          "line": 92,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            92,
+            198
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 1,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 2,
+          "only": 1
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 15.7,
+        "steps": {
+          "codeql": 8.2,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.8
+        }
+      }
+    },
+    {
+      "id": "npm-help_1.0.0",
+      "source": "npm:npm-help@1.0.0",
+      "snapshot_sha256": "b5efafd9f8b3bf63cd579509796c9144fba8a141acb8708fe42d40ffb86ee739",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 13,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            13
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.2,
+        "steps": {
+          "codeql": 7.1,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "onion-oled-js_0.0.2",
+      "source": "npm:onion-oled-js@0.0.2",
+      "snapshot_sha256": "df12d45d6c08eecc20d6742f061fa96aaa9a2f6c58c7c78b57d8ded225069a4f",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "src/oled-exp.js",
+          "line": 91,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 14.0,
+        "steps": {
+          "codeql": 6.9,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "port-killer_1.0.1",
+      "source": "npm:port-killer@1.0.1",
+      "snapshot_sha256": "693b70ca7f38ecd27b26d230b828eb595264f293dbec5c9f21cfeb4f66f160e2",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 19,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            19
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.3,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.4
+        }
+      }
+    },
+    {
+      "id": "portkiller_1.0.2",
+      "source": "npm:portkiller@1.0.2",
+      "snapshot_sha256": "0dac90cc0089daaa63adcd2880a3551571c3e5d68420f2309efb656b92a2f0ca",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 3,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 1
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 10,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            10,
+            22
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 1,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 2,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.7,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "ps-kill_1.0.0",
+      "source": "npm:ps-kill@1.0.0",
+      "snapshot_sha256": "3ecd5a11b30808fa0ac423a62b45d0df0fb1ff51de25289c457586277ca64b38",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 8,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            8
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.4,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "ps-visitor_0.0.2",
+      "source": "npm:ps-visitor@0.0.2",
+      "snapshot_sha256": "a34d37dc95d358efe6d20ccd28dcd94a746013008f267f5fad30d3a68362b290",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 4,
+        "units": 4,
+        "candidates": 4,
+        "main_list": 4,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 404,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 4,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 4,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 4,
+          "only": 4
+        }
+      },
+      "seconds": {
+        "wall": 15.2,
+        "steps": {
+          "codeql": 7.9,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "psnode_0.0.1",
+      "source": "npm:psnode@0.0.1",
+      "snapshot_sha256": "db0f05e10124adefe5d23f2c3057ab624242396a4a86cae104fb185301aec7b4",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 4,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/index.js",
+          "line": 59,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint",
+            "semgrep"
+          ],
+          "priority": "P2",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            59
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        },
+        "semgrep": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.7,
+        "steps": {
+          "codeql": 7.5,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "roar-pidusage_1.1.6",
+      "source": "npm:roar-pidusage@1.1.6",
+      "snapshot_sha256": "4f22ec5a3344235822fad73cab93e6540e7955836b349f31f7d217d7b9c0e45b",
+      "scan_status": "partial",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 2
+      },
+      "sites": [
+        {
+          "path": "lib/stats.js",
+          "line": 103,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint"
+          ],
+          "priority": "P3",
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            103
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 1,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 2,
+          "only": 2
+        }
+      },
+      "seconds": {
+        "wall": 14.8,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "theme-core_0.2.5",
+      "source": "npm:theme-core@0.2.5",
+      "snapshot_sha256": "410af871df638bf9768808790e51daf840ba7bbf458d346398d7b14e0114e420",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 1
+      },
+      "sites": [
+        {
+          "path": "lib/utils.js",
+          "line": 16,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint"
+          ],
+          "priority": "P3",
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            16
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.4,
+        "steps": {
+          "codeql": 7.3,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    },
+    {
+      "id": "ts-process-promises_1.0.2",
+      "source": "npm:ts-process-promises@1.0.2",
+      "snapshot_sha256": "de415395b45e65793c36e0a9a5931db99bd340950381cafbbef6582f22691591",
+      "scan_status": "failed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": null,
+      "stages": {
+        "raw_alerts": 0,
+        "units": 0,
+        "candidates": 0,
+        "main_list": 0,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "lib/process-promises.js",
+          "line": 45,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {},
+      "seconds": {
+        "wall": 14.7,
+        "steps": {}
+      }
+    },
+    {
+      "id": "umount_1.1.6",
+      "source": "npm:umount@1.1.6",
+      "snapshot_sha256": "841495f6cc72f65531cdd6e5bd046456186a773b57a8a120c48808f116fcdc3a",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 2,
+        "candidates": 2,
+        "main_list": 2,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "build/umount.js",
+          "line": 52,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 2,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 2,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 2,
+          "only": 2
+        }
+      },
+      "seconds": {
+        "wall": 14.9,
+        "steps": {
+          "codeql": 7.5,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.8
+        }
+      }
+    },
+    {
+      "id": "wc-cmd_1.0.9",
+      "source": "npm:wc-cmd@1.0.9",
+      "snapshot_sha256": "d419675187a45c20d69c1d63c55fb0f861cf6ac24d6441c5f1ddbd150b350b17",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 1
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 49,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "eslint"
+          ],
+          "priority": "P3",
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            49
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "eslint": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 14.5,
+        "steps": {
+          "codeql": 7.4,
+          "eslint": 0.4,
+          "semgrep": 1.3,
+          "sink-locator": 1.0,
+          "codeql-create": 4.5
+        }
+      }
+    },
+    {
+      "id": "wincred_1.0.2",
+      "source": "npm:wincred@1.0.2",
+      "snapshot_sha256": "37530b1a5ebafd6243e30973ff02327c0a7c8a91312cc5bc89ff4db346743409",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 1,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 16,
+          "basis": "dataset_published_sink",
+          "reported": false,
+          "tools": [],
+          "priority": null,
+          "in_first_tiers": false,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": []
+        }
+      ],
+      "unlabeled": {
+        "total": 1,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 1,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 1
+        }
+      },
+      "seconds": {
+        "wall": 28.8,
+        "steps": {
+          "bandit": 0.2,
+          "codeql": 13.2,
+          "semgrep": 2.5,
+          "codeql-create": 7.3,
+          "codeql-evidence": 4.6,
+          "semgrep-evidence": 1.1,
+          "eslint": 0.4,
+          "sink-locator": 1.0
+        }
+      }
+    },
+    {
+      "id": "xopen_1.0.0",
+      "source": "npm:xopen@1.0.0",
+      "snapshot_sha256": "0eee6b0d3c0c119bea6ed6a911154e06bd3dbd0f094d7f98d19a4b214ca9430a",
+      "scan_status": "completed",
+      "profile": "command-injection-v0.2",
+      "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+      "stages": {
+        "raw_alerts": 2,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 1,
+        "filtered": 0,
+        "demoted": 0
+      },
+      "sites": [
+        {
+          "path": "index.js",
+          "line": 13,
+          "basis": "dataset_published_sink",
+          "reported": true,
+          "tools": [
+            "codeql",
+            "eslint"
+          ],
+          "priority": "P1",
+          "in_first_tiers": true,
+          "filtered": false,
+          "filter_rules": [],
+          "same_file_candidate_lines": [
+            13
+          ]
+        }
+      ],
+      "unlabeled": {
+        "total": 0,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "U": 0,
+          "P3": 0,
+          "P4": 0
+        },
+        "filtered": []
+      },
+      "sources": {
+        "codeql": {
+          "candidates": 1,
+          "only": 0
+        },
+        "eslint": {
+          "candidates": 1,
+          "only": 0
+        }
+      },
+      "seconds": {
+        "wall": 14.6,
+        "steps": {
+          "codeql": 7.5,
+          "eslint": 0.4,
+          "semgrep": 1.2,
+          "sink-locator": 1.0,
+          "codeql-create": 4.6
+        }
+      }
+    }
+  ],
+  "scan_statuses": {
+    "completed": 43,
+    "failed": 6,
+    "partial": 3
+  },
+  "configurations": {
+    "documented_sites_scanned": 43,
+    "reported_by_configuration": {
+      "semgrep": 12,
+      "codeql": 27,
+      "eslint": 27,
+      "semgrep ∪ codeql": 29,
+      "all sources": 32,
+      "all sources, after filtering": 32,
+      "first tiers (P1+P2), after filtering": 29
+    },
+    "reported_by_one_tool_only": {
+      "semgrep": 0,
+      "codeql": 3,
+      "eslint": 3,
+      "bandit": 0
+    },
+    "lost_to_filtering": 0,
+    "kept_sites_by_priority": {
+      "P1": 14,
+      "P2": 15,
+      "U": 0,
+      "P3": 3,
+      "P4": 0
+    }
+  },
+  "unlabeled": {
+    "total": 47,
+    "filtered": 0,
+    "main_list_by_priority": {
+      "P1": 20,
+      "P2": 8,
+      "U": 14,
+      "P3": 5,
+      "P4": 0
+    }
+  },
+  "wall_seconds": {
+    "scans": 52,
+    "total": 720.2,
+    "median": 14.5,
+    "max": 28.8
+  }
+}

@@ -1,0 +1,538 @@
+{
+  "verdicts": {
+    "constant_command": 17,
+    "not_constant": 2
+  },
+  "filtered": [
+    {
+      "id": "FujiwaraChoki__MoneyPrinterV2",
+      "owner": "FujiwaraChoki",
+      "repo": "MoneyPrinterV2",
+      "commit": "a734fa924adb9ffe5ab8472aa5526e469e42a8b5",
+      "scan_status": "completed",
+      "path": "src/classes/Outreach.py",
+      "line": 32,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'go version'",
+      "lines": [
+        "29:             None",
+        "30:         \"\"\"",
+        "31:         # Check if go is installed",
+        "32:         self.go_installed = os.system(\"go version\") == 0",
+        "33: ",
+        "34:         # Set niche",
+        "35:         self.niche = get_google_maps_scraper_niche()"
+      ]
+    },
+    {
+      "id": "FujiwaraChoki__MoneyPrinterV2",
+      "owner": "FujiwaraChoki",
+      "repo": "MoneyPrinterV2",
+      "commit": "a734fa924adb9ffe5ab8472aa5526e469e42a8b5",
+      "scan_status": "completed",
+      "path": "src/utils.py",
+      "line": 25,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'taskkill /f /im firefox.exe'",
+      "lines": [
+        "22: ",
+        "23:         # Kill all running Firefox instances",
+        "24:         if platform.system() == \"Windows\":",
+        "25:             os.system(\"taskkill /f /im firefox.exe\")",
+        "26:         else:",
+        "27:             os.system(\"pkill firefox\")",
+        "28: "
+      ]
+    },
+    {
+      "id": "FujiwaraChoki__MoneyPrinterV2",
+      "owner": "FujiwaraChoki",
+      "repo": "MoneyPrinterV2",
+      "commit": "a734fa924adb9ffe5ab8472aa5526e469e42a8b5",
+      "scan_status": "completed",
+      "path": "src/utils.py",
+      "line": 27,
+      "sink_kind": "os.system",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'pkill firefox'",
+      "lines": [
+        "24:         if platform.system() == \"Windows\":",
+        "25:             os.system(\"taskkill /f /im firefox.exe\")",
+        "26:         else:",
+        "27:             os.system(\"pkill firefox\")",
+        "28: ",
+        "29:         success(\" => Closed running Selenium instances.\")",
+        "30: "
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/bin/auto_cpufreq.py",
+      "line": 273,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'snapctl stop --disable auto-cpufreq'",
+      "lines": [
+        "270:             root_check()",
+        "271:             if IS_INSTALLED_WITH_SNAP:",
+        "272:                 run(\"snapctl set daemon=disabled\", shell=True)",
+        "273:                 run(\"snapctl stop --disable auto-cpufreq\", shell=True)",
+        "274:                 if auto_cpufreq_stats_path.exists():",
+        "275:                     if auto_cpufreq_stats_file is not None:",
+        "276:                         auto_cpufreq_stats_file.close()"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 354,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "' ' ; 'cpufreqctl.auto-cpufreq --governor'",
+      "lines": [
+        "351: def get_current_gov():",
+        "352:     return print(",
+        "353:         \"Currently using:\",",
+        "354:         getoutput(\"cpufreqctl.auto-cpufreq --governor\").strip().split(\" \")[0],",
+        "355:         \"governor\",",
+        "356:     )",
+        "357: "
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 413,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'/usr/local/bin/auto-cpufreq-install'",
+      "lines": [
+        "410: ",
+        "411:     tlp_service_detect() # output warning if TLP service is detected",
+        "412: ",
+        "413:     return call(\"/usr/local/bin/auto-cpufreq-install\", shell=True)",
+        "414: ",
+        "415: def remove_daemon():",
+        "416:     # check if auto-cpufreq is installed"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 427,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'/usr/local/bin/auto-cpufreq-remove'",
+      "lines": [
+        "424:     # system cleanup succeeds. Restoring competing services before that point",
+        "425:     # could leave them running alongside an auto-cpufreq daemon that failed to",
+        "426:     # stop, and would make a failed removal unsafe to retry.",
+        "427:     remove_status = call(\"/usr/local/bin/auto-cpufreq-remove\", shell=True)",
+        "428:     if remove_status != 0:",
+        "429:         return remove_status",
+        "430: "
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 484,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'\\n\\t\\tExecuted on:' ; 'date'",
+      "lines": [
+        "481:         if remaining <= 3 and remaining >= 0: print(\".\", end=\"\", flush=True)",
+        "482:         sleep(s/3)",
+        "483: ",
+        "484:     print(\"\\n\\t\\tExecuted on:\", getoutput('date'))",
+        "485: ",
+        "486: # get cpu usage + system load for (last minute)",
+        "487: def get_load():    "
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 609,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'cpufreqctl.auto-cpufreq --frequency-max-limit'",
+      "lines": [
+        "606:     }",
+        "607: ",
+        "608:     set_frequencies.max_limit = int(",
+        "609:         getoutput(\"cpufreqctl.auto-cpufreq --frequency-max-limit\")",
+        "610:     )",
+        "611:     set_frequencies.min_limit = int(",
+        "612:         getoutput(\"cpufreqctl.auto-cpufreq --frequency-min-limit\")"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 612,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'cpufreqctl.auto-cpufreq --frequency-min-limit'",
+      "lines": [
+        "609:         getoutput(\"cpufreqctl.auto-cpufreq --frequency-max-limit\")",
+        "610:     )",
+        "611:     set_frequencies.min_limit = int(",
+        "612:         getoutput(\"cpufreqctl.auto-cpufreq --frequency-min-limit\")",
+        "613:     )",
+        "614: ",
+        "615:     conf = config.get_config()"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 1277,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'Computer type:' ; 'dmidecode --string chassis-type'",
+      "lines": [
+        "1274:     print(\"click package:\", click.__version__)",
+        "1275:     print(\"distro package:\", distro.__version__)",
+        "1276: ",
+        "1277: def device_info(): print(\"Computer type:\", getoutput(\"dmidecode --string chassis-type\"))",
+        "1278: ",
+        "1279: def distro_info():",
+        "1280:     dist = \"UNKNOWN distro\""
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 1313,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "not_constant",
+      "command": "getoutput('nproc') ; 'nproc'",
+      "lines": [
+        "1310:     print(f\"Processor:{model_name}\")",
+        "1311: ",
+        "1312:     # get core count",
+        "1313:     total_cpu_count = int(getoutput(\"nproc\"))",
+        "1314:     print(\"Cores:\", total_cpu_count)",
+        "1315: ",
+        "1316:     # get architecture"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/core.py",
+      "line": 1321,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'cpufreqctl.auto-cpufreq --driver'",
+      "lines": [
+        "1318:     print(\"Architecture:\", cpu_arch)",
+        "1319: ",
+        "1320:     # get driver",
+        "1321:     driver = getoutput(\"cpufreqctl.auto-cpufreq --driver\")",
+        "1322:     print(\"Driver: \" + driver)",
+        "1323: ",
+        "1324:     config_path = config.path if config.has_config() else None"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/globals.py",
+      "line": 5,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "' ' ; 'cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors'",
+      "lines": [
+        "2: from subprocess import getoutput",
+        "3: ",
+        "4: ALL_GOVERNORS = ('performance', 'ondemand', 'conservative', 'schedutil', 'userspace', 'powersave') # from the highest performance to the lowest",
+        "5: AVAILABLE_GOVERNORS = getoutput('cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors').strip().split(' ')",
+        "6: AVAILABLE_GOVERNORS_SORTED = tuple(filter(lambda gov: gov in AVAILABLE_GOVERNORS, ALL_GOVERNORS))",
+        "7: ",
+        "8: GITHUB = \"https://github.com/AdnanHodzic/auto-cpufreq\""
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/globals.py",
+      "line": 9,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "not_constant",
+      "command": "'/etc/arch-release' ; getoutput('pacman -Qs auto-cpufreq') ; 'pacman -Qs auto-cpufreq'",
+      "lines": [
+        "6: AVAILABLE_GOVERNORS_SORTED = tuple(filter(lambda gov: gov in AVAILABLE_GOVERNORS, ALL_GOVERNORS))",
+        "7: ",
+        "8: GITHUB = \"https://github.com/AdnanHodzic/auto-cpufreq\"",
+        "9: IS_INSTALLED_WITH_AUR = path.isfile(\"/etc/arch-release\") and bool(getoutput(\"pacman -Qs auto-cpufreq\"))",
+        "10: IS_INSTALLED_WITH_SNAP = getenv(\"PKG_MARKER\") == \"SNAP\"",
+        "11: POWER_SUPPLY_DIR = \"/sys/class/power_supply/\"",
+        "12: SNAP_DAEMON_CHECK = getoutput(\"snapctl get daemon\")"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/globals.py",
+      "line": 12,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'snapctl get daemon'",
+      "lines": [
+        "9: IS_INSTALLED_WITH_AUR = path.isfile(\"/etc/arch-release\") and bool(getoutput(\"pacman -Qs auto-cpufreq\"))",
+        "10: IS_INSTALLED_WITH_SNAP = getenv(\"PKG_MARKER\") == \"SNAP\"",
+        "11: POWER_SUPPLY_DIR = \"/sys/class/power_supply/\"",
+        "12: SNAP_DAEMON_CHECK = getoutput(\"snapctl get daemon\")",
+        "13: ",
+        "14: CPU_TEMP_SENSOR_PRIORITY = (\"coretemp\", \"acpitz\", \"k10temp\", \"zenpower\")"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/gui/tray.py",
+      "line": 26,
+      "sink_kind": "subprocess.run",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'sudo -E python app.py'",
+      "lines": [
+        "23:     menu.show_all()",
+        "24:     return menu",
+        "25: ",
+        "26: def open_app(MenuItem): run(\"sudo -E python app.py\", shell=True)",
+        "27: ",
+        "28: if __name__ == \"__main__\": main()"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/modules/system_info.py",
+      "line": 146,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver'",
+      "lines": [
+        "143:         self.processor_model: str = (",
+        "144:             getoutput(\"grep -E 'model name' /proc/cpuinfo -m 1\").split(\":\")[-1].strip()",
+        "145:         )",
+        "146:         self.cpu_driver: str = getoutput(",
+        "147:             \"cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver\"",
+        "148:         ).strip()",
+        "149:         self.kernel_version: str = platform.release()"
+      ]
+    },
+    {
+      "id": "AdnanHodzic__auto-cpufreq",
+      "owner": "AdnanHodzic",
+      "repo": "auto-cpufreq",
+      "commit": "fe7b13baeca002b368b1261bcc681ca9995055cf",
+      "scan_status": "completed",
+      "path": "auto_cpufreq/power_helper.py",
+      "line": 44,
+      "sink_kind": "subprocess.getoutput",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P4",
+      "filter_rules": [
+        "G2_LITERAL_COMMAND"
+      ],
+      "verdict": "constant_command",
+      "command": "'tlp-stat -s'",
+      "lines": [
+        "41: # alert in case TLP service is running",
+        "42: def tlp_service_detect():",
+        "43:     if tlp_stat_exists:",
+        "44:         status_output = getoutput(\"tlp-stat -s\")",
+        "45:         tlp_status = TLPStatusParser(status_output)",
+        "46:         if tlp_status.is_enabled():",
+        "47:             warning()"
+      ]
+    }
+  ]
+}
