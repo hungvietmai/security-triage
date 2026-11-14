@@ -34,11 +34,16 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 | 2026-10-27 | sau các commit sửa lỗi cùng ngày | Windows, cục bộ | Backend: **375 đạt, 2 bỏ qua** (SQLite, không đặt `TEST_DATABASE_URL`); ruff, format, mypy sạch | lần cập nhật tài liệu này |
 | 2026-10-27 | sau các commit sửa lỗi cùng ngày | Windows, cục bộ | Thực nghiệm: **85 đạt**, không cần `PYTHONUTF8` | lần cập nhật tài liệu này |
 | 2026-10-27 | sau các commit sửa lỗi cùng ngày | Windows, cục bộ | Frontend `npm run check`: typecheck, lint, format, **63 test / 13 file** đạt | lần cập nhật tài liệu này |
+| 2026-11-14 | `2344e5b` (thêm profile `path-traversal-v0.2`; chạy trên working tree ngay trước khi commit) | Windows, cục bộ | Backend: **392 đạt, 2 bỏ qua** (SQLite), coverage nhánh 94,08%; ruff, format, mypy sạch. Thực nghiệm: **87 đạt** (`PYTHONUTF8=1`). Frontend `npm run check`: **64 test / 13 file** đạt. `openapi.json` khớp bản xuất từ backend | lần cập nhật tài liệu này |
+| 2026-11-14 | như trên | Docker Compose, cục bộ | Service `test` trên PostgreSQL: **394 đạt**, coverage 94,26%. Stack dựng lại và healthy; `scripts.check_worker` trong worker nhận cả hai profile với Semgrep 1.178.0 và CodeQL 2.27.1; `alembic check` không lệch; readiness `ok` | lần cập nhật tài liệu này |
+| 2026-11-14 | như trên | Docker Compose, cục bộ; quét thật qua API với profile `path-traversal-v0.2` | `pipecat-ai/pipecat@7519c26` (archive trùng SHA-256 với khóa đợt C): 73 giây, 3 đơn vị, cả 3 **P4** `EV_HIDDEN_BY_EVIDENCE`, khớp đợt C (baseline 3, v0.2 còn 0). `pallets-eco/flask-admin@4f8be45`: 15 giây, 3 đơn vị **P1** `EV_KEPT_NO_PROOF` ở dòng 151, 175, 182 của `fileadmin/__init__.py`, khớp đợt A (3 cảnh báo, v0.2 loại 0). Cả hai repository là dữ liệu phát triển đã quét trước đó | lần cập nhật tài liệu này |
 
 **Chưa xác minh:**
 
-- CI của nhánh `feat/research-safety-evidence`, vì máy không có `gh`.
-- Toàn stack Docker trên các commit này.
+- CI của nhánh `feat/research-safety-evidence` và `feat/cwe22-triage`, vì máy không có `gh`.
+- Toàn stack Docker trên các commit ngày 27/10 (`2344e5b` đã được kiểm, xem bảng trên).
+- Giao diện với đơn vị của profile `path-traversal-v0.2` trong trình duyệt thật: chỉ mới kiểm
+  API trả `200` cho danh sách và chi tiết đơn vị.
 - E2E Playwright ở máy cục bộ (chưa cài Chromium).
 
 ## 3. Lỗi đã biết
