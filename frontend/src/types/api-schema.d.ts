@@ -126,6 +126,8 @@ export interface paths {
     /**
      * List Units
      * @description Location units in queue order (P1, P2, U, P3, P4, then unit_key).
+     *
+     *     `disposition=review` is the main review list; `filtered` lists what evidence removed.
      */
     get: operations["list_units_api_v1_scans__scan_id__units_get"];
     put?: never;
@@ -148,6 +150,46 @@ export interface paths {
      * @description Evidence record, reason, policy provenance and the raw findings of one unit.
      */
     get: operations["get_unit_api_v1_scans__scan_id__units__unit_id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/scans/{scan_id}/report": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get Report
+     * @description Before/after report: alerts per tool, merged candidates, what was filtered and why.
+     */
+    get: operations["get_report_api_v1_scans__scan_id__report_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/scans/{scan_id}/report.sarif": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get Sarif
+     * @description Every original alert as SARIF 2.1.0; filtered candidates carry a suppression.
+     */
+    get: operations["get_sarif_api_v1_scans__scan_id__report_sarif_get"];
     put?: never;
     post?: never;
     delete?: never;
@@ -319,6 +361,94 @@ export interface components {
        */
       storage: "ok" | "unavailable";
     };
+    /** ReportCandidate */
+    ReportCandidate: {
+      /** Candidate Key */
+      candidate_key: string;
+      /**
+       * Basis
+       * @description same_call_site, single_location or unmatched_location
+       */
+      basis: string;
+      /** Path */
+      path: string | null;
+      /** Start Line */
+      start_line: number | null;
+      /** Sink Kind */
+      sink_kind: string | null;
+      /** Tools */
+      tools: string[];
+      /**
+       * Priority
+       * @enum {string}
+       */
+      priority: "P1" | "P2" | "U" | "P3" | "P4";
+      /**
+       * Disposition
+       * @enum {string}
+       */
+      disposition: "review" | "filtered";
+      /** Filter Rule */
+      filter_rule: string | null;
+      /**
+       * Filter Rules
+       * @description Every rule whose evidence filtered it
+       */
+      filter_rules: string[];
+      /** Reason */
+      reason: string;
+      /** Unit Ids */
+      unit_ids: string[];
+      /** Raw Alerts */
+      raw_alerts: number;
+    };
+    /** ReportStages */
+    ReportStages: {
+      /**
+       * Raw Alerts
+       * @description Alerts of every detection tool, before merging
+       */
+      raw_alerts: number;
+      /**
+       * Units
+       * @description Alerts merged by call and argument role
+       */
+      units: number;
+      /**
+       * Candidates
+       * @description Units merged by call: one review item each
+       */
+      candidates: number;
+      /**
+       * Main List
+       * @description Candidates left after filtering
+       */
+      main_list: number;
+      /**
+       * Filtered
+       * @description Candidates a tool proved false; kept on file
+       */
+      filtered: number;
+      /**
+       * Demoted
+       * @description Main-list candidates ranked P3 or P4, not filtered
+       */
+      demoted: number;
+    };
+    /**
+     * SarifLog
+     * @description SARIF 2.1.0 log of every original alert, annotated with candidate and disposition.
+     */
+    SarifLog: {
+      /** $Schema */
+      $schema: string;
+      /** Version */
+      version: string;
+      /** Runs */
+      runs: {
+        [key: string]: unknown;
+      }[];
+    };
     /** ScanAccepted */
     ScanAccepted: {
       /**
@@ -342,11 +472,14 @@ export interface components {
         | components["schemas"]["GitHubSource"];
       /**
        * Profile
-       * @description command-injection-v0.1: CWE-78, JavaScript and Python, priority policy. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.
+       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.
        * @default command-injection-v0.1
        * @enum {string}
        */
-      profile: "command-injection-v0.1" | "path-traversal-v0.2";
+      profile:
+        | "command-injection-v0.1"
+        | "command-injection-v0.2"
+        | "path-traversal-v0.2";
     };
     /** ScanRead */
     ScanRead: {
@@ -386,6 +519,79 @@ export interface components {
       unit_counts: {
         [key: string]: number;
       };
+      /**
+       * Disposition Counts
+       * @description Units in the main review list and units filtered on evidence
+       */
+      disposition_counts: {
+        [key: string]: number;
+      };
+    };
+    /**
+     * ScanReport
+     * @description Before/after report of one scan: detection, merging, filtering, timing.
+     */
+    ScanReport: {
+      /**
+       * Scan Id
+       * Format: uuid
+       */
+      scan_id: string;
+      /** Status */
+      status: string;
+      /** Profile */
+      profile: string | null;
+      /**
+       * Profile Sha256
+       * @description Hash of the pinned profile manifest
+       */
+      profile_sha256: string | null;
+      /** Policy Version */
+      policy_version: string | null;
+      /** Reconciler Version */
+      reconciler_version: string | null;
+      snapshot: components["schemas"]["SnapshotRead"];
+      /** Started At */
+      started_at: string | null;
+      /** Finished At */
+      finished_at: string | null;
+      /** Tool Versions */
+      tool_versions: {
+        [key: string]: string;
+      };
+      /**
+       * Steps
+       * @description Per language and step: status, seconds, alert count
+       */
+      steps: {
+        [key: string]: {
+          [key: string]: {
+            [key: string]: unknown;
+          };
+        };
+      };
+      /** Raw Alerts */
+      raw_alerts: {
+        [key: string]: number;
+      };
+      stages: components["schemas"]["ReportStages"];
+      /** Sources */
+      sources: {
+        [key: string]: components["schemas"]["SourceContribution"];
+      };
+      /** Main List By Priority */
+      main_list_by_priority: {
+        [key: string]: number;
+      };
+      /**
+       * Filtered By Rule
+       * @description Filtered candidates per rule; one candidate can satisfy several rules
+       */
+      filtered_by_rule: {
+        [key: string]: number;
+      };
+      /** Candidates */
+      candidates: components["schemas"]["ReportCandidate"][];
     };
     /** SnapshotRead */
     SnapshotRead: {
@@ -406,6 +612,16 @@ export interface components {
       provenance_kind: string | null;
       /** Error Message */
       error_message: string | null;
+    };
+    /** SourceContribution */
+    SourceContribution: {
+      /** Candidates */
+      candidates: number;
+      /**
+       * Only
+       * @description Candidates no other tool reported
+       */
+      only: number;
     };
     /** ToolRunRead */
     ToolRunRead: {
@@ -461,6 +677,21 @@ export interface components {
       reason: string;
       /** Tools */
       tools: string[];
+      /**
+       * Disposition
+       * @enum {string}
+       */
+      disposition: "review" | "filtered";
+      /**
+       * Candidate Key
+       * @description Shared by units of the same call
+       */
+      candidate_key: string | null;
+      /**
+       * Filter Rule
+       * @description Rule that filtered the candidate, if any
+       */
+      filter_rule: string | null;
       /** Matched Conditions */
       matched_conditions: string[];
       /** Predicate Values */
@@ -481,6 +712,20 @@ export interface components {
       finding_evidence: {
         [key: string]: unknown;
       }[];
+      /**
+       * Candidate
+       * @description Key, match basis, member units, tools and best priority
+       */
+      candidate: {
+        [key: string]: unknown;
+      } | null;
+      /**
+       * Adjudication
+       * @description Filter decision: rule, reason, evidence, or why the unit was kept
+       */
+      adjudication: {
+        [key: string]: unknown;
+      } | null;
       /** Policy Id */
       policy_id: string;
       /** Policy Version */
@@ -551,6 +796,21 @@ export interface components {
       reason: string;
       /** Tools */
       tools: string[];
+      /**
+       * Disposition
+       * @enum {string}
+       */
+      disposition: "review" | "filtered";
+      /**
+       * Candidate Key
+       * @description Shared by units of the same call
+       */
+      candidate_key: string | null;
+      /**
+       * Filter Rule
+       * @description Rule that filtered the candidate, if any
+       */
+      filter_rule: string | null;
     };
     /** ValidationError */
     ValidationError: {
@@ -822,7 +1082,8 @@ export interface operations {
     parameters: {
       query?: {
         tier?: ("P1" | "P2" | "U" | "P3" | "P4") | null;
-        tool?: ("semgrep" | "codeql") | null;
+        tool?: ("semgrep" | "bandit" | "eslint" | "codeql") | null;
+        disposition?: ("review" | "filtered") | null;
         /** @description Maximum number of items to return */
         limit?: number;
         /** @description Number of items to skip */
@@ -884,6 +1145,86 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["UnitDetail"];
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_report_api_v1_scans__scan_id__report_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        scan_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ScanReport"];
+        };
+      };
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_sarif_api_v1_scans__scan_id__report_sarif_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        scan_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["SarifLog"];
         };
       };
       /** @description Not found */

@@ -4,12 +4,15 @@ import base64
 import hashlib
 import io
 import json
+import shutil
 import tarfile
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any, BinaryIO
 
+from app.scanners.bandit import STAGED_CONFIG
 from app.scanners.pipeline import PipelineResult
+from app.scanners.provenance import pinned_file
 from app.scanners.semgrep import stage_rule
 from app.triage.sinks_python import locate_python_sinks
 
@@ -59,10 +62,45 @@ def _finding(raw_id: str, tool: str, rule_id: str, region: dict[str, Any], snaps
     }
 
 
+def _code_flow(steps: list[dict[str, Any]]) -> dict[str, Any]:
+    """A SARIF code flow with one reported path."""
+    locations = [
+        {
+            "location": {
+                "physicalLocation": {
+                    "artifactLocation": {"uri": step["uri"]},
+                    "region": {"startLine": step["line"], "startColumn": 1},
+                }
+            }
+        }
+        for step in steps
+    ]
+    return {"threadFlows": [{"locations": locations}]}
+
+
 def fake_pipeline(
-    status: str = "completed", outputs: list[Path] | None = None
+    status: str = "completed",
+    outputs: list[Path] | None = None,
+    *,
+    semgrep_rule: str = "dangerous-system-call",
+    refuted: bool = False,
+    codeql_alert: bool = True,
+    bandit_severity: str | None = None,
+    dead_branch: bool = False,
 ) -> Callable[..., PipelineResult]:
-    """Stages the pinned rules like run_semgrep and reports one Semgrep and one CodeQL alert."""
+    """Stages the pinned rules like run_semgrep and reports one Semgrep and one CodeQL alert.
+
+    When the language config configures Bandit, it also stages the pinned ini like
+    run_bandit and reports one Bandit alert on the whole call. When it configures CodeQL
+    evidence queries, the control query repeats the CodeQL alert and the evidence query
+    repeats it too unless `refuted`. `semgrep_rule` names the pinned Semgrep rule that
+    reports: "dangerous-system-call" claims a flow, "subprocess-shell-true" is an audit.
+    `codeql_alert=False` leaves CodeQL silent; `bandit_severity` is the rating Bandit gives
+    the call (LOW for a literal command). When the config configures Semgrep evidence
+    rules, the control rule reports the command and the evidence rule repeats it unless
+    `dead_branch`, in which case line 1 is reported as a dead assignment and CodeQL's
+    alert carries a path through it.
+    """
 
     def run(**kwargs: Any) -> PipelineResult:
         output: Path = kwargs["output"]
@@ -80,18 +118,70 @@ def fake_pipeline(
             snapshot = kwargs["snapshot_sha256"]
             findings = [
                 # Semgrep prefixes rule IDs with the staged config's path.
-                _finding(
-                    "semgrep:0:0", "semgrep", "tmp.rule-1.dangerous-system-call", region, snapshot
-                ),
+                _finding("semgrep:0:0", "semgrep", f"tmp.{semgrep_rule}", region, snapshot),
                 _finding("codeql:0:0", "codeql", "py/command-line-injection", region, snapshot),
-            ]
+            ][: 2 if codeql_alert else 1]
         step = {"status": status, "exit_code": 0 if status != "failed" else 2, "argv": ["tool"]}
+        steps = {"semgrep": dict(step), "codeql": dict(step)}
+        bandit = kwargs.get("bandit")
+        if bandit is not None:
+            steps["bandit"] = dict(step)
+            root = kwargs["repository_root"]
+            shutil.copyfile(pinned_file(bandit["config"], root), output / STAGED_CONFIG)
+            if findings:
+                call = dict(locate_python_sinks("app.py", source)[0]["span"])
+                bandit_alert = _finding("bandit:0:0", "bandit", "B605", call, snapshot)
+                if bandit_severity is not None:
+                    bandit_alert["raw_result"] = {"properties": {"issue_severity": bandit_severity}}
+                findings.append(bandit_alert)
+        evidence_findings: list[Any] = []
+        if kwargs.get("semgrep_evidence") is not None:
+            steps["semgrep-evidence"] = dict(step)
+            (output / "semgrep-evidence.sarif").write_text('{"runs": []}\n', encoding="utf-8")
+            if findings:
+                reported = [("st-cmd-flow-none", region)]
+                if dead_branch:
+                    line: dict[str, Any] = {
+                        "startLine": 1,
+                        "startColumn": 1,
+                        "endLine": 1,
+                        "endColumn": 10,
+                    }
+                    reported.append(("st-dead-assignment", line))
+                    path = [{"uri": "app.py", "line": 1}, {"uri": "app.py", "line": 2}]
+                    for finding in findings:
+                        if finding["tool"] == "codeql":
+                            finding["raw_result"] = {"codeFlows": [_code_flow(path)]}
+                else:
+                    reported.append(("st-cmd-flow-all", region))
+                evidence_findings += [
+                    _finding(
+                        f"semgrep-evidence:0:{index}",
+                        "semgrep-evidence",
+                        f"tmp.semgrep-evidence.{rule}",
+                        where,
+                        snapshot,
+                    )
+                    for index, (rule, where) in enumerate(reported)
+                ]
+        if kwargs.get("codeql_evidence") is not None:
+            steps["codeql-evidence"] = dict(step)
+            (output / "codeql-evidence.sarif").write_text('{"runs": []}\n', encoding="utf-8")
+            if findings and codeql_alert:
+                rules = ["st/cwe-78/none"] + ([] if refuted else ["st/cwe-78/all"])
+                evidence_findings += [
+                    _finding(
+                        f"codeql-evidence:0:{index}", "codeql-evidence", rule, region, snapshot
+                    )
+                    for index, rule in enumerate(rules)
+                ]
         return PipelineResult(
             status=status,  # type: ignore[arg-type]
-            steps={"semgrep": dict(step), "codeql": dict(step)},  # type: ignore[dict-item]
+            steps=steps,  # type: ignore[arg-type]
             findings=findings,
             codeql_query_files=kwargs["codeql_query_sha256"],
             codeql_pack_manifest="name: codeql/queries\n",
+            evidence_findings=evidence_findings,
         )
 
     return run

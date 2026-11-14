@@ -19,7 +19,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUnit } from "@/features/scans/api/get-unit";
-import type { Finding, UnitDetail } from "@/features/scans/types";
+import {
+  FILTER_RULES,
+  type Finding,
+  type UnitDetail,
+} from "@/features/scans/types";
 import { getDataFlows } from "@/features/scans/utils/data-flows";
 import { isApiError } from "@/lib/api-client";
 
@@ -64,9 +68,59 @@ function FindingEvidence({ finding }: { finding: Finding }) {
   );
 }
 
+function Adjudication({ unit }: { unit: UnitDetail }) {
+  const record = unit.adjudication;
+  const candidate = unit.candidate;
+  const filtered = unit.disposition === "filtered";
+  const evidence = Array.isArray(record?.evidence) ? record.evidence : [];
+  const members = Array.isArray(candidate?.unit_ids)
+    ? candidate.unit_ids.length
+    : 1;
+  return (
+    <section className="space-y-3">
+      <h3 className="font-semibold">Thẩm định</h3>
+      <dl className="space-y-3">
+        <Detail label="Kết quả">
+          {filtered
+            ? "Đã gạn khỏi danh sách rà chính. Cảnh báo gốc vẫn được giữ ở bên dưới."
+            : "Nằm trong danh sách rà chính."}
+        </Detail>
+        {filtered && (
+          <Detail label="Quy tắc gạn">
+            {FILTER_RULES[unit.filter_rule ?? ""] ?? unit.filter_rule}
+          </Detail>
+        )}
+        <Detail label="Lý do">
+          {typeof record?.reason === "string"
+            ? record.reason
+            : "Lượt quét này chưa có bước thẩm định."}
+        </Detail>
+        <Detail label="Ứng viên">
+          {members > 1
+            ? `Cùng một lời gọi với ${members - 1} đơn vị khác; `
+            : "Một đơn vị; "}
+          công cụ đã báo:{" "}
+          {Array.isArray(candidate?.tools)
+            ? candidate.tools.join(", ")
+            : unit.tools.join(", ")}
+        </Detail>
+      </dl>
+      {evidence.length > 0 && (
+        <div>
+          <h4 className="font-medium">Bằng chứng gạn</h4>
+          <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs whitespace-pre-wrap">
+            {JSON.stringify(evidence, null, 2)}
+          </pre>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function UnitEvidence({ unit }: { unit: UnitDetail }) {
   return (
     <div className="space-y-6 p-4 pt-0">
+      <Adjudication unit={unit} />
       <section className="space-y-3">
         <h3 className="font-semibold">Quyết định</h3>
         <dl className="space-y-3">

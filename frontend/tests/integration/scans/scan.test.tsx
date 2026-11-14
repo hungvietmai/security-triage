@@ -14,7 +14,11 @@ function seed() {
   const scan = makeScan({ unit_counts: { P1: 1, P2: 1, U: 1, P3: 0, P4: 0 } });
   const units = [
     makeUnit({ path: "first.js" }),
-    makeUnit({ priority: "P2", path: "second.js", tools: ["semgrep"] }),
+    makeUnit({
+      priority: "P2",
+      path: "second.js",
+      tools: ["semgrep", "bandit"],
+    }),
     makeUnit({ priority: "U", path: "third.js", tools: ["codeql"] }),
   ];
   db.scans = [scan];
@@ -43,6 +47,13 @@ describe("Scan detail", () => {
     expect(table.getByLabelText("Không có cảnh báo CodeQL")).toHaveTextContent(
       "✗",
     );
+    // The screening column names the tools of the first stage that reported the unit.
+    expect(
+      table.getByLabelText("Có cảnh báo sàng lọc: Semgrep, Bandit"),
+    ).toHaveTextContent("Semgrep, Bandit");
+    expect(
+      table.getByLabelText("Không có cảnh báo sàng lọc"),
+    ).toHaveTextContent("✗");
   });
 
   it("reads tier and tool from the URL and changes both filters through shareable links", async () => {

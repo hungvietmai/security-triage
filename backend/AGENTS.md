@@ -61,8 +61,8 @@ backend/
 │   │   ├── exceptions.py  # AppError / NotFoundError / ConflictError, ErrorResponse
 │   │   └── storage.py     # Shared S3 (SeaweedFS) client
 │   ├── features/          # One package per domain — see below
-│   ├── scanners/          # Semgrep/CodeQL adapters, scan profile, server-built source downloads
-│   ├── triage/            # Pure reconciliation, evidence and priority policy (stdlib only)
+│   ├── scanners/          # Semgrep/CodeQL/Bandit/ESLint adapters, scan profile, source downloads
+│   ├── triage/            # Pure reconciliation, evidence, priority policy, adjudication (stdlib only)
 │   ├── workflows/         # Multi-feature flows: scans/ (API, execution, persistence)
 │   └── workers/           # Celery app (composition); tasks live in workflows/
 ├── migrations/            # Alembic; versions/NNNN_description.py

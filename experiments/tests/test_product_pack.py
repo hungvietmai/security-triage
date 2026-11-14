@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import runpy
+import shutil
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -11,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 PACK = ROOT / "rules/codeql/path-traversal-v0.2"
 PILOT = ROOT / "experiments/owasp-bp-pilot"
 WAVE_C = ROOT / "experiments/wave-c"
+CWE78_PACK = ROOT / "rules/codeql/command-injection-evidence-v0.2"
 
 
 def _sha256(path: Path) -> str:
@@ -48,6 +52,33 @@ class ProductPackProvenanceTests(unittest.TestCase):
             _sha256(PACK / "codeql-pack.lock.yml"),
             locked["experiments/wave-c/pack-locks/v02.lock.yml"],
         )
+
+
+class CommandInjectionEvidencePackTests(unittest.TestCase):
+    def test_library_and_lock_match_the_v02_freeze(self) -> None:
+        frozen = _manifest(PILOT / "FREEZE_v0.2_postformat.sha256")
+        for name in ("SafetyEvidence.qll", "qlpack.yml"):
+            with self.subTest(name=name):
+                self.assertEqual(_sha256(CWE78_PACK / name), frozen[f"ql_v02/{name}"])
+        locked = _manifest(WAVE_C / "EXECUTION_LOCK.sha256")
+        self.assertEqual(
+            _sha256(CWE78_PACK / "codeql-pack.lock.yml"),
+            locked["experiments/wave-c/pack-locks/v02.lock.yml"],
+        )
+
+    def test_queries_are_what_the_frozen_generator_writes(self) -> None:
+        # Run a copy of the frozen gen.py in a scratch directory; it writes next to itself.
+        with tempfile.TemporaryDirectory() as folder:
+            shutil.copy(PILOT / "ql_v02" / "gen.py", folder)
+            runpy.run_path(str(Path(folder) / "gen.py"))
+            for query in ("cwe78_none.ql", "cwe78_all.ql"):
+                with self.subTest(query=query):
+                    generated = (Path(folder) / "queries" / query).read_bytes()
+                    # The pack stores LF; the generator writes the platform's line ending.
+                    self.assertEqual(
+                        b"\n".join(generated.splitlines()) + b"\n",
+                        (CWE78_PACK / "queries" / query).read_bytes(),
+                    )
 
 
 if __name__ == "__main__":

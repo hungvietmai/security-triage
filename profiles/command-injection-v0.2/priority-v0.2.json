@@ -1,0 +1,176 @@
+{
+  "policy_id": "command-injection-priority",
+  "policy_version": "0.2",
+  "status": "product_profile_not_yet_evaluated",
+  "date": "2026-11-14",
+  "specification": "profiles/command-injection-v0.2/PRIORITY_V0_2.md",
+  "supersedes": "experiments/policy/priority-v0.1.yaml",
+  "reconciler_version": "reconcile-v0.1",
+  "policy_type": "ordered_first_match_decision_list",
+  "weighted_score": false,
+  "levels": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "U"
+  ],
+  "operational_queue_order": [
+    "P1",
+    "P2",
+    "U",
+    "P3",
+    "P4"
+  ],
+  "scope": {
+    "primary_cwe": "CWE-78",
+    "languages": [
+      "javascript",
+      "python"
+    ],
+    "threat_model": "Linux/POSIX",
+    "human_labels_allowed_as_features": false,
+    "automatic_suppression": false
+  },
+  "rule_claims": {
+    "path": "profiles/command-injection-v0.2/rule-claims-v3.json",
+    "version": "rule-claims-v3"
+  },
+  "stages": {
+    "screening": [
+      "semgrep",
+      "bandit",
+      "eslint"
+    ],
+    "adjudication": [
+      "codeql"
+    ]
+  },
+  "changes_from_v0_1": [
+    "agreement is CodeQL plus at least one screening tool, instead of Semgrep plus CodeQL",
+    "Bandit and ESLint rules are classified by rule-claims-v3 as audit claims with an unknown source",
+    "the ordered decision list is unchanged"
+  ],
+  "predicates": {
+    "agreement": {
+      "all": [
+        {
+          "tools_include": "codeql"
+        },
+        {
+          "tools_include_any": [
+            "semgrep",
+            "bandit",
+            "eslint"
+          ]
+        }
+      ]
+    },
+    "others": "as defined in experiments/policy/PRIORITY_V0_1.md section 4"
+  },
+  "decisions": [
+    {
+      "id": "D00_UNRESOLVED",
+      "when": {
+        "any": [
+          "unresolved_unit",
+          "evidence_conflict"
+        ]
+      },
+      "priority": "U",
+      "reason": "Chưa đủ cơ sở gán ưu tiên: {matched_conditions}; cần rà soát {unknown_fields}."
+    },
+    {
+      "id": "D10_LITERAL",
+      "when": {
+        "all": [
+          "execution_candidate",
+          "verified_blocker"
+        ]
+      },
+      "priority": "P4",
+      "reason": "Đã xác minh toàn bộ lệnh thuộc miền literal hẹp: {blocker_proof}; giữ cảnh báo để rà soát, không kết luận an toàn."
+    },
+    {
+      "id": "D20_STRONG",
+      "when": {
+        "all": [
+          "execution_candidate",
+          "strong_flow",
+          {
+            "not": "verified_blocker"
+          },
+          {
+            "any": [
+              "shell_semantics",
+              "agreement"
+            ]
+          }
+        ]
+      },
+      "priority": "P1",
+      "reason": "Ưu tiên rất cao: {matched_conditions}; loại nguồn {source_types}; bất định còn lại {unknown_fields}."
+    },
+    {
+      "id": "D30_HIGH",
+      "when": {
+        "all": [
+          "execution_candidate",
+          {
+            "not": "verified_blocker"
+          },
+          {
+            "any": [
+              "strong_flow",
+              {
+                "all": [
+                  "flow_claim",
+                  "important_unknown"
+                ]
+              },
+              {
+                "all": [
+                  "agreement",
+                  "audit_claim",
+                  {
+                    "not": "strong_flow"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "priority": "P2",
+      "reason": "Ưu tiên cao: {matched_conditions}; còn thiếu {unknown_fields}; nguồn {source_types}."
+    },
+    {
+      "id": "D40_REVIEW",
+      "when": {
+        "all": [
+          "execution_candidate",
+          {
+            "not": "verified_blocker"
+          },
+          {
+            "any": [
+              "flow_claim",
+              "important_unknown",
+              "shell_semantics"
+            ]
+          }
+        ]
+      },
+      "priority": "P3",
+      "reason": "Cần rà soát thủ công: {matched_conditions}; chưa đủ điều kiện P1/P2; thiếu {unknown_fields}."
+    },
+    {
+      "id": "D99_DEFAULT",
+      "when": {
+        "always": true
+      },
+      "priority": "P4",
+      "reason": "Ứng viên audit còn lại: {matched_conditions}; chưa có bằng chứng luồng mạnh; giữ toàn bộ cảnh báo."
+    }
+  ]
+}

@@ -137,6 +137,100 @@ def test_execute_scan_persists_every_result_row_and_artifact(engine, storage, ma
     assert outputs and not outputs[0].parent.exists()
 
 
+def test_v0_2_profile_stores_the_screening_tool_and_classifies_its_alert(
+    engine, storage, make_scan
+):
+    scan_id = make_scan(profile="command-injection-v0.2")
+    assert _execute(engine, storage, scan_id, run_pipeline_fn=fake_pipeline()) == "completed"
+    with Session(engine) as session:
+        scan = session.get_one(Scan, scan_id)
+        assert (scan.config["profile_id"], scan.config["policy_version"]) == (
+            "command-injection-v0.2",
+            "0.2",
+        )
+        runs = session.scalars(select(ToolRun).order_by(ToolRun.tool)).all()
+        assert [(r.tool, r.status, r.tool_version) for r in runs] == [
+            ("bandit", "completed", "1.9.4"),
+            ("codeql", "completed", "2.27.1"),
+            # The adjudication step: evidence queries on the same CodeQL database.
+            ("codeql-evidence", "completed", "2.27.1"),
+            ("semgrep", "completed", "1.178.0"),
+            # Semgrep's dead-branch evidence rules: the open-source adjudication step.
+            ("semgrep-evidence", "completed", "1.178.0"),
+        ]
+        assert scan.artifacts["python/bandit.ini"]["sha256"]
+        # os.system is a shell sink, so the whole-call Bandit alert joins the same unit.
+        unit = session.scalars(select(LocationUnit)).one()
+        assert _count(session, UnitFinding) == 3
+        assessment = session.scalars(select(UnitAssessment)).one()
+        assert assessment.unit_id == unit.id
+        bandit = next(r for r in assessment.evidence["finding_evidence"] if r["tool"] == "bandit")
+        assert (bandit["definition_verified"], bandit["claim_family"], bandit["source_type"]) == (
+            True,
+            "audit",
+            "unknown",
+        )
+        assert assessment.evidence["tools"] == ["bandit", "codeql", "semgrep"]
+
+
+@pytest.mark.parametrize(
+    ("severity", "disposition", "rule"),
+    [("LOW", "filtered", "G2_LITERAL_COMMAND"), ("HIGH", "review", None)],
+)
+def test_a_literal_command_is_filtered_only_with_bandits_literal_rating(
+    engine, storage, make_scan, severity, disposition, rule
+):
+    # A real sink and a real literal proof; Semgrep's audit rule and Bandit report the call.
+    scan_id = make_scan(
+        {"app.py": "import os\nos.system('ls -l')\n"}, profile="command-injection-v0.2"
+    )
+    pipeline = fake_pipeline(
+        semgrep_rule="subprocess-shell-true", codeql_alert=False, bandit_severity=severity
+    )
+    assert _execute(engine, storage, scan_id, run_pipeline_fn=pipeline) == "completed"
+    with Session(engine) as session:
+        assessment = session.scalars(select(UnitAssessment)).one()
+        # The policy still ranks the unit; filtering is a separate, recorded decision.
+        assert (assessment.priority, assessment.decision_id) == ("P4", "D10_LITERAL")
+        assert assessment.disposition == disposition
+        record = assessment.evidence["adjudication"]
+        assert record["rule"] == rule
+        if rule is None:
+            assert record["kept_because"] == ["literal_proof_without_second_source"]
+        else:
+            assert [item["tool"] for item in record["evidence"]] == ["security-triage", "bandit"]
+        # Nothing is deleted either way.
+        assert _count(session, Finding) == 2 and _count(session, UnitFinding) == 2
+        unit = session.scalars(select(LocationUnit)).one()
+        assert unit.candidate_key == assessment.evidence["candidate"]["key"]
+
+
+def test_a_python_file_that_does_not_parse_leaves_the_scan_partial_and_filters_nothing(
+    engine, storage, make_scan
+):
+    """Regression: one file with a syntax error made the Python sink locator fail the scan."""
+    files = {
+        # Without the broken file this call is filtered by G2 (see the test above).
+        "app.py": "import os\nos.system('ls -l')\n",
+        "legacy.py": "print 'python 2'\nf(a=1, 2)\n",
+    }
+    scan_id = make_scan(files, profile="command-injection-v0.2")
+    pipeline = fake_pipeline(
+        semgrep_rule="subprocess-shell-true", codeql_alert=False, bandit_severity="LOW"
+    )
+    assert _execute(engine, storage, scan_id, run_pipeline_fn=pipeline) == "partial"
+    with Session(engine) as session:
+        scan = session.get_one(Scan, scan_id)
+        assert scan.status == "partial"
+        locator = scan.config["steps"]["python"]["sink-locator"]
+        assert locator["status"] == "partial"
+        # The call in the file that does parse is still located, ranked and kept for review.
+        assessment = session.scalars(select(UnitAssessment)).one()
+        assert (assessment.priority, assessment.disposition) == ("P4", "review")
+        assert assessment.evidence["adjudication"]["kept_because"] == ["run_incomplete"]
+        assert _count(session, Finding) == 2
+
+
 def test_persist_replaces_results_and_rolls_back_a_failed_write(engine, storage, make_scan):
     scan_id = make_scan()
     with Session(engine) as session:
@@ -395,7 +489,7 @@ def test_run_scan_retries_infrastructure_errors_then_fails(engine, make_scan, ea
 def test_task_time_limits_cover_every_scanner_timeout_in_the_profile(profile_id):
     profile = scan_module.load_scan_profile(get_settings(), profile_id)
     budget = sum(
-        2 * 60 + scan_module.SCANNER_STEPS * config["timeout_seconds"]
+        scan_module.VERSION_CHECKS * 60 + scan_module.SCANNER_STEPS * config["timeout_seconds"]
         for config in profile.configs.values()
     )
     assert budget < scan_module.SOFT_TIME_LIMIT < scan_module.TIME_LIMIT

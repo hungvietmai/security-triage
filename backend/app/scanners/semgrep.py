@@ -9,7 +9,7 @@ from typing import Protocol
 
 from app.scanners.acquisition import fetch
 from app.scanners.process import InvokeCallable, ProcessRecord, invoke
-from app.scanners.provenance import digest
+from app.scanners.provenance import digest, pinned_file
 from app.scanners.sarif import Finding, sarif_findings
 
 MAX_RULE_BYTES = 2 * 1024 * 1024
@@ -128,3 +128,49 @@ def run_sink_locator(
     if record["status"] != "completed":
         raise RuntimeError("JavaScript sink locator failed; see locator logs")
     return record, result.read_text(encoding="utf-8")
+
+
+def run_semgrep_evidence(
+    *,
+    binary: str,
+    source: Path,
+    output: Path,
+    snapshot_sha256: str,
+    repository_root: Path,
+    rules: Mapping[str, object],
+    jobs: int,
+    timeout_seconds: float,
+    invoke_fn: InvokeCallable = invoke,
+) -> tuple[ProcessRecord, list[Finding], bool]:
+    """Run a pinned file of safety-evidence rules; its results are evidence, never alerts.
+
+    They carry the tool name "semgrep-evidence" and are not reconciled into units.
+    """
+    staged = output / "semgrep-evidence.yaml"
+    shutil.copyfile(pinned_file(rules, repository_root), staged)
+    sarif = output / "semgrep-evidence.sarif"
+    argv: list[str | Path] = [
+        binary,
+        "scan",
+        "--metrics=off",
+        "--disable-version-check",
+        "--disable-nosem",
+        "--no-git-ignore",
+        "--jobs",
+        str(jobs),
+        "--sarif",
+        "--output",
+        str(sarif),
+        "--config",
+        str(staged),
+        ".",
+    ]
+    record = invoke_fn(argv, source, output, "semgrep-evidence", timeout_seconds)
+    if not sarif.exists():
+        raise RuntimeError("Evidence rules produced no SARIF output")
+    findings, complete = sarif_findings(sarif, "semgrep-evidence", snapshot_sha256)
+    record["raw_findings"] = len(findings)
+    record["sarif_sha256"] = digest(sarif)
+    if record["status"] == "completed" and not complete:
+        record["status"] = "partial"
+    return record, findings, complete

@@ -67,6 +67,8 @@ class LocationUnit(Identity, Base):
     mapping_status: Mapped[str] = mapped_column(String(48))
     reconciler_version: Mapped[str] = mapped_column(String(80))
     locator_version: Mapped[str] = mapped_column(String(80))
+    # Units that point at the same call share this key: one review candidate.
+    candidate_key: Mapped[str | None] = mapped_column(String(160), index=True)
 
 
 class UnitFinding(Identity, Base):
@@ -106,6 +108,10 @@ class UnitAssessment(Identity, Base):
             "priority IN ('P1', 'P2', 'U', 'P3', 'P4')",
             name="ck_unit_assessment_priority",
         ),
+        CheckConstraint(
+            "disposition IN ('review', 'filtered')",
+            name="ck_unit_assessment_disposition",
+        ),
     )
 
     unit_id: Mapped[uuid.UUID] = mapped_column(
@@ -114,6 +120,9 @@ class UnitAssessment(Identity, Base):
     # Tools, claims, traces, predicates and unknowns: the evidence record as computed.
     evidence: Mapped[dict[str, Any]] = mapped_column(JSON_VALUE, default=dict)
     priority: Mapped[str] = mapped_column(String(4))
+    # 'filtered': a tool proved the candidate false, so it left the main review list.
+    # The unit, its alerts and the evidence stay; `evidence` holds the adjudication record.
+    disposition: Mapped[str] = mapped_column(String(16), default="review", server_default="review")
     decision_id: Mapped[str] = mapped_column(String(48))
     matched_conditions: Mapped[list[str]] = mapped_column(JSON_VALUE, default=list)
     reason: Mapped[str] = mapped_column(Text)

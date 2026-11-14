@@ -172,6 +172,7 @@ def test_path_traversal_scan_ranks_baseline_alerts_by_safety_evidence(
     assert scan["policy_version"] == "0.2"
     assert [(r["tool"], r["status"]) for r in scan["tool_runs"]] == [("codeql", "completed")]
     assert {tier: n for tier, n in scan["unit_counts"].items() if n} == {"P1": 1, "P4": 1}
+    assert scan["disposition_counts"] == {"review": 1, "filtered": 1}
 
     # Nothing is deleted: the alert the evidence removed is still listed, last.
     items = client.get(f"/api/v1/scans/{scan_id}/units").json()["items"]
@@ -186,6 +187,19 @@ def test_path_traversal_scan_ranks_baseline_alerts_by_safety_evidence(
     assert hidden["matched_conditions"] == ["baseline_alert", "removed_by_safety_evidence"]
     assert [f["rule_id"] for f in hidden["findings"]] == ["st/cwe-22/none"]
     assert hidden["policy_id"] == "cwe22-safety-evidence" and hidden["policy_sha256"]
+    # The hidden alert is filtered on evidence and can be reopened with its original alert.
+    assert (hidden["disposition"], hidden["filter_rule"]) == (
+        "filtered",
+        "G1_CODEQL_SAFETY_EVIDENCE",
+    )
+    assert hidden["adjudication"]["evidence"][0]["refuted_raw_ids"] == ["codeql:0:1"]
+    assert kept["disposition"] == "review" and kept["adjudication"]["rule"] is None
+    filtered = client.get(
+        f"/api/v1/scans/{scan_id}/units", params={"disposition": "filtered"}
+    ).json()
+    assert [i["start_line"] for i in filtered["items"]] == [3]
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    assert (report["stages"]["main_list"], report["stages"]["filtered"]) == (1, 1)
 
 
 def test_github_scan_checks_the_archive_root(client, engine, project_id, queued):
@@ -321,3 +335,194 @@ def test_scan_requests_use_the_configured_celery_app_from_any_thread():
     thread.start()
     thread.join()
     assert seen == [celery_app.main]
+
+
+V02 = {"profile": "command-injection-v0.2"}
+# Semgrep's audit rule and Bandit report the call; CodeQL's flow is refuted by evidence.
+REFUTED: dict[str, Any] = {"semgrep_rule": "subprocess-shell-true", "refuted": True}
+
+
+def _scan_v02(client, engine, project_id, **pipeline: Any) -> str:
+    archive = make_archive({"package.json": PACKAGE_JSON, "app.py": PYTHON_SOURCE}, "package")
+    body = {**_npm(), **V02}
+    scan_id = client.post(f"/api/v1/projects/{project_id}/scans", json=body).json()["scan_id"]
+    registry = fake_registry("demo", "1.0.0", archive)
+    assert _run(engine, scan_id, registry, pipeline=fake_pipeline(**pipeline)) == "completed"
+    return str(scan_id)
+
+
+def test_a_refuted_flow_leaves_the_main_list_but_stays_readable_with_its_reason(
+    client, engine, project_id, queued
+):
+    # Semgrep's audit rule and Bandit report the call; CodeQL reports a flow that the safety
+    # evidence query no longer reports.
+    scan_id = _scan_v02(client, engine, project_id, **REFUTED)
+
+    scan = client.get(f"/api/v1/scans/{scan_id}").json()
+    assert scan["disposition_counts"] == {"review": 0, "filtered": 1}
+    assert ("codeql-evidence", "completed") in [(r["tool"], r["status"]) for r in scan["tool_runs"]]
+
+    units = f"/api/v1/scans/{scan_id}/units"
+    assert client.get(units, params={"disposition": "review"}).json()["total"] == 0
+    (unit,) = client.get(units, params={"disposition": "filtered"}).json()["items"]
+    assert (unit["disposition"], unit["filter_rule"]) == ("filtered", "G1_CODEQL_SAFETY_EVIDENCE")
+    # The unit is still in the unfiltered listing, with every original alert.
+    assert client.get(units).json()["total"] == 1
+    detail = client.get(f"{units}/{unit['id']}").json()
+    assert {f["raw_id"] for f in detail["findings"]} == {"semgrep:0:0", "codeql:0:0", "bandit:0:0"}
+    assert detail["adjudication"]["evidence"][0]["refuted_raw_ids"] == ["codeql:0:0"]
+    assert "st/cwe-78/all" in detail["adjudication"]["reason"]
+    assert detail["candidate"]["tools"] == ["bandit", "codeql", "semgrep"]
+    assert client.get(units, params={"disposition": "gone"}).status_code == 422
+
+
+def test_report_counts_detection_merging_and_filtering(client, engine, project_id, queued):
+    scan_id = _scan_v02(client, engine, project_id, **REFUTED)
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    assert report["profile"] == "command-injection-v0.2"
+    assert len(report["profile_sha256"]) == 64
+    assert report["raw_alerts"] == {"bandit": 1, "codeql": 1, "semgrep": 1}
+    # Three alerts of one call: one unit, one candidate, filtered on evidence.
+    assert report["stages"] == {
+        "raw_alerts": 3,
+        "units": 1,
+        "candidates": 1,
+        "main_list": 0,
+        "filtered": 1,
+        "demoted": 0,
+    }
+    assert report["filtered_by_rule"] == {"G1_CODEQL_SAFETY_EVIDENCE": 1}
+    assert report["sources"]["codeql"] == {"candidates": 1, "only": 0}
+    (candidate,) = report["candidates"]
+    assert (candidate["basis"], candidate["raw_alerts"]) == ("same_call_site", 3)
+    assert candidate["disposition"] == "filtered" and candidate["filter_rule"]
+    assert report["steps"]["python"]["codeql-evidence"]["status"] == "completed"
+    assert report["snapshot"]["sha256"]
+
+
+@pytest.mark.parametrize(
+    ("pipeline", "kept_because"),
+    [
+        # The evidence query still reports the flow.
+        ({"semgrep_rule": "subprocess-shell-true"}, "evidence_query_still_reports_flow"),
+        # Semgrep's taint rule claims the flow independently of CodeQL.
+        ({"refuted": True}, "independent_flow_claim"),
+    ],
+)
+def test_report_keeps_candidates_without_refuting_evidence(
+    client, engine, project_id, queued, pipeline, kept_because
+):
+    scan_id = _scan_v02(client, engine, project_id, **pipeline)
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    assert (report["stages"]["main_list"], report["stages"]["filtered"]) == (1, 0)
+    (unit,) = client.get(f"/api/v1/scans/{scan_id}/units").json()["items"]
+    detail = client.get(f"/api/v1/scans/{scan_id}/units/{unit['id']}").json()
+    assert detail["adjudication"]["kept_because"] == [kept_because]
+    assert detail["disposition"] == "review"
+
+
+def test_report_of_a_scan_only_one_tool_reported_keeps_that_candidate(
+    client, engine, project_id, queued
+):
+    # The v0.1 profile's fake run: Semgrep and CodeQL at one call, no evidence step.
+    archive = make_archive({"package.json": PACKAGE_JSON, "app.py": PYTHON_SOURCE}, "package")
+    scan_id = client.post(f"/api/v1/projects/{project_id}/scans", json=_npm()).json()["scan_id"]
+    assert _run(engine, scan_id, fake_registry("demo", "1.0.0", archive)) == "completed"
+    with Session(engine) as session:
+        scan = session.get_one(Scan, uuid.UUID(scan_id))
+        _add_unit(session, scan, "legacy-unit", "P3")
+        session.commit()
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    assert report["stages"]["candidates"] == 2 and report["stages"]["filtered"] == 0
+    # A unit written before candidates existed, reported by Semgrep alone, is its own candidate.
+    legacy = next(c for c in report["candidates"] if c["candidate_key"] == "legacy-unit")
+    assert (legacy["tools"], legacy["disposition"], legacy["basis"]) == (
+        ["semgrep"],
+        "review",
+        "single_unit",
+    )
+    assert report["sources"]["semgrep"] == {"candidates": 2, "only": 1}
+    assert report["stages"]["demoted"] >= 1
+
+
+def test_sarif_export_keeps_every_alert_and_suppresses_filtered_ones(
+    client, engine, project_id, queued
+):
+    scan_id = _scan_v02(client, engine, project_id, **REFUTED)
+    response = client.get(f"/api/v1/scans/{scan_id}/report.sarif")
+    assert response.status_code == 200
+    sarif = response.json()
+    assert sarif["version"] == "2.1.0" and sarif["$schema"].endswith("sarif-2.1.0.json")
+    assert sorted(run["tool"]["driver"]["name"] for run in sarif["runs"]) == [
+        "bandit",
+        "codeql",
+        "semgrep",
+    ]
+    results = [result for run in sarif["runs"] for result in run["results"]]
+    assert len(results) == 3
+    for result in results:
+        triage = result["properties"]["securityTriage"]
+        assert (triage["disposition"], triage["filterRule"]) == (
+            "filtered",
+            "G1_CODEQL_SAFETY_EVIDENCE",
+        )
+        assert result["suppressions"][0]["kind"] == "external"
+        location = result["locations"][0]["physicalLocation"]
+        assert location["artifactLocation"]["uri"] == "app.py"
+        assert "ruleIndex" not in result and result["ruleId"]
+    assert len({r["properties"]["securityTriage"]["candidateKey"] for r in results}) == 1
+
+    other = client.post("/api/v1/projects", json={"name": "Kept"}).json()["id"]
+    kept_id = _scan_v02(client, engine, other)
+    kept = client.get(f"/api/v1/scans/{kept_id}/report.sarif").json()
+    assert all("suppressions" not in r for run in kept["runs"] for r in run["results"])
+    assert client.get(f"/api/v1/scans/{uuid.uuid4()}/report").status_code == 404
+
+
+@pytest.mark.parametrize(
+    ("pipeline", "rules"),
+    [
+        # Semgrep's dead-branch evidence alone: no tool claims a flow at the call.
+        (
+            {"semgrep_rule": "subprocess-shell-true", "codeql_alert": False, "dead_branch": True},
+            ["G3_SEMGREP_DEAD_BRANCH"],
+        ),
+        # CodeQL's flow runs through the dead branch and its own evidence query agrees.
+        (
+            {"semgrep_rule": "subprocess-shell-true", "dead_branch": True, "refuted": True},
+            ["G3_SEMGREP_DEAD_BRANCH", "G1_CODEQL_SAFETY_EVIDENCE"],
+        ),
+    ],
+)
+def test_semgrep_dead_branch_evidence_filters_and_is_reported_per_rule(
+    client, engine, project_id, queued, pipeline, rules
+):
+    scan_id = _scan_v02(client, engine, project_id, **pipeline)
+    scan = client.get(f"/api/v1/scans/{scan_id}").json()
+    assert ("semgrep-evidence", "completed") in [
+        (r["tool"], r["status"]) for r in scan["tool_runs"]
+    ]
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    (candidate,) = report["candidates"]
+    assert (candidate["disposition"], candidate["filter_rule"]) == ("filtered", rules[0])
+    assert candidate["filter_rules"] == rules
+    # One filtered candidate, counted once under every rule that filtered it.
+    assert report["stages"]["filtered"] == 1
+    assert report["filtered_by_rule"] == dict.fromkeys(rules, 1)
+    assert report["steps"]["python"]["semgrep-evidence"]["status"] == "completed"
+    (unit,) = client.get(f"/api/v1/scans/{scan_id}/units").json()["items"]
+    detail = client.get(f"/api/v1/scans/{scan_id}/units/{unit['id']}").json()
+    assert [item["rule"] for item in detail["adjudication"]["evidence"]] == rules
+    assert detail["adjudication"]["evidence"][0]["tool"] == "semgrep"
+
+
+def test_codeql_evidence_that_still_reports_the_flow_blocks_the_dead_branch_rule(
+    client, engine, project_id, queued
+):
+    scan_id = _scan_v02(
+        client, engine, project_id, semgrep_rule="subprocess-shell-true", dead_branch=True
+    )
+    (unit,) = client.get(f"/api/v1/scans/{scan_id}/units").json()["items"]
+    detail = client.get(f"/api/v1/scans/{scan_id}/units/{unit['id']}").json()
+    assert detail["disposition"] == "review"
+    assert detail["adjudication"]["kept_because"] == ["evidence_query_still_reports_flow"]

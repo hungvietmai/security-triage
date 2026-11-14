@@ -61,6 +61,7 @@ export function makeScan(overrides: Partial<Scan> = {}): Scan {
       },
     ],
     unit_counts: { P1: 0, P2: 0, U: 0, P3: 0, P4: 0 },
+    disposition_counts: { review: 0, filtered: 0 },
     ...overrides,
   };
 }
@@ -83,6 +84,11 @@ export function makeUnit(overrides: Partial<Unit> = {}): Unit {
     decision_id: "D01",
     reason: "Untrusted command path",
     tools: ["semgrep", "codeql"],
+    disposition: "review",
+    candidate_key: `candidate-${id}`,
+    filter_rule: null,
+    candidate: null,
+    adjudication: null,
     matched_conditions: ["strong_flow"],
     predicate_values: { strong_flow: true, verified_blocker: false },
     unknown_fields: ["source_library_input_or_unknown"],

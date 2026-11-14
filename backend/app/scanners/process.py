@@ -12,7 +12,7 @@ from collections.abc import Mapping, MutableMapping, Sequence
 from pathlib import Path
 from typing import Literal, NotRequired, Protocol, TypedDict, cast
 
-ToolName = Literal["semgrep", "codeql"]
+ToolName = Literal["semgrep", "codeql", "bandit", "eslint"]
 
 
 class ProcessRecord(TypedDict):
@@ -113,13 +113,13 @@ def tool_version(
     invoke_fn: InvokeCallable = invoke,
 ) -> None:
     """Require the exact scanner version before running a scan."""
-    argv = [binary, "--version"] if tool == "semgrep" else [binary, "version", "--format=json"]
+    argv = [binary, "version", "--format=json"] if tool == "codeql" else [binary, "--version"]
     record = invoke_fn(argv, working_directory, output, tool + "-version", 60)
     steps[tool + "-version"] = record
     if record["status"] != "completed":
         raise RuntimeError(f"{tool} unavailable; see version logs")
 
-    actual = (output / f"{tool}-version.stdout.log").read_text(encoding="utf-8")
+    actual = (output / f"{tool}-version.stdout.log").read_text(encoding="utf-8").strip()
     if tool == "codeql":
         payload = cast(object, json.loads(actual))
         if not isinstance(payload, dict):
@@ -128,5 +128,10 @@ def tool_version(
         if not isinstance(version, str):
             raise ValueError("Invalid CodeQL version output")
         actual = version
+    elif tool == "bandit":
+        # "bandit 1.9.4", followed by a line naming the Python it runs on.
+        actual = actual.splitlines()[0].removeprefix("bandit ") if actual else actual
+    elif tool == "eslint":
+        actual = actual.removeprefix("v")
     if actual.strip() != expected:
         raise ValueError(f"{tool} version mismatch: {actual.strip()} != {expected}")

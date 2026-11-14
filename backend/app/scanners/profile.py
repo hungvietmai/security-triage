@@ -4,9 +4,10 @@ A manifest (profiles/<id>/profile.json) names files by repository-relative path 
 each by SHA-256. It points at the research files themselves rather than copies, so the
 worker and the experiments read one source. Nothing is returned unless every pin matches.
 
-Two kinds exist. A priority profile (no "kind") runs Semgrep and CodeQL and ranks units with
-a priority policy. A "safety-evidence" profile runs a baseline query and the same query with
-safety-evidence barriers from one pinned pack; the evidence query's alerts rank the baseline's.
+Two kinds exist. A priority profile (no "kind") runs Semgrep and CodeQL, optionally with the
+screening tools Bandit and ESLint, and ranks units with a priority policy. A "safety-evidence"
+profile runs a baseline query and the same query with safety-evidence barriers from one pinned
+pack; the evidence query's alerts rank the baseline's.
 """
 
 from __future__ import annotations
@@ -57,6 +58,8 @@ class EvidenceProfile:
 
 
 AnyProfile = ScanProfile | EvidenceProfile
+# Scanners a priority profile's language config may add to Semgrep and CodeQL.
+SCREENING_TOOLS = ("bandit", "eslint")
 EVIDENCE_KIND = "safety-evidence"
 
 
@@ -163,6 +166,38 @@ def load_profile(root: Path, manifest: str) -> ScanProfile:
                     raise ProfileError(f"Config and profile pin {rule['path']} differently")
                 if not isinstance(raw["semgrep_rule_ids"].get(rule["path"]), str):
                     raise ProfileError(f"Profile names no rule ID for {rule['path']}")
+            for tool in SCREENING_TOOLS:
+                if (tool in config) != (tool in config.get("scanners", ())):
+                    raise ProfileError(f"Config must both list and configure {tool}")
+                if tool not in config:
+                    continue
+                entry = config[tool]
+                if not entry["version"] or not entry["rules"]:
+                    raise ProfileError(f"Config names no version or rules for {tool}")
+                # The tool's configuration, and for ESLint the lockfile its plugins come from.
+                for name in ("config", "lockfile") if tool == "eslint" else ("config",):
+                    pinned(entry[name]["path"])
+                    if raw["files"][entry[name]["path"]] != entry[name]["sha256"]:
+                        raise ProfileError(
+                            f"Config and profile pin {entry[name]['path']} differently"
+                        )
+            evidence = config.get("adjudication", {}).get("codeql_evidence")
+            if evidence is not None:
+                # The evidence pack's library and lock decide what its queries mean.
+                pack = evidence["query_pack"]
+                for name in evidence["pack_files"]:
+                    pinned(f"{pack}/{name}")
+                for query, sha256 in evidence["query_sha256"].items():
+                    if _sha256(pinned(f"{pack}/{query}")) != sha256:
+                        raise ProfileError(f"Config and profile pin {query} differently")
+                if set(evidence["queries"]) != set(evidence["query_sha256"]):
+                    raise ProfileError("Evidence queries and their hashes differ")
+            semgrep_evidence = config.get("adjudication", {}).get("semgrep_evidence")
+            if semgrep_evidence is not None:
+                rules = semgrep_evidence["rules"]
+                pinned(rules["path"])
+                if raw["files"][rules["path"]] != rules["sha256"]:
+                    raise ProfileError(f"Config and profile pin {rules['path']} differently")
         locators: dict[str, Path] = {}
         for language, entry in raw["languages"].items():
             if "sink_locator" in entry:

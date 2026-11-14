@@ -1,7 +1,8 @@
 """Refuse to start a scan worker whose profiles or scanners differ from the pins.
 
 Runs before Celery in the worker container: every file of every profile must match its hash,
-and the installed Semgrep/CodeQL must be the versions in tools/pins.env and the profiles.
+and the installed Semgrep, CodeQL, Bandit and ESLint must be the versions in tools/pins.env
+and the profiles. Bandit and ESLint are checked only when a profile uses them.
 """
 
 import tempfile
@@ -9,8 +10,17 @@ from collections.abc import Iterable
 from pathlib import Path
 
 from app.core.config import get_settings
-from app.scanners.process import ProcessRecord, ToolVersionCallable, invoke, tool_version
+from app.scanners.process import (
+    ProcessRecord,
+    ToolName,
+    ToolVersionCallable,
+    invoke,
+    tool_version,
+)
 from app.scanners.profile import AnyProfile, ProfileError, load_any_profile
+
+# Screening tools a profile config may add, and the pin that fixes each one's version.
+SCREENING_PINS: dict[ToolName, str] = {"bandit": "BANDIT_VERSION", "eslint": "ESLINT_VERSION"}
 
 
 def read_pins(path: Path) -> dict[str, str]:
@@ -33,6 +43,9 @@ def check_pins(profile: AnyProfile, pins: dict[str, str]) -> None:
         pack = config["codeql_bundle"][f"{language}_query_pack"]
         if actual != expected or pack != pins[f"CODEQL_{language.upper()}_QUERY_PACK"]:
             raise ProfileError(f"{language} profile config differs from tools/pins.env")
+        for tool, pin in SCREENING_PINS.items():
+            if tool in config and config[tool].get("version") != pins[pin]:
+                raise ProfileError(f"{language} profile {tool} differs from tools/pins.env")
 
 
 def check(
@@ -48,32 +61,23 @@ def check(
     ]
     for profile in profiles:
         check_pins(profile, pins)
+    tools: dict[ToolName, str] = {
+        "semgrep": pins["SEMGREP_VERSION"],
+        "codeql": pins["CODEQL_VERSION"],
+    }
+    for tool, pin in SCREENING_PINS.items():
+        if any(tool in config for profile in profiles for config in profile.configs.values()):
+            tools[tool] = pins[pin]
     with tempfile.TemporaryDirectory() as folder:
         logs = Path(folder)
         steps: dict[str, ProcessRecord] = {}
-        tool_version_fn(
-            "semgrep",
-            pins["SEMGREP_VERSION"],
-            logs,
-            "semgrep",
-            steps,
-            working_directory=logs,
-            invoke_fn=invoke,
-        )
-        tool_version_fn(
-            "codeql",
-            pins["CODEQL_VERSION"],
-            logs,
-            "codeql",
-            steps,
-            working_directory=logs,
-            invoke_fn=invoke,
-        )
+        for tool, version in tools.items():
+            tool_version_fn(
+                tool, version, logs, tool, steps, working_directory=logs, invoke_fn=invoke
+            )
     loaded = ", ".join(f"{p.profile_id} sha256={p.manifest_sha256}" for p in profiles)
-    return (
-        f"Worker ready: profiles {loaded}, "
-        f"semgrep {pins['SEMGREP_VERSION']}, codeql {pins['CODEQL_VERSION']}"
-    )
+    versions = ", ".join(f"{tool} {version}" for tool, version in tools.items())
+    return f"Worker ready: profiles {loaded}, {versions}"
 
 
 if __name__ == "__main__":

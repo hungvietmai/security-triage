@@ -26,8 +26,12 @@ COPY experiments/rules /srv/triage/experiments/rules
 COPY experiments/mappings /srv/triage/experiments/mappings
 COPY experiments/policy /srv/triage/experiments/policy
 COPY experiments/locators /srv/triage/experiments/locators
-# The path-traversal-v0.2 profile's pinned CodeQL query pack.
+# Pinned CodeQL safety-evidence packs: path-traversal-v0.2 and the CodeQL adjudication step
+# of command-injection-v0.2.
 COPY rules/codeql/path-traversal-v0.2 /srv/triage/rules/codeql/path-traversal-v0.2
+COPY rules/codeql/command-injection-evidence-v0.2 /srv/triage/rules/codeql/command-injection-evidence-v0.2
+# Pinned Semgrep safety-evidence rules (dead branches) with their synthetic check cases.
+COPY rules/semgrep /srv/triage/rules/semgrep
 WORKDIR /app
 COPY --chown=appuser:appuser backend/ .
 USER appuser

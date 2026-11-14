@@ -99,6 +99,36 @@ export async function installBrowserApi(page: Page, { failed = false } = {}) {
         total: items.length,
       } satisfies Schemas["UnitPage"]);
     }
+    if (path === `/scans/${scan.id}/report`)
+      return reply({
+        scan_id: scan.id,
+        status: "completed",
+        profile: scan.profile,
+        profile_sha256: "f".repeat(64),
+        policy_version: scan.policy_version,
+        reconciler_version: scan.reconciler_version,
+        snapshot: scan.snapshot,
+        started_at: scan.started_at,
+        finished_at: scan.finished_at,
+        tool_versions: {},
+        steps: {},
+        raw_alerts: { codeql: 1, semgrep: 2 },
+        stages: {
+          raw_alerts: 3,
+          units: units.length,
+          candidates: units.length,
+          main_list: units.length,
+          filtered: 0,
+          demoted: 0,
+        },
+        sources: {
+          codeql: { candidates: 1, only: 0 },
+          semgrep: { candidates: 2, only: 1 },
+        },
+        main_list_by_priority: { P1: 1, P2: 1, U: 0, P3: 0, P4: 0 },
+        filtered_by_rule: {},
+        candidates: [],
+      } satisfies Schemas["ScanReport"]);
     const unit = units.find(
       (unit) => path === `/scans/${scan.id}/units/${unit.id}`,
     );

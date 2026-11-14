@@ -11,13 +11,31 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUnits } from "@/features/scans/api/get-units";
-import { UNITS_PAGE_SIZE, type Tier, type Tool } from "@/features/scans/types";
+import {
+  DISPOSITIONS,
+  FILTER_RULES,
+  SCREENING_TOOLS,
+  UNITS_PAGE_SIZE,
+  type Disposition,
+  type Tier,
+  type Tool,
+  type Unit,
+} from "@/features/scans/types";
+
+/** Display names of the screening-step tools that reported this unit, or "". */
+function screeningTools(unit: Unit) {
+  return Object.entries(SCREENING_TOOLS)
+    .filter(([tool]) => unit.tools.includes(tool))
+    .map(([, label]) => label)
+    .join(", ");
+}
 
 export function UnitsTable({
   scanId,
   page,
   tier,
   tool,
+  list,
   onPageChange,
   onSelect,
 }: {
@@ -25,6 +43,7 @@ export function UnitsTable({
   page: number;
   tier?: Tier;
   tool?: Tool;
+  list?: Disposition;
   onPageChange: (page: number) => void;
   onSelect: (unitId: string) => void;
 }) {
@@ -35,6 +54,7 @@ export function UnitsTable({
       offset: (page - 1) * UNITS_PAGE_SIZE,
       tier,
       tool,
+      disposition: list,
     },
   });
   if (query.isPending) return <p role="status">Đang tải đơn vị…</p>;
@@ -63,8 +83,9 @@ export function UnitsTable({
                 "file:dòng",
                 "Hàm sink",
                 "Vai trò đối số",
-                "Semgrep",
+                "Sàng lọc",
                 "CodeQL",
+                "Thẩm định",
                 "decision_id",
                 "Lý do",
               ].map((heading) => (
@@ -100,12 +121,12 @@ export function UnitsTable({
                 <TableCell>
                   <span
                     aria-label={
-                      unit.tools.includes("semgrep")
-                        ? "Có cảnh báo Semgrep"
-                        : "Không có cảnh báo Semgrep"
+                      screeningTools(unit)
+                        ? `Có cảnh báo sàng lọc: ${screeningTools(unit)}`
+                        : "Không có cảnh báo sàng lọc"
                     }
                   >
-                    {unit.tools.includes("semgrep") ? "✓" : "✗"}
+                    {screeningTools(unit) || "✗"}
                   </span>
                 </TableCell>
                 <TableCell>
@@ -118,6 +139,11 @@ export function UnitsTable({
                   >
                     {unit.tools.includes("codeql") ? "✓" : "✗"}
                   </span>
+                </TableCell>
+                <TableCell className="max-w-56 whitespace-normal">
+                  {unit.disposition === "filtered"
+                    ? `${DISPOSITIONS.filtered}: ${FILTER_RULES[unit.filter_rule ?? ""] ?? unit.filter_rule ?? "có bằng chứng"}`
+                    : DISPOSITIONS.review}
                 </TableCell>
                 <TableCell>{unit.decision_id}</TableCell>
                 <TableCell className="max-w-80 truncate" title={unit.reason}>

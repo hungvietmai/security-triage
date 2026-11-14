@@ -15,7 +15,14 @@ from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.scanners.sources import github_coordinate, npm_coordinate
 from app.workflows.scans.exceptions import UnitNotFound
-from app.workflows.scans.schemas import TIERS, NpmSource, ScanCreate, Tier, Tool
+from app.workflows.scans.schemas import (
+    TIERS,
+    Disposition,
+    NpmSource,
+    ScanCreate,
+    Tier,
+    Tool,
+)
 
 # Queue order for display only (policy: ranking evaluation uses uniform order within a tier).
 _QUEUE_ORDER = case(
@@ -97,6 +104,12 @@ def describe_scan(session: Session, scan: Scan) -> dict[str, Any]:
         .group_by(UnitAssessment.priority)
     ).all()
     counts = dict.fromkeys(TIERS, 0) | {priority: count for priority, count in counted}
+    dispositions = session.execute(
+        select(UnitAssessment.disposition, func.count())
+        .join(LocationUnit, LocationUnit.id == UnitAssessment.unit_id)
+        .where(*_results(scan))
+        .group_by(UnitAssessment.disposition)
+    ).all()
     return {
         "id": scan.id,
         "project_id": snapshot.project_id,
@@ -111,11 +124,19 @@ def describe_scan(session: Session, scan: Scan) -> dict[str, Any]:
         "snapshot": snapshot,
         "tool_runs": runs,
         "unit_counts": counts,
+        "disposition_counts": {"review": 0, "filtered": 0} | dict(dispositions),
     }
 
 
 def _summary(
-    unit: LocationUnit, *, priority: str, decision_id: str, reason: str, tools: list[str]
+    unit: LocationUnit,
+    *,
+    priority: str,
+    decision_id: str,
+    reason: str,
+    tools: list[str],
+    disposition: str,
+    filter_rule: str | None,
 ) -> dict[str, Any]:
     return {
         "id": unit.id,
@@ -132,11 +153,20 @@ def _summary(
         "decision_id": decision_id,
         "reason": reason,
         "tools": tools,
+        "disposition": disposition,
+        "candidate_key": unit.candidate_key,
+        "filter_rule": filter_rule,
     }
 
 
 def list_units(
-    session: Session, scan: Scan, *, page: PageParams, tier: Tier | None, tool: Tool | None
+    session: Session,
+    scan: Scan,
+    *,
+    page: PageParams,
+    tier: Tier | None,
+    tool: Tool | None,
+    disposition: Disposition | None = None,
 ) -> PageResult[dict[str, Any]]:
     """P1, P2, U, P3, P4, then unit_key: a total order, so pages never overlap."""
     statement = (
@@ -147,6 +177,8 @@ def list_units(
     )
     if tier is not None:
         statement = statement.where(UnitAssessment.priority == tier)
+    if disposition is not None:
+        statement = statement.where(UnitAssessment.disposition == disposition)
     if tool is not None:
         statement = statement.where(
             exists()
@@ -168,6 +200,8 @@ def list_units(
                     UnitAssessment.decision_id,
                     UnitAssessment.reason,
                     UnitAssessment.evidence["tools"].label("tools"),
+                    UnitAssessment.disposition,
+                    UnitAssessment.evidence["adjudication"]["rule"].label("filter_rule"),
                 ).where(
                     UnitAssessment.unit_id.in_([unit.id for unit in result.items]),
                     UnitAssessment.policy_version == scan.policy_version,
@@ -182,6 +216,8 @@ def list_units(
                 decision_id=assessments[unit.id].decision_id,
                 reason=assessments[unit.id].reason,
                 tools=assessments[unit.id].tools or [],
+                disposition=assessments[unit.id].disposition,
+                filter_rule=assessments[unit.id].filter_rule,
             )
             for unit in result.items
         ],
@@ -215,7 +251,11 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
             decision_id=assessment.decision_id,
             reason=assessment.reason,
             tools=evidence.get("tools", []),
+            disposition=assessment.disposition,
+            filter_rule=(evidence.get("adjudication") or {}).get("rule"),
         ),
+        "candidate": evidence.get("candidate"),
+        "adjudication": evidence.get("adjudication"),
         "matched_conditions": assessment.matched_conditions,
         "predicate_values": evidence.get("predicate_values", {}),
         "unknown_fields": evidence.get("unknown_fields", []),

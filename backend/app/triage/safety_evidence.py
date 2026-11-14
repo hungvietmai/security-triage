@@ -13,6 +13,13 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from typing import Any
 
+from app.triage.adjudicate import (
+    ADJUDICATION_VERSION,
+    CODEQL_SAFETY_EVIDENCE,
+    FILTERED,
+    FLOW_STILL_REPORTED,
+    REVIEW,
+)
 from app.triage.reconcile import (
     MappingStatus,
     ReconciledUnit,
@@ -131,6 +138,35 @@ def assess_with_evidence(
                 "unknown_fields": [],
                 "baseline_rule": baseline_rule,
                 "evidence_rule": evidence_rule,
+                # Every location is its own candidate; a hidden one leaves the main list.
+                "candidate": {
+                    "key": unit_id,
+                    "basis": "single_location",
+                    "unit_ids": [unit_id],
+                    "tools": ["codeql"],
+                    "priority": "P1" if kept else "P4",
+                },
+                "disposition": REVIEW if kept else FILTERED,
+                "adjudication": {
+                    "version": ADJUDICATION_VERSION,
+                    "status": "kept" if kept else "filtered",
+                    "rule": None if kept else CODEQL_SAFETY_EVIDENCE,
+                    "rules": [] if kept else [CODEQL_SAFETY_EVIDENCE],
+                    "kept_because": [FLOW_STILL_REPORTED] if kept else [],
+                    "reason": _REASONS[decision],
+                    "evidence": []
+                    if kept
+                    else [
+                        {
+                            "rule": CODEQL_SAFETY_EVIDENCE,
+                            "tool": "codeql-safety-evidence",
+                            "kind": "safety_evidence_query_removed_every_flow",
+                            "baseline_rules": [baseline_rule],
+                            "evidence_rule": evidence_rule,
+                            "refuted_raw_ids": [f["raw_id"] for f in baseline[location]],
+                        }
+                    ],
+                },
                 "finding_evidence": [
                     {
                         "raw_id": finding["raw_id"],

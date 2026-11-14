@@ -1,0 +1,307 @@
+# Safety evidence for CWE-78 from Semgrep CE: assignments in branches that can never run.
+# Pinned by the command-injection-v0.2 scan profile; see README.md in this directory.
+# Generated once; edit only by creating a new version directory.
+#
+# st-cmd-flow-none   every flow Semgrep sees from request data, parameters, argv, the
+#                    environment or input() into a command argument (the control rule)
+# st-cmd-flow-all    the same flows, minus those that pass through an assignment in a branch
+#                    whose condition is a constant integer comparison that never selects it
+# st-dead-assignment the right-hand side of each such assignment (the dead code itself)
+#
+# The condition must compare integer expressions Semgrep can fold to constants, including
+# local variables it proves constant. Anything else leaves the flow in place.
+rules:
+  - id: st-cmd-flow-none
+    mode: taint
+    languages: [python]
+    severity: INFO
+    message: Data from a request, a parameter, argv, the environment or input() reaches this command.
+    pattern-sources:
+      - pattern: request.$ATTRIBUTE
+      - pattern: flask.request.$ATTRIBUTE
+      - pattern: sys.argv
+      - pattern: os.environ
+      - pattern: input(...)
+      - patterns:
+          - pattern-inside: |
+              def $FUNCTION(..., $PARAMETER, ...):
+                  ...
+          - focus-metavariable: $PARAMETER
+    pattern-sinks:
+      - patterns:
+          - pattern-either:
+              - pattern: subprocess.$CALL($COMMAND, ...)
+              - pattern: os.system($COMMAND)
+              - pattern: os.popen($COMMAND, ...)
+              - pattern: asyncio.create_subprocess_shell($COMMAND, ...)
+          - focus-metavariable: $COMMAND
+  - id: st-cmd-flow-all
+    mode: taint
+    languages: [python]
+    severity: INFO
+    message: The same data reaches this command without passing through a branch that never runs.
+    pattern-sources:
+      - pattern: request.$ATTRIBUTE
+      - pattern: flask.request.$ATTRIBUTE
+      - pattern: sys.argv
+      - pattern: os.environ
+      - pattern: input(...)
+      - patterns:
+          - pattern-inside: |
+              def $FUNCTION(..., $PARAMETER, ...):
+                  ...
+          - focus-metavariable: $PARAMETER
+    pattern-sanitizers:
+      - patterns:
+          - pattern: |
+              if $L > $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L > $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L > $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L > $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L < $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L < $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L < $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L < $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L >= $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L >= $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L >= $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L >= $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L <= $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L <= $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L <= $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L <= $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L == $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L == $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L == $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L == $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L != $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L != $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L != $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L != $R)
+          - focus-metavariable: $V
+    pattern-sinks:
+      - patterns:
+          - pattern-either:
+              - pattern: subprocess.$CALL($COMMAND, ...)
+              - pattern: os.system($COMMAND)
+              - pattern: os.popen($COMMAND, ...)
+              - pattern: asyncio.create_subprocess_shell($COMMAND, ...)
+          - focus-metavariable: $COMMAND
+  - id: st-dead-assignment
+    languages: [python]
+    severity: INFO
+    message: This assignment is in a branch whose constant condition never selects it.
+    pattern-either:
+      - patterns:
+          - pattern: |
+              if $L > $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L > $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L > $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L > $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L < $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L < $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L < $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L < $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L >= $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L >= $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L >= $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L >= $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L <= $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L <= $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L <= $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L <= $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L == $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L == $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L == $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L == $R)
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L != $R:
+                  ...
+              else:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: $L != $R
+          - focus-metavariable: $V
+      - patterns:
+          - pattern: |
+              if $L != $R:
+                  ...
+                  $X = $V
+                  ...
+          - metavariable-comparison:
+              comparison: not ($L != $R)
+          - focus-metavariable: $V

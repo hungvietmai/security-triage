@@ -5,6 +5,9 @@ the files; this script derives everything else from those files. Run it after ch
 any of them; CI runs `--check`, which fails while the committed profile is stale.
 
     python experiments/build_profile.py [--check]
+
+Every priority profile in MANIFESTS is rebuilt. Safety-evidence profiles
+(profiles/path-traversal-v0.2) are written by hand and are not handled here.
 """
 
 import argparse
@@ -17,6 +20,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = "profiles/command-injection-v0.1/profile.json"
+MANIFESTS = (MANIFEST, "profiles/command-injection-v0.2/profile.json")
+# Screening tools a language config may add, and the files each one pins.
+SCREENING_FILES = {"bandit": ("config",), "eslint": ("config", "lockfile")}
 
 
 def _sha256(data):
@@ -46,6 +52,16 @@ def build(manifest_path=MANIFEST):
             # read here, from the same pinned bytes, and recorded in the manifest.
             (defined,) = yaml.safe_load((ROOT / rule["path"]).read_bytes())["rules"]
             rule_ids[rule["path"]] = defined["id"]
+        for tool, names in SCREENING_FILES.items():
+            for name in names if tool in config else ():
+                paths.add(config[tool][name]["path"])
+        semgrep_evidence = config.get("adjudication", {}).get("semgrep_evidence")
+        if semgrep_evidence:
+            paths.add(semgrep_evidence["rules"]["path"])
+        evidence = config.get("adjudication", {}).get("codeql_evidence")
+        if evidence:
+            for name in [*evidence["pack_files"], *evidence["queries"]]:
+                paths.add(f"{evidence['query_pack']}/{name}")
     files = {path: _sha256((ROOT / path).read_bytes()) for path in paths}
     files[policy["compiled"]] = _sha256(compiled)
     manifest["semgrep_rule_ids"] = dict(sorted(rule_ids.items()))
@@ -68,13 +84,14 @@ def main(argv=None):
     parser.add_argument("--check", action="store_true", help="fail if the profile is stale")
     args = parser.parse_args(argv)
     if args.check:
-        outdated = stale()
+        outdated = [path for manifest in MANIFESTS for path in stale(manifest)]
         for path in outdated:
             print("stale:", path)
         return 1 if outdated else 0
-    for path, data in build().items():
-        (ROOT / path).write_bytes(data)
-        print("wrote", path)
+    for manifest in MANIFESTS:
+        for path, data in build(manifest).items():
+            (ROOT / path).write_bytes(data)
+            print("wrote", path)
     return 0
 
 

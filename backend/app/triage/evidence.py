@@ -30,6 +30,9 @@ _SUBPROCESS = {
     "subprocess.check_output",
 }
 _JS_SPAWN = {"child_process.spawn", "child_process.spawnSync"}
+# Tools of the screening step; CodeQL is the adjudication step. Under profiles that run
+# only Semgrep and CodeQL this is the original "both tools" agreement.
+SCREENING_TOOLS = frozenset({"semgrep", "bandit", "eslint"})
 _STATUSES = {"mapped", "role_unresolved", "unmapped", "column_encoding_requires_review"}
 _ROLES = {"shell_command", "executable", "argument_list", None}
 
@@ -403,7 +406,7 @@ class EvidenceIndex:
             "audit_claim": any(c["audit_oriented"] for c in records),
             "strong_flow": strong,
             "shell_semantics": role == "shell_command",
-            "agreement": set(tools) >= {"semgrep", "codeql"},
+            "agreement": "codeql" in tools and not SCREENING_TOOLS.isdisjoint(tools),
             "verified_blocker": proof is not None,
             "important_unknown": bool(unknown),
             "evidence_conflict": proof is not None and strong,

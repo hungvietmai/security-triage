@@ -52,11 +52,16 @@ def verified_definitions(
     expected_query_sha256: Mapping[str, str],
     observed_query_sha256: Mapping[str, str] | None,
     query_pack_version: str | None,
+    screening: Sequence[Mapping[str, Any]] = (),
 ) -> list[dict[str, str]]:
     """Rule definitions from bytes this run staged or verified, never finding metadata.
 
     `staged_rules[i]` is (SHA-256 of the staged copy of `semgrep_rules[i]` or None, its
     parsed YAML). Aliases sharing a rule ID stay distinct by hash.
+
+    `screening` lists tools whose rules ship inside the tool (Bandit, ESLint): {tool,
+    version, rules, expected_sha256, observed_sha256}. Their definition is the pinned tool
+    configuration this run staged, so a rule is verified only when that copy matches.
     """
     definitions = []
     for rule, (staged_sha256, parsed) in zip(semgrep_rules, staged_rules, strict=True):
@@ -74,6 +79,19 @@ def verified_definitions(
                 "tool_version": semgrep_version,
                 "definition_sha256": staged_sha256,
             }
+        )
+    for entry in screening:
+        if entry["observed_sha256"] is None or entry["observed_sha256"] != entry["expected_sha256"]:
+            continue
+        definitions.extend(
+            {
+                "tool": entry["tool"],
+                "language": language,
+                "rule_id": rule_id,
+                "tool_version": entry["version"],
+                "definition_sha256": entry["observed_sha256"],
+            }
+            for rule_id in entry["rules"]
         )
     observed = observed_query_sha256 or {}
     if observed == expected_query_sha256 and query_pack_version:

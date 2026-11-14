@@ -26,6 +26,8 @@ def test_openapi_export_is_deterministic_json_with_every_route():
         "/api/v1/projects/{project_id}",
         "/api/v1/projects/{project_id}/scans",
         "/api/v1/scans/{scan_id}",
+        "/api/v1/scans/{scan_id}/report",
+        "/api/v1/scans/{scan_id}/report.sarif",
         "/api/v1/scans/{scan_id}/units",
         "/api/v1/scans/{scan_id}/units/{unit_id}",
     }
@@ -68,6 +70,23 @@ def test_check_worker_verifies_every_profile_and_scanner_versions():
     ]
     assert message.startswith("Worker ready: profiles command-injection-v0.1 sha256=")
     assert ", path-traversal-v0.2 sha256=" in message
+
+
+def test_check_worker_checks_screening_tools_only_when_a_profile_uses_them():
+    calls: list[tuple[str, str, str]] = []
+    manifest = "profiles/command-injection-v0.2/profile.json"
+    message = check_worker.check(ROOT, manifest, tool_version_fn=_fake_tool_version(calls))
+    pins = check_worker.read_pins(ROOT / "tools/pins.env")
+    assert [(tool, version) for _, version, tool in calls] == [
+        ("semgrep", pins["SEMGREP_VERSION"]),
+        ("codeql", pins["CODEQL_VERSION"]),
+        ("bandit", pins["BANDIT_VERSION"]),
+        ("eslint", pins["ESLINT_VERSION"]),
+    ]
+    assert message.endswith(f"bandit {pins['BANDIT_VERSION']}, eslint {pins['ESLINT_VERSION']}")
+    profile = load_profile(ROOT, manifest)
+    with pytest.raises(ProfileError, match="python profile bandit differs"):
+        check_worker.check_pins(profile, {**pins, "BANDIT_VERSION": "0.0.0"})
 
 
 @pytest.mark.parametrize(

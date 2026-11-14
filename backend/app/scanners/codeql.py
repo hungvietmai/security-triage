@@ -123,3 +123,64 @@ def run_codeql(
         query_files=query_files,
         pack_manifest=pack_manifest,
     )
+
+
+def run_codeql_evidence(
+    *,
+    binary: str,
+    source: Path,
+    output: Path,
+    snapshot_sha256: str,
+    query_pack: Path,
+    queries: Sequence[str],
+    expected_query_sha256: Mapping[str, str],
+    jobs: int,
+    ram_mb: int,
+    timeout_seconds: float,
+    invoke_fn: InvokeCallable = invoke,
+) -> tuple[ProcessRecord, list[Finding], bool]:
+    """Run pinned safety-evidence queries on the database `run_codeql` already created.
+
+    The adjudication step reuses the extraction: no second database is built. Its alerts are
+    evidence about the scan's CodeQL alerts, so they carry the tool name "codeql-evidence" and
+    are never reconciled into units.
+    """
+    database = output / "codeql-db"
+    if not database.is_dir():
+        raise RuntimeError("No CodeQL database to run evidence queries on")
+    query_paths = [query_pack / query for query in queries]
+    if not all(path.is_file() for path in query_paths):
+        raise ValueError("Configured CodeQL evidence query missing from pack")
+    observed = {path.relative_to(query_pack).as_posix(): digest(path) for path in query_paths}
+    if observed != dict(expected_query_sha256):
+        raise ValueError("CodeQL evidence query digest mismatch")
+    sarif = output / "codeql-evidence.sarif"
+    record = invoke_fn(
+        [
+            binary,
+            "database",
+            "analyze",
+            str(database),
+            *[str(path) for path in query_paths],
+            "--format=sarif-latest",
+            "--output",
+            str(sarif),
+            # A cached result of the same query path would otherwise be reused across packs.
+            "--rerun",
+            "--threads",
+            str(jobs),
+            f"--ram={ram_mb}",
+        ],
+        source,
+        output,
+        "codeql-evidence",
+        timeout_seconds,
+    )
+    if not sarif.exists():
+        raise RuntimeError("Evidence queries produced no SARIF output")
+    findings, complete = sarif_findings(sarif, "codeql-evidence", snapshot_sha256)
+    record["raw_findings"] = len(findings)
+    record["sarif_sha256"] = digest(sarif)
+    if record["status"] == "completed" and not complete:
+        record["status"] = "partial"
+    return record, findings, complete

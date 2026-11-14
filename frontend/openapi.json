@@ -368,7 +368,7 @@
           "scans"
         ],
         "summary": "List Units",
-        "description": "Location units in queue order (P1, P2, U, P3, P4, then unit_key).",
+        "description": "Location units in queue order (P1, P2, U, P3, P4, then unit_key).\n\n`disposition=review` is the main review list; `filtered` lists what evidence removed.",
         "operationId": "list_units_api_v1_scans__scan_id__units_get",
         "parameters": [
           {
@@ -413,6 +413,8 @@
                 {
                   "enum": [
                     "semgrep",
+                    "bandit",
+                    "eslint",
                     "codeql"
                   ],
                   "type": "string"
@@ -422,6 +424,26 @@
                 }
               ],
               "title": "Tool"
+            }
+          },
+          {
+            "name": "disposition",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "review",
+                    "filtered"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Disposition"
             }
           },
           {
@@ -523,6 +545,114 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UnitDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scans/{scan_id}/report": {
+      "get": {
+        "tags": [
+          "scans"
+        ],
+        "summary": "Get Report",
+        "description": "Before/after report: alerts per tool, merged candidates, what was filtered and why.",
+        "operationId": "get_report_api_v1_scans__scan_id__report_get",
+        "parameters": [
+          {
+            "name": "scan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Scan Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScanReport"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/scans/{scan_id}/report.sarif": {
+      "get": {
+        "tags": [
+          "scans"
+        ],
+        "summary": "Get Sarif",
+        "description": "Every original alert as SARIF 2.1.0; filtered candidates carry a suppression.",
+        "operationId": "get_sarif_api_v1_scans__scan_id__report_sarif_get",
+        "parameters": [
+          {
+            "name": "scan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Scan Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SarifLog"
                 }
               }
             }
@@ -946,6 +1076,202 @@
         ],
         "title": "ReadinessChecks"
       },
+      "ReportCandidate": {
+        "properties": {
+          "candidate_key": {
+            "type": "string",
+            "title": "Candidate Key"
+          },
+          "basis": {
+            "type": "string",
+            "title": "Basis",
+            "description": "same_call_site, single_location or unmatched_location"
+          },
+          "path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Path"
+          },
+          "start_line": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Line"
+          },
+          "sink_kind": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sink Kind"
+          },
+          "tools": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tools"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "P1",
+              "P2",
+              "U",
+              "P3",
+              "P4"
+            ],
+            "title": "Priority"
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "review",
+              "filtered"
+            ],
+            "title": "Disposition"
+          },
+          "filter_rule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Rule"
+          },
+          "filter_rules": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Filter Rules",
+            "description": "Every rule whose evidence filtered it"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "unit_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Unit Ids"
+          },
+          "raw_alerts": {
+            "type": "integer",
+            "title": "Raw Alerts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidate_key",
+          "basis",
+          "path",
+          "start_line",
+          "sink_kind",
+          "tools",
+          "priority",
+          "disposition",
+          "filter_rule",
+          "filter_rules",
+          "reason",
+          "unit_ids",
+          "raw_alerts"
+        ],
+        "title": "ReportCandidate"
+      },
+      "ReportStages": {
+        "properties": {
+          "raw_alerts": {
+            "type": "integer",
+            "title": "Raw Alerts",
+            "description": "Alerts of every detection tool, before merging"
+          },
+          "units": {
+            "type": "integer",
+            "title": "Units",
+            "description": "Alerts merged by call and argument role"
+          },
+          "candidates": {
+            "type": "integer",
+            "title": "Candidates",
+            "description": "Units merged by call: one review item each"
+          },
+          "main_list": {
+            "type": "integer",
+            "title": "Main List",
+            "description": "Candidates left after filtering"
+          },
+          "filtered": {
+            "type": "integer",
+            "title": "Filtered",
+            "description": "Candidates a tool proved false; kept on file"
+          },
+          "demoted": {
+            "type": "integer",
+            "title": "Demoted",
+            "description": "Main-list candidates ranked P3 or P4, not filtered"
+          }
+        },
+        "type": "object",
+        "required": [
+          "raw_alerts",
+          "units",
+          "candidates",
+          "main_list",
+          "filtered",
+          "demoted"
+        ],
+        "title": "ReportStages"
+      },
+      "SarifLog": {
+        "properties": {
+          "$schema": {
+            "type": "string",
+            "title": "$Schema"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "runs": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Runs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "$schema",
+          "version",
+          "runs"
+        ],
+        "title": "SarifLog",
+        "description": "SARIF 2.1.0 log of every original alert, annotated with candidate and disposition."
+      },
       "ScanAccepted": {
         "properties": {
           "scan_id": {
@@ -995,10 +1321,11 @@
             "type": "string",
             "enum": [
               "command-injection-v0.1",
+              "command-injection-v0.2",
               "path-traversal-v0.2"
             ],
             "title": "Profile",
-            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, priority policy. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
+            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
             "default": "command-injection-v0.1"
           }
         },
@@ -1123,6 +1450,20 @@
             },
             "type": "object",
             "title": "Unit Counts"
+          },
+          "disposition_counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "review",
+                "filtered"
+              ]
+            },
+            "type": "object",
+            "title": "Disposition Counts",
+            "description": "Units in the main review list and units filtered on evidence"
           }
         },
         "type": "object",
@@ -1139,9 +1480,184 @@
           "policy_version",
           "snapshot",
           "tool_runs",
-          "unit_counts"
+          "unit_counts",
+          "disposition_counts"
         ],
         "title": "ScanRead"
+      },
+      "ScanReport": {
+        "properties": {
+          "scan_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Scan Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "profile": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile"
+          },
+          "profile_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile Sha256",
+            "description": "Hash of the pinned profile manifest"
+          },
+          "policy_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Version"
+          },
+          "reconciler_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reconciler Version"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/SnapshotRead"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "tool_versions": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Tool Versions"
+          },
+          "steps": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Steps",
+            "description": "Per language and step: status, seconds, alert count"
+          },
+          "raw_alerts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Raw Alerts"
+          },
+          "stages": {
+            "$ref": "#/components/schemas/ReportStages"
+          },
+          "sources": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SourceContribution"
+            },
+            "type": "object",
+            "title": "Sources"
+          },
+          "main_list_by_priority": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "P1",
+                "P2",
+                "U",
+                "P3",
+                "P4"
+              ]
+            },
+            "type": "object",
+            "title": "Main List By Priority"
+          },
+          "filtered_by_rule": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Filtered By Rule",
+            "description": "Filtered candidates per rule; one candidate can satisfy several rules"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/ReportCandidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scan_id",
+          "status",
+          "profile",
+          "profile_sha256",
+          "policy_version",
+          "reconciler_version",
+          "snapshot",
+          "started_at",
+          "finished_at",
+          "tool_versions",
+          "steps",
+          "raw_alerts",
+          "stages",
+          "sources",
+          "main_list_by_priority",
+          "filtered_by_rule",
+          "candidates"
+        ],
+        "title": "ScanReport",
+        "description": "Before/after report of one scan: detection, merging, filtering, timing."
       },
       "SnapshotRead": {
         "properties": {
@@ -1221,6 +1737,25 @@
           "error_message"
         ],
         "title": "SnapshotRead"
+      },
+      "SourceContribution": {
+        "properties": {
+          "candidates": {
+            "type": "integer",
+            "title": "Candidates"
+          },
+          "only": {
+            "type": "integer",
+            "title": "Only",
+            "description": "Candidates no other tool reported"
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidates",
+          "only"
+        ],
+        "title": "SourceContribution"
       },
       "ToolRunRead": {
         "properties": {
@@ -1400,6 +1935,38 @@
             "type": "array",
             "title": "Tools"
           },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "review",
+              "filtered"
+            ],
+            "title": "Disposition"
+          },
+          "candidate_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Key",
+            "description": "Shared by units of the same call"
+          },
+          "filter_rule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Rule",
+            "description": "Rule that filtered the candidate, if any"
+          },
           "matched_conditions": {
             "items": {
               "type": "string"
@@ -1459,6 +2026,32 @@
             "type": "array",
             "title": "Finding Evidence"
           },
+          "candidate": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate",
+            "description": "Key, match basis, member units, tools and best priority"
+          },
+          "adjudication": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adjudication",
+            "description": "Filter decision: rule, reason, evidence, or why the unit was kept"
+          },
           "policy_id": {
             "type": "string",
             "title": "Policy Id"
@@ -1511,6 +2104,9 @@
           "decision_id",
           "reason",
           "tools",
+          "disposition",
+          "candidate_key",
+          "filter_rule",
           "matched_conditions",
           "predicate_values",
           "unknown_fields",
@@ -1518,6 +2114,8 @@
           "shell_state",
           "blocker_proof",
           "finding_evidence",
+          "candidate",
+          "adjudication",
           "policy_id",
           "policy_version",
           "policy_sha256",
@@ -1679,6 +2277,38 @@
             },
             "type": "array",
             "title": "Tools"
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "review",
+              "filtered"
+            ],
+            "title": "Disposition"
+          },
+          "candidate_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Candidate Key",
+            "description": "Shared by units of the same call"
+          },
+          "filter_rule": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Rule",
+            "description": "Rule that filtered the candidate, if any"
           }
         },
         "type": "object",
@@ -1696,7 +2326,10 @@
           "priority",
           "decision_id",
           "reason",
-          "tools"
+          "tools",
+          "disposition",
+          "candidate_key",
+          "filter_rule"
         ],
         "title": "UnitSummary"
       },

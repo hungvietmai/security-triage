@@ -42,12 +42,14 @@ export const scansHandlers = [
     const search = new URL(request.url).searchParams;
     const tier = search.get("tier");
     const tool = search.get("tool");
+    const disposition = search.get("disposition");
     const limit = Number(search.get("limit") ?? 20);
     const offset = Number(search.get("offset") ?? 0);
     const units = (db.units[String(params.scanId)] ?? []).filter(
       (unit) =>
         (!tier || unit.priority === tier) &&
-        (!tool || unit.tools.includes(tool)),
+        (!tool || unit.tools.includes(tool)) &&
+        (!disposition || unit.disposition === disposition),
     );
     const page: Schemas["UnitPage"] = {
       items: units.slice(offset, offset + limit),
@@ -56,6 +58,56 @@ export const scansHandlers = [
       offset,
     };
     return HttpResponse.json(page);
+  }),
+  http.get(`${env.API_URL}/scans/:scanId/report`, ({ params }) => {
+    const scan = db.scans.find((scan) => scan.id === params.scanId);
+    if (!scan)
+      return HttpResponse.json({ detail: "Scan not found" }, { status: 404 });
+    const units = db.units[scan.id] ?? [];
+    const filtered = units.filter((unit) => unit.disposition === "filtered");
+    const tools = [...new Set(units.flatMap((unit) => unit.tools))].sort();
+    const report: Schemas["ScanReport"] = {
+      scan_id: scan.id,
+      status: scan.status,
+      profile: scan.profile,
+      profile_sha256: "f".repeat(64),
+      policy_version: scan.policy_version,
+      reconciler_version: scan.reconciler_version,
+      snapshot: scan.snapshot,
+      started_at: scan.started_at,
+      finished_at: scan.finished_at,
+      tool_versions: {},
+      steps: {
+        javascript: { codeql: { status: "completed", seconds: 12.34 } },
+      },
+      raw_alerts: Object.fromEntries(tools.map((tool) => [tool, 1])),
+      stages: {
+        raw_alerts: units.length + 1,
+        units: units.length,
+        candidates: units.length,
+        main_list: units.length - filtered.length,
+        filtered: filtered.length,
+        demoted: 0,
+      },
+      sources: Object.fromEntries(
+        tools.map((tool) => [
+          tool,
+          {
+            candidates: units.filter((unit) => unit.tools.includes(tool))
+              .length,
+            only: units.filter(
+              (unit) => unit.tools.length === 1 && unit.tools[0] === tool,
+            ).length,
+          },
+        ]),
+      ),
+      main_list_by_priority: { P1: 0, P2: 0, U: 0, P3: 0, P4: 0 },
+      filtered_by_rule: Object.fromEntries(
+        filtered.map((unit) => [unit.filter_rule ?? "unspecified", 1]),
+      ),
+      candidates: [],
+    };
+    return HttpResponse.json(report);
   }),
   http.get(`${env.API_URL}/scans/:scanId/units/:unitId`, ({ params }) => {
     const unit = db.units[String(params.scanId)]?.find(

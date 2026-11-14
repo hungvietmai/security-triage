@@ -15,9 +15,16 @@ import {
 import { paths } from "@/config/paths";
 import { useScan } from "@/features/scans/api/get-scan";
 import { ScanHeader } from "@/features/scans/components/scan-header";
+import { ScanReportPanel } from "@/features/scans/components/scan-report";
 import { UnitDetailSheet } from "@/features/scans/components/unit-detail-sheet";
 import { UnitsTable } from "@/features/scans/components/units-table";
-import { isScanActive, TIERS, TOOLS } from "@/features/scans/types";
+import {
+  DISPOSITIONS,
+  isScanActive,
+  TIERS,
+  TOOLS,
+  type Disposition,
+} from "@/features/scans/types";
 import { isApiError } from "@/lib/api-client";
 
 const route = getRouteApi("/scans/$scanId");
@@ -95,6 +102,23 @@ export function ScanRoute() {
               </Button>
             ))}
           </div>
+          <div className="flex flex-wrap gap-2" aria-label="Danh sách">
+            {(Object.keys(DISPOSITIONS) as Disposition[]).map((list) => (
+              <Button
+                key={list}
+                variant={search.list === list ? "default" : "outline"}
+                aria-pressed={search.list === list}
+                onClick={() =>
+                  updateSearch({
+                    list: search.list === list ? undefined : list,
+                    page: 1,
+                  })
+                }
+              >
+                {DISPOSITIONS[list]}: {scan.disposition_counts[list] ?? 0}
+              </Button>
+            ))}
+          </div>
           <div className="flex flex-wrap gap-4">
             <Field className="w-48">
               <FieldLabel htmlFor="tier-filter">Mức ưu tiên</FieldLabel>
@@ -147,7 +171,8 @@ export function ScanRoute() {
           </div>
           <p className="text-sm text-muted-foreground">
             ✓/✗ cho biết có/không có cảnh báo tại đơn vị. Thiếu kết quả công cụ
-            không chứng minh mã nguồn an toàn.
+            không chứng minh mã nguồn an toàn. Đơn vị đã gạn không bị xóa: mở
+            danh sách “Đã gạn” để xem lại cảnh báo gốc và lý do.
           </p>
           {isScanActive(scan.status) ? (
             <p role="status">
@@ -163,6 +188,7 @@ export function ScanRoute() {
               onSelect={setUnitId}
             />
           )}
+          {!isScanActive(scan.status) && <ScanReportPanel scanId={scanId} />}
           <UnitDetailSheet
             scanId={scanId}
             unitId={unitId}

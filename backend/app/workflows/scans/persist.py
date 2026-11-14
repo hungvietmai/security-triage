@@ -17,7 +17,9 @@ from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.workflows.scans.results import LanguageResult, ScanResult
 
-SCANNERS = ("semgrep", "codeql")
+# Steps stored as tool runs. "semgrep-evidence" and "codeql-evidence" are adjudication steps:
+# each has a SARIF artifact and timing but no findings of its own.
+SCANNERS = ("semgrep", "semgrep-evidence", "bandit", "eslint", "codeql", "codeql-evidence")
 # The process layer reports timeouts; the tool-run status vocabulary records them as failures.
 _TOOL_STATUS = {"completed": "completed", "partial": "partial"}
 
@@ -145,6 +147,11 @@ def _write_units(
     finding_ids: dict[str, uuid.UUID],
 ) -> None:
     units: dict[str, LocationUnit] = {}
+    candidates = {
+        assessment["unit_id"]: assessment["candidate"]["key"]
+        for assessment in result.assessments
+        if "candidate" in assessment
+    }
     for unit in result.units:
         span = unit["sink_span"]
         units[unit["unit_id"]] = LocationUnit(
@@ -160,6 +167,7 @@ def _write_units(
             mapping_status=unit["mapping_status"],
             reconciler_version=result.unit_version,
             locator_version=result.locator_version,
+            candidate_key=candidates.get(unit["unit_id"]),
         )
     session.add_all(units.values())
     session.flush()
@@ -179,6 +187,7 @@ def _write_units(
                 unit_id=units[assessment["unit_id"]].id,
                 evidence=assessment,
                 priority=assessment["priority"],
+                disposition=assessment.get("disposition", "review"),
                 decision_id=assessment["decision_id"],
                 matched_conditions=assessment["matched_conditions"],
                 reason=assessment["reason"],

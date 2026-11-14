@@ -41,11 +41,13 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
-# Per profile language: two version checks (60 s) and four steps bounded by the profile's
-# timeout_seconds (Semgrep, CodeQL create, CodeQL analyze, sink locator). Both languages of
-# command-injection-v0.1 at 600 s, plus transfer headroom; a test keeps this above every profile.
-SCANNER_STEPS = 4
-SOFT_TIME_LIMIT = 2 * (2 * 60 + SCANNER_STEPS * 600) + 600
+# Per profile language: up to three version checks (60 s) and five steps bounded by the
+# profile's timeout_seconds (Semgrep, Bandit or ESLint, CodeQL create, CodeQL analyze, sink
+# locator). Both languages of command-injection-v0.2 at 600 s, plus transfer headroom; a test
+# keeps this above every profile.
+VERSION_CHECKS = 3
+SCANNER_STEPS = 5
+SOFT_TIME_LIMIT = 2 * (VERSION_CHECKS * 60 + SCANNER_STEPS * 600) + 600
 # The soft limit interrupts only the main thread, which then waits for a scanner thread still
 # running, bounded by that step's timeout, before it can mark the scan failed. The hard limit
 # must leave that time, or the scan would be killed and stay "running". The longest step is
@@ -208,6 +210,18 @@ def scan_snapshot(
             ),
             "scanner_workers": settings.scanner_workers,
             "artifact_upload_workers": settings.artifact_upload_workers,
+            # Status, seconds and alert count of every step, for the before/after report.
+            "steps": {
+                result.language: {
+                    name: {
+                        key: step[key]
+                        for key in ("status", "seconds", "raw_findings")
+                        if key in step
+                    }
+                    for name, step in result.pipeline.steps.items()
+                }
+                for result in results
+            },
         },
         source_file_count=len(files),
     )

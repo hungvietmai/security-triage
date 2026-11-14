@@ -198,3 +198,78 @@ def test_repository_evidence_profile_verifies():
         "queries/cwe22_all.ql",
     ]
     assert (profile.baseline_rule, profile.evidence_rule) == ("st/cwe-22/none", "st/cwe-22/all")
+
+
+V02_MANIFEST = "profiles/command-injection-v0.2/profile.json"
+
+
+def _write_screening_profile(root: Path, **entry: Any) -> None:
+    """The base test profile with Bandit added to its language config."""
+    manifest = _write_profile(root)
+    (root / "bandit.ini").write_bytes(b"[bandit]\n")
+    pin = {"path": "bandit.ini", "sha256": _sha(b"[bandit]\n")}
+    config = json.loads((root / "js.json").read_bytes())
+    config["scanners"] = ["semgrep", "bandit", "codeql"]
+    config["bandit"] = {"version": "1.9.4", "config": pin, "rules": ["B602"], **entry}
+    (root / "js.json").write_text(json.dumps(config), encoding="utf-8")
+    manifest["files"]["js.json"] = _sha((root / "js.json").read_bytes())
+    manifest["files"]["bandit.ini"] = pin["sha256"]
+    (root / "profile.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+
+def test_load_profile_accepts_a_pinned_screening_tool(tmp_path):
+    _write_screening_profile(tmp_path)
+    profile = load_profile(tmp_path, "profile.json")
+    assert profile.configs["javascript"]["bandit"]["rules"] == ["B602"]
+
+
+@pytest.mark.parametrize(
+    ("entry", "message"),
+    [
+        ({"config": {"path": "bandit.ini", "sha256": "0" * 64}}, "pin bandit.ini differently"),
+        ({"rules": []}, "no version or rules for bandit"),
+        ({"version": ""}, "no version or rules for bandit"),
+    ],
+)
+def test_load_profile_rejects_an_unpinned_or_empty_screening_tool(tmp_path, entry, message):
+    _write_screening_profile(tmp_path, **entry)
+    with pytest.raises(ProfileError, match=message):
+        load_profile(tmp_path, "profile.json")
+
+
+def test_load_profile_rejects_a_screening_tool_that_is_listed_but_not_configured(tmp_path):
+    manifest = _write_profile(tmp_path)
+    config = json.loads((tmp_path / "js.json").read_bytes())
+    config["scanners"] = ["semgrep", "bandit", "codeql"]
+    (tmp_path / "js.json").write_text(json.dumps(config), encoding="utf-8")
+    manifest["files"]["js.json"] = _sha((tmp_path / "js.json").read_bytes())
+    (tmp_path / "profile.json").write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ProfileError, match="both list and configure bandit"):
+        load_profile(tmp_path, "profile.json")
+
+
+def test_repository_v0_2_profile_verifies_and_claims_every_screening_rule():
+    profile = load_profile(ROOT, V02_MANIFEST)
+    assert profile.profile_id == "command-injection-v0.2"
+    assert profile.policy["policy_version"] == "0.2"
+    assert profile.rule_claims["version"] == "rule-claims-v3"
+    screening = {"python": "bandit", "javascript": "eslint"}
+    for language, tool in screening.items():
+        config = profile.configs[language]
+        assert config["scanners"] == ["semgrep", tool, "codeql"]
+        for rule_id in config[tool]["rules"]:
+            # Exactly one claim, bound to the tool version and the pinned configuration bytes.
+            claims = [
+                rule
+                for rule in profile.rule_claims["rules"]
+                if (rule["tool"], rule["rule_id"], rule["language"]) == (tool, rule_id, language)
+            ]
+            assert [
+                (claim["tool_version"], claim["definition_sha256"], claim["claim_family"])
+                for claim in claims
+            ] == [(config[tool]["version"], config[tool]["config"]["sha256"], "audit")]
+
+
+def test_repository_v0_2_policy_keeps_the_v0_1_decision_list():
+    current = load_profile(ROOT, V02_MANIFEST).policy["decisions"]
+    assert current == load_profile(ROOT, MANIFEST).policy["decisions"]

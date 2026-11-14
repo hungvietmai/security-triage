@@ -18,6 +18,7 @@ export function getUnits(
       limit: params.limit ?? UNITS_PAGE_SIZE,
       tier: params.tier ?? undefined,
       tool: params.tool ?? undefined,
+      disposition: params.disposition ?? undefined,
     },
     signal,
   });

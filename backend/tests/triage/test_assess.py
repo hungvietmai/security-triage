@@ -100,6 +100,74 @@ def test_verified_definitions_use_only_matching_staged_bytes():
     assert _definitions([], None) == []
 
 
+def test_screening_rules_are_verified_only_by_the_staged_tool_configuration():
+    def definitions(observed):
+        entry = {
+            "tool": "bandit",
+            "version": "1.9.4",
+            "rules": ["B602", "B605"],
+            "expected_sha256": "e" * 64,
+            "observed_sha256": observed,
+        }
+        return verified_definitions(
+            language="python",
+            semgrep_version="1.0",
+            codeql_version="2.0",
+            semgrep_rules=[],
+            staged_rules=[],
+            expected_query_sha256={},
+            observed_query_sha256=None,
+            query_pack_version=None,
+            screening=[entry],
+        )
+
+    assert definitions("e" * 64) == [
+        {
+            "tool": "bandit",
+            "language": "python",
+            "rule_id": rule_id,
+            "tool_version": "1.9.4",
+            "definition_sha256": "e" * 64,
+        }
+        for rule_id in ("B602", "B605")
+    ]
+    # The tool did not run, or ran with other bytes: its rules stay unverified.
+    assert definitions(None) == []
+    assert definitions("f" * 64) == []
+
+
+@pytest.mark.parametrize(
+    ("tools", "agreement"),
+    [
+        (["semgrep", "codeql"], True),
+        (["bandit", "codeql"], True),
+        (["eslint", "codeql"], True),
+        (["semgrep", "bandit"], False),  # two screening tools, no adjudication
+        (["codeql"], False),
+    ],
+)
+def test_agreement_needs_codeql_and_a_screening_tool(tools, agreement):
+    source = "import os\nos.system(cmd)\n"
+    sink = locate_python_sinks("app.py", source)[0]
+    findings = [
+        {
+            "raw_id": f"{tool}:0:0",
+            "tool": tool,
+            "snapshot_sha256": "s" * 64,
+            "rule_id": "unlisted",
+            "reported_path": "app.py",
+            "reported_region": dict(sink["args"][0]["span"]),
+            "message": "",
+            "raw_result": {},
+        }
+        for tool in tools
+    ]
+    (unit,) = reconcile_findings(findings, [sink], {"app.py": source})
+    claims = classify_claims(MAPPING, findings, [])
+    evidence = build_evidence(unit, findings, claims, [sink], {"app.py": source})
+    assert evidence["predicate_values"]["agreement"] is agreement
+
+
 def test_assess_units_stamps_provenance_on_every_assessment():
     source = "import os\nos.system(cmd)\n"
     sinks = locate_python_sinks("a.py", source)

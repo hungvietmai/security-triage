@@ -38,3 +38,59 @@ has recorded prior exposure (it is the long-standing development and CI parity c
 This demo adds no new scanner exposure for any held-out or previously unscanned pair,
 and it is a demonstration, not a test: the test suites and Playwright fixtures still
 never scan research pairs.
+
+---
+
+# Real-stack demo: merging, filtering and the before/after report
+
+**Complete stack, no mocked HTTP.** [adjudication-demo.mjs](adjudication-demo.mjs) opens two
+scans the worker already finished and checks, in a real browser, what the thesis demonstration
+needs to show. It starts no scanner and fails if the page shows anything other than the
+expected values.
+
+Recorded 2026-11-14 on the working tree after commit `1d581a6` (Windows host, Docker Desktop,
+Chromium via Playwright on the host, application at `http://localhost:5173`).
+
+| Scan | Profile | Source (development data) |
+| --- | --- | --- |
+| CWE-78 | `command-injection-v0.2` | `OWASP-Benchmark/BenchmarkPython@f129148`: 51 alerts, 20 candidates, 2 filtered |
+| CWE-22 | `path-traversal-v0.2` | `pipecat-ai/pipecat@7519c26`: 3 alerts, all filtered by safety evidence |
+
+| Screenshot | Shows |
+| --- | --- |
+| [adjudication-scan-overview.png](adjudication-scan-overview.png) | Scan page: main review list and filtered list counts, units table, before/after report |
+| [adjudication-merged-candidate.png](adjudication-merged-candidate.png) | One unit holding the alerts of Bandit, CodeQL and Semgrep for the same call |
+| [adjudication-single-tool-kept.png](adjudication-single-tool-kept.png) | A call only Bandit reported (`BenchmarkTest00899`, a true positive): kept, with the reason no evidence refutes it |
+| [adjudication-filtered-list.png](adjudication-filtered-list.png) | The "Đã gạn" list: two candidates and the rule that filtered each (Semgrep's dead-branch evidence for `01097`, CodeQL's safety evidence for `01098`) |
+| [adjudication-filtered-detail.png](adjudication-filtered-detail.png) | A filtered unit reopened: decision, the evidence of both rules it satisfied and its original alerts |
+| [adjudication-report.png](adjudication-report.png) | Before/after report: stages, each tool's contribution, filter rules, step timings |
+| [adjudication-cwe22-reopened.png](adjudication-cwe22-reopened.png) | A CWE-22 alert removed by safety evidence, reopened from the filtered list |
+
+The script also downloads both exports from the page and checks them: the JSON report has
+18 main-list and 2 filtered candidates; the merged SARIF log keeps all 51 alerts and marks only
+the 6 alerts of the two filtered candidates as suppressed.
+
+## Reproduce
+
+Start the stack, scan the two sources once (they are development data; see
+[experiments/evaluation/collect_development.sh](../../experiments/evaluation/collect_development.sh)),
+then pass the two scan IDs to the script. With the frontend's Playwright and Chromium on the
+host:
+
+```bash
+docker compose up --build -d --wait --wait-timeout 900
+python experiments/evaluation/collect_report.py /tmp/owasp command-injection-v0.2 github \
+  OWASP-Benchmark BenchmarkPython f1291485808b66e20ddb6b01b10dc71b3df8c8ba
+python experiments/evaluation/collect_report.py /tmp/pipecat path-traversal-v0.2 github \
+  pipecat-ai pipecat 7519c26ac5508573c35fa3a9c4717b013993d129
+
+cd frontend && npm run test:e2e:install
+BASE=http://localhost:5173 OUT=../artifacts/demo-adjudication \
+  SCAN_CWE78=<scan_id in /tmp/owasp/report.json> \
+  SCAN_CWE22=<scan_id in /tmp/pipecat/report.json> \
+  node --input-type=module - < ../docs/demo/adjudication-demo.mjs
+```
+
+The script is piped to Node so that `playwright` resolves from `frontend/node_modules`.
+This is a demonstration on development data, not an evaluation: the numbers it checks are
+the ones recorded in [docs/thesis/chapter-3-results.md](../thesis/chapter-3-results.md).

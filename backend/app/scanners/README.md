@@ -8,11 +8,12 @@ Changes here change both; CI's `scan-parity` job requires them to agree.
 |---|---|
 | `sources.py` | Server-built npm/GitHub download URLs; npm registry integrity check |
 | `acquisition.py` | Bounded archive extraction: 50 MiB download, 200 MiB unpacked, 20,000 entries; rejects traversal and outward symlinks, skips symlinks inside the archive |
-| `semgrep.py`, `codeql.py`, `process.py` | Scanner adapters; each command runs with an argument list and a timeout in its own process group, with logs preserved |
+| `semgrep.py`, `codeql.py`, `process.py` | Scanner adapters; each command runs with an argument list and a timeout in its own process group, with logs preserved. `codeql.run_codeql_evidence` runs pinned safety-evidence queries on the database the scan already created (the adjudication step) |
+| `bandit.py`, `eslint.py` | Screening adapters for profiles that add them. Both run from pinned worker configuration (`tools/bandit`, `tools/eslint`) and never load configuration, plugins or a formatter from the scanned source. ESLint paths are made relative to the source root; a file it cannot parse makes its run partial |
 | `pipeline.py` | Runs the configured tools for one language, optionally in parallel, preserving configured order; rejects a scanner whose version differs from the configuration |
 | `sarif.py` | Strict SARIF 2.1.0 parsing; malformed arrays fail, runs without results are partial |
-| `profile.py` | Loads a scan profile (`profiles/<id>/profile.json`) and verifies the SHA-256 of every file it names. Priority profiles pin rules, rule claims and a policy; `safety-evidence` profiles pin a CodeQL query pack with a baseline and an evidence query |
-| `provenance.py` | Artifact hashing helpers |
+| `profile.py` | Loads a scan profile (`profiles/<id>/profile.json`) and verifies the SHA-256 of every file it names. Priority profiles pin rules, rule claims, a policy and the configuration of any screening tool (Bandit, ESLint) their language configs add; `safety-evidence` profiles pin a CodeQL query pack with a baseline and an evidence query |
+| `provenance.py` | Artifact hashing helpers; `pinned_file` resolves a configured `{path, sha256}` file inside the repository |
 
 Rules:
 

@@ -21,7 +21,7 @@ celery_app.conf.update(
     timezone="UTC",
     # Redis redelivers unacknowledged tasks after this; acks_late tasks (run_scan) must finish
     # well within it, or a long scan would start again on another worker while still running.
-    broker_transport_options={"visibility_timeout": 2 * 60 * 60},
+    broker_transport_options={"visibility_timeout": 3 * 60 * 60},
 )
 
 
