@@ -9,9 +9,15 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong hai profile:
+  một commit GitHub, chọn một trong ba profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
+  - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
+    Python, eslint-plugin-security cho JavaScript/TypeScript); CodeQL thẩm định bằng truy
+    vấn bằng chứng an toàn và ứng viên có bằng chứng là cảnh báo sai được gạn sang danh
+    sách riêng. Đã đo trên dữ liệu phát triển và trên ba đợt mã chưa từng xem (chỉ có nhãn
+    dương tính); chưa đo trên tập giữ lại `pairs-v1`
+    ([docs/thesis/chuong-3-thuc-nghiem.md](docs/thesis/chuong-3-thuc-nghiem.md));
   - `path-traversal-v0.2`: CWE-22, Python, CodeQL với bằng chứng an toàn v0.2. Cảnh báo có
     bằng chứng an toàn xuống cuối hàng đợi, không bị xóa.
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
@@ -23,6 +29,7 @@ và CodeQL. Repository gồm hai phần:
 | [docs/research.md](docs/research.md) | Câu hỏi nghiên cứu, diễn tiến, kết quả, việc còn mở, quy ước tài liệu |
 | [docs/architecture.md](docs/architecture.md) | Kiến trúc ứng dụng, luồng quét, dữ liệu, API, những gì chưa có |
 | [docs/validation.md](docs/validation.md) | Hook, CI, kết quả kiểm chứng đã ghi nhận, lỗi đã biết |
+| [docs/thesis/](docs/thesis/README.md) | Hồ sơ đề án: bản thảo ba chương và Kết luận, đối chiếu cam kết đề cương, bảng tiêu chí, hướng dẫn trình diễn, tiến độ |
 | [docs/performance.md](docs/performance.md) | Số đo hiệu năng backend (2026-10-07) |
 | [docs/demo/](docs/demo/README.md) | Demo toàn stack quét `curling@0.2.0` (2026-10-08) |
 | [experiments/README.md](experiments/README.md) | Bản đồ thư mục thực nghiệm, cách chạy, danh sách tài liệu bị khóa |
@@ -146,13 +153,14 @@ Danh sách job và các kết quả đã ghi nhận: [docs/validation.md](docs/v
 | `frontend/` | React + TypeScript + Vite, shadcn/ui, TanStack Query/Router; Nginx cho bản build |
 | `backend/app/` | FastAPI theo domain: `core/` (config, DB, S3, lỗi), `features/<domain>/`, Celery. Xem [backend/AGENTS.md](backend/AGENTS.md) |
 | `backend/app/scanners/`, `backend/app/triage/` | Lõi quét và thẩm định, dùng chung giữa worker và CLI thực nghiệm |
-| `backend/migrations/` | Alembic, migration 0001–0006 |
+| `backend/migrations/` | Alembic, migration 0001–0007 |
 | `backend/tests/` | Test theo cấu trúc `app/`, gồm test kiến trúc |
 | `infra/` | Cấu hình SeaweedFS |
 | `rules/codeql/python-evidence/` | Query chẩn đoán guard số nguyên (giai đoạn CWE-78) |
 | `rules/codeql/path-traversal-v0.2/` | Pack CWE-22 v0.2 mà worker chạy, trùng từng byte với bản nghiên cứu. Các phiên bản query CWE-22 khác nằm trong `experiments/` |
+| `rules/codeql/command-injection-evidence-v0.2/`, `rules/semgrep/command-injection-evidence-v0.1/` | Hai gói bằng chứng cho bước gạn CWE-78: truy vấn CodeQL chạy lại trên database đã tạo, và luật nhánh chết của Semgrep CE kèm các ca kiểm tra |
 | `profiles/` | Scan profile của worker: manifest ghim hash các config, rule, rule-claims và policy |
-| `tools/` | Ghim phiên bản Semgrep/CodeQL và script cài, dùng chung cho các image scanner |
+| `tools/` | Ghim phiên bản Semgrep, CodeQL, Bandit, Node.js và ESLint; script cài dùng chung cho các image scanner; cấu hình đã ghim của Bandit (`bandit/`) và ESLint (`eslint/`) |
 | `experiments/` | Toàn bộ nghiên cứu: dữ liệu, query, runner, kết quả, khóa. Xem [experiments/README.md](experiments/README.md) |
 | `docs/` | Tài liệu tổng quan (xem [Tài liệu](#tài-liệu)) |
 
@@ -172,15 +180,17 @@ npm run gen:api    # sau khi xuất lại openapi.json từ backend
 ```
 
 Trang hiện có: Tổng quan, Dự án (`?page=`), Chi tiết dự án (`?tab=`), Lượt quét,
-Chi tiết lượt quét (hàng đợi P1→P4 và bằng chứng), Cảnh báo, Hệ thống, 404. Tính năng mà
+Chi tiết lượt quét (hàng đợi P1→P4, danh sách rà chính và đã gạn, bằng chứng, báo cáo
+trước–sau), Cảnh báo, Hệ thống, 404. Tính năng mà
 backend chưa có được hiển thị rõ là "Chưa triển khai"; giao diện không dùng dữ liệu mẫu
 hay kết quả quét giả.
 
 ## Scanner trong worker
 
-Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep và CodeQL
-theo [`tools/pins.env`](tools/pins.env), kèm hai scan profile
-[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json) và
+Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep, CodeQL,
+Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm ba scan profile
+[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json),
+[`profiles/command-injection-v0.2/`](profiles/command-injection-v0.2/profile.json) và
 [`profiles/path-traversal-v0.2/`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
 [`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)). Worker từ chối
 khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không

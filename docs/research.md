@@ -284,8 +284,48 @@ trình bày cả hai kịch bản.
 6. **Tích hợp ứng dụng** (đề án hướng ứng dụng):
    - Đã xong bước 1: profile `path-traversal-v0.2` chạy pack v0.2 trong worker và xếp cảnh
      báo P1 (còn báo) hoặc P4 (bằng chứng đã loại); xem [architecture.md](architecture.md).
-   - Còn lại: hiển thị bảng bằng chứng, quy trình rà theo phiếu, báo cáo theo dự án, và đánh
-     giá với người dùng.
+   - Đã xong bước 2 (14/11): profile `command-injection-v0.2` thêm công cụ bổ trợ của đề
+     cương vào bước sàng lọc (Bandit cho Python, eslint-plugin-security cho
+     JavaScript/TypeScript) và chính sách ưu tiên v0.2; xem
+     [PRIORITY_V0_2.md](../profiles/command-injection-v0.2/PRIORITY_V0_2.md). Profile này
+     **chưa có số liệu đánh giá nào**.
+   - Đã xong bước 3 (14/11): bước gạn `adjudicate-v0.2` (ứng viên theo lời gọi; G3 dùng luật
+     bằng chứng nhánh chết của Semgrep CE, G1 dùng truy vấn bằng chứng CWE-78 của CodeQL trên
+     cùng database, G2 dùng phân loại lệnh hằng của Bandit), báo cáo trước–sau và SARIF hợp
+     nhất. Số liệu: [thesis/chapter-3-results.md](thesis/chapter-3-results.md). Trên 20 vị trí
+     CWE-78 của OWASP BenchmarkPython: hợp các nguồn báo 13/13 lỗi thật; gạn 2/7 cảnh báo sai
+     (1/7 chỉ bằng Semgrep), không gạn nhầm lỗi thật nào. **Đây là dữ liệu đã dùng để phát
+     triển, không phải kiểm chứng độc lập.**
+   - Kiểm tra độc lập quy mô nhỏ (14/11, giao thức băm trước khi quét): ba ứng dụng công khai
+     chưa từng xem, 3/3 lỗi chèn lệnh đã công bố được báo, 0 bị gạn; một lỗi thật nằm ở P3 vì
+     CodeQL im lặng. Xem [independent/PROTOCOL.md](../experiments/evaluation/independent/PROTOCOL.md).
+   - Kiểm tra độc lập đợt 2 và 3 (14/11, cùng cách đăng ký): 52 package npm có CVE chèn lệnh
+     của SecBench.js nằm ngoài inventory đã khóa, và ba ứng dụng Python. Trên 43 lượt quét
+     hoàn tất của đợt 2, hợp các nguồn báo 32 vị trí lỗi đã công bố (CodeQL riêng 27, Semgrep
+     riêng 12); đợt 3 báo 6/6. Không vị trí nào bị gạn; bước gạn cũng không gạn ứng viên nào.
+     Chỉ có nhãn dương tính nên không tính được độ chính xác. Đợt 2 làm lộ một lỗi của
+     worker (tệp có `\r\n` làm hỏng lượt quét, đã sửa) và 4 cảnh báo đúng dòng lỗi không gộp
+     được vào lời gọi. Xem
+     [independent-secbench/](../experiments/evaluation/independent-secbench/PROTOCOL.md),
+     [independent-python/](../experiments/evaluation/independent-python/PROTOCOL.md) và
+     [thesis/chuong-3-thuc-nghiem.md](thesis/chuong-3-thuc-nghiem.md).
+   - Kiểm tra độc lập đợt 4 (14/11): 210 dòng mã minh họa của kho semgrep-rules, có cả nhãn
+     "có lỗi" (135) và "an toàn" (75) do tác giả luật viết. Lượt quét đã đăng ký **thất bại**
+     vì một tệp Python sai cú pháp làm bộ định vị lời gọi dừng cả lượt quét (đã sửa). Lượt
+     quét lại sau khi sửa, ngoài kết quả đã đăng ký: hợp mọi nguồn P 0,66 / R 0,71 / F1 0,69;
+     Semgrep riêng 0,88 / 0,36 / 0,51; CodeQL riêng 1,00 / 0,15 / 0,26. Lượt này `partial` nên
+     bước gạn không gạn gì. Xem
+     [independent-labeled/DEVIATIONS.md](../experiments/evaluation/independent-labeled/DEVIATIONS.md).
+   - Kiểm tra độc lập đợt 5 (14–15/11): 20 công cụ dòng lệnh Python thật, không có nhãn. 18 lượt
+     quét hoàn tất; bước gạn chuyển 19 trong 145 ứng viên sang "Đã gạn", tất cả theo quy tắc
+     "lệnh là hằng" (G2). Phép kiểm độc lập đã đăng ký chấp nhận 17, đánh 2 là "không hằng";
+     đọc lại cho thấy cả hai là lệnh hằng bọc trong lời gọi khác. G1 và G3 không gạn ứng viên
+     nào. Xem [independent-filter/READING.md](../experiments/evaluation/independent-filter/READING.md).
+   - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
+     [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
+     thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
+     CWE-22, đánh giá với người dùng. Hồ sơ đề án và bảng tiêu chí:
+     [thesis/README.md](thesis/README.md).
 7. **Tập held-out CWE-78** (16 cặp, chưa quét): quyết định chính thức bỏ hay dùng tiếp.
 8. **Script bị khóa trên Windows:** code chưa khóa đã được sửa để đọc/ghi UTF-8 (27/10), nhưng
    các script bị khóa vẫn dùng bảng mã mặc định. Trên Windows phải chạy chúng với `PYTHONUTF8=1`.
