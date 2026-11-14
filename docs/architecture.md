@@ -11,9 +11,16 @@ scan profile đã ghim hash. Sau đó worker gộp cảnh báo theo vị trí si
 vào một mức ưu tiên rà soát. Giao diện hiển thị trạng thái lượt quét, hàng đợi P1→P4 và
 bằng chứng của từng đơn vị.
 
-Profile duy nhất hiện có là `command-injection-v0.1`: CWE-78 trên JavaScript và Python.
-Đây là sản phẩm của giai đoạn nghiên cứu CWE-78. Phương pháp CWE-22 hiện tại (bằng chứng
-an toàn v0.2/v0.3) **chưa được tích hợp** vào ứng dụng.
+Người dùng chọn một trong hai profile khi tạo lượt quét:
+
+| Profile | Phạm vi | Cách xếp hàng đợi |
+|---|---|---|
+| `command-injection-v0.1` (mặc định) | CWE-78; JavaScript và Python; Semgrep và CodeQL | Gộp cảnh báo theo sink, xếp P1–P4/U theo chính sách ưu tiên v0.1 |
+| `path-traversal-v0.2` | CWE-22; Python; chỉ CodeQL | Cảnh báo của truy vấn baseline. Nếu truy vấn có bằng chứng an toàn v0.2 vẫn báo thì ở **P1**; nếu bằng chứng đã loại mọi luồng thì xuống **P4**. Không xóa cảnh báo nào |
+
+Profile `path-traversal-v0.2` dùng đúng pack đã đánh giá trong nghiên cứu
+([rules/codeql/path-traversal-v0.2/](../rules/codeql/path-traversal-v0.2/README.md)), trùng từng
+byte với bản đóng băng. v0.3 chưa được tích hợp.
 
 ## 2. Thành phần
 
@@ -43,15 +50,23 @@ Mọi cổng chỉ bind `127.0.0.1`. Ứng dụng dành cho **một người dù
    - Khi giải nén: tối đa 50 MiB tải về, 200 MiB giải nén, 20.000 mục. Từ chối path traversal
      và symlink trỏ ra ngoài; symlink trỏ vào trong archive thì bỏ qua.
 3. **Quét** (`workflows/scans/analysis.py`, `app/scanners/`):
-   - Trước khi nhận việc, worker kiểm hash của mọi file trong profile và phiên bản scanner.
+   - Lúc khởi động, worker kiểm hash của mọi file trong mọi profile và phiên bản scanner;
+     sai lệch thì từ chối chạy. Mỗi lượt quét nạp lại profile mà nó đã chọn.
    - Các ngôn ngữ chạy tuần tự. Trong một ngôn ngữ, Semgrep và CodeQL có thể chạy song song
      (`SCANNER_WORKERS`, mặc định 2).
-4. **Thẩm định** (`app/triage/`):
-   - Định vị sink bằng AST.
-   - `reconcile-v0.1` gộp cảnh báo thành đơn vị theo `snapshot + đường dẫn + sink + vai trò đối số`;
-     CWE không nằm trong khóa.
-   - `priority v0.1` gán P1–P4 hoặc U kèm mã quyết định và lý do. Mức ưu tiên **không xóa
-     cảnh báo** và không phải nhãn đúng/sai.
+4. **Thẩm định** (`app/triage/`), theo loại profile:
+   - **Profile ưu tiên** (`command-injection-v0.1`):
+     - định vị sink bằng AST;
+     - `reconcile-v0.1` gộp cảnh báo thành đơn vị theo `snapshot + đường dẫn + sink + vai trò
+       đối số` (CWE không nằm trong khóa);
+     - `priority v0.1` gán P1–P4 hoặc U kèm mã quyết định và lý do.
+   - **Profile bằng chứng an toàn** (`path-traversal-v0.2`, `app/triage/safety_evidence.py`):
+     - mỗi vị trí cảnh báo của truy vấn baseline là một đơn vị;
+     - so với truy vấn có bằng chứng: còn báo thì P1, không còn thì P4;
+     - truy vấn bằng chứng báo ở vị trí ngoài baseline là lỗi, và lượt quét thất bại;
+     - lượt quét chạy dở (`partial`) không xếp hạng gì, để tránh hiển thị cảnh báo đang giữ
+       thành cảnh báo bị ẩn.
+   - Mức ưu tiên **không xóa cảnh báo** và không phải nhãn đúng/sai.
 5. **Lưu** (`workflows/scans/persist.py`): kết quả của lượt quét được thay trong một
    transaction. Artifact được upload song song (`ARTIFACT_UPLOAD_WORKERS`, mặc định 4) dưới
    `scans/{scan_id}/…`, kèm SHA-256.
@@ -107,7 +122,8 @@ dữ liệu mẫu hay kết quả giả. Cấu trúc và quy tắc của fronten
 
 - Upload archive hoặc thư mục từ máy người dùng.
 - API liệt kê mọi lượt quét, và trang cảnh báo tổng hợp toàn hệ thống.
-- Profile CWE-22 dùng bằng chứng an toàn v0.2/v0.3.
+- Với profile CWE-22: hiển thị bảng bằng chứng (`Evidence.ql`: cơ chế, guard, dòng mã), quy
+  trình rà theo phiếu và v0.3.
 - Đăng nhập, phân quyền, TLS, quản lý secret, hạn mức tài nguyên và worker quét cô lập.
   Đây là điều kiện bắt buộc trước mọi triển khai dùng chung.
 

@@ -40,7 +40,11 @@ class GitHubSource(InputSchema):
 
 class ScanCreate(InputSchema):
     source: Annotated[NpmSource | GitHubSource, Field(discriminator="kind")]
-    profile: Literal["command-injection-v0.1"] = "command-injection-v0.1"
+    profile: Literal["command-injection-v0.1", "path-traversal-v0.2"] = Field(
+        default="command-injection-v0.1",
+        description="command-injection-v0.1: CWE-78, JavaScript and Python, priority policy. "
+        "path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
+    )
 
 
 class ScanAccepted(BaseModel):

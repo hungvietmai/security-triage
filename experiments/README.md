@@ -123,6 +123,12 @@ Sau khi đổi một file đã được ghim, chạy `python experiments/build_p
 quả; CI (`test_profile.py`) sẽ fail nếu profile lỗi thời. Worker từ chối khởi động nếu hash
 hoặc phiên bản scanner lệch.
 
+`profiles/path-traversal-v0.2/profile.json` (viết tay, loại `safety-evidence`) ghim pack CodeQL
+ở `rules/codeql/path-traversal-v0.2/`. Pack này là bản sao từng byte của `owasp-bp-pilot/ql_v02/`
+và của hai truy vấn mà đợt C đã chạy; `tests/test_product_pack.py` fail nếu bản sao lệch khỏi
+các khóa `FREEZE_v0.2_postformat.sha256`, `wave-c/toolchain.lock.json` và
+`wave-c/EXECUTION_LOCK.sha256`. Phiên bản bằng chứng mới cần thư mục pack và profile mới.
+
 ## Tài liệu bị khóa
 
 Một file bị coi là khóa khi SHA-256 hiện tại của nó xuất hiện trong một manifest:
@@ -130,7 +136,7 @@ Một file bị coi là khóa khi SHA-256 hiện tại của nó xuất hiện t
 - `*.sha256`: `FREEZE_*`, `LOCK`, `EXECUTION_LOCK`, `LABELS_LOCK`, `RESULTS_LOCK`,
   `PATHS_LOCK`, `REVIEW_LOCK`, `SELF_REVIEW_LOCK`, `INPUTS_LOCK`, `EXPECTATIONS`;
 - `FREEZE_v0.3_dual.json`;
-- `profiles/command-injection-v0.1/profile.json`.
+- `profiles/command-injection-v0.1/profile.json` và `profiles/path-traversal-v0.2/profile.json`.
 
 Sửa một file như vậy sẽ phá kiểm tra khóa, hoặc khiến worker từ chối khởi động. Kiểm tra trước khi sửa:
 

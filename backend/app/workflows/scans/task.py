@@ -24,11 +24,12 @@ from app.features.sources.models import SourceSnapshot
 from app.scanners.acquisition import SOURCE_EXTENSIONS
 from app.scanners.pipeline import PipelineStatus, run_pipeline
 from app.scanners.process import InvokeCallable, invoke
-from app.scanners.profile import load_profile
+from app.scanners.profile import AnyProfile, EvidenceProfile, load_any_profile
 from app.scanners.provenance import digest
 from app.scanners.sources import Fetch, fetch_allowlisted
 from app.triage.reconcile import RECONCILIATION_VERSION
-from app.workflows.scans.analysis import RunPipeline, scan_language
+from app.triage.safety_evidence import EVIDENCE_UNIT_VERSION
+from app.workflows.scans.analysis import RunPipeline, scan_language, scan_language_evidence
 from app.workflows.scans.exceptions import INFRA_ERRORS
 from app.workflows.scans.persist import claim_scan, mark_scan_failed, persist_scan_result
 from app.workflows.scans.results import LanguageResult, ScanResult
@@ -42,13 +43,15 @@ logger = logging.getLogger(__name__)
 MAX_RETRIES = 3
 # Per profile language: two version checks (60 s) and four steps bounded by the profile's
 # timeout_seconds (Semgrep, CodeQL create, CodeQL analyze, sink locator). Both languages of
-# command-injection-v0.1 at 600 s, plus transfer headroom; a test keeps this above the profile.
+# command-injection-v0.1 at 600 s, plus transfer headroom; a test keeps this above every profile.
 SCANNER_STEPS = 4
 SOFT_TIME_LIMIT = 2 * (2 * 60 + SCANNER_STEPS * 600) + 600
-# The soft limit interrupts only the main thread. With parallel scanners it then waits for the
-# other thread's scanner, bounded by its own 600 s timeout, before it can mark the scan failed;
-# the hard limit must leave that time, or the scan would be killed and stay "running".
-TIME_LIMIT = SOFT_TIME_LIMIT + 600 + 300
+# The soft limit interrupts only the main thread, which then waits for a scanner thread still
+# running, bounded by that step's timeout, before it can mark the scan failed. The hard limit
+# must leave that time, or the scan would be killed and stay "running". The longest step is
+# path-traversal-v0.2's CodeQL at 1200 s; a test keeps this current.
+LONGEST_SCANNER_STEP = 1200
+TIME_LIMIT = SOFT_TIME_LIMIT + LONGEST_SCANNER_STEP + 300
 
 
 def _now() -> datetime:
@@ -102,17 +105,29 @@ def _overall(statuses: list[PipelineStatus]) -> PipelineStatus:
     return "partial" if any(s in {"completed", "partial"} for s in statuses) else "failed"
 
 
+def load_scan_profile(settings: Settings, profile_id: str | None) -> AnyProfile:
+    """The scan's named profile, or the default for scans created before profiles were named."""
+    if profile_id is None:
+        manifest = settings.scan_profile
+    elif profile_id in settings.scan_profiles:
+        manifest = settings.scan_profiles[profile_id]
+    else:
+        raise ValueError(f"Unknown scan profile: {profile_id}")
+    return load_any_profile(settings.triage_root, manifest)
+
+
 def scan_snapshot(
     scan_id: uuid.UUID,
     snapshot: SourceSnapshot,
     *,
     settings: Settings,
     storage: "S3Client",
+    profile_id: str | None = None,
     run_pipeline_fn: RunPipeline = run_pipeline,
     invoke_fn: InvokeCallable = invoke,
 ) -> ScanResult:
     """Scan, triage and upload artifacts in a work directory that never outlives the call."""
-    profile = load_profile(settings.triage_root, settings.scan_profile)
+    profile = load_scan_profile(settings, profile_id)
     if snapshot.status != "ready" or not snapshot.sha256:
         raise ValueError(f"Snapshot is not ready (status {snapshot.status})")
     with tempfile.TemporaryDirectory(prefix=f"scan-{scan_id}-") as folder:
@@ -130,8 +145,19 @@ def scan_snapshot(
         for language in languages:
             output = work / language
             output.mkdir()
-            results.append(
-                scan_language(
+            if isinstance(profile, EvidenceProfile):
+                language_result = scan_language_evidence(
+                    language,
+                    profile=profile,
+                    settings=settings,
+                    source=source,
+                    output=output,
+                    snapshot_sha256=snapshot.sha256,
+                    run_pipeline_fn=run_pipeline_fn,
+                    invoke_fn=invoke_fn,
+                )
+            else:
+                language_result = scan_language(
                     language,
                     profile=profile,
                     settings=settings,
@@ -142,7 +168,7 @@ def scan_snapshot(
                     run_pipeline_fn=run_pipeline_fn,
                     invoke_fn=invoke_fn,
                 )
-            )
+            results.append(language_result)
             artifacts.update(
                 _upload(
                     storage,
@@ -169,8 +195,17 @@ def scan_snapshot(
             "profile_id": profile.profile_id,
             "profile_sha256": profile.manifest_sha256,
             "languages": languages,
-            "reconciler_version": RECONCILIATION_VERSION,
-            "policy_version": profile.policy["policy_version"],
+            **(
+                {
+                    "reconciler_version": EVIDENCE_UNIT_VERSION,
+                    "policy_version": profile.policy_version,
+                }
+                if isinstance(profile, EvidenceProfile)
+                else {
+                    "reconciler_version": RECONCILIATION_VERSION,
+                    "policy_version": profile.policy["policy_version"],
+                }
+            ),
             "scanner_workers": settings.scanner_workers,
             "artifact_upload_workers": settings.artifact_upload_workers,
         },
@@ -191,7 +226,8 @@ def execute_scan(
     with (session_factory or SessionLocal)() as session:
         if not claim_scan(session, scan_id, now=_now()):
             return "skipped"
-        snapshot_id = session.get_one(Scan, scan_id).snapshot_id
+        scan = session.get_one(Scan, scan_id)
+        snapshot_id, profile_id = scan.snapshot_id, scan.config.get("profile")
         try:
             storage = storage or get_s3_client()
             acquire_snapshot(session, snapshot_id, storage=storage, fetch=fetch, now=_now())
@@ -200,6 +236,7 @@ def execute_scan(
                 session.get_one(SourceSnapshot, snapshot_id),
                 settings=get_settings(),
                 storage=storage,
+                profile_id=profile_id,
                 run_pipeline_fn=run_pipeline_fn,
                 invoke_fn=invoke_fn,
             )

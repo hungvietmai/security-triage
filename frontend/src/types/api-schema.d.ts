@@ -342,10 +342,11 @@ export interface components {
         | components["schemas"]["GitHubSource"];
       /**
        * Profile
+       * @description command-injection-v0.1: CWE-78, JavaScript and Python, priority policy. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.
        * @default command-injection-v0.1
-       * @constant
+       * @enum {string}
        */
-      profile: "command-injection-v0.1";
+      profile: "command-injection-v0.1" | "path-traversal-v0.2";
     };
     /** ScanRead */
     ScanRead: {

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -36,6 +37,7 @@ import {
 import { paths } from "@/config/paths";
 import {
   createScanInputSchema,
+  SCAN_PROFILES,
   useCreateScan,
 } from "@/features/scans/api/create-scan";
 import type { ScanCreate } from "@/features/scans/types";
@@ -54,6 +56,7 @@ export function CreateScanDialog({ projectId }: { projectId: string }) {
     defaultValues: EMPTY,
   });
   const kind = useWatch({ control: form.control, name: "source.kind" });
+  const profile = useWatch({ control: form.control, name: "profile" });
   const fields: {
     name: FieldPathByValue<ScanCreate, string>;
     label: string;
@@ -133,11 +136,35 @@ export function CreateScanDialog({ projectId }: { projectId: string }) {
           <DialogHeader>
             <DialogTitle>Tạo scan mới</DialogTitle>
             <DialogDescription>
-              Quét phiên bản npm hoặc commit GitHub cố định bằng profile
-              command-injection-v0.1.
+              Quét phiên bản npm hoặc commit GitHub cố định bằng một profile đã
+              ghim phiên bản công cụ và luật.
             </DialogDescription>
           </DialogHeader>
           <FieldGroup className="py-6">
+            <Field>
+              <FieldLabel htmlFor="scan-profile">Profile</FieldLabel>
+              <Select
+                value={profile}
+                disabled={mutation.isPending}
+                onValueChange={(value) =>
+                  form.setValue("profile", value as ScanCreate["profile"])
+                }
+              >
+                <SelectTrigger id="scan-profile">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(SCAN_PROFILES).map(([id, { label }]) => (
+                    <SelectItem key={id} value={id}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FieldDescription>
+                {SCAN_PROFILES[profile].description}
+              </FieldDescription>
+            </Field>
             <Field>
               <FieldLabel htmlFor="scan-source">Nguồn</FieldLabel>
               <Select
@@ -146,6 +173,7 @@ export function CreateScanDialog({ projectId }: { projectId: string }) {
                 onValueChange={(value) => {
                   form.reset({
                     ...EMPTY,
+                    profile: form.getValues("profile"),
                     source:
                       value === "npm"
                         ? EMPTY.source

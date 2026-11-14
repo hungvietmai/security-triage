@@ -993,8 +993,12 @@
           },
           "profile": {
             "type": "string",
-            "const": "command-injection-v0.1",
+            "enum": [
+              "command-injection-v0.1",
+              "path-traversal-v0.2"
+            ],
             "title": "Profile",
+            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, priority policy. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
             "default": "command-injection-v0.1"
           }
         },

@@ -14,6 +14,9 @@ from app.scanners.semgrep import stage_rule
 from app.triage.sinks_python import locate_python_sinks
 
 PYTHON_SOURCE = "import os\nos.system(cmd)\n"
+# Two path sinks; fake_evidence_pipeline keeps line 2 and lets evidence remove line 3.
+PATH_SOURCE = "from flask import request\nopen(request.args['a'])\nopen(request.args['b'])\n"
+EVIDENCE_PACK = "rules/codeql/path-traversal-v0.2"
 
 
 class FakeStorage:
@@ -89,6 +92,41 @@ def fake_pipeline(
             findings=findings,
             codeql_query_files=kwargs["codeql_query_sha256"],
             codeql_pack_manifest="name: codeql/queries\n",
+        )
+
+    return run
+
+
+def fake_evidence_pipeline(status: str = "completed") -> Callable[..., PipelineResult]:
+    """CodeQL from the pinned evidence pack: baseline alerts on lines 2 and 3, evidence on 2."""
+
+    def run(**kwargs: Any) -> PipelineResult:
+        assert kwargs["scanners"] == ["codeql"]
+        assert kwargs["python_query_pack"].as_posix().endswith(EVIDENCE_PACK)
+        snapshot = kwargs["snapshot_sha256"]
+
+        def alert(raw_id: str, rule_id: str, line: int) -> Any:
+            region = {"startLine": line, "startColumn": 6, "endLine": line, "endColumn": 24}
+            return {
+                **_finding(raw_id, "codeql", rule_id, region, snapshot),
+                "reported_cwes": ["CWE-22"],
+                "message": "flow from source",
+            }
+
+        findings = []
+        if status != "failed":
+            findings = [
+                alert("codeql:0:0", "st/cwe-22/none", 2),
+                alert("codeql:0:1", "st/cwe-22/none", 3),
+                alert("codeql:0:2", "st/cwe-22/all", 2),
+            ]
+        step = {"status": status, "exit_code": 0 if status != "failed" else 2, "argv": ["codeql"]}
+        return PipelineResult(
+            status=status,  # type: ignore[arg-type]
+            steps={"codeql": step},  # type: ignore[dict-item]
+            findings=findings,
+            codeql_query_files=kwargs["codeql_query_sha256"],
+            codeql_pack_manifest="name: security-triage/python-safety-evidence\n",
         )
 
     return run

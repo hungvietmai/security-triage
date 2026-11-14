@@ -5,12 +5,13 @@ from pathlib import Path
 
 import pytest
 
-from app.scanners.profile import ProfileError, load_profile
+from app.scanners.profile import ProfileError, load_evidence_profile, load_profile
 from app.workers.celery_app import ping
 from scripts import check_worker, export_openapi
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = "profiles/command-injection-v0.1/profile.json"
+EVIDENCE_MANIFEST = "profiles/path-traversal-v0.2/profile.json"
 
 
 def test_openapi_export_is_deterministic_json_with_every_route():
@@ -55,19 +56,26 @@ def _fake_tool_version(calls):
     return fake
 
 
-def test_check_worker_verifies_profile_pins_and_scanner_versions():
+def test_check_worker_verifies_every_profile_and_scanner_versions():
     calls: list[tuple[str, str, str]] = []
-    message = check_worker.check(ROOT, MANIFEST, tool_version_fn=_fake_tool_version(calls))
+    message = check_worker.check(
+        ROOT, [MANIFEST, EVIDENCE_MANIFEST], tool_version_fn=_fake_tool_version(calls)
+    )
     pins = check_worker.read_pins(ROOT / "tools/pins.env")
     assert calls == [
         ("semgrep", pins["SEMGREP_VERSION"], "semgrep"),
         ("codeql", pins["CODEQL_VERSION"], "codeql"),
     ]
-    assert message.startswith("Worker ready: profile command-injection-v0.1 sha256=")
+    assert message.startswith("Worker ready: profiles command-injection-v0.1 sha256=")
+    assert ", path-traversal-v0.2 sha256=" in message
 
 
-def test_check_worker_rejects_profile_that_differs_from_pins():
-    profile = load_profile(ROOT, MANIFEST)
+@pytest.mark.parametrize(
+    "profile",
+    [lambda: load_profile(ROOT, MANIFEST), lambda: load_evidence_profile(ROOT, EVIDENCE_MANIFEST)],
+    ids=["priority", "evidence"],
+)
+def test_check_worker_rejects_profile_that_differs_from_pins(profile):
     pins = check_worker.read_pins(ROOT / "tools/pins.env")
     with pytest.raises(ProfileError, match="differs from tools/pins.env"):
-        check_worker.check_pins(profile, {**pins, "CODEQL_PYTHON_QUERY_PACK": "0.0.0"})
+        check_worker.check_pins(profile(), {**pins, "CODEQL_PYTHON_QUERY_PACK": "0.0.0"})

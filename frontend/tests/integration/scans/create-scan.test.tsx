@@ -97,6 +97,53 @@ describe("Create scan dialog", () => {
     });
   });
 
+  it("sends the chosen CWE-22 profile and keeps it when the source kind changes", async () => {
+    let input: Schemas["ScanCreate"] | undefined;
+    server.use(
+      http.post(
+        "/api/v1/projects/:projectId/scans",
+        async ({ request, params }) => {
+          input = (await request.json()) as Schemas["ScanCreate"];
+          const scan = makeScan({ project_id: String(params.projectId) });
+          db.scans = [scan];
+          return HttpResponse.json(
+            {
+              scan_id: scan.id,
+              snapshot_id: scan.snapshot.id,
+              status: "queued",
+            },
+            { status: 202 },
+          );
+        },
+      ),
+    );
+    const { user, dialog } = await openForm();
+    await user.click(dialog.getByRole("combobox", { name: "Profile" }));
+    await user.click(
+      screen.getByRole("option", {
+        name: "CWE-22 · Path traversal (bằng chứng an toàn)",
+      }),
+    );
+    expect(dialog.getByText(/CodeQL cho Python/)).toBeInTheDocument();
+    await user.click(dialog.getByRole("combobox", { name: "Nguồn" }));
+    await user.click(screen.getByRole("option", { name: "GitHub" }));
+    await user.type(dialog.getByLabelText("Owner GitHub"), "pipecat-ai");
+    await user.type(dialog.getByLabelText("Repo GitHub"), "pipecat");
+    await user.type(dialog.getByLabelText("Commit"), "a".repeat(40));
+    await user.click(dialog.getByRole("button", { name: "Tạo scan" }));
+    await waitFor(() =>
+      expect(input).toEqual({
+        source: {
+          kind: "github",
+          owner: "pipecat-ai",
+          repo: "pipecat",
+          commit: "a".repeat(40),
+        },
+        profile: "path-traversal-v0.2",
+      }),
+    );
+  });
+
   it.each([
     ["source", "npm", "version"],
     ["source", "npm"],

@@ -47,8 +47,24 @@ export const createScanInputSchema = z.object({
         ),
     }),
   ]),
-  profile: z.literal("command-injection-v0.1"),
+  profile: z.enum(["command-injection-v0.1", "path-traversal-v0.2"]),
 }) satisfies z.ZodType<ScanCreate>;
+
+export const SCAN_PROFILES: Record<
+  ScanCreate["profile"],
+  { label: string; description: string }
+> = {
+  "command-injection-v0.1": {
+    label: "CWE-78 · Command injection",
+    description:
+      "Semgrep và CodeQL cho JavaScript và Python; xếp hàng đợi theo chính sách ưu tiên v0.1.",
+  },
+  "path-traversal-v0.2": {
+    label: "CWE-22 · Path traversal (bằng chứng an toàn)",
+    description:
+      "CodeQL cho Python. Cảnh báo có bằng chứng an toàn được xếp cuối hàng đợi, không bị xóa.",
+  },
+};
 
 export function createScan({
   projectId,

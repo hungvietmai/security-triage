@@ -15,10 +15,8 @@ from app.features.findings.models import Finding
 from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
-from app.triage.reconcile import RECONCILIATION_VERSION
 from app.workflows.scans.results import LanguageResult, ScanResult
 
-LOCATOR_VERSION = "sink-locator-v0"
 SCANNERS = ("semgrep", "codeql")
 # The process layer reports timeouts; the tool-run status vocabulary records them as failures.
 _TOOL_STATUS = {"completed": "completed", "partial": "partial"}
@@ -126,7 +124,7 @@ def _write_findings(
                 **_coordinates(finding["reported_region"]),
                 message=finding["message"],
                 cwe_ids=finding["reported_cwes"],
-                mapping_version=RECONCILIATION_VERSION,
+                mapping_version=result.unit_version,
                 evidence={
                     "raw_id": finding["raw_id"],
                     "raw_rule_id": finding["rule_id"],
@@ -160,8 +158,8 @@ def _write_units(
             sink_kind=unit["sink_kind"],
             argument_role=unit["argument_role"],
             mapping_status=unit["mapping_status"],
-            reconciler_version=RECONCILIATION_VERSION,
-            locator_version=LOCATOR_VERSION,
+            reconciler_version=result.unit_version,
+            locator_version=result.locator_version,
         )
     session.add_all(units.values())
     session.flush()
@@ -171,7 +169,7 @@ def _write_units(
                 UnitFinding(
                     unit_id=units[unit["unit_id"]].id,
                     finding_id=finding_ids[mapping["raw_id"]],
-                    reconciler_version=RECONCILIATION_VERSION,
+                    reconciler_version=result.unit_version,
                     match_rule=mapping["mapping_method"],
                 )
             )

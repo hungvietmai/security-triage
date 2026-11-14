@@ -9,12 +9,17 @@ from app.core.config import Settings
 from app.scanners.acquisition import load_source_texts
 from app.scanners.pipeline import PipelineResult
 from app.scanners.process import InvokeCallable, ProcessRecord
-from app.scanners.profile import ScanProfile
+from app.scanners.profile import EvidenceProfile, ScanProfile
 from app.scanners.provenance import digest
 from app.scanners.semgrep import run_sink_locator
 from app.triage.assess import assert_finding_conservation, assess_units, verified_definitions
 from app.triage.policy import validate_policy
 from app.triage.reconcile import RECONCILIATION_VERSION, ReconciledUnit, reconcile_findings
+from app.triage.safety_evidence import (
+    EVIDENCE_LOCATOR_VERSION,
+    EVIDENCE_UNIT_VERSION,
+    assess_with_evidence,
+)
 from app.triage.sinks_javascript import parse_javascript_sink_output
 from app.triage.sinks_python import locate_python_sinks
 from app.triage.types import SinkRecord
@@ -175,3 +180,87 @@ def scan_language(
     _write_json(output / "units.json", units)
     _write_json(output / "assessments.json", assessments)
     return LanguageResult(language, result, versions, units, assessments)
+
+
+def scan_language_evidence(
+    language: str,
+    *,
+    profile: EvidenceProfile,
+    settings: Settings,
+    source: Path,
+    output: Path,
+    snapshot_sha256: str,
+    run_pipeline_fn: RunPipeline,
+    invoke_fn: InvokeCallable,
+) -> LanguageResult:
+    """Run the baseline and evidence queries from the profile's pack, then rank the baseline."""
+    config = profile.configs[language]
+    result = run_pipeline_fn(
+        scanners=config["scanners"],
+        language=language,
+        source=source,
+        output=output,
+        snapshot_sha256=snapshot_sha256,
+        repository_root=profile.root,
+        semgrep_binary="semgrep",
+        codeql_binary="codeql",
+        semgrep_version=config["semgrep_version"],
+        codeql_version=config["codeql_version"],
+        semgrep_rules=config["semgrep_rules"],
+        codeql_queries=config["codeql_queries"],
+        codeql_query_sha256=config["codeql_query_sha256"],
+        javascript_query_pack=profile.query_pack if language == "javascript" else None,
+        python_query_pack=profile.query_pack if language == "python" else None,
+        jobs=config["jobs"],
+        timeout_seconds=config["timeout_seconds"],
+        codeql_ram_mb=2048,
+        max_workers=settings.scanner_workers,
+        invoke_fn=invoke_fn,
+    )
+    units: list[ReconciledUnit] = []
+    assessments: list[dict[str, Any]] = []
+    # Ranking needs both queries' results; a partial run could show a kept alert as hidden.
+    if result.status == "completed":
+        units, assessments = assess_with_evidence(
+            result.findings,
+            snapshot_sha256=snapshot_sha256,
+            baseline_rule=profile.baseline_rule,
+            evidence_rule=profile.evidence_rule,
+            provenance={
+                "policy_id": profile.policy_id,
+                "policy_version": profile.policy_version,
+                "policy_sha256": profile.policy_sha256,
+                "spec_sha256": profile.specification_sha256,
+                # Rule claims belong to priority profiles; evidence profiles have none.
+                "rule_claims_version": "not-applicable",
+                "rule_claims_sha256": "",
+                "reconciler_version": EVIDENCE_UNIT_VERSION,
+            },
+        )
+    _write_json(
+        output / "run.json",
+        {
+            "language": language,
+            "status": result.status,
+            "steps": result.steps,
+            "snapshot_sha256": snapshot_sha256,
+            "profile_id": profile.profile_id,
+            "profile_sha256": profile.manifest_sha256,
+            "scanner_workers": settings.scanner_workers,
+            "codeql_query_files": result.codeql_query_files,
+            "raw_findings": len(result.findings),
+            "unit_count": len(units),
+        },
+    )
+    _write_json(output / "findings.json", result.findings)
+    _write_json(output / "units.json", units)
+    _write_json(output / "assessments.json", assessments)
+    return LanguageResult(
+        language,
+        result,
+        {"codeql": config["codeql_version"]},
+        units,
+        assessments,
+        unit_version=EVIDENCE_UNIT_VERSION,
+        locator_version=EVIDENCE_LOCATOR_VERSION,
+    )

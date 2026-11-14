@@ -1,0 +1,28 @@
+{
+  "config_id": "path-traversal-v0.2-python",
+  "purpose": "Product scan: CodeQL CWE-22 baseline and v0.2 safety evidence from the evaluated research pack.",
+  "scanners": [
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 2,
+  "timeout_seconds": 1200,
+  "semgrep_rules": [],
+  "codeql_queries": [
+    "queries/cwe22_none.ql",
+    "queries/cwe22_all.ql"
+  ],
+  "codeql_query_sha256": {
+    "queries/cwe22_none.ql": "f78591a1a1b201e689fd70dc60c4e0ff9bfc2a6761089eb4a1fc2481d61044a8",
+    "queries/cwe22_all.ql": "28ca7100da0f962056e9bee44c8e49d7445d2ac70799d4cacbb615b7f0a0e870"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "asset": "codeql-bundle-python-linux64.tar.zst",
+    "sha256": "ea86393c6c812542ae5a3a7122bcc760873707a50b25cc47d2fd7cfd514b0cb0",
+    "python_query_pack": "1.8.11",
+    "python_all_pack": "7.2.6"
+  },
+  "language": "python"
+}

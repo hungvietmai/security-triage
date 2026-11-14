@@ -281,8 +281,11 @@ trình bày cả hai kịch bản.
 3. **RC-M6:** xác minh trong môi trường cô lập; nếu đúng là lỗ hổng, báo kín cho mlflow.
 4. **Đợt C:** kiểm tra near-duplicate ở mức ngữ nghĩa giữa các snapshot.
 5. **Chọn baseline v0.2 hay v0.2.1.** Mọi đánh giá mới cần giao thức mới và dữ liệu chưa từng xem.
-6. **Tích hợp ứng dụng:** worker vẫn chạy profile CWE-78 (`command-injection-v0.1`).
-   Phương pháp CWE-22 v0.2/v0.3 chưa có trong ứng dụng.
+6. **Tích hợp ứng dụng** (đề án hướng ứng dụng):
+   - Đã xong bước 1: profile `path-traversal-v0.2` chạy pack v0.2 trong worker và xếp cảnh
+     báo P1 (còn báo) hoặc P4 (bằng chứng đã loại); xem [architecture.md](architecture.md).
+   - Còn lại: hiển thị bảng bằng chứng, quy trình rà theo phiếu, báo cáo theo dự án, và đánh
+     giá với người dùng.
 7. **Tập held-out CWE-78** (16 cặp, chưa quét): quyết định chính thức bỏ hay dùng tiếp.
 8. **Script bị khóa trên Windows:** code chưa khóa đã được sửa để đọc/ghi UTF-8 (27/10), nhưng
    các script bị khóa vẫn dùng bảng mã mặc định. Trên Windows phải chạy chúng với `PYTHONUTF8=1`.

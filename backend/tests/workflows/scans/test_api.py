@@ -15,8 +15,10 @@ from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment
 from app.workflows.scans import task as scan_task
 from tests.workflows.scans.fakes import (
+    PATH_SOURCE,
     PYTHON_SOURCE,
     FakeStorage,
+    fake_evidence_pipeline,
     fake_pipeline,
     fake_registry,
     make_archive,
@@ -44,12 +46,18 @@ def _npm(package: str = "demo", version: str = "1.0.0") -> dict[str, Any]:
     return {"source": {"kind": "npm", "package": package, "version": version}}
 
 
-def _run(engine: Engine, scan_id: str, fetch: Any, storage: FakeStorage | None = None) -> str:
+def _run(
+    engine: Engine,
+    scan_id: str,
+    fetch: Any,
+    storage: FakeStorage | None = None,
+    pipeline: Any = None,
+) -> str:
     return scan_task.execute_scan(
         uuid.UUID(scan_id),
         session_factory=lambda: Session(engine),
         storage=storage or FakeStorage(),  # type: ignore[arg-type]
-        run_pipeline_fn=fake_pipeline(),
+        run_pipeline_fn=pipeline or fake_pipeline(),
         fetch=fetch,
     )
 
@@ -143,6 +151,41 @@ def test_npm_scan_end_to_end_through_the_api(client, engine, project_id, queued)
         client.get(f"/api/v1/scans/{again['scan_id']}/units").json()["items"][0]["unit_key"]
         == (unit["unit_key"])
     )
+
+
+def test_path_traversal_scan_ranks_baseline_alerts_by_safety_evidence(
+    client, engine, project_id, queued
+):
+    body = {
+        "source": {"kind": "github", "owner": "o", "repo": "r", "commit": COMMIT},
+        "profile": "path-traversal-v0.2",
+    }
+    archive = make_archive({"app.py": PATH_SOURCE}, f"r-{COMMIT}")
+    scan_id = client.post(f"/api/v1/projects/{project_id}/scans", json=body).json()["scan_id"]
+    assert (
+        _run(engine, scan_id, lambda url, limit: archive, pipeline=fake_evidence_pipeline())
+        == "completed"
+    )
+
+    scan = client.get(f"/api/v1/scans/{scan_id}").json()
+    assert scan["profile"] == "path-traversal-v0.2"
+    assert scan["policy_version"] == "0.2"
+    assert [(r["tool"], r["status"]) for r in scan["tool_runs"]] == [("codeql", "completed")]
+    assert {tier: n for tier, n in scan["unit_counts"].items() if n} == {"P1": 1, "P4": 1}
+
+    # Nothing is deleted: the alert the evidence removed is still listed, last.
+    items = client.get(f"/api/v1/scans/{scan_id}/units").json()["items"]
+    assert [(i["start_line"], i["priority"], i["decision_id"]) for i in items] == [
+        (2, "P1", "EV_KEPT_NO_PROOF"),
+        (3, "P4", "EV_HIDDEN_BY_EVIDENCE"),
+    ]
+    kept = client.get(f"/api/v1/scans/{scan_id}/units/{items[0]['id']}").json()
+    assert kept["predicate_values"] == {"baseline_alert": True, "retained_by_evidence_query": True}
+    assert {f["rule_id"] for f in kept["findings"]} == {"st/cwe-22/none", "st/cwe-22/all"}
+    hidden = client.get(f"/api/v1/scans/{scan_id}/units/{items[1]['id']}").json()
+    assert hidden["matched_conditions"] == ["baseline_alert", "removed_by_safety_evidence"]
+    assert [f["rule_id"] for f in hidden["findings"]] == ["st/cwe-22/none"]
+    assert hidden["policy_id"] == "cwe22-safety-evidence" and hidden["policy_sha256"]
 
 
 def test_github_scan_checks_the_archive_root(client, engine, project_id, queued):

@@ -27,7 +27,14 @@ from app.scanners.sarif import Finding as SarifFinding
 from app.workers.celery_app import celery_app
 from app.workflows.scans import task as scan_module
 from app.workflows.scans.persist import _coordinates, persist_scan_result
-from tests.workflows.scans.fakes import PYTHON_SOURCE, FakeStorage, fake_pipeline, make_archive
+from tests.workflows.scans.fakes import (
+    PATH_SOURCE,
+    PYTHON_SOURCE,
+    FakeStorage,
+    fake_evidence_pipeline,
+    fake_pipeline,
+    make_archive,
+)
 
 
 @pytest.fixture
@@ -37,7 +44,12 @@ def storage() -> FakeStorage:
 
 @pytest.fixture
 def make_scan(engine: Engine, storage: FakeStorage) -> Callable[..., uuid.UUID]:
-    def make(files: dict[str, str] | None = None, *, sha256: str | None = None) -> uuid.UUID:
+    def make(
+        files: dict[str, str] | None = None,
+        *,
+        sha256: str | None = None,
+        profile: str | None = None,
+    ) -> uuid.UUID:
         archive = make_archive(files or {"app.py": PYTHON_SOURCE})
         storage.objects[("sources", "snapshots/s.tgz")] = archive
         with Session(engine) as session:
@@ -53,7 +65,8 @@ def make_scan(engine: Engine, storage: FakeStorage) -> Callable[..., uuid.UUID]:
             )
             session.add(snapshot)
             session.flush()
-            scan = Scan(snapshot_id=snapshot.id, config={"requested_by": "test"})
+            config = {"requested_by": "test", **({"profile": profile} if profile else {})}
+            scan = Scan(snapshot_id=snapshot.id, config=config)
             session.add(scan)
             session.commit()
             return scan.id
@@ -226,6 +239,25 @@ def test_scanner_failure_is_final_without_triage(engine, storage, make_scan):
         assert _count(session, LocationUnit) == 0
 
 
+def test_partial_evidence_run_ranks_nothing(engine, storage, make_scan):
+    # Without the evidence query's complete results, a kept alert would look hidden.
+    scan_id = make_scan({"app.py": PATH_SOURCE}, profile="path-traversal-v0.2")
+    pipeline = fake_evidence_pipeline("partial")
+    assert _execute(engine, storage, scan_id, run_pipeline_fn=pipeline) == "partial"
+    with Session(engine) as session:
+        assert session.get_one(Scan, scan_id).config["profile_id"] == "path-traversal-v0.2"
+        assert _count(session, Finding) == 3
+        assert _count(session, LocationUnit) == 0
+
+
+def test_unknown_profile_fails_the_scan(engine, storage, make_scan):
+    scan_id = make_scan(profile="retired-profile")
+    assert _execute(engine, storage, scan_id) == "failed"
+    with Session(engine) as session:
+        message = session.get_one(Scan, scan_id).error_message
+        assert message is not None and "Unknown scan profile: retired-profile" in message
+
+
 def test_languages_combine_into_partial_and_javascript_uses_the_locator(engine, storage, make_scan):
     def pipeline(**kwargs: Any) -> PipelineResult:
         status = "failed" if kwargs["language"] == "python" else "completed"
@@ -359,15 +391,17 @@ def test_run_scan_retries_infrastructure_errors_then_fails(engine, make_scan, ea
         assert scan.error_message is not None and "after retries" in scan.error_message
 
 
-def test_task_time_limits_cover_every_scanner_timeout_in_the_profile():
-    profile = load_profile(get_settings().triage_root, get_settings().scan_profile)
+@pytest.mark.parametrize("profile_id", sorted(get_settings().scan_profiles))
+def test_task_time_limits_cover_every_scanner_timeout_in_the_profile(profile_id):
+    profile = scan_module.load_scan_profile(get_settings(), profile_id)
     budget = sum(
         2 * 60 + scan_module.SCANNER_STEPS * config["timeout_seconds"]
         for config in profile.configs.values()
     )
     assert budget < scan_module.SOFT_TIME_LIMIT < scan_module.TIME_LIMIT
-    # After the soft limit, an in-flight parallel scanner may still run to its own timeout.
+    # After the soft limit, an in-flight scanner may still run to its own timeout.
     longest_step = max(config["timeout_seconds"] for config in profile.configs.values())
+    assert longest_step <= scan_module.LONGEST_SCANNER_STEP
     assert scan_module.TIME_LIMIT - scan_module.SOFT_TIME_LIMIT > longest_step
     visibility = celery_app.conf.broker_transport_options["visibility_timeout"]
     assert scan_module.TIME_LIMIT < visibility

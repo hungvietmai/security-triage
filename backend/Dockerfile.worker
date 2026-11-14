@@ -26,6 +26,8 @@ COPY experiments/rules /srv/triage/experiments/rules
 COPY experiments/mappings /srv/triage/experiments/mappings
 COPY experiments/policy /srv/triage/experiments/policy
 COPY experiments/locators /srv/triage/experiments/locators
+# The path-traversal-v0.2 profile's pinned CodeQL query pack.
+COPY rules/codeql/path-traversal-v0.2 /srv/triage/rules/codeql/path-traversal-v0.2
 WORKDIR /app
 COPY --chown=appuser:appuser backend/ .
 USER appuser

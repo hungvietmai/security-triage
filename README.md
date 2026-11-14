@@ -9,9 +9,11 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub bằng Semgrep và CodeQL theo profile `command-injection-v0.1` (CWE-78,
-  JavaScript/Python). Ứng dụng gộp cảnh báo theo vị trí sink, xếp hàng đợi ưu tiên P1→P4 và
-  hiển thị bằng chứng. Phương pháp CWE-22 chưa được tích hợp vào ứng dụng.
+  một commit GitHub, chọn một trong hai profile:
+  - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
+    sink và xếp hàng đợi P1→P4;
+  - `path-traversal-v0.2`: CWE-22, Python, CodeQL với bằng chứng an toàn v0.2. Cảnh báo có
+    bằng chứng an toàn xuống cuối hàng đợi, không bị xóa.
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
 
 ## Tài liệu
@@ -147,7 +149,8 @@ Danh sách job và các kết quả đã ghi nhận: [docs/validation.md](docs/v
 | `backend/migrations/` | Alembic, migration 0001–0006 |
 | `backend/tests/` | Test theo cấu trúc `app/`, gồm test kiến trúc |
 | `infra/` | Cấu hình SeaweedFS |
-| `rules/codeql/python-evidence/` | Query chẩn đoán guard số nguyên (giai đoạn CWE-78). Các query CWE-22 nằm trong `experiments/` |
+| `rules/codeql/python-evidence/` | Query chẩn đoán guard số nguyên (giai đoạn CWE-78) |
+| `rules/codeql/path-traversal-v0.2/` | Pack CWE-22 v0.2 mà worker chạy, trùng từng byte với bản nghiên cứu. Các phiên bản query CWE-22 khác nằm trong `experiments/` |
 | `profiles/` | Scan profile của worker: manifest ghim hash các config, rule, rule-claims và policy |
 | `tools/` | Ghim phiên bản Semgrep/CodeQL và script cài, dùng chung cho các image scanner |
 | `experiments/` | Toàn bộ nghiên cứu: dữ liệu, query, runner, kết quả, khóa. Xem [experiments/README.md](experiments/README.md) |
@@ -176,9 +179,11 @@ hay kết quả quét giả.
 ## Scanner trong worker
 
 Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep và CodeQL
-theo [`tools/pins.env`](tools/pins.env), kèm scan profile
-[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json). Worker từ chối
-khởi động nếu hash của profile hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
+theo [`tools/pins.env`](tools/pins.env), kèm hai scan profile
+[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json) và
+[`profiles/path-traversal-v0.2/`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
+[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)). Worker từ chối
+khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
 kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
 
 Các việc còn mở của cả ứng dụng và nghiên cứu được theo dõi ở

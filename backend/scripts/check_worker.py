@@ -1,15 +1,16 @@
-"""Refuse to start a scan worker whose profile or scanners differ from the pins.
+"""Refuse to start a scan worker whose profiles or scanners differ from the pins.
 
-Runs before Celery in the worker container: every profile file must match its hash, and
-the installed Semgrep/CodeQL must be the versions in tools/pins.env and the profile.
+Runs before Celery in the worker container: every file of every profile must match its hash,
+and the installed Semgrep/CodeQL must be the versions in tools/pins.env and the profiles.
 """
 
 import tempfile
+from collections.abc import Iterable
 from pathlib import Path
 
 from app.core.config import get_settings
 from app.scanners.process import ProcessRecord, ToolVersionCallable, invoke, tool_version
-from app.scanners.profile import ProfileError, ScanProfile, load_profile
+from app.scanners.profile import AnyProfile, ProfileError, load_any_profile
 
 
 def read_pins(path: Path) -> dict[str, str]:
@@ -22,7 +23,7 @@ def read_pins(path: Path) -> dict[str, str]:
     return pins
 
 
-def check_pins(profile: ScanProfile, pins: dict[str, str]) -> None:
+def check_pins(profile: AnyProfile, pins: dict[str, str]) -> None:
     for language, config in profile.configs.items():
         expected = {
             "semgrep_version": pins["SEMGREP_VERSION"],
@@ -34,10 +35,19 @@ def check_pins(profile: ScanProfile, pins: dict[str, str]) -> None:
             raise ProfileError(f"{language} profile config differs from tools/pins.env")
 
 
-def check(root: Path, manifest: str, *, tool_version_fn: ToolVersionCallable = tool_version) -> str:
-    profile = load_profile(root, manifest)
+def check(
+    root: Path,
+    manifests: str | Iterable[str],
+    *,
+    tool_version_fn: ToolVersionCallable = tool_version,
+) -> str:
     pins = read_pins(root / "tools/pins.env")
-    check_pins(profile, pins)
+    profiles = [
+        load_any_profile(root, manifest)
+        for manifest in ([manifests] if isinstance(manifests, str) else manifests)
+    ]
+    for profile in profiles:
+        check_pins(profile, pins)
     with tempfile.TemporaryDirectory() as folder:
         logs = Path(folder)
         steps: dict[str, ProcessRecord] = {}
@@ -59,12 +69,14 @@ def check(root: Path, manifest: str, *, tool_version_fn: ToolVersionCallable = t
             working_directory=logs,
             invoke_fn=invoke,
         )
+    loaded = ", ".join(f"{p.profile_id} sha256={p.manifest_sha256}" for p in profiles)
     return (
-        f"Worker ready: profile {profile.profile_id} sha256={profile.manifest_sha256}, "
+        f"Worker ready: profiles {loaded}, "
         f"semgrep {pins['SEMGREP_VERSION']}, codeql {pins['CODEQL_VERSION']}"
     )
 
 
 if __name__ == "__main__":
     settings = get_settings()
-    print(check(settings.triage_root, settings.scan_profile))
+    manifests = {settings.scan_profile, *settings.scan_profiles.values()}
+    print(check(settings.triage_root, sorted(manifests)))
