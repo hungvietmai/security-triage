@@ -240,8 +240,9 @@ def test_acquire_source_rejects_bad_registry_integrity(tmp_path):
 def test_load_source_texts_filters_language_and_rejects_escape(tmp_path):
     root = tmp_path / "source"
     (root / "lib").mkdir(parents=True)
-    (root / "lib" / "a.js").write_text("exec(x)\n", encoding="utf-8")
-    (root / "b.py").write_text("print(1)\n", encoding="utf-8")
+    # Bytes, so that the fixture has the same line endings on every platform.
+    (root / "lib" / "a.js").write_bytes(b"exec(x)\n")
+    (root / "b.py").write_bytes(b"print(1)\n")
     (root / "c.js").write_bytes(b"\xff\xfe\x00")
     (tmp_path / "outside.js").write_text("secret\n", encoding="utf-8")
 
@@ -250,6 +251,43 @@ def test_load_source_texts_filters_language_and_rejects_escape(tmp_path):
     assert load_source_texts(root, ["b.py"], "python") == {"b.py": "print(1)\n"}
     with pytest.raises(ValueError, match="escapes"):
         load_source_texts(root, ["../outside.js"], "javascript")
+
+
+def test_load_source_texts_keeps_line_endings_so_scanner_byte_offsets_still_apply(tmp_path):
+    """Regression: a CRLF file made the JavaScript sink locator fail the whole scan."""
+    from app.triage.sinks_javascript import parse_javascript_sink_output
+
+    root = tmp_path / "source"
+    root.mkdir()
+    lines = [
+        b"var cp = require('child_process');",
+        b"",
+        b"function run(cmd) {",
+        b"    cp.exec(cmd);",
+        b"}",
+    ]
+    raw = b"".join(line + bytes([13, 10]) for line in lines)
+    (root / "index.js").write_bytes(raw)
+
+    sources = load_source_texts(root, ["index.js"], "javascript")
+    assert sources["index.js"].encode("utf-8") == raw
+
+    # Semgrep reports offsets into the bytes on disk.
+    start, end = raw.index(b"cp.exec"), raw.index(b"cp.exec") + len(b"cp.exec(cmd)")
+    payload = {
+        "results": [
+            {
+                "check_id": "rules.sink-locator-v0-child-process-namespace",
+                "path": "index.js",
+                "start": {"line": 4, "col": 5, "offset": start},
+                "end": {"line": 4, "col": 17, "offset": end},
+            }
+        ]
+    }
+    (sink,) = parse_javascript_sink_output(json.dumps(payload), sources)
+    assert (sink["callee"], sink["sink_kind"]) == ("cp.exec", "child_process.exec")
+    assert [argument["text"] for argument in sink["args"]] == ["cmd"]
+    assert sink["args"][0]["span"]["startLine"] == 4
 
 
 def _archive_with_link(path, link_name: str, target: str) -> None:

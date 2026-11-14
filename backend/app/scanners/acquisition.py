@@ -279,7 +279,11 @@ SOURCE_EXTENSIONS = {
 def load_source_texts(
     source_root: Path, source_files: Sequence[str], language: str
 ) -> dict[str, str]:
-    """Read acquired sources of one language; undecodable files are skipped, not guessed."""
+    """Read acquired sources of one language; undecodable files are skipped, not guessed.
+
+    Line endings are kept as they are on disk. Scanners report byte offsets into the file, so
+    text read with newline translation (CRLF to LF) no longer lines up with them.
+    """
     extensions = SOURCE_EXTENSIONS[language]
     root = source_root.resolve()
     sources = {}
@@ -291,7 +295,8 @@ def load_source_texts(
         if not candidate.is_relative_to(root):
             raise ValueError("Source file escapes acquired source root")
         try:
-            sources[relative_path.as_posix()] = candidate.read_text(encoding="utf-8")
+            with candidate.open(encoding="utf-8", newline="") as handle:
+                sources[relative_path.as_posix()] = handle.read()
         except UnicodeDecodeError:
             continue
     return sources
