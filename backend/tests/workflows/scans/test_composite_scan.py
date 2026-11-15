@@ -704,6 +704,27 @@ def test_rows_written_before_filtering_existed_are_still_readable(client, engine
             {"kept_because": ["literal_proof_without_second_source"]},
             "insufficient",
         ),
+        # No evidence about the alert exists: its rule has no evidence query, or the evidence
+        # pack does not report it. Nothing was compared, so this is not "not refuted".
+        (
+            "review",
+            "D20_STRONG",
+            {"kept_because": ["flow_rule_without_evidence_query"]},
+            "insufficient",
+        ),
+        (
+            "review",
+            "D20_STRONG",
+            {"kept_because": ["evidence_baseline_does_not_report_this_alert"]},
+            "insufficient",
+        ),
+        # Missing evidence next to a contradicting claim: the contradiction is what was examined.
+        (
+            "review",
+            "D20_STRONG",
+            {"kept_because": ["flow_rule_without_evidence_query", "independent_flow_claim"]},
+            "not_refuted",
+        ),
         ("review", "D30_HIGH", {"kept_because": ["independent_flow_claim"]}, "not_refuted"),
         (
             "review",

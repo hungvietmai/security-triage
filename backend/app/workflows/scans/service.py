@@ -94,8 +94,15 @@ def create_scan(session: Session, project: Project, data: ScanCreate, *, bucket:
 
 # Reasons a unit is kept that say the evidence could not be examined at all.
 _EVIDENCE_UNAVAILABLE = {"run_incomplete", "evidence_step_failed", NOT_RANKED}
-# Reasons that say there was nothing, or not enough, to examine.
-_EVIDENCE_INSUFFICIENT = {"no_refuting_evidence", "literal_proof_without_second_source"}
+# Reasons that say there was nothing, or not enough, to examine. That includes a flow alert
+# whose rule has no evidence query and one the evidence pack's baseline does not report: in
+# both cases no evidence about the alert exists, so none was compared with it.
+_EVIDENCE_INSUFFICIENT = {
+    "no_refuting_evidence",
+    "literal_proof_without_second_source",
+    "flow_rule_without_evidence_query",
+    "evidence_baseline_does_not_report_this_alert",
+}
 _HELD_DECISIONS = (UNRESOLVED_DECISION, NOT_RANKED_DECISION)
 
 
