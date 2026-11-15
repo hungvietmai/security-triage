@@ -794,11 +794,12 @@ mục 17.
 ## 17. Trạng thái P1b (2026-11-15)
 
 P1b tích hợp lõi của P1a vào ứng dụng web. Làm trên `e8bf32a` và, theo quyết định của chủ đề án,
-commit vào `feat/multi-cwe-core` tách theo đầu việc; **chưa push**. **Chủ đề án chưa kết luận
-nghiệm thu P1b.** Lần rà gần nhất (2026-11-15) chủ đề án đánh giá chưa đạt vì chưa có dự án thật
-nào có hai nhóm trong cùng một file; lượt quét bổ sung theo yêu cầu đó (mục 17.4, điểm 10) đã có
-kết quả và còn chờ chủ đề án xem. Không file nào dưới `experiments/`, `rules/`, `tools/` hay bốn
-thư mục profile cũ thay đổi; logic G1–G4 và điều kiện an toàn của pack v0.2 không đổi.
+commit vào `feat/multi-cwe-core` tách theo đầu việc; **chưa push**. **Chủ đề án chấp nhận P1b
+ngày 2026-11-15, kèm các giới hạn ở mục 17.5.** Lần rà trước đó trong ngày chủ đề án đánh giá chưa
+đạt vì chưa có dự án thật nào có hai nhóm trong cùng một file; quyết định chấp nhận được đưa ra
+sau lượt quét bổ sung theo yêu cầu đó (mục 17.4, điểm 10). Không file nào dưới `experiments/`,
+`rules/`, `tools/` hay bốn thư mục profile cũ thay đổi; logic G1–G4 và điều kiện an toàn của pack
+v0.2 không đổi.
 
 ### 17.1 Đã làm theo từng đầu việc
 
@@ -975,5 +976,5 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
 
 ### 17.6 Đầu việc tiếp theo
 
-Thuộc quyền chủ đề án: kết luận nghiệm thu P1b sau khi rà; quyết định có làm P1b-7 hay không; và nhóm CWE đầu tiên của P2,
+Thuộc quyền chủ đề án: push nhánh và chạy CI; quyết định có làm P1b-7 hay không; và nhóm CWE đầu tiên của P2,
 với giao thức và gói bằng chứng riêng trước khi nhóm đó được phép gạn.
