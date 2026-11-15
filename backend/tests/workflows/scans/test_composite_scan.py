@@ -7,6 +7,7 @@ same API to show that they answer as before, with their one family derived from 
 """
 
 import hashlib
+import json
 import uuid
 from collections import Counter
 from typing import Any
@@ -244,6 +245,16 @@ def test_a_composite_scan_stores_both_families_with_their_provenance(engine):
             artifact = scan.artifacts[f"python/{name}"]
             stored = storage.objects[(settings.s3_bucket, artifact["key"])]
             assert hashlib.sha256(stored).hexdigest() == artifact["sha256"]
+        # Each member's own files stay in the work directory, so the stored record must
+        # itself name the query files each member's CodeQL run was checked against.
+        record = json.loads(
+            storage.objects[(settings.s3_bucket, scan.artifacts["python/run.json"]["key"])]
+        )
+        assert {m["family"]: m["codeql_query_files"] for m in record["members"]} == {
+            "command-injection": command.configs["python"]["codeql_query_sha256"],
+            "path-traversal": path.configs["python"]["codeql_query_sha256"],
+        }
+        assert not [name for name in scan.artifacts if "/families/" in name]
 
 
 def test_a_composite_scan_is_read_by_family_through_the_api(client, engine):

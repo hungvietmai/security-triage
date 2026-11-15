@@ -153,7 +153,9 @@ class CompositeResult:
     status: PipelineStatus
     # Every step of the language run with its kind and the families it serves.
     steps: dict[str, dict[str, Any]]
-    # Every detection finding of every pass; evidence-only results are never in here.
+    # Every result a member ranks: the detection alerts of every pass and, for a pass that
+    # runs a safety-evidence pack, that pack's evidence-query results too (the member links
+    # both to the unit). Results of the primary member's evidence steps are never in here.
     findings: list[Finding]
     classification: list[Classification]
     families: list[FamilyResult]
@@ -628,6 +630,12 @@ def scan_language_families(
                     "status": family.status,
                     "error": family.error,
                     "unit_version": family.result.unit_version if family.result else None,
+                    # The hashes of the query files this member's CodeQL run was checked
+                    # against, as its own run record states them. Only this file is stored
+                    # with the scan; the files under families/ stay in the work directory.
+                    "codeql_query_files": (
+                        family.result.pipeline.codeql_query_files if family.result else None
+                    ),
                     "raw_findings": len(family.raw_finding_ids),
                     "units": len(family.units),
                 }

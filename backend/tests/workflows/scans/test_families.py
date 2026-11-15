@@ -657,6 +657,11 @@ def test_a_composite_scan_writes_its_record_and_each_familys_own_files(tmp_path)
         assert json.loads((folder / "units.json").read_text(encoding="utf-8")) == family.units
         member_run = json.loads((folder / "run.json").read_text(encoding="utf-8"))
         assert member_run["profile_id"] == family.profile_id
+        # The scan's record is the one stored with the scan, so it repeats the query hashes
+        # each member's CodeQL run was checked against.
+        recorded = next(m for m in run["members"] if m["family"] == family.family)
+        assert recorded["codeql_query_files"] == member_run["codeql_query_files"]
+        assert recorded["codeql_query_files"]
     # The path member sees the shared database's steps as its own.
     path_run = json.loads(
         (output / "families" / "path-traversal" / "run.json").read_text(encoding="utf-8")
