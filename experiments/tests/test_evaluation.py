@@ -1090,7 +1090,7 @@ class JavaScriptLabelScoringTests(unittest.TestCase):
         expected = json.loads((JS_LABELS / "results" / "score.json").read_bytes())
         self.assertEqual(js_label_score.evaluate(), expected)
         everything = expected["groups"]["all"]
-        self.assertEqual(everything["units"], 140)
+        self.assertEqual(everything["units"], 146)
         self.assertEqual(everything["filter"], {"vulnerable": 0, "safe": 1, "undetermined": 0})
 
     def test_every_item_has_one_label_with_a_reason_and_a_valid_class(self):
@@ -1120,14 +1120,13 @@ class JavaScriptLabelScoringTests(unittest.TestCase):
             self.assertRegex(meta["reviewed_by"], r"\d{4}-\d{2}-\d{2}")
             self.assertNotIn("No person has checked", meta["review_note"])
 
-    def test_review_record_covers_the_reviewed_labels_and_no_others(self):
-        # The owner reviewed the 31 labels first assigned safe or undetermined (2026-11-15).
+    def test_every_label_has_the_owner_review_record(self):
+        # The owner reviewed all labels on 2026-11-15: 31 interactively, 47 in a review file.
         # A label without a review entry must not be counted as reviewed by a person.
         labels = json.loads((JS_LABELS / "labels.json").read_bytes())["labels"]
         reviewed = [row for row in labels if row["review"] is not None]
-        pending = [row for row in labels if row["review"] is None]
-        self.assertEqual((len(reviewed), len(pending)), (31, 47))
-        self.assertEqual({row["label"] for row in pending}, {"vulnerable"})
+        self.assertEqual((len(labels), len(reviewed)), (84, 84))
+        self.assertEqual(sum(1 for row in reviewed if row["review"]["decision"] == "changed"), 12)
         for row in reviewed:
             with self.subTest(id=row["id"]):
                 review = row["review"]
@@ -1138,23 +1137,30 @@ class JavaScriptLabelScoringTests(unittest.TestCase):
                     row["class"],
                 )
                 self.assertEqual(review["decision"], "agreed" if same else "changed")
-        # Every safe label, the ones false-positive counts rest on, was reviewed.
-        self.assertTrue(all(row["review"] for row in labels if row["label"] == "safe"))
 
-    def test_protocol_and_sheet_builder_are_the_registered_files(self):
+    def test_each_unmatched_alert_is_its_own_unit(self):
+        # The reviewer's decision for extra-asciinema: seven alerts, seven units.
+        labels = json.loads((JS_LABELS / "labels.json").read_bytes())["labels"]
+        split = [row["id"] for row in labels if row["id"].startswith("extra-asciinema_1.0.0|")]
+        unmatched = sorted(i.rsplit("|", 1)[1] for i in split if "|U" in i)
+        self.assertEqual(unmatched, ["U31", "U35", "U40", "U41", "U42", "U43", "U45"])
+        self.assertFalse([row["id"] for row in labels if row["id"].endswith("|None")])
+
+    def test_protocol_is_the_registered_file_and_script_changes_are_recorded(self):
         import hashlib
 
         registered = json.loads((JS_LABELS / "PREREGISTRATION.json").read_bytes())["sha256"]
-        for name in ("PROTOCOL.md", "label_sheet.py"):
-            relative = f"experiments/evaluation/js-labels-v0.3/{name}"
-            actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
-            self.assertEqual(actual, registered[relative])
-        # score_labels.py differs by one sort key; README.md records both hashes.
+        protocol = "experiments/evaluation/js-labels-v0.3/PROTOCOL.md"
+        actual = hashlib.sha256((ROOT / protocol).read_bytes()).hexdigest()
+        self.assertEqual(actual, registered[protocol])
+        # Both scripts changed after registration (a sort key, then one unit per unmatched
+        # alert at the reviewer's decision); README.md records the registered and current hash.
         readme = (JS_LABELS / "README.md").read_text(encoding="utf-8")
-        scoring = "experiments/evaluation/js-labels-v0.3/score_labels.py"
-        self.assertIn(registered[scoring][:8], readme)
-        current = hashlib.sha256((ROOT / scoring).read_bytes()).hexdigest()
-        self.assertIn(current[:8], readme)
+        for name in ("label_sheet.py", "score_labels.py"):
+            relative = f"experiments/evaluation/js-labels-v0.3/{name}"
+            self.assertIn(registered[relative][:8], readme)
+            current = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+            self.assertIn(current[:8], readme)
 
 
 if __name__ == "__main__":

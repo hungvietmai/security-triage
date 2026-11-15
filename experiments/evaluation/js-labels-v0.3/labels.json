@@ -2,18 +2,25 @@
   "description": "Labels of the JavaScript and TypeScript candidates of the v0.3 exports of 84 npm sources that are not known vulnerable sites. Criteria: PROTOCOL.md.",
   "assigned_by": "AI coding assistant (Claude), reading the package source",
   "assigned_on": "2026-11-15",
-  "reviewed_by": "project owner, 2026-11-15: 31 of 78 labels, namely every label the assistant had assigned safe or undetermined",
-  "review_note": "Reviewed interactively with the code excerpt of each item. 12 labels changed (_thi.ng__egf_0.3.0|lib/index.umd.js|None; git-parse_1.0.4|dist/checkout_commit.js|None; git-parse_1.0.4|dist/git_diff.js|None; git-parse_1.0.4|dist/git_log_stream.js|None; git-parse_1.0.4|dist/git_pull.js|None; launch-editor_2.14.1|index.js|167; launch-editor_2.14.1|index.js|172; monorepo-build_0.1.9|lib/index.test.js|12; nodemon_3.1.14|lib/monitor/run.js|430; nodemon_3.1.14|lib/monitor/run.js|434; react-dev-utils_11.0.0|openBrowser.js|92; roar-pidusage_1.1.6|lib/helpers.js|12). The reviewer labels an alert on a require line by the command calls of that module. The 47 labels the assistant assigned vulnerable have review null: not reviewed by a person. CVE identifiers in the notes are the reviewer's statements.",
+  "reviewed_by": "project owner, 2026-11-15: all 84 labels. 31 in an interactive session with the code of each item, 47 in a Markdown review file; 3 of those were decided after the alert start lines were shown from the saved report",
+  "review_note": "12 labels differ from what the assistant assigned (_thi.ng__egf_0.3.0|lib/index.umd.js|U1; git-parse_1.0.4|dist/checkout_commit.js|U10; git-parse_1.0.4|dist/git_diff.js|U10; git-parse_1.0.4|dist/git_log_stream.js|U8; git-parse_1.0.4|dist/git_pull.js|U10; launch-editor_2.14.1|index.js|167; launch-editor_2.14.1|index.js|172; monorepo-build_0.1.9|lib/index.test.js|12; nodemon_3.1.14|lib/monitor/run.js|430; nodemon_3.1.14|lib/monitor/run.js|434; react-dev-utils_11.0.0|openBrowser.js|92; roar-pidusage_1.1.6|lib/helpers.js|12). The reviewer labels an alert on a require line by the command calls of that module, and counts each unmatched alert as its own unit at the line it starts on, which split one label of extra-asciinema into seven. CVE identifiers and source links in the notes are the reviewer's.",
   "labels": [
     {
       "id": "_thi.ng__egf_0.3.0|tags.js|25",
       "label": "vulnerable",
       "class": null,
       "reason": "`body` of a #gpg tag comes from the parsed EGF text and is put inside `echo \"${body}\" | gpg --decrypt`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Trong nhánh giải mã của Node.js, nội dung thẻ GPG do bên gọi cung cấp được ghép vào chuỗi cho `execSync` bằng dấu ngoặc kép mà không có bước trích dẫn phù hợp. [Tài liệu gói](https://www.npmjs.com/package/%40thi.ng/egf)"
+      }
     },
     {
-      "id": "_thi.ng__egf_0.3.0|lib/index.umd.js|None",
+      "id": "_thi.ng__egf_0.3.0|lib/index.umd.js|U1",
       "label": "vulnerable",
       "class": null,
       "reason": "The alert points at `require(\"child_process\")` in the minified bundle; that expression runs no command.",
@@ -31,7 +38,14 @@
       "label": "vulnerable",
       "class": null,
       "reason": "Each `ip` of the `range` argument of the public `arp()` is interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Hàm công khai `arp` nhận `range` từ bên gọi và ghép từng `ip` vào chuỗi cho `child_process.exec` sau khi kiểm tra kiểu của `range`. [Mã nguồn 2.0.0](https://github.com/haf-decent/arpping/blob/503cb320cd54c719bca88fea22a2c5b3a5ebddfe/index.js#L135-L148) · [Điểm xuất](https://github.com/haf-decent/arpping/blob/503cb320cd54c719bca88fea22a2c5b3a5ebddfe/index.js#L222)"
+      }
     },
     {
       "id": "arpping_2.0.0|index.js|60",
@@ -52,21 +66,42 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`path.basename(file)` and `args`, both arguments of the blame function, are concatenated into `svn blame`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Nhánh SVN của `Blamer.blameByFile` chuyển `file` và `args` từ bên gọi vào hàm ghép lệnh, nơi `path.basename(file)` và `args` dạng chuỗi đi thẳng vào `exec`. [API công khai](https://github.com/kucherenko/blamer/blob/347e365e8d62c69099de57c46a0e717446b76e74/src/Blamer.js#L10-L15) · [Mã nguồn 0.1.13](https://github.com/kucherenko/blamer/blob/347e365e8d62c69099de57c46a0e717446b76e74/src/vcs/svn.js#L7-L41)"
+      }
     },
     {
       "id": "codecov_3.6.4|lib/codecov.js|480",
       "label": "vulnerable",
       "class": null,
       "reason": "`root` is `path.resolve(args.options.root || query.root || '.')`, a command-line option, concatenated into `find`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`root` lấy từ tùy chọn của bên gọi, được chuẩn hóa bằng `path.resolve` rồi ghép trực tiếp vào chuỗi cho `execSync` ở nhánh tìm báo cáo ngoài Windows. [Tùy chọn dòng lệnh](https://github.com/codecov/codecov-node/blob/bac0787351100cb430a72cfe58e46f0cdb069da5/bin/codecov#L9-L11) · [Gán `root`](https://github.com/codecov/codecov-node/blob/bac0787351100cb430a72cfe58e46f0cdb069da5/lib/codecov.js#L356) · [Thực thi](https://github.com/codecov/codecov-node/blob/bac0787351100cb430a72cfe58e46f0cdb069da5/lib/codecov.js#L480)"
+      }
     },
     {
-      "id": "codecov_3.6.4|lib/codecov.js|None",
+      "id": "codecov_3.6.4|lib/codecov.js|U356",
       "label": "vulnerable",
       "class": null,
       "reason": "Unmatched alert on line 356 about the same `root` value reaching the shell commands on lines 419 and 480.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ nêu dòng 356, nơi gán `root`, và hai điểm thực thi tại 419 và 480. Nhật ký cảnh báo gốc cần xác nhận dòng bắt đầu và liệu mục này có trùng mục 4 tại dòng 480 hay là ứng viên riêng. [Mã nguồn 3.6.4](https://github.com/codecov/codecov-node/blob/bac0787351100cb430a72cfe58e46f0cdb069da5/lib/codecov.js#L356-L480) Second pass (alert start lines shown from the saved report): Label case 5 as vulnerable and count it as one separate candidate. The CodeQL alert starts at lib/codecov.js:356:27. path.resolve normalizes the externally supplied root but does not escape shell metacharacters before the value reaches the shell commands at lines 419 and 480. Those lines are related locations with their own candidate records."
+      }
     },
     {
       "id": "deferred-exec_0.3.1|lib/deferred-exec.js|46",
@@ -87,119 +122,322 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`cmd` is built from keys and values of `options.cmdOptions` of the public update function.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Hàm công khai `update` nhúng khóa và giá trị từ `options.cmdOptions` do bên gọi truyền vào `cmd` trước khi đưa chuỗi đến `exec`, qua bước kiểm tra giá trị có tồn tại. [Mã nguồn](https://github.com/balderdashy/enpeem/blob/06fda9b85c3a45dff84da940e355fc11cb53ecc8/index.js) · [Phiên bản](https://github.com/balderdashy/enpeem/blob/06fda9b85c3a45dff84da940e355fc11cb53ecc8/package.json)"
+      }
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|11",
       "label": "vulnerable",
       "class": null,
       "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`cat` nhận tên tệp `f` từ bên gọi và nội suy trực tiếp vào lệnh cho `child_process.exec`. [Tài liệu API](https://nodef.github.io/extra-asciinema/)"
+      }
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|26",
       "label": "vulnerable",
       "class": null,
       "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`catSync` nhận tên tệp `f` từ bên gọi và nội suy trực tiếp vào lệnh cho `child_process.execSync`. [Tài liệu API](https://nodef.github.io/extra-asciinema/)"
+      }
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|193",
       "label": "vulnerable",
       "class": null,
       "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`upload` nhận tên tệp `f` từ bên gọi và nội suy trực tiếp vào lệnh cho `child_process.exec`. [Tài liệu API](https://nodef.github.io/extra-asciinema/)"
+      }
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|71",
       "label": "vulnerable",
       "class": null,
       "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Hàm công khai `rec` chuyển đường dẫn tệp `f` do bên gọi cung cấp qua `recCmd`, hàm này chỉ bọc đường dẫn bằng ngoặc kép rồi chuyển chuỗi cho `child_process.exec`. [API và lời gọi](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/rec.js#L20-L32) · [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js#L1-L21)"
+      }
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|99",
       "label": "vulnerable",
       "class": null,
       "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Hàm công khai `recSync` chuyển đường dẫn tệp `f` do bên gọi cung cấp qua `recCmd`, hàm này chỉ bọc đường dẫn bằng ngoặc kép rồi chuyển chuỗi cho `child_process.execSync`. [API và lời gọi](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/recSync.js#L20-L26) · [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js#L1-L21)"
+      }
     },
     {
-      "id": "extra-asciinema_1.0.0|index.js|None",
+      "id": "extra-asciinema_1.0.0|index.js|U31",
       "label": "vulnerable",
       "class": null,
-      "reason": "Seven unmatched alerts on the concatenations inside `recCmd`, whose result is executed on lines 71 and 99.",
-      "review": null
+      "reason": "Unmatched alert on line 31, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|U35",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 35, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|U40",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 40, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|U41",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 41, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|U42",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 42, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|U43",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 43, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|U45",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 45, a concatenation inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Lý do cũ gộp bảy cảnh báo trong hàm tạo lệnh. Cần lấy từng dòng bắt đầu từ báo cáo gốc và đối chiếu với mục 10–11 trước khi đếm. [Hàm tạo lệnh 1.0.0](https://github.com/nodef/extra-asciinema/blob/6d39ce277ed1dddfa5375b575c8e099235dd5b9d/src/_recCmd.js) Second pass (alert start lines shown from the saved report): Split case 12 into seven vulnerable candidates, one per distinct SARIF start line in index.js: 31, 35, 40, 41, 42, 43, and 45. At each location, recCmd incorporates caller-controlled data into the command without adequate shell escaping. Lines 71 and 99 are related execution sites with their own candidate records. Count the seven candidates separately for scoring."
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|8",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`generateimage` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `input`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|27",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`convertvideo` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `input`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|46",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`generategif` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `input`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|65",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`extractaudio` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `input`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|83",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`compressvideo` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `input`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|101",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input1`, `input2`, `x`, `y`, `start`, `end` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`addoverlayimagetime` ghép trực tiếp `output` do bên gọi cung cấp vào lệnh FFmpeg, trong khi phép kiểm tra tồn tại tệp chỉ áp dụng cho hai đầu vào. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|119",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input1`, `input2`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`addoverlayimage` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho hai đầu vào. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|137",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input`, `text`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`addoverlaytext` ghép trực tiếp `output` do bên gọi cung cấp vào lệnh FFmpeg, trong khi phép kiểm tra tồn tại tệp chỉ áp dụng cho `input`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|155",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `input`, `audio` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`addaudiotovideo` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `input` và `audio`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|173",
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `audio`, `image` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`addaudiotoimage` ghép `output` do bên gọi cung cấp trực tiếp vào lệnh FFmpeg, còn phép kiểm tra tồn tại tệp áp dụng cho `audio` và `image`. [Mã nguồn và phần xuất API](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/index.js) · [Phiên bản](https://github.com/TRomesh/ffmpegdotjs/blob/4016a94484db1e7fc8f66c0431dc8342884573a6/package.json)"
+      }
     },
     {
       "id": "freespace_1.0.4|index.js|49",
@@ -220,7 +458,14 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`driveOrMountRegex` only constrains the first character; the rest of the argument reaches `df -P ... | awk`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Ở nhánh ngoài Windows, `checkSync` ghép `driveOrMount` do bên gọi cung cấp vào chuỗi cho `execSync` sau khi kiểm tra ký tự đầu mà không ràng buộc phần còn lại. [Mã nguồn](https://github.com/ptelad/freespace/blob/7f34444539e2b5191b37a0f4a9301bd4122f4813/index.js) · [Phiên bản](https://github.com/ptelad/freespace/blob/7f34444539e2b5191b37a0f4a9301bd4122f4813/package.json)"
+      }
     },
     {
       "id": "freespace_1.0.4|index.js|65",
@@ -241,52 +486,101 @@
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `packageName` and `registry` are interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Ở nhánh có `registry`, hàm xuất ra ngoài ghép trực tiếp `packageName` và `registry` của bên gọi vào chuỗi cho `child_process.execSync`. [Mã nguồn 1.0.6](https://github.com/hoperyy/get-npm-package-version/blob/0efe6e245e23b9393103732ee5d53abfd97141eb/index.js#L1-L17)"
+      }
     },
     {
       "id": "git-add-remote_1.0.0|index.js|31",
       "label": "vulnerable",
       "class": null,
       "reason": "`name` and `url` are only checked to be strings and then concatenated into `git remote add`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`addRemote.sync` kiểm tra `name` và `url` của bên gọi là chuỗi rồi ghép cả hai trực tiếp vào lệnh cho `child_process.execSync`. [Mã nguồn](https://github.com/jonschlinkert/git-add-remote/blob/5c06c3e8954dbe57d487d612c5326941e363ee26/index.js)"
+      }
     },
     {
       "id": "git-lib_1.6.0|git.js|27",
       "label": "vulnerable",
       "class": null,
       "reason": "`options` and `message` of `commit()` are concatenated into `git commit`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`commit` lấy `options` từ bên gọi và ghép trực tiếp vào chuỗi lệnh, đồng thời chèn `message` bằng dấu ngoặc kép mà không có bước trích dẫn phù hợp. [Mã nguồn và phần xuất API](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/git.js) · [Phiên bản](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/package.json)"
+      }
     },
     {
       "id": "git-lib_1.6.0|git.js|126",
       "label": "vulnerable",
       "class": null,
       "reason": "Each `file` of `revert(files)` is concatenated into `git checkout --`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`revert` chuyển tham số `files` của bên gọi thành mảng khi cần rồi ghép trực tiếp từng `file` vào chuỗi lệnh. [Mã nguồn và phần xuất API](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/git.js) · [Phiên bản](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/package.json)"
+      }
     },
     {
       "id": "git-lib_1.6.0|git.js|223",
       "label": "vulnerable",
       "class": null,
       "reason": "`branch` of `checkout()` is concatenated into `git checkout`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`checkout` ghép trực tiếp tên nhánh `branch` do bên gọi cung cấp vào chuỗi lệnh. [Mã nguồn và phần xuất API](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/git.js) · [Phiên bản](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/package.json)"
+      }
     },
     {
       "id": "git-lib_1.6.0|git.js|236",
       "label": "vulnerable",
       "class": null,
       "reason": "`newBranchName` is concatenated into `git checkout -b`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`newBranch` ghép trực tiếp tham số `newBranchName` của bên gọi vào chuỗi lệnh. [Mã nguồn và phần xuất API](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/git.js) · [Phiên bản](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/package.json)"
+      }
     },
     {
       "id": "git-lib_1.6.0|git.js|249",
       "label": "vulnerable",
       "class": null,
       "reason": "`branch` of `deleteBranch()` is concatenated into `git branch -d`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`deleteBranch` ghép trực tiếp tham số `branch` của bên gọi vào chuỗi lệnh. [Mã nguồn và phần xuất API](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/git.js) · [Phiên bản](https://github.com/joeyism/node-git-lib/blob/1b7d6140f30b22a6faf52b99a3ae136d357fd018/package.json)"
+      }
     },
     {
-      "id": "git-parse_1.0.4|dist/checkout_commit.js|None",
+      "id": "git-parse_1.0.4|dist/checkout_commit.js|U10",
       "label": "vulnerable",
       "class": null,
       "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
@@ -300,7 +594,7 @@
       }
     },
     {
-      "id": "git-parse_1.0.4|dist/git_diff.js|None",
+      "id": "git-parse_1.0.4|dist/git_diff.js|U10",
       "label": "vulnerable",
       "class": null,
       "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
@@ -314,7 +608,7 @@
       }
     },
     {
-      "id": "git-parse_1.0.4|dist/git_log_stream.js|None",
+      "id": "git-parse_1.0.4|dist/git_log_stream.js|U8",
       "label": "safe",
       "class": "no_shell",
       "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
@@ -328,7 +622,7 @@
       }
     },
     {
-      "id": "git-parse_1.0.4|dist/git_pull.js|None",
+      "id": "git-parse_1.0.4|dist/git_pull.js|U10",
       "label": "safe",
       "class": "constant_command",
       "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
@@ -346,21 +640,42 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`dir` of `GitFileOperations.fs_rmdir_r`, which the package index re-exports, is concatenated into `rm -rf`; no caller inside the package constrains it.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`GitFileOperations.fs_rmdir_r` được xuất qua điểm vào của gói và ghép tham số `dir` do bên gọi cung cấp trực tiếp vào chuỗi cho `child_process.exec`. [Điểm xuất](https://github.com/christkv/node-git/blob/c88e44a22a6a81aabf1984c5881d53ce3df1f713/lib/git/index.js#L1-L11) · [Hàm thực thi 0.1.5](https://github.com/christkv/node-git/blob/c88e44a22a6a81aabf1984c5881d53ce3df1f713/lib/git/git_file_operations.js#L125-L134)"
+      }
     },
     {
       "id": "google-cloudstorage-commands_0.0.1|index.js|22",
       "label": "vulnerable",
       "class": null,
       "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`cors` là phương thức công khai nhận `bucket` từ bên gọi và ghép trực tiếp vào chuỗi lệnh cho `exec`. [Mã nguồn](https://github.com/samradical/google-cloudstorage-commands/blob/e69c931c4363be266489b26a1766760c9fce08d2/index.js)"
+      }
     },
     {
       "id": "google-cloudstorage-commands_0.0.1|index.js|39",
       "label": "vulnerable",
       "class": null,
       "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`publicRead` là phương thức công khai nhận `bucket` từ bên gọi và ghép trực tiếp vào chuỗi lệnh cho `exec`. [Mã nguồn](https://github.com/samradical/google-cloudstorage-commands/blob/e69c931c4363be266489b26a1766760c9fce08d2/index.js)"
+      }
     },
     {
       "id": "grunt-shell_4.0.0|tasks/shell.js|46",
@@ -395,14 +710,28 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`path` of `dimensions()` is concatenated into `identify`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`dimensions` là hàm xuất ra ngoài và ghép trực tiếp `path` của bên gọi vào chuỗi cho `child_process.exec` ở nhánh đầu vào là đường dẫn. [Mã nguồn 5.0.1](https://github.com/martinj/node-imagickal/blob/13f036b7f468611c6f119f90fcd59e9ffc6081d1/lib/imagickal.js#L71-L77)"
+      }
     },
     {
       "id": "imagickal_5.0.1|lib/commands.js|276",
       "label": "vulnerable",
       "class": null,
       "reason": "`this.get(src, dst)` joins the caller's paths into the command; `pipeOrPath` only wraps them in double quotes.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`transform` chuyển `src` và `dst` do bên gọi cung cấp vào hàm tạo lệnh, nơi `pipeOrPath` chỉ bọc đường dẫn dạng chuỗi bằng ngoặc kép trước khi lệnh đi vào `child_process.exec`. [API công khai](https://github.com/martinj/node-imagickal/blob/13f036b7f468611c6f119f90fcd59e9ffc6081d1/lib/imagickal.js#L236-L248) · [Xử lý đường dẫn](https://github.com/martinj/node-imagickal/blob/13f036b7f468611c6f119f90fcd59e9ffc6081d1/lib/commands.js#L77-L81) · [Tạo và thực thi lệnh](https://github.com/martinj/node-imagickal/blob/13f036b7f468611c6f119f90fcd59e9ffc6081d1/lib/commands.js#L249-L276)"
+      }
     },
     {
       "id": "kill-port-process_0.0.1|src/index.js|63",
@@ -423,7 +752,14 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`programname` is concatenated into `taskkill`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Ở nhánh Windows, hàm xuất ra ngoài nhận `programname` từ bên gọi và ghép trực tiếp giá trị này vào chuỗi cho `child_process.exec`."
+      }
     },
     {
       "id": "killport_1.0.1|index.js|29",
@@ -468,25 +804,46 @@
       }
     },
     {
-      "id": "local-devices_2.0.0|src/index.js|None",
+      "id": "local-devices_2.0.0|src/index.js|U114",
       "label": "vulnerable",
       "class": null,
       "reason": "Unmatched alert on line 114: `address` of the exported function is concatenated into `arp -n`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "First pass (review file): Mã nguồn 2.0.0 xác nhận tham số `address` của API công khai được chuyển đến lời gọi `exec` ở dòng 114. Cần khớp dòng bắt đầu của cảnh báo gốc với dòng này trước khi ghi nhãn cho ứng viên. [API](https://github.com/DylanPiercey/local-devices/blob/57b83360ae4c8eecdce005c5207795f35e73eeb9/src/index.js#L16-L23) · [Mã nguồn tại dòng 114](https://github.com/DylanPiercey/local-devices/blob/57b83360ae4c8eecdce005c5207795f35e73eeb9/src/index.js#L111-L115) Second pass (alert start lines shown from the saved report): Label case 37 as vulnerable. The exported function passes the caller-controlled address through pingServer to arpOne, where it is concatenated into a shell command without escaping. Count one candidate at the SARIF start location src/index.js:114:18."
+      }
     },
     {
       "id": "lsof_0.1.0|lib/lsof.js|9",
       "label": "vulnerable",
       "class": null,
       "reason": "`pid` of the exported `raw()` is concatenated into `lsof -p`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`raw` cho bên gọi truyền `pid` và ghép trực tiếp vào chuỗi lệnh, còn việc lấy và chuyển đổi mã tiến trình hiện tại chỉ diễn ra khi đối số đầu là hàm gọi lại."
+      }
     },
     {
       "id": "lsof_0.1.0|lib/lsof.js|71",
       "label": "vulnerable",
       "class": null,
       "reason": "`port` of the exported `rawUdpPort()` is concatenated into `lsof -i udp:`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`rawUdpPort` đưa `port` do bên gọi cung cấp trực tiếp vào chuỗi cho `child_process.exec`."
+      }
     },
     {
       "id": "monorepo-build_0.1.9|lib/index.test.js|12",
@@ -521,7 +878,14 @@
       "label": "vulnerable",
       "class": null,
       "reason": "`dest_file` and `src_file` are concatenated into `pdflatex`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Hàm công khai `selflatex` ghép trực tiếp `src_file` và `dest_file` của bên gọi vào lệnh biên dịch lần thứ hai. [Tài liệu gói](https://github.com/toolbuddy/node-latex-pdf)"
+      }
     },
     {
       "id": "node-notifier_10.0.1|lib/utils.js|59",
@@ -598,28 +962,56 @@
       "label": "vulnerable",
       "class": null,
       "reason": "Wrapper around `exec`; callers pass commands with the tag name and extra branch names of the caller's options inside double quotes only.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Trong mã TypeScript của bản 0.2.4-beta, tên thẻ và tên nhánh từ đối số công khai được ghép vào chuỗi lệnh chỉ bằng ngoặc kép rồi chuyển đến hàm bọc tương ứng với `lib/publish.js:198`. [Cấu hình phiên bản và biên dịch](https://github.com/theoy/npm-git-publish/blob/7b9f7b98b4a63b13d140e66a96a48a2f5096bad0/package.json) · [Nơi tạo lệnh](https://github.com/theoy/npm-git-publish/blob/7b9f7b98b4a63b13d140e66a96a48a2f5096bad0/lib/publish.ts#L184-L197) · [Nguồn tham số và hàm bọc](https://github.com/theoy/npm-git-publish/blob/7b9f7b98b4a63b13d140e66a96a48a2f5096bad0/lib/publish.ts#L261-L278)"
+      }
     },
     {
       "id": "pdf-image_1.0.5|index.js|104",
       "label": "vulnerable",
       "class": null,
       "reason": "The command contains `pdfFilePath` and the convert options given to the constructor, in double quotes only.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`convertPage` đưa chuỗi do `constructConvertCommandForPage` tạo vào `exec`, trong đó đường dẫn PDF do bên gọi truyền được đưa vào chuỗi lệnh mà thiếu trích dẫn phù hợp. [Thông báo xác nhận luồng của hàm tạo lệnh](https://github.com/advisories/GHSA-q5mh-72xg-628w)"
+      }
     },
     {
       "id": "pdfinfojs_0.3.6|lib/pdfinfo.js|28",
       "label": "vulnerable",
       "class": null,
       "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Hàm khởi tạo nhận `filename` từ bên gọi và chỉ bọc bằng ngoặc kép trong `options.additional`, danh sách được `getInfoSync` ghép vào chuỗi cho `shell.exec` ở dòng 28. [Mã nguồn 0.3.6](https://github.com/fagbokforlaget/pdfinfojs/blob/475b5dc4bb26c8634210f4c7d63476308f949c9e/lib/pdfinfo.js#L7-L28)"
+      }
     },
     {
       "id": "pdfinfojs_0.3.6|lib/pdfinfo.js|72",
       "label": "vulnerable",
       "class": null,
       "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "Phương thức `get` vẫn gọi `shell.exec` ở dòng 72 với chuỗi chứa `filename` từ hàm khởi tạo, vốn chỉ được bọc bằng ngoặc kép trong `options.additional`. [Hàm khởi tạo](https://github.com/fagbokforlaget/pdfinfojs/blob/475b5dc4bb26c8634210f4c7d63476308f949c9e/lib/pdfinfo.js#L7-L10) · [Phương thức `get` trong 0.3.6](https://github.com/fagbokforlaget/pdfinfojs/blob/475b5dc4bb26c8634210f4c7d63476308f949c9e/lib/pdfinfo.js#L69-L75)"
+      }
     },
     {
       "id": "portkiller_1.0.2|index.js|22",
@@ -640,14 +1032,28 @@
       "label": "vulnerable",
       "class": null,
       "reason": "The `extra` argument is appended to `ps aux |`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "API công khai `ps` chuyển trực tiếp tham số `extra` vào đoạn lệnh ghép trong `psRaw`, nên trường hợp này thỏa tiêu chí mục 5 về dữ liệu do bên gọi cung cấp. [Mã nguồn 0.0.2](https://github.com/WisdomKwan/ps-visitor/blob/cdfc934a8e4af95aa0473f4b2a4bd091d09faf2f/index.js)"
+      }
     },
     {
       "id": "ps-visitor_0.0.2|index.js|444",
       "label": "vulnerable",
       "class": null,
       "reason": "The `signal` argument, only trimmed, is put into `kill -l`.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`getSignalRaw` là hàm xuất ra ngoài nhận `signal` từ bên gọi và ghép vào chuỗi cho `exec` sau khi cắt khoảng trắng và bỏ tiền tố `SIG`. [Mã nguồn](https://github.com/WisdomKwan/ps-visitor/blob/cdfc934a8e4af95aa0473f4b2a4bd091d09faf2f/index.js)"
+      }
     },
     {
       "id": "react-dev-utils_11.0.0|openBrowser.js|92",
@@ -766,7 +1172,14 @@
       "label": "vulnerable",
       "class": null,
       "reason": "The arguments `pythonLancher` and `target` are interpolated into the shell command string without quoting or validation.",
-      "review": null
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "vulnerable",
+        "assistant_class": null,
+        "note": "`getCredential` nhận `target` và `pythonLancher` từ bên gọi rồi ghép trực tiếp vào chuỗi cho hàm bọc của `child_process.exec`. [Mã nguồn 1.0.2](https://github.com/rolangom/wincred/blob/3fd39186ee32add9c12046cdccf2765d19565335/index.ts)"
+      }
     }
   ]
 }

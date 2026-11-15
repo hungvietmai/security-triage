@@ -40,12 +40,34 @@ def sources():
 
 
 def javascript_candidates(source):
-    report = json.loads((MATCHING / "inputs" / source["id"] / "report.json").read_bytes())
-    return [c for c in report["candidates"] if c["path"].endswith(JS)]
+    """JavaScript candidates of one export. An unmatched candidate has no call line; it gets
+    `alert_line`, the line its alert starts on in the exported SARIF log."""
+    folder = MATCHING / "inputs" / source["id"]
+    report = json.loads((folder / "report.json").read_bytes())
+    found = [dict(c) for c in report["candidates"] if c["path"].endswith(JS)]
+    if any(c["start_line"] is None for c in found):
+        starts = {}
+        for run in json.loads((folder / "report.sarif").read_bytes())["runs"]:
+            for result in run["results"]:
+                key = result["properties"]["securityTriage"]["candidateKey"]
+                region = result["locations"][0]["physicalLocation"].get("region", {})
+                if region.get("startLine") is not None:
+                    starts[key] = min(region["startLine"], starts.get(key, region["startLine"]))
+        for candidate in found:
+            if candidate["start_line"] is None:
+                candidate["alert_line"] = starts.get(candidate["candidate_key"])
+    return found
+
+
+def unit_line(candidate):
+    """What identifies a unit within a file: the call line, or `U<line>` for an unmatched alert."""
+    if candidate["start_line"] is not None:
+        return candidate["start_line"]
+    return f"U{candidate.get('alert_line')}"
 
 
 def item_id(source, candidate):
-    return f"{source['id']}|{candidate['path']}|{candidate['start_line']}"
+    return f"{source['id']}|{candidate['path']}|{unit_line(candidate)}"
 
 
 def items():
@@ -57,7 +79,9 @@ def items():
         for candidate in javascript_candidates(source):
             if (candidate["path"], candidate["start_line"]) in sites:
                 continue
-            # Two candidates that start on one line of one file are one item.
+            # Two candidates that start on one line of one file are one item. Each unmatched
+            # alert is its own item, shown at the line it starts on.
+            line = candidate["start_line"]
             rows.setdefault(
                 item_id(source, candidate),
                 {
@@ -65,7 +89,7 @@ def items():
                     "package": source["package"],
                     "version": source["version"],
                     "path": candidate["path"],
-                    "line": candidate["start_line"],
+                    "line": candidate.get("alert_line") if line is None else line,
                 },
             )
     return list(rows.values())

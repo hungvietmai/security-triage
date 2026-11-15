@@ -1,13 +1,13 @@
 {
   "labels_assigned_by": "AI coding assistant (Claude), reading the package source",
-  "labels_reviewed_by": "project owner, 2026-11-15: 31 of 78 labels, namely every label the assistant had assigned safe or undetermined",
+  "labels_reviewed_by": "project owner, 2026-11-15: all 84 labels. 31 in an interactive session with the code of each item, 47 in a Markdown review file; 3 of those were decided after the alert start lines were shown from the saved report",
   "groups": {
     "all": {
-      "units": 140,
+      "units": 146,
       "labels": {
         "vulnerable": {
           "cve": 62,
-          "assistant": 54
+          "assistant": 60
         },
         "safe": {
           "cve": 0,
@@ -24,64 +24,64 @@
           "tp": 52,
           "fp": 4,
           "undetermined": 9,
-          "fn": 71,
+          "fn": 77,
           "precision": 0.9286,
-          "recall_upper_bound": 0.4228,
-          "f1_upper_bound": 0.581
+          "recall_upper_bound": 0.4031,
+          "f1_upper_bound": 0.5622
         },
         "codeql": {
-          "tp": 92,
+          "tp": 98,
           "fp": 2,
           "undetermined": 1,
           "fn": 31,
-          "precision": 0.9787,
-          "recall_upper_bound": 0.748,
-          "f1_upper_bound": 0.8479
+          "precision": 0.98,
+          "recall_upper_bound": 0.7597,
+          "f1_upper_bound": 0.8559
         },
         "eslint": {
           "tp": 83,
           "fp": 9,
           "undetermined": 6,
-          "fn": 40,
+          "fn": 46,
           "precision": 0.9022,
-          "recall_upper_bound": 0.6748,
-          "f1_upper_bound": 0.7721
+          "recall_upper_bound": 0.6434,
+          "f1_upper_bound": 0.7511
         },
         "semgrep ∪ codeql": {
-          "tp": 103,
+          "tp": 109,
           "fp": 4,
           "undetermined": 10,
           "fn": 20,
-          "precision": 0.9626,
-          "recall_upper_bound": 0.8374,
-          "f1_upper_bound": 0.8956
+          "precision": 0.9646,
+          "recall_upper_bound": 0.845,
+          "f1_upper_bound": 0.9008
         },
         "all sources": {
-          "tp": 116,
+          "tp": 122,
           "fp": 11,
           "undetermined": 13,
           "fn": 7,
-          "precision": 0.9134,
-          "recall_upper_bound": 0.9431,
-          "f1_upper_bound": 0.928
+          "precision": 0.9173,
+          "recall_upper_bound": 0.9457,
+          "f1_upper_bound": 0.9313
         },
         "all sources, after filtering": {
-          "tp": 116,
+          "tp": 122,
           "fp": 10,
           "undetermined": 13,
           "fn": 7,
-          "precision": 0.9206,
-          "recall_upper_bound": 0.9431,
-          "f1_upper_bound": 0.9317
+          "precision": 0.9242,
+          "recall_upper_bound": 0.9457,
+          "f1_upper_bound": 0.9348
         },
         "first tiers (P1+P2), after filtering": {
           "tp": 97,
           "fp": 4,
           "undetermined": 9,
-          "fn": 26,
+          "fn": 32,
           "precision": 0.9604,
-          "recall_upper_bound": 0.7886,
-          "f1_upper_bound": 0.8661
+          "recall_upper_bound": 0.7519,
+          "f1_upper_bound": 0.8435
         }
       },
       "filter": {
@@ -110,11 +110,11 @@
       }
     },
     "not_read_when_fixing": {
-      "units": 125,
+      "units": 131,
       "labels": {
         "vulnerable": {
           "cve": 54,
-          "assistant": 49
+          "assistant": 55
         },
         "safe": {
           "cve": 0,
@@ -131,64 +131,64 @@
           "tp": 47,
           "fp": 4,
           "undetermined": 8,
-          "fn": 61,
+          "fn": 67,
           "precision": 0.9216,
-          "recall_upper_bound": 0.4352,
-          "f1_upper_bound": 0.5912
+          "recall_upper_bound": 0.4123,
+          "f1_upper_bound": 0.5697
         },
         "codeql": {
-          "tp": 82,
+          "tp": 88,
           "fp": 2,
           "undetermined": 1,
           "fn": 26,
-          "precision": 0.9762,
-          "recall_upper_bound": 0.7593,
-          "f1_upper_bound": 0.8542
+          "precision": 0.9778,
+          "recall_upper_bound": 0.7719,
+          "f1_upper_bound": 0.8627
         },
         "eslint": {
           "tp": 74,
           "fp": 8,
           "undetermined": 6,
-          "fn": 34,
+          "fn": 40,
           "precision": 0.9024,
-          "recall_upper_bound": 0.6852,
-          "f1_upper_bound": 0.7789
+          "recall_upper_bound": 0.6491,
+          "f1_upper_bound": 0.7551
         },
         "semgrep ∪ codeql": {
-          "tp": 91,
+          "tp": 97,
           "fp": 4,
           "undetermined": 9,
           "fn": 17,
-          "precision": 0.9579,
-          "recall_upper_bound": 0.8426,
-          "f1_upper_bound": 0.8966
+          "precision": 0.9604,
+          "recall_upper_bound": 0.8509,
+          "f1_upper_bound": 0.9023
         },
         "all sources": {
-          "tp": 103,
+          "tp": 109,
           "fp": 10,
           "undetermined": 12,
           "fn": 5,
-          "precision": 0.9115,
-          "recall_upper_bound": 0.9537,
-          "f1_upper_bound": 0.9321
+          "precision": 0.916,
+          "recall_upper_bound": 0.9561,
+          "f1_upper_bound": 0.9356
         },
         "all sources, after filtering": {
-          "tp": 103,
+          "tp": 109,
           "fp": 10,
           "undetermined": 12,
           "fn": 5,
-          "precision": 0.9115,
-          "recall_upper_bound": 0.9537,
-          "f1_upper_bound": 0.9321
+          "precision": 0.916,
+          "recall_upper_bound": 0.9561,
+          "f1_upper_bound": 0.9356
         },
         "first tiers (P1+P2), after filtering": {
           "tp": 85,
           "fp": 4,
           "undetermined": 8,
-          "fn": 23,
+          "fn": 29,
           "precision": 0.9551,
-          "recall_upper_bound": 0.787,
-          "f1_upper_bound": 0.8629
+          "recall_upper_bound": 0.7456,
+          "f1_upper_bound": 0.8374
         }
       },
       "filter": {

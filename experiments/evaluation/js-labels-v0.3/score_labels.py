@@ -121,10 +121,12 @@ def build_units():
         sites = set(known.get(f"{source['package']}@{source['version']}", []))
         by_line = {}
         for candidate in sheet.javascript_candidates(source):
-            by_line.setdefault((candidate["path"], candidate["start_line"]), []).append(candidate)
+            # A call candidate is keyed by its line; each unmatched alert by `U<its start line>`.
+            key = (candidate["path"], sheet.unit_line(candidate))
+            by_line.setdefault(key, []).append(candidate)
         units = []
         # An unmatched alert has no line; sort it first within its file.
-        ordered = sorted(by_line.items(), key=lambda item: (item[0][0], item[0][1] or 0))
+        ordered = sorted(by_line.items(), key=lambda item: (item[0][0], str(item[0][1])))
         for (path, line), candidates in ordered:
             unit = merge(candidates)
             if (path, line) in sites:
