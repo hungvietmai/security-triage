@@ -37,3 +37,24 @@ Câu hỏi 2 của giao thức (bước gạn chuyển đi bao nhiêu vị trí 
 trả lời**: lượt quét lại ở trạng thái `partial` (bước định vị Python bỏ qua tệp sai cú pháp;
 CodeQL JavaScript chạy dở), nên theo thiết kế bước gạn không hoạt động. Mục 6 của giao thức đã
 lường trước trường hợp này.
+
+## 4. Quét lại bằng profile v0.3 (2026-11-15, dữ liệu phát triển)
+
+Sau khi profile `command-injection-v0.3` có bộ định vị lời gọi JavaScript v1, kho được quét thêm
+một lần bằng v0.3 ([v0.3-rescan/](v0.3-rescan/)) và chấm bằng cùng nhãn và script:
+[results/v0.3-rescan.json](results/v0.3-rescan.json). Lúc này kho đã được quét hai lần và kết
+quả đã được xem, nên đây là **dữ liệu phát triển**, không còn là kiểm tra độc lập.
+
+| 25 vị trí JavaScript có nhãn (15 có lỗi, 10 an toàn), hợp mọi nguồn | TP | FP | FN | TN | Độ chính xác | Độ bao phủ | F1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| v0.2 (lượt quét lại ở mục 2) | 6 | 0 | 9 | 10 | 1,00 | 0,40 | 0,57 |
+| v0.3 | 12 | 2 | 3 | 8 | 0,86 | 0,80 | 0,83 |
+
+- Khác biệt đến từ đối sánh: với v0.2, cảnh báo ở sáu vị trí có lỗi và hai vị trí an toàn không
+  gộp được vào lời gọi nào nên không được tính là "được báo". Công cụ phát hiện không đổi.
+- 185 vị trí Python cho kết quả y hệt hai lượt (F1 0,69).
+- Trên cả 210 vị trí: F1 0,69 → 0,71.
+- Lượt quét vẫn `partial`, nên không quy tắc gạn nào hoạt động, kể cả G4; không vị trí có nhãn
+  nào bị gạn. Đợt này vì thế không đo được G4.
+- 11 trong 25 vị trí JavaScript thuộc kiểm thử của các luật Semgrep mà profile đang chạy; ở đó
+  Semgrep được chấm bằng kỳ vọng của chính nó.

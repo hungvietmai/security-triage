@@ -130,6 +130,10 @@ lỗi đã công bố của chính package đó vẫn ở danh sách rà chính.
   ứng viên JavaScript. Trên dữ liệu này G4 **gần như không giảm khối lượng rà soát**. Lý do nằm
   ở khâu phát hiện: luật của ESLint và hai luật `spawn(..., {shell: true})` của Semgrep hiếm khi
   báo một lệnh hằng.
+- *Trên JavaScript có nhãn hai phía:* bộ kiểm thử luật của semgrep-rules có 25 vị trí. Quét lại
+  bằng v0.3, hợp mọi nguồn đạt độ chính xác 0,86, độ bao phủ 0,80, F1 0,83 (v0.2: 1,00, 0,40,
+  0,57); lượt quét chạy dở nên G4 không hoạt động ở đó. Xem
+  [../independent-labeled/DEVIATIONS.md](../independent-labeled/DEVIATIONS.md), mục 4.
 - *Điều chưa đo được:* các loại cảnh báo sai khác trên JavaScript. Nhãn đối chứng ở đây chỉ nói
   lệnh có hằng hay không; nó không nói một lệnh không hằng có khai thác được hay không.
 

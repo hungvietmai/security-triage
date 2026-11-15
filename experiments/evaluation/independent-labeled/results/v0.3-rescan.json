@@ -1,0 +1,541 @@
+{
+  "source": "github:semgrep/semgrep-rules@a84ff9cc2453ca91d581380de4b8b3f272f6f4be",
+  "snapshot_sha256": "b227c2d234ffd9c84c4dbd6619a5897a7192637c141baeace3bfc37b0715a887",
+  "scan_status": "partial",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "step_statuses": {
+    "python/bandit": "completed",
+    "python/codeql": "completed",
+    "python/semgrep": "completed",
+    "python/sink-locator": "partial",
+    "python/codeql-create": "completed",
+    "python/codeql-evidence": "completed",
+    "python/semgrep-evidence": "completed",
+    "javascript/codeql": "partial",
+    "javascript/eslint": "completed",
+    "javascript/semgrep": "completed",
+    "javascript/sink-locator": "completed",
+    "javascript/codeql-create": "completed",
+    "javascript/semgrep-evidence": "completed"
+  },
+  "stages": {
+    "raw_alerts": 552,
+    "units": 345,
+    "candidates": 335,
+    "main_list": 335,
+    "filtered": 0,
+    "demoted": 214
+  },
+  "subsets": {
+    "all labeled sites": {
+      "sites": {
+        "vulnerable": 135,
+        "safe": 75
+      },
+      "scores": {
+        "semgrep": {
+          "tp": 55,
+          "fp": 9,
+          "fn": 80,
+          "tn": 66,
+          "precision": 0.8594,
+          "recall": 0.4074,
+          "f1": 0.5528
+        },
+        "codeql": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 115,
+          "tn": 75,
+          "precision": 1.0,
+          "recall": 0.1481,
+          "f1": 0.258
+        },
+        "bandit": {
+          "tp": 88,
+          "fp": 47,
+          "fn": 47,
+          "tn": 28,
+          "precision": 0.6519,
+          "recall": 0.6519,
+          "f1": 0.6519
+        },
+        "eslint": {
+          "tp": 5,
+          "fp": 2,
+          "fn": 130,
+          "tn": 73,
+          "precision": 0.7143,
+          "recall": 0.037,
+          "f1": 0.0704
+        },
+        "semgrep ∪ codeql": {
+          "tp": 55,
+          "fp": 9,
+          "fn": 80,
+          "tn": 66,
+          "precision": 0.8594,
+          "recall": 0.4074,
+          "f1": 0.5528
+        },
+        "all sources": {
+          "tp": 102,
+          "fp": 51,
+          "fn": 33,
+          "tn": 24,
+          "precision": 0.6667,
+          "recall": 0.7556,
+          "f1": 0.7084
+        },
+        "all sources, open-source filter": {
+          "tp": 102,
+          "fp": 51,
+          "fn": 33,
+          "tn": 24,
+          "precision": 0.6667,
+          "recall": 0.7556,
+          "f1": 0.7084
+        },
+        "all sources, filtered": {
+          "tp": 102,
+          "fp": 51,
+          "fn": 33,
+          "tn": 24,
+          "precision": 0.6667,
+          "recall": 0.7556,
+          "f1": 0.7084
+        },
+        "first tiers (P1+P2), filtered": {
+          "tp": 43,
+          "fp": 5,
+          "fn": 92,
+          "tn": 70,
+          "precision": 0.8958,
+          "recall": 0.3185,
+          "f1": 0.4699
+        }
+      },
+      "filter_effect": {
+        "filtered": {
+          "vulnerable": 0,
+          "safe": 0
+        },
+        "filtered_by_rule": {},
+        "demoted_p3_p4": {
+          "vulnerable": 59,
+          "safe": 46
+        },
+        "filtered_sites": []
+      }
+    },
+    "python": {
+      "sites": {
+        "vulnerable": 120,
+        "safe": 65
+      },
+      "scores": {
+        "semgrep": {
+          "tp": 43,
+          "fp": 7,
+          "fn": 77,
+          "tn": 58,
+          "precision": 0.86,
+          "recall": 0.3583,
+          "f1": 0.5058
+        },
+        "codeql": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 100,
+          "tn": 65,
+          "precision": 1.0,
+          "recall": 0.1667,
+          "f1": 0.2858
+        },
+        "bandit": {
+          "tp": 88,
+          "fp": 47,
+          "fn": 32,
+          "tn": 18,
+          "precision": 0.6519,
+          "recall": 0.7333,
+          "f1": 0.6902
+        },
+        "eslint": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 120,
+          "tn": 65,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null
+        },
+        "semgrep ∪ codeql": {
+          "tp": 43,
+          "fp": 7,
+          "fn": 77,
+          "tn": 58,
+          "precision": 0.86,
+          "recall": 0.3583,
+          "f1": 0.5058
+        },
+        "all sources": {
+          "tp": 90,
+          "fp": 49,
+          "fn": 30,
+          "tn": 16,
+          "precision": 0.6475,
+          "recall": 0.75,
+          "f1": 0.695
+        },
+        "all sources, open-source filter": {
+          "tp": 90,
+          "fp": 49,
+          "fn": 30,
+          "tn": 16,
+          "precision": 0.6475,
+          "recall": 0.75,
+          "f1": 0.695
+        },
+        "all sources, filtered": {
+          "tp": 90,
+          "fp": 49,
+          "fn": 30,
+          "tn": 16,
+          "precision": 0.6475,
+          "recall": 0.75,
+          "f1": 0.695
+        },
+        "first tiers (P1+P2), filtered": {
+          "tp": 31,
+          "fp": 3,
+          "fn": 89,
+          "tn": 62,
+          "precision": 0.9118,
+          "recall": 0.2583,
+          "f1": 0.4026
+        }
+      },
+      "filter_effect": {
+        "filtered": {
+          "vulnerable": 0,
+          "safe": 0
+        },
+        "filtered_by_rule": {},
+        "demoted_p3_p4": {
+          "vulnerable": 59,
+          "safe": 46
+        },
+        "filtered_sites": []
+      }
+    },
+    "javascript": {
+      "sites": {
+        "vulnerable": 15,
+        "safe": 10
+      },
+      "scores": {
+        "semgrep": {
+          "tp": 12,
+          "fp": 2,
+          "fn": 3,
+          "tn": 8,
+          "precision": 0.8571,
+          "recall": 0.8,
+          "f1": 0.8276
+        },
+        "codeql": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 15,
+          "tn": 10,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null
+        },
+        "bandit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 15,
+          "tn": 10,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null
+        },
+        "eslint": {
+          "tp": 5,
+          "fp": 2,
+          "fn": 10,
+          "tn": 8,
+          "precision": 0.7143,
+          "recall": 0.3333,
+          "f1": 0.4545
+        },
+        "semgrep ∪ codeql": {
+          "tp": 12,
+          "fp": 2,
+          "fn": 3,
+          "tn": 8,
+          "precision": 0.8571,
+          "recall": 0.8,
+          "f1": 0.8276
+        },
+        "all sources": {
+          "tp": 12,
+          "fp": 2,
+          "fn": 3,
+          "tn": 8,
+          "precision": 0.8571,
+          "recall": 0.8,
+          "f1": 0.8276
+        },
+        "all sources, open-source filter": {
+          "tp": 12,
+          "fp": 2,
+          "fn": 3,
+          "tn": 8,
+          "precision": 0.8571,
+          "recall": 0.8,
+          "f1": 0.8276
+        },
+        "all sources, filtered": {
+          "tp": 12,
+          "fp": 2,
+          "fn": 3,
+          "tn": 8,
+          "precision": 0.8571,
+          "recall": 0.8,
+          "f1": 0.8276
+        },
+        "first tiers (P1+P2), filtered": {
+          "tp": 12,
+          "fp": 2,
+          "fn": 3,
+          "tn": 8,
+          "precision": 0.8571,
+          "recall": 0.8,
+          "f1": 0.8276
+        }
+      },
+      "filter_effect": {
+        "filtered": {
+          "vulnerable": 0,
+          "safe": 0
+        },
+        "filtered_by_rule": {},
+        "demoted_p3_p4": {
+          "vulnerable": 0,
+          "safe": 0
+        },
+        "filtered_sites": []
+      }
+    },
+    "tests of rules the profile does not run": {
+      "sites": {
+        "vulnerable": 93,
+        "safe": 53
+      },
+      "scores": {
+        "semgrep": {
+          "tp": 22,
+          "fp": 5,
+          "fn": 71,
+          "tn": 48,
+          "precision": 0.8148,
+          "recall": 0.2366,
+          "f1": 0.3667
+        },
+        "codeql": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 93,
+          "tn": 53,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null
+        },
+        "bandit": {
+          "tp": 62,
+          "fp": 35,
+          "fn": 31,
+          "tn": 18,
+          "precision": 0.6392,
+          "recall": 0.6667,
+          "f1": 0.6527
+        },
+        "eslint": {
+          "tp": 3,
+          "fp": 2,
+          "fn": 90,
+          "tn": 51,
+          "precision": 0.6,
+          "recall": 0.0323,
+          "f1": 0.0613
+        },
+        "semgrep ∪ codeql": {
+          "tp": 22,
+          "fp": 5,
+          "fn": 71,
+          "tn": 48,
+          "precision": 0.8148,
+          "recall": 0.2366,
+          "f1": 0.3667
+        },
+        "all sources": {
+          "tp": 69,
+          "fp": 38,
+          "fn": 24,
+          "tn": 15,
+          "precision": 0.6449,
+          "recall": 0.7419,
+          "f1": 0.69
+        },
+        "all sources, open-source filter": {
+          "tp": 69,
+          "fp": 38,
+          "fn": 24,
+          "tn": 15,
+          "precision": 0.6449,
+          "recall": 0.7419,
+          "f1": 0.69
+        },
+        "all sources, filtered": {
+          "tp": 69,
+          "fp": 38,
+          "fn": 24,
+          "tn": 15,
+          "precision": 0.6449,
+          "recall": 0.7419,
+          "f1": 0.69
+        },
+        "first tiers (P1+P2), filtered": {
+          "tp": 10,
+          "fp": 3,
+          "fn": 83,
+          "tn": 50,
+          "precision": 0.7692,
+          "recall": 0.1075,
+          "f1": 0.1886
+        }
+      },
+      "filter_effect": {
+        "filtered": {
+          "vulnerable": 0,
+          "safe": 0
+        },
+        "filtered_by_rule": {},
+        "demoted_p3_p4": {
+          "vulnerable": 59,
+          "safe": 35
+        },
+        "filtered_sites": []
+      }
+    },
+    "python, tests of rules the profile does not run": {
+      "sites": {
+        "vulnerable": 84,
+        "safe": 48
+      },
+      "scores": {
+        "semgrep": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 68,
+          "tn": 45,
+          "precision": 0.8421,
+          "recall": 0.1905,
+          "f1": 0.3107
+        },
+        "codeql": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 84,
+          "tn": 48,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null
+        },
+        "bandit": {
+          "tp": 62,
+          "fp": 35,
+          "fn": 22,
+          "tn": 13,
+          "precision": 0.6392,
+          "recall": 0.7381,
+          "f1": 0.6851
+        },
+        "eslint": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 84,
+          "tn": 48,
+          "precision": null,
+          "recall": 0.0,
+          "f1": null
+        },
+        "semgrep ∪ codeql": {
+          "tp": 16,
+          "fp": 3,
+          "fn": 68,
+          "tn": 45,
+          "precision": 0.8421,
+          "recall": 0.1905,
+          "f1": 0.3107
+        },
+        "all sources": {
+          "tp": 63,
+          "fp": 36,
+          "fn": 21,
+          "tn": 12,
+          "precision": 0.6364,
+          "recall": 0.75,
+          "f1": 0.6885
+        },
+        "all sources, open-source filter": {
+          "tp": 63,
+          "fp": 36,
+          "fn": 21,
+          "tn": 12,
+          "precision": 0.6364,
+          "recall": 0.75,
+          "f1": 0.6885
+        },
+        "all sources, filtered": {
+          "tp": 63,
+          "fp": 36,
+          "fn": 21,
+          "tn": 12,
+          "precision": 0.6364,
+          "recall": 0.75,
+          "f1": 0.6885
+        },
+        "first tiers (P1+P2), filtered": {
+          "tp": 4,
+          "fp": 1,
+          "fn": 80,
+          "tn": 47,
+          "precision": 0.8,
+          "recall": 0.0476,
+          "f1": 0.0899
+        }
+      },
+      "filter_effect": {
+        "filtered": {
+          "vulnerable": 0,
+          "safe": 0
+        },
+        "filtered_by_rule": {},
+        "demoted_p3_p4": {
+          "vulnerable": 59,
+          "safe": 35
+        },
+        "filtered_sites": []
+      }
+    }
+  },
+  "unlabeled": {
+    "total": 182,
+    "filtered": 0
+  }
+}

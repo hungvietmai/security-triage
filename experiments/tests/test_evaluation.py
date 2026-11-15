@@ -592,7 +592,11 @@ class LabeledSitesTests(unittest.TestCase):
 class LabeledCheckResultsTests(unittest.TestCase):
     """The committed results of the labeled check, its exports and its registration."""
 
-    RUNS = {"registered.json": "input", "posthoc-after-fix.json": "posthoc-after-fix"}
+    RUNS = {
+        "registered.json": "input",
+        "posthoc-after-fix.json": "posthoc-after-fix",
+        "v0.3-rescan.json": "v0.3-rescan",
+    }
 
     def test_committed_results_are_reproduced_from_the_saved_exports(self):
         labels = json.loads((LABELED / "labels.json").read_bytes())
