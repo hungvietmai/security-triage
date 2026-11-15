@@ -1,6 +1,6 @@
 import json
 
-from app.scanners.codeql import query_pack_for_language, run_codeql
+from app.scanners.codeql import query_pack_for_language, run_codeql, run_codeql_evidence
 from app.scanners.process import ProcessRecord
 from app.scanners.provenance import digest
 
@@ -197,3 +197,92 @@ def test_run_codeql_rejects_failed_database_create(tmp_path):
         assert str(exc) == "CodeQL extraction failed"
     else:
         raise AssertionError("failed database create was accepted")
+
+
+def _evidence_pass(tmp_path, results_by_name):
+    """A database directory, one pinned query and an invoke double that writes each pass's SARIF."""
+    source = tmp_path / "source"
+    source.mkdir()
+    output = tmp_path / "output"
+    (output / "codeql-db").mkdir(parents=True)
+    pack = tmp_path / "pack"
+    query = pack / "queries/q.ql"
+    query.parent.mkdir(parents=True)
+    query.write_text("select 1\n", encoding="utf-8")
+    commands = []
+
+    def fake_invoke(argv, cwd, output_dir, name, timeout, env=None) -> ProcessRecord:
+        commands.append((name, [str(item) for item in argv]))
+        results = [
+            {
+                "ruleId": rule,
+                "message": {"text": "m"},
+                "locations": [
+                    {
+                        "physicalLocation": {
+                            "artifactLocation": {"uri": "app.py"},
+                            "region": {"startLine": 1},
+                        }
+                    }
+                ],
+            }
+            for rule in results_by_name[name]
+        ]
+        (output_dir / f"{name}.sarif").write_text(
+            json.dumps({"version": "2.1.0", "runs": [{"results": results}]}), encoding="utf-8"
+        )
+        return {"argv": [str(i) for i in argv], "status": "completed", "exit_code": 0}
+
+    arguments = {
+        "binary": "codeql",
+        "source": source,
+        "output": output,
+        "snapshot_sha256": "c" * 64,
+        "query_pack": pack,
+        "queries": ["queries/q.ql"],
+        "expected_query_sha256": {"queries/q.ql": digest(query)},
+        "jobs": 1,
+        "ram_mb": 2048,
+        "timeout_seconds": 600,
+        "invoke_fn": fake_invoke,
+    }
+    return arguments, commands, output
+
+
+def test_evidence_pass_keeps_its_name_files_and_raw_ids_by_default(tmp_path):
+    arguments, commands, output = _evidence_pass(tmp_path, {"codeql-evidence": ["st/a"]})
+
+    record, findings, complete = run_codeql_evidence(**arguments)
+
+    assert [name for name, _ in commands] == ["codeql-evidence"]
+    argv = commands[0][1]
+    assert argv[:3] == ["codeql", "database", "analyze"]
+    assert argv[argv.index("--output") + 1] == str(output / "codeql-evidence.sarif")
+    # A cached result of the same query path must never be reused across packs.
+    assert "--rerun" in argv
+    assert (record["status"], record["raw_findings"], complete) == ("completed", 1, True)
+    assert [(f["raw_id"], f["tool"]) for f in findings] == [
+        ("codeql-evidence:0:0", "codeql-evidence")
+    ]
+
+
+def test_named_passes_on_one_database_do_not_overwrite_each_other(tmp_path):
+    arguments, commands, output = _evidence_pass(
+        tmp_path, {"codeql-evidence": ["st/a"], "codeql-path-traversal": ["st/b", "st/c"]}
+    )
+
+    _, first, _ = run_codeql_evidence(**arguments)
+    _, second, _ = run_codeql_evidence(**arguments, name="codeql-path-traversal")
+
+    assert [name for name, _ in commands] == ["codeql-evidence", "codeql-path-traversal"]
+    assert (output / "codeql-evidence.sarif").is_file()
+    assert (output / "codeql-path-traversal.sarif").is_file()
+    assert [f["rule_id"] for f in first] == ["st/a"]
+    assert [f["rule_id"] for f in second] == ["st/b", "st/c"]
+    # Raw IDs stay unique across the passes of one language run.
+    raw_ids = [f["raw_id"] for f in first + second]
+    assert raw_ids == [
+        "codeql-evidence:0:0",
+        "codeql-path-traversal:0:0",
+        "codeql-path-traversal:0:1",
+    ]

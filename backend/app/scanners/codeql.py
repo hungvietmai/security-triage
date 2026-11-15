@@ -138,12 +138,17 @@ def run_codeql_evidence(
     ram_mb: int,
     timeout_seconds: float,
     invoke_fn: InvokeCallable = invoke,
+    name: str = "codeql-evidence",
 ) -> tuple[ProcessRecord, list[Finding], bool]:
     """Run pinned safety-evidence queries on the database `run_codeql` already created.
 
     The adjudication step reuses the extraction: no second database is built. Its alerts are
     evidence about the scan's CodeQL alerts, so they carry the tool name "codeql-evidence" and
     are never reconciled into units.
+
+    `name` names this analysis pass: its SARIF and log files, its process record and the
+    prefix of its results' raw IDs. Several packs can be analyzed on one database, one pass
+    each, without overwriting one another; the default is the adjudication step's name.
     """
     database = output / "codeql-db"
     if not database.is_dir():
@@ -154,7 +159,7 @@ def run_codeql_evidence(
     observed = {path.relative_to(query_pack).as_posix(): digest(path) for path in query_paths}
     if observed != dict(expected_query_sha256):
         raise ValueError("CodeQL evidence query digest mismatch")
-    sarif = output / "codeql-evidence.sarif"
+    sarif = output / f"{name}.sarif"
     record = invoke_fn(
         [
             binary,
@@ -173,12 +178,12 @@ def run_codeql_evidence(
         ],
         source,
         output,
-        "codeql-evidence",
+        name,
         timeout_seconds,
     )
     if not sarif.exists():
         raise RuntimeError("Evidence queries produced no SARIF output")
-    findings, complete = sarif_findings(sarif, "codeql-evidence", snapshot_sha256)
+    findings, complete = sarif_findings(sarif, name, snapshot_sha256)
     record["raw_findings"] = len(findings)
     record["sarif_sha256"] = digest(sarif)
     if record["status"] == "completed" and not complete:
