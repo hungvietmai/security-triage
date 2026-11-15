@@ -25,7 +25,7 @@ Results and what they do and do not show: [docs/thesis/chapter-3-results.md](../
 | `independent-filter/` | Fifth check, on the filter step alone: 20 real Python command-line tools picked by one fixed GitHub search, no labels. `filtered_candidates.py` counts what the filter moved out of the main list in completed scans; `verify_filtered.py` checks every filtered call against the source with a rule fixed before the scans. `READING.md` holds the registered result and the later reading of two calls |
 | `pairs-v1/` | The frozen CVE pairs under Amendments 06 to 08: label builder, run and freeze scripts, the development-split run with v0.2, the rehearsal of v0.3 and the **held-out run with v0.3** (16 pairs scanned once from the locked bytes after the configuration was frozen and committed) |
 | `js-matching-v0.3/` | Development experiment for profile v0.3: 84 npm sources rescanned, compared with their saved v0.2 exports (unmatched candidates, newly merged alerts, wrong-merge check, filter rule G4) |
-| `js-labels-v0.3/` | Labels for every JavaScript candidate of those 84 sources (62 CVE sites, 78 labels assigned by an AI assistant and **not reviewed by a person**), the criteria fixed beforehand and the scoring of the saved v0.3 exports |
+| `js-labels-v0.3/` | Labels for every JavaScript candidate of those 84 sources (62 CVE sites, 78 labels assigned by an AI assistant; the owner reviewed the 31 safe and undetermined ones, **the 47 vulnerable ones are not reviewed by a person**), the criteria fixed beforehand and the scoring of the saved v0.3 exports |
 | `PIPELINE_CHANGES.json` | Pipeline code files that changed after the registered scans of `independent*/`, with the reason. Protocols, labels, scoring scripts and exports are never listed there |
 
 `experiments/tests/test_evaluation.py` recomputes every file in `results/` from `inputs/` and
@@ -103,8 +103,9 @@ are expected to stay the same for the same snapshot, profile and tool versions.
   filtered). Do not rescan either; the held-out split is no longer independent data.
 - **`js-matching-v0.3/` is development data**: every source was scanned before and ten were
   read to design the change. It measures matching, not false-positive reduction.
-- **`js-labels-v0.3/` uses labels assigned by an AI assistant that no person has reviewed.**
-  Say so wherever its numbers are used, until `reviewed_by` in its `labels.json` is filled.
+- **`js-labels-v0.3/`: 47 of its 78 labels (all assigned vulnerable by an AI assistant) have
+  not been reviewed by a person.** Say so wherever its true-positive counts are used, until
+  the `review` field of those labels is filled.
 - **Counting unit:** the review candidate, one call. A labeled site is reported by a
   configuration when any of its candidates is in it. Candidates outside every labeled site
   are counted as unlabeled and never scored.

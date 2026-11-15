@@ -2,476 +2,771 @@
   "description": "Labels of the JavaScript and TypeScript candidates of the v0.3 exports of 84 npm sources that are not known vulnerable sites. Criteria: PROTOCOL.md.",
   "assigned_by": "AI coding assistant (Claude), reading the package source",
   "assigned_on": "2026-11-15",
-  "reviewed_by": null,
-  "review_note": "No person has checked these labels. Fill reviewed_by with the reviewer's role and the date, and list changed labels here, only after the review sheet has been read.",
+  "reviewed_by": "project owner, 2026-11-15: 31 of 78 labels, namely every label the assistant had assigned safe or undetermined",
+  "review_note": "Reviewed interactively with the code excerpt of each item. 12 labels changed (_thi.ng__egf_0.3.0|lib/index.umd.js|None; git-parse_1.0.4|dist/checkout_commit.js|None; git-parse_1.0.4|dist/git_diff.js|None; git-parse_1.0.4|dist/git_log_stream.js|None; git-parse_1.0.4|dist/git_pull.js|None; launch-editor_2.14.1|index.js|167; launch-editor_2.14.1|index.js|172; monorepo-build_0.1.9|lib/index.test.js|12; nodemon_3.1.14|lib/monitor/run.js|430; nodemon_3.1.14|lib/monitor/run.js|434; react-dev-utils_11.0.0|openBrowser.js|92; roar-pidusage_1.1.6|lib/helpers.js|12). The reviewer labels an alert on a require line by the command calls of that module. The 47 labels the assistant assigned vulnerable have review null: not reviewed by a person. CVE identifiers in the notes are the reviewer's statements.",
   "labels": [
     {
       "id": "_thi.ng__egf_0.3.0|tags.js|25",
       "label": "vulnerable",
       "class": null,
-      "reason": "`body` of a #gpg tag comes from the parsed EGF text and is put inside `echo \"${body}\" | gpg --decrypt`."
+      "reason": "`body` of a #gpg tag comes from the parsed EGF text and is put inside `echo \"${body}\" | gpg --decrypt`.",
+      "review": null
     },
     {
       "id": "_thi.ng__egf_0.3.0|lib/index.umd.js|None",
-      "label": "safe",
-      "class": "not_a_command_sink",
-      "reason": "The alert points at `require(\"child_process\")` in the minified bundle; that expression runs no command."
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The alert points at `require(\"child_process\")` in the minified bundle; that expression runs no command.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "not_a_command_sink",
+        "note": "VULNERABLE - Confirmed command injection. Although ESLint reports the require(\"child_process\") expression rather than the execution sink, the same bundled module contains execSync() with untrusted #gpg content interpolated into a shell command. The vulnerability corresponds to the known vulnerable implementation in tags.js:25. Classify as a true positive at the module-level alert scope."
+      }
     },
     {
       "id": "arpping_2.0.0|index.js|145",
       "label": "vulnerable",
       "class": null,
-      "reason": "Each `ip` of the `range` argument of the public `arp()` is interpolated into the shell command string without quoting or validation."
+      "reason": "Each `ip` of the `range` argument of the public `arp()` is interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "arpping_2.0.0|index.js|60",
       "label": "safe",
       "class": "constant_command",
-      "reason": "`ipCommand` is set once at module load to 'ipconfig' or 'ifconfig' depending on the platform."
+      "reason": "`ipCommand` is set once at module load to 'ipconfig' or 'ifconfig' depending on the platform.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "constant_command",
+        "note": "SAFE - Constant command. ipCommand chỉ được gán các giá trị cố định ipconfig hoặc ifconfig dựa trên hệ điều hành. Không phát hiện dữ liệu không tin cậy truyền vào exec() tại vị trí cảnh báo. Đây là false positive đối với command injection, mặc dù package có lỗ hổng tại các vị trí khác."
+      }
     },
     {
       "id": "blamer_0.1.13|src/vcs/svn.js|38",
       "label": "vulnerable",
       "class": null,
-      "reason": "`path.basename(file)` and `args`, both arguments of the blame function, are concatenated into `svn blame`."
+      "reason": "`path.basename(file)` and `args`, both arguments of the blame function, are concatenated into `svn blame`.",
+      "review": null
     },
     {
       "id": "codecov_3.6.4|lib/codecov.js|480",
       "label": "vulnerable",
       "class": null,
-      "reason": "`root` is `path.resolve(args.options.root || query.root || '.')`, a command-line option, concatenated into `find`."
+      "reason": "`root` is `path.resolve(args.options.root || query.root || '.')`, a command-line option, concatenated into `find`.",
+      "review": null
     },
     {
       "id": "codecov_3.6.4|lib/codecov.js|None",
       "label": "vulnerable",
       "class": null,
-      "reason": "Unmatched alert on line 356 about the same `root` value reaching the shell commands on lines 419 and 480."
+      "reason": "Unmatched alert on line 356 about the same `root` value reaching the shell commands on lines 419 and 480.",
+      "review": null
     },
     {
       "id": "deferred-exec_0.3.1|lib/deferred-exec.js|46",
       "label": "undetermined",
       "class": null,
-      "reason": "`spawn(command, args, options)` runs the caller's program without a shell unless the caller's options ask for one; the API exists to run what the caller passes."
+      "reason": "`spawn(command, args, options)` runs the caller's program without a shell unless the caller's options ask for one; the API exists to run what the caller passes.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Caller-controlled process execution. The package invokes child_process.spawn(command, args, options) with caller-supplied arguments. Although spawn does not use a shell by default, callers may enable options.shell, potentially exposing untrusted input to shell interpretation. The API intentionally supports arbitrary program execution, and no specific untrusted-to-sink exploit path has been established. Exploitability depends on caller context and trust boundaries."
+      }
     },
     {
       "id": "enpeem_2.2.0|index.js|114",
       "label": "vulnerable",
       "class": null,
-      "reason": "`cmd` is built from keys and values of `options.cmdOptions` of the public update function."
+      "reason": "`cmd` is built from keys and values of `options.cmdOptions` of the public update function.",
+      "review": null
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|11",
       "label": "vulnerable",
       "class": null,
-      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation."
+      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|26",
       "label": "vulnerable",
       "class": null,
-      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation."
+      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|193",
       "label": "vulnerable",
       "class": null,
-      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation."
+      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|71",
       "label": "vulnerable",
       "class": null,
-      "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote."
+      "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote.",
+      "review": null
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|99",
       "label": "vulnerable",
       "class": null,
-      "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote."
+      "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote.",
+      "review": null
     },
     {
       "id": "extra-asciinema_1.0.0|index.js|None",
       "label": "vulnerable",
       "class": null,
-      "reason": "Seven unmatched alerts on the concatenations inside `recCmd`, whose result is executed on lines 71 and 99."
+      "reason": "Seven unmatched alerts on the concatenations inside `recCmd`, whose result is executed on lines 71 and 99.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|8",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|27",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|46",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|65",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|83",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|101",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input1`, `input2`, `x`, `y`, `start`, `end` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input1`, `input2`, `x`, `y`, `start`, `end` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|119",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input1`, `input2`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input1`, `input2`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|137",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input`, `text`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input`, `text`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|155",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `input`, `audio` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `input`, `audio` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "ffmpegdotjs_0.0.4|index.js|173",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `audio`, `image` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+      "reason": "The arguments `audio`, `image` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name.",
+      "review": null
     },
     {
       "id": "freespace_1.0.4|index.js|49",
       "label": "safe",
       "class": "validated_or_escaped",
-      "reason": "On Windows only `charAt(0)` of the value is used, and the regex checked before requires that character to be a letter or '/'."
+      "reason": "On Windows only `charAt(0)` of the value is used, and the regex checked before requires that character to be a letter or '/'.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "validated_or_escaped",
+        "note": "SAFE - Validated single-character input. Both Windows command execution sites use only the first character of driveOrMount, which is restricted to an alphabetic character or /. Shell metacharacters cannot reach either command through this input. The package has a confirmed command injection vulnerability on Unix, but these two Windows-specific alerts are not exploitable through the identified data flow."
+      }
     },
     {
       "id": "freespace_1.0.4|index.js|67",
       "label": "vulnerable",
       "class": null,
-      "reason": "`driveOrMountRegex` only constrains the first character; the rest of the argument reaches `df -P ... | awk`."
+      "reason": "`driveOrMountRegex` only constrains the first character; the rest of the argument reaches `df -P ... | awk`.",
+      "review": null
     },
     {
       "id": "freespace_1.0.4|index.js|65",
       "label": "safe",
       "class": "validated_or_escaped",
-      "reason": "On Windows only `charAt(0)` of the value is used, and the regex checked before requires that character to be a letter or '/'."
+      "reason": "On Windows only `charAt(0)` of the value is used, and the regex checked before requires that character to be a letter or '/'.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "validated_or_escaped",
+        "note": "SAFE - Validated single-character input. Both Windows command execution sites use only the first character of driveOrMount, which is restricted to an alphabetic character or /. Shell metacharacters cannot reach either command through this input. The package has a confirmed command injection vulnerability on Unix, but these two Windows-specific alerts are not exploitable through the identified data flow."
+      }
     },
     {
       "id": "get-npm-package-version_1.0.6|index.js|14",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `packageName` and `registry` are interpolated into the shell command string without quoting or validation."
+      "reason": "The arguments `packageName` and `registry` are interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "git-add-remote_1.0.0|index.js|31",
       "label": "vulnerable",
       "class": null,
-      "reason": "`name` and `url` are only checked to be strings and then concatenated into `git remote add`."
+      "reason": "`name` and `url` are only checked to be strings and then concatenated into `git remote add`.",
+      "review": null
     },
     {
       "id": "git-lib_1.6.0|git.js|27",
       "label": "vulnerable",
       "class": null,
-      "reason": "`options` and `message` of `commit()` are concatenated into `git commit`."
+      "reason": "`options` and `message` of `commit()` are concatenated into `git commit`.",
+      "review": null
     },
     {
       "id": "git-lib_1.6.0|git.js|126",
       "label": "vulnerable",
       "class": null,
-      "reason": "Each `file` of `revert(files)` is concatenated into `git checkout --`."
+      "reason": "Each `file` of `revert(files)` is concatenated into `git checkout --`.",
+      "review": null
     },
     {
       "id": "git-lib_1.6.0|git.js|223",
       "label": "vulnerable",
       "class": null,
-      "reason": "`branch` of `checkout()` is concatenated into `git checkout`."
+      "reason": "`branch` of `checkout()` is concatenated into `git checkout`.",
+      "review": null
     },
     {
       "id": "git-lib_1.6.0|git.js|236",
       "label": "vulnerable",
       "class": null,
-      "reason": "`newBranchName` is concatenated into `git checkout -b`."
+      "reason": "`newBranchName` is concatenated into `git checkout -b`.",
+      "review": null
     },
     {
       "id": "git-lib_1.6.0|git.js|249",
       "label": "vulnerable",
       "class": null,
-      "reason": "`branch` of `deleteBranch()` is concatenated into `git branch -d`."
+      "reason": "`branch` of `deleteBranch()` is concatenated into `git branch -d`.",
+      "review": null
     },
     {
       "id": "git-parse_1.0.4|dist/checkout_commit.js|None",
-      "label": "safe",
-      "class": "not_a_command_sink",
-      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "not_a_command_sink",
+        "note": "VULNERABLE - Potential OS Command Injection. checkoutCommit() passes the hash parameter into a shell command executed by child_process.exec() at line 34. Assuming no effective validation or escaping, attacker-controlled input may alter the executed command. ESLint reports the child_process import rather than the vulnerable sink. Other tools failed to identify this execution site."
+      }
     },
     {
       "id": "git-parse_1.0.4|dist/git_diff.js|None",
-      "label": "safe",
-      "class": "not_a_command_sink",
-      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "not_a_command_sink",
+        "note": "VULNERABLE - Confirmed OS Command Injection (CVE-2021-26543). The gitDiff() function interpolates potentially attacker-controlled commit1, commit2, and file parameters directly into a shell command executed via child_process.exec() at line 22. ESLint flags the child_process import rather than the vulnerable sink. Classified as true positive under module-level alert evaluation."
+      }
     },
     {
       "id": "git-parse_1.0.4|dist/git_log_stream.js|None",
       "label": "safe",
-      "class": "not_a_command_sink",
-      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+      "class": "no_shell",
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "not_a_command_sink",
+        "note": "SAFE - No shell execution. The module uses spawn('git', gitParams) with arguments passed as an array. options.sinceCommit is incorporated into a single argument rather than a shell command string. Shell metacharacters cannot trigger OS command injection. No exploitable argument injection has been established at this site."
+      }
     },
     {
       "id": "git-parse_1.0.4|dist/git_pull.js|None",
       "label": "safe",
-      "class": "not_a_command_sink",
-      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+      "class": "constant_command",
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "not_a_command_sink",
+        "note": "SAFE - Constant shell command. The module executes the fixed command git pull via child_process.exec(). User-controlled pathToRepo is used only as the working directory (cwd) and is not interpolated into the shell command. No command injection path is identified at this site. The ESLint alert on require(\"child_process\") is classified as a false positive for OS Command Injection."
+      }
     },
     {
       "id": "git_0.1.5|lib/git/git_file_operations.js|128",
       "label": "vulnerable",
       "class": null,
-      "reason": "`dir` of `GitFileOperations.fs_rmdir_r`, which the package index re-exports, is concatenated into `rm -rf`; no caller inside the package constrains it."
+      "reason": "`dir` of `GitFileOperations.fs_rmdir_r`, which the package index re-exports, is concatenated into `rm -rf`; no caller inside the package constrains it.",
+      "review": null
     },
     {
       "id": "google-cloudstorage-commands_0.0.1|index.js|22",
       "label": "vulnerable",
       "class": null,
-      "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation."
+      "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "google-cloudstorage-commands_0.0.1|index.js|39",
       "label": "vulnerable",
       "class": null,
-      "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation."
+      "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation.",
+      "review": null
     },
     {
       "id": "grunt-shell_4.0.0|tasks/shell.js|46",
       "label": "undetermined",
       "class": null,
-      "reason": "The task runs the command written in the Gruntfile; whether untrusted data is in it depends on that configuration."
+      "reason": "The task runs the command written in the Gruntfile; whether untrusted data is in it depends on that configuration.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Intentional shell execution. The plugin executes commands supplied through Grunt configuration. grunt.template.process() expands configuration templates but does not provide shell sanitization. Execution is an intended feature, and no specific untrusted-to-sink injection path has been established. Exploitability depends on the origin and trustworthiness of the interpolated values in the consuming Gruntfile."
+      }
     },
     {
       "id": "gulp-shell_0.8.0|lib/index.js|36",
       "label": "undetermined",
       "class": null,
-      "reason": "The plugin runs the command template of the gulpfile with a shell; whether untrusted data is in it depends on that configuration."
+      "reason": "The plugin runs the command template of the gulpfile with a shell; whether untrusted data is in it depends on that configuration.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Shell-enabled command template. spawn() executes a command rendered by lodash.template() with shell execution enabled by default. Template variables such as file.path and options.templateData are not shell-escaped, creating a potential OS Command Injection path. However, exploitability depends on the consuming gulpfile configuration and whether an attacker controls interpolated values. No concrete exploitable caller has been established."
+      }
     },
     {
       "id": "imagickal_5.0.1|lib/imagickal.js|77",
       "label": "vulnerable",
       "class": null,
-      "reason": "`path` of `dimensions()` is concatenated into `identify`."
+      "reason": "`path` of `dimensions()` is concatenated into `identify`.",
+      "review": null
     },
     {
       "id": "imagickal_5.0.1|lib/commands.js|276",
       "label": "vulnerable",
       "class": null,
-      "reason": "`this.get(src, dst)` joins the caller's paths into the command; `pipeOrPath` only wraps them in double quotes."
+      "reason": "`this.get(src, dst)` joins the caller's paths into the command; `pipeOrPath` only wraps them in double quotes.",
+      "review": null
     },
     {
       "id": "kill-port-process_0.0.1|src/index.js|63",
       "label": "undetermined",
       "class": null,
-      "reason": "`pid` is returned by the dependency `pid-from-port`, whose code is outside the package."
+      "reason": "`pid` is returned by the dependency `pid-from-port`, whose code is outside the package.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Unverified dependency output. The Windows branch interpolates pid returned by the external pid-from-port dependency into a shell command executed via child_process.exec(). No local validation or escaping is performed. Although the dependency is documented to return numeric process identifiers, its exact implementation and output guarantees have not been verified. No concrete injection path has been established."
+      }
     },
     {
       "id": "kill-process-by-name_1.0.5|index.js|9",
       "label": "vulnerable",
       "class": null,
-      "reason": "`programname` is concatenated into `taskkill`."
+      "reason": "`programname` is concatenated into `taskkill`.",
+      "review": null
     },
     {
       "id": "killport_1.0.1|index.js|29",
       "label": "safe",
       "class": "validated_or_escaped",
-      "reason": "Each `pid` is `+blocks[1]`, a number parsed from the `lsof` output; non-numeric values are dropped."
+      "reason": "Each `pid` is `+blocks[1]`, a number parsed from the `lsof` output; non-numeric values are dropped.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "validated_or_escaped",
+        "note": "SAFE - Numeric validation. The PID is converted to a number using unary +, and invalid numeric values are rejected before execution. Therefore, shell metacharacters cannot be injected through pid into exec('kill ' + pid). However, the same module contains a separate confirmed command injection vulnerability at line 9 (CVE-2021-23360), where the unvalidated port parameter is interpolated into a shell command."
+      }
     },
     {
       "id": "launch-editor_2.14.1|index.js|167",
-      "label": "undetermined",
+      "label": "vulnerable",
       "class": null,
-      "reason": "On Windows the editor and file name go to cmd.exe after `^` escaping written for this package; its strength cannot be judged from the code."
+      "reason": "On Windows the editor and file name go to cmd.exe after `^` escaping written for this package; its strength cannot be judged from the code.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "VULNERABLE - Confirmed OS Command Injection (CVE-2026-112943). The Windows branch constructs a shell command using custom caret-based escaping, but escapeCmdArgs() fails to neutralize % characters. Windows CMD environment-variable expansion can bypass the intended escaping and introduce executable shell syntax. The vulnerability affects launch-editor 2.14.1 and was fixed in 2.14.2. Classified as a confirmed true positive."
+      }
     },
     {
       "id": "launch-editor_2.14.1|index.js|172",
-      "label": "undetermined",
+      "label": "vulnerable",
       "class": null,
-      "reason": "`spawn(editor, args)` uses no shell, but the program name comes from the caller, the environment or the process list."
+      "reason": "`spawn(editor, args)` uses no shell, but the program name comes from the caller, the environment or the process list.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "VULNERABLE - Confirmed Argument Injection (CVE-2026-112944, CWE-88). Although spawn() executes without a shell, the application forwards potentially attacker-controlled filenames directly to editor CLI arguments. Filenames beginning with '+' or '-' may be interpreted as executable commands or options by editors such as Vim and Emacs. The vulnerability affects launch-editor 2.14.1 and was fixed in 2.14.2."
+      }
     },
     {
       "id": "local-devices_2.0.0|src/index.js|None",
       "label": "vulnerable",
       "class": null,
-      "reason": "Unmatched alert on line 114: `address` of the exported function is concatenated into `arp -n`."
+      "reason": "Unmatched alert on line 114: `address` of the exported function is concatenated into `arp -n`.",
+      "review": null
     },
     {
       "id": "lsof_0.1.0|lib/lsof.js|9",
       "label": "vulnerable",
       "class": null,
-      "reason": "`pid` of the exported `raw()` is concatenated into `lsof -p`."
+      "reason": "`pid` of the exported `raw()` is concatenated into `lsof -p`.",
+      "review": null
     },
     {
       "id": "lsof_0.1.0|lib/lsof.js|71",
       "label": "vulnerable",
       "class": null,
-      "reason": "`port` of the exported `rawUdpPort()` is concatenated into `lsof -i udp:`."
+      "reason": "`port` of the exported `rawUdpPort()` is concatenated into `lsof -i udp:`.",
+      "review": null
     },
     {
       "id": "monorepo-build_0.1.9|lib/index.test.js|12",
-      "label": "safe",
-      "class": "test_or_example_code",
-      "reason": "A jest mock inside the package's own test file; it runs the commands the tests produce."
+      "label": "undetermined",
+      "class": null,
+      "reason": "A jest mock inside the package's own test file; it runs the commands the tests produce.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "test_or_example_code",
+        "note": "UNCERTAIN - Test-only execution sink. The flagged execSync(command, {cwd}) occurs inside a Jest mock factory in lib/index.test.js. Although the file is test-only and not normally executed in production, the mock invokes the real child_process.execSync() with a dynamic command. The origin and validation of command have not been established. Test-file location alone is insufficient to classify the alert as safe."
+      }
     },
     {
       "id": "node-gyp_13.0.2|lib/node-gyp.js|175",
       "label": "undetermined",
       "class": null,
-      "reason": "`spawn(command, args, opts)` uses no shell by default; the program is the toolchain found from configuration and environment."
+      "reason": "`spawn(command, args, opts)` uses no shell by default; the program is the toolchain found from configuration and environment.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Build-tool process execution. The spawn() wrapper executes build tools using command, arguments, and options supplied by internal callers. Shell execution is disabled by default but may be enabled through opts.shell. The wrapper performs no local validation. Execution is an intended feature of node-gyp, and no concrete attacker-controlled injection path has been established. Further analysis of internal call sites, configuration sources, and shell options is required."
+      }
     },
     {
       "id": "node-latex-pdf_0.0.2|node-latex-pdf.js|15",
       "label": "vulnerable",
       "class": null,
-      "reason": "`dest_file` and `src_file` are concatenated into `pdflatex`."
+      "reason": "`dest_file` and `src_file` are concatenated into `pdflatex`.",
+      "review": null
     },
     {
       "id": "node-notifier_10.0.1|lib/utils.js|59",
       "label": "safe",
       "class": "validated_or_escaped",
-      "reason": "The notifier path goes through `shellwords.escape`; the options come from `constructArgumentList`, which keeps allow-listed keys and escapes `\"`, `$`, backtick and backslash inside double quotes."
+      "reason": "The notifier path goes through `shellwords.escape`; the options come from `constructArgumentList`, which keeps allow-listed keys and escapes `\"`, `$`, backtick and backslash inside double quotes.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "validated_or_escaped",
+        "note": "SAFE - Sanitized shell command. The notifier executable is escaped using shellwords.escape(). Arguments are constructed through constructArgumentList() with an allowlist of option names, recursive escaping of array elements, escaping of shell-sensitive characters, and double-quote wrapping. No effective command injection path was identified through the reviewed notifysend.js caller. The CodeQL finding is classified as a false positive for OS Command Injection."
+      }
     },
     {
       "id": "nodemon_3.1.14|lib/monitor/run.js|346",
       "label": "safe",
       "class": "internal_values_only",
-      "reason": "`child.pid` is the numeric id of the process nodemon itself spawned."
+      "reason": "`child.pid` is the numeric id of the process nodemon itself spawned.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "internal_values_only",
+        "note": "SAFE - OS-generated process identifier. The command uses a fixed taskkill structure, with child.pid obtained from a child process created by nodemon. The PID is generated by the operating system and is numeric, so shell metacharacters cannot enter the command through the identified data flow. No command injection vulnerability is established at this execution site."
+      }
     },
     {
       "id": "nodemon_3.1.14|lib/monitor/run.js|430",
-      "label": "undetermined",
-      "class": null,
-      "reason": "`pid` values come from `psTree`; `sig` is derived from `config.signal`, whose validation is in another module."
+      "label": "safe",
+      "class": "validated_or_escaped",
+      "reason": "`pid` values come from `psTree`; `sig` is derived from `config.signal`, whose validation is in another module.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "SAFE - Signal validation before shell execution. Both execution sites use process identifiers and a signal derived from config.signal. Before reaching either exec() call, child.kill(signal) validates the signal through Node.js. Invalid signal strings containing shell metacharacters are rejected, preventing their propagation to the shell commands. No exploitable OS Command Injection path is identified through the reviewed inputs."
+      }
     },
     {
       "id": "nodemon_3.1.14|lib/monitor/run.js|434",
-      "label": "undetermined",
-      "class": null,
-      "reason": "`child.pid` is a number; `sig` is derived from `config.signal`, whose validation is in another module."
+      "label": "safe",
+      "class": "validated_or_escaped",
+      "reason": "`child.pid` is a number; `sig` is derived from `config.signal`, whose validation is in another module.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "SAFE - Signal validation before shell execution. Both execution sites use process identifiers and a signal derived from config.signal. Before reaching either exec() call, child.kill(signal) validates the signal through Node.js. Invalid signal strings containing shell metacharacters are rejected, preventing their propagation to the shell commands. No exploitable OS Command Injection path is identified through the reviewed inputs."
+      }
     },
     {
       "id": "nodemon_3.1.14|lib/version.js|79",
       "label": "safe",
       "class": "internal_values_only",
-      "reason": "`command(cmd)` is a local wrapper; its three callers in the file pass string literals."
+      "reason": "`command(cmd)` is a local wrapper; its three callers in the file pass string literals.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "safe",
+        "assistant_class": "internal_values_only",
+        "note": "SAFE - Internal constant commands. The command() wrapper invokes child_process.exec(), but all three call sites pass fixed command strings. The wrapper is not exported, and no untrusted input reaches the command argument. Although one command uses shell substitution, its syntax is static. No OS Command Injection path is identified."
+      }
     },
     {
       "id": "npm-git-publish_0.2.4-beta|lib/publish.js|198",
       "label": "vulnerable",
       "class": null,
-      "reason": "Wrapper around `exec`; callers pass commands with the tag name and extra branch names of the caller's options inside double quotes only."
+      "reason": "Wrapper around `exec`; callers pass commands with the tag name and extra branch names of the caller's options inside double quotes only.",
+      "review": null
     },
     {
       "id": "pdf-image_1.0.5|index.js|104",
       "label": "vulnerable",
       "class": null,
-      "reason": "The command contains `pdfFilePath` and the convert options given to the constructor, in double quotes only."
+      "reason": "The command contains `pdfFilePath` and the convert options given to the constructor, in double quotes only.",
+      "review": null
     },
     {
       "id": "pdfinfojs_0.3.6|lib/pdfinfo.js|28",
       "label": "vulnerable",
       "class": null,
-      "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command."
+      "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command.",
+      "review": null
     },
     {
       "id": "pdfinfojs_0.3.6|lib/pdfinfo.js|72",
       "label": "vulnerable",
       "class": null,
-      "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command."
+      "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command.",
+      "review": null
     },
     {
       "id": "portkiller_1.0.2|index.js|22",
       "label": "undetermined",
       "class": null,
-      "reason": "`pid` is a token of the output of the previous `lsof` command, which itself contains the `port` argument."
+      "reason": "`pid` is a token of the output of the previous `lsof` command, which itself contains the `port` argument.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Unvalidated subprocess output. The PID is extracted as the second whitespace-separated token from lsof stdout and interpolated into exec('kill ' + pid) without numeric validation. Normal lsof output supplies a numeric PID, but the parsing logic does not independently enforce this property. The upstream command at line 10 is independently vulnerable to command injection (CVE-2021-23379), potentially allowing output manipulation. A separate exploitable injection path at line 22 has not yet been confirmed."
+      }
     },
     {
       "id": "ps-visitor_0.0.2|index.js|56",
       "label": "vulnerable",
       "class": null,
-      "reason": "The `extra` argument is appended to `ps aux |`."
+      "reason": "The `extra` argument is appended to `ps aux |`.",
+      "review": null
     },
     {
       "id": "ps-visitor_0.0.2|index.js|444",
       "label": "vulnerable",
       "class": null,
-      "reason": "The `signal` argument, only trimmed, is put into `kill -l`."
+      "reason": "The `signal` argument, only trimmed, is put into `kill -l`.",
+      "review": null
     },
     {
       "id": "react-dev-utils_11.0.0|openBrowser.js|92",
-      "label": "undetermined",
+      "label": "vulnerable",
       "class": null,
-      "reason": "`encodeURI(url)` leaves `$(` and `)` intact inside double quotes; `url` is the development server address from configuration."
+      "reason": "`encodeURI(url)` leaves `$(` and `)` intact inside double quotes; `url` is the development server address from configuration.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "VULNERABLE - OS Command Injection. The exported openBrowser() function passes a caller-controlled URL through encodeURI() into a shell command executed by execSync() on macOS. encodeURI() preserves $, ( and ), allowing shell command substitution inside double quotes. The vulnerable execution pattern is documented in CVE-2026-14802. Although normal development-server URLs may be trusted, the exported API permits crafted input to reach the execution sink."
+      }
     },
     {
       "id": "react-dev-utils_11.0.0|launchEditor.js|378",
       "label": "undetermined",
       "class": null,
-      "reason": "On Windows the file name is checked against an allow-list first, but `editor` passed to `cmd.exe /C` comes from REACT_EDITOR or the process list."
+      "reason": "On Windows the file name is checked against an allow-list first, but `editor` passed to `cmd.exe /C` comes from REACT_EDITOR or the process list.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Windows CMD execution with environment-derived editor. The function invokes cmd.exe /C with an editor and arguments potentially sourced from environment variables. The filename is restricted by a Windows-specific allowlist, but editor configuration and initial arguments are not subject to equivalent validation. shellQuote.parse() does not guarantee Windows CMD escaping. No confirmed attacker-controlled injection path has been established. Exploitability depends on configuration trust boundaries."
+      }
     },
     {
       "id": "release-it_21.1.0|lib/shell.js|60",
       "label": "undetermined",
       "class": null,
-      "reason": "Runs the hook and command strings of the release configuration; whether untrusted data is in them depends on that configuration."
+      "reason": "Runs the hook and command strings of the release configuration; whether untrusted data is in them depends on that configuration.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Configuration-driven shell execution. execStringCommand() executes shell commands supplied by the release configuration or hooks. Commands may contain interpolated template variables such as ${version}. No shell escaping is evident at the execution site. Shell execution is an intended feature of release-it, and no concrete attacker-controlled injection path has been established. Exploitability depends on the trustworthiness of the configuration and interpolated values."
+      }
     },
     {
       "id": "release-it_21.1.0|lib/shell.js|90",
       "label": "undetermined",
       "class": null,
-      "reason": "On Windows the npm, yarn or pnpm argument array is joined and run with a shell; the arguments come from other modules and configuration."
+      "reason": "On Windows the npm, yarn or pnpm argument array is joined and run with a shell; the arguments come from other modules and configuration.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Potential Windows OS Command Injection. The Windows-specific branch concatenates npm/yarn/pnpm command arguments using command.join(' ') and executes the resulting string with shell: true, without argument escaping. Configurable values such as tag, publishArgs, and versionArgs may introduce shell metacharacters. However, no concrete attacker-controlled input path has been established. Exploitability depends on the trustworthiness and validation of upstream arguments."
+      }
     },
     {
       "id": "roar-pidusage_1.1.6|lib/helpers.js|12",
-      "label": "safe",
-      "class": "internal_values_only",
-      "reason": "Both callers of `getconf` in the package pass the literals 'CLK_TCK' and 'PAGESIZE'."
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Both callers of `getconf` in the package pass the literals 'CLK_TCK' and 'PAGESIZE'.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "changed",
+        "assistant_label": "safe",
+        "assistant_class": "internal_values_only",
+        "note": "VULNERABLE - OS Command Injection. The exported getconf() function concatenates its keyword parameter directly into a shell command executed via child_process.exec(), without validation or escaping. Although both internal callers pass constant values (CLK_TCK and PAGESIZE), external consumers can invoke the exported function with attacker-controlled input. Shell metacharacters can therefore reach the execution sink."
+      }
     },
     {
       "id": "shelljs_0.10.0|src/exec.js|147",
       "label": "undetermined",
       "class": null,
-      "reason": "`shell.exec(cmd)` exists to run the caller's command string."
+      "reason": "`shell.exec(cmd)` exists to run the caller's command string.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Intentional shell execution API. Both sites execute caller-supplied command strings using child_process.exec(). The first handles asynchronous execution, while the second supports the synchronous execution path. Arbitrary shell command execution is the intended functionality of ShellJS. No specific attacker-controlled injection path has been established. Exploitability depends on whether consuming applications incorporate untrusted input into command strings without appropriate sanitization."
+      }
     },
     {
       "id": "shelljs_0.10.0|src/exec-child.js|41",
       "label": "undetermined",
       "class": null,
-      "reason": "Child script of `shell.exec`; it runs the command string the parent wrote for it."
+      "reason": "Child script of `shell.exec`; it runs the command string the parent wrote for it.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Intentional shell execution API. Both sites execute caller-supplied command strings using child_process.exec(). The first handles asynchronous execution, while the second supports the synchronous execution path. Arbitrary shell command execution is the intended functionality of ShellJS. No specific attacker-controlled injection path has been established. Exploitability depends on whether consuming applications incorporate untrusted input into command strings without appropriate sanitization."
+      }
     },
     {
       "id": "ts-process-promises_1.0.2|lib/process-promises.js|83",
       "label": "undetermined",
       "class": null,
-      "reason": "`spawn(command, args, options)` runs the caller's program without a shell unless the caller's options ask for one; the API exists to run what the caller passes."
+      "reason": "`spawn(command, args, options)` runs the caller's program without a shell unless the caller's options ask for one; the API exists to run what the caller passes.",
+      "review": {
+        "by": "project owner",
+        "on": "2026-11-15",
+        "decision": "agreed",
+        "assistant_label": "undetermined",
+        "assistant_class": null,
+        "note": "UNCERTAIN - Caller-controlled process execution. The exported spawn() wrapper forwards caller-supplied command, args, and options directly to child_process.spawn(). Shell execution is disabled by default but may be enabled by the caller. Arbitrary process execution is the intended functionality of this library. No concrete attacker-controlled injection path has been established. Exploitability depends on the consuming application's trust boundaries and execution options."
+      }
     },
     {
       "id": "wincred_1.0.2|index.ts|20",
       "label": "vulnerable",
       "class": null,
-      "reason": "The arguments `pythonLancher` and `target` are interpolated into the shell command string without quoting or validation."
+      "reason": "The arguments `pythonLancher` and `target` are interpolated into the shell command string without quoting or validation.",
+      "review": null
     }
   ]
 }

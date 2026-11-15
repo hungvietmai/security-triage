@@ -1120,6 +1120,27 @@ class JavaScriptLabelScoringTests(unittest.TestCase):
             self.assertRegex(meta["reviewed_by"], r"\d{4}-\d{2}-\d{2}")
             self.assertNotIn("No person has checked", meta["review_note"])
 
+    def test_review_record_covers_the_reviewed_labels_and_no_others(self):
+        # The owner reviewed the 31 labels first assigned safe or undetermined (2026-11-15).
+        # A label without a review entry must not be counted as reviewed by a person.
+        labels = json.loads((JS_LABELS / "labels.json").read_bytes())["labels"]
+        reviewed = [row for row in labels if row["review"] is not None]
+        pending = [row for row in labels if row["review"] is None]
+        self.assertEqual((len(reviewed), len(pending)), (31, 47))
+        self.assertEqual({row["label"] for row in pending}, {"vulnerable"})
+        for row in reviewed:
+            with self.subTest(id=row["id"]):
+                review = row["review"]
+                self.assertEqual(review["by"], "project owner")
+                self.assertTrue(review["note"].strip())
+                same = (review["assistant_label"], review["assistant_class"]) == (
+                    row["label"],
+                    row["class"],
+                )
+                self.assertEqual(review["decision"], "agreed" if same else "changed")
+        # Every safe label, the ones false-positive counts rest on, was reviewed.
+        self.assertTrue(all(row["review"] for row in labels if row["label"] == "safe"))
+
     def test_protocol_and_sheet_builder_are_the_registered_files(self):
         import hashlib
 
