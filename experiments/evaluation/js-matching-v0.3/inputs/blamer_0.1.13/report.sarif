@@ -1,0 +1,1356 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "1646f3e8-febb-4b6e-9768-98f97a2233cd"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 57,
+                            "startLine": 10,
+                            "startColumn": 53
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 15,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 19,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 21,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.basename(file)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 21,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "realFile"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 15,
+                            "startLine": 21,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "realFile"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 24,
+                            "startColumn": 38
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 63,
+                            "startLine": 10,
+                            "startColumn": 59
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 14,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 9,
+                            "startLine": 14,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 15,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 19,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 20,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 7,
+                            "startLine": 20,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 24,
+                            "startColumn": 25
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 63,
+                            "startLine": 10,
+                            "startColumn": 59
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 14,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 9,
+                            "startLine": 14,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 15,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 19,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 20,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 20,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 7,
+                            "startLine": 20,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 24,
+                            "startColumn": 25
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/git.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/vcs/git.js"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 10,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 57,
+                  "startLine": 10,
+                  "startColumn": 53
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 46,
+                  "endColumn": 7,
+                  "startLine": 24,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "src/vcs/git.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 63,
+                  "startLine": 10,
+                  "startColumn": 59
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 57,
+                  "startLine": 10,
+                  "startColumn": 53
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 46,
+                  "startLine": 24,
+                  "startColumn": 38
+                },
+                "artifactLocation": {
+                  "uri": "src/vcs/git.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 63,
+                  "startLine": 10,
+                  "startColumn": 59
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 29,
+                  "startLine": 24,
+                  "startColumn": 25
+                },
+                "artifactLocation": {
+                  "uri": "src/vcs/git.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "af664b810b120ed8:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "91d10a722903814ed1d308eecc63393b6f0261cae204ff04c70d3dd326728512",
+              "unitKey": "906b8ff7bdc75dd96ba9aa5ac143a52efafa6db3aa7c063d96672a34ef224fe5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 57,
+                            "startLine": 10,
+                            "startColumn": 53
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 15,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 7,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 9,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.basename(file)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 9,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "realFile"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 15,
+                            "startLine": 9,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "realFile"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 38,
+                            "startColumn": 25
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 63,
+                            "startLine": 10,
+                            "startColumn": 59
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 14,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 9,
+                            "startLine": 14,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 15,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 7,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 8,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 7,
+                            "startLine": 8,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 38,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 63,
+                            "startLine": 10,
+                            "startColumn": 59
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 14,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 9,
+                            "startLine": 14,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 15,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "src/Blamer.js",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 7,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 8,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 41,
+                            "startLine": 8,
+                            "startColumn": 37
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 7,
+                            "startLine": 8,
+                            "startColumn": 3
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "args"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 46,
+                            "startLine": 38,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "src/vcs/svn.js",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/vcs/svn.js"
+                },
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 10,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 57,
+                  "startLine": 10,
+                  "startColumn": 53
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 50,
+                  "endColumn": 7,
+                  "startLine": 38,
+                  "startColumn": 5
+                },
+                "artifactLocation": {
+                  "uri": "src/vcs/svn.js",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 63,
+                  "startLine": 10,
+                  "startColumn": 59
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 57,
+                  "startLine": 10,
+                  "startColumn": 53
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 38,
+                  "startColumn": 25
+                },
+                "artifactLocation": {
+                  "uri": "src/vcs/svn.js",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 63,
+                  "startLine": 10,
+                  "startColumn": 59
+                },
+                "artifactLocation": {
+                  "uri": "src/Blamer.js",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 46,
+                  "startLine": 38,
+                  "startColumn": 42
+                },
+                "artifactLocation": {
+                  "uri": "src/vcs/svn.js",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "608ec115f8ca785d:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "8799d2e8169de768d1de887e296c1b09a8abc2f672c070cde0198ef755103629",
+              "unitKey": "aaa5b394ea3713f390f29340186a9bca7b25d40d34636f015d464fc056278973",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "1646f3e8-febb-4b6e-9768-98f97a2233cd"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/vcs/git.js"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 5,
+                  "endLine": 46,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "91d10a722903814ed1d308eecc63393b6f0261cae204ff04c70d3dd326728512",
+              "unitKey": "906b8ff7bdc75dd96ba9aa5ac143a52efafa6db3aa7c063d96672a34ef224fe5",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/vcs/svn.js"
+                },
+                "region": {
+                  "startLine": 38,
+                  "startColumn": 5,
+                  "endLine": 50,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "8799d2e8169de768d1de887e296c1b09a8abc2f672c070cde0198ef755103629",
+              "unitKey": "aaa5b394ea3713f390f29340186a9bca7b25d40d34636f015d464fc056278973",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

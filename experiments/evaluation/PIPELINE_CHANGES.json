@@ -1,0 +1,15 @@
+{
+  "note": "Pipeline files whose bytes differ from the hash recorded in a PREREGISTRATION.json of experiments/evaluation/independent*. Each was changed after every scan of those checks had finished. Protocols, labels, scoring scripts and saved exports are never listed here: a test fails if one of them changes.",
+  "changed_after_registered_scans": {
+    "backend/app/triage/adjudicate.py": {
+      "changed_on": "2026-11-15",
+      "registered_sha256": "6b1d30c70e650bcff94a396bde68efd5edcf189fbf7e92bc0f86005aea8c048a",
+      "reason": "adjudicate-v0.3 adds filter rule G4 (constant shell command, JavaScript) for profile command-injection-v0.3. Rules G1, G2 and G3 and every keep code are unchanged; G4 only applies when a profile supplies constant-command evidence."
+    },
+    "backend/app/workflows/scans/analysis.py": {
+      "changed_on": "2026-11-15",
+      "registered_sha256": "30eff9843ac329e0f98ecd6295818ce855dd8bf259972df4a4a26309be366708",
+      "reason": "Passes the constant-command evidence and the Semgrep target selection of profile command-injection-v0.3 to the pipeline. Profiles without those settings run as before."
+    }
+  }
+}

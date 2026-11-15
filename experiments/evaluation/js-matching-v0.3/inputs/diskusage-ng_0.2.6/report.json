@@ -1,0 +1,122 @@
+{
+  "scan_id": "19c1b0a7-6f80-4771-9424-5f3a2653c9f8",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "3c161ff4-7c5d-4903-b76a-a1ecb28e576d",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:diskusage-ng@0.2.6",
+    "sha256": "216b5dcdc97b341b8e5c9fea7ce77b25d3234939e0ba4133a2c3e490c8cd1c3f",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:41:26.624526Z",
+  "finished_at": "2026-11-14T20:41:40.784224Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.4303,
+        "raw_findings": 1
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.3645,
+        "raw_findings": 1
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2163,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.016,
+        "raw_findings": 2
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.6735
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1144
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7658
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0663,
+        "raw_findings": 1
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 1,
+    "eslint": 1
+  },
+  "stages": {
+    "raw_alerts": 2,
+    "units": 1,
+    "candidates": 1,
+    "main_list": 1,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 1,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 1,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 1,
+    "P2": 0,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "e7651914aad54a7606b147e03dd638bb263a7663f6ae514ed92f7cc368a27b0b",
+      "basis": "same_call_site",
+      "path": "lib/posix.js",
+      "start_line": 11,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "60dc44aa-ff82-4589-9ca8-9c61c185ce50"
+      ],
+      "raw_alerts": 2
+    }
+  ]
+}

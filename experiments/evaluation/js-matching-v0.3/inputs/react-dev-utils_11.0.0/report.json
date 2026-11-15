@@ -1,0 +1,154 @@
+{
+  "scan_id": "bb51c9ad-8045-457a-b0e3-f4469e5aeed0",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "6fc74093-d9f5-48ff-94b9-8aadcc8c18a2",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:react-dev-utils@11.0.0",
+    "sha256": "cd24020b86a02f9bb86fb6ae3ff3ecdeb3892250dac73ce54c81c3e01e0c6cdf",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T21:07:26.716926Z",
+  "finished_at": "2026-11-14T21:07:42.060022Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 8.2318,
+        "raw_findings": 9
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.4648,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2661,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.116,
+        "raw_findings": 10
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.8233
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1143
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7658
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0662,
+        "raw_findings": 3
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 9
+  },
+  "stages": {
+    "raw_alerts": 9,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 3,
+      "only": 3
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 2,
+    "P2": 1,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "cc7ab083346d333226be07dd46025443715dbe45a2948c05c63ff646c9973522",
+      "basis": "same_call_site",
+      "path": "getProcessForPort.js",
+      "start_line": 28,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "d885b3fa-44a4-49f8-ae62-5633d2a3ba11"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "094500905d79962e33c1cbcc14674838dfc89ee369ef07016e477fb0b98f30da",
+      "basis": "same_call_site",
+      "path": "openBrowser.js",
+      "start_line": 92,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "13a404b8-c086-4765-85ab-e1afbfae1bcf"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "980399a67f2e8cd37aced2c91d98e907dfd1f1e9457b36414fdf1bc113a50f48",
+      "basis": "same_call_site",
+      "path": "launchEditor.js",
+      "start_line": 378,
+      "sink_kind": "child_process.spawn",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "3e35c7a1-b440-4220-9086-358d2d09a677"
+      ],
+      "raw_alerts": 7
+    }
+  ]
+}

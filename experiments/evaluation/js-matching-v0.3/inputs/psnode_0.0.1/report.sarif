@@ -1,0 +1,412 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "362345a2-9b86-4c27-86da-02bf50ff9d16"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 57,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 78,
+                            "startLine": 58,
+                            "startColumn": 75
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 53,
+                  "endColumn": 78
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 57,
+                  "startColumn": 33
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 74,
+                  "endColumn": 5,
+                  "startLine": 59,
+                  "startColumn": 3
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 57,
+                  "startColumn": 33
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 78,
+                  "startLine": 58,
+                  "startColumn": 75
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "2d99afba181f98b7:1",
+            "primaryLocationStartColumnFingerprint": "50"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "a27d8537d088523212ca520b1fd9f05dbeb1a3ab12e9dc5fdf30f7ad33fd0650",
+              "unitKey": "66290641c311493986e6a7fcd412781afa9215e080968ecba437027f0c96b192",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 57,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pid"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 94,
+                            "startLine": 58,
+                            "startColumn": 91
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 81,
+                  "endColumn": 94
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 57,
+                  "startColumn": 33
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 74,
+                  "endColumn": 5,
+                  "startLine": 59,
+                  "startColumn": 3
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 57,
+                  "startColumn": 33
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 94,
+                  "startLine": 58,
+                  "startColumn": 91
+                },
+                "artifactLocation": {
+                  "uri": "lib/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "2d99afba181f98b7:1",
+            "primaryLocationStartColumnFingerprint": "78"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "a27d8537d088523212ca520b1fd9f05dbeb1a3ab12e9dc5fdf30f7ad33fd0650",
+              "unitKey": "66290641c311493986e6a7fcd412781afa9215e080968ecba437027f0c96b192",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "362345a2-9b86-4c27-86da-02bf50ff9d16"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 3,
+                  "endLine": 74,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "a27d8537d088523212ca520b1fd9f05dbeb1a3ab12e9dc5fdf30f7ad33fd0650",
+              "unitKey": "66290641c311493986e6a7fcd412781afa9215e080968ecba437027f0c96b192",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "362345a2-9b86-4c27-86da-02bf50ff9d16"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `pid`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/index.js"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 21,
+                  "endLine": 59,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "a27d8537d088523212ca520b1fd9f05dbeb1a3ab12e9dc5fdf30f7ad33fd0650",
+              "unitKey": "66290641c311493986e6a7fcd412781afa9215e080968ecba437027f0c96b192",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

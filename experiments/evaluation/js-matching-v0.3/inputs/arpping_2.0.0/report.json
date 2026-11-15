@@ -1,0 +1,172 @@
+{
+  "scan_id": "499b2f78-c323-4334-bbbd-74ba5f8f6f2e",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "e7229e48-ffbe-413c-933d-27b794679a20",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:arpping@2.0.0",
+    "sha256": "dca4fe019d1ed65e4dfca27cea73257481dad6a492300bc8a18125da0d88c61e",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:37:21.846848Z",
+  "finished_at": "2026-11-14T20:37:36.711056Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 8.2821,
+        "raw_findings": 2
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.4146,
+        "raw_findings": 3
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2161,
+        "raw_findings": 2
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0157,
+        "raw_findings": 3
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.4745
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1144
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7664
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0161,
+        "raw_findings": 1
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 2,
+    "eslint": 3,
+    "semgrep": 2
+  },
+  "stages": {
+    "raw_alerts": 7,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 2,
+    "filtered": 1,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 2,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 3,
+      "only": 1
+    },
+    "semgrep": {
+      "candidates": 2,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 2,
+    "P2": 0,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {
+    "G4_JS_CONSTANT_COMMAND": 1
+  },
+  "candidates": [
+    {
+      "candidate_key": "6f62552b19eff7c1e66e5a32066bb764d69af5c50ecd97ef3ca36f2cae6b9533",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 120,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "ddaff01e-359d-4630-ab9b-760507718299"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "646a324d7c70b2b77a60b90a30b0d0a547daf7d80f2ab166aa2300ad8a165d53",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 145,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "da98fbbf-69d7-4ad6-bc91-b2bf42925818"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "426235069a286d5daa1f67a978fb1a9d819eda3ce5a022ed9c4232ed8bdd9832",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 60,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "filtered",
+      "filter_rule": "G4_JS_CONSTANT_COMMAND",
+      "filter_rules": [
+        "G4_JS_CONSTANT_COMMAND"
+      ],
+      "reason": "Đã gạn khỏi danh sách rà chính: luật bằng chứng của Semgrep chứng minh chuỗi lệnh của lời gọi này là hằng lúc biên dịch (kể cả khi lệnh được truyền qua biến), và lời gọi nhận toàn bộ lệnh trong một chuỗi (exec, execSync). Không công cụ nào khẳng định luồng dữ liệu tới lệnh; cảnh báo còn lại chỉ bắt mẫu cú pháp. Cảnh báo gốc được giữ để xem lại.",
+      "unit_ids": [
+        "d6397f2b-1f7f-4950-8c2f-ec8d634c6ba9"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

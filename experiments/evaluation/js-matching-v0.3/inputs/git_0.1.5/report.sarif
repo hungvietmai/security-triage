@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "664b62fd-54fb-4631-a49f-e58fd3a7c453"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/git/git.js"
+                },
+                "region": {
+                  "startLine": 232,
+                  "startColumn": 3,
+                  "endLine": 241,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c054bd67eec53b786a368fd494215502c90215d0025203f56b48162cd85662ff",
+              "unitKey": "60759500bb0bbf11f6936ecbc279d9ce8c50f02c44bb1663284b8b79bd77ed6f",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/git/git_file_operations.js"
+                },
+                "region": {
+                  "startLine": 128,
+                  "startColumn": 15,
+                  "endLine": 134,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "ca239029f4f8500469d99311300413bc4d655fe4b40bd0e4571751d7e7f4cd9b",
+              "unitKey": "b6897d50084eb946c1070752bc155987c99e43a84412b972ce4620f037665708",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

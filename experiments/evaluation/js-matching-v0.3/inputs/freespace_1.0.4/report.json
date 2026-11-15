@@ -1,0 +1,188 @@
+{
+  "scan_id": "7e1d3a86-efec-4258-83c0-4717dcfdc66d",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "949eb82b-5480-440b-b1b6-2c08ca8a75e8",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:freespace@1.0.4",
+    "sha256": "8601f9ca5f575d7b0f0afa3a15df584747b769f3baf4dbf4992c19336b3bd64c",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:44:49.505719Z",
+  "finished_at": "2026-11-14T20:45:03.612621Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.4807,
+        "raw_findings": 3
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.3644,
+        "raw_findings": 2
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2175,
+        "raw_findings": 4
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.016,
+        "raw_findings": 4
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.5736
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1144
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.766
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0662,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 3,
+    "eslint": 2,
+    "semgrep": 4
+  },
+  "stages": {
+    "raw_alerts": 9,
+    "units": 4,
+    "candidates": 4,
+    "main_list": 4,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 3,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 2,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 4,
+      "only": 1
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 3,
+    "P2": 1,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "a42ea721e577a49c56aa4b3e489b2149825082a77e5f896d5f2625af9f84e3a2",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 49,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "b9a44b3f-4c08-4b5b-ad9f-8480fa1dbb75"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "3da7f356c70965d3b6392165a9d72cb08ecb08d297055560b62f129e7138e92e",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 51,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "871c17ad-aff4-4851-bbe7-0c904e9858cc"
+      ],
+      "raw_alerts": 3
+    },
+    {
+      "candidate_key": "f18bdd7fabb6cc8bf1202e90ad0badd69f31276599fd8ca63e15b2b40433def1",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 67,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "e9dd1dd5-9c93-469f-a7a9-9d82ca4bf754"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "2689aaba42b027cd9b6ab9f88766b2dc05725e8630babd1a27f6e4be5e2fddbd",
+      "basis": "same_call_site",
+      "path": "index.js",
+      "start_line": 65,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "semgrep"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "af3e8d72-8690-4225-ad81-46eb34c8fd99"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "scan_id": "ac3dc1e7-979c-4194-9335-abad327d289d",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "629ee177-b4d5-4987-9dda-583c41e7fea0",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:compass-compile@0.0.1",
+    "sha256": "06c877fa9526242cb5b8f975db33bb873f8736a0a0b84d034da638b8f2fb827e",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:39:24.207398Z",
+  "finished_at": "2026-11-14T20:39:37.751765Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 6.9792,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.3646,
+        "raw_findings": 1
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2162,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0161,
+        "raw_findings": 1
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.5237
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1143
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7659
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.066,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "eslint": 1
+  },
+  "stages": {
+    "raw_alerts": 1,
+    "units": 1,
+    "candidates": 1,
+    "main_list": 1,
+    "filtered": 0,
+    "demoted": 1
+  },
+  "sources": {
+    "eslint": {
+      "candidates": 1,
+      "only": 1
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 1,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "b1025df1000fab57cf4d601249d0b75c408c2ca231422fdf5c9dfb6f72e4bdd5",
+      "basis": "same_call_site",
+      "path": "lib/compass.js",
+      "start_line": 25,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "827a510f-172f-4b96-aac0-854823aa55d0"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

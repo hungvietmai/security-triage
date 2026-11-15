@@ -1,0 +1,135 @@
+{
+  "scan_id": "664b62fd-54fb-4631-a49f-e58fd3a7c453",
+  "status": "partial",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "6a86e859-b53e-4074-a75c-6116c5df2e47",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:git@0.1.5",
+    "sha256": "4cf4d76a463bfe9751850f96223d21b3a02cd6001fcf802fd2dace10c48ffccc",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:48:05.202780Z",
+  "finished_at": "2026-11-14T20:48:21.992552Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 8.5394,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "partial",
+        "seconds": 0.7154,
+        "raw_findings": 2
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.3164,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.2679,
+        "raw_findings": 4
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 5.5752
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1145
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8162
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.1663,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "eslint": 2
+  },
+  "stages": {
+    "raw_alerts": 2,
+    "units": 2,
+    "candidates": 2,
+    "main_list": 2,
+    "filtered": 0,
+    "demoted": 2
+  },
+  "sources": {
+    "eslint": {
+      "candidates": 2,
+      "only": 2
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 2,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "c054bd67eec53b786a368fd494215502c90215d0025203f56b48162cd85662ff",
+      "basis": "same_call_site",
+      "path": "lib/git/git.js",
+      "start_line": 232,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "7f20b0ad-0874-4174-8074-1aa69fe9a679"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "ca239029f4f8500469d99311300413bc4d655fe4b40bd0e4571751d7e7f4cd9b",
+      "basis": "same_call_site",
+      "path": "lib/git/git_file_operations.js",
+      "start_line": 128,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "382a5a19-8746-46f9-943e-f0617b822d0d"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

@@ -1,0 +1,2195 @@
+{
+  "note": "Reference labels for one class of false positive only: a shell-string call whose command is a constant. Development data.",
+  "shell_string_candidates": 120,
+  "reference": {
+    "constant_command": 1,
+    "not_constant": 116,
+    "unreadable": 3
+  },
+  "constant_by_reference": {
+    "pattern_alerts_only": 1,
+    "with_a_flow_claim": 0
+  },
+  "g4": {
+    "filtered": 1,
+    "filtered_and_constant_by_reference": 1,
+    "filtered_but_not_constant_by_reference": 0,
+    "constant_pattern_only_but_kept": 0
+  },
+  "constant_candidates": [
+    {
+      "id": "arpping_2.0.0",
+      "path": "index.js",
+      "line": 60,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "filtered",
+      "filter_rules": [
+        "G4_JS_CONSTANT_COMMAND"
+      ],
+      "reference": "constant_command",
+      "command": "ipCommand"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "_thi.ng__egf_0.3.0",
+      "path": "lib/index.js",
+      "line": 157,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`echo \"${body}\" | gpg --decrypt`"
+    },
+    {
+      "id": "_thi.ng__egf_0.3.0",
+      "path": "tags.js",
+      "line": 25,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`echo \"${body}\" | gpg --decrypt`"
+    },
+    {
+      "id": "adb-driver_0.1.8",
+      "path": "build/AdbDriver.js",
+      "line": 26,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "execCmd"
+    },
+    {
+      "id": "apiconnect-cli-plugins_6.0.2",
+      "path": "lib/plugin-loader.js",
+      "line": 181,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "installCmd"
+    },
+    {
+      "id": "arpping_2.0.0",
+      "path": "index.js",
+      "line": 120,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ping ${flag} ${this.timeout} ${ip}`"
+    },
+    {
+      "id": "arpping_2.0.0",
+      "path": "index.js",
+      "line": 145,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`arp ${ip}`"
+    },
+    {
+      "id": "arpping_2.0.0",
+      "path": "index.js",
+      "line": 60,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "filtered",
+      "filter_rules": [
+        "G4_JS_CONSTANT_COMMAND"
+      ],
+      "reference": "constant_command",
+      "command": "ipCommand"
+    },
+    {
+      "id": "blamer_0.1.13",
+      "path": "src/vcs/git.js",
+      "line": 24,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git blame ' + args + ' ' + realFile"
+    },
+    {
+      "id": "blamer_0.1.13",
+      "path": "src/vcs/svn.js",
+      "line": 38,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'svn blame ' + realFile + ' ' + args"
+    },
+    {
+      "id": "codecov_3.6.4",
+      "path": "lib/codecov.js",
+      "line": 480,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'find ' + root + ' ' + patterns + more_patterns"
+    },
+    {
+      "id": "codecov_3.6.4",
+      "path": "lib/codecov.js",
+      "line": 419,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "gcov"
+    },
+    {
+      "id": "compass-compile_0.0.1",
+      "path": "lib/compass.js",
+      "line": 25,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "connection-tester_0.2.0",
+      "path": "index.js",
+      "line": 15,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "curling_0.2.0",
+      "path": "lib/curl-transport.js",
+      "line": 56,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "\"curl \" + command"
+    },
+    {
+      "id": "curljs_0.1.2",
+      "path": "index.js",
+      "line": 37,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "curlString"
+    },
+    {
+      "id": "deferred-exec_0.3.1",
+      "path": "lib/deferred-exec.js",
+      "line": 42,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "diskusage-ng_0.2.6",
+      "path": "lib/posix.js",
+      "line": 11,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'df -k \"' + path + '\"'"
+    },
+    {
+      "id": "enpeem_2.2.0",
+      "path": "index.js",
+      "line": 114,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "eslint-fixer_0.1.5",
+      "path": "index.js",
+      "line": 24,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "extra-asciinema_1.0.0",
+      "path": "index.js",
+      "line": 11,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`asciinema cat ${f}`"
+    },
+    {
+      "id": "extra-asciinema_1.0.0",
+      "path": "index.js",
+      "line": 26,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`asciinema cat ${f}`"
+    },
+    {
+      "id": "extra-asciinema_1.0.0",
+      "path": "index.js",
+      "line": 193,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`asciinema upload ${f}`"
+    },
+    {
+      "id": "extra-asciinema_1.0.0",
+      "path": "index.js",
+      "line": 208,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`asciinema upload ${f}`"
+    },
+    {
+      "id": "extra-asciinema_1.0.0",
+      "path": "index.js",
+      "line": 71,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "recCmd(f, o)"
+    },
+    {
+      "id": "extra-asciinema_1.0.0",
+      "path": "index.js",
+      "line": 99,
+      "tools": [
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "recCmd(f, o)"
+    },
+    {
+      "id": "ffmpeg-sdk_0.0.5",
+      "path": "index.js",
+      "line": 9,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 8,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} -ss 00:00:21 -vsync 0 -frames:v 1 ${output}_%03d.png`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 27,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} ${output}.mp4`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 46,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} -ss 15 -t 5 -vf scale=320:180 ${output}.gif`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 65,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} -f mp3 -ab 192000 -vn ${output}.mp3`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 83,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} -vcodec h264 -acodec mp3 ${output}.mp4`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 101,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input1} -i ${input2} -filter_complex \"[0:v][1:v] overlay=${x}:${y}:enable='bet"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 119,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input1} -i ${input2} -filter_complex \"[0:v][1:v] overlay=${x}:${y}\" -codec:a c"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 137,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} -vf 'drawtext=fontfile=/asset/times-new-roman.ttf:fontsize=64:fontcolor"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 155,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${input} -i ${audio} -map 0:0 -map 1:0 -vcodec copy -acodec copy ${output}.mp4`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 173,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -i ${audio} -loop 1 -f image2 -i ${image} -t 188 ${output}.mp4`"
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4",
+      "path": "index.js",
+      "line": 191,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`ffmpeg -hide_banner -loglevel quiet -ss ${start} -i ${input} -t ${duration} -c copy ${output}.mp4`"
+    },
+    {
+      "id": "freespace_1.0.4",
+      "path": "index.js",
+      "line": 49,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`fsutil volume diskfree ${driveOrMount}:`"
+    },
+    {
+      "id": "freespace_1.0.4",
+      "path": "index.js",
+      "line": 51,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`df -P ${driveOrMount} | awk 'NR==2 {print $4}'`"
+    },
+    {
+      "id": "freespace_1.0.4",
+      "path": "index.js",
+      "line": 67,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`df -P ${driveOrMount} | awk 'NR==2 {print $4}'`"
+    },
+    {
+      "id": "freespace_1.0.4",
+      "path": "index.js",
+      "line": 65,
+      "tools": [
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`fsutil volume diskfree ${driveOrMount}:`"
+    },
+    {
+      "id": "geojson2kml_0.1.1",
+      "path": "index.js",
+      "line": 6,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "ogrCommand"
+    },
+    {
+      "id": "get-npm-package-version_1.0.6",
+      "path": "index.js",
+      "line": 14,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`npm view ${packageName} version --registry ${registry}`"
+    },
+    {
+      "id": "get-npm-package-version_1.0.6",
+      "path": "index.js",
+      "line": 16,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`npm view ${packageName} version`"
+    },
+    {
+      "id": "git-add-remote_1.0.0",
+      "path": "index.js",
+      "line": 31,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git remote add ' + name + ' ' + url"
+    },
+    {
+      "id": "git-add-remote_1.0.0",
+      "path": "index.js",
+      "line": 21,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git remote add ' + name + ' ' + url"
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "path": "git.js",
+      "line": 13,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git add ' + files"
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "path": "git.js",
+      "line": 27,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git commit ' + options + ' -m \\\"' + message + '\\\"'"
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "path": "git.js",
+      "line": 126,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git checkout -- ' + file"
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "path": "git.js",
+      "line": 223,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git checkout ' + branch"
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "path": "git.js",
+      "line": 236,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git checkout -b ' + newBranchName"
+    },
+    {
+      "id": "git-lib_1.6.0",
+      "path": "git.js",
+      "line": 249,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "\"git branch -d \" + branch"
+    },
+    {
+      "id": "git-tags-remote_1.0.2",
+      "path": "index.js",
+      "line": 5,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`git ls-remote --tags ${repo}`"
+    },
+    {
+      "id": "git_0.1.5",
+      "path": "lib/git/git.js",
+      "line": 232,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "call_string"
+    },
+    {
+      "id": "git_0.1.5",
+      "path": "lib/git/git_file_operations.js",
+      "line": 128,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'rm -rf ' + dir"
+    },
+    {
+      "id": "gitblame_0.1.1",
+      "path": "lib/gitblame.js",
+      "line": 15,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'git blame ' + filename"
+    },
+    {
+      "id": "gm_1.20.0",
+      "path": "lib/compare.js",
+      "line": 72,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "execCmd"
+    },
+    {
+      "id": "google-cloudstorage-commands_0.0.1",
+      "path": "index.js",
+      "line": 11,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`gsutil -m cp ${_rn} -a public-read ${_path} ${bucket}`"
+    },
+    {
+      "id": "google-cloudstorage-commands_0.0.1",
+      "path": "index.js",
+      "line": 22,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "_c"
+    },
+    {
+      "id": "google-cloudstorage-commands_0.0.1",
+      "path": "index.js",
+      "line": 39,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "_c"
+    },
+    {
+      "id": "growl_1.9.0",
+      "path": "lib/growl.js",
+      "line": 289,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "args.join(' ')"
+    },
+    {
+      "id": "grunt-shell_4.0.0",
+      "path": "tasks/shell.js",
+      "line": 46,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "heroku-env_0.2.0",
+      "path": "lib/get.js",
+      "line": 3,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'heroku config --app ' + app"
+    },
+    {
+      "id": "imagickal_5.0.1",
+      "path": "lib/imagickal.js",
+      "line": 77,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "imagickal_5.0.1",
+      "path": "lib/imagickal.js",
+      "line": 127,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "imagickal_5.0.1",
+      "path": "lib/commands.js",
+      "line": 276,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "this.get(src, dst, opts.format)"
+    },
+    {
+      "id": "kill-port-process_0.0.1",
+      "path": "src/index.js",
+      "line": 44,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "kill-port-process_0.0.1",
+      "path": "src/index.js",
+      "line": 63,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`taskkill /PID ${pid} /F`"
+    },
+    {
+      "id": "kill-process-by-name_1.0.5",
+      "path": "index.js",
+      "line": 9,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'taskkill /F /IM ' + programname + '.exe /T'"
+    },
+    {
+      "id": "kill-process-by-name_1.0.5",
+      "path": "index.js",
+      "line": 12,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'pkill -f ' + programname"
+    },
+    {
+      "id": "killing_1.0.6",
+      "path": "lib/killing.js",
+      "line": 35,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'ps -ef | grep ' + name"
+    },
+    {
+      "id": "killport_1.0.1",
+      "path": "index.js",
+      "line": 9,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "killport_1.0.1",
+      "path": "index.js",
+      "line": 29,
+      "tools": [
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'kill ' + pid"
+    },
+    {
+      "id": "launch-editor_2.14.1",
+      "path": "index.js",
+      "line": 167,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "launchCommand"
+    },
+    {
+      "id": "libnmap_0.4.11",
+      "path": "lib/classes/tools.js",
+      "line": 114,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "lsof_0.1.0",
+      "path": "lib/lsof.js",
+      "line": 9,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'lsof -p ' + pid"
+    },
+    {
+      "id": "lsof_0.1.0",
+      "path": "lib/lsof.js",
+      "line": 37,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'lsof -i tcp:' + port"
+    },
+    {
+      "id": "lsof_0.1.0",
+      "path": "lib/lsof.js",
+      "line": 71,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'lsof -i udp:' + port"
+    },
+    {
+      "id": "monorepo-build_0.1.9",
+      "path": "lib/index.test.js",
+      "line": 12,
+      "tools": [
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "unreadable",
+      "command": null
+    },
+    {
+      "id": "monorepo-build_0.1.9",
+      "path": "lib/util/exec.js",
+      "line": 4,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "node-df_0.1.4",
+      "path": "lib/index.js",
+      "line": 41,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "node-key-sender_1.0.11",
+      "path": "key-sender.js",
+      "line": 117,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "node-latex-pdf_0.0.2",
+      "path": "node-latex-pdf.js",
+      "line": 10,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "\"pdflatex -output-directory \" + dest_file + \" \" + src_file"
+    },
+    {
+      "id": "node-latex-pdf_0.0.2",
+      "path": "node-latex-pdf.js",
+      "line": 15,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "\"pdflatex -output-directory \" + dest_file + \" \" + src_file"
+    },
+    {
+      "id": "node-notifier_10.0.1",
+      "path": "lib/utils.js",
+      "line": 59,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "notifier + ' ' + options.join(' ')"
+    },
+    {
+      "id": "node-ps_0.0.2",
+      "path": "lib/index.js",
+      "line": 72,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "node-unrar_0.1.0",
+      "path": "lib/index.js",
+      "line": 23,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "execCommand"
+    },
+    {
+      "id": "nodemon_3.1.14",
+      "path": "lib/monitor/run.js",
+      "line": 346,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'taskkill /pid ' + child.pid + ' /T /F'"
+    },
+    {
+      "id": "nodemon_3.1.14",
+      "path": "lib/monitor/run.js",
+      "line": 430,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`kill -${sig} ${pid}`"
+    },
+    {
+      "id": "nodemon_3.1.14",
+      "path": "lib/monitor/run.js",
+      "line": 434,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`kill -${sig} ${child.pid}`"
+    },
+    {
+      "id": "nodemon_3.1.14",
+      "path": "lib/version.js",
+      "line": 79,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "npm-git-publish_0.2.4-beta",
+      "path": "lib/publish.js",
+      "line": 92,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "\"git clone --quiet --depth 1 \" + gitRemoteUrl + \" \\\"\" + gitRepoDir + \"\\\"\""
+    },
+    {
+      "id": "npm-git-publish_0.2.4-beta",
+      "path": "lib/publish.js",
+      "line": 198,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "npm-help_1.0.0",
+      "path": "index.js",
+      "line": 13,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'tnpm view ' + module + ' version'"
+    },
+    {
+      "id": "open_0.0.5",
+      "path": "lib/open.js",
+      "line": 58,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "opener + ' \"' + escape(target) + '\"'"
+    },
+    {
+      "id": "pdf-image_1.0.5",
+      "path": "index.js",
+      "line": 104,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "convertCommand"
+    },
+    {
+      "id": "pdf-image_1.0.5",
+      "path": "index.js",
+      "line": 43,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "getInfoCommand"
+    },
+    {
+      "id": "port-killer_1.0.1",
+      "path": "index.js",
+      "line": 19,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`lsof -t -i:${port}`"
+    },
+    {
+      "id": "portkiller_1.0.2",
+      "path": "index.js",
+      "line": 10,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`lsof -n -i4TCP:${port} | grep LISTEN`"
+    },
+    {
+      "id": "portkiller_1.0.2",
+      "path": "index.js",
+      "line": 22,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "`kill ${pid}`"
+    },
+    {
+      "id": "portprocesses_1.0.4",
+      "path": "exec.js",
+      "line": 5,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "ps-kill_1.0.0",
+      "path": "index.js",
+      "line": 8,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "ps-visitor_0.0.2",
+      "path": "index.js",
+      "line": 56,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "ps-visitor_0.0.2",
+      "path": "index.js",
+      "line": 404,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "ps-visitor_0.0.2",
+      "path": "index.js",
+      "line": 444,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "ps_0.0.2",
+      "path": "lib/index.js",
+      "line": 8,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'ps ' + args"
+    },
+    {
+      "id": "psnode_0.0.1",
+      "path": "lib/index.js",
+      "line": 59,
+      "tools": [
+        "codeql",
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "killCommand"
+    },
+    {
+      "id": "react-dev-utils_11.0.0",
+      "path": "getProcessForPort.js",
+      "line": 28,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'lsof -i:' + port + ' -P -t -sTCP:LISTEN'"
+    },
+    {
+      "id": "react-dev-utils_11.0.0",
+      "path": "openBrowser.js",
+      "line": 92,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'osascript openChrome.applescript \"' +"
+    },
+    {
+      "id": "release-it_21.1.0",
+      "path": "lib/shell.js",
+      "line": 60,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "roar-pidusage_1.1.6",
+      "path": "lib/helpers.js",
+      "line": 12,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "'getconf '+keyword"
+    },
+    {
+      "id": "roar-pidusage_1.1.6",
+      "path": "lib/stats.js",
+      "line": 103,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd + pid"
+    },
+    {
+      "id": "shelljs_0.10.0",
+      "path": "src/exec.js",
+      "line": 147,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "shelljs_0.10.0",
+      "path": "src/exec-child.js",
+      "line": 41,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "theme-core_0.2.5",
+      "path": "lib/utils.js",
+      "line": 16,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "cmd"
+    },
+    {
+      "id": "ts-process-promises_1.0.2",
+      "path": "lib/process-promises.js",
+      "line": 45,
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "unreadable",
+      "command": null
+    },
+    {
+      "id": "umount_1.1.6",
+      "path": "build/umount.js",
+      "line": 52,
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "rules": [
+        "detect-child-process",
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "unmountCommand + \" \" + device"
+    },
+    {
+      "id": "wc-cmd_1.0.9",
+      "path": "index.js",
+      "line": 49,
+      "tools": [
+        "eslint"
+      ],
+      "rules": [
+        "security/detect-child-process"
+      ],
+      "flow_claim": false,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command"
+    },
+    {
+      "id": "wincred_1.0.2",
+      "path": "index.ts",
+      "line": 20,
+      "tools": [
+        "codeql"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "unreadable",
+      "command": null
+    },
+    {
+      "id": "xopen_1.0.0",
+      "path": "index.js",
+      "line": 13,
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "rules": [
+        "js/shell-command-constructed-from-input",
+        "security/detect-child-process"
+      ],
+      "flow_claim": true,
+      "disposition": "review",
+      "filter_rules": [],
+      "reference": "not_constant",
+      "command": "command + ' ' + filepath"
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "95a6748e-8c02-4099-bc45-102a8cabe223"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 52,
+                            "startLine": 16,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 21,
+                            "startColumn": 20
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 60,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "functio ... )\\n    } [address]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 70,
+                            "endColumn": 6,
+                            "startLine": 67,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 22,
+                            "startLine": 69,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] resolve [resolve-value]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 69,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "resolve [Return] [resolve-value]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 61,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "new Pro ...  }\\n  }) [PromiseValue]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 71,
+                            "endColumn": 5,
+                            "startLine": 61,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pingServer(address) [PromiseValue]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 21,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 113,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "address"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 114,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "src/index.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/index.js"
+                },
+                "region": {
+                  "startLine": 114,
+                  "startColumn": 18,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 52,
+                  "startLine": 16,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "src/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 38,
+                  "startLine": 114,
+                  "startColumn": 10
+                },
+                "artifactLocation": {
+                  "uri": "src/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 52,
+                  "startLine": 16,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "src/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 37,
+                  "startLine": 114,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "src/index.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "98173c8c48b18122:1",
+            "primaryLocationStartColumnFingerprint": "15"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "d97ac795321b785e4f45503b7d25908cc3c2cb605e2fa70ddcc81b876dc6fb0e",
+              "unitKey": "d97ac795321b785e4f45503b7d25908cc3c2cb605e2fa70ddcc81b876dc6fb0e",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

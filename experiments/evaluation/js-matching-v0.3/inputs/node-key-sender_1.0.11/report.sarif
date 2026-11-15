@@ -1,0 +1,2217 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "91a9b117-1d64-44cc-873b-da9dd9eb9685"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](5) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](6) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](7) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](8) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](9) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](10) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](11) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](12) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](13) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](14) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](15) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 62,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 63,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[keyCode] [0]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 63,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams [0]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 111,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams [0]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams.join(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 81,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrKeyCodes"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 43,
+                            "startLine": 66,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrKeyCodes"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 42,
+                            "startLine": 67,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 111,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams.join(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 81,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "letter"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 70,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "letter"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 55,
+                            "startLine": 71,
+                            "startColumn": 49
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "letter"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 97,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "letter"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 98,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 98,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 104,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "module. ... letter)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 71,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 62,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 63,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[keyCode] [0]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 63,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams [0]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 111,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams [0]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams.join(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 81,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "text"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 84,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "text"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 88,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "currentKey"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 88,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "currentKey"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 55,
+                            "startLine": 89,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "letter"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 97,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "letter"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 98,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 98,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 104,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "module. ... entKey)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 89,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 24,
+                            "startLine": 89,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCode"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 91,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] keyCodes [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 91,
+                            "startColumn": 13
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "keyCodes [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 94,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 111,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arrParams.join(' ')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 81,
+                            "startLine": 115,
+                            "startColumn": 62
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "key-sender.js"
+                },
+                "region": {
+                  "startLine": 115,
+                  "startColumn": 27,
+                  "endColumn": 114
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 38,
+                  "startLine": 62,
+                  "startColumn": 31
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 123,
+                  "endColumn": 15,
+                  "startLine": 117,
+                  "startColumn": 20
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 43,
+                  "startLine": 66,
+                  "startColumn": 32
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 70,
+                  "startColumn": 34
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 5,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 84,
+                  "startColumn": 32
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 6,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 50,
+                  "startLine": 107,
+                  "startColumn": 39
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 7,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 111,
+                  "startColumn": 31
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 8,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 50,
+                  "startLine": 157,
+                  "startColumn": 41
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 9,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 161,
+                  "startColumn": 47
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 10,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 43,
+                  "startLine": 174,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 11,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 57,
+                  "startLine": 174,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 12,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 51,
+                  "startLine": 195,
+                  "startColumn": 44
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 13,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 65,
+                  "startLine": 195,
+                  "startColumn": 53
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 14,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 48,
+                  "startLine": 216,
+                  "startColumn": 37
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 15,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 41,
+                  "startLine": 231,
+                  "startColumn": 37
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 38,
+                  "startLine": 62,
+                  "startColumn": 31
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 81,
+                  "startLine": 115,
+                  "startColumn": 62
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 43,
+                  "startLine": 66,
+                  "startColumn": 32
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 70,
+                  "startColumn": 34
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 84,
+                  "startColumn": 32
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1276cdd6dcfba305:1",
+            "primaryLocationStartColumnFingerprint": "14"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c1e2fba0479b6af9a6f5f433335e96acaf53bba088a43f8d2f60b0cbf2f96ea0",
+              "unitKey": "f5605f3f457a2438fad26dee4488f6352494682ccedf282d66d0905cb273ddd2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 278,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 42,
+                            "startLine": 279,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 279,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "{\\n      ... l\\n    }"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 15,
+                            "endColumn": 6,
+                            "startLine": 9,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 9,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 54,
+                            "startLine": 131,
+                            "startColumn": 47
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options ... illisec"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 73,
+                            "startLine": 131,
+                            "startColumn": 47
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "key-sender.js"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 25,
+                  "endColumn": 73
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 123,
+                  "endColumn": 15,
+                  "startLine": 117,
+                  "startColumn": 20
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 73,
+                  "startLine": 131,
+                  "startColumn": 47
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "5cf68bded2e0ae40:1",
+            "primaryLocationStartColumnFingerprint": "12"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c1e2fba0479b6af9a6f5f433335e96acaf53bba088a43f8d2f60b0cbf2f96ea0",
+              "unitKey": "f5605f3f457a2438fad26dee4488f6352494682ccedf282d66d0905cb273ddd2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 278,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 42,
+                            "startLine": 279,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 279,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "{\\n      ... l\\n    }"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 15,
+                            "endColumn": 6,
+                            "startLine": 9,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 9,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 54,
+                            "startLine": 139,
+                            "startColumn": 47
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options ... illisec"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 79,
+                            "startLine": 139,
+                            "startColumn": 47
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "key-sender.js"
+                },
+                "region": {
+                  "startLine": 139,
+                  "startColumn": 25,
+                  "endColumn": 79
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 123,
+                  "endColumn": 15,
+                  "startLine": 117,
+                  "startColumn": 20
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 79,
+                  "startLine": 139,
+                  "startColumn": 47
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "8a5e28fd1a760a01:1",
+            "primaryLocationStartColumnFingerprint": "12"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c1e2fba0479b6af9a6f5f433335e96acaf53bba088a43f8d2f60b0cbf2f96ea0",
+              "unitKey": "f5605f3f457a2438fad26dee4488f6352494682ccedf282d66d0905cb273ddd2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 278,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 42,
+                            "startLine": 279,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 279,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "{\\n      ... l\\n    }"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 15,
+                            "endColumn": 6,
+                            "startLine": 9,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 9,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 143,
+                            "startColumn": 46
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options ... illisec"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 80,
+                            "startLine": 143,
+                            "startColumn": 46
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "key-sender.js"
+                },
+                "region": {
+                  "startLine": 143,
+                  "startColumn": 25,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 123,
+                  "endColumn": 15,
+                  "startLine": 117,
+                  "startColumn": 20
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 80,
+                  "startLine": 143,
+                  "startColumn": 46
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "928f8e45f389ea79:1",
+            "primaryLocationStartColumnFingerprint": "12"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c1e2fba0479b6af9a6f5f433335e96acaf53bba088a43f8d2f60b0cbf2f96ea0",
+              "unitKey": "f5605f3f457a2438fad26dee4488f6352494682ccedf282d66d0905cb273ddd2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 278,
+                            "startColumn": 45
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "optionValue"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 42,
+                            "startLine": 279,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 279,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "{\\n      ... l\\n    }"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endLine": 15,
+                            "endColumn": 6,
+                            "startLine": 9,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 9,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 50,
+                            "startLine": 147,
+                            "startColumn": 43
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options.extra"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 56,
+                            "startLine": 147,
+                            "startColumn": 43
+                          },
+                          "artifactLocation": {
+                            "uri": "key-sender.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "key-sender.js"
+                },
+                "region": {
+                  "startLine": 147,
+                  "startColumn": 25,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 123,
+                  "endColumn": 15,
+                  "startLine": 117,
+                  "startColumn": 20
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 278,
+                  "startColumn": 45
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 56,
+                  "startLine": 147,
+                  "startColumn": 43
+                },
+                "artifactLocation": {
+                  "uri": "key-sender.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "a7d1d898fc079cd9:1",
+            "primaryLocationStartColumnFingerprint": "12"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c1e2fba0479b6af9a6f5f433335e96acaf53bba088a43f8d2f60b0cbf2f96ea0",
+              "unitKey": "f5605f3f457a2438fad26dee4488f6352494682ccedf282d66d0905cb273ddd2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "91a9b117-1d64-44cc-873b-da9dd9eb9685"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "key-sender.js"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 20,
+                  "endLine": 123,
+                  "endColumn": 15
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c1e2fba0479b6af9a6f5f433335e96acaf53bba088a43f8d2f60b0cbf2f96ea0",
+              "unitKey": "f5605f3f457a2438fad26dee4488f6352494682ccedf282d66d0905cb273ddd2",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

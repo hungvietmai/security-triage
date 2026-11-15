@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "0345cbc1-f348-4148-a5d5-e07424eab137"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 12,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/gitblame.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 14,
+                            "startColumn": 32
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/gitblame.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "path.basename(file)"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 14,
+                            "startColumn": 18
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/gitblame.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "filename"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 15,
+                            "startLine": 14,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/gitblame.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "filename"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 31,
+                            "startLine": 15,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/gitblame.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/gitblame.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 8,
+                  "endColumn": 31
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 31,
+                  "startLine": 12,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "lib/gitblame.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 23,
+                  "endColumn": 5,
+                  "startLine": 15,
+                  "startColumn": 3
+                },
+                "artifactLocation": {
+                  "uri": "lib/gitblame.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 31,
+                  "startLine": 12,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "lib/gitblame.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 31,
+                  "startLine": 15,
+                  "startColumn": 23
+                },
+                "artifactLocation": {
+                  "uri": "lib/gitblame.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "c8f8a83087c1740d:1",
+            "primaryLocationStartColumnFingerprint": "5"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "701c3f8f41e510d1c334cc7c65be9469fae9f7bb8bd9e1b8e454878e62fe487f",
+              "unitKey": "e7baf5d11e1f3ac030ca5c67a959eaa6a03c92cb7de3591d10b4a3494b540792",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "0345cbc1-f348-4148-a5d5-e07424eab137"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/gitblame.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 23,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "701c3f8f41e510d1c334cc7c65be9469fae9f7bb8bd9e1b8e454878e62fe487f",
+              "unitKey": "e7baf5d11e1f3ac030ca5c67a959eaa6a03c92cb7de3591d10b4a3494b540792",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

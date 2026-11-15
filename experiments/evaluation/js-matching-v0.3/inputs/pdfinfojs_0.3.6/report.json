@@ -1,0 +1,154 @@
+{
+  "scan_id": "ad20f0c3-f466-4246-a650-c412c45d6cb5",
+  "status": "partial",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "8065fda6-3621-464b-b3b9-342f187b45e2",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:pdfinfojs@0.3.6",
+    "sha256": "39b3a900e11361a2d17b6c590e98b848a67d3ee95e30b46fed134fe020f74e63",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T21:04:10.890974Z",
+  "finished_at": "2026-11-14T21:04:24.841552Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.2802,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "partial",
+        "seconds": 0.4146,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2163,
+        "raw_findings": 3
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0659,
+        "raw_findings": 3
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.5228
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4147
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1145
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7663
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0158,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "semgrep": 3
+  },
+  "stages": {
+    "raw_alerts": 3,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 3
+  },
+  "sources": {
+    "semgrep": {
+      "candidates": 3,
+      "only": 3
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 3,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "cc25f57b5fad3a1fa743164e17caf9e33073b72a86a84e344d4da45c395225b9",
+      "basis": "same_call_site",
+      "path": "lib/pdfinfo.js",
+      "start_line": 28,
+      "sink_kind": "shelljs.exec",
+      "tools": [
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "424ac669-3ae6-4b9e-b4a3-22105b918b59"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "3b0427b19ac9bb9080188aa83562b6707b48e084fc93ca705214d03220f60005",
+      "basis": "same_call_site",
+      "path": "lib/pdfinfo.js",
+      "start_line": 47,
+      "sink_kind": "shelljs.exec",
+      "tools": [
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "a5a04dbc-3480-42c0-a1e2-1b742f4d3274"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "711144bf74fb6bb47b2db7babfc1fd58f3886d3998689c7cf94534ce570af0a3",
+      "basis": "same_call_site",
+      "path": "lib/pdfinfo.js",
+      "start_line": 72,
+      "sink_kind": "shelljs.exec",
+      "tools": [
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "c3228a15-2187-41e8-ad6f-64411c3daf7b"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

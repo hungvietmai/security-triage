@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "57d70647-64b3-4142-b178-ffe84fc7896d"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found require(\"child_process\")"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "dist/checkout_commit.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 45,
+                  "endLine": 10,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "3b5afe4664449e9de4b703a71b7a8a3fab61c74a69fc870f6c60172e8d28e7ce",
+              "unitKey": "3b5afe4664449e9de4b703a71b7a8a3fab61c74a69fc870f6c60172e8d28e7ce",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found require(\"child_process\")"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "dist/git_diff.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 45,
+                  "endLine": 10,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "ac61061e25786ad30ca2f515672defeb408618fdd41d40cd6ecab3a0b2690958",
+              "unitKey": "ac61061e25786ad30ca2f515672defeb408618fdd41d40cd6ecab3a0b2690958",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found require(\"child_process\")"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "dist/git_log_stream.js"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 45,
+                  "endLine": 8,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "7d92bc3e7ffcd9063d0fbaf207af4c42ba36effde4a1c3237f06d8c3668f1d22",
+              "unitKey": "7d92bc3e7ffcd9063d0fbaf207af4c42ba36effde4a1c3237f06d8c3668f1d22",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found require(\"child_process\")"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "dist/git_pull.js"
+                },
+                "region": {
+                  "startLine": 10,
+                  "startColumn": 45,
+                  "endLine": 10,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "686417035ed7147f2645506fb96fa27bcb597408cea48a0d4bccc2f033fed05b",
+              "unitKey": "686417035ed7147f2645506fb96fa27bcb597408cea48a0d4bccc2f033fed05b",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -21,9 +21,9 @@ import configurations  # noqa: E402
 import posthoc_missed  # noqa: E402
 
 sys.path.insert(0, str(ROOT / "experiments" / "evaluation" / "pairs-v1"))
-import pair_labels  # noqa: E402
-
 import importlib.util  # noqa: E402
+
+import pair_labels  # noqa: E402
 
 
 def _load(name, path):
@@ -43,8 +43,27 @@ verify_filtered = _load("verify_filtered", FILTER / "verify_filtered.py")
 PAIRS_KIT = ROOT / "experiments" / "evaluation" / "pairs-v1"
 score_pairs = _load("score_pairs", PAIRS_KIT / "score_pairs.py")
 freeze = _load("freeze", PAIRS_KIT / "freeze.py")
+JS_MATCHING = ROOT / "experiments" / "evaluation" / "js-matching-v0.3"
+js_compare = _load("js_compare", JS_MATCHING / "compare.py")
+constant_reference = _load("constant_reference", JS_MATCHING / "constant_reference.py")
 
 EVALUATION = ROOT / "experiments" / "evaluation"
+PIPELINE_CHANGES = json.loads((EVALUATION / "PIPELINE_CHANGES.json").read_bytes())[
+    "changed_after_registered_scans"
+]
+
+
+def _assert_registered(case, relative, registered):
+    """A registered file is unchanged, or it is pipeline code with a recorded change."""
+    import hashlib
+
+    actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+    if actual == registered:
+        return
+    case.assertIn(relative, PIPELINE_CHANGES, f"{relative} changed without a record")
+    case.assertEqual(PIPELINE_CHANGES[relative]["registered_sha256"], registered)
+    # What defines a check (protocol, labels, scoring, exports) may never be on that list.
+    case.assertFalse(relative.startswith("experiments/"))
 
 
 def _candidate(path, tools, priority="P3", disposition="review", rule=None):
@@ -435,7 +454,7 @@ class LaterIndependentChecksTests(unittest.TestCase):
                         self.assertEqual(registered, deviations[relative]["registered_sha256"])
                         self.assertEqual(actual, deviations[relative]["current_sha256"])
                     else:
-                        self.assertEqual(actual, registered)
+                        _assert_registered(self, relative, registered)
 
     def test_post_hoc_reading_is_reproduced_and_separates_unmerged_alerts_from_silence(self):
         folder = EVALUATION / "independent-secbench"
@@ -607,8 +626,7 @@ class LabeledCheckResultsTests(unittest.TestCase):
         record = json.loads((LABELED / "PREREGISTRATION.json").read_bytes())
         for relative, registered in record["sha256"].items():
             with self.subTest(file=relative):
-                actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
-                self.assertEqual(actual, registered)
+                _assert_registered(self, relative, registered)
 
 
 class FilterCheckTests(unittest.TestCase):
@@ -756,8 +774,7 @@ class FilterCheckResultsTests(unittest.TestCase):
         record = json.loads((FILTER / "PREREGISTRATION.json").read_bytes())
         for relative, registered in record["sha256"].items():
             with self.subTest(file=relative):
-                actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
-                self.assertEqual(actual, registered)
+                _assert_registered(self, relative, registered)
 
 
 class PairsRunKitTests(unittest.TestCase):
@@ -840,6 +857,121 @@ class PairsDevelopmentResultTests(unittest.TestCase):
     def test_no_held_out_pair_has_been_scanned(self):
         self.assertFalse((PAIRS_KIT / "held_out" / "inputs").exists())
         self.assertFalse((PAIRS_KIT / "HELD_OUT_GATE.json").exists())
+
+
+class JavaScriptMatchingTests(unittest.TestCase):
+    """The v0.2 against v0.3 comparison of JavaScript matching (development data)."""
+
+    def test_committed_comparison_is_reproduced_from_the_saved_exports(self):
+        expected = json.loads((JS_MATCHING / "results" / "compare.json").read_bytes())
+        self.assertEqual(js_compare.evaluate(), expected)
+        total = expected["all"]
+        self.assertEqual(total["unmatched_candidates"], [37, 14])
+        self.assertEqual(total["alerts_unmatched_before"]["merged"], 23)
+        # Neither a wrong merge nor a lost match, and no known vulnerable site was filtered.
+        self.assertEqual(total["newly_merged_not_inside_the_call"], 0)
+        self.assertEqual(total["alerts_that_lost_their_call"], 0)
+        self.assertEqual(total["known_sites"]["filtered_after"], 0)
+
+    def test_every_rescan_used_one_profile_version_and_matches_its_manifest(self):
+        import hashlib
+
+        folders = sorted(path for path in (JS_MATCHING / "inputs").iterdir() if path.is_dir())
+        self.assertEqual(len(folders), 84)
+        profiles = set()
+        for folder in folders:
+            manifest = json.loads((folder / "manifest.json").read_bytes())
+            for name, sha256 in manifest["files"].items():
+                with self.subTest(folder=folder.name, file=name):
+                    actual = hashlib.sha256((folder / name).read_bytes()).hexdigest()
+                    self.assertEqual(actual, sha256)
+            report = json.loads((folder / "report.json").read_bytes())
+            profiles.add((report["profile"], report["profile_sha256"]))
+        self.assertEqual(len(profiles), 1)
+        self.assertEqual(next(iter(profiles))[0], "command-injection-v0.3")
+
+    def test_an_alert_is_consistent_only_inside_the_call_its_candidate_starts_on(self):
+        call = {"path": "a.js", "start": [5, 3], "end": [7, 4]}
+        candidate = {"path": "a.js", "start_line": 5}
+        inside = {"startLine": 6, "startColumn": 5, "endLine": 6, "endColumn": 9}
+        outside = {"startLine": 9, "startColumn": 1, "endLine": 9, "endColumn": 4}
+        alert = {"candidate": candidate, "region": inside, "related": []}
+        self.assertTrue(js_compare.consistent(alert, [call]))
+        self.assertFalse(js_compare.consistent({**alert, "region": outside}, [call]))
+        # A related location inside the call is an explicit link to it.
+        linked = {**alert, "region": outside, "related": [("a.js", inside)]}
+        self.assertTrue(js_compare.consistent(linked, [call]))
+        # A call that starts on another line is not the candidate's call.
+        self.assertFalse(js_compare.consistent(alert, [{**call, "start": [6, 1]}]))
+
+
+class ConstantReferenceTests(unittest.TestCase):
+    """Reference labels for the constant-command class and the score of filter rule G4."""
+
+    def test_committed_summary_follows_from_the_saved_reference_labels(self):
+        saved = json.loads((JS_MATCHING / "results" / "constant-reference.json").read_bytes())
+        self.assertEqual(constant_reference.summarize(saved["candidates"]), saved)
+        self.assertEqual(saved["shell_string_candidates"], 120)
+        self.assertEqual(
+            saved["g4"],
+            {
+                "filtered": 1,
+                "filtered_and_constant_by_reference": 1,
+                "filtered_but_not_constant_by_reference": 0,
+                "constant_pattern_only_but_kept": 0,
+            },
+        )
+
+    def test_a_filtered_call_without_a_constant_reference_counts_as_a_wrong_filter(self):
+        row = {
+            "reference": "not_constant",
+            "flow_claim": False,
+            "disposition": "filtered",
+        }
+        kept = {"reference": "constant_command", "flow_claim": False, "disposition": "review"}
+        flow = {"reference": "constant_command", "flow_claim": True, "disposition": "review"}
+        result = constant_reference.summarize([row, kept, flow])
+        self.assertEqual(result["g4"]["filtered_but_not_constant_by_reference"], 1)
+        self.assertEqual(result["g4"]["constant_pattern_only_but_kept"], 1)
+        # A constant command with a flow claim is a conflict to review, not a missed filter.
+        self.assertEqual(result["constant_by_reference"]["with_a_flow_claim"], 1)
+
+    def test_the_reference_labeler_agrees_with_the_stated_synthetic_cases(self):
+        import re
+        import shutil
+        import subprocess
+
+        espree = ROOT / "tools" / "eslint" / "node_modules" / "espree"
+        if shutil.which("node") is None or not espree.is_dir():
+            self.skipTest("needs Node.js and tools/eslint/node_modules (npm ci in tools/eslint)")
+        pack = ROOT / "rules" / "semgrep" / "command-injection-evidence-js-v0.1"
+        cases = pack / "tests" / "cases.js"
+        calls, names = [], []
+        for number, line in enumerate(cases.read_text(encoding="utf-8").splitlines(), 1):
+            match = re.match(r"function (constant_\w+|kept_\w+)\(", line)
+            # spawn takes arguments; the labeler is only used for exec and execSync.
+            if not match or "spawn" in match.group(1):
+                continue
+            column = max(line.rfind("cp.exec("), line.rfind(" exec(") + 1)
+            end = line.index(");", column) + 1
+            calls.append(
+                {"line": number, "column": column + 1, "endLine": number, "endColumn": end + 1}
+            )
+            names.append(match.group(1))
+        done = subprocess.run(
+            ["node", str(JS_MATCHING / "constant_reference.cjs")],
+            input=json.dumps({"file": str(cases), "calls": calls}),
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            check=True,
+        )
+        verdicts = [item["verdict"] for item in json.loads(done.stdout)]
+        expected = [
+            "constant_command" if n.startswith("constant_") else "not_constant" for n in names
+        ]
+        self.assertEqual(verdicts, expected)
+        self.assertEqual(len(names), 19)
 
 
 if __name__ == "__main__":

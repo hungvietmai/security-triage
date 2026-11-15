@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "52e01a11-bb1d-451b-9bd3-8a6bd40c8ad8"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This formatted string which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pluginUri"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 140,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "installPluginInDir [pluginUri]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 156,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pluginUri"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 174,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pluginUri"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 33,
+                            "startLine": 140,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pluginUri"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 48,
+                            "startLine": 147,
+                            "startColumn": 39
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "installPluginInDir [pluginUri]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 29,
+                            "startLine": 156,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "pluginUri"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 174,
+                            "startColumn": 23
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/plugin-loader.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/plugin-loader.js"
+                },
+                "region": {
+                  "startLine": 174,
+                  "startColumn": 23,
+                  "endColumn": 32
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 140,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "lib/plugin-loader.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 215,
+                  "endColumn": 9,
+                  "startLine": 181,
+                  "startColumn": 18
+                },
+                "artifactLocation": {
+                  "uri": "lib/plugin-loader.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 33,
+                  "startLine": 140,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "lib/plugin-loader.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "cb6c3e8b0225c190:1",
+            "primaryLocationStartColumnFingerprint": "16"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "30f4d82002b3336efe0750ac43ffb6d7eedaa8b225b083d6b12053e404eab9c6",
+              "unitKey": "eedb12ccd3eefb0d44abb3c456a4ff0556cca6ccff94461b433bde5c4823ad84",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "52e01a11-bb1d-451b-9bd3-8a6bd40c8ad8"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/plugin-loader.js"
+                },
+                "region": {
+                  "startLine": 181,
+                  "startColumn": 18,
+                  "endLine": 215,
+                  "endColumn": 9
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "30f4d82002b3336efe0750ac43ffb6d7eedaa8b225b083d6b12053e404eab9c6",
+              "unitKey": "eedb12ccd3eefb0d44abb3c456a4ff0556cca6ccff94461b433bde5c4823ad84",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

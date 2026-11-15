@@ -1,0 +1,141 @@
+{
+  "scan_id": "59b2ccaf-df27-476b-9ae3-4c314d5da2e0",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "a0f8ad3e-6331-43d7-86b7-1827a97b27dd",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:deferred-exec@0.3.1",
+    "sha256": "729f74d03bd83f2d4834894bbb20676cbbcdaf755851c4de8534a6b8bc555421",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:41:02.105231Z",
+  "finished_at": "2026-11-14T20:41:15.862694Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.1794,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.3645,
+        "raw_findings": 1
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2162,
+        "raw_findings": 2
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0159,
+        "raw_findings": 3
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.523
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1144
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7659
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0661,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "eslint": 1,
+    "semgrep": 2
+  },
+  "stages": {
+    "raw_alerts": 3,
+    "units": 2,
+    "candidates": 2,
+    "main_list": 2,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "eslint": {
+      "candidates": 1,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 2,
+      "only": 1
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 2,
+    "U": 0,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "f901eba991d97d5101de785d1f416e3ac10f8675a399010b521e1ee27f8c3582",
+      "basis": "same_call_site",
+      "path": "lib/deferred-exec.js",
+      "start_line": 42,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint",
+        "semgrep"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "4f54d3dd-247e-4334-a53a-aee0bc778d6c"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "9a646206477c101ccdb84921cd347bac086663050f2097c8fbd5ad324e88e2c7",
+      "basis": "same_call_site",
+      "path": "lib/deferred-exec.js",
+      "start_line": 46,
+      "sink_kind": "child_process.spawn",
+      "tools": [
+        "semgrep"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "dc03a8d8-b17c-4df6-ad50-01001992b790"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

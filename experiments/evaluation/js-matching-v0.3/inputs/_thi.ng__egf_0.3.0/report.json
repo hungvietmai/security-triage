@@ -1,0 +1,166 @@
+{
+  "scan_id": "3ee6fbbf-bd77-47c7-b52e-6f8e496dfb0b",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "8b99e046-7c0a-4cec-a457-725cdf535786",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:@thi.ng/egf@0.3.0",
+    "sha256": "869d8445bc2010d9d6d00f2ed52c735ec6088f0e9340c8df9601cd915f7c273c",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-14T20:34:33.329292Z",
+  "finished_at": "2026-11-14T20:35:55.701216Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 75.1624,
+        "raw_findings": 2
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.5148,
+        "raw_findings": 1
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.3164,
+        "raw_findings": 2
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.1163,
+        "raw_findings": 2
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.8237
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1149
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.766
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.1163,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 2,
+    "eslint": 1,
+    "semgrep": 2
+  },
+  "stages": {
+    "raw_alerts": 5,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 0
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 2,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 1,
+      "only": 1
+    },
+    "semgrep": {
+      "candidates": 2,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 2,
+    "P2": 0,
+    "U": 1,
+    "P3": 0,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "8ce52c8b43891557cb474ef3d04802186b4cbb6a02a0dd93feafa9f852c35dd1",
+      "basis": "same_call_site",
+      "path": "lib/index.js",
+      "start_line": 157,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "341f255a-4f71-4eb1-83a3-d9dfc6a744a5"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "d9f05551e4b5cfc076a091c4b13f8ced3cba6747ee6028399f3a8136dce92b10",
+      "basis": "same_call_site",
+      "path": "tags.js",
+      "start_line": 25,
+      "sink_kind": "child_process.execSync",
+      "tools": [
+        "codeql",
+        "semgrep"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "58422587-056a-448f-a49a-7af81ddc1319"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "210458ae7b30ed5f1e8c822742928e72d5ef5cb47cde33b206d5479ad9a92c38",
+      "basis": "unmatched_location",
+      "path": "lib/index.umd.js",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "eslint"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "2b82dfda-e88d-416a-9ac1-ded70a35f5fe"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "cf0a1c4f-1bff-4527-9897-2efcdbc4cb12"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/exec-child.js"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 11,
+                  "endLine": 55,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "367e5316495cc795868a5e64e69cbeb4a151e55a25d87f54a96f7a50b4357aac",
+              "unitKey": "ddbc3a0e19a64b9c903c12ab97726d14a432ebd6f3cfc004ae046fb0e824a151",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/exec.js"
+                },
+                "region": {
+                  "startLine": 147,
+                  "startColumn": 11,
+                  "endLine": 159,
+                  "endColumn": 5
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "51578272a8a9f114ef570afcc7fe6f9fb16f2cd146a1801bb71e4190916a1b07",
+              "unitKey": "fa33f25e8d84d9ba10d6ed7dc95d0fd75efa4e113256bcb8e780c6031ec7a1f1",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "cf0a1c4f-1bff-4527-9897-2efcdbc4cb12"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `cmd`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/exec.js"
+                },
+                "region": {
+                  "startLine": 147,
+                  "startColumn": 22,
+                  "endLine": 147,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "51578272a8a9f114ef570afcc7fe6f9fb16f2cd146a1801bb71e4190916a1b07",
+              "unitKey": "fa33f25e8d84d9ba10d6ed7dc95d0fd75efa4e113256bcb8e780c6031ec7a1f1",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}
