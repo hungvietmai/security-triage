@@ -1049,6 +1049,27 @@ giao diện là của `4360121` (bản sửa sau đó không đổi frontend hay
 ở `59255dc`. Giới hạn môi trường: mọi lệnh chạy trên một máy
 Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca lỗi công cụ trên stack thật vẫn là lỗi được tiêm (mục 17.4, điểm 9).
 
+**Lượt chạy cuối** (2026-11-15) trên commit `82b82a5`, cây làm việc sạch, stack dựng lại từ đúng
+commit đó; một lệnh `bash artifacts/multi-cwe-p1-final/run_all.sh`, đầu ra ở
+`artifacts/multi-cwe-p1-final/` (`run.txt` và từng file bên dưới). Các commit sau `82b82a5` chỉ sửa
+tài liệu.
+
+| # | Lệnh | Đạt | Bỏ qua | Đầu ra |
+|---|---|---|---|---|
+| 1 | `uv run pytest -q -rs --cov` (SQLite, công cụ giả lập) | 592 | 2 (`test_process.py:65`, `:157`, nhóm tiến trình POSIX) | `backend-sqlite.txt` |
+| 2 | `docker compose --profile test run --build --rm test` (PostgreSQL, công cụ giả lập) | 594 | 0 | `backend-postgres.txt` |
+| 3 | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` trong image kiểm thử | sạch | — | `static.txt` |
+| 4 | `python -m unittest discover -s experiments/tests` (Python 3.12) | 153 | 0 | `experiments.txt` |
+| 5 | `npm run check`, `npm run build`, `npm run test:e2e` (API giả lập) | Vitest 78; Playwright 2 | 1 (kiểm thử stack thật, chạy ở dòng 7) | `frontend.txt` |
+| 6 | `scripts.export_openapi` so với `frontend/openapi.json`; `scripts.check_worker` | giống hệt; worker sẵn sàng | — | `run.txt` |
+| 7 | `FULL_STACK_URL=http://127.0.0.1:5173 npx playwright test multi-cwe-full-stack` (**công cụ thật**, từ biểu mẫu tới SARIF) | 1 | 0 | `full-stack.txt`, `e2e/` (báo cáo JSON, SARIF, ảnh chụp) |
+| 8 | `legacy_regression.py` (**công cụ thật**, bốn profile cũ so với lượt quét lưu ngày 14/11) | 4/5 giống hệt; ca v0.1 như mục 18.3 | — | `legacy-regression.txt` |
+
+Dòng 7, lượt quét `9c25499b…` của OWASP BenchmarkPython `f129148`: 239 kết quả = 176 cảnh báo phát
+hiện + 63 kết quả truy vấn bằng chứng; 0 cảnh báo chưa xếp hạng; 149 đơn vị rà soát thành 145 ứng
+viên, 81 ở danh sách rà chính và 64 đã gạn; nhóm lệnh 51 → 24 đơn vị (2 gạn), nhóm đường dẫn 125 →
+125 đơn vị (62 gạn). SARIF có 239 kết quả, 68 kết quả mang `suppressions` (thuộc 64 đơn vị đã gạn).
+
 ### 18.3 Bảng nghiệm thu
 
 | # | Tiêu chí | Kết luận | Căn cứ |
@@ -1116,8 +1137,13 @@ Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca l
      `test_stored_alerts_without_a_unit_are_counted_and_exported`,
      `test_task.py::test_partial_evidence_run_ranks_nothing_and_holds_every_alert`.
 
-  Không lượt quét nào trong 392 lượt đã lưu ở trạng thái này, và chưa có lượt chạy dở thật nào của
-  profile này để kiểm trên stack thật: bằng chứng là kiểm thử với công cụ giả lập.
+  Kiểm trên stack thật ở `82b82a5` (`artifacts/multi-cwe-p1-audit/single_profile_fault.py`, cùng
+  tệp bọc `codeql` của mục 17.4 điểm 9, nguồn tổng hợp đã lưu): CodeQL thật phân tích xong pack
+  CWE-22 nhưng thoát mã lỗi. Lượt quét `path-traversal-v0.2` ghi `failed`; 4 kết quả đã lưu nằm trong
+  2 đơn vị `F10_FAMILY_NOT_RANKED` mức U ở danh sách rà, trạng thái bằng chứng "không lấy được"; SARIF
+  có đủ 4 kết quả, không kết quả nào mang `suppressions`. Lượt quét sạch của cùng snapshot và cùng
+  profile cho 2 đơn vị `EV_KEPT_NO_PROOF` như trước (2 cảnh báo phát hiện + 2 kết quả bằng chứng). Đây
+  là lỗi được tiêm; chưa gặp lượt chạy dở tự phát của profile này.
 - **L4 — kết quả truy vấn bằng chứng được đếm là cảnh báo** (có từ trước P1; `4360121`). Báo cáo đếm
   mọi dòng `findings`; với nhóm CWE-22 con số "trước" vì thế gồm cả kết quả của `st/cwe-22/all`
   (`safety_evidence.py:90-119`). Sửa: báo cáo có `evidence_results` và `detection_alerts` cho cả lượt
@@ -1131,20 +1157,33 @@ Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca l
   `scan-report.tsx` đã đổi thành "thỏa điều kiện gạn của nhóm"; chú thích sai ở
   `families.CompositeResult.findings` đã được viết lại.
 
+Commit theo từng lỗi (đều đã push; không commit nào bị viết lại):
+
+| Lỗi | Commit | Ghi chú |
+|---|---|---|
+| L2 | `c8959aa` | Riêng |
+| L3 | `834156b` | Riêng |
+| L1 | `bdfdb7e` (đơn vị giữ) và phần xuất SARIF trong `4360121` | Phần xuất nằm chung commit với L4 vì cùng sửa bảng số của báo cáo; tách ra sẽ phải viết lại lịch sử đã push |
+| L4 | `4360121` | Chung với phần xuất của L1 |
+
 **Còn tồn tại:**
 
 - **L5 — CI chưa chạy trên GitHub**, và không job nào quét profile ghép bằng công cụ thật (mục 18.1).
 - **L6 — commit `dc1db13` không qua `tsc` khi đứng riêng**; chủ đề án đã quyết định để nguyên.
-- Đơn vị giữ của profile đơn (L1) mới được kiểm bằng công cụ giả lập; chưa gặp lượt chạy dở thật.
+- Đơn vị giữ của profile đơn (L1) đã kiểm trên stack thật bằng lỗi được tiêm; chưa gặp lượt chạy dở tự phát.
 
 ### 18.6 Có đóng được P1 không
 
 **Về kỹ thuật thì đóng được, với một điều kiện còn lại: CI chạy trên GitHub và xanh.** Mười hai
 trong mười ba tiêu chí đạt. Tiêu chí CI chưa đạt vì chưa có lượt chạy nào: nhánh đã được push, và
-lượt chạy sẽ bắt đầu khi chủ đề án mở draft pull request (mục 18.1). Khi được hỏi lại cùng ngày,
-chủ đề án quyết định **để CI lại sau và giữ tiêu chí này ở FAIL**; vì vậy P1 chưa được ghi là đã
-đóng. Mọi job của CI đã chạy tương đương tại chỗ và đạt, nhưng điều đó không thay cho lượt chạy
-thật. Nếu CI đỏ, P1 chưa đóng cho tới khi nguyên nhân được xử lý.
+lượt chạy sẽ bắt đầu khi có draft pull request (mục 18.1). Chủ đề án sau đó yêu cầu mở draft pull
+request vào `feat/cwe22-triage`; tại thời điểm ghi mục này pull request **chưa được mở**: máy làm
+việc không có `gh`, và trợ lý không được phép đọc thông tin đăng nhập Git để gọi API của GitHub. Vì
+vậy tiêu chí CI vẫn là FAIL (chưa chạy) và P1 chưa được ghi là đã đóng. So với
+`origin/feat/cwe22-triage`, pull request sẽ gồm 22 commit của công việc đa CWE và **một commit nền**
+chưa có trên remote của nhánh đó: `837c53d` (tài liệu luận văn); nhánh cơ sở được để nguyên. Mọi job
+của CI đã chạy tương đương tại chỗ và đạt, nhưng điều đó không thay cho lượt chạy thật. Nếu CI đỏ,
+P1 chưa đóng cho tới khi nguyên nhân được xử lý.
 
 ## 19. P2 — thẩm định và thiết kế tối thiểu cho CWE-89 (2026-11-15)
 
