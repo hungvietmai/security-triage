@@ -991,7 +991,7 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
 ### 17.6 Đầu việc tiếp theo
 
 Thuộc quyền chủ đề án: mở draft pull request để CI chạy (mục 18.1; nhánh đã được push);
-quyết định cho P1b-7, cũng là cách xử lý giới hạn còn lại của L1 (mục 18.5); và nhóm CWE đầu tiên của P2,
+quyết định cho P1b-7; và nhóm CWE đầu tiên của P2,
 với giao thức và gói bằng chứng riêng trước khi nhóm đó được phép gạn (thiết kế ở mục 19).
 
 ## 18. Nghiệm thu kỹ thuật P1 (2026-11-15)
@@ -1003,9 +1003,9 @@ không dữ liệu held-out hay cặp đã đóng băng nào được quét, kh�
 ### 18.1 Git và CI
 
 - Khi bắt đầu rà: `HEAD` = `59255dc`, `origin/feat/multi-cwe-core` ở `04c8e8a`, bốn commit chưa
-  push. Sau khi chủ đề án quyết định (cùng ngày), ba bản sửa của lần rà được commit
-  (`c8959aa`, `834156b`, `4360121`) và nhánh được push lên `origin` tới `4360121`, không ép ghi đè;
-  hook pre-push đạt. Việc mở draft pull request do chủ đề án thực hiện.
+  push. Sau khi chủ đề án quyết định (cùng ngày), bốn bản sửa của lần rà được commit
+  (`c8959aa`, `834156b`, `4360121`, `bdfdb7e`) và nhánh được push lên `origin`, không ép ghi đè; hook
+  pre-push đạt. Việc mở draft pull request do chủ đề án thực hiện.
 - **Vì sao không có lượt GitHub Actions nào:** `.github/workflows/ci.yml` chỉ chạy khi `push` vào
   `main` hoặc khi có `pull_request`. Nhánh được push nhưng chưa có pull request nào, nên không sự
   kiện nào khớp. API của GitHub xác nhận: 0 pull request và 0 lượt chạy cho nhánh và cho commit
@@ -1029,35 +1029,36 @@ không dữ liệu held-out hay cặp đã đóng băng nào được quét, kh�
 
 | Tầng | Lệnh | Kết quả |
 |---|---|---|
-| Công cụ giả lập, SQLite | `uv run pytest --cov` (Windows) | 590 đạt, **2 bỏ qua**, độ phủ 95,56%; 2 ca **bỏ qua** là `tests/scanners/test_process.py:65` và `:157` (nhóm tiến trình POSIX), không tính là đạt ở tầng này |
-| Công cụ giả lập, PostgreSQL | `docker compose --profile test run --build --rm test` | 592 đạt, độ phủ 95,68%, không ca nào bỏ qua (hai ca POSIX chạy ở đây) |
-| Golden bốn profile cũ | nằm trong hai lệnh trên (`test_legacy_golden.py`, 15 kịch bản) | Đạt, không file golden nào đổi |
+| Công cụ giả lập, SQLite | `uv run pytest --cov` (Windows) | 592 đạt, **2 bỏ qua**, độ phủ 95,58%; 2 ca **bỏ qua** là `tests/scanners/test_process.py:65` và `:157` (nhóm tiến trình POSIX), không tính là đạt ở tầng này |
+| Công cụ giả lập, PostgreSQL | `docker compose --profile test run --build --rm test` | 594 đạt, độ phủ 95,70%, không ca nào bỏ qua (hai ca POSIX chạy ở đây) |
+| Golden bốn profile cũ | nằm trong hai lệnh trên (`test_legacy_golden.py`, 15 kịch bản) | Đạt; 14 file không đổi, file `path-traversal-v0.2-partial-run` được sinh lại có chủ ý (lỗi L1, mục 18.5) |
 | Tĩnh | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` trong image kiểm thử | Sạch; không lỗ hổng đã biết |
 | Migration, PostgreSQL | `alembic upgrade head` → `check` → `downgrade base` → `upgrade head` → `check` trên database tạm; `test_migration_0008.py` | Đạt; không chạy trên database đang có dữ liệu |
 | Hợp đồng API | `scripts.export_openapi` so với `frontend/openapi.json`; kiểu sinh ra so với `api-schema.d.ts` | Giống hệt |
 | Thực nghiệm | `python -m unittest discover -s experiments/tests` (Python 3.12, `pyyaml` 6.0.3, `jsonschema` 4.26.0) | 153 đạt. Bằng Python 3.11 của máy thì 4 module không nạp được (cú pháp 3.12): giới hạn môi trường, không phải lỗi mã |
 | Giao diện, API giả lập | `npm run lint`, `format:check`, `npm test`, `npm run build`, `npm run test:e2e` | Vitest 78 đạt; Playwright 2 đạt, **1 bỏ qua** (kiểm thử stack thật) |
 | Giao diện, **công cụ thật** | `FULL_STACK_URL=… npx playwright test multi-cwe-full-stack` | 1 đạt, chạy lại sau các bản sửa: 239 kết quả công cụ = 176 cảnh báo phát hiện + 63 kết quả truy vấn bằng chứng; 0 cảnh báo chưa xếp hạng; 149 đơn vị, 64 đã gạn — bằng P1a và P1b |
-| Bốn profile cũ, **công cụ thật** | `legacy_regression.py`: quét lại nguồn phát triển và so với lượt quét lưu ngày 14/11 | 4/5 ca giống hệt; ca v0.1 xem mục 18.3 |
+| Bốn profile cũ, **công cụ thật** | `legacy_regression.py`: quét lại nguồn phát triển và so với lượt quét lưu ngày 14/11 | 4/5 ca giống hệt; ca v0.1 xem mục 18.3. Chạy lại sau mọi bản sửa (`bdfdb7e`): cùng kết quả |
 | Job `reconciliation-integration` | cùng lệnh và cùng script tiêu chí của CI, image thực nghiệm dựng tại chỗ | Đạt |
 | Job `scan-parity` | CLI trong image thực nghiệm so với API | Đạt mọi điều kiện |
 | Các bước còn lại của `docker-integration` | hai cấu hình Compose, `check_worker`, proxy, readiness, `celery inspect ping` | Đạt |
 | Dữ liệu đã lưu | `db_audit.sql`, `db_filtered.sql` trên 392 lượt quét, 6.492 kết quả, 3.945 đơn vị | Xem mục 18.3 |
 
-Các số ở ba dòng đầu và dòng giao diện là của trạng thái cuối (`4360121`); các dòng còn lại chạy ở
-`59255dc` và không bị các bản sửa sau đó chạm tới. Giới hạn môi trường: mọi lệnh chạy trên một máy
+Hai dòng đầu, dòng thực nghiệm và dòng bốn profile cũ là của trạng thái cuối (`bdfdb7e`); hai dòng
+giao diện là của `4360121` (bản sửa sau đó không đổi frontend hay hợp đồng API); ba dòng job CI chạy
+ở `59255dc`. Giới hạn môi trường: mọi lệnh chạy trên một máy
 Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca lỗi công cụ trên stack thật vẫn là lỗi được tiêm (mục 17.4, điểm 9).
 
 ### 18.3 Bảng nghiệm thu
 
 | # | Tiêu chí | Kết luận | Căn cứ |
 |---|---|---|---|
-| 1 | Bốn profile cũ giữ kết quả | **PASS** | Golden 15 kịch bản trên SQLite và PostgreSQL. Công cụ thật: `command-injection-v0.2` và `v0.3` trên `curling@0.2.0`, `v0.2` trên BenchmarkPython (51 kết quả, 24 đơn vị, 2 gạn), `path-traversal-v0.2` trên `flask-admin@4f8be45` cho đúng khóa đơn vị, mức, quyết định, lý do, ứng viên, báo cáo và số kết quả SARIF của lượt quét lưu trước P1. `v0.1` trên `curling`: khóa đơn vị, mức, quyết định, lý do và hash chính sách giống; bản lưu ngày 14/11 thiếu bản ghi ứng viên và lý do giữ vì nó được ghi trước commit `c187059` (thêm bước gạn cho mọi profile), không phải do P1. `scan-parity` và `reconciliation-integration` đạt |
+| 1 | Bốn profile cũ giữ kết quả | **PASS**, một thay đổi có chủ ý | Golden 15 kịch bản trên SQLite và PostgreSQL; thay đổi duy nhất là lượt `path-traversal-v0.2` chạy dở nay giữ cảnh báo thành đơn vị mức U, theo quyết định của chủ đề án (L1). Công cụ thật: `command-injection-v0.2` và `v0.3` trên `curling@0.2.0`, `v0.2` trên BenchmarkPython (51 kết quả, 24 đơn vị, 2 gạn), `path-traversal-v0.2` trên `flask-admin@4f8be45` cho đúng khóa đơn vị, mức, quyết định, lý do, ứng viên, báo cáo và số kết quả SARIF của lượt quét lưu trước P1. `v0.1` trên `curling`: khóa đơn vị, mức, quyết định, lý do và hash chính sách giống; bản lưu ngày 14/11 thiếu bản ghi ứng viên và lý do giữ vì nó được ghi trước commit `c187059` (thêm bước gạn cho mọi profile), không phải do P1. `scan-parity` và `reconciliation-integration` đạt |
 | 2 | Pipeline ghép `multi-cwe-v0.1` | **PASS** | Lượt quét từ giao diện hôm nay cho đúng số của P1a và P1b; mỗi nhóm bằng lượt quét riêng (P1a `run-03`, pygoat, DSVPWA) |
 | 3 | Migration 0008 | **PASS** | Vòng hai chiều trên PostgreSQL; `alembic check`; trên database thật: 366 lượt quét, md5 của ba bảng không đổi, `analysis_family` NULL ở 3.557 đơn vị cũ |
 | 4 | API | **PASS** | 0 trường đổi giá trị trên 366 lượt quét cũ; `openapi.json` khớp; kiểm thử API trên PostgreSQL |
 | 5 | Giao diện | **PASS**, một giới hạn | Vitest, Playwright với API giả lập, và luồng đầy đủ trên stack thật. Giới hạn: luồng stack thật không nằm trong CI |
-| 6 | SARIF | **PASS** sau khi sửa | Lượt ghép: số kết quả SARIF bằng số kết quả lưu ở mọi lượt, kể cả ba ca lỗi tiêm. Lượt chạy dở của profile đơn `path-traversal-v0.2` trước đây xuất SARIF rỗng (lỗi L1); nay mọi kết quả đã lưu đều được xuất |
+| 6 | SARIF | **PASS** sau khi sửa | Lượt ghép: số kết quả SARIF bằng số kết quả lưu ở mọi lượt, kể cả ba ca lỗi tiêm. Lượt chạy dở của profile đơn `path-traversal-v0.2` trước đây xuất SARIF rỗng và không vào danh sách rà (lỗi L1); nay mọi kết quả đã lưu đều được xuất và cảnh báo chưa xếp hạng thành đơn vị giữ mức U |
 | 7 | Bảo toàn cảnh báo | **PASS** | 6.492 kết quả, mỗi kết quả liên kết với đúng một đơn vị; 0 kết quả ngoài đơn vị; 0 kết quả nằm trong hai đơn vị. Lượt ghép còn tự kiểm lúc chạy (`families.check_conservation`) và thất bại thay vì ghi kết quả thiếu |
 | 8 | Không gộp nhầm giữa các CWE | **PASS**, bằng chứng trên mã thật còn mỏng | 0 liên kết giữa đơn vị và kết quả của nhóm khác; 0 khóa ứng viên dùng chung giữa hai nhóm. Một file thật có cả hai nhóm (DSVPWA); ca lồng nhau chỉ có trên nguồn tổng hợp |
 | 9 | Không tự gạn khi thiếu bằng chứng | **PASS** | 314 đơn vị đã gạn: 0 đơn vị thuộc lượt chạy ngôn ngữ có công cụ phát hiện hoặc bộ định vị chưa hoàn tất; 0 đơn vị bị gạn bởi G1, G3 hay G4 khi bước bằng chứng của chính quy tắc đó lỗi; mọi đơn vị đã gạn có tên quy tắc, bản ghi bằng chứng và danh sách lý do giữ rỗng. Khi `codeql-evidence` lỗi, G2 vẫn gạn lệnh hằng: G2 không dùng bước đó (chứng minh lệnh hằng và mức Bandit), và đây là logic đã khóa, không đổi |
@@ -1096,17 +1097,27 @@ Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca l
   chiếu. 202 đơn vị đã lưu mang lý do thứ nhất. Sửa: hai lý do này cho `insufficient`
   (`service.py`, `_EVIDENCE_INSUFFICIENT`). Không quyết định gạn nào đổi: trường này chỉ được suy ra
   khi đọc.
-- **L1 — lượt quét `path-traversal-v0.2` chạy dở giấu cảnh báo khỏi báo cáo và SARIF** (có từ trước
-  P1; `4360121`). `analysis.py:350-351` chỉ xếp hạng khi lượt chạy hoàn tất; cảnh báo vẫn được lưu
-  nhưng không có đơn vị, nên báo cáo ghi "3 cảnh báo → 0 ứng viên" và `report.build_sarif` (nối với
-  `unit_findings`) xuất SARIF rỗng. Theo quyết định của chủ đề án, sửa ở lớp xuất và không đổi đơn
-  vị: báo cáo có `stages.unranked_alerts`, SARIF xuất cả các cảnh báo này với `ranked: false`, ở
-  danh sách rà, không có `suppressions`. Kiểm thử:
-  `test_alerts_of_an_incomplete_single_profile_run_are_counted_and_exported`. **Giới hạn còn lại:**
-  danh sách rà trên giao diện vẫn không hiện các cảnh báo này, vì profile đơn không tạo đơn vị cho
-  chúng (hành vi cũ, được ghim bởi `test_task.py::test_partial_evidence_run_ranks_nothing`); báo cáo
-  trên giao diện có một dòng nêu số cảnh báo chưa xếp hạng. Profile ghép không có giới hạn này (đơn
-  vị `F10_FAMILY_NOT_RANKED`). Không lượt quét nào trong 392 lượt đã lưu ở trạng thái này.
+- **L1 — lượt quét `path-traversal-v0.2` chạy dở giấu cảnh báo khỏi người rà** (có từ trước P1).
+  `analysis.py:350-351` chỉ xếp hạng khi lượt chạy hoàn tất; cảnh báo vẫn được lưu nhưng không có
+  đơn vị, nên không vào danh sách rà, báo cáo ghi "3 cảnh báo → 0 ứng viên" và `report.build_sarif`
+  (nối với `unit_findings`) xuất SARIF rỗng. Sửa theo hai quyết định của chủ đề án:
+  1. Lớp xuất (`4360121`): báo cáo có `stages.unranked_alerts` và SARIF xuất mọi kết quả đã lưu, kể
+     cả kết quả không nằm trong đơn vị nào (`ranked: false`). Phần này còn giá trị cho dữ liệu ghi
+     trước bản sửa thứ hai.
+  2. Đơn vị giữ (commit kế tiếp): khi một profile đơn không xếp hạng cảnh báo nào của lượt chạy,
+     `task.scan_snapshot` gọi `families.hold_unranked` để giữ chúng đúng như lượt quét ghép giữ cảnh
+     báo của nhóm chưa xếp hạng: mỗi vị trí được báo là một đơn vị `F10_FAMILY_NOT_RANKED`, mức U, ở
+     danh sách rà, trạng thái bằng chứng "không lấy được", không bao giờ bị gạn. File bị ghim
+     `analysis.py` không đổi. Đây là thay đổi hành vi có chủ ý của một profile cũ ở đúng một trạng
+     thái: golden `path-traversal-v0.2-partial-run.json` được sinh lại (thêm 2 đơn vị và 2 đánh giá;
+     cảnh báo, lượt chạy công cụ và trạng thái lượt quét không đổi), 14 golden còn lại không đổi.
+     Lượt chạy hoàn tất không bị ảnh hưởng. Kiểm thử:
+     `test_an_incomplete_single_profile_run_holds_its_alerts_for_review`,
+     `test_stored_alerts_without_a_unit_are_counted_and_exported`,
+     `test_task.py::test_partial_evidence_run_ranks_nothing_and_holds_every_alert`.
+
+  Không lượt quét nào trong 392 lượt đã lưu ở trạng thái này, và chưa có lượt chạy dở thật nào của
+  profile này để kiểm trên stack thật: bằng chứng là kiểm thử với công cụ giả lập.
 - **L4 — kết quả truy vấn bằng chứng được đếm là cảnh báo** (có từ trước P1; `4360121`). Báo cáo đếm
   mọi dòng `findings`; với nhóm CWE-22 con số "trước" vì thế gồm cả kết quả của `st/cwe-22/all`
   (`safety_evidence.py:90-119`). Sửa: báo cáo có `evidence_results` và `detection_alerts` cho cả lượt
@@ -1124,15 +1135,16 @@ Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca l
 
 - **L5 — CI chưa chạy trên GitHub**, và không job nào quét profile ghép bằng công cụ thật (mục 18.1).
 - **L6 — commit `dc1db13` không qua `tsc` khi đứng riêng**; chủ đề án đã quyết định để nguyên.
-- Giới hạn còn lại của L1 nêu trên: cần P1b-7 hoặc một quyết định đổi hành vi của profile đơn.
+- Đơn vị giữ của profile đơn (L1) mới được kiểm bằng công cụ giả lập; chưa gặp lượt chạy dở thật.
 
 ### 18.6 Có đóng được P1 không
 
 **Về kỹ thuật thì đóng được, với một điều kiện còn lại: CI chạy trên GitHub và xanh.** Mười hai
-trong mười ba tiêu chí đạt. Tiêu chí CI chưa đạt vì chưa có lượt chạy nào: nhánh đã được push tới
-`4360121`, và lượt chạy sẽ bắt đầu khi chủ đề án mở draft pull request (mục 18.1). Mọi job của CI
-đã chạy tương đương tại chỗ và đạt, nhưng điều đó không thay cho lượt chạy thật. Nếu CI đỏ, P1 chưa
-đóng cho tới khi nguyên nhân được xử lý.
+trong mười ba tiêu chí đạt. Tiêu chí CI chưa đạt vì chưa có lượt chạy nào: nhánh đã được push, và
+lượt chạy sẽ bắt đầu khi chủ đề án mở draft pull request (mục 18.1). Khi được hỏi lại cùng ngày,
+chủ đề án quyết định **để CI lại sau và giữ tiêu chí này ở FAIL**; vì vậy P1 chưa được ghi là đã
+đóng. Mọi job của CI đã chạy tương đương tại chỗ và đạt, nhưng điều đó không thay cho lượt chạy
+thật. Nếu CI đỏ, P1 chưa đóng cho tới khi nguyên nhân được xử lý.
 
 ## 19. P2 — thẩm định và thiết kế tối thiểu cho CWE-89 (2026-11-15)
 
@@ -1208,7 +1220,7 @@ Gộp cấu hình chỉ nên xét lại khi có số đo cho thấy các lượt
 
 | Bước | Việc | File | Ghi chú |
 |---|---|---|---|
-| 0 | CI xanh trên pull request của P1; nâng giới hạn thời gian; quyết định cho giới hạn còn lại của L1 (mục 18.5) | `task.py`, `celery_app.py` | Điều kiện vào P2. L4 đã xử lý ở `4360121` |
+| 0 | CI xanh trên pull request của P1; nâng giới hạn thời gian | `task.py`, `celery_app.py` | Điều kiện vào P2. L1 và L4 đã xử lý ở lần rà mục 18 |
 | 1 | Golden cho `multi-cwe-v0.1` trên đầu vào tổng hợp cố định | `backend/tests/golden/` | Lưới an toàn trước khi sửa lớp ghép |
 | 2 | Kiểu profile "chỉ phát hiện": các truy vấn của pack chuẩn ghim theo hash, CWE ánh xạ khai trong manifest cho từng rule, không có rule bằng chứng | `scanners/profile.py`; `profiles/sql-injection-v0.1/` | `js/sql-injection` khai ba CWE; không suy CWE từ tên rule |
 | 3 | Bộ xử lý "phát hiện và giữ": mỗi vị trí được báo là một đơn vị, luôn ở danh sách rà, lý do giữ `no_filter_condition_for_family`, trạng thái bằng chứng `insufficient` | file mới `workflows/scans/detection.py`; `service.py` | Dùng `reconcile_findings(findings, [], {})` như đơn vị giữ hiện có; không qua `assess.py`. Mức ưu tiên của nhóm là quyết định của chủ đề án |
