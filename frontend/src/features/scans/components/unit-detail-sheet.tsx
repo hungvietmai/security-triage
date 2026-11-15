@@ -20,7 +20,10 @@ import {
 } from "@/components/ui/table";
 import { useUnit } from "@/features/scans/api/get-unit";
 import {
+  EVIDENCE_STATES,
+  FAMILIES,
   FILTER_RULES,
+  KEPT_REASONS,
   type Finding,
   type UnitDetail,
 } from "@/features/scans/types";
@@ -47,6 +50,26 @@ function FindingEvidence({ finding }: { finding: Finding }) {
       <p className="font-mono text-xs break-all">
         {finding.file_path ?? "Không rõ file"}:{finding.start_line ?? "—"}
       </p>
+      <dl className="grid gap-2 text-xs sm:grid-cols-2">
+        <Detail label="CWE do công cụ báo">
+          {finding.cwe_ids.join(", ") || "Công cụ không gắn CWE"}
+        </Detail>
+        <Detail label="CWE theo rule đã ghim">
+          {finding.mapped_cwes === null
+            ? "Lượt quét này không phân loại"
+            : finding.mapped_cwes.join(", ") || "Không có ánh xạ đã kiểm"}
+        </Detail>
+        {finding.family_status !== null && (
+          <Detail label="Nhóm của cảnh báo">
+            {finding.family_status === "resolved"
+              ? `${finding.analysis_family} (${finding.family_basis})`
+              : `Chưa xác định: ${KEPT_REASONS[finding.unresolved_reason ?? ""] ?? finding.unresolved_reason}`}
+          </Detail>
+        )}
+        {finding.tool_pass !== null && finding.tool_pass !== finding.tool && (
+          <Detail label="Lượt chạy">{finding.tool_pass}</Detail>
+        )}
+      </dl>
       <h5 className="font-medium">Vết dữ liệu</h5>
       {flows.length === 0 ? (
         <p className="text-muted-foreground">công cụ không cung cấp vết</p>
@@ -80,11 +103,26 @@ function Adjudication({ unit }: { unit: UnitDetail }) {
     <section className="space-y-3">
       <h3 className="font-semibold">Thẩm định</h3>
       <dl className="space-y-3">
+        <Detail label="Nhóm phân tích">
+          {unit.analysis_family
+            ? FAMILIES[unit.analysis_family]
+            : "Chưa ghi nhận nhóm"}
+        </Detail>
         <Detail label="Kết quả">
           {filtered
             ? "Đã gạn khỏi danh sách rà chính. Cảnh báo gốc vẫn được giữ ở bên dưới."
             : "Nằm trong danh sách rà chính."}
         </Detail>
+        <Detail label="Trạng thái bằng chứng">
+          {EVIDENCE_STATES[unit.evidence_state]}
+        </Detail>
+        {unit.kept_because.length > 0 && (
+          <Detail label="Vì sao được giữ">
+            {unit.kept_because
+              .map((code) => KEPT_REASONS[code] ?? code)
+              .join("; ")}
+          </Detail>
+        )}
         {filtered && (
           <Detail label="Quy tắc gạn">
             {FILTER_RULES[unit.filter_rule ?? ""] ?? unit.filter_rule}
@@ -170,12 +208,17 @@ function UnitEvidence({ unit }: { unit: UnitDetail }) {
           <Detail label="source_types">
             {unit.source_types.join(", ") || "Chưa xác định"}
           </Detail>
-          <Detail label="Vai trò đối số">
-            {unit.argument_role ?? "Chưa xác định"}
-          </Detail>
-          <Detail label="Trạng thái shell">
-            {unit.shell_state ?? "Chưa xác định"}
-          </Detail>
+          {/* Argument role and shell state describe a command call only. */}
+          {unit.analysis_family === "command-injection" && (
+            <>
+              <Detail label="Vai trò đối số">
+                {unit.argument_role ?? "Chưa xác định"}
+              </Detail>
+              <Detail label="Trạng thái shell">
+                {unit.shell_state ?? "Chưa xác định"}
+              </Detail>
+            </>
+          )}
           <Detail label="Mapping">{unit.mapping_status}</Detail>
         </dl>
         {unit.finding_evidence.length > 0 && (

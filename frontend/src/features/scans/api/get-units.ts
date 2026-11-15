@@ -19,6 +19,7 @@ export function getUnits(
       tier: params.tier ?? undefined,
       tool: params.tool ?? undefined,
       disposition: params.disposition ?? undefined,
+      family: params.family ?? undefined,
     },
     signal,
   });

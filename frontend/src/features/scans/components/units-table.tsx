@@ -13,10 +13,13 @@ import {
 import { useUnits } from "@/features/scans/api/get-units";
 import {
   DISPOSITIONS,
+  EVIDENCE_STATES,
+  FAMILIES,
   FILTER_RULES,
   SCREENING_TOOLS,
   UNITS_PAGE_SIZE,
   type Disposition,
+  type Family,
   type Tier,
   type Tool,
   type Unit,
@@ -36,6 +39,7 @@ export function UnitsTable({
   tier,
   tool,
   list,
+  family,
   onPageChange,
   onSelect,
 }: {
@@ -44,6 +48,7 @@ export function UnitsTable({
   tier?: Tier;
   tool?: Tool;
   list?: Disposition;
+  family?: Family;
   onPageChange: (page: number) => void;
   onSelect: (unitId: string) => void;
 }) {
@@ -55,6 +60,7 @@ export function UnitsTable({
       tier,
       tool,
       disposition: list,
+      family,
     },
   });
   if (query.isPending) return <p role="status">Đang tải đơn vị…</p>;
@@ -80,12 +86,14 @@ export function UnitsTable({
             <TableRow>
               {[
                 "Mức",
+                "Nhóm",
                 "file:dòng",
                 "Hàm sink",
                 "Vai trò đối số",
                 "Sàng lọc",
                 "CodeQL",
                 "Thẩm định",
+                "Bằng chứng",
                 "decision_id",
                 "Lý do",
               ].map((heading) => (
@@ -102,6 +110,20 @@ export function UnitsTable({
               >
                 <TableCell>
                   <Badge variant="outline">{unit.priority}</Badge>
+                </TableCell>
+                <TableCell>
+                  <span
+                    title={
+                      unit.analysis_family
+                        ? FAMILIES[unit.analysis_family]
+                        : "Chưa ghi nhận nhóm"
+                    }
+                  >
+                    {unit.cwe ??
+                      (unit.analysis_family
+                        ? FAMILIES[unit.analysis_family]
+                        : "—")}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <Button
@@ -144,6 +166,9 @@ export function UnitsTable({
                   {unit.disposition === "filtered"
                     ? `${DISPOSITIONS.filtered}: ${FILTER_RULES[unit.filter_rule ?? ""] ?? unit.filter_rule ?? "có bằng chứng"}`
                     : DISPOSITIONS.review}
+                </TableCell>
+                <TableCell className="max-w-56 whitespace-normal">
+                  {EVIDENCE_STATES[unit.evidence_state]}
                 </TableCell>
                 <TableCell>{unit.decision_id}</TableCell>
                 <TableCell className="max-w-80 truncate" title={unit.reason}>

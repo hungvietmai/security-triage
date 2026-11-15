@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DISPOSITIONS, TIERS, TOOLS } from "@/features/scans/types";
+import { DISPOSITIONS, FAMILIES, TIERS, TOOLS } from "@/features/scans/types";
 
 export const scanSearchSchema = z.object({
   page: z.number().int().min(1).default(1).catch(1),
@@ -7,6 +7,10 @@ export const scanSearchSchema = z.object({
   tool: z.enum(TOOLS).optional().catch(undefined),
   list: z
     .enum(Object.keys(DISPOSITIONS) as [keyof typeof DISPOSITIONS])
+    .optional()
+    .catch(undefined),
+  family: z
+    .enum(Object.keys(FAMILIES) as [keyof typeof FAMILIES])
     .optional()
     .catch(undefined),
 });

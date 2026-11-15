@@ -9,7 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getSarifUrl, useReport } from "@/features/scans/api/get-report";
-import { FILTER_RULES, type ScanReport } from "@/features/scans/types";
+import {
+  EVIDENCE_STATES,
+  FAMILIES,
+  FILTER_RULES,
+  type EvidenceState,
+  type ScanReport,
+} from "@/features/scans/types";
 
 const STAGES: { key: keyof ScanReport["stages"]; label: string }[] = [
   { key: "raw_alerts", label: "Cảnh báo thô của mọi công cụ" },
@@ -116,6 +122,32 @@ export function ScanReportPanel({ scanId }: { scanId: string }) {
         label="Các bước của quy trình"
         head={["Bước", "Số lượng"]}
         rows={STAGES.map(({ key, label }) => [label, report.stages[key]])}
+      />
+      <Counts
+        label="Trước–sau theo nhóm phân tích"
+        head={[
+          "Nhóm",
+          "Cảnh báo thô",
+          "Đơn vị",
+          "Ứng viên",
+          "Danh sách rà chính",
+          "Đã gạn",
+          "Trạng thái bằng chứng",
+        ]}
+        rows={report.families.map((family) => [
+          FAMILIES[family.family],
+          family.raw_alerts,
+          family.units,
+          family.candidates,
+          family.main_list,
+          family.filtered,
+          Object.entries(family.evidence_states)
+            .map(
+              ([state, count]) =>
+                `${EVIDENCE_STATES[state as EvidenceState]}: ${count}`,
+            )
+            .join("; ") || "—",
+        ])}
       />
       <Counts
         label="Đóng góp của từng công cụ"

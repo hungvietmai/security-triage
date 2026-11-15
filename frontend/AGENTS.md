@@ -69,7 +69,14 @@ src/features/<feature>/
 ```
 
 Current features: `projects` (list, detail, create), `health` (readiness/liveness),
-and `scans` (create, status polling, units and evidence).
+and `scans` (create, status polling, analysis families, units and evidence, report).
+
+A scan has one or more analysis families (one CWE each, `ScanFamilies`). The family filter
+is URL state (`?family=`) like tier, tool and list. A unit shows two separate facts: the
+filter decision (`disposition`) and what the evidence says (`evidence_state`); never merge
+them into one label, and never present a unit without refuting evidence as safe.
+`tests/e2e/multi-cwe-full-stack.spec.ts` is the one browser test against the complete
+stack; it is skipped unless `FULL_STACK_URL` is set.
 
 ## Architecture rules
 

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { paths } from "@/config/paths";
 import { useScan } from "@/features/scans/api/get-scan";
+import { ScanFamilies } from "@/features/scans/components/scan-families";
 import { ScanHeader } from "@/features/scans/components/scan-header";
 import { ScanReportPanel } from "@/features/scans/components/scan-report";
 import { UnitDetailSheet } from "@/features/scans/components/unit-detail-sheet";
@@ -85,6 +86,11 @@ export function ScanRoute() {
               </AlertDescription>
             </Alert>
           )}
+          <ScanFamilies
+            families={scan.families}
+            selected={search.family}
+            onSelect={(family) => updateSearch({ family, page: 1 })}
+          />
           <div className="flex flex-wrap gap-2" aria-label="Số đơn vị theo mức">
             {TIERS.map((tier) => (
               <Button
