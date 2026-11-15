@@ -22,7 +22,7 @@ from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.scanners.pipeline import PipelineResult
-from app.scanners.profile import load_profile
+from app.scanners.profile import CompositeProfile, load_profile
 from app.scanners.sarif import Finding as SarifFinding
 from app.workers.celery_app import celery_app
 from app.workflows.scans import task as scan_module
@@ -488,13 +488,18 @@ def test_run_scan_retries_infrastructure_errors_then_fails(engine, make_scan, ea
 @pytest.mark.parametrize("profile_id", sorted(get_settings().scan_profiles))
 def test_task_time_limits_cover_every_scanner_timeout_in_the_profile(profile_id):
     profile = scan_module.load_scan_profile(get_settings(), profile_id)
-    budget = sum(
-        scan_module.VERSION_CHECKS * 60 + scan_module.SCANNER_STEPS * config["timeout_seconds"]
-        for config in profile.configs.values()
-    )
+    # Every version check and every step, evidence steps included, running to its limit.
+    budget = scan_module.worst_case_seconds(profile)
     assert budget < scan_module.SOFT_TIME_LIMIT < scan_module.TIME_LIMIT
     # After the soft limit, an in-flight scanner may still run to its own timeout.
-    longest_step = max(config["timeout_seconds"] for config in profile.configs.values())
+    members = (
+        [member for _, member in profile.members]
+        if isinstance(profile, CompositeProfile)
+        else [profile]
+    )
+    longest_step = max(
+        config["timeout_seconds"] for member in members for config in member.configs.values()
+    )
     assert longest_step <= scan_module.LONGEST_SCANNER_STEP
     assert scan_module.TIME_LIMIT - scan_module.SOFT_TIME_LIMIT > longest_step
     visibility = celery_app.conf.broker_transport_options["visibility_timeout"]

@@ -92,7 +92,7 @@ def _write_findings(
         if record.get("canonical_rule_id")
     }
     runs: list[ToolRun] = []
-    for tool in SCANNERS:
+    for tool in (*SCANNERS, *result.passes):
         step = result.pipeline.steps.get(tool)
         if step is None:
             continue
@@ -114,10 +114,31 @@ def _write_findings(
     session.add_all(runs)
     session.flush()
 
+    # A composite scan maps each finding with the version of the family part that holds it.
+    versions = {
+        raw_id: part.unit_version
+        for part in result.parts
+        for unit in part.units
+        for raw_id in unit["raw_finding_ids"]
+    }
     findings: list[Finding] = []
     for run in runs:
-        tool_findings = [f for f in result.pipeline.findings if f["tool"] == run.tool]
+        tool_findings = [
+            f
+            for f in result.pipeline.findings
+            # A pass on the shared database reports as its tool but is its own run.
+            if result.finding_pass.get(f["raw_id"], f["tool"]) == run.tool
+        ]
         for index, finding in enumerate(tool_findings):
+            evidence: dict[str, Any] = {
+                "raw_id": finding["raw_id"],
+                "raw_rule_id": finding["rule_id"],
+                "raw_result": finding["raw_result"],
+            }
+            classification = result.classification.get(finding["raw_id"])
+            if classification is not None:
+                # Kept next to the tool's own labels (cwe_ids), never in their place.
+                evidence["classification"] = classification
             row = Finding(
                 tool_run_id=run.id,
                 result_index=index,
@@ -126,12 +147,11 @@ def _write_findings(
                 **_coordinates(finding["reported_region"]),
                 message=finding["message"],
                 cwe_ids=finding["reported_cwes"],
-                mapping_version=result.unit_version,
-                evidence={
-                    "raw_id": finding["raw_id"],
-                    "raw_rule_id": finding["rule_id"],
-                    "raw_result": finding["raw_result"],
-                },
+                classification_source=(
+                    (classification["family_basis"] or "unresolved") if classification else None
+                ),
+                mapping_version=versions.get(finding["raw_id"], result.unit_version),
+                evidence=evidence,
             )
             findings.append(row)
     # Resolve IDs in one batch before writing unit links, regardless of finding count.
@@ -168,6 +188,7 @@ def _write_units(
             reconciler_version=result.unit_version,
             locator_version=result.locator_version,
             candidate_key=candidates.get(unit["unit_id"]),
+            analysis_family=result.family,
         )
     session.add_all(units.values())
     session.flush()
@@ -212,7 +233,9 @@ def persist_scan_result(
         session.execute(delete(LocationUnit).where(LocationUnit.scan_id == scan_id))
         for language in result.languages:
             finding_ids = _write_findings(session, scan_id, language, result.artifacts)
-            _write_units(session, scan_id, language, finding_ids)
+            # A composite scan writes one part per family; any other scan is its own part.
+            for part in language.parts or (language,):
+                _write_units(session, scan_id, part, finding_ids)
         snapshot = session.get_one(SourceSnapshot, scan.snapshot_id)
         snapshot.provenance_verified_at = now
         if snapshot.file_count is None:

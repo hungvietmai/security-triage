@@ -17,7 +17,14 @@ from app.scanners.process import (
     invoke,
     tool_version,
 )
-from app.scanners.profile import AnyProfile, ProfileError, load_any_profile
+from app.scanners.profile import (
+    AnyProfile,
+    CompositeProfile,
+    LoadedProfile,
+    ProfileError,
+    load_any_profile,
+)
+from app.workflows.scans.families import members_of
 
 # Screening tools a profile config may add, and the pin that fixes each one's version.
 SCREENING_PINS: dict[ToolName, str] = {"bandit": "BANDIT_VERSION", "eslint": "ESLINT_VERSION"}
@@ -48,6 +55,17 @@ def check_pins(profile: AnyProfile, pins: dict[str, str]) -> None:
                 raise ProfileError(f"{language} profile {tool} differs from tools/pins.env")
 
 
+def member_profiles(profile: LoadedProfile) -> list[AnyProfile]:
+    """The profiles whose rules a scan with `profile` runs: itself, or a composite's members."""
+    if not isinstance(profile, CompositeProfile):
+        return [profile]
+    try:
+        # A composite must name families this worker handles, or no scan could use it.
+        return [member.profile for member in members_of(profile)]
+    except ValueError as exc:
+        raise ProfileError(str(exc)) from exc
+
+
 def check(
     root: Path,
     manifests: str | Iterable[str],
@@ -59,14 +77,15 @@ def check(
         load_any_profile(root, manifest)
         for manifest in ([manifests] if isinstance(manifests, str) else manifests)
     ]
-    for profile in profiles:
-        check_pins(profile, pins)
+    members = [member for profile in profiles for member in member_profiles(profile)]
+    for member in members:
+        check_pins(member, pins)
     tools: dict[ToolName, str] = {
         "semgrep": pins["SEMGREP_VERSION"],
         "codeql": pins["CODEQL_VERSION"],
     }
     for tool, pin in SCREENING_PINS.items():
-        if any(tool in config for profile in profiles for config in profile.configs.values()):
+        if any(tool in config for member in members for config in member.configs.values()):
             tools[tool] = pins[pin]
     with tempfile.TemporaryDirectory() as folder:
         logs = Path(folder)

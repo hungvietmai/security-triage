@@ -24,9 +24,11 @@ from app.triage.sinks_python import locate_python_sinks
 from app.workflows.scans.analysis import scan_language, scan_language_evidence
 from app.workflows.scans.families import (
     COMPOSITION_VERSION,
+    NOT_RANKED_DECISION,
     UNRESOLVED_DECISION,
     CompositeResult,
     FamilyResult,
+    HeldUnits,
     check_conservation,
     compose,
     scan_language_families,
@@ -213,6 +215,10 @@ class Tools:
         if self.path_pass == "failed":
             raise RuntimeError("Evidence queries produced no SARIF output")
         alerts = self._path_alerts(kwargs["name"])
+        # Like the real pass: its SARIF is a file of its own next to the other tools' output.
+        (kwargs["output"] / f"{kwargs['name']}.sarif").write_text(
+            '{"runs": []}\n', encoding="utf-8"
+        )
         record = {**STEP, "status": self.path_pass, "seconds": 7.25, "raw_findings": len(alerts)}
         return record, alerts, self.path_pass == "completed"
 
@@ -350,10 +356,22 @@ def test_every_finding_is_kept_once_and_no_unit_mixes_families(tmp_path):
     assert result.conservation == {
         "raw_findings": 13,
         "families": {
-            "command-injection": {"routed": 6, "in_units": 6, "unranked": 0, "units": 2},
-            "path-traversal": {"routed": 7, "in_units": 7, "unranked": 0, "units": 4},
+            "command-injection": {
+                "routed": 6,
+                "in_units": 6,
+                "not_ranked": 0,
+                "units": 2,
+                "held_units": 0,
+            },
+            "path-traversal": {
+                "routed": 7,
+                "in_units": 7,
+                "not_ranked": 0,
+                "units": 4,
+                "held_units": 0,
+            },
         },
-        "unassigned": {"routed": 0, "in_units": 0, "unranked": 0, "units": 0},
+        "unassigned": {"routed": 0, "units": 0},
     }
     family_of = {record["raw_id"]: record["analysis_family"] for record in result.classification}
     assert len(family_of) == len(result.findings) == 13
@@ -471,15 +489,33 @@ def test_an_unusable_path_pass_ranks_no_path_alert_and_leaves_the_command_family
     path = _family(result, "path-traversal")
     assert (path.status, path.units, path.error) == (path_pass, [], None)
     assert result.status == "partial"
-    # A partial pass still reported alerts: they stay on record, unranked, never hidden.
-    routed = 7 if path_pass == "partial" else 0
+    # A partial pass still reported alerts. The member ranks none of them, as it would
+    # alone; the composition keeps each reported location as a unit for a reviewer.
+    routed, locations = (7, 4) if path_pass == "partial" else (0, 0)
     assert result.conservation["families"]["path-traversal"] == {
         "routed": routed,
         "in_units": 0,
-        "unranked": routed,
+        "not_ranked": routed,
         "units": 0,
+        "held_units": locations,
     }
     assert len(result.findings) == 6 + routed
+    held = [part for part in result.held if part.family == "path-traversal"]
+    assert len(held) == (1 if routed else 0)
+    for part in held:
+        assert sorted(raw for unit in part.units for raw in unit["raw_finding_ids"]) == sorted(
+            path.raw_finding_ids
+        )
+        for assessment in part.assessments:
+            assert (
+                assessment["priority"],
+                assessment["disposition"],
+                assessment["decision_id"],
+                assessment["analysis_family"],
+            ) == ("U", "review", NOT_RANKED_DECISION, "path-traversal")
+            assert assessment["adjudication"]["kept_because"] == ["family_not_ranked"]
+            assert assessment["adjudication"]["rules"] == []
+            assert "chạy dở" in assessment["reason"]
     assert result.steps[PASS]["status"] == path_pass
 
 
@@ -542,7 +578,15 @@ def test_an_unexpected_rule_fails_its_family_only_and_its_alerts_stay_on_record(
             "pass_provenance",
         )
         assert record["mapped_cwes"] == [] and record["reported_cwes"] == ["cwe-022"]
-    assert result.conservation["families"]["path-traversal"]["unranked"] == 7
+    assert result.conservation["families"]["path-traversal"]["not_ranked"] == 7
+    # The failed member's alerts are still reviewable: one unit per reported location.
+    (held,) = result.held
+    assert (held.family, len(held.units)) == ("path-traversal", 4)
+    assert {a["decision_id"] for a in held.assessments} == {NOT_RANKED_DECISION}
+    assert all("Unexpected rule" in a["reason"] for a in held.assessments)
+    # Held units never share an ID with a member's unit or with each other.
+    ids = [unit["unit_id"] for unit in [*held.units, *command.units]]
+    assert len(set(ids)) == len(ids)
 
 
 def test_a_finding_without_a_family_is_kept_alone_at_priority_u(tmp_path):
@@ -573,12 +617,8 @@ def test_a_finding_without_a_family_is_kept_alone_at_priority_u(tmp_path):
     assert assessment["adjudication"]["rules"] == []
     assert assessment["adjudication"]["kept_because"] == ["rule_not_claimed"]
     assert assessment["finding_evidence"] == [record]
-    assert result.conservation["unassigned"] == {
-        "routed": 1,
-        "in_units": 1,
-        "unranked": 0,
-        "units": 1,
-    }
+    assert result.conservation["unassigned"] == {"routed": 1, "units": 1}
+    assert assessment["analysis_family"] is None
     # It is not merged into the command call it sits in, and no family lost anything else.
     command = _family(result, "command-injection")
     assert all("semgrep:0:2" not in unit["raw_finding_ids"] for unit in command.units)
@@ -622,7 +662,7 @@ def test_a_composite_scan_writes_its_record_and_each_familys_own_files(tmp_path)
         (output / "families" / "path-traversal" / "run.json").read_text(encoding="utf-8")
     )
     assert sorted(path_run["steps"]) == ["codeql", "codeql-create", "codeql-version"]
-    assert not (output / "families" / "unassigned").exists()
+    assert not (output / "held").exists()
     assert not (output / "units.json").exists()
 
 
@@ -699,9 +739,24 @@ def test_conservation_rejects_lost_duplicated_and_misplaced_findings():
     assert check_conservation(findings, classified, [whole], [])["families"]["x"] == {
         "routed": 2,
         "in_units": 2,
-        "unranked": 0,
+        "not_ranked": 0,
         "units": 1,
+        "held_units": 0,
     }
+    # A family that ranked nothing has all its findings in units held for it.
+    kept = HeldUnits("x", [{"raw_finding_ids": ["a:0:0", "a:0:1"]}], [])  # type: ignore[typeddict-item]
+    assert check_conservation(findings, classified, [family("x", [])], [kept])["families"]["x"] == {
+        "routed": 2,
+        "in_units": 0,
+        "not_ranked": 2,
+        "units": 0,
+        "held_units": 1,
+    }
+    with pytest.raises(RuntimeError, match="Composite conservation failed for x"):
+        # Ranked by the member and held as well: the finding would be in two units.
+        check_conservation(findings, classified, [whole], [kept])
+    with pytest.raises(RuntimeError, match="missing=\\['a:0:0', 'a:0:1'\\]"):
+        check_conservation(findings, classified, [family("x", [])], [])
     with pytest.raises(RuntimeError, match="missing=\\['a:0:1'\\]"):
         check_conservation(
             findings, classified, [family("x", [{"raw_finding_ids": ["a:0:0"]}])], []

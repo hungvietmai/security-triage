@@ -8,6 +8,10 @@ Two kinds exist. A priority profile (no "kind") runs Semgrep and CodeQL, optiona
 screening tools Bandit and ESLint, and ranks units with a priority policy. A "safety-evidence"
 profile runs a baseline query and the same query with safety-evidence barriers from one pinned
 pack; the evidence query's alerts rank the baseline's.
+
+A third kind, "composite", runs no rules of its own: it pins the manifests of member profiles,
+one per analysis family, that are scanned together on one tool run. Each member stays the
+profile it is, with its own pinned rules, policy and filter conditions.
 """
 
 from __future__ import annotations
@@ -60,9 +64,31 @@ class EvidenceProfile:
 
 
 AnyProfile = ScanProfile | EvidenceProfile
+
+
+@dataclass(frozen=True, slots=True)
+class CompositeProfile:
+    """Member profiles scanned together; `members` is (analysis family, profile), in order."""
+
+    profile_id: str
+    manifest_sha256: str
+    root: Path
+    members: tuple[tuple[str, AnyProfile], ...]
+    # Names how members are combined; recorded with every scan (see workflows/scans/families).
+    composition: str
+    specification_sha256: str
+
+    @property
+    def configs(self) -> dict[str, dict[str, Any]]:
+        """Language configs of the member that runs the scanners: the languages a scan covers."""
+        return self.members[0][1].configs
+
+
+LoadedProfile = AnyProfile | CompositeProfile
 # Scanners a priority profile's language config may add to Semgrep and CodeQL.
 SCREENING_TOOLS = ("bandit", "eslint")
 EVIDENCE_KIND = "safety-evidence"
+COMPOSITE_KIND = "composite"
 
 
 def _sha256(data: bytes) -> str:
@@ -97,17 +123,71 @@ def _pinned(files: dict[str, bytes], relative: str) -> bytes:
     return files[relative]
 
 
-def load_any_profile(root: Path, manifest: str) -> AnyProfile:
-    """Load a profile of either kind; its "kind" field selects the loader."""
+def _kind(root: Path, manifest: str) -> object:
     try:
-        kind = json.loads(_read(root.resolve(), manifest)).get("kind")
+        return json.loads(_read(root.resolve(), manifest)).get("kind")
     except (AttributeError, json.JSONDecodeError) as exc:
         raise ProfileError(f"Malformed scan profile: {exc!r}") from exc
+
+
+def load_member_profile(root: Path, manifest: str) -> AnyProfile:
+    """Load a profile that scans by itself; its "kind" field selects the loader."""
+    kind = _kind(root, manifest)
     if kind == EVIDENCE_KIND:
         return load_evidence_profile(root, manifest)
     if kind is not None:
         raise ProfileError(f"Unknown profile kind: {kind!r}")
     return load_profile(root, manifest)
+
+
+def load_any_profile(root: Path, manifest: str) -> LoadedProfile:
+    """Load a profile of any kind; its "kind" field selects the loader."""
+    if _kind(root, manifest) == COMPOSITE_KIND:
+        return load_composite_profile(root, manifest)
+    return load_member_profile(root, manifest)
+
+
+def load_composite_profile(root: Path, manifest: str) -> CompositeProfile:
+    """Verify the pinned member manifests, then load every member with its own loader.
+
+    The composite pins each member's manifest by hash and the member's loader verifies what
+    that manifest pins, so a scan uses exactly the bytes the member profile uses alone. The
+    first member runs the scanners; a member cannot itself be a composite.
+    """
+    root = root.resolve()
+    try:
+        manifest_bytes, raw, files = _verified(root, manifest)
+        if raw.get("kind") != COMPOSITE_KIND or raw.get("schema") != 2:
+            raise ProfileError("Not a composite profile of schema 2")
+        entries = raw["members"]
+        if not isinstance(entries, list) or not entries:
+            raise ProfileError("A composite profile needs at least one member")
+        members: list[tuple[str, AnyProfile]] = []
+        for entry in entries:
+            family, path = entry["family"], entry["profile"]
+            if not isinstance(family, str) or not family or not isinstance(path, str):
+                raise ProfileError("A member needs an analysis family and a profile manifest")
+            _pinned(files, path)
+            member = load_member_profile(root, path)
+            if entry["profile_id"] != member.profile_id:
+                raise ProfileError(f"Member {path} is not profile {entry['profile_id']}")
+            members.append((family, member))
+        families = [family for family, _ in members]
+        if len(set(families)) != len(families):
+            raise ProfileError("A composite profile takes one member per analysis family")
+        composition = raw["composition"]
+        if not isinstance(composition, str) or not composition:
+            raise ProfileError("A composite profile names its composition version")
+        return CompositeProfile(
+            profile_id=raw["profile_id"],
+            manifest_sha256=_sha256(manifest_bytes),
+            root=root,
+            members=tuple(members),
+            composition=composition,
+            specification_sha256=_sha256(_pinned(files, raw["specification"])),
+        )
+    except (KeyError, TypeError, AttributeError, json.JSONDecodeError) as exc:
+        raise ProfileError(f"Malformed scan profile: {exc!r}") from exc
 
 
 def load_evidence_profile(root: Path, manifest: str) -> EvidenceProfile:

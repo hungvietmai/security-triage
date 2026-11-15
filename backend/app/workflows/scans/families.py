@@ -11,13 +11,18 @@ assessments equal what scanning with that member's profile alone produces. The o
 difference is the raw-ID prefix of a pass that shares the database (see `PASS_PREFIX`).
 
 Routing happens before any merging, so an alert of one family can never be merged into a
-unit of another. A finding whose family cannot be named stays "unassigned": its own unit,
-priority U, always in the review list, with every label kept.
+unit of another. Every finding ends in exactly one unit. Two kinds of unit are made here and
+not by a member; both sit at priority U in the review list and are never filtered:
+
+  unassigned   the finding's family cannot be named (F00_FAMILY_UNRESOLVED);
+  not ranked   the member ranked none of its family's findings, because its run was
+               incomplete or its assessment failed (F10_FAMILY_NOT_RANKED).
 """
 
 from __future__ import annotations
 
 import dataclasses
+import hashlib
 import json
 import re
 import shutil
@@ -31,9 +36,9 @@ from app.core.config import Settings
 from app.scanners.codeql import query_pack_for_language, run_codeql_evidence
 from app.scanners.pipeline import PipelineResult, PipelineStatus, run_pipeline
 from app.scanners.process import InvokeCallable, ProcessRecord, invoke
-from app.scanners.profile import AnyProfile, EvidenceProfile, ScanProfile
+from app.scanners.profile import AnyProfile, CompositeProfile, EvidenceProfile, ScanProfile
 from app.scanners.sarif import Finding
-from app.triage.reconcile import RECONCILIATION_VERSION, ReconciledUnit, reconcile_findings
+from app.triage.reconcile import ReconciledUnit, reconcile_findings
 from app.workflows.scans.analysis import RunPipeline, scan_language, scan_language_evidence
 from app.workflows.scans.classification import (
     Claim,
@@ -47,6 +52,29 @@ from app.workflows.scans.results import LanguageResult
 COMPOSITION_VERSION = "family-composition-v0.1"
 UNASSIGNED = "unassigned"
 UNRESOLVED_DECISION = "F00_FAMILY_UNRESOLVED"
+NOT_RANKED_DECISION = "F10_FAMILY_NOT_RANKED"
+NOT_RANKED = "family_not_ranked"
+# How a unit made here was located: at the place the tool reported, with no sink behind it.
+HELD_LOCATOR_VERSION = "reported-location"
+
+
+@dataclass(frozen=True, slots=True)
+class Family:
+    """An analysis family: the semantic group one member profile handles."""
+
+    name: str
+    cwe: str
+    label: str
+    # The kind of profile whose entry point assesses this family's findings.
+    profile_type: type[ScanProfile] | type[EvidenceProfile]
+
+
+# Every family a scan can contain. A new family is added here only with its own member profile
+# and, before it may filter anything, its own evaluated evidence.
+FAMILIES = {
+    "command-injection": Family("command-injection", "CWE-78", "Command injection", ScanProfile),
+    "path-traversal": Family("path-traversal", "CWE-22", "Path traversal", EvidenceProfile),
+}
 # The analysis family each pinned profile handles. A profile that is not listed cannot be a
 # member: its family, and with it the conditions under which it may filter, is unknown.
 FAMILY_OF_PROFILE = {
@@ -111,6 +139,15 @@ class FamilyResult:
 
 
 @dataclass(frozen=True, slots=True)
+class HeldUnits:
+    """Units made by the composition for findings no member ranked; `family` may be UNASSIGNED."""
+
+    family: str
+    units: list[ReconciledUnit]
+    assessments: list[dict[str, Any]]
+
+
+@dataclass(frozen=True, slots=True)
 class CompositeResult:
     language: str
     status: PipelineStatus
@@ -120,9 +157,41 @@ class CompositeResult:
     findings: list[Finding]
     classification: list[Classification]
     families: list[FamilyResult]
-    unassigned_units: list[ReconciledUnit]
-    unassigned_assessments: list[dict[str, Any]]
+    # Findings kept outside the members' results: without a family, or of an unranked family.
+    held: list[HeldUnits]
     conservation: dict[str, Any]
+
+    def _held(self, family: str) -> HeldUnits | None:
+        return next((part for part in self.held if part.family == family), None)
+
+    @property
+    def unassigned_units(self) -> list[ReconciledUnit]:
+        part = self._held(UNASSIGNED)
+        return part.units if part is not None else []
+
+    @property
+    def unassigned_assessments(self) -> list[dict[str, Any]]:
+        part = self._held(UNASSIGNED)
+        return part.assessments if part is not None else []
+
+
+def _ordered(members: Sequence[Member]) -> list[Member]:
+    """One member per family, the member that runs the scanners first."""
+    for member in members:
+        family = FAMILIES.get(member.family)
+        if family is None or FAMILY_OF_PROFILE.get(member.profile.profile_id) != member.family:
+            raise ValueError(
+                f"Profile {member.profile.profile_id} is not a member of family {member.family!r}"
+            )
+        if not isinstance(member.profile, family.profile_type):
+            raise ValueError(f"Family {member.family} cannot assess {member.profile.profile_id}")
+    families = [member.family for member in members]
+    if len(set(families)) != len(families):
+        raise ValueError("A composite scan takes one member per analysis family")
+    primary = [member for member in members if isinstance(member.profile, ScanProfile)]
+    if len(primary) != 1:
+        raise ValueError("A composite scan needs exactly one member that runs the scanners")
+    return primary + [member for member in members if member is not primary[0]]
 
 
 def compose(profiles: Sequence[AnyProfile]) -> list[Member]:
@@ -138,13 +207,19 @@ def compose(profiles: Sequence[AnyProfile]) -> list[Member]:
         if family is None:
             raise ValueError(f"Profile has no analysis family: {profile.profile_id}")
         members.append(Member(family, profile))
-    families = [member.family for member in members]
-    if len(set(families)) != len(families):
-        raise ValueError("A composite scan takes one member per analysis family")
-    primary = [member for member in members if isinstance(member.profile, ScanProfile)]
-    if len(primary) != 1:
-        raise ValueError("A composite scan needs exactly one member that runs the scanners")
-    return primary + [member for member in members if member is not primary[0]]
+    return _ordered(members)
+
+
+def members_of(profile: CompositeProfile) -> list[Member]:
+    """The members a composite profile pins, checked against the families this code handles.
+
+    The manifest names each member's family; a family this code does not know, a profile that
+    belongs to another family, or another way of combining members is refused, so a scan never
+    runs a handler its manifest did not ask for.
+    """
+    if profile.composition != COMPOSITION_VERSION:
+        raise ValueError(f"Unknown composition version: {profile.composition}")
+    return _ordered([Member(family, member) for family, member in profile.members])
 
 
 def pass_name(member: Member) -> str:
@@ -191,35 +266,50 @@ def _claim(member: Member, language: str) -> Claim:
     return pinned_rules_claim(rules, basis=f"pinned_query_id:{profile.profile_id}")
 
 
-def _unassigned(
-    findings: Sequence[Finding], records: Mapping[str, Classification]
-) -> tuple[list[ReconciledUnit], list[dict[str, Any]]]:
-    """One unit per reported location for findings no family could be named for."""
-    if not findings:
-        return [], []
+def _held_units(
+    findings: Sequence[Finding],
+    records: Mapping[str, Classification],
+    *,
+    family: str,
+    decision: str,
+    codes: Sequence[str] | None,
+    reason: str,
+) -> HeldUnits:
+    """One unit per reported location for findings of `family` that no member ranked.
+
+    `codes` are the reasons the units are kept; None takes each finding's own reason for
+    having no family. The reason text ends with what always holds for such a unit.
+    """
     # No sink is offered, so nothing is merged into a call: each location stands alone.
     units = reconcile_findings(findings, [], {})
     tools = {finding["raw_id"]: finding["tool"] for finding in findings}
     assessments = []
     for unit in units:
+        # The same location may be held for another family too; the family is part of the ID.
+        identity = f"{COMPOSITION_VERSION}\n{family}\n{unit['unit_id']}"
+        unit["unit_id"] = hashlib.sha256(identity.encode()).hexdigest()
         evidence = [records[raw_id] for raw_id in unit["raw_finding_ids"]]
-        reasons = sorted({str(record["unresolved_reason"]) for record in evidence})
-        reason = "Chưa xác định được nhóm phân tích: " + "; ".join(
-            _UNRESOLVED_REASONS[code] for code in reasons
+        kept = (
+            list(codes)
+            if codes is not None
+            else sorted({str(record["unresolved_reason"]) for record in evidence})
         )
-        reason += ". Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng."
+        text = reason
+        if codes is None:
+            text += ": " + "; ".join(_UNRESOLVED_REASONS[code] for code in kept)
+        text += ". Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng."
         unit_tools = sorted({tools[raw_id] for raw_id in unit["raw_finding_ids"]})
         assessments.append(
             {
                 "unit_id": unit["unit_id"],
-                "analysis_family": None,
+                "analysis_family": None if family == UNASSIGNED else family,
                 "priority": "U",
-                "decision_id": UNRESOLVED_DECISION,
-                "matched_conditions": ["family_unresolved", *reasons],
-                "reason": reason,
+                "decision_id": decision,
+                "matched_conditions": [decision.split("_", 1)[1].lower(), *kept],
+                "reason": text,
                 "tools": unit_tools,
-                "predicate_values": {"family_unresolved": True},
-                "unknown_fields": ["analysis_family"],
+                "predicate_values": {"held_by_composition": True},
+                "unknown_fields": ["analysis_family"] if family == UNASSIGNED else ["assessment"],
                 "finding_evidence": evidence,
                 "candidate": {
                     "key": unit["unit_id"],
@@ -234,33 +324,33 @@ def _unassigned(
                     "status": "kept",
                     "rule": None,
                     "rules": [],
-                    "kept_because": reasons,
-                    "reason": reason,
+                    "kept_because": kept,
+                    "reason": text,
                     "evidence": [],
                 },
-                "policy_id": "family-routing",
+                "policy_id": "family-composition",
                 "policy_version": COMPOSITION_VERSION,
                 "policy_sha256": "",
                 "spec_sha256": "",
                 "rule_claims_version": "not-applicable",
                 "rule_claims_sha256": "",
-                "reconciler_version": RECONCILIATION_VERSION,
+                "reconciler_version": COMPOSITION_VERSION,
             }
         )
-    return units, assessments
+    return HeldUnits(family, units, assessments)
 
 
 def check_conservation(
     findings: Sequence[Mapping[str, Any]],
     classification: Sequence[Classification],
     families: Sequence[FamilyResult],
-    unassigned_units: Sequence[Mapping[str, Any]],
+    held: Sequence[HeldUnits],
 ) -> dict[str, Any]:
-    """Every finding is classified once and sits in one unit of its own family, or is unranked.
+    """Every finding is classified once and sits in exactly one unit of its own family.
 
-    "Unranked" is a family that produced no unit at all for its findings (its run was
-    incomplete or its member failed); the findings stay on record. A family that ranked some
-    of its findings but not others, or a unit holding another family's finding, is an error.
+    A family's findings are either all in the member's units or all in units held for it
+    ("not ranked"). A family that ranked some findings but not others, a finding in two units,
+    a finding in no unit, or a unit holding another family's finding is an error.
     """
     raw_ids = [str(finding["raw_id"]) for finding in findings]
     if len(set(raw_ids)) != len(raw_ids):
@@ -268,36 +358,40 @@ def check_conservation(
         raise RuntimeError(f"Composite scan produced duplicate raw IDs: {duplicated}")
     if [record["raw_id"] for record in classification] != raw_ids:
         raise RuntimeError("Composite scan did not classify every finding exactly once")
-    routed: dict[str | None, list[str]] = {}
+    routed: dict[str, list[str]] = {}
     for record in classification:
-        routed.setdefault(record["analysis_family"], []).append(record["raw_id"])
+        routed.setdefault(record["analysis_family"] or UNASSIGNED, []).append(record["raw_id"])
+    held_by = {part.family: part.units for part in held}
 
-    def account(name: str, mine: Sequence[str], units: Sequence[Mapping[str, Any]]) -> Any:
-        in_units = Counter(str(raw_id) for unit in units for raw_id in unit["raw_finding_ids"])
-        if in_units and in_units != Counter(mine):
-            missing = sorted((Counter(mine) - in_units).elements())
-            foreign = sorted((in_units - Counter(mine)).elements())
+    def count(units: Sequence[Mapping[str, Any]]) -> Counter[str]:
+        return Counter(str(raw_id) for unit in units for raw_id in unit["raw_finding_ids"])
+
+    def account(name: str, units: Sequence[Mapping[str, Any]]) -> dict[str, int]:
+        mine = Counter(routed.get(name, []))
+        ranked, kept = count(units), count(held_by.get(name, []))
+        if ranked + kept != mine or (ranked and kept):
+            missing = sorted((mine - ranked - kept).elements())
+            foreign = sorted((ranked + kept - mine).elements())
             raise RuntimeError(
                 f"Composite conservation failed for {name}: missing={missing}, foreign={foreign}"
             )
         return {
-            "routed": len(mine),
-            "in_units": sum(in_units.values()),
-            "unranked": 0 if in_units else len(mine),
+            "routed": sum(mine.values()),
+            "in_units": sum(ranked.values()),
+            "not_ranked": sum(kept.values()),
             "units": len(units),
+            "held_units": len(held_by.get(name, [])),
         }
 
-    known = {family.family for family in families}
-    stray = sorted(str(family) for family in routed if family is not None and family not in known)
+    known = {family.family for family in families} | {UNASSIGNED}
+    stray = sorted(family for family in {*routed, *held_by} if family not in known)
     if stray:
         raise RuntimeError(f"Findings were routed to families without a member: {stray}")
+    unassigned = account(UNASSIGNED, [])
     return {
         "raw_findings": len(raw_ids),
-        "families": {
-            family.family: account(family.family, routed.get(family.family, []), family.units)
-            for family in families
-        },
-        UNASSIGNED: account(UNASSIGNED, routed.get(None, []), unassigned_units),
+        "families": {family.family: account(family.family, family.units) for family in families},
+        UNASSIGNED: {"routed": unassigned["routed"], "units": unassigned["held_units"]},
     }
 
 
@@ -317,10 +411,11 @@ def scan_language_families(
 ) -> CompositeResult:
     """Run the scanners once for `language` and let every member assess its family's findings.
 
-    `members` comes from `compose`. `output` receives the tools' files, the CodeQL database,
-    the combined `findings.json`, `classification.json` and `run.json`, and one folder per
-    family under `families/` with that member's own files. `pass_members` overrides which
-    families a tool pass serves; by default every pass serves the member that configured it.
+    `members` comes from `compose` or `members_of`. `output` receives the tools' files, the
+    CodeQL database, the combined `findings.json`, `classification.json` and `run.json`, one
+    folder per family under `families/` with that member's own files, and one folder per
+    family under `held/` for units made here. `pass_members` overrides which families a tool
+    pass serves; by default every pass serves the member that configured it.
     """
     taking_part = _participating(members, language)
     primary, others = taking_part[0], taking_part[1:]
@@ -342,7 +437,8 @@ def scan_language_families(
         records.extend(classify_findings(found, pass_of=passes, pass_members=serves, claims=claims))
 
     def routed_to(family: str) -> list[Finding]:
-        mine = {record["raw_id"] for record in records if record["analysis_family"] == family}
+        wanted = None if family == UNASSIGNED else family
+        mine = {record["raw_id"] for record in records if record["analysis_family"] == wanted}
         return [finding for finding in findings if finding["raw_id"] in mine]
 
     def primary_pipeline(**kwargs: Any) -> PipelineResult:
@@ -394,13 +490,12 @@ def scan_language_families(
             classify(found, {finding["raw_id"]: name for finding in found})
             member_steps["codeql"] = record
             status = record["status"]
+            usable = status in {"completed", "partial"}
             return PipelineResult(
-                status=status if status in {"completed", "partial"} else "failed",  # type: ignore[arg-type]
+                status=status if usable else "failed",  # type: ignore[arg-type]
                 steps=member_steps,
                 findings=routed_to(member.family),
-                codeql_query_files=dict(kwargs["codeql_query_sha256"])
-                if status in {"completed", "partial"}
-                else None,
+                codeql_query_files=dict(kwargs["codeql_query_sha256"]) if usable else None,
                 codeql_pack_manifest=manifest,
             )
 
@@ -477,16 +572,43 @@ def scan_language_families(
         run_member(member, run_evidence)
 
     by_raw_id = {record["raw_id"]: record for record in records}
-    unresolved = [f for f in findings if by_raw_id[f["raw_id"]]["analysis_family"] is None]
-    unassigned_units, unassigned_assessments = _unassigned(unresolved, by_raw_id)
-    conservation = check_conservation(findings, records, results, unassigned_units)
+    held: list[HeldUnits] = []
+    unresolved = routed_to(UNASSIGNED)
+    if unresolved:
+        held.append(
+            _held_units(
+                unresolved,
+                by_raw_id,
+                family=UNASSIGNED,
+                decision=UNRESOLVED_DECISION,
+                codes=None,
+                reason="Chưa xác định được nhóm phân tích",
+            )
+        )
+    for family in results:
+        mine = routed_to(family.family)
+        if mine and not family.units:
+            # The member ranked nothing (as it would alone); the alerts still need a reviewer.
+            state = "chạy dở" if family.status == "partial" else "thất bại"
+            detail = f" ({family.error})" if family.error else ""
+            held.append(
+                _held_units(
+                    mine,
+                    by_raw_id,
+                    family=family.family,
+                    decision=NOT_RANKED_DECISION,
+                    codes=[NOT_RANKED],
+                    reason=f"Nhóm {family.family} {state}{detail} nên chưa xếp hạng cảnh báo này",
+                )
+            )
+    conservation = check_conservation(findings, records, results, held)
     status = _overall([family.status for family in results])
 
-    if unassigned_units:
-        folder = output / "families" / UNASSIGNED
+    for part in held:
+        folder = output / "held" / part.family
         folder.mkdir(parents=True)
-        _write_json(folder / "units.json", unassigned_units)
-        _write_json(folder / "assessments.json", unassigned_assessments)
+        _write_json(folder / "units.json", part.units)
+        _write_json(folder / "assessments.json", part.assessments)
     _write_json(output / "findings.json", findings)
     _write_json(output / "classification.json", records)
     _write_json(
@@ -522,7 +644,113 @@ def scan_language_families(
         findings=findings,
         classification=records,
         families=results,
-        unassigned_units=unassigned_units,
-        unassigned_assessments=unassigned_assessments,
+        held=held,
         conservation=conservation,
+    )
+
+
+def family_summaries(result: CompositeResult, members: Sequence[Member]) -> list[dict[str, Any]]:
+    """What each family of one language run did, for the scan's provenance record."""
+    profiles = {member.family: member.profile for member in members}
+    held = {part.family: len(part.units) for part in result.held}
+    summaries = []
+    for family in result.families:
+        profile = profiles[family.family]
+        summaries.append(
+            {
+                "family": family.family,
+                "cwe": FAMILIES[family.family].cwe,
+                "profile_id": profile.profile_id,
+                "profile_sha256": profile.manifest_sha256,
+                "status": family.status,
+                "error": family.error,
+                "unit_version": family.result.unit_version if family.result else None,
+                "policy_versions": sorted({a["policy_version"] for a in family.assessments}),
+                "raw_findings": len(family.raw_finding_ids),
+                "units": len(family.units),
+                "held_units": held.get(family.family, 0),
+                # The steps whose results are this family's evidence, with their state.
+                "evidence_steps": {
+                    name: step["status"]
+                    for name, step in result.steps.items()
+                    if family.family in step["serves"] and "evidence" in step["kind"]
+                },
+            }
+        )
+    if UNASSIGNED in held:
+        summaries.append(
+            {
+                "family": UNASSIGNED,
+                "cwe": None,
+                "profile_id": None,
+                "profile_sha256": None,
+                "status": "completed",
+                "error": None,
+                "unit_version": COMPOSITION_VERSION,
+                "policy_versions": [COMPOSITION_VERSION],
+                "raw_findings": result.conservation[UNASSIGNED]["routed"],
+                "units": 0,
+                "held_units": held[UNASSIGNED],
+                "evidence_steps": {},
+            }
+        )
+    return summaries
+
+
+def to_language_result(result: CompositeResult) -> LanguageResult:
+    """A composite run in the shape persistence takes: one language, one part per family.
+
+    The tool runs and findings belong to the language; the units and assessments belong to
+    the family that produced them, each with its own unit and locator version.
+    """
+    versions: dict[str, str] = {}
+    parts: list[LanguageResult] = []
+    for family in result.families:
+        if family.result is None:
+            continue
+        versions.update(family.result.tool_versions)
+        if family.units:
+            parts.append(dataclasses.replace(family.result, family=family.family))
+    passes = tuple(
+        name
+        for name, step in result.steps.items()
+        if step["kind"] == "detection+evidence" and name.startswith(PASS_PREFIX)
+    )
+    for name in passes:
+        versions[name] = versions.get("codeql", "")
+    steps: dict[str, ProcessRecord] = {
+        name: step  # type: ignore[misc]
+        for name, step in result.steps.items()
+    }
+    pipeline = PipelineResult(
+        status=result.status,
+        steps=steps,
+        findings=result.findings,
+        codeql_query_files=None,
+        codeql_pack_manifest=None,
+    )
+    for part in result.held:
+        parts.append(
+            LanguageResult(
+                result.language,
+                pipeline,
+                versions,
+                part.units,
+                part.assessments,
+                unit_version=COMPOSITION_VERSION,
+                locator_version=HELD_LOCATOR_VERSION,
+                family=part.family,
+            )
+        )
+    return LanguageResult(
+        result.language,
+        pipeline,
+        versions,
+        [unit for part in parts for unit in part.units],
+        [assessment for part in parts for assessment in part.assessments],
+        unit_version=COMPOSITION_VERSION,
+        parts=tuple(parts),
+        passes=passes,
+        finding_pass={record["raw_id"]: record["tool_pass"] for record in result.classification},
+        classification={record["raw_id"]: dict(record) for record in result.classification},
     )

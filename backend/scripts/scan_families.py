@@ -43,7 +43,7 @@ from app.scanners.acquisition import (
 from app.scanners.codeql import run_codeql_evidence
 from app.scanners.pipeline import run_pipeline
 from app.scanners.process import InvokeCallable, invoke
-from app.scanners.profile import EvidenceProfile
+from app.scanners.profile import EvidenceProfile, load_member_profile
 from app.workflows.scans.analysis import RunPipeline, scan_language, scan_language_evidence
 from app.workflows.scans.families import (
     FAMILY_OF_PROFILE,
@@ -53,7 +53,6 @@ from app.workflows.scans.families import (
     compose,
     scan_language_families,
 )
-from app.workflows.scans.task import load_scan_profile
 
 Acquire = Callable[..., AcquiredSource]
 MEMBER_FILES = ("units.json", "assessments.json", "findings.json")
@@ -100,7 +99,12 @@ def run(
     if mode not in {"composite", "separate"}:
         raise ValueError(f"Unknown mode: {mode}")
     settings = settings or get_settings()
-    members = compose([load_scan_profile(settings, profile_id) for profile_id in profile_ids])
+    members = compose(
+        [
+            load_member_profile(settings.triage_root, settings.scan_profiles[profile_id])
+            for profile_id in profile_ids
+        ]
+    )
     output.mkdir(parents=True, exist_ok=False)
     limits = AcquisitionLimits(MAX_ARCHIVE, MAX_UNPACKED, MAX_FILES)
     runs: list[dict[str, Any]] = []
@@ -368,13 +372,21 @@ def _conservation(folder: Path) -> dict[str, Any]:
     placed: Counter[str] = Counter()
     mixed = 0
     foreign = 0
-    families = sorted(path.name for path in (folder / "families").iterdir() if path.is_dir())
-    for family in families:
-        units_file = folder / "families" / family / "units.json"
+    # A member's own units are under families/; units the composition made for findings no
+    # member ranked are under held/, by the family they are held for.
+    folders = [
+        path
+        for parent in ("families", "held")
+        if (folder / parent).is_dir()
+        for path in sorted((folder / parent).iterdir())
+        if path.is_dir()
+    ]
+    for path in folders:
+        units_file = path / "units.json"
         for unit in _read_json(units_file) if units_file.is_file() else []:
             owners = {family_of[raw_id] for raw_id in unit["raw_finding_ids"]}
             mixed += len(owners) > 1
-            foreign += owners != {None if family == UNASSIGNED else family}
+            foreign += owners != {None if path.name == UNASSIGNED else path.name}
             placed.update(unit["raw_finding_ids"])
     raw_ids = [finding["raw_id"] for finding in findings]
     return {
