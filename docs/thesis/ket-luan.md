@@ -54,8 +54,8 @@ Các kết quả chính:
   trên mã thực tế thay vì benchmark.
 - Tiếp tục hoàn thiện đối sánh trên JavaScript: phiên bản 0.3 đã đưa 23 trong 37 cảnh báo ghép
   hụt về đúng lời gọi; phần còn lại cần cách biểu diễn một cảnh báo liên quan tới nhiều lời gọi.
-- Rà nốt 47 nhãn JavaScript "có lỗi" do trợ lý AI gán và gán nhãn một mẫu ứng viên trên mã
-  ứng dụng thật, để đo độ chính xác bằng nhãn đã kiểm; dùng một tập giữ lại mới cho các phiên
+- Gán nhãn một mẫu ứng viên trên mã ứng dụng thật với người rà độc lập với quy trình, để đo độ
+  chính xác ngoài dữ liệu phát triển; dùng một tập giữ lại mới cho các phiên
   bản sau.
 - Mở rộng sang nhóm lỗi khác theo cách đã làm với duyệt đường dẫn (CWE-22).
 - Cung cấp giao diện dòng lệnh để tích hợp vào quy trình tích hợp liên tục.
