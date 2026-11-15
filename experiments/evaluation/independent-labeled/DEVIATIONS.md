@@ -56,5 +56,9 @@ quả đã được xem, nên đây là **dữ liệu phát triển**, không c�
 - Trên cả 210 vị trí: F1 0,69 → 0,71.
 - Lượt quét vẫn `partial`, nên không quy tắc gạn nào hoạt động, kể cả G4; không vị trí có nhãn
   nào bị gạn. Đợt này vì thế không đo được G4.
+- Hai vị trí an toàn bị báo (`typescript/mcp/security/mcp-command-injection-typescript.ts`, dòng 46
+  và 64) là lời gọi `exec` do ESLint và luật luồng dữ liệu `detect-child-process` của Semgrep cùng
+  báo. Một công cụ khẳng định luồng dữ liệu ở đó, nên G4 sẽ giữ cả hai kể cả khi lượt quét hoàn
+  tất: đây là loại cảnh báo sai khác, không thuộc nhóm lệnh hằng.
 - 11 trong 25 vị trí JavaScript thuộc kiểm thử của các luật Semgrep mà profile đang chạy; ở đó
   Semgrep được chấm bằng kỳ vọng của chính nó.
