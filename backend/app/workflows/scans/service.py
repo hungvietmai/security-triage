@@ -14,6 +14,7 @@ from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.scanners.sources import github_coordinate, npm_coordinate
+from app.workflows.scans.detection import NO_FILTER_CONDITION
 from app.workflows.scans.exceptions import UnitNotFound
 from app.workflows.scans.families import (
     COMPOSITION_VERSION,
@@ -103,6 +104,8 @@ _EVIDENCE_INSUFFICIENT = {
     "literal_proof_without_second_source",
     "flow_rule_without_evidence_query",
     "evidence_baseline_does_not_report_this_alert",
+    # A family that is detected and kept: no filter condition exists, so no evidence either.
+    NO_FILTER_CONDITION,
 }
 _HELD_DECISIONS = (UNRESOLVED_DECISION, NOT_RANKED_DECISION)
 

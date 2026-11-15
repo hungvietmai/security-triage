@@ -1,0 +1,4479 @@
+{
+  "described": {
+    "disposition_counts": {
+      "filtered": 1,
+      "review": 9
+    },
+    "families": [
+      {
+        "cwe": "CWE-78",
+        "family": "command-injection",
+        "filtered": 0,
+        "held": 0,
+        "label": "Command injection",
+        "profile_id": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "review": 2,
+        "runs": [
+          {
+            "error": null,
+            "evidence_steps": {
+              "codeql-evidence": "completed",
+              "semgrep-evidence": "completed"
+            },
+            "language": "python",
+            "raw_findings": 6,
+            "status": "completed"
+          }
+        ],
+        "units": 2
+      },
+      {
+        "cwe": "CWE-22",
+        "family": "path-traversal",
+        "filtered": 1,
+        "held": 0,
+        "label": "Path traversal",
+        "profile_id": "path-traversal-v0.2",
+        "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+        "review": 3,
+        "runs": [
+          {
+            "error": null,
+            "evidence_steps": {
+              "codeql-path-traversal": "completed"
+            },
+            "language": "python",
+            "raw_findings": 7,
+            "status": "completed"
+          }
+        ],
+        "units": 4
+      },
+      {
+        "cwe": "CWE-89",
+        "family": "sql-injection",
+        "filtered": 0,
+        "held": 0,
+        "label": "SQL injection",
+        "profile_id": "sql-injection-v0.1",
+        "profile_sha256": "be69a770d1754c66b76466d066911ff0a606150a6c1d2d341e04e06be0647181",
+        "review": 4,
+        "runs": [
+          {
+            "error": null,
+            "evidence_steps": {},
+            "language": "python",
+            "raw_findings": 4,
+            "status": "completed"
+          }
+        ],
+        "units": 4
+      }
+    ],
+    "policy_version": "family-composition-v0.1",
+    "profile": "multi-cwe-v0.2",
+    "reconciler_version": "family-composition-v0.1",
+    "status": "completed",
+    "tool_runs": [
+      [
+        "python",
+        "bandit",
+        "completed",
+        "1.9.4"
+      ],
+      [
+        "python",
+        "codeql",
+        "completed",
+        "2.27.1"
+      ],
+      [
+        "python",
+        "codeql-evidence",
+        "completed",
+        "2.27.1"
+      ],
+      [
+        "python",
+        "codeql-path-traversal",
+        "completed",
+        "2.27.1"
+      ],
+      [
+        "python",
+        "codeql-sql-injection",
+        "completed",
+        "2.27.1"
+      ],
+      [
+        "python",
+        "semgrep",
+        "completed",
+        "1.178.0"
+      ],
+      [
+        "python",
+        "semgrep-evidence",
+        "completed",
+        "1.178.0"
+      ]
+    ],
+    "unit_counts": {
+      "P1": 3,
+      "P2": 2,
+      "P3": 0,
+      "P4": 1,
+      "U": 4
+    }
+  },
+  "report": {
+    "candidates": [
+      {
+        "analysis_family": "path-traversal",
+        "basis": "single_location",
+        "candidate_key": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+        "cwe": "CWE-22",
+        "disposition": "review",
+        "evidence_state": "not_refuted",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P1",
+        "raw_alerts": 2,
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "sink_kind": "codeql-path-injection-sink",
+        "start_line": 3,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "path-traversal",
+        "basis": "single_location",
+        "candidate_key": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+        "cwe": "CWE-22",
+        "disposition": "review",
+        "evidence_state": "not_refuted",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P1",
+        "raw_alerts": 2,
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "sink_kind": "codeql-path-injection-sink",
+        "start_line": 4,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "path-traversal",
+        "basis": "single_location",
+        "candidate_key": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+        "cwe": "CWE-22",
+        "disposition": "review",
+        "evidence_state": "not_refuted",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P1",
+        "raw_alerts": 2,
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "sink_kind": "codeql-path-injection-sink",
+        "start_line": 6,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "command-injection",
+        "basis": "same_call_site",
+        "candidate_key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+        "cwe": "CWE-78",
+        "disposition": "review",
+        "evidence_state": "not_refuted",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P2",
+        "raw_alerts": 3,
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+        "sink_kind": "os.system",
+        "start_line": 3,
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "command-injection",
+        "basis": "same_call_site",
+        "candidate_key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+        "cwe": "CWE-78",
+        "disposition": "review",
+        "evidence_state": "not_refuted",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P2",
+        "raw_alerts": 3,
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+        "sink_kind": "os.system",
+        "start_line": 6,
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "sql-injection",
+        "basis": "single_location",
+        "candidate_key": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+        "cwe": "CWE-89",
+        "disposition": "review",
+        "evidence_state": "insufficient",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "U",
+        "raw_alerts": 1,
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "sink_kind": "codeql-reported-sink",
+        "start_line": 1,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "sql-injection",
+        "basis": "single_location",
+        "candidate_key": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+        "cwe": "CWE-89",
+        "disposition": "review",
+        "evidence_state": "insufficient",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "U",
+        "raw_alerts": 1,
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "sink_kind": "codeql-reported-sink",
+        "start_line": 3,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "sql-injection",
+        "basis": "single_location",
+        "candidate_key": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+        "cwe": "CWE-89",
+        "disposition": "review",
+        "evidence_state": "insufficient",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "U",
+        "raw_alerts": 1,
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "sink_kind": "codeql-reported-sink",
+        "start_line": 4,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "sql-injection",
+        "basis": "single_location",
+        "candidate_key": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+        "cwe": "CWE-89",
+        "disposition": "review",
+        "evidence_state": "insufficient",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "U",
+        "raw_alerts": 1,
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "sink_kind": "codeql-reported-sink",
+        "start_line": 6,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "path-traversal",
+        "basis": "single_location",
+        "candidate_key": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+        "cwe": "CWE-22",
+        "disposition": "filtered",
+        "evidence_state": "refuted",
+        "filter_rule": "G1_CODEQL_SAFETY_EVIDENCE",
+        "filter_rules": [
+          "G1_CODEQL_SAFETY_EVIDENCE"
+        ],
+        "path": "app.py",
+        "priority": "P4",
+        "raw_alerts": 1,
+        "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+        "sink_kind": "codeql-path-injection-sink",
+        "start_line": 5,
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": 1
+      }
+    ],
+    "composition": {
+      "members": [
+        {
+          "family": "command-injection",
+          "profile_id": "command-injection-v0.3",
+          "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406"
+        },
+        {
+          "family": "path-traversal",
+          "profile_id": "path-traversal-v0.2",
+          "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e"
+        },
+        {
+          "family": "sql-injection",
+          "profile_id": "sql-injection-v0.1",
+          "profile_sha256": "be69a770d1754c66b76466d066911ff0a606150a6c1d2d341e04e06be0647181"
+        }
+      ],
+      "specification_sha256": "a96a2c8179c930b2e39a07bd57bf493e2c64ffe299b5c56b825f9285ba6fb1fe",
+      "version": "family-composition-v0.1"
+    },
+    "families": [
+      {
+        "candidates": 2,
+        "cwe": "CWE-78",
+        "detection_alerts": 6,
+        "evidence_results": 0,
+        "evidence_states": {
+          "not_refuted": 2
+        },
+        "family": "command-injection",
+        "filtered": 0,
+        "filtered_by_rule": {},
+        "label": "Command injection",
+        "main_list": 2,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 2,
+          "P3": 0,
+          "P4": 0,
+          "U": 0
+        },
+        "raw_alerts": 6,
+        "units": 2
+      },
+      {
+        "candidates": 4,
+        "cwe": "CWE-22",
+        "detection_alerts": 4,
+        "evidence_results": 3,
+        "evidence_states": {
+          "not_refuted": 3,
+          "refuted": 1
+        },
+        "family": "path-traversal",
+        "filtered": 1,
+        "filtered_by_rule": {
+          "G1_CODEQL_SAFETY_EVIDENCE": 1
+        },
+        "label": "Path traversal",
+        "main_list": 3,
+        "main_list_by_priority": {
+          "P1": 3,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0,
+          "U": 0
+        },
+        "raw_alerts": 7,
+        "units": 4
+      },
+      {
+        "candidates": 4,
+        "cwe": "CWE-89",
+        "detection_alerts": 4,
+        "evidence_results": 0,
+        "evidence_states": {
+          "insufficient": 4
+        },
+        "family": "sql-injection",
+        "filtered": 0,
+        "filtered_by_rule": {},
+        "label": "SQL injection",
+        "main_list": 4,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 0,
+          "P3": 0,
+          "P4": 0,
+          "U": 4
+        },
+        "raw_alerts": 4,
+        "units": 4
+      }
+    ],
+    "filtered_by_rule": {
+      "G1_CODEQL_SAFETY_EVIDENCE": 1
+    },
+    "main_list_by_priority": {
+      "P1": 3,
+      "P2": 2,
+      "P3": 0,
+      "P4": 0,
+      "U": 4
+    },
+    "raw_alerts": {
+      "bandit": 2,
+      "codeql": 2,
+      "codeql-path-traversal": 7,
+      "codeql-sql-injection": 4,
+      "semgrep": 2
+    },
+    "sources": {
+      "bandit": {
+        "candidates": 2,
+        "only": 0
+      },
+      "codeql": {
+        "candidates": 10,
+        "only": 8
+      },
+      "semgrep": {
+        "candidates": 2,
+        "only": 0
+      }
+    },
+    "stages": {
+      "candidates": 10,
+      "demoted": 0,
+      "detection_alerts": 14,
+      "evidence_results": 3,
+      "filtered": 1,
+      "main_list": 9,
+      "raw_alerts": 17,
+      "units": 10,
+      "unranked_alerts": 0
+    }
+  },
+  "sarif": [
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 15,
+                  "endLine": 3,
+                  "startColumn": 1,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "B605",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 51,
+                  "endLine": 6,
+                  "startColumn": 1,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "B605",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "bandit",
+        "version": "1.9.4"
+      }
+    },
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 14,
+                  "endLine": 3,
+                  "startColumn": 11,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "py/command-line-injection",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78",
+              "CWE-88"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-078",
+              "cwe-088"
+            ],
+            "resultRole": "detection",
+            "unitKey": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 50,
+                  "endLine": 6,
+                  "startColumn": 11,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "py/command-line-injection",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78",
+              "CWE-88"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-078",
+              "cwe-088"
+            ],
+            "resultRole": "detection",
+            "unitKey": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "codeql",
+        "version": "2.27.1"
+      }
+    },
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 23,
+                  "endLine": 4,
+                  "startColumn": 6,
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/none",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+            "cwe": "CWE-22",
+            "decisionId": "EV_KEPT_NO_PROOF",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P1",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "detection",
+            "unitKey": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 23,
+                  "endLine": 5,
+                  "startColumn": 6,
+                  "startLine": 5
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/none",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+            "cwe": "CWE-22",
+            "decisionId": "EV_HIDDEN_BY_EVIDENCE",
+            "disposition": "filtered",
+            "evidenceState": "refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": "G1_CODEQL_SAFETY_EVIDENCE",
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P4",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "detection",
+            "unitKey": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2"
+          },
+          "suppressed": true
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 42,
+                  "endLine": 6,
+                  "startColumn": 25,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/none",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+            "cwe": "CWE-22",
+            "decisionId": "EV_KEPT_NO_PROOF",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P1",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "detection",
+            "unitKey": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 14,
+                  "endLine": 3,
+                  "startColumn": 11,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/none",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+            "cwe": "CWE-22",
+            "decisionId": "EV_KEPT_NO_PROOF",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P1",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "detection",
+            "unitKey": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 23,
+                  "endLine": 4,
+                  "startColumn": 6,
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/all",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+            "cwe": "CWE-22",
+            "decisionId": "EV_KEPT_NO_PROOF",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P1",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "evidence_query",
+            "unitKey": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 42,
+                  "endLine": 6,
+                  "startColumn": 25,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/all",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+            "cwe": "CWE-22",
+            "decisionId": "EV_KEPT_NO_PROOF",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P1",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "evidence_query",
+            "unitKey": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 14,
+                  "endLine": 3,
+                  "startColumn": 11,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "st/cwe-22/all",
+          "securityTriage": {
+            "analysisFamily": "path-traversal",
+            "candidateKey": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+            "cwe": "CWE-22",
+            "decisionId": "EV_KEPT_NO_PROOF",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-22"
+            ],
+            "priority": "P1",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-022"
+            ],
+            "resultRole": "evidence_query",
+            "unitKey": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "codeql-path-traversal",
+        "version": "2.27.1"
+      }
+    },
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 10,
+                  "endLine": 1,
+                  "startColumn": 8,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "ruleId": "py/sql-injection",
+          "securityTriage": {
+            "analysisFamily": "sql-injection",
+            "candidateKey": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+            "cwe": "CWE-89",
+            "decisionId": "K10_DETECTED_KEPT",
+            "disposition": "review",
+            "evidenceState": "insufficient",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-89"
+            ],
+            "priority": "U",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-089"
+            ],
+            "resultRole": "detection",
+            "unitKey": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 14,
+                  "endLine": 3,
+                  "startColumn": 11,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "py/sql-injection",
+          "securityTriage": {
+            "analysisFamily": "sql-injection",
+            "candidateKey": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+            "cwe": "CWE-89",
+            "decisionId": "K10_DETECTED_KEPT",
+            "disposition": "review",
+            "evidenceState": "insufficient",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-89"
+            ],
+            "priority": "U",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-089"
+            ],
+            "resultRole": "detection",
+            "unitKey": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 23,
+                  "endLine": 4,
+                  "startColumn": 6,
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "ruleId": "py/sql-injection",
+          "securityTriage": {
+            "analysisFamily": "sql-injection",
+            "candidateKey": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+            "cwe": "CWE-89",
+            "decisionId": "K10_DETECTED_KEPT",
+            "disposition": "review",
+            "evidenceState": "insufficient",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-89"
+            ],
+            "priority": "U",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-089"
+            ],
+            "resultRole": "detection",
+            "unitKey": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 17,
+                  "endLine": 6,
+                  "startColumn": 11,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "py/sql-injection",
+          "securityTriage": {
+            "analysisFamily": "sql-injection",
+            "candidateKey": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+            "cwe": "CWE-89",
+            "decisionId": "K10_DETECTED_KEPT",
+            "disposition": "review",
+            "evidenceState": "insufficient",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-89"
+            ],
+            "priority": "U",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-089"
+            ],
+            "resultRole": "detection",
+            "unitKey": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "codeql-sql-injection",
+        "version": "2.27.1"
+      }
+    },
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 14,
+                  "endLine": 3,
+                  "startColumn": 11,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "dangerous-system-call",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "CWE-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 50,
+                  "endLine": 6,
+                  "startColumn": 11,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "dangerous-system-call",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "not_refuted",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "CWE-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "semgrep",
+        "version": "1.178.0"
+      }
+    }
+  ],
+  "scan": {
+    "artifacts": [
+      "python/assessments.json",
+      "python/bandit.ini",
+      "python/classification.json",
+      "python/codeql-path-traversal.sarif",
+      "python/codeql-sql-injection.sarif",
+      "python/findings.json",
+      "python/rule-0.yaml",
+      "python/rule-1.yaml",
+      "python/rule-2.yaml",
+      "python/rule-3.yaml",
+      "python/run.json",
+      "python/units.json"
+    ],
+    "assessments_artifact": [
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "evidence_query_still_reports_flow"
+          ],
+          "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "argument_role": "shell_command",
+        "blocker_proof": null,
+        "candidate": {
+          "basis": "same_call_site",
+          "key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+          "priority": "P2",
+          "tools": [
+            "bandit",
+            "codeql",
+            "semgrep"
+          ],
+          "unit_ids": [
+            "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          ]
+        },
+        "command_literal": false,
+        "decision_id": "D30_HIGH",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "audit_oriented": true,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "B605",
+            "claim_family": "audit",
+            "claim_kind": "call_site_pattern",
+            "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "bandit:0:0",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "B605",
+            "source_location": null,
+            "source_type": "unknown",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "bandit",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          },
+          {
+            "audit_oriented": false,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "py/command-line-injection",
+            "claim_family": "flow",
+            "claim_kind": "modeled_command_line_flow",
+            "definition_sha256": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "codeql:0:0",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "py/command-line-injection",
+            "source_location": null,
+            "source_type": "remote",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "codeql",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          },
+          {
+            "audit_oriented": false,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "dangerous-system-call",
+            "claim_family": "flow",
+            "claim_kind": "modeled_remote_argument_flow",
+            "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "semgrep:0:0",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "tmp.dangerous-system-call",
+            "source_location": null,
+            "source_type": "remote",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "semgrep",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          }
+        ],
+        "mapping_status": "mapped",
+        "matched_conditions": [
+          "agreement",
+          "audit_claim",
+          "execution_candidate",
+          "flow_claim",
+          "important_unknown",
+          "not strong_flow",
+          "not verified_blocker",
+          "shell_semantics",
+          "{'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}",
+          "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+          "{'all': ['flow_claim', 'important_unknown']}",
+          "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+        ],
+        "policy_id": "command-injection-priority",
+        "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "agreement": true,
+          "audit_claim": true,
+          "evidence_conflict": false,
+          "execution_candidate": true,
+          "flow_claim": true,
+          "important_unknown": true,
+          "shell_semantics": true,
+          "strong_flow": false,
+          "unresolved_unit": false,
+          "verified_blocker": false
+        },
+        "priority": "P2",
+        "reason": "Ưu tiên cao: agreement, audit_claim, execution_candidate, flow_claim, important_unknown, not strong_flow, not verified_blocker, shell_semantics, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+        "reconciler_version": "reconcile-v0.1",
+        "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+        "rule_claims_version": "rule-claims-v3",
+        "shell_state": "absent",
+        "source_types": [
+          "remote",
+          "unknown"
+        ],
+        "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "trace_lengths_by_tool": {
+          "bandit": [
+            0
+          ],
+          "codeql": [
+            0
+          ],
+          "semgrep": [
+            0
+          ]
+        },
+        "traces_by_tool": {
+          "bandit": false,
+          "codeql": false,
+          "semgrep": false
+        },
+        "unit_id": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370",
+        "unknown_fields": [
+          "flow_claim_without_valid_endpoint_trace",
+          "source_library_input_or_unknown"
+        ]
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "evidence_query_still_reports_flow"
+          ],
+          "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "argument_role": "shell_command",
+        "blocker_proof": null,
+        "candidate": {
+          "basis": "same_call_site",
+          "key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+          "priority": "P2",
+          "tools": [
+            "bandit",
+            "codeql",
+            "semgrep"
+          ],
+          "unit_ids": [
+            "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          ]
+        },
+        "command_literal": false,
+        "decision_id": "D30_HIGH",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "audit_oriented": true,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "B605",
+            "claim_family": "audit",
+            "claim_kind": "call_site_pattern",
+            "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "bandit:0:1",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "B605",
+            "source_location": null,
+            "source_type": "unknown",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "bandit",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          },
+          {
+            "audit_oriented": false,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "py/command-line-injection",
+            "claim_family": "flow",
+            "claim_kind": "modeled_command_line_flow",
+            "definition_sha256": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "codeql:0:1",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "py/command-line-injection",
+            "source_location": null,
+            "source_type": "remote",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "codeql",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          },
+          {
+            "audit_oriented": false,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "dangerous-system-call",
+            "claim_family": "flow",
+            "claim_kind": "modeled_remote_argument_flow",
+            "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "semgrep:0:1",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "tmp.dangerous-system-call",
+            "source_location": null,
+            "source_type": "remote",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "semgrep",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          }
+        ],
+        "mapping_status": "mapped",
+        "matched_conditions": [
+          "agreement",
+          "audit_claim",
+          "execution_candidate",
+          "flow_claim",
+          "important_unknown",
+          "not strong_flow",
+          "not verified_blocker",
+          "shell_semantics",
+          "{'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}",
+          "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+          "{'all': ['flow_claim', 'important_unknown']}",
+          "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+        ],
+        "policy_id": "command-injection-priority",
+        "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "agreement": true,
+          "audit_claim": true,
+          "evidence_conflict": false,
+          "execution_candidate": true,
+          "flow_claim": true,
+          "important_unknown": true,
+          "shell_semantics": true,
+          "strong_flow": false,
+          "unresolved_unit": false,
+          "verified_blocker": false
+        },
+        "priority": "P2",
+        "reason": "Ưu tiên cao: agreement, audit_claim, execution_candidate, flow_claim, important_unknown, not strong_flow, not verified_blocker, shell_semantics, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+        "reconciler_version": "reconcile-v0.1",
+        "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+        "rule_claims_version": "rule-claims-v3",
+        "shell_state": "absent",
+        "source_types": [
+          "remote",
+          "unknown"
+        ],
+        "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "trace_lengths_by_tool": {
+          "bandit": [
+            0
+          ],
+          "codeql": [
+            0
+          ],
+          "semgrep": [
+            0
+          ]
+        },
+        "traces_by_tool": {
+          "bandit": false,
+          "codeql": false,
+          "semgrep": false
+        },
+        "unit_id": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d",
+        "unknown_fields": [
+          "flow_claim_without_valid_endpoint_trace",
+          "source_library_input_or_unknown"
+        ]
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "evidence_query_still_reports_flow"
+          ],
+          "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "baseline_rule": "st/cwe-22/none",
+        "candidate": {
+          "basis": "single_location",
+          "key": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+          "priority": "P1",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2"
+          ]
+        },
+        "decision_id": "EV_KEPT_NO_PROOF",
+        "disposition": "review",
+        "evidence_rule": "st/cwe-22/all",
+        "finding_evidence": [
+          {
+            "message": "alert",
+            "query": "baseline",
+            "raw_id": "codeql-path-traversal:0:3",
+            "rule_id": "st/cwe-22/none"
+          },
+          {
+            "message": "alert",
+            "query": "evidence",
+            "raw_id": "codeql-path-traversal:0:6",
+            "rule_id": "st/cwe-22/all"
+          }
+        ],
+        "matched_conditions": [
+          "baseline_alert",
+          "retained_by_evidence_query"
+        ],
+        "policy_id": "cwe22-safety-evidence",
+        "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "baseline_alert": true,
+          "retained_by_evidence_query": true
+        },
+        "priority": "P1",
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "reconciler_version": "safety-evidence-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+        "unknown_fields": []
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "evidence_query_still_reports_flow"
+          ],
+          "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "baseline_rule": "st/cwe-22/none",
+        "candidate": {
+          "basis": "single_location",
+          "key": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+          "priority": "P1",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746"
+          ]
+        },
+        "decision_id": "EV_KEPT_NO_PROOF",
+        "disposition": "review",
+        "evidence_rule": "st/cwe-22/all",
+        "finding_evidence": [
+          {
+            "message": "alert",
+            "query": "baseline",
+            "raw_id": "codeql-path-traversal:0:0",
+            "rule_id": "st/cwe-22/none"
+          },
+          {
+            "message": "alert",
+            "query": "evidence",
+            "raw_id": "codeql-path-traversal:0:4",
+            "rule_id": "st/cwe-22/all"
+          }
+        ],
+        "matched_conditions": [
+          "baseline_alert",
+          "retained_by_evidence_query"
+        ],
+        "policy_id": "cwe22-safety-evidence",
+        "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "baseline_alert": true,
+          "retained_by_evidence_query": true
+        },
+        "priority": "P1",
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "reconciler_version": "safety-evidence-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+        "unknown_fields": []
+      },
+      {
+        "adjudication": {
+          "evidence": [
+            {
+              "baseline_rules": [
+                "st/cwe-22/none"
+              ],
+              "evidence_rule": "st/cwe-22/all",
+              "kind": "safety_evidence_query_removed_every_flow",
+              "refuted_raw_ids": [
+                "codeql-path-traversal:0:1"
+              ],
+              "rule": "G1_CODEQL_SAFETY_EVIDENCE",
+              "tool": "codeql-safety-evidence"
+            }
+          ],
+          "kept_because": [],
+          "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+          "rule": "G1_CODEQL_SAFETY_EVIDENCE",
+          "rules": [
+            "G1_CODEQL_SAFETY_EVIDENCE"
+          ],
+          "status": "filtered",
+          "version": "adjudicate-v0.3"
+        },
+        "baseline_rule": "st/cwe-22/none",
+        "candidate": {
+          "basis": "single_location",
+          "key": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+          "priority": "P4",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2"
+          ]
+        },
+        "decision_id": "EV_HIDDEN_BY_EVIDENCE",
+        "disposition": "filtered",
+        "evidence_rule": "st/cwe-22/all",
+        "finding_evidence": [
+          {
+            "message": "alert",
+            "query": "baseline",
+            "raw_id": "codeql-path-traversal:0:1",
+            "rule_id": "st/cwe-22/none"
+          }
+        ],
+        "matched_conditions": [
+          "baseline_alert",
+          "removed_by_safety_evidence"
+        ],
+        "policy_id": "cwe22-safety-evidence",
+        "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "baseline_alert": true,
+          "retained_by_evidence_query": false
+        },
+        "priority": "P4",
+        "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+        "reconciler_version": "safety-evidence-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+        "unknown_fields": []
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "evidence_query_still_reports_flow"
+          ],
+          "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "baseline_rule": "st/cwe-22/none",
+        "candidate": {
+          "basis": "single_location",
+          "key": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+          "priority": "P1",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c"
+          ]
+        },
+        "decision_id": "EV_KEPT_NO_PROOF",
+        "disposition": "review",
+        "evidence_rule": "st/cwe-22/all",
+        "finding_evidence": [
+          {
+            "message": "alert",
+            "query": "baseline",
+            "raw_id": "codeql-path-traversal:0:2",
+            "rule_id": "st/cwe-22/none"
+          },
+          {
+            "message": "alert",
+            "query": "evidence",
+            "raw_id": "codeql-path-traversal:0:5",
+            "rule_id": "st/cwe-22/all"
+          }
+        ],
+        "matched_conditions": [
+          "baseline_alert",
+          "retained_by_evidence_query"
+        ],
+        "policy_id": "cwe22-safety-evidence",
+        "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "baseline_alert": true,
+          "retained_by_evidence_query": true
+        },
+        "priority": "P1",
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "reconciler_version": "safety-evidence-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+        "unknown_fields": []
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "no_filter_condition_for_family"
+          ],
+          "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "candidate": {
+          "basis": "single_location",
+          "key": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+          "priority": "U",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c"
+          ]
+        },
+        "decision_id": "K10_DETECTED_KEPT",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "mapped_cwes": [
+              "CWE-89"
+            ],
+            "message": "alert",
+            "query": "detection",
+            "raw_id": "codeql-sql-injection:0:0",
+            "reported_cwes": [
+              "cwe-089"
+            ],
+            "rule_id": "py/sql-injection"
+          }
+        ],
+        "matched_conditions": [
+          "detected",
+          "no_filter_condition_for_family"
+        ],
+        "policy_id": "sql-injection-detect-and-keep",
+        "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "policy_version": "0.1",
+        "predicate_values": {
+          "detected": true,
+          "run_complete": true
+        },
+        "priority": "U",
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "reconciler_version": "detection-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+        "unknown_fields": [
+          "priority_policy",
+          "filter_condition"
+        ]
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "no_filter_condition_for_family"
+          ],
+          "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "candidate": {
+          "basis": "single_location",
+          "key": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+          "priority": "U",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a"
+          ]
+        },
+        "decision_id": "K10_DETECTED_KEPT",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "mapped_cwes": [
+              "CWE-89"
+            ],
+            "message": "alert",
+            "query": "detection",
+            "raw_id": "codeql-sql-injection:0:1",
+            "reported_cwes": [
+              "cwe-089"
+            ],
+            "rule_id": "py/sql-injection"
+          }
+        ],
+        "matched_conditions": [
+          "detected",
+          "no_filter_condition_for_family"
+        ],
+        "policy_id": "sql-injection-detect-and-keep",
+        "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "policy_version": "0.1",
+        "predicate_values": {
+          "detected": true,
+          "run_complete": true
+        },
+        "priority": "U",
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "reconciler_version": "detection-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+        "unknown_fields": [
+          "priority_policy",
+          "filter_condition"
+        ]
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "no_filter_condition_for_family"
+          ],
+          "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "candidate": {
+          "basis": "single_location",
+          "key": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+          "priority": "U",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e"
+          ]
+        },
+        "decision_id": "K10_DETECTED_KEPT",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "mapped_cwes": [
+              "CWE-89"
+            ],
+            "message": "alert",
+            "query": "detection",
+            "raw_id": "codeql-sql-injection:0:2",
+            "reported_cwes": [
+              "cwe-089"
+            ],
+            "rule_id": "py/sql-injection"
+          }
+        ],
+        "matched_conditions": [
+          "detected",
+          "no_filter_condition_for_family"
+        ],
+        "policy_id": "sql-injection-detect-and-keep",
+        "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "policy_version": "0.1",
+        "predicate_values": {
+          "detected": true,
+          "run_complete": true
+        },
+        "priority": "U",
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "reconciler_version": "detection-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+        "unknown_fields": [
+          "priority_policy",
+          "filter_condition"
+        ]
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "no_filter_condition_for_family"
+          ],
+          "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "candidate": {
+          "basis": "single_location",
+          "key": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+          "priority": "U",
+          "tools": [
+            "codeql"
+          ],
+          "unit_ids": [
+            "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a"
+          ]
+        },
+        "decision_id": "K10_DETECTED_KEPT",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "mapped_cwes": [
+              "CWE-89"
+            ],
+            "message": "alert",
+            "query": "detection",
+            "raw_id": "codeql-sql-injection:0:3",
+            "reported_cwes": [
+              "cwe-089"
+            ],
+            "rule_id": "py/sql-injection"
+          }
+        ],
+        "matched_conditions": [
+          "detected",
+          "no_filter_condition_for_family"
+        ],
+        "policy_id": "sql-injection-detect-and-keep",
+        "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "policy_version": "0.1",
+        "predicate_values": {
+          "detected": true,
+          "run_complete": true
+        },
+        "priority": "U",
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "reconciler_version": "detection-units-v1",
+        "rule_claims_sha256": "",
+        "rule_claims_version": "not-applicable",
+        "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+        "unknown_fields": [
+          "priority_policy",
+          "filter_condition"
+        ]
+      }
+    ],
+    "classification": [
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "semgrep:0:0",
+        "reported_cwes": [
+          "CWE-78"
+        ],
+        "rule_id": "tmp.dangerous-system-call",
+        "tool": "semgrep",
+        "tool_pass": "semgrep",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "bandit:0:0",
+        "reported_cwes": [
+          "cwe-78"
+        ],
+        "rule_id": "B605",
+        "tool": "bandit",
+        "tool_pass": "bandit",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78",
+          "CWE-88"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "codeql:0:0",
+        "reported_cwes": [
+          "cwe-078",
+          "cwe-088"
+        ],
+        "rule_id": "py/command-line-injection",
+        "tool": "codeql",
+        "tool_pass": "codeql",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "semgrep:0:1",
+        "reported_cwes": [
+          "CWE-78"
+        ],
+        "rule_id": "tmp.dangerous-system-call",
+        "tool": "semgrep",
+        "tool_pass": "semgrep",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "bandit:0:1",
+        "reported_cwes": [
+          "cwe-78"
+        ],
+        "rule_id": "B605",
+        "tool": "bandit",
+        "tool_pass": "bandit",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78",
+          "CWE-88"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "codeql:0:1",
+        "reported_cwes": [
+          "cwe-078",
+          "cwe-088"
+        ],
+        "rule_id": "py/command-line-injection",
+        "tool": "codeql",
+        "tool_pass": "codeql",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:0",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/none",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:1",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/none",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:2",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/none",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:3",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/none",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:4",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/all",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:5",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/all",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "path-traversal",
+        "candidate_families": [
+          "path-traversal"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-22"
+        ],
+        "mapped_cwes_basis": "pinned_query_id:path-traversal-v0.2",
+        "raw_id": "codeql-path-traversal:0:6",
+        "reported_cwes": [
+          "cwe-022"
+        ],
+        "rule_id": "st/cwe-22/all",
+        "tool": "codeql",
+        "tool_pass": "codeql-path-traversal",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "sql-injection",
+        "candidate_families": [
+          "sql-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-89"
+        ],
+        "mapped_cwes_basis": "pinned_rule_id:sql-injection-v0.1",
+        "raw_id": "codeql-sql-injection:0:0",
+        "reported_cwes": [
+          "cwe-089"
+        ],
+        "rule_id": "py/sql-injection",
+        "tool": "codeql",
+        "tool_pass": "codeql-sql-injection",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "sql-injection",
+        "candidate_families": [
+          "sql-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-89"
+        ],
+        "mapped_cwes_basis": "pinned_rule_id:sql-injection-v0.1",
+        "raw_id": "codeql-sql-injection:0:1",
+        "reported_cwes": [
+          "cwe-089"
+        ],
+        "rule_id": "py/sql-injection",
+        "tool": "codeql",
+        "tool_pass": "codeql-sql-injection",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "sql-injection",
+        "candidate_families": [
+          "sql-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-89"
+        ],
+        "mapped_cwes_basis": "pinned_rule_id:sql-injection-v0.1",
+        "raw_id": "codeql-sql-injection:0:2",
+        "reported_cwes": [
+          "cwe-089"
+        ],
+        "rule_id": "py/sql-injection",
+        "tool": "codeql",
+        "tool_pass": "codeql-sql-injection",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "sql-injection",
+        "candidate_families": [
+          "sql-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-89"
+        ],
+        "mapped_cwes_basis": "pinned_rule_id:sql-injection-v0.1",
+        "raw_id": "codeql-sql-injection:0:3",
+        "reported_cwes": [
+          "cwe-089"
+        ],
+        "rule_id": "py/sql-injection",
+        "tool": "codeql",
+        "tool_pass": "codeql-sql-injection",
+        "unresolved_reason": null
+      }
+    ],
+    "config": {
+      "composition": {
+        "members": [
+          {
+            "family": "command-injection",
+            "profile_id": "command-injection-v0.3",
+            "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406"
+          },
+          {
+            "family": "path-traversal",
+            "profile_id": "path-traversal-v0.2",
+            "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e"
+          },
+          {
+            "family": "sql-injection",
+            "profile_id": "sql-injection-v0.1",
+            "profile_sha256": "be69a770d1754c66b76466d066911ff0a606150a6c1d2d341e04e06be0647181"
+          }
+        ],
+        "specification_sha256": "a96a2c8179c930b2e39a07bd57bf493e2c64ffe299b5c56b825f9285ba6fb1fe",
+        "version": "family-composition-v0.1"
+      },
+      "families": {
+        "python": [
+          {
+            "cwe": "CWE-78",
+            "error": null,
+            "evidence_steps": {
+              "codeql-evidence": "completed",
+              "semgrep-evidence": "completed"
+            },
+            "family": "command-injection",
+            "held_units": 0,
+            "policy_versions": [
+              "0.2"
+            ],
+            "profile_id": "command-injection-v0.3",
+            "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+            "raw_findings": 6,
+            "status": "completed",
+            "unit_version": "reconcile-v0.1",
+            "units": 2
+          },
+          {
+            "cwe": "CWE-22",
+            "error": null,
+            "evidence_steps": {
+              "codeql-path-traversal": "completed"
+            },
+            "family": "path-traversal",
+            "held_units": 0,
+            "policy_versions": [
+              "0.2"
+            ],
+            "profile_id": "path-traversal-v0.2",
+            "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+            "raw_findings": 7,
+            "status": "completed",
+            "unit_version": "safety-evidence-units-v1",
+            "units": 4
+          },
+          {
+            "cwe": "CWE-89",
+            "error": null,
+            "evidence_steps": {},
+            "family": "sql-injection",
+            "held_units": 0,
+            "policy_versions": [
+              "0.1"
+            ],
+            "profile_id": "sql-injection-v0.1",
+            "profile_sha256": "be69a770d1754c66b76466d066911ff0a606150a6c1d2d341e04e06be0647181",
+            "raw_findings": 4,
+            "status": "completed",
+            "unit_version": "detection-units-v1",
+            "units": 4
+          }
+        ]
+      },
+      "languages": [
+        "python"
+      ],
+      "profile_id": "multi-cwe-v0.2",
+      "profile_sha256": "9dbeaf75e7d1c7a4befa633625d3ebb8245f7f87d27f8f31e07ad7602665b422"
+    },
+    "error_message": null,
+    "policy_version": "family-composition-v0.1",
+    "reconciler_version": "family-composition-v0.1",
+    "run": {
+      "composition_version": "family-composition-v0.1",
+      "conservation": {
+        "families": {
+          "command-injection": {
+            "held_units": 0,
+            "in_units": 6,
+            "not_ranked": 0,
+            "routed": 6,
+            "units": 2
+          },
+          "path-traversal": {
+            "held_units": 0,
+            "in_units": 7,
+            "not_ranked": 0,
+            "routed": 7,
+            "units": 4
+          },
+          "sql-injection": {
+            "held_units": 0,
+            "in_units": 4,
+            "not_ranked": 0,
+            "routed": 4,
+            "units": 4
+          }
+        },
+        "raw_findings": 17,
+        "unassigned": {
+          "routed": 0,
+          "units": 0
+        }
+      },
+      "members": [
+        {
+          "codeql_query_files": {
+            "Security/CWE-078/CommandInjection.ql": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+            "Security/CWE-078/UnsafeShellCommandConstruction.ql": "d3e2a5c45764fe819fcf051d111f9cc1e6f02e2080b7e3ea98d06afcd0ead7fb"
+          },
+          "error": null,
+          "family": "command-injection",
+          "profile_id": "command-injection-v0.3",
+          "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+          "raw_findings": 6,
+          "status": "completed",
+          "unit_version": "reconcile-v0.1",
+          "units": 2
+        },
+        {
+          "codeql_query_files": {
+            "queries/cwe22_all.ql": "28ca7100da0f962056e9bee44c8e49d7445d2ac70799d4cacbb615b7f0a0e870",
+            "queries/cwe22_none.ql": "f78591a1a1b201e689fd70dc60c4e0ff9bfc2a6761089eb4a1fc2481d61044a8"
+          },
+          "error": null,
+          "family": "path-traversal",
+          "profile_id": "path-traversal-v0.2",
+          "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+          "raw_findings": 7,
+          "status": "completed",
+          "unit_version": "safety-evidence-units-v1",
+          "units": 4
+        },
+        {
+          "codeql_query_files": {
+            "Security/CWE-089/SqlInjection.ql": "e8324e568041a22d5d3a4ea21ef52ef791d67a699352273edda350caeca84964"
+          },
+          "error": null,
+          "family": "sql-injection",
+          "profile_id": "sql-injection-v0.1",
+          "profile_sha256": "be69a770d1754c66b76466d066911ff0a606150a6c1d2d341e04e06be0647181",
+          "raw_findings": 4,
+          "status": "completed",
+          "unit_version": "detection-units-v1",
+          "units": 4
+        }
+      ],
+      "status": "completed",
+      "steps": {
+        "bandit": {
+          "kind": "detection",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "codeql": {
+          "kind": "detection",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "codeql-create": {
+          "kind": "shared",
+          "serves": [
+            "command-injection",
+            "path-traversal",
+            "sql-injection"
+          ],
+          "status": "completed"
+        },
+        "codeql-evidence": {
+          "kind": "evidence",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "codeql-path-traversal": {
+          "kind": "detection+evidence",
+          "serves": [
+            "path-traversal"
+          ],
+          "status": "completed"
+        },
+        "codeql-sql-injection": {
+          "kind": "detection",
+          "serves": [
+            "sql-injection"
+          ],
+          "status": "completed"
+        },
+        "codeql-version": {
+          "kind": "version",
+          "serves": [
+            "command-injection",
+            "path-traversal",
+            "sql-injection"
+          ],
+          "status": "completed"
+        },
+        "semgrep": {
+          "kind": "detection",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "semgrep-evidence": {
+          "kind": "evidence",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "sink-locator": {
+          "kind": "locator",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        }
+      }
+    },
+    "status": "completed",
+    "units_artifact": [
+      {
+        "argument_role": "shell_command",
+        "callee": "os.system",
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "bandit:0:0",
+            "tool": "bandit"
+          },
+          {
+            "mapping_method": "containment",
+            "mapping_status": "mapped",
+            "raw_id": "codeql:0:0",
+            "tool": "codeql"
+          },
+          {
+            "mapping_method": "containment",
+            "mapping_status": "mapped",
+            "raw_id": "semgrep:0:0",
+            "tool": "semgrep"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "bandit:0:0",
+          "codeql:0:0",
+          "semgrep:0:0"
+        ],
+        "reported_region": null,
+        "sink_kind": "os.system",
+        "sink_span": {
+          "endColumn": 15,
+          "endLine": 3,
+          "startColumn": 1,
+          "startLine": 3
+        },
+        "snapshot_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "unit_id": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+      },
+      {
+        "argument_role": "shell_command",
+        "callee": "os.system",
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "bandit:0:1",
+            "tool": "bandit"
+          },
+          {
+            "mapping_method": "containment",
+            "mapping_status": "mapped",
+            "raw_id": "codeql:0:1",
+            "tool": "codeql"
+          },
+          {
+            "mapping_method": "containment",
+            "mapping_status": "mapped",
+            "raw_id": "semgrep:0:1",
+            "tool": "semgrep"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "bandit:0:1",
+          "codeql:0:1",
+          "semgrep:0:1"
+        ],
+        "reported_region": null,
+        "sink_kind": "os.system",
+        "sink_span": {
+          "endColumn": 51,
+          "endLine": 6,
+          "startColumn": 1,
+          "startLine": 6
+        },
+        "snapshot_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "unit_id": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:3",
+            "tool": "codeql"
+          },
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:6",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-path-traversal:0:3",
+          "codeql-path-traversal:0:6"
+        ],
+        "reported_region": {
+          "endColumn": 14,
+          "endLine": 3,
+          "startColumn": 11,
+          "startLine": 3
+        },
+        "sink_kind": "codeql-path-injection-sink",
+        "sink_span": {
+          "endColumn": 14,
+          "endLine": 3,
+          "startColumn": 11,
+          "startLine": 3
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:0",
+            "tool": "codeql"
+          },
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:4",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-path-traversal:0:0",
+          "codeql-path-traversal:0:4"
+        ],
+        "reported_region": {
+          "endColumn": 23,
+          "endLine": 4,
+          "startColumn": 6,
+          "startLine": 4
+        },
+        "sink_kind": "codeql-path-injection-sink",
+        "sink_span": {
+          "endColumn": 23,
+          "endLine": 4,
+          "startColumn": 6,
+          "startLine": 4
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:1",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-path-traversal:0:1"
+        ],
+        "reported_region": {
+          "endColumn": 23,
+          "endLine": 5,
+          "startColumn": 6,
+          "startLine": 5
+        },
+        "sink_kind": "codeql-path-injection-sink",
+        "sink_span": {
+          "endColumn": 23,
+          "endLine": 5,
+          "startColumn": 6,
+          "startLine": 5
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:2",
+            "tool": "codeql"
+          },
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-path-traversal:0:5",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-path-traversal:0:2",
+          "codeql-path-traversal:0:5"
+        ],
+        "reported_region": {
+          "endColumn": 42,
+          "endLine": 6,
+          "startColumn": 25,
+          "startLine": 6
+        },
+        "sink_kind": "codeql-path-injection-sink",
+        "sink_span": {
+          "endColumn": 42,
+          "endLine": 6,
+          "startColumn": 25,
+          "startLine": 6
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-sql-injection:0:0",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-sql-injection:0:0"
+        ],
+        "reported_region": {
+          "endColumn": 10,
+          "endLine": 1,
+          "startColumn": 8,
+          "startLine": 1
+        },
+        "sink_kind": "codeql-reported-sink",
+        "sink_span": {
+          "endColumn": 10,
+          "endLine": 1,
+          "startColumn": 8,
+          "startLine": 1
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-sql-injection:0:1",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-sql-injection:0:1"
+        ],
+        "reported_region": {
+          "endColumn": 14,
+          "endLine": 3,
+          "startColumn": 11,
+          "startLine": 3
+        },
+        "sink_kind": "codeql-reported-sink",
+        "sink_span": {
+          "endColumn": 14,
+          "endLine": 3,
+          "startColumn": 11,
+          "startLine": 3
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-sql-injection:0:2",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-sql-injection:0:2"
+        ],
+        "reported_region": {
+          "endColumn": 23,
+          "endLine": 4,
+          "startColumn": 6,
+          "startLine": 4
+        },
+        "sink_kind": "codeql-reported-sink",
+        "sink_span": {
+          "endColumn": 23,
+          "endLine": 4,
+          "startColumn": 6,
+          "startLine": 4
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e"
+      },
+      {
+        "argument_role": null,
+        "callee": null,
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "codeql-sql-injection:0:3",
+            "tool": "codeql"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "codeql-sql-injection:0:3"
+        ],
+        "reported_region": {
+          "endColumn": 17,
+          "endLine": 6,
+          "startColumn": 11,
+          "startLine": 6
+        },
+        "sink_kind": "codeql-reported-sink",
+        "sink_span": {
+          "endColumn": 17,
+          "endLine": 6,
+          "startColumn": 11,
+          "startLine": 6
+        },
+        "snapshot_sha256": "75c84ae27f674aae40600ec1a038924eb0ca1387ee5d2603d330052f9110e5b7",
+        "tools": [
+          "codeql"
+        ],
+        "unit_id": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a"
+      }
+    ]
+  },
+  "units": [
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "no_filter_condition_for_family"
+        ],
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "sql-injection",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+        "priority": "U",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e"
+        ]
+      },
+      "candidate_key": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+      "cwe": "CWE-89",
+      "decision_id": "K10_DETECTED_KEPT",
+      "disposition": "review",
+      "end_column": 23,
+      "end_line": 4,
+      "evidence_state": "insufficient",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "message": "alert",
+          "query": "detection",
+          "raw_id": "codeql-sql-injection:0:2",
+          "reported_cwes": [
+            "cwe-089"
+          ],
+          "rule_id": "py/sql-injection"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "sql-injection",
+          "cwe_ids": [
+            "cwe-089"
+          ],
+          "end_column": 23,
+          "end_line": 4,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "raw_id": "codeql-sql-injection:0:2",
+          "raw_rule_id": "py/sql-injection",
+          "rule_id": "py/sql-injection",
+          "start_column": 6,
+          "start_line": 4,
+          "tool": "codeql",
+          "tool_pass": "codeql-sql-injection",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "no_filter_condition_for_family"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "detected",
+        "no_filter_condition_for_family"
+      ],
+      "path": "app.py",
+      "policy_id": "sql-injection-detect-and-keep",
+      "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "policy_version": "0.1",
+      "predicate_values": {
+        "detected": true,
+        "run_complete": true
+      },
+      "priority": "U",
+      "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+      "reconciler_version": "detection-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-reported-sink",
+      "source_types": [],
+      "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "start_column": 6,
+      "start_line": 4,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "2889c95d7c709f9ae07c62bfffc3d7785efce65d272f16c80af9a24d7108ab8e",
+      "unknown_fields": [
+        "priority_policy",
+        "filter_condition"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "no_filter_condition_for_family"
+        ],
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "sql-injection",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+        "priority": "U",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c"
+        ]
+      },
+      "candidate_key": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+      "cwe": "CWE-89",
+      "decision_id": "K10_DETECTED_KEPT",
+      "disposition": "review",
+      "end_column": 10,
+      "end_line": 1,
+      "evidence_state": "insufficient",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "message": "alert",
+          "query": "detection",
+          "raw_id": "codeql-sql-injection:0:0",
+          "reported_cwes": [
+            "cwe-089"
+          ],
+          "rule_id": "py/sql-injection"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "sql-injection",
+          "cwe_ids": [
+            "cwe-089"
+          ],
+          "end_column": 10,
+          "end_line": 1,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "raw_id": "codeql-sql-injection:0:0",
+          "raw_rule_id": "py/sql-injection",
+          "rule_id": "py/sql-injection",
+          "start_column": 8,
+          "start_line": 1,
+          "tool": "codeql",
+          "tool_pass": "codeql-sql-injection",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "no_filter_condition_for_family"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "detected",
+        "no_filter_condition_for_family"
+      ],
+      "path": "app.py",
+      "policy_id": "sql-injection-detect-and-keep",
+      "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "policy_version": "0.1",
+      "predicate_values": {
+        "detected": true,
+        "run_complete": true
+      },
+      "priority": "U",
+      "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+      "reconciler_version": "detection-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-reported-sink",
+      "source_types": [],
+      "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "start_column": 8,
+      "start_line": 1,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "47656d0619b168bd567adfec640bc09fc0c77302d0289d58e22e01a4419d123c",
+      "unknown_fields": [
+        "priority_policy",
+        "filter_condition"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [
+          {
+            "baseline_rules": [
+              "st/cwe-22/none"
+            ],
+            "evidence_rule": "st/cwe-22/all",
+            "kind": "safety_evidence_query_removed_every_flow",
+            "refuted_raw_ids": [
+              "codeql-path-traversal:0:1"
+            ],
+            "rule": "G1_CODEQL_SAFETY_EVIDENCE",
+            "tool": "codeql-safety-evidence"
+          }
+        ],
+        "kept_because": [],
+        "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+        "rule": "G1_CODEQL_SAFETY_EVIDENCE",
+        "rules": [
+          "G1_CODEQL_SAFETY_EVIDENCE"
+        ],
+        "status": "filtered",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "path-traversal",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+        "priority": "P4",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2"
+        ]
+      },
+      "candidate_key": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+      "cwe": "CWE-22",
+      "decision_id": "EV_HIDDEN_BY_EVIDENCE",
+      "disposition": "filtered",
+      "end_column": 23,
+      "end_line": 5,
+      "evidence_state": "refuted",
+      "filter_rule": "G1_CODEQL_SAFETY_EVIDENCE",
+      "finding_evidence": [
+        {
+          "message": "alert",
+          "query": "baseline",
+          "raw_id": "codeql-path-traversal:0:1",
+          "rule_id": "st/cwe-22/none"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 23,
+          "end_line": 5,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:1",
+          "raw_rule_id": "st/cwe-22/none",
+          "rule_id": "st/cwe-22/none",
+          "start_column": 6,
+          "start_line": 5,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "baseline_alert",
+        "removed_by_safety_evidence"
+      ],
+      "path": "app.py",
+      "policy_id": "cwe22-safety-evidence",
+      "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "baseline_alert": true,
+        "retained_by_evidence_query": false
+      },
+      "priority": "P4",
+      "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+      "reconciler_version": "safety-evidence-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-path-injection-sink",
+      "source_types": [],
+      "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+      "start_column": 6,
+      "start_line": 5,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "5e7fcd7efd31b6d97574d9d1310bfdf707b07a2bbe3c5eb7ea1358ac251e0ac2",
+      "unknown_fields": []
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "evidence_query_still_reports_flow"
+        ],
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "command-injection",
+      "argument_role": "shell_command",
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "same_call_site",
+        "key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+        "priority": "P2",
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "unit_ids": [
+          "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+        ]
+      },
+      "candidate_key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+      "cwe": "CWE-78",
+      "decision_id": "D30_HIGH",
+      "disposition": "review",
+      "end_column": 15,
+      "end_line": 3,
+      "evidence_state": "not_refuted",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "audit_oriented": true,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "B605",
+          "claim_family": "audit",
+          "claim_kind": "call_site_pattern",
+          "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "bandit:0:0",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "B605",
+          "source_location": null,
+          "source_type": "unknown",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "bandit",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        },
+        {
+          "audit_oriented": false,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "py/command-line-injection",
+          "claim_family": "flow",
+          "claim_kind": "modeled_command_line_flow",
+          "definition_sha256": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "codeql:0:0",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "py/command-line-injection",
+          "source_location": null,
+          "source_type": "remote",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "codeql",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        },
+        {
+          "audit_oriented": false,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "dangerous-system-call",
+          "claim_family": "flow",
+          "claim_kind": "modeled_remote_argument_flow",
+          "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "semgrep:0:0",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "tmp.dangerous-system-call",
+          "source_location": null,
+          "source_type": "remote",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "semgrep",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "cwe-78"
+          ],
+          "end_column": 15,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "bandit:0:0",
+          "raw_rule_id": "B605",
+          "rule_id": "B605",
+          "start_column": 1,
+          "start_line": 3,
+          "tool": "bandit",
+          "tool_pass": "bandit",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "cwe-078",
+            "cwe-088"
+          ],
+          "end_column": 14,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78",
+            "CWE-88"
+          ],
+          "raw_id": "codeql:0:0",
+          "raw_rule_id": "py/command-line-injection",
+          "rule_id": "py/command-line-injection",
+          "start_column": 11,
+          "start_line": 3,
+          "tool": "codeql",
+          "tool_pass": "codeql",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "CWE-78"
+          ],
+          "end_column": 14,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "semgrep:0:0",
+          "raw_rule_id": "tmp.dangerous-system-call",
+          "rule_id": "dangerous-system-call",
+          "start_column": 11,
+          "start_line": 3,
+          "tool": "semgrep",
+          "tool_pass": "semgrep",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "evidence_query_still_reports_flow"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "agreement",
+        "audit_claim",
+        "execution_candidate",
+        "flow_claim",
+        "important_unknown",
+        "not strong_flow",
+        "not verified_blocker",
+        "shell_semantics",
+        "{'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}",
+        "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+        "{'all': ['flow_claim', 'important_unknown']}",
+        "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+      ],
+      "path": "app.py",
+      "policy_id": "command-injection-priority",
+      "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "agreement": true,
+        "audit_claim": true,
+        "evidence_conflict": false,
+        "execution_candidate": true,
+        "flow_claim": true,
+        "important_unknown": true,
+        "shell_semantics": true,
+        "strong_flow": false,
+        "unresolved_unit": false,
+        "verified_blocker": false
+      },
+      "priority": "P2",
+      "reason": "Ưu tiên cao: agreement, audit_claim, execution_candidate, flow_claim, important_unknown, not strong_flow, not verified_blocker, shell_semantics, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+      "reconciler_version": "reconcile-v0.1",
+      "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+      "rule_claims_version": "rule-claims-v3",
+      "shell_state": "absent",
+      "sink_kind": "os.system",
+      "source_types": [
+        "remote",
+        "unknown"
+      ],
+      "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+      "start_column": 1,
+      "start_line": 3,
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "unit_key": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370",
+      "unknown_fields": [
+        "flow_claim_without_valid_endpoint_trace",
+        "source_library_input_or_unknown"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "evidence_query_still_reports_flow"
+        ],
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "path-traversal",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+        "priority": "P1",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746"
+        ]
+      },
+      "candidate_key": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+      "cwe": "CWE-22",
+      "decision_id": "EV_KEPT_NO_PROOF",
+      "disposition": "review",
+      "end_column": 23,
+      "end_line": 4,
+      "evidence_state": "not_refuted",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "message": "alert",
+          "query": "baseline",
+          "raw_id": "codeql-path-traversal:0:0",
+          "rule_id": "st/cwe-22/none"
+        },
+        {
+          "message": "alert",
+          "query": "evidence",
+          "raw_id": "codeql-path-traversal:0:4",
+          "rule_id": "st/cwe-22/all"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 23,
+          "end_line": 4,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:0",
+          "raw_rule_id": "st/cwe-22/none",
+          "rule_id": "st/cwe-22/none",
+          "start_column": 6,
+          "start_line": 4,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 23,
+          "end_line": 4,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:4",
+          "raw_rule_id": "st/cwe-22/all",
+          "rule_id": "st/cwe-22/all",
+          "start_column": 6,
+          "start_line": 4,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "evidence_query_still_reports_flow"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "baseline_alert",
+        "retained_by_evidence_query"
+      ],
+      "path": "app.py",
+      "policy_id": "cwe22-safety-evidence",
+      "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "baseline_alert": true,
+        "retained_by_evidence_query": true
+      },
+      "priority": "P1",
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "reconciler_version": "safety-evidence-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-path-injection-sink",
+      "source_types": [],
+      "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+      "start_column": 6,
+      "start_line": 4,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "9e5f6f00c612527bfd4ea0685f0b474bef4ed5a486a946636267436373f55746",
+      "unknown_fields": []
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "no_filter_condition_for_family"
+        ],
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "sql-injection",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+        "priority": "U",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a"
+        ]
+      },
+      "candidate_key": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+      "cwe": "CWE-89",
+      "decision_id": "K10_DETECTED_KEPT",
+      "disposition": "review",
+      "end_column": 14,
+      "end_line": 3,
+      "evidence_state": "insufficient",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "message": "alert",
+          "query": "detection",
+          "raw_id": "codeql-sql-injection:0:1",
+          "reported_cwes": [
+            "cwe-089"
+          ],
+          "rule_id": "py/sql-injection"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "sql-injection",
+          "cwe_ids": [
+            "cwe-089"
+          ],
+          "end_column": 14,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "raw_id": "codeql-sql-injection:0:1",
+          "raw_rule_id": "py/sql-injection",
+          "rule_id": "py/sql-injection",
+          "start_column": 11,
+          "start_line": 3,
+          "tool": "codeql",
+          "tool_pass": "codeql-sql-injection",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "no_filter_condition_for_family"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "detected",
+        "no_filter_condition_for_family"
+      ],
+      "path": "app.py",
+      "policy_id": "sql-injection-detect-and-keep",
+      "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "policy_version": "0.1",
+      "predicate_values": {
+        "detected": true,
+        "run_complete": true
+      },
+      "priority": "U",
+      "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+      "reconciler_version": "detection-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-reported-sink",
+      "source_types": [],
+      "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "start_column": 11,
+      "start_line": 3,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "a7f591a6a3e58af7c0e3fb8ba1a366879f426e9ea6bdbec2463512a128c7f60a",
+      "unknown_fields": [
+        "priority_policy",
+        "filter_condition"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "evidence_query_still_reports_flow"
+        ],
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "path-traversal",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+        "priority": "P1",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c"
+        ]
+      },
+      "candidate_key": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+      "cwe": "CWE-22",
+      "decision_id": "EV_KEPT_NO_PROOF",
+      "disposition": "review",
+      "end_column": 42,
+      "end_line": 6,
+      "evidence_state": "not_refuted",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "message": "alert",
+          "query": "baseline",
+          "raw_id": "codeql-path-traversal:0:2",
+          "rule_id": "st/cwe-22/none"
+        },
+        {
+          "message": "alert",
+          "query": "evidence",
+          "raw_id": "codeql-path-traversal:0:5",
+          "rule_id": "st/cwe-22/all"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 42,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:2",
+          "raw_rule_id": "st/cwe-22/none",
+          "rule_id": "st/cwe-22/none",
+          "start_column": 25,
+          "start_line": 6,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 42,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:5",
+          "raw_rule_id": "st/cwe-22/all",
+          "rule_id": "st/cwe-22/all",
+          "start_column": 25,
+          "start_line": 6,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "evidence_query_still_reports_flow"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "baseline_alert",
+        "retained_by_evidence_query"
+      ],
+      "path": "app.py",
+      "policy_id": "cwe22-safety-evidence",
+      "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "baseline_alert": true,
+        "retained_by_evidence_query": true
+      },
+      "priority": "P1",
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "reconciler_version": "safety-evidence-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-path-injection-sink",
+      "source_types": [],
+      "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+      "start_column": 25,
+      "start_line": 6,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "a8ee8fa8a1c165081705c68ab79aafe3e4acdcf5901cce36e6c589c86705f36c",
+      "unknown_fields": []
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "no_filter_condition_for_family"
+        ],
+        "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "sql-injection",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+        "priority": "U",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a"
+        ]
+      },
+      "candidate_key": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+      "cwe": "CWE-89",
+      "decision_id": "K10_DETECTED_KEPT",
+      "disposition": "review",
+      "end_column": 17,
+      "end_line": 6,
+      "evidence_state": "insufficient",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "message": "alert",
+          "query": "detection",
+          "raw_id": "codeql-sql-injection:0:3",
+          "reported_cwes": [
+            "cwe-089"
+          ],
+          "rule_id": "py/sql-injection"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "sql-injection",
+          "cwe_ids": [
+            "cwe-089"
+          ],
+          "end_column": 17,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-89"
+          ],
+          "raw_id": "codeql-sql-injection:0:3",
+          "raw_rule_id": "py/sql-injection",
+          "rule_id": "py/sql-injection",
+          "start_column": 11,
+          "start_line": 6,
+          "tool": "codeql",
+          "tool_pass": "codeql-sql-injection",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "no_filter_condition_for_family"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "detected",
+        "no_filter_condition_for_family"
+      ],
+      "path": "app.py",
+      "policy_id": "sql-injection-detect-and-keep",
+      "policy_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "policy_version": "0.1",
+      "predicate_values": {
+        "detected": true,
+        "run_complete": true
+      },
+      "priority": "U",
+      "reason": "CodeQL báo luồng dữ liệu tới vị trí này. Nhóm phân tích này chưa có chính sách xếp hạng và chưa có điều kiện gạn nào đã được đo, nên cảnh báo được giữ nguyên ở danh sách rà.",
+      "reconciler_version": "detection-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-reported-sink",
+      "source_types": [],
+      "spec_sha256": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+      "start_column": 11,
+      "start_line": 6,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "b364d6dd1a45624fd5c257c58e470e3133b4814f6d948cc7ff50785722506b9a",
+      "unknown_fields": [
+        "priority_policy",
+        "filter_condition"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "evidence_query_still_reports_flow"
+        ],
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo luồng tới lời gọi này.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "command-injection",
+      "argument_role": "shell_command",
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "same_call_site",
+        "key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+        "priority": "P2",
+        "tools": [
+          "bandit",
+          "codeql",
+          "semgrep"
+        ],
+        "unit_ids": [
+          "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+        ]
+      },
+      "candidate_key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+      "cwe": "CWE-78",
+      "decision_id": "D30_HIGH",
+      "disposition": "review",
+      "end_column": 51,
+      "end_line": 6,
+      "evidence_state": "not_refuted",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "audit_oriented": true,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "B605",
+          "claim_family": "audit",
+          "claim_kind": "call_site_pattern",
+          "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "bandit:0:1",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "B605",
+          "source_location": null,
+          "source_type": "unknown",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "bandit",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        },
+        {
+          "audit_oriented": false,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "py/command-line-injection",
+          "claim_family": "flow",
+          "claim_kind": "modeled_command_line_flow",
+          "definition_sha256": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "codeql:0:1",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "py/command-line-injection",
+          "source_location": null,
+          "source_type": "remote",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "codeql",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        },
+        {
+          "audit_oriented": false,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "dangerous-system-call",
+          "claim_family": "flow",
+          "claim_kind": "modeled_remote_argument_flow",
+          "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "semgrep:0:1",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "tmp.dangerous-system-call",
+          "source_location": null,
+          "source_type": "remote",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "semgrep",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "cwe-78"
+          ],
+          "end_column": 51,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "bandit:0:1",
+          "raw_rule_id": "B605",
+          "rule_id": "B605",
+          "start_column": 1,
+          "start_line": 6,
+          "tool": "bandit",
+          "tool_pass": "bandit",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "cwe-078",
+            "cwe-088"
+          ],
+          "end_column": 50,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78",
+            "CWE-88"
+          ],
+          "raw_id": "codeql:0:1",
+          "raw_rule_id": "py/command-line-injection",
+          "rule_id": "py/command-line-injection",
+          "start_column": 11,
+          "start_line": 6,
+          "tool": "codeql",
+          "tool_pass": "codeql",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "CWE-78"
+          ],
+          "end_column": 50,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "semgrep:0:1",
+          "raw_rule_id": "tmp.dangerous-system-call",
+          "rule_id": "dangerous-system-call",
+          "start_column": 11,
+          "start_line": 6,
+          "tool": "semgrep",
+          "tool_pass": "semgrep",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "evidence_query_still_reports_flow"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "agreement",
+        "audit_claim",
+        "execution_candidate",
+        "flow_claim",
+        "important_unknown",
+        "not strong_flow",
+        "not verified_blocker",
+        "shell_semantics",
+        "{'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}",
+        "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+        "{'all': ['flow_claim', 'important_unknown']}",
+        "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+      ],
+      "path": "app.py",
+      "policy_id": "command-injection-priority",
+      "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "agreement": true,
+        "audit_claim": true,
+        "evidence_conflict": false,
+        "execution_candidate": true,
+        "flow_claim": true,
+        "important_unknown": true,
+        "shell_semantics": true,
+        "strong_flow": false,
+        "unresolved_unit": false,
+        "verified_blocker": false
+      },
+      "priority": "P2",
+      "reason": "Ưu tiên cao: agreement, audit_claim, execution_candidate, flow_claim, important_unknown, not strong_flow, not verified_blocker, shell_semantics, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+      "reconciler_version": "reconcile-v0.1",
+      "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+      "rule_claims_version": "rule-claims-v3",
+      "shell_state": "absent",
+      "sink_kind": "os.system",
+      "source_types": [
+        "remote",
+        "unknown"
+      ],
+      "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+      "start_column": 1,
+      "start_line": 6,
+      "tools": [
+        "bandit",
+        "codeql",
+        "semgrep"
+      ],
+      "unit_key": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d",
+      "unknown_fields": [
+        "flow_claim_without_valid_endpoint_trace",
+        "source_library_input_or_unknown"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "evidence_query_still_reports_flow"
+        ],
+        "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "path-traversal",
+      "argument_role": null,
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "single_location",
+        "key": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+        "priority": "P1",
+        "tools": [
+          "codeql"
+        ],
+        "unit_ids": [
+          "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2"
+        ]
+      },
+      "candidate_key": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+      "cwe": "CWE-22",
+      "decision_id": "EV_KEPT_NO_PROOF",
+      "disposition": "review",
+      "end_column": 14,
+      "end_line": 3,
+      "evidence_state": "not_refuted",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "message": "alert",
+          "query": "baseline",
+          "raw_id": "codeql-path-traversal:0:3",
+          "rule_id": "st/cwe-22/none"
+        },
+        {
+          "message": "alert",
+          "query": "evidence",
+          "raw_id": "codeql-path-traversal:0:6",
+          "rule_id": "st/cwe-22/all"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 14,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:3",
+          "raw_rule_id": "st/cwe-22/none",
+          "rule_id": "st/cwe-22/none",
+          "start_column": 11,
+          "start_line": 3,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "path-traversal",
+          "cwe_ids": [
+            "cwe-022"
+          ],
+          "end_column": 14,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-22"
+          ],
+          "raw_id": "codeql-path-traversal:0:6",
+          "raw_rule_id": "st/cwe-22/all",
+          "rule_id": "st/cwe-22/all",
+          "start_column": 11,
+          "start_line": 3,
+          "tool": "codeql",
+          "tool_pass": "codeql-path-traversal",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "evidence_query_still_reports_flow"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "baseline_alert",
+        "retained_by_evidence_query"
+      ],
+      "path": "app.py",
+      "policy_id": "cwe22-safety-evidence",
+      "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "baseline_alert": true,
+        "retained_by_evidence_query": true
+      },
+      "priority": "P1",
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "reconciler_version": "safety-evidence-units-v1",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "shell_state": null,
+      "sink_kind": "codeql-path-injection-sink",
+      "source_types": [],
+      "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+      "start_column": 11,
+      "start_line": 3,
+      "tools": [
+        "codeql"
+      ],
+      "unit_key": "f7ff891f4bfe9cf2bb45d43d7cd40c63f4cf238e1f4176cd18d54748bcfb05d2",
+      "unknown_fields": []
+    }
+  ]
+}

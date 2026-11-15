@@ -100,7 +100,8 @@ Record concurrency settings with scan provenance when changing execution behavio
 `classification.py` and `families.py` hold the composite (multi-family) scan: the scanners
 run once, one CodeQL database is created, every finding is routed to one analysis family
 before anything is merged, and each family is assessed by its member profile's existing
-entry point (`scan_language` or `scan_language_evidence`). A finding whose family cannot be
+entry point (`scan_language`, `scan_language_evidence` or, for a family that is only
+detected and kept, `detection.scan_language_detection`). A finding whose family cannot be
 named stays unassigned at priority U, and findings a family could not rank are held as
 units at priority U (`F10_FAMILY_NOT_RANKED`), so every finding of a composite scan sits in
 exactly one unit. A single-profile scan whose profile ranked nothing (a partial
@@ -108,9 +109,10 @@ exactly one unit. A single-profile scan whose profile ranked nothing (a partial
 called from `task.scan_snapshot`; never leave a stored finding without a unit. A new family
 filters nothing until its own evidence has been evaluated.
 
-A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`) pins its members'
-manifests; `scanners/profile.py` loads it, `families.members_of` checks that it names
-families in `families.FAMILIES`, and `task.scan_snapshot` runs it. `families.to_language_result`
+A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/` and
+`profiles/multi-cwe-v0.2/`) pins its members' manifests; `scanners/profile.py` loads it,
+`families.members_of` checks that it names families in `families.FAMILIES`, and
+`task.scan_snapshot` runs it. `families.to_language_result`
 turns a composite run into one `LanguageResult` with a part per family; `persist.py` writes
 tool runs and findings per language and units per part, with `location_units.analysis_family`
 and the finding's classification in `findings.evidence`. Reads select a composite scan's
@@ -120,6 +122,15 @@ one place that turns a filter record into what the evidence says: keep it separa
 scan status and from `disposition`. The development CLI `scripts/scan_families.py` runs the
 same composition without the database and compares it with single-profile scans. Plan,
 invariants and status: `../docs/plans/multi-cwe.md`.
+
+A `"kind": "detection"` profile (`profiles/sql-injection-v0.1/`, family `sql-injection`,
+CWE-89) pins queries of the installed standard CodeQL pack by hash and the CWEs of each rule in
+its manifest. It runs only as a member, in its own pass (`codeql-sql-injection`) on the shared
+database, and `detection.keep_detected` makes one unit per reported location at the manifest's
+tier, always in the review list. `multi-cwe-v0.1` must keep producing what
+`tests/golden/composite/` records; `multi-cwe-v0.2` adds a member and changes nothing else.
+The task's time limits and the broker's visibility timeout cover the largest profile
+(`task.worst_case_seconds`); change them together.
 
 To add an analysis family: add it to `families.FAMILIES` and its profiles to
 `FAMILY_OF_PROFILE`, give it a member profile, and leave it without filter conditions until

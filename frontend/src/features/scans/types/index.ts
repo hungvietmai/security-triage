@@ -54,6 +54,7 @@ export const FILTER_RULES: Record<string, string> = {
 export const FAMILIES = {
   "command-injection": "CWE-78 · Command injection",
   "path-traversal": "CWE-22 · Path traversal",
+  "sql-injection": "CWE-89 · SQL injection",
   unassigned: "Chưa xác định nhóm",
 } as const satisfies Record<Family, string>;
 // What the evidence says about a unit. Separate from the scan's status and from the filter
@@ -84,6 +85,8 @@ export const KEPT_REASONS: Record<string, string> = {
   flow_claim_without_a_trace_to_check:
     "Công cụ khác báo luồng nhưng không kèm đường đi để đối chiếu",
   family_not_ranked: "Nhóm phân tích chưa xếp hạng được cảnh báo này",
+  no_filter_condition_for_family:
+    "Nhóm này chỉ phát hiện và giữ: chưa có điều kiện gạn nào được đo",
   rule_not_claimed: "Không thành viên nào của lượt quét khai rule này",
   definition_unverified: "Không xác định được một định nghĩa rule đã ghim",
   ambiguous_family: "Nhiều hơn một nhóm phân tích khai rule này",

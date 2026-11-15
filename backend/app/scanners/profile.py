@@ -12,6 +12,11 @@ pack; the evidence query's alerts rank the baseline's.
 A third kind, "composite", runs no rules of its own: it pins the manifests of member profiles,
 one per analysis family, that are scanned together on one tool run. Each member stays the
 profile it is, with its own pinned rules, policy and filter conditions.
+
+A "detection" profile pins queries of the installed standard CodeQL pack by hash and names the
+CWEs each of their rules is mapped to. It has no evidence query and no filter condition: every
+alert is kept for review. It runs as a member of a composite profile, on the database the
+composite's first member created.
 """
 
 from __future__ import annotations
@@ -63,7 +68,26 @@ class EvidenceProfile:
     specification_sha256: str
 
 
-AnyProfile = ScanProfile | EvidenceProfile
+@dataclass(frozen=True, slots=True)
+class DetectionProfile:
+    """Detect and keep: pinned queries of the standard CodeQL pack, no evidence, no filter."""
+
+    profile_id: str
+    manifest_sha256: str
+    root: Path
+    configs: dict[str, dict[str, Any]]
+    # Language -> rule ID -> the CWEs the pinned rule is mapped to; a rule may map to several.
+    rules: dict[str, dict[str, list[str]]]
+    # The one tier every unit of this profile gets; the profile has no ranking policy.
+    priority: str
+    policy_id: str
+    policy_version: str
+    # Hash of the specification: what assessments record as their policy.
+    policy_sha256: str
+    specification_sha256: str
+
+
+AnyProfile = ScanProfile | EvidenceProfile | DetectionProfile
 
 
 @dataclass(frozen=True, slots=True)
@@ -88,7 +112,10 @@ LoadedProfile = AnyProfile | CompositeProfile
 # Scanners a priority profile's language config may add to Semgrep and CodeQL.
 SCREENING_TOOLS = ("bandit", "eslint")
 EVIDENCE_KIND = "safety-evidence"
+DETECTION_KIND = "detection"
 COMPOSITE_KIND = "composite"
+# Tiers a detection profile may give its units.
+DETECTION_PRIORITIES = ("P1", "P2", "U", "P3", "P4")
 
 
 def _sha256(data: bytes) -> str:
@@ -135,6 +162,8 @@ def load_member_profile(root: Path, manifest: str) -> AnyProfile:
     kind = _kind(root, manifest)
     if kind == EVIDENCE_KIND:
         return load_evidence_profile(root, manifest)
+    if kind == DETECTION_KIND:
+        return load_detection_profile(root, manifest)
     if kind is not None:
         raise ProfileError(f"Unknown profile kind: {kind!r}")
     return load_profile(root, manifest)
@@ -184,6 +213,65 @@ def load_composite_profile(root: Path, manifest: str) -> CompositeProfile:
             root=root,
             members=tuple(members),
             composition=composition,
+            specification_sha256=_sha256(_pinned(files, raw["specification"])),
+        )
+    except (KeyError, TypeError, AttributeError, json.JSONDecodeError) as exc:
+        raise ProfileError(f"Malformed scan profile: {exc!r}") from exc
+
+
+def load_detection_profile(root: Path, manifest: str) -> DetectionProfile:
+    """Verify every pinned file, then return a profile that detects and keeps.
+
+    The queries belong to the installed standard pack, not to the repository, so their bytes
+    are checked against the configured hashes when they run (`run_codeql_evidence`).
+    """
+    root = root.resolve()
+    try:
+        manifest_bytes, raw, files = _verified(root, manifest)
+        if raw.get("kind") != DETECTION_KIND:
+            raise ProfileError("Not a detection profile")
+        configs = {
+            language: json.loads(_pinned(files, entry["config"]))
+            for language, entry in raw["languages"].items()
+        }
+        rules: dict[str, dict[str, list[str]]] = {}
+        for language, config in configs.items():
+            if config["semgrep_rules"] or config["scanners"] != ["codeql"]:
+                raise ProfileError("A detection profile runs CodeQL only")
+            if not config["codeql_queries"] or set(config["codeql_queries"]) != set(
+                config["codeql_query_sha256"]
+            ):
+                raise ProfileError("Detection queries and their hashes differ")
+            mapped = raw["rules"].get(language)
+            if not isinstance(mapped, dict) or not mapped:
+                raise ProfileError(f"A detection profile names no rules for {language}")
+            for rule, cwes in mapped.items():
+                if (
+                    not isinstance(cwes, list)
+                    or not cwes
+                    or not all(
+                        isinstance(cwe, str) and cwe.startswith("CWE-") and cwe[4:].isdigit()
+                        for cwe in cwes
+                    )
+                ):
+                    raise ProfileError(f"Rule {rule} names no mapped CWE")
+            rules[language] = {rule: list(cwes) for rule, cwes in mapped.items()}
+        if set(raw["rules"]) != set(configs):
+            raise ProfileError("Rules and language configs name different languages")
+        priority = raw["priority"]
+        if priority not in DETECTION_PRIORITIES:
+            raise ProfileError(f"Unknown priority tier: {priority!r}")
+        policy = raw["policy"]
+        return DetectionProfile(
+            profile_id=raw["profile_id"],
+            manifest_sha256=_sha256(manifest_bytes),
+            root=root,
+            configs=configs,
+            rules=rules,
+            priority=priority,
+            policy_id=policy["id"],
+            policy_version=policy["version"],
+            policy_sha256=_sha256(_pinned(files, policy["source"])),
             specification_sha256=_sha256(_pinned(files, raw["specification"])),
         )
     except (KeyError, TypeError, AttributeError, json.JSONDecodeError) as exc:

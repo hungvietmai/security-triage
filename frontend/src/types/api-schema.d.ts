@@ -220,7 +220,8 @@ export interface components {
        * Family
        * @enum {string}
        */
-      family: "command-injection" | "path-traversal" | "unassigned";
+      family:
+        "command-injection" | "path-traversal" | "sql-injection" | "unassigned";
       /**
        * Cwe
        * @description The family's CWE; none for unassigned findings
@@ -496,7 +497,13 @@ export interface components {
       raw_alerts: number;
       /** Analysis Family */
       analysis_family:
-        ("command-injection" | "path-traversal" | "unassigned") | null;
+        | (
+            | "command-injection"
+            | "path-traversal"
+            | "sql-injection"
+            | "unassigned"
+          )
+        | null;
       /** Cwe */
       cwe: string | null;
       /**
@@ -520,7 +527,8 @@ export interface components {
        * Family
        * @enum {string}
        */
-      family: "command-injection" | "path-traversal" | "unassigned";
+      family:
+        "command-injection" | "path-traversal" | "sql-injection" | "unassigned";
       /** Cwe */
       cwe: string | null;
       /** Label */
@@ -649,7 +657,7 @@ export interface components {
         | components["schemas"]["GitHubSource"];
       /**
        * Profile
-       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile.
+       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile. multi-cwe-v0.2: the same two members plus sql-injection-v0.1 (CWE-89, Python and JavaScript/TypeScript, CodeQL only), whose alerts are detected and kept for review: nothing ranks or filters them.
        * @default command-injection-v0.1
        * @enum {string}
        */
@@ -658,7 +666,8 @@ export interface components {
         | "command-injection-v0.2"
         | "command-injection-v0.3"
         | "path-traversal-v0.2"
-        | "multi-cwe-v0.1";
+        | "multi-cwe-v0.1"
+        | "multi-cwe-v0.2";
     };
     /** ScanRead */
     ScanRead: {
@@ -893,7 +902,13 @@ export interface components {
        * @description The family that assessed the unit; follows from the profile for a single-profile scan
        */
       analysis_family:
-        ("command-injection" | "path-traversal" | "unassigned") | null;
+        | (
+            | "command-injection"
+            | "path-traversal"
+            | "sql-injection"
+            | "unassigned"
+          )
+        | null;
       /**
        * Cwe
        * @description The family's CWE
@@ -1039,7 +1054,13 @@ export interface components {
        * @description The family that assessed the unit; follows from the profile for a single-profile scan
        */
       analysis_family:
-        ("command-injection" | "path-traversal" | "unassigned") | null;
+        | (
+            | "command-injection"
+            | "path-traversal"
+            | "sql-injection"
+            | "unassigned"
+          )
+        | null;
       /**
        * Cwe
        * @description The family's CWE
@@ -1334,7 +1355,14 @@ export interface operations {
         tier?: ("P1" | "P2" | "U" | "P3" | "P4") | null;
         tool?: ("semgrep" | "bandit" | "eslint" | "codeql") | null;
         disposition?: ("review" | "filtered") | null;
-        family?: ("command-injection" | "path-traversal" | "unassigned") | null;
+        family?:
+          | (
+              | "command-injection"
+              | "path-traversal"
+              | "sql-injection"
+              | "unassigned"
+            )
+          | null;
         /** @description Maximum number of items to return */
         limit?: number;
         /** @description Number of items to skip */

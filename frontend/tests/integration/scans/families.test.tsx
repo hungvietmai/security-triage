@@ -271,9 +271,7 @@ describe("A scan with several analysis families", () => {
       main().getByRole("button", { name: "CWE-78 · Command injection: 1" }),
     ).toHaveAttribute("aria-pressed", "true");
 
-    const { router } = await renderApp(
-      `/scans/${scan.id}?family=sql-injection`,
-    );
+    const { router } = await renderApp(`/scans/${scan.id}?family=xss`);
     expect(router.state.location.search.family).toBeUndefined();
   });
 
@@ -411,5 +409,111 @@ describe("A scan with several analysis families", () => {
     expect(
       main().queryByRole("region", { name: "Nhóm phân tích" }),
     ).not.toBeInTheDocument();
+  });
+
+  it("offers the three-family profile and says SQL injection is only detected and kept", async () => {
+    const project = makeProject();
+    db.projects = [project];
+    const { user } = await renderApp(`/projects/${project.id}`);
+    await user.click(await main().findByRole("button", { name: "Tạo scan" }));
+    const dialog = within(screen.getByRole("dialog", { name: "Tạo scan mới" }));
+    await user.click(dialog.getByRole("combobox", { name: "Profile" }));
+    await user.click(
+      screen.getByRole("option", {
+        name: "CWE-78 + CWE-22 + CWE-89 · Đa CWE, SQL injection chỉ phát hiện và giữ",
+      }),
+    );
+    expect(dialog.getByText(/chưa được xếp hạng hay gạn/)).toBeInTheDocument();
+  });
+
+  it("shows a SQL injection unit as kept for review with no evidence to weigh", async () => {
+    const sql: Family = {
+      family: "sql-injection",
+      cwe: "CWE-89",
+      label: "SQL injection",
+      profile_id: "sql-injection-v0.1",
+      profile_sha256: "3".repeat(64),
+      runs: [
+        {
+          language: "python",
+          status: "completed",
+          error: null,
+          raw_findings: 1,
+          evidence_steps: {},
+        },
+      ],
+      units: 1,
+      review: 1,
+      filtered: 0,
+      held: 0,
+    };
+    const scan = makeScan({
+      profile: "multi-cwe-v0.2",
+      reconciler_version: "family-composition-v0.1",
+      policy_version: "family-composition-v0.1",
+      unit_counts: { P1: 1, P2: 0, U: 1, P3: 0, P4: 0 },
+      disposition_counts: { review: 2, filtered: 0 },
+      families: [COMMAND, sql],
+    });
+    const command = makeUnit({ path: "run.py" });
+    const query = makeUnit({
+      path: "query.py",
+      priority: "U",
+      sink_kind: "codeql-reported-sink",
+      argument_role: null,
+      shell_state: null,
+      analysis_family: "sql-injection",
+      cwe: "CWE-89",
+      tools: ["codeql"],
+      decision_id: "K10_DETECTED_KEPT",
+      evidence_state: "insufficient",
+      kept_because: ["no_filter_condition_for_family"],
+      adjudication: {
+        status: "kept",
+        rule: null,
+        rules: [],
+        kept_because: ["no_filter_condition_for_family"],
+        reason: "Nhóm phân tích này chưa có điều kiện gạn nào đã được đo.",
+        evidence: [],
+      },
+    });
+    query.findings[0] = {
+      ...query.findings[0],
+      tool: "codeql",
+      rule_id: "py/sql-injection",
+      cwe_ids: ["cwe-089"],
+      mapped_cwes: ["CWE-89"],
+      analysis_family: "sql-injection",
+      family_status: "resolved",
+      family_basis: "pass_provenance",
+      tool_pass: "codeql-sql-injection",
+    };
+    db.scans = [scan];
+    db.units[scan.id] = [command, query];
+
+    const { user } = await renderApp(`/scans/${scan.id}?family=sql-injection`);
+    expect(
+      await main().findByRole("button", { name: "CWE-89 · SQL injection: 1" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      main().queryByRole("button", { name: "Xem đơn vị run.py:12" }),
+    ).not.toBeInTheDocument();
+    await user.click(
+      await main().findByRole("button", { name: "Xem đơn vị query.py:12" }),
+    );
+    const sheet = within(await screen.findByRole("dialog"));
+    expect(
+      await sheet.findByText("CWE-89 · SQL injection"),
+    ).toBeInTheDocument();
+    expect(sheet.getByText("Chưa đủ bằng chứng")).toBeInTheDocument();
+    expect(
+      sheet.getByText(
+        "Nhóm này chỉ phát hiện và giữ: chưa có điều kiện gạn nào được đo",
+      ),
+    ).toBeInTheDocument();
+    expect(sheet.getByText("cwe-089")).toBeInTheDocument();
+    expect(
+      sheet.getByText("Nằm trong danh sách rà chính."),
+    ).toBeInTheDocument();
   });
 });

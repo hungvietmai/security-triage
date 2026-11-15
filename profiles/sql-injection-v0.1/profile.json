@@ -1,0 +1,38 @@
+{
+  "kind": "detection",
+  "profile_id": "sql-injection-v0.1",
+  "languages": {
+    "javascript": {
+      "config": "profiles/sql-injection-v0.1/javascript.json"
+    },
+    "python": {
+      "config": "profiles/sql-injection-v0.1/python.json"
+    }
+  },
+  "rules": {
+    "javascript": {
+      "js/sql-injection": [
+        "CWE-89",
+        "CWE-90",
+        "CWE-943"
+      ]
+    },
+    "python": {
+      "py/sql-injection": [
+        "CWE-89"
+      ]
+    }
+  },
+  "priority": "U",
+  "policy": {
+    "id": "sql-injection-detect-and-keep",
+    "version": "0.1",
+    "source": "profiles/sql-injection-v0.1/DETECTION.md"
+  },
+  "specification": "profiles/sql-injection-v0.1/DETECTION.md",
+  "files": {
+    "profiles/sql-injection-v0.1/DETECTION.md": "e7d1fa6fde486b8f0d94a1ddbe10588bef2659d6486372b9e1330aafde068415",
+    "profiles/sql-injection-v0.1/javascript.json": "6ac23a111784a882e6fda487a8e1606465848f99b18273dcb1badbcc5060ee99",
+    "profiles/sql-injection-v0.1/python.json": "8786767102f616860b6979b0a1941c9c6cc849341b1d21a4a7562b85526db044"
+  }
+}

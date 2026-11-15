@@ -2,9 +2,10 @@
 
 A composite scan is built from existing pinned profiles ("members"), one per analysis family.
 The scanners run once and one CodeQL database is created. Each member's own entry point
-(`scan_language` or `scan_language_evidence`) then assesses the findings routed to its family,
-with its own pinned rules, policy and filter conditions. Nothing here ranks or filters: the
-composition only provides each member with the tool results it would have produced alone.
+(`scan_language`, `scan_language_evidence` or `scan_language_detection`) then assesses the
+findings routed to its family, with its own pinned rules, policy and filter conditions.
+Nothing here ranks or filters: the composition only provides each member with the tool
+results it would have produced alone.
 
 The rule this module keeps: for the same snapshot and pinned tools, a family's units and
 assessments equal what scanning with that member's profile alone produces. The one intended
@@ -36,7 +37,13 @@ from app.core.config import Settings
 from app.scanners.codeql import query_pack_for_language, run_codeql_evidence
 from app.scanners.pipeline import PipelineResult, PipelineStatus, run_pipeline
 from app.scanners.process import InvokeCallable, ProcessRecord, invoke
-from app.scanners.profile import AnyProfile, CompositeProfile, EvidenceProfile, ScanProfile
+from app.scanners.profile import (
+    AnyProfile,
+    CompositeProfile,
+    DetectionProfile,
+    EvidenceProfile,
+    ScanProfile,
+)
 from app.scanners.sarif import Finding
 from app.triage.reconcile import ReconciledUnit, reconcile_findings
 from app.workflows.scans.analysis import RunPipeline, scan_language, scan_language_evidence
@@ -47,6 +54,7 @@ from app.workflows.scans.classification import (
     pinned_rules_claim,
     rule_claims_claim,
 )
+from app.workflows.scans.detection import scan_language_detection
 from app.workflows.scans.results import LanguageResult
 
 COMPOSITION_VERSION = "family-composition-v0.1"
@@ -66,7 +74,7 @@ class Family:
     cwe: str
     label: str
     # The kind of profile whose entry point assesses this family's findings.
-    profile_type: type[ScanProfile] | type[EvidenceProfile]
+    profile_type: type[ScanProfile] | type[EvidenceProfile] | type[DetectionProfile]
 
 
 # Every family a scan can contain. A new family is added here only with its own member profile
@@ -74,6 +82,8 @@ class Family:
 FAMILIES = {
     "command-injection": Family("command-injection", "CWE-78", "Command injection", ScanProfile),
     "path-traversal": Family("path-traversal", "CWE-22", "Path traversal", EvidenceProfile),
+    # Detected and kept only: no ranking policy and no filter condition has been evaluated.
+    "sql-injection": Family("sql-injection", "CWE-89", "SQL injection", DetectionProfile),
 }
 # The analysis family each pinned profile handles. A profile that is not listed cannot be a
 # member: its family, and with it the conditions under which it may filter, is unknown.
@@ -82,10 +92,16 @@ FAMILY_OF_PROFILE = {
     "command-injection-v0.2": "command-injection",
     "command-injection-v0.3": "command-injection",
     "path-traversal-v0.2": "path-traversal",
+    "sql-injection-v0.1": "sql-injection",
 }
 # A member whose queries run on the shared database gets its own analysis pass. Its raw IDs
 # start with this prefix and the family, so they stay unique next to the primary CodeQL pass.
 PASS_PREFIX = "codeql-"
+# What a pass on the shared database is, for the cost record: a safety-evidence pack runs its
+# detection and its evidence query in one command; a detection member runs detection only.
+EVIDENCE_PASS = "detection+evidence"
+DETECTION_PASS = "detection"
+PASS_KINDS = (EVIDENCE_PASS, DETECTION_PASS)
 # Files a member's entry point writes; a composite scan keeps them per family.
 MEMBER_FILES = ("run.json", "findings.json", "units.json", "assessments.json")
 # What each step of the primary pipeline is, for the cost record.
@@ -200,8 +216,8 @@ def compose(profiles: Sequence[AnyProfile]) -> list[Member]:
     """The members of a composite scan, one per family, the primary member first.
 
     Exactly one member runs the screening tools and creates the CodeQL database (a priority
-    profile); every other member is a safety-evidence profile whose pack is analyzed on that
-    database.
+    profile); every other member is a safety-evidence or a detection profile whose queries
+    are analyzed on that database, each in a pass of its own.
     """
     members = []
     for profile in profiles:
@@ -260,6 +276,11 @@ def _claim(member: Member, language: str) -> Claim:
     profile = member.profile
     if isinstance(profile, ScanProfile):
         return rule_claims_claim(profile.rule_claims, language)
+    if isinstance(profile, DetectionProfile):
+        # The manifest pins each rule's mapped CWEs; nothing is read from the rule's name.
+        return pinned_rules_claim(
+            profile.rules[language], basis=f"pinned_rule_id:{profile.profile_id}"
+        )
     rules = {}
     for rule in (profile.baseline_rule, profile.evidence_rule):
         # The pack's query IDs name their CWE ("st/cwe-22/none"); the manifest pins the IDs.
@@ -528,7 +549,8 @@ def scan_language_families(
             for finding in found:
                 # The pass name stays in the raw ID; the tool is CodeQL, as when run alone.
                 finding["tool"] = "codeql"
-            steps[name] = {**record, "kind": "detection+evidence", "serves": [member.family]}
+            kind = EVIDENCE_PASS if isinstance(member.profile, EvidenceProfile) else DETECTION_PASS
+            steps[name] = {**record, "kind": kind, "serves": [member.family]}
             classify(found, {finding["raw_id"]: name for finding in found})
             member_steps["codeql"] = record
             status = record["status"]
@@ -594,12 +616,22 @@ def scan_language_families(
         steps[step] = {**record, "kind": kind, "serves": users}
 
     for member in others:
-        profile = member.profile
-        assert isinstance(profile, EvidenceProfile)
 
-        def run_evidence(
-            folder: Path, member: Member = member, profile: EvidenceProfile = profile
-        ) -> LanguageResult:
+        def run_on_shared_database(folder: Path, member: Member = member) -> LanguageResult:
+            profile = member.profile
+            if isinstance(profile, DetectionProfile):
+                return scan_language_detection(
+                    language,
+                    profile=profile,
+                    family=member.family,
+                    settings=settings,
+                    source=source,
+                    output=folder,
+                    snapshot_sha256=snapshot_sha256,
+                    run_pipeline_fn=shared_database_pipeline(member),
+                    invoke_fn=invoke_fn,
+                )
+            assert isinstance(profile, EvidenceProfile)
             return scan_language_evidence(
                 language,
                 profile=profile,
@@ -611,7 +643,7 @@ def scan_language_families(
                 invoke_fn=invoke_fn,
             )
 
-        run_member(member, run_evidence)
+        run_member(member, run_on_shared_database)
 
     by_raw_id = {record["raw_id"]: record for record in records}
     held: list[HeldUnits] = []
@@ -762,7 +794,7 @@ def to_language_result(result: CompositeResult) -> LanguageResult:
     passes = tuple(
         name
         for name, step in result.steps.items()
-        if step["kind"] == "detection+evidence" and name.startswith(PASS_PREFIX)
+        if step["kind"] in PASS_KINDS and name.startswith(PASS_PREFIX)
     )
     for name in passes:
         versions[name] = versions.get("codeql", "")

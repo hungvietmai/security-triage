@@ -53,6 +53,7 @@ export const createScanInputSchema = z.object({
     "command-injection-v0.3",
     "path-traversal-v0.2",
     "multi-cwe-v0.1",
+    "multi-cwe-v0.2",
   ]),
 }) satisfies z.ZodType<ScanCreate>;
 
@@ -84,6 +85,12 @@ export const SCAN_PROFILES: Record<
     label: "CWE-78 + CWE-22 · Đa CWE trong một lượt quét",
     description:
       "Quét command-injection-v0.3 và path-traversal-v0.2 trong cùng một lượt, dùng chung một database CodeQL. Mỗi cảnh báo thuộc đúng một nhóm CWE và được thẩm định bằng profile của nhóm đó; CWE-22 chỉ có trên Python.",
+  },
+  "multi-cwe-v0.2": {
+    label:
+      "CWE-78 + CWE-22 + CWE-89 · Đa CWE, SQL injection chỉ phát hiện và giữ",
+    description:
+      "Như multi-cwe-v0.1, thêm nhóm SQL injection (CWE-89) cho Python và JavaScript/TypeScript bằng CodeQL trên cùng database. Cảnh báo CWE-89 chưa được xếp hạng hay gạn: tất cả ở danh sách rà chính.",
   },
 };
 

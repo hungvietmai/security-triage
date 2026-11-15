@@ -323,7 +323,9 @@ def test_a_composite_scan_is_read_by_family_through_the_api(client, engine):
     # A tool filter also finds alerts of that tool's pass on the shared database.
     assert len(_units(client, scan_id, tool="codeql")) == 6
     assert len(_units(client, scan_id, tool="bandit")) == 2
-    assert client.get(f"/api/v1/scans/{scan_id}/units?family=sql-injection").status_code == 422
+    # A family this scan's profile has no member for is a valid name with no units.
+    assert _units(client, scan_id, family="sql-injection") == []
+    assert client.get(f"/api/v1/scans/{scan_id}/units?family=xss").status_code == 422
 
     detail = client.get(f"/api/v1/scans/{scan_id}/units/{hidden['id']}").json()
     assert (detail["analysis_family"], detail["cwe"], detail["disposition"]) == (

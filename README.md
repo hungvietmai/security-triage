@@ -9,7 +9,7 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong năm profile:
+  một commit GitHub, chọn một trong sáu profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
@@ -30,6 +30,10 @@ và CodeQL. Repository gồm hai phần:
     CWE và được thẩm định bằng profile của nhóm đó. Mới kiểm chứng kỹ thuật trên dữ liệu phát
     triển ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md)); cách dùng ở
     [mục dưới](#quét-nhiều-cwe-trong-một-lượt).
+  - `multi-cwe-v0.2`: như `multi-cwe-v0.1`, thêm nhóm **SQL injection (CWE-89)** cho Python và
+    JavaScript/TypeScript bằng truy vấn chuẩn của CodeQL trên cùng database. Ở phiên bản này CWE-89
+    **chỉ được phát hiện và giữ**: chưa có chính sách xếp hạng, chưa có điều kiện gạn, mọi cảnh báo
+    ở danh sách rà chính. Mới kiểm chứng kỹ thuật trên dữ liệu phát triển.
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
 
 ## Tài liệu
@@ -100,8 +104,15 @@ Chạy lại `docker compose up --build -d` sau khi thay đổi dependencies ho�
 6. Cuối trang, **Báo cáo trước–sau** có bảng theo từng nhóm; tải báo cáo JSON hoặc SARIF hợp nhất
    (mỗi cảnh báo mang nhóm và CWE; cảnh báo đã gạn có `suppressions`, không bị xóa).
 
-Giới hạn: CWE-22 chỉ có trên Python; lượt quét ghép chạy lâu hơn một profile đơn nhưng chỉ tạo
-database CodeQL một lần. Profile đơn vẫn dùng được như trước.
+Profile **"CWE-78 + CWE-22 + CWE-89 · Đa CWE, SQL injection chỉ phát hiện và giữ"**
+(`multi-cwe-v0.2`) dùng y như trên và có thêm nhóm `sql-injection`. Đơn vị của nhóm này luôn ở mức
+U ("chưa xếp hạng"), luôn ở danh sách rà chính, cột **Bằng chứng** ghi "Chưa đủ bằng chứng" và
+SARIF không bao giờ gắn `suppressions` cho chúng. Với JavaScript/TypeScript, một cảnh báo của
+`js/sql-injection` mang cả ba CWE mà rule ánh xạ tới (CWE-89, CWE-90, CWE-943).
+
+Giới hạn: CWE-22 chỉ có trên Python; CWE-89 mới chỉ dùng CodeQL (chưa có Semgrep, Bandit) và chưa
+gộp cảnh báo theo lời gọi; lượt quét ghép chạy lâu hơn một profile đơn nhưng chỉ tạo database CodeQL
+một lần. Profile đơn và `multi-cwe-v0.1` vẫn dùng được như trước.
 
 ## Phát triển trong Docker, tự tải lại code
 
@@ -220,14 +231,16 @@ hay kết quả quét giả.
 ## Scanner trong worker
 
 Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep, CodeQL,
-Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm năm scan profile:
+Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm sáu scan profile:
 [`command-injection-v0.1`](profiles/command-injection-v0.1/profile.json),
 [`command-injection-v0.2`](profiles/command-injection-v0.2/profile.json),
 [`command-injection-v0.3`](profiles/command-injection-v0.3/profile.json),
 [`path-traversal-v0.2`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
-[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và profile ghép
-[`multi-cwe-v0.1`](profiles/multi-cwe-v0.1/profile.json), vốn chỉ ghim manifest của hai profile
-thành viên. Worker từ chối
+[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và hai profile ghép
+[`multi-cwe-v0.1`](profiles/multi-cwe-v0.1/profile.json) và
+[`multi-cwe-v0.2`](profiles/multi-cwe-v0.2/profile.json), vốn chỉ ghim manifest của các profile
+thành viên. Thành viên [`sql-injection-v0.1`](profiles/sql-injection-v0.1/profile.json) chỉ chạy
+bên trong `multi-cwe-v0.2`. Worker từ chối
 khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
 kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
 

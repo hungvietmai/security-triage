@@ -1,10 +1,10 @@
-"""Golden regression for the composite profile multi-cwe-v0.1.
+"""Golden regression for the composite profiles multi-cwe-v0.1 and multi-cwe-v0.2.
 
 Each scenario runs a composite scan through the worker with scripted scanner output and
 compares what the scan stored and what the API, the report and the SARIF export say about it
-with a committed JSON file under tests/golden/composite/. The files were generated before any
-analysis family was added to the composition; a difference means `multi-cwe-v0.1` now behaves
-differently.
+with a committed JSON file under tests/golden/composite/. The `multi-cwe-v0.1` files were
+generated before any analysis family was added to the composition; a difference means that
+profile now behaves differently. The `multi-cwe-v0.2` files pin the three-family scan.
 
 To regenerate after an intended, explained change: UPDATE_GOLDEN=1 uv run pytest <this file>.
 Review the diff of every golden file and commit it with the change that caused it.
@@ -26,10 +26,23 @@ from app.features.scans.models import Scan
 from tests.workflows.scans.fakes import FakeStorage
 from tests.workflows.scans.test_composite_scan import _composite, _detail, _units
 from tests.workflows.scans.test_families import Tools
+from tests.workflows.scans.test_sql_family import SqlTools, _scan_v02, standard_pack  # noqa: F401
 
 GOLDEN = Path(__file__).resolve().parents[2] / "golden" / "composite"
 UPDATE = os.environ.get("UPDATE_GOLDEN") == "1"
 
+V02_SCENARIOS: dict[str, Tools] = {
+    "multi-cwe-v0.2-three-families": SqlTools(),
+    "multi-cwe-v0.2-other-families-filter": SqlTools(command_refuted=True, path_hidden=()),
+    "multi-cwe-v0.2-sql-pass-partial": SqlTools(sql_pass="partial"),
+    "multi-cwe-v0.2-sql-pass-failed": SqlTools(sql_pass="failed"),
+    "multi-cwe-v0.2-sql-pass-failed-with-results": SqlTools(
+        sql_pass="failed", sql_results_when_failed=True
+    ),
+    "multi-cwe-v0.2-unexpected-sql-rule": SqlTools(sql_rule="py/nosql-injection"),
+    "multi-cwe-v0.2-path-pass-partial": SqlTools(path_pass="partial"),
+    "multi-cwe-v0.2-database-failed": SqlTools(database="failed"),
+}
 SCENARIOS: dict[str, Tools] = {
     "multi-cwe-v0.1-both-families": Tools(),
     "multi-cwe-v0.1-command-evidence-refutes": Tools(command_refuted=True),
@@ -183,5 +196,13 @@ def test_multi_cwe_v0_1_produces_its_recorded_result(client, engine, name):
     _check(name, _produced(client, engine, storage, scan_id))
 
 
+@pytest.mark.parametrize("name", sorted(V02_SCENARIOS))
+def test_multi_cwe_v0_2_produces_its_recorded_result(client, engine, name):
+    scan_id, _, storage = _scan_v02(engine, V02_SCENARIOS[name])
+    _check(name, _produced(client, engine, storage, scan_id))
+
+
 def test_every_golden_file_belongs_to_a_scenario():
-    assert sorted(path.stem for path in GOLDEN.glob("*.json")) == sorted(SCENARIOS)
+    assert sorted(path.stem for path in GOLDEN.glob("*.json")) == sorted(
+        [*SCENARIOS, *V02_SCENARIOS]
+    )

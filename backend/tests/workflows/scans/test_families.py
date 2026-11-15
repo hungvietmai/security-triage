@@ -705,6 +705,9 @@ def test_members_must_fit_one_tool_run(tmp_path):
     with pytest.raises(ValueError, match="one member per analysis family"):
         compose([command, _profile("command-injection-v0.2")])
     with pytest.raises(ValueError, match="no analysis family"):
+        compose([dataclasses.replace(command, profile_id="cross-site-scripting-v0.1")])
+    # A profile of the wrong kind cannot stand in for a family's member.
+    with pytest.raises(ValueError, match="Family sql-injection cannot assess"):
         compose([dataclasses.replace(command, profile_id="sql-injection-v0.1")])
 
     other_version = {"python": {**path.configs["python"], "codeql_version": "9.9.9"}}

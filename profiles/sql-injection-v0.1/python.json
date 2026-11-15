@@ -1,0 +1,26 @@
+{
+  "config_id": "sql-injection-v0.1-python",
+  "purpose": "Product scan: detect CWE-89 with the standard CodeQL query and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [],
+  "codeql_queries": [
+    "Security/CWE-089/SqlInjection.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-089/SqlInjection.ql": "e8324e568041a22d5d3a4ea21ef52ef791d67a699352273edda350caeca84964"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "asset": "codeql-bundle-python-linux64.tar.zst",
+    "sha256": "ea86393c6c812542ae5a3a7122bcc760873707a50b25cc47d2fd7cfd514b0cb0",
+    "python_query_pack": "1.8.11",
+    "python_all_pack": "7.2.6"
+  },
+  "language": "python"
+}

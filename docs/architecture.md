@@ -13,8 +13,8 @@ viên rà soát và gạn những ứng viên có bằng chứng cụ thể là 
 trạng thái lượt quét, danh sách rà chính và danh sách đã gạn theo hàng đợi P1→P4, bằng chứng
 của từng đơn vị và báo cáo trước–sau.
 
-Người dùng chọn một trong năm profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
-`multi-cwe-v0.1` ghép hai profile có sẵn vào một lượt quét:
+Người dùng chọn một trong sáu profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
+`multi-cwe-v0.1` ghép hai profile có sẵn vào một lượt quét, và `multi-cwe-v0.2` thêm nhóm CWE-89:
 
 | Profile | Phạm vi | Cách xếp hàng đợi |
 |---|---|---|
@@ -23,6 +23,7 @@ Người dùng chọn một trong năm profile khi tạo lượt quét. Bốn pr
 | `command-injection-v0.3` | Như v0.2 | Như v0.2, với ba điểm khác: worker quyết định phạm vi tệp của Semgrep (mã bị quét không tự ẩn tệp được); bộ định vị lời gọi JavaScript v1 nhận thêm bí danh hai bước, destructuring, `promisify`, `require` nội tuyến; quy tắc gạn G4 cho lời gọi `exec`/`execSync` có lệnh hằng. Đã đo trên dữ liệu phát triển và trên tập giữ lại của `pairs-v1` (9 vị trí lỗi đã biết, chỉ nhãn dương tính) |
 | `path-traversal-v0.2` | CWE-22; Python; chỉ CodeQL | Cảnh báo của truy vấn baseline. Nếu truy vấn có bằng chứng an toàn v0.2 vẫn báo thì ở **P1**; nếu bằng chứng đã loại mọi luồng thì xuống **P4**. Không xóa cảnh báo nào |
 | `multi-cwe-v0.1` | CWE-78 (JavaScript/TypeScript và Python) và CWE-22 (Python) trong một lượt quét; ghim manifest của `command-injection-v0.3` và `path-traversal-v0.2` | Mỗi cảnh báo thuộc đúng một nhóm phân tích và được xếp hạng, gạn bằng đúng profile thành viên của nhóm đó. Cảnh báo không xác định được nhóm, hoặc thuộc nhóm chưa xếp hạng được, ở mức **U** trong danh sách rà. Mới kiểm chứng kỹ thuật trên dữ liệu phát triển, chưa có số liệu đánh giá riêng |
+| `multi-cwe-v0.2` | Như `multi-cwe-v0.1`, thêm CWE-89 (Python và JavaScript/TypeScript; chỉ CodeQL); ghim thêm manifest của `sql-injection-v0.1` | Hai nhóm đầu như `multi-cwe-v0.1`. Nhóm `sql-injection` **chỉ phát hiện và giữ**: mỗi vị trí CodeQL báo là một đơn vị mức **U** ("chưa xếp hạng") ở danh sách rà chính; không có chính sách xếp hạng và không có điều kiện gạn |
 
 Profile `path-traversal-v0.2` dùng đúng pack đã đánh giá trong nghiên cứu
 ([rules/codeql/path-traversal-v0.2/](../rules/codeql/path-traversal-v0.2/README.md)), trùng từng
@@ -128,7 +129,7 @@ Lõi quét (`app/scanners`) và lõi thẩm định (`app/triage`) được dùn
 [run_pilot.py](../experiments/run_pilot.py). Job CI `scan-parity` quét `curling@0.2.0` qua cả
 hai đường và yêu cầu kết quả giống nhau.
 
-### 3.1 Lượt quét nhiều nhóm CWE (profile `multi-cwe-v0.1`)
+### 3.1 Lượt quét nhiều nhóm CWE (profile `multi-cwe-v0.1` và `multi-cwe-v0.2`)
 
 Profile ghép không có luật hay chính sách riêng: manifest của nó ghim manifest của các profile
 thành viên theo hash, mỗi thành viên ứng với một **nhóm phân tích**
@@ -158,6 +159,19 @@ thành viên theo hash, mỗi thành viên ứng với một **nhóm phân tích
    vụ một nhóm không làm đổi kết quả của nhóm khác.
 6. **Không có điều kiện gạn dùng chung.** G1–G4 thuộc nhóm lệnh; điều kiện của pack v0.2 thuộc nhóm
    đường dẫn. Profile ghép không thêm hay nới điều kiện nào.
+7. **Nhóm chỉ phát hiện và giữ** (`multi-cwe-v0.2`, nhóm `sql-injection` → CWE-89). Thành viên
+   `sql-injection-v0.1` là một profile kiểu `detection`
+   ([DETECTION.md](../profiles/sql-injection-v0.1/DETECTION.md)): nó ghim theo hash truy vấn
+   `Security/CWE-089/SqlInjection.ql` của gói truy vấn chuẩn CodeQL cho Python và
+   JavaScript/TypeScript, và khai trong manifest các CWE mà mỗi rule ánh xạ tới (`js/sql-injection`
+   ánh xạ tới ba CWE). Truy vấn chạy trong lượt riêng `codeql-sql-injection` trên database dùng
+   chung. `app/workflows/scans/detection.py` biến mỗi vị trí được báo thành một đơn vị mức U
+   (`K10_DETECTED_KEPT`) ở danh sách rà, với lý do giữ `no_filter_condition_for_family` và trạng
+   thái bằng chứng "chưa đủ". Không có bộ định vị sink, không gộp theo lời gọi, không xếp hạng,
+   không gạn. Lượt chạy dở giữ các cảnh báo đã báo và ghi `run_incomplete`; lượt chạy thất bại mà
+   đã ghi kết quả, hoặc cảnh báo của một rule không được ghim, được lớp ghép giữ thành đơn vị
+   `F10_FAMILY_NOT_RANKED`. Hai nhóm kia của `multi-cwe-v0.2` cho đúng kết quả của
+   `multi-cwe-v0.1`.
 
 Công cụ dòng lệnh `backend/scripts/scan_families.py` chạy cùng lớp ghép này mà không qua cơ sở dữ
 liệu, và so lượt quét ghép với lượt quét riêng từng profile. Thiết kế, bất biến và kết quả kiểm

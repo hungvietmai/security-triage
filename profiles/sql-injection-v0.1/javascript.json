@@ -1,0 +1,24 @@
+{
+  "config_id": "sql-injection-v0.1-javascript",
+  "purpose": "Product scan: detect CWE-89 in JavaScript and TypeScript with the standard CodeQL query and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [],
+  "codeql_queries": [
+    "Security/CWE-089/SqlInjection.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-089/SqlInjection.ql": "38c79ee799144a8c9fe4ca5c933d74dfdba98f1e5b898b36ea173af4fefbbd91"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "sha256": "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833",
+    "javascript_query_pack": "2.4.6"
+  },
+  "language": "javascript"
+}

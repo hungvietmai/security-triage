@@ -43,8 +43,9 @@ from app.scanners.acquisition import (
 from app.scanners.codeql import run_codeql_evidence
 from app.scanners.pipeline import run_pipeline
 from app.scanners.process import InvokeCallable, invoke
-from app.scanners.profile import EvidenceProfile, load_member_profile
+from app.scanners.profile import DetectionProfile, EvidenceProfile, load_member_profile
 from app.workflows.scans.analysis import RunPipeline, scan_language, scan_language_evidence
+from app.workflows.scans.detection import scan_language_detection
 from app.workflows.scans.families import (
     FAMILY_OF_PROFILE,
     PASS_PREFIX,
@@ -174,6 +175,11 @@ def run(
                 begin = time.monotonic()
                 if isinstance(member.profile, EvidenceProfile):
                     alone = scan_language_evidence(language, profile=member.profile, **common)
+                elif isinstance(member.profile, DetectionProfile):
+                    # Alone, the member creates its own database and runs the same queries.
+                    alone = scan_language_detection(
+                        language, profile=member.profile, family=member.family, **common
+                    )
                 else:
                     alone = scan_language(
                         language, profile=member.profile, files=acquired.source_files, **common

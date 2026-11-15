@@ -28,6 +28,7 @@ from app.scanners.pipeline import PipelineStatus, run_pipeline
 from app.scanners.process import InvokeCallable, invoke
 from app.scanners.profile import (
     CompositeProfile,
+    DetectionProfile,
     EvidenceProfile,
     LoadedProfile,
     ScanProfile,
@@ -38,6 +39,7 @@ from app.scanners.sources import Fetch, fetch_allowlisted
 from app.triage.reconcile import RECONCILIATION_VERSION
 from app.triage.safety_evidence import EVIDENCE_UNIT_VERSION
 from app.workflows.scans.analysis import RunPipeline, scan_language, scan_language_evidence
+from app.workflows.scans.detection import DETECTION_UNIT_VERSION
 from app.workflows.scans.exceptions import INFRA_ERRORS
 from app.workflows.scans.families import (
     COMPOSITION_VERSION,
@@ -60,9 +62,9 @@ logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
 # The soft limit must cover every step of the largest profile running to its timeout
-# (`worst_case_seconds`): multi-cwe-v0.1 needs 8760 s, command-injection-v0.3 7560 s. A test
-# keeps this above every profile.
-SOFT_TIME_LIMIT = 9000
+# (`worst_case_seconds`): multi-cwe-v0.2 needs 9960 s, multi-cwe-v0.1 8760 s,
+# command-injection-v0.3 7560 s. A test keeps this above every profile.
+SOFT_TIME_LIMIT = 10200
 # The soft limit interrupts only the main thread, which then waits for a scanner thread still
 # running, bounded by that step's timeout, before it can mark the scan failed. The hard limit
 # must leave that time, or the scan would be killed and stay "running". The longest step is
@@ -234,6 +236,11 @@ def scan_snapshot(
                     run_pipeline_fn=run_pipeline_fn,
                     invoke_fn=invoke_fn,
                 )
+            elif isinstance(profile, DetectionProfile):
+                # Its queries run on a database another member creates.
+                raise ValueError(
+                    f"Profile {profile.profile_id} only runs as a member of a composite profile"
+                )
             else:
                 language_result = scan_language(
                     language,
@@ -337,6 +344,11 @@ def _versions(profile: LoadedProfile, families: dict[str, list[dict[str, Any]]])
     if isinstance(profile, EvidenceProfile):
         return {
             "reconciler_version": EVIDENCE_UNIT_VERSION,
+            "policy_version": profile.policy_version,
+        }
+    if isinstance(profile, DetectionProfile):
+        return {
+            "reconciler_version": DETECTION_UNIT_VERSION,
             "policy_version": profile.policy_version,
         }
     return {

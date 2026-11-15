@@ -456,6 +456,7 @@
                   "enum": [
                     "command-injection",
                     "path-traversal",
+                    "sql-injection",
                     "unassigned"
                   ],
                   "type": "string"
@@ -725,6 +726,7 @@
             "enum": [
               "command-injection",
               "path-traversal",
+              "sql-injection",
               "unassigned"
             ],
             "title": "Family"
@@ -1427,6 +1429,7 @@
                 "enum": [
                   "command-injection",
                   "path-traversal",
+                  "sql-injection",
                   "unassigned"
                 ]
               },
@@ -1488,6 +1491,7 @@
             "enum": [
               "command-injection",
               "path-traversal",
+              "sql-injection",
               "unassigned"
             ],
             "title": "Family"
@@ -1741,10 +1745,11 @@
               "command-injection-v0.2",
               "command-injection-v0.3",
               "path-traversal-v0.2",
-              "multi-cwe-v0.1"
+              "multi-cwe-v0.1",
+              "multi-cwe-v0.2"
             ],
             "title": "Profile",
-            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile.",
+            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile. multi-cwe-v0.2: the same two members plus sql-injection-v0.1 (CWE-89, Python and JavaScript/TypeScript, CodeQL only), whose alerts are detected and kept for review: nothing ranks or filters them.",
             "default": "command-injection-v0.1"
           }
         },
@@ -2425,6 +2430,7 @@
                 "enum": [
                   "command-injection",
                   "path-traversal",
+                  "sql-injection",
                   "unassigned"
                 ]
               },
@@ -2821,6 +2827,7 @@
                 "enum": [
                   "command-injection",
                   "path-traversal",
+                  "sql-injection",
                   "unassigned"
                 ]
               },
