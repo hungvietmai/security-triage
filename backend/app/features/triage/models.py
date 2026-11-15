@@ -69,6 +69,9 @@ class LocationUnit(Identity, Base):
     locator_version: Mapped[str] = mapped_column(String(80))
     # Units that point at the same call share this key: one review candidate.
     candidate_key: Mapped[str | None] = mapped_column(String(160), index=True)
+    # The analysis family that produced the unit, written by composite scans only. A scan
+    # with a single profile leaves it empty; its family follows from the profile.
+    analysis_family: Mapped[str | None] = mapped_column(String(48), index=True)
 
 
 class UnitFinding(Identity, Base):
