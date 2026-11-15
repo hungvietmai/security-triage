@@ -342,10 +342,13 @@ trình bày cả hai kịch bản.
      liệu phát triển): một lượt quét chạy CWE-78 và CWE-22 trên cùng một database CodeQL, định
      tuyến mỗi cảnh báo tới đúng một nhóm rồi dùng nguyên profile thành viên để thẩm định. Trên
      OWASP BenchmarkPython, mỗi nhóm cho đúng kết quả của lượt quét riêng profile đó (51 và 188
-     cảnh báo; 24 và 125 đơn vị; 2 và 62 đơn vị đã gạn), không cảnh báo nào mất hay nằm trong hai
-     đơn vị. Không có nhãn nào được dùng và không có số liệu hiệu quả gạn mới: các điều kiện gạn
-     vẫn là G1–G4 và pack v0.2 như đã đo. Dữ liệu này không có file nào chứa cả hai nhóm, nên việc
-     chống gộp nhầm mới chỉ có kiểm thử tổng hợp. Xem [plans/multi-cwe.md](plans/multi-cwe.md).
+     kết quả công cụ; 24 và 125 đơn vị; 2 và 62 đơn vị đã gạn), không kết quả nào mất hay nằm trong
+     hai đơn vị. Trong 188 kết quả của nhóm CWE-22 có 125 cảnh báo phát hiện và 63 kết quả của truy
+     vấn bằng chứng mà profile v0.2 lưu kèm đơn vị. Không có nhãn nào được dùng và không có số liệu
+     hiệu quả gạn mới: các điều kiện gạn vẫn là G1–G4 và pack v0.2 như đã đo, và số đơn vị đã gạn ở
+     đây không phải số cảnh báo sai đã xác minh. Trên mã thật, một file có cả hai nhóm mới gặp một
+     lần (`sgabe/DSVPWA`, `dsvpwa/handlers.py`); ca cảnh báo CWE-22 nằm bên trong một lời gọi CWE-78
+     vẫn chỉ có trên nguồn tổng hợp. Xem [plans/multi-cwe.md](plans/multi-cwe.md), mục 17 và 18.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng

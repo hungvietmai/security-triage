@@ -14,7 +14,9 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
 - **Cập nhật cùng ngày:** P1a đã được triển khai trên nhánh `feat/multi-cwe-core`; mã, kiểm thử và
   kết quả lượt quét thật nằm ở [mục 16](#16-trạng-thái-p1a-2026-11-15). P1b (tích hợp vào ứng dụng
   web) nằm ở [mục 17](#17-trạng-thái-p1b-2026-11-15). Các mục 1–15 giữ nguyên là bản thiết kế; chỗ
-  nào thực tế khác kế hoạch thì được ghi ngay tại chỗ và ở mục 16, 17.
+  nào thực tế khác kế hoạch thì được ghi ngay tại chỗ và ở mục 16, 17. Lần rà nghiệm thu kỹ thuật
+  P1 nằm ở [mục 18](#18-nghiệm-thu-kỹ-thuật-p1-2026-11-15); thẩm định và thiết kế tối thiểu cho
+  CWE-89 ở [mục 19](#19-p2--thẩm-định-và-thiết-kế-tối-thiểu-cho-cwe-89-2026-11-15).
 
 ## 1. Kết luận ngắn
 
@@ -831,6 +833,10 @@ vi cũ: lượt `path-traversal-v0.2` chạy dở vẫn không tạo đơn vị 
 
 Chỉ `refuted` dẫn tới `filtered`. Lượt quét chạy dở, bước bằng chứng lỗi và nhóm chưa xếp hạng cho
 `unavailable`; bằng chứng không bác bỏ hoặc mâu thuẫn cho `not_refuted`; cả hai đều giữ cảnh báo.
+Không có bằng chứng nào về cảnh báo cho `insufficient`: kể cả khi rule báo luồng chưa có truy vấn
+bằng chứng (`flow_rule_without_evidence_query`) hoặc truy vấn đối chứng không báo cảnh báo đó
+(`evidence_baseline_does_not_report_this_alert`) — hai lý do này trước lần rà ở mục 18 bị xếp nhầm
+vào `not_refuted`, tức "đã đối chiếu", dù không có gì để đối chiếu.
 
 ### 17.3 Kiểm thử
 
@@ -883,9 +889,16 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
    | Trạng thái bằng chứng của đơn vị | 2 bị bác bỏ, 15 không bác bỏ, 7 chưa đủ | 62 bị bác bỏ, 63 không bác bỏ |
    | Khóa đơn vị, mức, quyết định so với lượt ghép của P1a | Giống nhau | Giống nhau |
 
-   239 cảnh báo, mỗi cảnh báo liên kết với đúng một đơn vị; SARIF tải về có 239 kết quả, 51 và 188
-   theo nhóm; chỉ kết quả của đơn vị đã gạn có `suppressions`. JavaScript của kho này không có cảnh
-   báo nào.
+   239 kết quả công cụ, mỗi kết quả liên kết với đúng một đơn vị; SARIF tải về có 239 kết quả, 51 và
+   188 theo nhóm; chỉ kết quả của đơn vị đã gạn có `suppressions`. JavaScript của kho này không có
+   cảnh báo nào.
+
+   **Cách đọc hai con số này** (rà lại ở mục 18.4): 188 của nhóm đường dẫn gồm 125 cảnh báo phát
+   hiện (`st/cwe-22/none`) và 63 kết quả của truy vấn bằng chứng (`st/cwe-22/all`) mà profile
+   `path-traversal-v0.2` lưu như cảnh báo gắn vào đơn vị (mục 5.5). Số cảnh báo phát hiện của lượt
+   quét là 176 (51 + 125), không phải 239. "Bị bác bỏ" là trạng thái bằng chứng của đơn vị thỏa
+   điều kiện gạn của nhóm mình; lượt này không dùng nhãn nào, nên 2 và 62 **không phải số cảnh báo
+   sai đã được xác minh**.
 4. **Profile ghép trên nguồn chỉ có JavaScript** (`curling@0.2.0`, quét bằng cả hai profile): lượt
    `multi-cwe-v0.1` cho đúng đơn vị, mức, quyết định, lý do và các bước báo cáo của lượt
    `command-injection-v0.3`; chỉ nhóm lệnh tham gia.
@@ -967,14 +980,277 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
   viết (điểm 5).
 - Commit `dc1db13` không qua `tsc` của frontend khi đứng một mình: một dòng của `get-units.ts` nằm
   ở commit kế tiếp. Đầu nhánh thì sạch; chủ đề án quyết định để nguyên.
-- CI trên GitHub chưa chạy vì chưa push; hook pre-commit đã chạy ở từng commit và script pre-push
-  đã chạy tại chỗ (điểm 11). Job `reconciliation-integration` của CI (dựng image thực nghiệm) chưa
-  chạy tại chỗ. Trang "Cảnh báo" tổng hợp và API liệt kê lượt quét vẫn chưa có, như trước.
+- CI trên GitHub chưa chạy: nhánh đã được push tới `04c8e8a` nhưng workflow chỉ chạy khi push vào
+  `main` hoặc khi có pull request, và chưa có pull request nào (mục 18.1). Hook pre-commit đã chạy
+  ở từng commit, script pre-push và cả năm job CI đã chạy tương đương tại chỗ (điểm 11, mục 18.2).
+  Trang "Cảnh báo" tổng hợp và API liệt kê lượt quét vẫn chưa có, như trước.
 - `multi-cwe-v0.1` chưa có số liệu đánh giá riêng; số liệu ở trên là kiểm chứng kỹ thuật trên dữ
   liệu phát triển, không dùng nhãn.
 - P1b-7 (cho profile đơn đi qua lớp ghép) không làm; hai đường vẫn song song ở `task.py`.
 
 ### 17.6 Đầu việc tiếp theo
 
-Thuộc quyền chủ đề án: push nhánh và chạy CI; quyết định có làm P1b-7 hay không; và nhóm CWE đầu tiên của P2,
-với giao thức và gói bằng chứng riêng trước khi nhóm đó được phép gạn.
+Thuộc quyền chủ đề án: mở draft pull request để CI chạy (mục 18.1; nhánh đã được push);
+quyết định cho P1b-7, cũng là cách xử lý giới hạn còn lại của L1 (mục 18.5); và nhóm CWE đầu tiên của P2,
+với giao thức và gói bằng chứng riêng trước khi nhóm đó được phép gạn (thiết kế ở mục 19).
+
+## 18. Nghiệm thu kỹ thuật P1 (2026-11-15)
+
+Lần rà này kiểm lại P1a và P1b bằng mã, dữ liệu đã lưu và các lượt chạy mới; không làm lại hai giai
+đoạn đó. Đầu ra thô nằm ở `artifacts/multi-cwe-p1-audit/` (không vào Git). Không nhãn nào được dùng,
+không dữ liệu held-out hay cặp đã đóng băng nào được quét, không file bị ghim nào bị sửa.
+
+### 18.1 Git và CI
+
+- Khi bắt đầu rà: `HEAD` = `59255dc`, `origin/feat/multi-cwe-core` ở `04c8e8a`, bốn commit chưa
+  push. Sau khi chủ đề án quyết định (cùng ngày), ba bản sửa của lần rà được commit
+  (`c8959aa`, `834156b`, `4360121`) và nhánh được push lên `origin` tới `4360121`, không ép ghi đè;
+  hook pre-push đạt. Việc mở draft pull request do chủ đề án thực hiện.
+- **Vì sao không có lượt GitHub Actions nào:** `.github/workflows/ci.yml` chỉ chạy khi `push` vào
+  `main` hoặc khi có `pull_request`. Nhánh được push nhưng chưa có pull request nào, nên không sự
+  kiện nào khớp. API của GitHub xác nhận: 0 pull request và 0 lượt chạy cho nhánh và cho commit
+  `04c8e8a`; lượt CI gần nhất của kho là trên `main` ngày 2026-10-08.
+- **Cách chạy CI mà không merge:** mở một draft pull request. Sự kiện `pull_request` không lọc theo
+  nhánh đích, nên có hai lựa chọn:
+  1. `feat/multi-cwe-core` → `feat/cwe22-triage` (nên chọn): phần khác biệt chỉ gồm công việc đa CWE.
+     Cần push `feat/cwe22-triage` trước, vì bản cục bộ hơn `origin` một commit (`837c53d`) mà nhánh
+     đa CWE dựng trên đó.
+  2. `feat/multi-cwe-core` → `main`: chạy cùng năm job, nhưng pull request chứa cả công việc của
+     `feat/cwe22-triage`. `git merge-tree` cho thấy hai nhánh gộp được không xung đột.
+
+  Thêm `workflow_dispatch` không giúp được ngay: nút chạy tay chỉ xuất hiện khi workflow có trigger
+  đó trên nhánh mặc định. Máy làm việc không có `gh`, nên trợ lý không mở được pull request.
+- **CI xanh vẫn chưa chạy profile ghép bằng công cụ thật:** job `frontend` bỏ qua
+  `multi-cwe-full-stack.spec.ts` (không có `FULL_STACK_URL`), `scan-parity` chỉ quét profile mặc định
+  v0.1, và `docker-integration` không quét gì. Việc đưa một lượt quét ghép thật vào CI là tiêu chí
+  của P2 (mục 19.5).
+
+### 18.2 Kiểm thử đã chạy
+
+| Tầng | Lệnh | Kết quả |
+|---|---|---|
+| Công cụ giả lập, SQLite | `uv run pytest --cov` (Windows) | 590 đạt, **2 bỏ qua**, độ phủ 95,56%; 2 ca **bỏ qua** là `tests/scanners/test_process.py:65` và `:157` (nhóm tiến trình POSIX), không tính là đạt ở tầng này |
+| Công cụ giả lập, PostgreSQL | `docker compose --profile test run --build --rm test` | 592 đạt, độ phủ 95,68%, không ca nào bỏ qua (hai ca POSIX chạy ở đây) |
+| Golden bốn profile cũ | nằm trong hai lệnh trên (`test_legacy_golden.py`, 15 kịch bản) | Đạt, không file golden nào đổi |
+| Tĩnh | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` trong image kiểm thử | Sạch; không lỗ hổng đã biết |
+| Migration, PostgreSQL | `alembic upgrade head` → `check` → `downgrade base` → `upgrade head` → `check` trên database tạm; `test_migration_0008.py` | Đạt; không chạy trên database đang có dữ liệu |
+| Hợp đồng API | `scripts.export_openapi` so với `frontend/openapi.json`; kiểu sinh ra so với `api-schema.d.ts` | Giống hệt |
+| Thực nghiệm | `python -m unittest discover -s experiments/tests` (Python 3.12, `pyyaml` 6.0.3, `jsonschema` 4.26.0) | 153 đạt. Bằng Python 3.11 của máy thì 4 module không nạp được (cú pháp 3.12): giới hạn môi trường, không phải lỗi mã |
+| Giao diện, API giả lập | `npm run lint`, `format:check`, `npm test`, `npm run build`, `npm run test:e2e` | Vitest 78 đạt; Playwright 2 đạt, **1 bỏ qua** (kiểm thử stack thật) |
+| Giao diện, **công cụ thật** | `FULL_STACK_URL=… npx playwright test multi-cwe-full-stack` | 1 đạt, chạy lại sau các bản sửa: 239 kết quả công cụ = 176 cảnh báo phát hiện + 63 kết quả truy vấn bằng chứng; 0 cảnh báo chưa xếp hạng; 149 đơn vị, 64 đã gạn — bằng P1a và P1b |
+| Bốn profile cũ, **công cụ thật** | `legacy_regression.py`: quét lại nguồn phát triển và so với lượt quét lưu ngày 14/11 | 4/5 ca giống hệt; ca v0.1 xem mục 18.3 |
+| Job `reconciliation-integration` | cùng lệnh và cùng script tiêu chí của CI, image thực nghiệm dựng tại chỗ | Đạt |
+| Job `scan-parity` | CLI trong image thực nghiệm so với API | Đạt mọi điều kiện |
+| Các bước còn lại của `docker-integration` | hai cấu hình Compose, `check_worker`, proxy, readiness, `celery inspect ping` | Đạt |
+| Dữ liệu đã lưu | `db_audit.sql`, `db_filtered.sql` trên 392 lượt quét, 6.492 kết quả, 3.945 đơn vị | Xem mục 18.3 |
+
+Các số ở ba dòng đầu và dòng giao diện là của trạng thái cuối (`4360121`); các dòng còn lại chạy ở
+`59255dc` và không bị các bản sửa sau đó chạm tới. Giới hạn môi trường: mọi lệnh chạy trên một máy
+Windows với Docker; không lượt nào chạy trên GitHub Actions. Các ca lỗi công cụ trên stack thật vẫn là lỗi được tiêm (mục 17.4, điểm 9).
+
+### 18.3 Bảng nghiệm thu
+
+| # | Tiêu chí | Kết luận | Căn cứ |
+|---|---|---|---|
+| 1 | Bốn profile cũ giữ kết quả | **PASS** | Golden 15 kịch bản trên SQLite và PostgreSQL. Công cụ thật: `command-injection-v0.2` và `v0.3` trên `curling@0.2.0`, `v0.2` trên BenchmarkPython (51 kết quả, 24 đơn vị, 2 gạn), `path-traversal-v0.2` trên `flask-admin@4f8be45` cho đúng khóa đơn vị, mức, quyết định, lý do, ứng viên, báo cáo và số kết quả SARIF của lượt quét lưu trước P1. `v0.1` trên `curling`: khóa đơn vị, mức, quyết định, lý do và hash chính sách giống; bản lưu ngày 14/11 thiếu bản ghi ứng viên và lý do giữ vì nó được ghi trước commit `c187059` (thêm bước gạn cho mọi profile), không phải do P1. `scan-parity` và `reconciliation-integration` đạt |
+| 2 | Pipeline ghép `multi-cwe-v0.1` | **PASS** | Lượt quét từ giao diện hôm nay cho đúng số của P1a và P1b; mỗi nhóm bằng lượt quét riêng (P1a `run-03`, pygoat, DSVPWA) |
+| 3 | Migration 0008 | **PASS** | Vòng hai chiều trên PostgreSQL; `alembic check`; trên database thật: 366 lượt quét, md5 của ba bảng không đổi, `analysis_family` NULL ở 3.557 đơn vị cũ |
+| 4 | API | **PASS** | 0 trường đổi giá trị trên 366 lượt quét cũ; `openapi.json` khớp; kiểm thử API trên PostgreSQL |
+| 5 | Giao diện | **PASS**, một giới hạn | Vitest, Playwright với API giả lập, và luồng đầy đủ trên stack thật. Giới hạn: luồng stack thật không nằm trong CI |
+| 6 | SARIF | **PASS** sau khi sửa | Lượt ghép: số kết quả SARIF bằng số kết quả lưu ở mọi lượt, kể cả ba ca lỗi tiêm. Lượt chạy dở của profile đơn `path-traversal-v0.2` trước đây xuất SARIF rỗng (lỗi L1); nay mọi kết quả đã lưu đều được xuất |
+| 7 | Bảo toàn cảnh báo | **PASS** | 6.492 kết quả, mỗi kết quả liên kết với đúng một đơn vị; 0 kết quả ngoài đơn vị; 0 kết quả nằm trong hai đơn vị. Lượt ghép còn tự kiểm lúc chạy (`families.check_conservation`) và thất bại thay vì ghi kết quả thiếu |
+| 8 | Không gộp nhầm giữa các CWE | **PASS**, bằng chứng trên mã thật còn mỏng | 0 liên kết giữa đơn vị và kết quả của nhóm khác; 0 khóa ứng viên dùng chung giữa hai nhóm. Một file thật có cả hai nhóm (DSVPWA); ca lồng nhau chỉ có trên nguồn tổng hợp |
+| 9 | Không tự gạn khi thiếu bằng chứng | **PASS** | 314 đơn vị đã gạn: 0 đơn vị thuộc lượt chạy ngôn ngữ có công cụ phát hiện hoặc bộ định vị chưa hoàn tất; 0 đơn vị bị gạn bởi G1, G3 hay G4 khi bước bằng chứng của chính quy tắc đó lỗi; mọi đơn vị đã gạn có tên quy tắc, bản ghi bằng chứng và danh sách lý do giữ rỗng. Khi `codeql-evidence` lỗi, G2 vẫn gạn lệnh hằng: G2 không dùng bước đó (chứng minh lệnh hằng và mức Bandit), và đây là logic đã khóa, không đổi |
+| 10 | Trạng thái bằng chứng | **PASS** sau khi sửa | Lỗi L3 ở mục 18.5 đã sửa kèm kiểm thử |
+| 11 | Provenance của lượt quét ghép | **PASS** sau khi sửa | Lỗi L2 ở mục 18.5 đã sửa kèm kiểm thử và kiểm trên stack thật |
+| 12 | CI | **FAIL** (chưa chạy) | Không có lượt GitHub Actions nào cho nhánh; mọi job đã chạy tương đương tại chỗ và đạt. Nhánh đã được push; còn chờ draft pull request của chủ đề án (mục 18.1) |
+| 13 | Tuyên bố của báo cáo khớp hiện vật | **PASS** sau khi sửa | Mục 18.4: câu chữ đã sửa, và báo cáo của ứng dụng nay tự tách cảnh báo phát hiện khỏi kết quả truy vấn bằng chứng (lỗi L4) |
+
+### 18.4 Đối chiếu tuyên bố của báo cáo P1 với hiện vật
+
+| Tuyên bố | Hiện vật | Kết luận |
+|---|---|---|
+| Lượt ghép bằng hai lượt quét riêng (P1a) | `run-02`, `run-03`: `equivalent: true`; `run-01`: `false` vì công cụ so sánh, bản gốc còn giữ; tiêu chí `run-03` ghi trước khi chạy | Đúng |
+| "239 cảnh báo, 51 và 188 theo nhóm" | 51 + 125 cảnh báo phát hiện + 63 kết quả truy vấn bằng chứng `st/cwe-22/all` | **Đã nói lại:** 239 là số kết quả công cụ; số cảnh báo phát hiện là 176. Câu chữ ở mục 17.4 và `docs/research.md` đã sửa; báo cáo của ứng dụng nay ghi 176 và 63 riêng |
+| "2 và 62 đơn vị đã gạn" | Đúng số; không nhãn nào được dùng | Đúng, với điều kiện không đọc thành "64 cảnh báo sai đã xác minh". Hiệu quả gạn đã đo vẫn chỉ là các số ở bảng mục 5.6 |
+| Migration không ghi lại dữ liệu cũ | `db-before-0008.txt` và `db-after-0008.txt`: cùng số dòng và md5 | Đúng |
+| API cũ và mới giống nhau trên 366 lượt quét | `history-compare.txt` | Đúng |
+| Ba ca lỗi tiêm giữ đủ cảnh báo | `fault-run.txt` | Đúng; là lỗi tiêm |
+| Dự án thật có hai nhóm trong một file | `real-project-2-result.json`; tiêu chí ghi trước kết quả | Đúng, một file; ứng viên đầu không đạt và được ghi là không đạt |
+| "Cảnh báo chưa xác định nhóm" đã kiểm | Chỉ kiểm thử tự động | Đúng như đã ghi: chưa gặp trên stack thật |
+
+### 18.5 Lỗi còn tồn tại và lỗi đã sửa
+
+**Đã sửa trong lần rà này** (mỗi lỗi có kiểm thử thất bại khi bỏ bản sửa):
+
+- **L2 — bản ghi lượt quét ghép thiếu hash truy vấn đã quan sát** (`c8959aa`). Worker chỉ tải lên các
+  file ở gốc thư mục ngôn ngữ (`task.py`, `_upload`), còn `run.json` của từng thành viên — nơi ghi
+  `codeql_query_files` — nằm dưới `families/` và bị bỏ lại. Lượt quét profile đơn lưu thông tin này,
+  lượt ghép thì không. Sửa: `run.json` của lượt ghép ghi `codeql_query_files` cho từng thành viên
+  (`families.py`, `scan_language_families`). Kiểm thử: `test_families.py` và
+  `test_composite_scan.py`; trên stack thật, bản ghi lưu của một lượt quét DSVPWA có đúng hash đã
+  ghim của cả hai thành viên.
+- **L3 — hai lý do giữ bị gắn nhầm trạng thái "đã đối chiếu"** (`834156b`). `service.evidence_state`
+  trả `not_refuted` cho `flow_rule_without_evidence_query` và
+  `evidence_baseline_does_not_report_this_alert`, dù ở hai ca này không có bằng chứng nào để đối
+  chiếu. 202 đơn vị đã lưu mang lý do thứ nhất. Sửa: hai lý do này cho `insufficient`
+  (`service.py`, `_EVIDENCE_INSUFFICIENT`). Không quyết định gạn nào đổi: trường này chỉ được suy ra
+  khi đọc.
+- **L1 — lượt quét `path-traversal-v0.2` chạy dở giấu cảnh báo khỏi báo cáo và SARIF** (có từ trước
+  P1; `4360121`). `analysis.py:350-351` chỉ xếp hạng khi lượt chạy hoàn tất; cảnh báo vẫn được lưu
+  nhưng không có đơn vị, nên báo cáo ghi "3 cảnh báo → 0 ứng viên" và `report.build_sarif` (nối với
+  `unit_findings`) xuất SARIF rỗng. Theo quyết định của chủ đề án, sửa ở lớp xuất và không đổi đơn
+  vị: báo cáo có `stages.unranked_alerts`, SARIF xuất cả các cảnh báo này với `ranked: false`, ở
+  danh sách rà, không có `suppressions`. Kiểm thử:
+  `test_alerts_of_an_incomplete_single_profile_run_are_counted_and_exported`. **Giới hạn còn lại:**
+  danh sách rà trên giao diện vẫn không hiện các cảnh báo này, vì profile đơn không tạo đơn vị cho
+  chúng (hành vi cũ, được ghim bởi `test_task.py::test_partial_evidence_run_ranks_nothing`); báo cáo
+  trên giao diện có một dòng nêu số cảnh báo chưa xếp hạng. Profile ghép không có giới hạn này (đơn
+  vị `F10_FAMILY_NOT_RANKED`). Không lượt quét nào trong 392 lượt đã lưu ở trạng thái này.
+- **L4 — kết quả truy vấn bằng chứng được đếm là cảnh báo** (có từ trước P1; `4360121`). Báo cáo đếm
+  mọi dòng `findings`; với nhóm CWE-22 con số "trước" vì thế gồm cả kết quả của `st/cwe-22/all`
+  (`safety_evidence.py:90-119`). Sửa: báo cáo có `evidence_results` và `detection_alerts` cho cả lượt
+  quét và từng nhóm, giao diện dùng `detection_alerts` làm cột "trước", và mỗi kết quả SARIF mang
+  `resultRole`. `raw_alerts` giữ nguyên nghĩa cũ. Trên BenchmarkPython bằng công cụ thật: 239 kết quả
+  = 176 cảnh báo phát hiện + 63 kết quả truy vấn bằng chứng; nhóm CWE-22 là 125 → 63. Kiểm thử:
+  `test_a_single_evidence_profile_counts_its_evidence_results_apart` và bảng số của lượt ghép. Vai
+  trò của kết quả chỉ biết được ở đơn vị do thành viên xếp hạng; ở đơn vị giữ và cảnh báo chưa xếp
+  hạng nó là `unknown` và được tính vào `detection_alerts`.
+- Câu chữ "công cụ chứng minh ứng viên là sai" trong `schemas.py`, `report.py` và nhãn giao diện ở
+  `scan-report.tsx` đã đổi thành "thỏa điều kiện gạn của nhóm"; chú thích sai ở
+  `families.CompositeResult.findings` đã được viết lại.
+
+**Còn tồn tại:**
+
+- **L5 — CI chưa chạy trên GitHub**, và không job nào quét profile ghép bằng công cụ thật (mục 18.1).
+- **L6 — commit `dc1db13` không qua `tsc` khi đứng riêng**; chủ đề án đã quyết định để nguyên.
+- Giới hạn còn lại của L1 nêu trên: cần P1b-7 hoặc một quyết định đổi hành vi của profile đơn.
+
+### 18.6 Có đóng được P1 không
+
+**Về kỹ thuật thì đóng được, với một điều kiện còn lại: CI chạy trên GitHub và xanh.** Mười hai
+trong mười ba tiêu chí đạt. Tiêu chí CI chưa đạt vì chưa có lượt chạy nào: nhánh đã được push tới
+`4360121`, và lượt chạy sẽ bắt đầu khi chủ đề án mở draft pull request (mục 18.1). Mọi job của CI
+đã chạy tương đương tại chỗ và đạt, nhưng điều đó không thay cho lượt chạy thật. Nếu CI đỏ, P1 chưa
+đóng cho tới khi nguyên nhân được xử lý.
+
+## 19. P2 — thẩm định và thiết kế tối thiểu cho CWE-89 (2026-11-15)
+
+Chỉ là thẩm định và thiết kế. Không có mã, profile hay rule nào của CWE-89 được thêm ở lần rà này.
+
+### 19.1 Kiến trúc hiện tại cho phép và không cho phép gì
+
+| Ràng buộc | Ở đâu | Hệ quả với CWE-89 |
+|---|---|---|
+| Đúng một thành viên là `ScanProfile`; nó chạy mọi công cụ sàng lọc và tạo database | `families.py`, `_ordered` (dòng 193-196) và `_participating` | Semgrep, Bandit, ESLint chỉ chạy với cấu hình của nhóm lệnh. Không có chỗ để đưa rule của nhóm khác vào |
+| Mọi thành viên còn lại phải là `EvidenceProfile` | `families.py`, vòng lặp sau `run_member(primary, …)` (`assert isinstance(profile, EvidenceProfile)`); `Family.profile_type` | Thành viên thứ ba buộc phải có dạng "truy vấn đối chứng + truy vấn bằng chứng" |
+| `EvidenceProfile` chỉ chạy CodeQL, cần pack tự viết nằm trong kho và hai rule `baseline`/`evidence` | `profile.py`, `load_evidence_profile` | Không trỏ được vào `Security/CWE-089/SqlInjection.ql` của pack chuẩn |
+| `assess_with_evidence` gạn mọi vị trí mà truy vấn bằng chứng không báo | `safety_evidence.py:124-149` | Một `EvidenceProfile` **không thể** "chỉ phát hiện và giữ". Giả lập bằng truy vấn bằng chứng trùng truy vấn đối chứng sẽ ghi sai rằng "truy vấn bằng chứng vẫn báo" và nhân đôi số kết quả (lỗi L4) |
+| Đường đánh giá của `ScanProfile` viết cứng CWE-78 | `assess.py:15` (`_CODEQL_RULES`), `claims.py:51` (`cwe78_candidate`), `sinks_python.py`, `adjudicate.py` | Nhóm thứ hai nhiều công cụ không đi qua `scan_language` được. Các file này bị ghim bởi bản đăng ký nghiên cứu nên không sửa: nhóm mới cần bộ xử lý riêng, bằng file mới |
+| Định tuyến theo bộ rule đã ghim khi một lượt chạy phục vụ nhiều nhóm | `classification.py`, nhánh `pinned_rule_set` | Đã có và có kiểm thử, nhưng **chưa từng chạy trên stack thật** |
+| Tên lượt chạy = `codeql-<nhóm>`, cột `tool_runs.tool` dài 32 ký tự | `families.PASS_PREFIX`; `features/scans/models.py:54` | `sql-injection` vừa. Tên nhóm dài hơn khoảng 24 ký tự (ví dụ `server-side-request-forgery`) sẽ không ghi được: dùng tên ngắn |
+| Ngân sách thời gian | `task.py:63-70`: giới hạn mềm 9.000 s, cứng 10.500 s; `celery_app.py:24`: visibility 10.800 s | Hôm nay còn dư 240 s. Thêm một lượt CodeQL 600 s cho mỗi ngôn ngữ đẩy trường hợp xấu nhất lên 9.960 s: phải nâng cả ba giới hạn hoặc hạ timeout của lượt mới. Kiểm thử `test_task_time_limits_…` sẽ chặn nếu quên |
+| Cột `location_units.analysis_family` là chuỗi tự do 48 ký tự | migration 0008 | Không cần migration mới cho nhóm mới |
+| `FamilyName` là kiểu liệt kê trong API và giao diện | `schemas.py:19`; `frontend/src/features/scans/types/index.ts` | Thêm nhóm là thay đổi hợp đồng API (thêm giá trị), phải sinh lại `openapi.json` và kiểu |
+
+### 19.2 Công cụ đã ghim hỗ trợ CWE-89 tới đâu
+
+Kiểm tra trong image worker hiện tại; không tải thêm gì.
+
+| Công cụ | Python | JS/TS |
+|---|---|---|
+| CodeQL 2.27.1 | `py/sql-injection` (`python-queries` 1.8.11), độ chính xác cao, CWE-089 | `js/sql-injection` (`javascript-queries` 2.4.6), khai **CWE-089, CWE-090 và CWE-943**: một rule ánh xạ nhiều CWE, đúng ca mà `mapped_cwes` sinh ra để giữ |
+| Bandit 1.9.4 | `B608` (chuỗi SQL ghép), `B610`, `B611` (Django `extra`, `RawSQL`): bắt mẫu cú pháp, không có luồng | — |
+| Semgrep CE 1.178.0 | Chưa có rule CWE-89 nào trong kho. Rule phải được đưa vào kho và ghim hash như `experiments/rules/python-upstream/`; cần kiểm tra giấy phép của nguồn rule trước | Như bên trái |
+| ESLint + `eslint-plugin-security` 4.2.1 | — | Plugin đã ghim không có rule SQL |
+
+Chi phí đo hôm nay trên BenchmarkPython (một lần): Semgrep 2,0 s, Bandit 1,9 s, tạo database 12,5 s,
+`codeql` 10,2 s, `codeql-evidence` 10,4 s, `codeql-path-traversal` 8,2 s. Chi phí nằm ở CodeQL; một
+lượt Semgrep hay Bandit riêng cho nhóm mới tốn vài giây.
+
+Dữ liệu phát triển có sẵn: BenchmarkPython có 16 ca `sqli` (CWE-89) theo file kết quả mong đợi của
+chính nó. File đó là nhãn: chỉ được dùng theo một giao thức ghi trước.
+
+### 19.3 Hai phương án
+
+**A — CWE-89 chỉ bằng CodeQL, chưa gạn.** Thêm một lượt `codeql-sql-injection` trên database dùng
+chung, mỗi cảnh báo thành một đơn vị được giữ.
+
+- Thay đổi: một kiểu thành viên mới "chỉ phát hiện" (không dùng lại `EvidenceProfile`, xem 19.1); nới
+  ràng buộc "các thành viên còn lại là `EvidenceProfile`"; profile ghép mới; giá trị mới của
+  `FamilyName`; giới hạn thời gian.
+- Nguy cơ hồi quy: thấp. Bốn profile cũ và `multi-cwe-v0.1` không đổi một byte cấu hình nào.
+- So với mục tiêu năm CWE: phủ nhanh (pack chuẩn của CodeQL có sẵn truy vấn CWE-79 và CWE-918 cho cả
+  hai ngôn ngữ), nhưng không đạt phần "nhiều công cụ rồi hợp nhất" của đề án, và giữ nguyên nút thắt:
+  công cụ sàng lọc vẫn thuộc riêng nhóm lệnh.
+
+**B — CWE-89 nhiều công cụ, một kế hoạch quét chung, định tuyến rule/query theo nhóm.**
+
+- Nếu hiểu là **gộp cấu hình** (một lượt Semgrep chạy rule của mọi nhóm, một cấu hình Bandit chung):
+  nguy cơ hồi quy cao và cụ thể. `analysis.py:165-168` kiểm định nghĩa rule theo tên file
+  `rule-<chỉ số>.yaml` của riêng thành viên; `analysis.py:169-179` so hash `bandit.ini` đã ghim với
+  file đã dùng. Cấu hình gộp làm lệch cả hai, và G2 của nhóm lệnh dựa vào mức của Bandit. Cả hai chỗ
+  nằm trong file bị ghim. Định tuyến khi đó phải dùng nhánh `pinned_rule_set`, lần đầu chạy trên dữ
+  liệu thật, và trạng thái "chưa xác định nhóm" trở thành ca có thể gặp.
+- Nếu hiểu là **một kế hoạch, nhiều lượt chạy có tên**: mỗi nhóm đóng góp các lượt của riêng mình
+  (`codeql-<nhóm>`, sau đó `semgrep-<nhóm>`, `bandit-<nhóm>`) với cấu hình đã ghim của riêng nó; thứ
+  dùng chung là snapshot, database CodeQL, thư mục làm việc và phép kiểm bảo toàn. Định tuyến vẫn theo
+  lượt chạy, như đã chứng minh ở P1. Các lượt của nhóm lệnh không đổi một byte, nên tính tương đương
+  giữ được theo cấu trúc. Giá phải trả là vài giây cho mỗi lượt Semgrep hoặc Bandit thêm.
+
+**Kết luận.** B đáp ứng mục tiêu dài hạn tốt hơn, ở dạng "nhiều lượt chạy có tên", không phải dạng
+gộp cấu hình: nó giữ nguyên tắc "không ép gộp" của mục 5.5 và không chạm file bị ghim. A không phải
+một kiến trúc khác mà là **bước đầu tiên của B**: lượt `codeql-sql-injection` chính là một lượt chạy
+có tên. Vì vậy P2 nên làm A trước, viết theo cấu trúc mà B mở rộng được, rồi mới thêm công cụ.
+Gộp cấu hình chỉ nên xét lại khi có số đo cho thấy các lượt Semgrep riêng là nút thắt.
+
+### 19.4 Thiết kế tối thiểu
+
+| Bước | Việc | File | Ghi chú |
+|---|---|---|---|
+| 0 | CI xanh trên pull request của P1; nâng giới hạn thời gian; quyết định cho giới hạn còn lại của L1 (mục 18.5) | `task.py`, `celery_app.py` | Điều kiện vào P2. L4 đã xử lý ở `4360121` |
+| 1 | Golden cho `multi-cwe-v0.1` trên đầu vào tổng hợp cố định | `backend/tests/golden/` | Lưới an toàn trước khi sửa lớp ghép |
+| 2 | Kiểu profile "chỉ phát hiện": các truy vấn của pack chuẩn ghim theo hash, CWE ánh xạ khai trong manifest cho từng rule, không có rule bằng chứng | `scanners/profile.py`; `profiles/sql-injection-v0.1/` | `js/sql-injection` khai ba CWE; không suy CWE từ tên rule |
+| 3 | Bộ xử lý "phát hiện và giữ": mỗi vị trí được báo là một đơn vị, luôn ở danh sách rà, lý do giữ `no_filter_condition_for_family`, trạng thái bằng chứng `insufficient` | file mới `workflows/scans/detection.py`; `service.py` | Dùng `reconcile_findings(findings, [], {})` như đơn vị giữ hiện có; không qua `assess.py`. Mức ưu tiên của nhóm là quyết định của chủ đề án |
+| 4 | Lớp ghép chọn bộ xử lý theo kiểu thành viên; vẫn đúng một thành viên tạo database | `families.py`: `Family.profile_type`, `_ordered`, `_claim`, vòng lặp thành viên | Thay đổi nhỏ nhất phá ràng buộc ở 19.1 |
+| 5 | Nhóm `sql-injection` (CWE-89) và profile `multi-cwe-v0.2` với ba thành viên; `multi-cwe-v0.1` giữ nguyên | `families.FAMILIES`, `core/config.py`, `schemas.py`, `frontend/…/types`, `openapi.json` | Thêm, không sửa profile đã ghim |
+| 6 | Lượt `semgrep-sql-injection` và `bandit-sql-injection`; mỗi cảnh báo vẫn là đơn vị riêng theo vị trí được báo | lớp ghép; rule đưa vào kho | Phần "B": lượt chạy có tên cho công cụ sàng lọc |
+| 7 | Bộ định vị sink SQL và gộp cảnh báo của nhiều công cụ theo sink | file mới dưới `triage/` | Là hiện vật nghiên cứu: cần đặc tả và phản ví dụ riêng |
+| 8 | Điều kiện gạn cho CWE-89 | — | Chỉ sau một giao thức ghi trước và một lượt đo riêng; không dùng lại G1–G4 |
+
+Bước 1–5 là P2a (phương án A trong cấu trúc của B). Bước 6–7 là P2b. Bước 8 nằm ngoài P2.
+
+### 19.5 Tiêu chí nghiệm thu P2a
+
+1. Golden của bốn profile cũ và của `multi-cwe-v0.1` không đổi một byte; `legacy_regression.py` cho
+   kết quả giống lần rà này.
+2. Trên một snapshot phát triển có cả ba nhóm, `multi-cwe-v0.2` cho nhóm lệnh và nhóm đường dẫn đúng
+   kết quả của `multi-cwe-v0.1`, và nhóm SQL đúng tập cảnh báo (rule, vị trí) của một lệnh
+   `codeql database analyze` độc lập với cùng truy vấn.
+3. Mỗi kết quả nằm trong đúng một đơn vị; không đơn vị nào lẫn nhóm; có kiểm thử cho cảnh báo SQL
+   nằm trong một lời gọi lệnh và cho hai nhóm trên cùng một vùng mã.
+4. **Không đơn vị nào của nhóm SQL bị gạn**, ở mọi kiểm thử và mọi lượt chạy; trạng thái bằng chứng
+   chỉ là `insufficient` hoặc `unavailable`; SARIF không có `suppressions` cho nhóm này.
+5. Lượt `codeql-sql-injection` lỗi hoặc chạy dở: cảnh báo của nó thành đơn vị
+   `F10_FAMILY_NOT_RANKED`, hai nhóm kia không đổi; kiểm bằng lỗi tiêm trên stack thật.
+6. Cảnh báo của `js/sql-injection` giữ nguyên `reported_cwes`, có `mapped_cwes` gồm cả ba CWE và
+   thuộc nhóm `sql-injection`.
+7. Trường hợp xấu nhất về thời gian nhỏ hơn giới hạn mềm, giới hạn cứng nhỏ hơn visibility timeout;
+   chi phí từng lượt được ghi.
+8. Không cần migration; dữ liệu cũ đọc như trước (so sánh API trên các lượt quét đã lưu).
+9. CI xanh trên một pull request, và có một job chạy profile ghép bằng công cụ thật.
+10. Không file bị ghim hay sổ đăng ký nghiên cứu nào thay đổi; không dùng nhãn; báo cáo chỉ nói
+    "phát hiện và giữ", không nêu số giảm cảnh báo sai cho CWE-89.
+
+### 19.6 Nguy cơ hồi quy cần theo dõi
+
+- `families._ordered` và vòng lặp thành viên là nơi duy nhất P2a sửa mã đang chạy của P1; golden
+  của lượt ghép (bước 1) phải có trước.
+- Giới hạn thời gian và visibility timeout đổi cùng nhau; lệch một bên làm lượt quét đang chạy bị
+  giao lại.
+- Thêm giá trị vào `FamilyName` là đổi hợp đồng API: giao diện cũ phải bỏ qua được nhóm lạ.
+- Khi bước 6 tới: mọi lượt chạy mới phải có tên riêng và cấu hình riêng. Không sửa `bandit.ini`, danh
+  sách rule Semgrep hay cấu hình ESLint của nhóm lệnh, kể cả khi "chỉ thêm một rule".
+- Kết quả bằng chứng lưu như cảnh báo (L4) nay được báo cáo tách riêng, nhưng chỉ khi thành viên ghi
+  vai trò của từng kết quả. Bộ xử lý mới không nên lưu kết quả bằng chứng như cảnh báo; nếu có, nó
+  phải ghi vai trò như `safety_evidence` đang làm.
