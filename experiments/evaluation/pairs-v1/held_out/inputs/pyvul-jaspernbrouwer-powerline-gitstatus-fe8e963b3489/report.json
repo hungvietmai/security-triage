@@ -1,0 +1,121 @@
+{
+  "scan_id": "ef0a5ee7-613f-43a4-8204-95c0d06bb1b6",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "f339083e-a3b5-4d8f-922f-8f9411569312",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:jaspernbrouwer/powerline-gitstatus@8000c7f41305ddb421528dd00b6292ffd121c2c2",
+    "sha256": "dd79686d75365cd1589e3a33968954204ebafd154cf40ae313c86a182f8961e7",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-15T05:09:02.931980Z",
+  "finished_at": "2026-11-15T05:09:17.518276Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.1642,
+        "raw_findings": 1
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 5.7319,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2662,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 1
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 2.7692
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1644
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 4.7748,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7656
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0661,
+        "raw_findings": 2
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 1
+  },
+  "stages": {
+    "raw_alerts": 1,
+    "units": 1,
+    "candidates": 1,
+    "main_list": 1,
+    "filtered": 0,
+    "demoted": 1
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 1,
+      "only": 1
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 1,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "183ef5024cce6867c335e902a34287c001b49ba80736d2dad76f2cf80ea42973",
+      "basis": "same_call_site",
+      "path": "powerline_gitstatus/segments.py",
+      "start_line": 18,
+      "sink_kind": "subprocess.Popen",
+      "tools": [
+        "bandit"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "a237ef93-d59f-4176-8c21-35404672c677"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

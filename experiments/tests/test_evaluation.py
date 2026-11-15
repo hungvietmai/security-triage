@@ -879,6 +879,44 @@ class PairsDevelopmentResultTests(unittest.TestCase):
         self.assertEqual(expected["result"]["summary"]["filtered"], 0)
 
 
+class PairsHeldOutResultTests(unittest.TestCase):
+    """The committed held-out result of pairs-v1 (Amendment 08, pipeline v0.3, scanned once)."""
+
+    RUN = PAIRS_KIT / "held_out"
+
+    def test_result_is_reproduced_and_every_pair_was_scanned_from_the_locked_bytes(self):
+        labels = json.loads((self.RUN / "labels.json").read_bytes())
+        expected = json.loads((self.RUN / "result.json").read_bytes())
+        self.assertEqual(score_pairs.score(labels, self.RUN / "inputs"), expected)
+        self.assertEqual((expected["pairs"], expected["scored_pairs"]), (16, 16))
+        self.assertEqual(expected["left_out"], [])
+        self.assertEqual(expected["result"]["scan_statuses"], {"completed": 12, "partial": 4})
+        self.assertEqual(
+            expected["result"]["summary"],
+            {"documented_sites": 9, "reported": 9, "in_first_tiers": 7, "filtered": 0, "missed": 0},
+        )
+        self.assertEqual(expected["result"]["configurations"]["lost_to_filtering"], 0)
+
+    def test_each_pair_was_scanned_once_with_the_frozen_profile(self):
+        import hashlib
+
+        frozen = json.loads((PAIRS_KIT / "FROZEN_CONFIGURATION_v0.3.json").read_bytes())
+        profile = frozen["sha256"]["profiles/command-injection-v0.3/profile.json"]
+        log = (self.RUN / "collection.log").read_text(encoding="utf-8").splitlines()
+        self.assertEqual(len([line for line in log if line.strip()]), 16)
+        folders = sorted(path for path in (self.RUN / "inputs").iterdir() if path.is_dir())
+        self.assertEqual(len(folders), 16)
+        for folder in folders:
+            report = json.loads((folder / "report.json").read_bytes())
+            manifest = json.loads((folder / "manifest.json").read_bytes())
+            with self.subTest(folder=folder.name):
+                self.assertEqual(report["profile"], "command-injection-v0.3")
+                self.assertEqual(report["profile_sha256"], profile)
+                for name, sha256 in manifest["files"].items():
+                    actual = hashlib.sha256((folder / name).read_bytes()).hexdigest()
+                    self.assertEqual(actual, sha256)
+
+
 class JavaScriptMatchingTests(unittest.TestCase):
     """The v0.2 against v0.3 comparison of JavaScript matching (development data)."""
 

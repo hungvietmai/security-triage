@@ -1,0 +1,1002 @@
+{
+  "split": "pairs-v1, split held_out: vulnerable versions and resolved known locations",
+  "pairs": 16,
+  "scored_pairs": 16,
+  "left_out": [],
+  "not_acquired_when_locked": [],
+  "result": {
+    "summary": {
+      "documented_sites": 9,
+      "reported": 9,
+      "in_first_tiers": 7,
+      "filtered": 0,
+      "missed": 0
+    },
+    "sources": [
+      {
+        "id": "pyvul-WeblateOrg-weblate-35d59f1f0405",
+        "source": "github:WeblateOrg/weblate@d83672a3e7415da1490334e2c9431e5da1966842",
+        "snapshot_sha256": "ff27919b64618d673bd91c8c3b23f58ab31d412f4f179f1e852d6f417057da6e",
+        "scan_status": "partial",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 25,
+          "units": 16,
+          "candidates": 16,
+          "main_list": 16,
+          "filtered": 0,
+          "demoted": 16
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 16,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 16,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 16,
+            "only": 16
+          }
+        },
+        "seconds": {
+          "wall": 73.0,
+          "steps": {
+            "bandit": 3.4,
+            "codeql": 26.6,
+            "semgrep": 4.5,
+            "codeql-create": 20.3,
+            "codeql-evidence": 9.3,
+            "semgrep-evidence": 8.0,
+            "eslint": 1.1,
+            "sink-locator": 2.0
+          }
+        }
+      },
+      {
+        "id": "pyvul-WeblateOrg-weblate-d83672a3e741",
+        "source": "github:WeblateOrg/weblate@9a5a09781e5a19ab9a24878afb08c9fcafb21ca7",
+        "snapshot_sha256": "fabf2ea688573d4c1a73081c63da4744388bce493f6e7bbfd627e32f0f86a400",
+        "scan_status": "partial",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 25,
+          "units": 16,
+          "candidates": 16,
+          "main_list": 16,
+          "filtered": 0,
+          "demoted": 16
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 16,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 16,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 16,
+            "only": 16
+          }
+        },
+        "seconds": {
+          "wall": 71.4,
+          "steps": {
+            "bandit": 3.4,
+            "codeql": 26.2,
+            "semgrep": 4.5,
+            "codeql-create": 19.1,
+            "codeql-evidence": 9.3,
+            "semgrep-evidence": 7.3,
+            "eslint": 1.1,
+            "sink-locator": 1.9
+          }
+        }
+      },
+      {
+        "id": "pyvul-abilian-abilian-devtools-9d71b0d3b6b4",
+        "source": "github:abilian/abilian-devtools@ea3a13a532dee1760bfea21bd50bed5467a5c25c",
+        "snapshot_sha256": "1feba88542b98639546a52e379d98e79bd75bad658c928bcfaa2507eee502657",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 1,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 1
+        },
+        "sites": [
+          {
+            "path": "src/abilian/devtools/main.py",
+            "line": 16,
+            "basis": "PyVul_deleted_or_modified_lines",
+            "reported": true,
+            "tools": [
+              "bandit"
+            ],
+            "priority": "P3",
+            "in_first_tiers": false,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              16
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 0,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 1,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.1,
+          "steps": {
+            "bandit": 0.2,
+            "codeql": 5.5,
+            "semgrep": 1.3,
+            "codeql-create": 2.6,
+            "codeql-evidence": 4.7,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "pyvul-cyanomiko-dcnnt-py-b4021d784a97",
+        "source": "github:cyanomiko/dcnnt-py@4084ea18f96d9a953315f5555fca45f26639b8be",
+        "snapshot_sha256": "74afe56b88b40366367620bee930f6077435cfdfe2a78d943f48b25553a89457",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 14,
+          "units": 7,
+          "candidates": 7,
+          "main_list": 7,
+          "filtered": 0,
+          "demoted": 7
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 7,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 7,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 7,
+            "only": 0
+          },
+          "semgrep": {
+            "candidates": 7,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 15.7,
+          "steps": {
+            "bandit": 0.3,
+            "codeql": 6.4,
+            "semgrep": 1.4,
+            "codeql-create": 3.1,
+            "codeql-evidence": 4.8,
+            "semgrep-evidence": 1.2
+          }
+        }
+      },
+      {
+        "id": "pyvul-jaspernbrouwer-powerline-gitstatus-fe8e963b3489",
+        "source": "github:jaspernbrouwer/powerline-gitstatus@8000c7f41305ddb421528dd00b6292ffd121c2c2",
+        "snapshot_sha256": "dd79686d75365cd1589e3a33968954204ebafd154cf40ae313c86a182f8961e7",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 1,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 1
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 1,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 1,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 1,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.6,
+          "steps": {
+            "bandit": 0.2,
+            "codeql": 5.7,
+            "semgrep": 1.3,
+            "codeql-create": 2.8,
+            "codeql-evidence": 4.8,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "pyvul-jupyterhub-binderhub-195caac17269",
+        "source": "github:jupyterhub/binderhub@034430adc8ed379135f3ef46ee6ca650781ef67c",
+        "snapshot_sha256": "158300c52720ac35f6f106fdd5bb8dceab9bb69552129a1ac5123b4e751ff986",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 17,
+          "units": 11,
+          "candidates": 11,
+          "main_list": 11,
+          "filtered": 0,
+          "demoted": 11
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 11,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 11,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 11,
+            "only": 11
+          }
+        },
+        "seconds": {
+          "wall": 36.9,
+          "steps": {
+            "bandit": 0.4,
+            "codeql": 14.2,
+            "semgrep": 2.7,
+            "codeql-create": 8.7,
+            "codeql-evidence": 5.3,
+            "semgrep-evidence": 2.5,
+            "eslint": 0.4,
+            "sink-locator": 1.1
+          }
+        }
+      },
+      {
+        "id": "pyvul-mlflow-mlflow-6dde93758d42",
+        "source": "github:mlflow/mlflow@330bf0b38b07d4adf3fae99af1b44c8e857f514a",
+        "snapshot_sha256": "a05959acfc9bb274311e9c91d94ad375a6017c8e501d30c0f4483eba546bb848",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 146,
+          "units": 87,
+          "candidates": 87,
+          "main_list": 87,
+          "filtered": 0,
+          "demoted": 86
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 87,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 1,
+            "P3": 86,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 87,
+            "only": 85
+          },
+          "semgrep": {
+            "candidates": 2,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 111.0,
+          "steps": {
+            "bandit": 6.4,
+            "codeql": 40.4,
+            "semgrep": 6.4,
+            "codeql-create": 31.7,
+            "codeql-evidence": 12.7,
+            "semgrep-evidence": 16.4,
+            "eslint": 6.8,
+            "sink-locator": 5.8
+          }
+        }
+      },
+      {
+        "id": "secbench-apex-publish-static-files-2.0.0",
+        "source": "npm:apex-publish-static-files@2.0.0",
+        "snapshot_sha256": "5231272bd6ac34344a6975554656609d9494580591c68d681132d48371be7897",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 1,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 0
+        },
+        "sites": [
+          {
+            "path": "index.js",
+            "line": 54,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql"
+            ],
+            "priority": "P1",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              54
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 0,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 1,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.7,
+          "steps": {
+            "codeql": 7.5,
+            "eslint": 0.4,
+            "semgrep": 1.2,
+            "sink-locator": 1.0,
+            "codeql-create": 4.6,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-async-git-1.13.1",
+        "source": "npm:async-git@1.13.1",
+        "snapshot_sha256": "0db74ccf62e9346fddbafecb947a1b944dcdd0e112507f498da011ca8aba4640",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 4,
+          "units": 4,
+          "candidates": 4,
+          "main_list": 4,
+          "filtered": 0,
+          "demoted": 0
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 4,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 4,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 4,
+            "only": 4
+          }
+        },
+        "seconds": {
+          "wall": 15.1,
+          "steps": {
+            "codeql": 7.7,
+            "eslint": 0.4,
+            "semgrep": 1.2,
+            "sink-locator": 1.1,
+            "codeql-create": 4.7,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-bestzip-2.1.6",
+        "source": "npm:bestzip@2.1.6",
+        "snapshot_sha256": "91a6f1590c5f03ce34b415dd15f545cf808861e516f0b2dc21c320a3b58b3bdc",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 3,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 0
+        },
+        "sites": [
+          {
+            "path": "lib/bestzip.js",
+            "line": 27,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql",
+              "eslint",
+              "semgrep"
+            ],
+            "priority": "P2",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              27
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 0,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 1,
+            "only": 0
+          },
+          "eslint": {
+            "candidates": 1,
+            "only": 0
+          },
+          "semgrep": {
+            "candidates": 1,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 15.0,
+          "steps": {
+            "codeql": 7.7,
+            "eslint": 0.4,
+            "semgrep": 1.3,
+            "sink-locator": 1.0,
+            "codeql-create": 4.6,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-giting-0.0.7",
+        "source": "npm:giting@0.0.7",
+        "snapshot_sha256": "aba933d41dd70cd45c09be590bffa3ef4c42435391cad4cfe2380a58c59a2d7e",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 12,
+          "units": 3,
+          "candidates": 3,
+          "main_list": 3,
+          "filtered": 0,
+          "demoted": 0
+        },
+        "sites": [
+          {
+            "path": "lib/git.js",
+            "line": 223,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql",
+              "eslint",
+              "semgrep"
+            ],
+            "priority": "P2",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              195,
+              208,
+              223
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 2,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 2,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 3,
+            "only": 0
+          },
+          "eslint": {
+            "candidates": 3,
+            "only": 0
+          },
+          "semgrep": {
+            "candidates": 3,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 15.5,
+          "steps": {
+            "codeql": 8.4,
+            "eslint": 0.4,
+            "semgrep": 1.2,
+            "sink-locator": 1.1,
+            "codeql-create": 4.5,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-kill-by-port-0.0.1",
+        "source": "npm:kill-by-port@0.0.1",
+        "snapshot_sha256": "448dfb0d283dd0df7fec5ebf0d46747cc56a239a6761211eb4cc85eba022763d",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 1,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 0
+        },
+        "sites": [
+          {
+            "path": "index.js",
+            "line": 8,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql"
+            ],
+            "priority": "P1",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              8
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 0,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 1,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.6,
+          "steps": {
+            "codeql": 7.6,
+            "eslint": 0.4,
+            "semgrep": 1.2,
+            "sink-locator": 1.1,
+            "codeql-create": 4.5,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-macaddress-0.2.8",
+        "source": "npm:macaddress@0.2.8",
+        "snapshot_sha256": "1b5dba1b0e7a69327e0a1788504afd30c744d3e8dca238d09421b4e4c280e1a4",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 5,
+          "units": 3,
+          "candidates": 3,
+          "main_list": 3,
+          "filtered": 0,
+          "demoted": 1
+        },
+        "sites": [
+          {
+            "path": "lib/unix.js",
+            "line": 4,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql",
+              "eslint"
+            ],
+            "priority": "P1",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              4
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 2,
+          "main_list_by_priority": {
+            "P1": 1,
+            "P2": 0,
+            "U": 0,
+            "P3": 1,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 2,
+            "only": 0
+          },
+          "eslint": {
+            "candidates": 3,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.8,
+          "steps": {
+            "codeql": 7.5,
+            "eslint": 0.4,
+            "semgrep": 1.2,
+            "sink-locator": 1.1,
+            "codeql-create": 4.7,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-pidusage-1.0.0",
+        "source": "npm:pidusage@1.0.0",
+        "snapshot_sha256": "f3fed8f649315bbb7848aedb54926b62a7e6194f4e99a64192fe356011633f8e",
+        "scan_status": "partial",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 3,
+          "units": 3,
+          "candidates": 3,
+          "main_list": 3,
+          "filtered": 0,
+          "demoted": 3
+        },
+        "sites": [
+          {
+            "path": "lib/stats.js",
+            "line": 108,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "eslint"
+            ],
+            "priority": "P3",
+            "in_first_tiers": false,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              108,
+              138
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 2,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 2,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "eslint": {
+            "candidates": 3,
+            "only": 3
+          }
+        },
+        "seconds": {
+          "wall": 14.7,
+          "steps": {
+            "codeql": 7.4,
+            "eslint": 0.4,
+            "semgrep": 1.3,
+            "sink-locator": 1.1,
+            "codeql-create": 4.6,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "secbench-total.js-3.4.6",
+        "source": "npm:total.js@3.4.6",
+        "snapshot_sha256": "add0ef7dfe86d3b90c5078e9e61071093a140ff91d2a98d079e06a0bfc78ca6c",
+        "scan_status": "partial",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 6,
+          "units": 6,
+          "candidates": 6,
+          "main_list": 6,
+          "filtered": 0,
+          "demoted": 2
+        },
+        "sites": [
+          {
+            "path": "image.js",
+            "line": 329,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql"
+            ],
+            "priority": "P2",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              231,
+              291,
+              329,
+              408
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 5,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 1,
+            "U": 2,
+            "P3": 2,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 4,
+            "only": 4
+          },
+          "eslint": {
+            "candidates": 2,
+            "only": 2
+          }
+        },
+        "seconds": {
+          "wall": 34.7,
+          "steps": {
+            "codeql": 17.3,
+            "eslint": 1.7,
+            "semgrep": 3.9,
+            "sink-locator": 3.2,
+            "codeql-create": 10.9,
+            "semgrep-evidence": 2.8
+          }
+        }
+      },
+      {
+        "id": "secbench-whereis-0.4.0",
+        "source": "npm:whereis@0.4.0",
+        "snapshot_sha256": "d6ab59a2a6cafe407a221659a47d2de426c4777925a95e7539baef6988f2f4c9",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 9,
+          "units": 4,
+          "candidates": 4,
+          "main_list": 4,
+          "filtered": 0,
+          "demoted": 0
+        },
+        "sites": [
+          {
+            "path": "index.js",
+            "line": 4,
+            "basis": "SecBench.js_sink_hint",
+            "reported": true,
+            "tools": [
+              "codeql",
+              "eslint",
+              "semgrep"
+            ],
+            "priority": "P1",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              4,
+              8,
+              10,
+              12
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 3,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 3,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "codeql": {
+            "candidates": 1,
+            "only": 0
+          },
+          "eslint": {
+            "candidates": 3,
+            "only": 0
+          },
+          "semgrep": {
+            "candidates": 4,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.5,
+          "steps": {
+            "codeql": 7.4,
+            "eslint": 0.4,
+            "semgrep": 1.2,
+            "sink-locator": 1.1,
+            "codeql-create": 4.5,
+            "semgrep-evidence": 1.1
+          }
+        }
+      }
+    ],
+    "scan_statuses": {
+      "partial": 4,
+      "completed": 12
+    },
+    "configurations": {
+      "documented_sites_scanned": 7,
+      "reported_by_configuration": {
+        "semgrep": 3,
+        "codeql": 6,
+        "eslint": 4,
+        "semgrep ∪ codeql": 6,
+        "all sources": 7,
+        "all sources, after filtering": 7,
+        "first tiers (P1+P2), after filtering": 6
+      },
+      "reported_by_one_tool_only": {
+        "semgrep": 0,
+        "codeql": 2,
+        "eslint": 0,
+        "bandit": 1
+      },
+      "lost_to_filtering": 0,
+      "kept_sites_by_priority": {
+        "P1": 4,
+        "P2": 2,
+        "U": 0,
+        "P3": 1,
+        "P4": 0
+      }
+    },
+    "unlabeled": {
+      "total": 156,
+      "filtered": 0,
+      "main_list_by_priority": {
+        "P1": 1,
+        "P2": 6,
+        "U": 7,
+        "P3": 142,
+        "P4": 0
+      }
+    },
+    "wall_seconds": {
+      "scans": 16,
+      "total": 490.3,
+      "median": 15.1,
+      "max": 111.0
+    }
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "scan_id": "a2e6c133-7ac9-44a3-9e23-fe538987959e",
+  "status": "partial",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "05932b0d-5e33-4ccc-9a8e-9157bc84a650",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:total.js@3.4.6",
+    "sha256": "add0ef7dfe86d3b90c5078e9e61071093a140ff91d2a98d079e06a0bfc78ca6c",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-15T05:15:07.647428Z",
+  "finished_at": "2026-11-15T05:15:42.306886Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 17.3019,
+        "raw_findings": 4
+      },
+      "eslint": {
+        "status": "partial",
+        "seconds": 1.6676,
+        "raw_findings": 2
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 3.922,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 3.1705,
+        "raw_findings": 9
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 10.8871
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4648
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1144
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8161
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 2.8197,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 4,
+    "eslint": 2
+  },
+  "stages": {
+    "raw_alerts": 6,
+    "units": 6,
+    "candidates": 6,
+    "main_list": 6,
+    "filtered": 0,
+    "demoted": 2
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 4,
+      "only": 4
+    },
+    "eslint": {
+      "candidates": 2,
+      "only": 2
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 2,
+    "U": 2,
+    "P3": 2,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "1e696f248854564e25e1826b3a91406b722487eef7ab7cbb46fdeef6749ce45b",
+      "basis": "same_call_site",
+      "path": "image.js",
+      "start_line": 291,
+      "sink_kind": "child_process.spawn",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "6b484ab4-4dff-4822-9d15-af5e97b86562"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "3fb43a51353498d3e9f890945d0cc6c50418405dc4a9f235dba7045a2a5f2a60",
+      "basis": "same_call_site",
+      "path": "image.js",
+      "start_line": 329,
+      "sink_kind": "child_process.spawn",
+      "tools": [
+        "codeql"
+      ],
+      "priority": "P2",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "ab74942e-11ab-4eb7-b2db-f220c948e279"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "ae2c44949b7e43d2c32985b176382fc12934add453b14f618ce34e7feefe7755",
+      "basis": "unmatched_location",
+      "path": "image.js",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "codeql"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "20c244a1-41d4-4642-9519-bb31d3ccc410"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "c9110874c50a5f781b0a74596b5720a850b5212aca219fdc8691cf56e39ab799",
+      "basis": "unmatched_location",
+      "path": "image.js",
+      "start_line": null,
+      "sink_kind": null,
+      "tools": [
+        "codeql"
+      ],
+      "priority": "U",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "71b8f0de-881b-4e0f-9b78-373218a54f59"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "d38090699c5e206c24ecbef8d393fadc76da1e05a6f5f4a3285e51bef3c356b1",
+      "basis": "same_call_site",
+      "path": "image.js",
+      "start_line": 231,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "8c5de6f1-7e17-41b6-9e0c-764c8adde106"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "83d219c312e53834cf67f72911a08d72c83060e37f2f11339d88a6f0b2971640",
+      "basis": "same_call_site",
+      "path": "image.js",
+      "start_line": 408,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "30dccd21-bf33-4c33-8f92-d0417e4a74a2"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

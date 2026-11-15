@@ -1,0 +1,1214 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "a2e6c133-7ac9-44a3-9e23-fe538987959e"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This shell argument which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 278,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 108,
+                            "startLine": 291,
+                            "startColumn": 104
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(type ? ... ) + '-'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 126,
+                            "startLine": 291,
+                            "startColumn": 96
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 368,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 401,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] arr [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 401,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arr [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 402,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "self.ar ...  + '-')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 127,
+                            "startLine": 291,
+                            "startColumn": 44
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "image.js"
+                },
+                "region": {
+                  "startLine": 291,
+                  "startColumn": 44,
+                  "endColumn": 127
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 278,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 139,
+                  "startLine": 291,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 278,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "e8f90b16859574:1",
+            "primaryLocationStartColumnFingerprint": "42"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "1e696f248854564e25e1826b3a91406b722487eef7ab7cbb46fdeef6749ce45b",
+              "unitKey": "04c723b0d04054d5ad7fb2c35d17dc1f414ba7f9a3817e4af7e0d90f540f6068",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This shell argument which depends on [library input](1) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 319,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 108,
+                            "startLine": 329,
+                            "startColumn": 104
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(type ? ... ) + '-'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 126,
+                            "startLine": 329,
+                            "startColumn": 96
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 368,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 401,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "[post update] arr [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 401,
+                            "startColumn": 10
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "arr [ArrayElement]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 402,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "self.ar ...  + '-')"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 127,
+                            "startLine": 329,
+                            "startColumn": 44
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "image.js"
+                },
+                "region": {
+                  "startLine": 329,
+                  "startColumn": 44,
+                  "endColumn": 127
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 319,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 139,
+                  "startLine": 329,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 319,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "e8f90b16859574:2",
+            "primaryLocationStartColumnFingerprint": "42"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "3fb43a51353498d3e9f890945d0cc6c50418405dc4a9f235dba7045a2a5f2a60",
+              "unitKey": "e6e9c5d9278bf15ff8dd20555ab54f099ffe6d7cde33523351cdb6f7b45c1ba7",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This shell argument which depends on [library input](1) is later used in a [shell command](2).\nThis shell argument which depends on [library input](1) is later used in a [shell command](3)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "first"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 368,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "first"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 376,
+                            "startColumn": 20
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "first"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 368,
+                            "startColumn": 27
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "first"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 25,
+                            "startLine": 376,
+                            "startColumn": 20
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "image.js"
+                },
+                "region": {
+                  "startLine": 376,
+                  "startColumn": 20,
+                  "endColumn": 25
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 32,
+                  "startLine": 368,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 139,
+                  "startLine": 291,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 139,
+                  "startLine": 329,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 32,
+                  "startLine": 368,
+                  "startColumn": 27
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "13a6a65637d5f255:1",
+            "primaryLocationStartColumnFingerprint": "18"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "ae2c44949b7e43d2c32985b176382fc12934add453b14f618ce34e7feefe7755",
+              "unitKey": "ae2c44949b7e43d2c32985b176382fc12934add453b14f618ce34e7feefe7755",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This shell argument which depends on [library input](1) is later used in a [shell command](2).\nThis shell argument which depends on [library input](1) is later used in a [shell command](3).\nThis shell argument which depends on [library input](4) is later used in a [shell command](2).\nThis shell argument which depends on [library input](4) is later used in a [shell command](3).\nThis shell argument which depends on [library input](5) is later used in a [shell command](2).\nThis shell argument which depends on [library input](5) is later used in a [shell command](3)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 278,
+                            "startColumn": 36
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 108,
+                            "startLine": 291,
+                            "startColumn": 104
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(type ? ... ) + '-'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 126,
+                            "startLine": 291,
+                            "startColumn": 96
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 368,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 401,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 34,
+                            "startLine": 319,
+                            "startColumn": 30
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "type"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 108,
+                            "startLine": 329,
+                            "startColumn": 104
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "(type ? ... ) + '-'"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 126,
+                            "startLine": 329,
+                            "startColumn": 96
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 368,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 401,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 38,
+                            "startLine": 368,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "last"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 401,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "image.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "image.js"
+                },
+                "region": {
+                  "startLine": 401,
+                  "startColumn": 19,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 278,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 139,
+                  "startLine": 291,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 139,
+                  "startLine": 329,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 319,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 5,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 38,
+                  "startLine": 368,
+                  "startColumn": 34
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 278,
+                  "startColumn": 36
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 34,
+                  "startLine": 319,
+                  "startColumn": 30
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 38,
+                  "startLine": 368,
+                  "startColumn": 34
+                },
+                "artifactLocation": {
+                  "uri": "image.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "fd952973d09df020:1",
+            "primaryLocationStartColumnFingerprint": "17"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "c9110874c50a5f781b0a74596b5720a850b5212aca219fdc8691cf56e39ab799",
+              "unitKey": "c9110874c50a5f781b0a74596b5720a850b5212aca219fdc8691cf56e39ab799",
+              "priority": "U",
+              "decisionId": "D00_UNRESOLVED",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "a2e6c133-7ac9-44a3-9e23-fe538987959e"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "image.js"
+                },
+                "region": {
+                  "startLine": 231,
+                  "startColumn": 12,
+                  "endLine": 257,
+                  "endColumn": 4
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "d38090699c5e206c24ecbef8d393fadc76da1e05a6f5f4a3285e51bef3c356b1",
+              "unitKey": "f78a5f8b1725c3830498e4108f601dc86fe386762c0d61201a1ad1d41ace7466",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "image.js"
+                },
+                "region": {
+                  "startLine": 408,
+                  "startColumn": 2,
+                  "endLine": 419,
+                  "endColumn": 4
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "83d219c312e53834cf67f72911a08d72c83060e37f2f11339d88a6f0b2971640",
+              "unitKey": "a76a8bb8c31e0db5f8ecba0daba68a8d5fe4b4fb132a909490802f9e04143bac",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

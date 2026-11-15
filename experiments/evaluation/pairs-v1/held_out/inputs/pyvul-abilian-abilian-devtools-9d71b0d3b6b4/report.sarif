@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "bda6962f-b7d6-4846-a63e-2806ba8713fb"
+      },
+      "results": [
+        {
+          "level": "error",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell, possible injection detected, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/abilian/devtools/main.py"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 14,
+                  "endLine": 16,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "b19bc253922f1c29cd70b5ae4106dce9ad626b1c242a76532d8f36e30531a7ad",
+              "unitKey": "bfb1a9dfbbf2cda4ef009bede50e36b516a64e30546fd7abddfd7e43fdcc1dc3",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

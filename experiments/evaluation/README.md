@@ -23,7 +23,7 @@ Results and what they do and do not show: [docs/thesis/chapter-3-results.md](../
 | `independent-python/` | Third check: six documented sites in three deliberately vulnerable Python applications, the language the filter step has evidence packs for |
 | `independent-labeled/` | Fourth check, with vulnerable **and** safe labels: 210 lines of the rule tests of semgrep-rules, labeled by the rule authors' `ruleid:`/`ok:` comments. `labeled_sites.py` gives TP/FP/FN/TN, precision, recall and F1 per configuration. The registered scan failed on a defect of the application; `DEVIATIONS.md` separates that registered result from the rescan after the fix |
 | `independent-filter/` | Fifth check, on the filter step alone: 20 real Python command-line tools picked by one fixed GitHub search, no labels. `filtered_candidates.py` counts what the filter moved out of the main list in completed scans; `verify_filtered.py` checks every filtered call against the source with a rule fixed before the scans. `READING.md` holds the registered result and the later reading of two calls |
-| `pairs-v1/` | The frozen CVE pairs under Amendments 06 and 07: label builder, run and freeze scripts, and the **development-split run with v0.2** (34 pairs scanned once from the locked bytes). The held-out split has not been scanned |
+| `pairs-v1/` | The frozen CVE pairs under Amendments 06 to 08: label builder, run and freeze scripts, the development-split run with v0.2, the rehearsal of v0.3 and the **held-out run with v0.3** (16 pairs scanned once from the locked bytes after the configuration was frozen and committed) |
 | `js-matching-v0.3/` | Development experiment for profile v0.3: 84 npm sources rescanned, compared with their saved v0.2 exports (unmatched candidates, newly merged alerts, wrong-merge check, filter rule G4) |
 | `PIPELINE_CHANGES.json` | Pipeline code files that changed after the registered scans of `independent*/`, with the reason. Protocols, labels, scoring scripts and exports are never listed there |
 
@@ -97,9 +97,9 @@ are expected to stay the same for the same snapshot, profile and tool versions.
   scans (19 of 145 candidates, all by the constant-command rule G2; the registered check
   accepted 17 and rejected 2, both of which a later reading found to be constant commands
   wrapped in another call). It says nothing about detection or about lost true positives.
-- **`pairs-v1/`: the development split was scanned once (2026-11-15, v0.2); the held-out split
-  was not.** Amendment 07 keeps its single use for the final pipeline version. Do not scan a
-  held-out pair without a new amendment and `freeze.py gate`.
+- **`pairs-v1/`: both splits have been scanned once.** The development split with v0.2, the
+  held-out split with v0.3 on 2026-11-15 (union of all sources: 9 of 9 known locations, none
+  filtered). Do not rescan either; the held-out split is no longer independent data.
 - **`js-matching-v0.3/` is development data**: every source was scanned before and ten were
   read to design the change. It measures matching, not false-positive reduction.
 - **Counting unit:** the review candidate, one call. A labeled site is reported by a

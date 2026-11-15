@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "59e6e4eb-51a7-4854-a10c-984d9c1b8602"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/helpers.js"
+                },
+                "region": {
+                  "startLine": 12,
+                  "startColumn": 5,
+                  "endLine": 25,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "3076becfda2fcd6ccc51560a28a789e1fc6c47fcc144f383cddab2c21e10a36c",
+              "unitKey": "e549f7ea2329698ffa7f0a05ec2b9e93c989e936317230bd6cedf30bf7e550b8",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/stats.js"
+                },
+                "region": {
+                  "startLine": 108,
+                  "startColumn": 5,
+                  "endLine": 119,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "8144c16e2c067886c5230116319525ca1a57b0bb46a642578651c7a85657d4ef",
+              "unitKey": "db57dcd00f8c9f97d06e8ba5b217fca0360fc6df36cd162ca2eb6fb3ba541a7e",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/stats.js"
+                },
+                "region": {
+                  "startLine": 138,
+                  "startColumn": 7,
+                  "endLine": 160,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "ab1ef88e0830b731d9ea2b0d3462d9e309fd676b104196fcd8e683631db6bbf8",
+              "unitKey": "4f256f4940021994444cf7382d18a6b86f500c17f11cfc72527f54c617d74f07",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

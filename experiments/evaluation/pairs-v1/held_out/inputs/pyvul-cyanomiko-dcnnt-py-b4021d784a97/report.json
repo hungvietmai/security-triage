@@ -1,0 +1,247 @@
+{
+  "scan_id": "6b124378-7373-472c-931d-ce3ecc6f97f2",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "2e90fcc2-d780-4c73-8e12-88054d5172b6",
+    "status": "ready",
+    "source_kind": "github_tarball",
+    "source_coordinate": "github:cyanomiko/dcnnt-py@4084ea18f96d9a953315f5555fca45f26639b8be",
+    "sha256": "74afe56b88b40366367620bee930f6077435cfdfe2a78d943f48b25553a89457",
+    "provenance_kind": "tofu",
+    "error_message": null
+  },
+  "started_at": "2026-11-15T05:08:38.478663Z",
+  "finished_at": "2026-11-15T05:08:54.211768Z",
+  "tool_versions": {
+    "python/bandit": "1.9.4",
+    "python/codeql": "2.27.1",
+    "python/codeql-evidence": "2.27.1",
+    "python/semgrep": "1.178.0",
+    "python/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "python": {
+      "bandit": {
+        "status": "completed",
+        "seconds": 0.2643,
+        "raw_findings": 7
+      },
+      "codeql": {
+        "status": "completed",
+        "seconds": 6.378,
+        "raw_findings": 0
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.3664,
+        "raw_findings": 7
+      },
+      "sink-locator": {
+        "status": "completed",
+        "raw_findings": 7
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 3.0698
+      },
+      "bandit-version": {
+        "status": "completed",
+        "seconds": 0.1645
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "codeql-evidence": {
+        "status": "completed",
+        "seconds": 4.8239,
+        "raw_findings": 0
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7667
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.2185,
+        "raw_findings": 14
+      }
+    }
+  },
+  "raw_alerts": {
+    "bandit": 7,
+    "semgrep": 7
+  },
+  "stages": {
+    "raw_alerts": 14,
+    "units": 7,
+    "candidates": 7,
+    "main_list": 7,
+    "filtered": 0,
+    "demoted": 7
+  },
+  "sources": {
+    "bandit": {
+      "candidates": 7,
+      "only": 0
+    },
+    "semgrep": {
+      "candidates": 7,
+      "only": 0
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 7,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "642aadf79c5207db5a3af50231f05918b584e2e9be524973ac85e02a1002892f",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/file_transfer.py",
+      "start_line": 110,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "12010d13-de6c-4a61-be8d-4cf407ee1dc6"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "58ad0e0fe7f01d9acd521fa4a5a47e965cd883a0698139018a00aa70d73058ee",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/notifications.py",
+      "start_line": 58,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "7152bef0-cd82-4d32-be4f-743ec4036ed2"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "129702eeacb0b4b6d69ca7d1910e1e6ea320361e91f7f843a6a497f02b7ca6ad",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/opener.py",
+      "start_line": 34,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "c486a098-5c75-4b8c-9290-c139667b8f66"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "8b41e2bdc7a749db88747f01a52edf00139dcc68ff7c72dd31e94d4c4c8894c3",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/opener.py",
+      "start_line": 44,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "45ad7f46-8a42-44ff-b539-b9606a128601"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "c80f764794083ba7db07c96cc7fc210a9afdce9d6050a60dac20a95fec506358",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/remote_commands.py",
+      "start_line": 48,
+      "sink_kind": "subprocess.check_call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "2af2f82a-4f8a-43d2-835b-78b7d54bbcab"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "a5cf891ab169ea27cba2eeafaaf123ac3412b7986f29a9b7b8d7dfb65b18b966",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/sync.py",
+      "start_line": 318,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "88cb15ad-2ed3-4294-aa48-02ca53f7cadc"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "7cc19a3953ffc04783019d9b27fa8b5867f2947336b7a38f6f946ca955e58c2d",
+      "basis": "same_call_site",
+      "path": "dcnnt/plugins/sync.py",
+      "start_line": 361,
+      "sink_kind": "subprocess.call",
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "08117877-f3f9-4e70-9bb2-eec3568597cb"
+      ],
+      "raw_alerts": 2
+    }
+  ]
+}

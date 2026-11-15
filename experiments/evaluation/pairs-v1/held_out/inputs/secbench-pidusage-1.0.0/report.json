@@ -1,0 +1,154 @@
+{
+  "scan_id": "59e6e4eb-51a7-4854-a10c-984d9c1b8602",
+  "status": "partial",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "90fa6738-2104-466a-982c-a9dc52f781cd",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:pidusage@1.0.0",
+    "sha256": "f3fed8f649315bbb7848aedb54926b62a7e6194f4e99a64192fe356011633f8e",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-15T05:14:43.223705Z",
+  "finished_at": "2026-11-15T05:14:57.914262Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.4302,
+        "raw_findings": 0
+      },
+      "eslint": {
+        "status": "partial",
+        "seconds": 0.4145,
+        "raw_findings": 3
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2665,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0658,
+        "raw_findings": 3
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.5728
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4146
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1142
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.7655
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0658,
+        "raw_findings": 0
+      }
+    }
+  },
+  "raw_alerts": {
+    "eslint": 3
+  },
+  "stages": {
+    "raw_alerts": 3,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 3
+  },
+  "sources": {
+    "eslint": {
+      "candidates": 3,
+      "only": 3
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 0,
+    "P2": 0,
+    "U": 0,
+    "P3": 3,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "3076becfda2fcd6ccc51560a28a789e1fc6c47fcc144f383cddab2c21e10a36c",
+      "basis": "same_call_site",
+      "path": "lib/helpers.js",
+      "start_line": 12,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "d4ba043f-2211-47c0-9d3b-61d8441b3e27"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "8144c16e2c067886c5230116319525ca1a57b0bb46a642578651c7a85657d4ef",
+      "basis": "same_call_site",
+      "path": "lib/stats.js",
+      "start_line": 108,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "bfa730d5-d376-49e7-a3c1-2a9dbbdb9f50"
+      ],
+      "raw_alerts": 1
+    },
+    {
+      "candidate_key": "ab1ef88e0830b731d9ea2b0d3462d9e309fd676b104196fcd8e683631db6bbf8",
+      "basis": "same_call_site",
+      "path": "lib/stats.js",
+      "start_line": 138,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+      "unit_ids": [
+        "9d956b1d-9114-4abf-943b-faed4e681d1d"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}

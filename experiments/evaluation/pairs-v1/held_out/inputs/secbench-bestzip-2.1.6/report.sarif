@@ -1,0 +1,674 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "1662f694-05c5-4c70-8b1a-4d4f9fef9e2a"
+      },
+      "results": [
+        {
+          "ruleId": "js/shell-command-constructed-from-input",
+          "message": {
+            "text": "This string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](1) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](3) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](4) is later used in a [shell command](2).\nThis string concatenation which depends on [library input](5) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 26,
+                            "startLine": 19,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 25,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options.destination"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 26,
+                            "startLine": 25,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 26,
+                            "startLine": 19,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 23,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "sources"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 18,
+                            "startLine": 21,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "sources"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 26,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 132,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 143,
+                            "startColumn": 25
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 26,
+                            "startLine": 19,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 14,
+                            "startLine": 25,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options.destination"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 26,
+                            "startLine": 25,
+                            "startColumn": 7
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 21,
+                            "startLine": 132,
+                            "startColumn": 14
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 32,
+                            "startLine": 143,
+                            "startColumn": 25
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 26,
+                            "startLine": 19,
+                            "startColumn": 19
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "options"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 23,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "sources"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 18,
+                            "startLine": 21,
+                            "startColumn": 11
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "sources"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 26,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "lib/bestzip.js",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js"
+                },
+                "region": {
+                  "startLine": 24,
+                  "startColumn": 21,
+                  "endLine": 26,
+                  "endColumn": 18
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 26,
+                  "startLine": 19,
+                  "startColumn": 19
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 30,
+                  "endColumn": 7,
+                  "startLine": 27,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 21,
+                  "startLine": 132,
+                  "startColumn": 14
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 24,
+                  "startLine": 136,
+                  "startColumn": 15
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 5,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 29,
+                  "startLine": 137,
+                  "startColumn": 20
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 26,
+                  "startLine": 19,
+                  "startColumn": 19
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 26,
+                  "startLine": 25,
+                  "startColumn": 7
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 16,
+                  "startLine": 26,
+                  "startColumn": 9
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 21,
+                  "startLine": 132,
+                  "startColumn": 14
+                },
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "10dc0abdae3e8aad:1",
+            "primaryLocationStartColumnFingerprint": "16"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4bf55719a6cf8ead6556998b536525c661f65d4cbf338b711813dc2cd6da7747",
+              "unitKey": "7effa658369b90d57a75df4862d1b52e5a932cc7bea8e748b28099b1f2e6792d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "eslint",
+          "version": "10.15.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "1662f694-05c5-4c70-8b1a-4d4f9fef9e2a"
+      },
+      "results": [
+        {
+          "level": "warning",
+          "ruleId": "security/detect-child-process",
+          "message": {
+            "text": "Found child_process.exec() with non Literal first argument"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 24,
+                  "endLine": 30,
+                  "endColumn": 7
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4bf55719a6cf8ead6556998b536525c661f65d4cbf338b711813dc2cd6da7747",
+              "unitKey": "7effa658369b90d57a75df4862d1b52e5a932cc7bea8e748b28099b1f2e6792d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "javascript",
+        "scanId": "1662f694-05c5-4c70-8b1a-4d4f9fef9e2a"
+      },
+      "results": [
+        {
+          "ruleId": "detect-child-process",
+          "message": {
+            "text": "Detected calls to child_process from a function argument `options`. This could lead to a command injection if the input is user controllable. Try to avoid calls to child_process, and if it is needed ensure user input is correctly sanitized or sandboxed. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "lib/bestzip.js"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 32,
+                  "endLine": 27,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "4bf55719a6cf8ead6556998b536525c661f65d4cbf338b711813dc2cd6da7747",
+              "unitKey": "7effa658369b90d57a75df4862d1b52e5a932cc7bea8e748b28099b1f2e6792d",
+              "priority": "P2",
+              "decisionId": "D30_HIGH",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

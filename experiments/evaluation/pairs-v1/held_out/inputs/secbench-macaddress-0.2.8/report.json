@@ -1,0 +1,161 @@
+{
+  "scan_id": "5931012b-3cd0-4320-aba8-197f4da450fe",
+  "status": "completed",
+  "profile": "command-injection-v0.3",
+  "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+  "policy_version": "0.2",
+  "reconciler_version": "reconcile-v0.1",
+  "snapshot": {
+    "id": "b5294fbe-7831-4620-b212-30abbda8acc1",
+    "status": "ready",
+    "source_kind": "npm_tarball",
+    "source_coordinate": "npm:macaddress@0.2.8",
+    "sha256": "1b5dba1b0e7a69327e0a1788504afd30c744d3e8dca238d09421b4e4c280e1a4",
+    "provenance_kind": "publisher_verified",
+    "error_message": null
+  },
+  "started_at": "2026-11-15T05:14:18.798646Z",
+  "finished_at": "2026-11-15T05:14:33.555694Z",
+  "tool_versions": {
+    "javascript/codeql": "2.27.1",
+    "javascript/eslint": "10.15.0",
+    "javascript/semgrep": "1.178.0",
+    "javascript/semgrep-evidence": "1.178.0"
+  },
+  "steps": {
+    "javascript": {
+      "codeql": {
+        "status": "completed",
+        "seconds": 7.5299,
+        "raw_findings": 2
+      },
+      "eslint": {
+        "status": "completed",
+        "seconds": 0.4146,
+        "raw_findings": 3
+      },
+      "semgrep": {
+        "status": "completed",
+        "seconds": 1.2161,
+        "raw_findings": 0
+      },
+      "sink-locator": {
+        "status": "completed",
+        "seconds": 1.0658,
+        "raw_findings": 4
+      },
+      "codeql-create": {
+        "status": "completed",
+        "seconds": 4.6734
+      },
+      "codeql-version": {
+        "status": "completed",
+        "seconds": 0.4147
+      },
+      "eslint-version": {
+        "status": "completed",
+        "seconds": 0.1143
+      },
+      "semgrep-version": {
+        "status": "completed",
+        "seconds": 0.8159
+      },
+      "semgrep-evidence": {
+        "status": "completed",
+        "seconds": 1.0661,
+        "raw_findings": 1
+      }
+    }
+  },
+  "raw_alerts": {
+    "codeql": 2,
+    "eslint": 3
+  },
+  "stages": {
+    "raw_alerts": 5,
+    "units": 3,
+    "candidates": 3,
+    "main_list": 3,
+    "filtered": 0,
+    "demoted": 1
+  },
+  "sources": {
+    "codeql": {
+      "candidates": 2,
+      "only": 0
+    },
+    "eslint": {
+      "candidates": 3,
+      "only": 1
+    }
+  },
+  "main_list_by_priority": {
+    "P1": 2,
+    "P2": 0,
+    "U": 0,
+    "P3": 1,
+    "P4": 0
+  },
+  "filtered_by_rule": {},
+  "candidates": [
+    {
+      "candidate_key": "2a387dba27b03bf61c99aee2edb79a98edfc207b6e665a782cf1f6dc9d8f1973",
+      "basis": "same_call_site",
+      "path": "lib/linux.js",
+      "start_line": 4,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "de6f32ac-cfd3-4577-ac7d-315553d176d9"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "b4adcde739dc87546300197f2155120d9970783b00ccf9291d83a065de6b2689",
+      "basis": "same_call_site",
+      "path": "lib/unix.js",
+      "start_line": 4,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "codeql",
+        "eslint"
+      ],
+      "priority": "P1",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "9c37d3d3-170b-481c-b3d7-389bf23eae19"
+      ],
+      "raw_alerts": 2
+    },
+    {
+      "candidate_key": "ffe463b0b57a2551151ee97e38693c01eed2ca790b6bf10473e5a017492510a8",
+      "basis": "same_call_site",
+      "path": "lib/macosx.js",
+      "start_line": 4,
+      "sink_kind": "child_process.exec",
+      "tools": [
+        "eslint"
+      ],
+      "priority": "P3",
+      "disposition": "review",
+      "filter_rule": null,
+      "filter_rules": [],
+      "reason": "Không có bằng chứng cụ thể cho thấy đây là cảnh báo sai.",
+      "unit_ids": [
+        "3c298902-b320-4011-b78f-c5c4da8d16a1"
+      ],
+      "raw_alerts": 1
+    }
+  ]
+}
