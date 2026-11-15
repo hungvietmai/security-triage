@@ -1,6 +1,7 @@
 # KẾT LUẬN
 
-> **Ghi chú cho người viết (không thuộc nội dung đề án).** Văn bản ngày 2026-11-14. Số liệu lấy
+> **Ghi chú cho người viết (không thuộc nội dung đề án).** Văn bản ngày 2026-11-14, phần hạn chế
+> cập nhật ngày 2026-11-15. Số liệu lấy
 > từ [chuong-3-thuc-nghiem.md](chuong-3-thuc-nghiem.md).
 
 **Kết quả đạt được.** Đề án đã xây dựng và đánh giá một quy trình bốn bước để sàng lọc và thẩm
@@ -39,9 +40,12 @@ Các kết quả chính:
 - Lấy hợp các nguồn đổi độ chính xác lấy độ bao phủ. Trên 210 dòng mã minh họa có cả nhãn an
   toàn mà dự án chưa từng xem, quy trình đạt F1 0,69, cao hơn mọi công cụ chạy riêng, nhưng độ
   chính xác 0,66 thấp hơn Semgrep (0,88) và CodeQL (1,00). Trên bộ OWASP, F1 của quy trình
-  (0,84) không vượt CodeQL chạy riêng (0,85). Trên mã ứng dụng thật chưa có số đo độ chính xác.
-- Với JavaScript/TypeScript, bước gạn chỉ có một quy tắc hẹp cho lệnh hằng, mới thấy hoạt động
-  trên một ca thật; chưa có dữ liệu có nhãn an toàn để đánh giá nó.
+  (0,84) không vượt CodeQL chạy riêng (0,85). Trên mã thật, độ chính xác mới có cho ứng viên
+  JavaScript của 84 package là dữ liệu phát triển (0,92, theo nhãn do tác giả rà, không mù);
+  chưa có số đo trên mã chưa từng xem.
+- Với JavaScript/TypeScript, bước gạn chỉ có một quy tắc hẹp cho lệnh hằng. Trên 84 package là
+  dữ liệu phát triển, nó chuyển đi 1 trong 11 cảnh báo sai đã được rà và không gạn nhầm ca nào
+  trong 122 ca có lỗi; mười cảnh báo sai còn lại chưa có bằng chứng để gạn.
 - Tập giữ lại gồm các cặp phiên bản lỗi/vá của CVE thật đã được dùng một lần cho phiên bản 0.3:
   quy trình báo cả 9 vị trí lỗi đã biết và không gạn nhầm ca nào. Nhưng chín vị trí là quá ít
   để nêu một tỷ lệ, và tập này chỉ có nhãn dương tính.

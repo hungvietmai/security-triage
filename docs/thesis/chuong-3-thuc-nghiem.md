@@ -572,7 +572,10 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
 
 6. *Bước gạn không làm mất lỗi thật nào trong mọi phép đo:* 0/13 trên D1; 0/7 trên Python độc
    lập, trong đó bốn vị trí đã được truy vấn bằng chứng xét và giữ lại; 0 trên các vị trí
-   JavaScript, nơi bước gạn không có gói bằng chứng.
+   JavaScript, nơi bước gạn không có gói bằng chứng. Con số này cần đọc theo hai nhóm. Ở D1,
+   I5, tập phát triển `pairs-v1` và 84 package JavaScript, bước gạn có gạn ứng viên (2, 19, 71
+   và 1) và không ứng viên nào trong số đó là vị trí lỗi đã biết. Ở I1–I3 và tập giữ lại, nó
+   không gạn ứng viên nào, nên "không mất" ở đó chưa phải là phép thử của bước gạn.
 7. *Lợi ích của bước gạn có thật nhưng hẹp.* Trên D1 nó loại 2/7 cảnh báo sai (1/7 nếu chỉ dùng
    công cụ mã nguồn mở). Trên dữ liệu độc lập: ở I1–I3 không ứng viên nào có bằng chứng bác bỏ;
    ở I4 lượt quét chạy dở nên bước gạn không hoạt động; ở I5 nó gạn 19 trong 145 ứng viên của
@@ -597,7 +600,7 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
 10. Dữ liệu độc lập làm lộ bốn khiếm khuyết mà dữ liệu phát triển không cho thấy: lỗi xử lý ký
     tự xuống dòng làm hỏng lượt quét JavaScript (đã sửa); một tệp Python sai cú pháp làm hỏng cả
     lượt quét (đã sửa); bộ định vị lời gọi JavaScript bỏ qua một số cách khai báo, khiến 4 cảnh
-    báo đúng nằm ở hàng U thay vì được gộp (chưa sửa: cần một phiên bản bộ định vị mới); và
+    báo đúng nằm ở hàng U thay vì được gộp (đã sửa một phần ở phiên bản 0.3, xem kết luận 11); và
     thông báo lỗi không rõ khi phiên bản package không còn tồn tại.
 
 **Về phiên bản 0.3.**
