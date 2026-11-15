@@ -1,6 +1,6 @@
 # Kiến trúc ứng dụng
 
-Mô tả ứng dụng web như đã cài đặt, cập nhật ngày 2026-10-27. Trạng thái và kết quả nghiên cứu
+Mô tả ứng dụng web như đã cài đặt, cập nhật ngày 2026-11-15. Trạng thái và kết quả nghiên cứu
 nằm ở [research.md](research.md); cách chạy stack nằm ở [README](../README.md).
 
 ## 1. Ứng dụng làm gì
@@ -13,7 +13,8 @@ viên rà soát và gạn những ứng viên có bằng chứng cụ thể là 
 trạng thái lượt quét, danh sách rà chính và danh sách đã gạn theo hàng đợi P1→P4, bằng chứng
 của từng đơn vị và báo cáo trước–sau.
 
-Người dùng chọn một trong bốn profile khi tạo lượt quét:
+Người dùng chọn một trong năm profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
+`multi-cwe-v0.1` ghép hai profile có sẵn vào một lượt quét:
 
 | Profile | Phạm vi | Cách xếp hàng đợi |
 |---|---|---|
@@ -21,6 +22,7 @@ Người dùng chọn một trong bốn profile khi tạo lượt quét:
 | `command-injection-v0.2` | CWE-78; JavaScript/TypeScript và Python. Sàng lọc: Semgrep cùng Bandit (Python) hoặc ESLint với eslint-plugin-security (JavaScript/TypeScript). Thẩm định: CodeQL | Như v0.1, theo chính sách ưu tiên v0.2: "đồng thuận" là CodeQL cùng ít nhất một công cụ sàng lọc. **Chưa được đánh giá** |
 | `command-injection-v0.3` | Như v0.2 | Như v0.2, với ba điểm khác: worker quyết định phạm vi tệp của Semgrep (mã bị quét không tự ẩn tệp được); bộ định vị lời gọi JavaScript v1 nhận thêm bí danh hai bước, destructuring, `promisify`, `require` nội tuyến; quy tắc gạn G4 cho lời gọi `exec`/`execSync` có lệnh hằng. Đã đo trên dữ liệu phát triển và trên tập giữ lại của `pairs-v1` (9 vị trí lỗi đã biết, chỉ nhãn dương tính) |
 | `path-traversal-v0.2` | CWE-22; Python; chỉ CodeQL | Cảnh báo của truy vấn baseline. Nếu truy vấn có bằng chứng an toàn v0.2 vẫn báo thì ở **P1**; nếu bằng chứng đã loại mọi luồng thì xuống **P4**. Không xóa cảnh báo nào |
+| `multi-cwe-v0.1` | CWE-78 (JavaScript/TypeScript và Python) và CWE-22 (Python) trong một lượt quét; ghim manifest của `command-injection-v0.3` và `path-traversal-v0.2` | Mỗi cảnh báo thuộc đúng một nhóm phân tích và được xếp hạng, gạn bằng đúng profile thành viên của nhóm đó. Cảnh báo không xác định được nhóm, hoặc thuộc nhóm chưa xếp hạng được, ở mức **U** trong danh sách rà. Mới kiểm chứng kỹ thuật trên dữ liệu phát triển, chưa có số liệu đánh giá riêng |
 
 Profile `path-traversal-v0.2` dùng đúng pack đã đánh giá trong nghiên cứu
 ([rules/codeql/path-traversal-v0.2/](../rules/codeql/path-traversal-v0.2/README.md)), trùng từng
@@ -113,14 +115,40 @@ Lõi quét (`app/scanners`) và lõi thẩm định (`app/triage`) được dùn
 [run_pilot.py](../experiments/run_pilot.py). Job CI `scan-parity` quét `curling@0.2.0` qua cả
 hai đường và yêu cầu kết quả giống nhau.
 
-**Lượt quét ghép nhiều nhóm CWE (chỉ có ở công cụ dòng lệnh phát triển, từ 2026-11-15).**
-`app/workflows/scans/families.py` chạy công cụ một lần và tạo một database CodeQL cho mỗi ngôn
-ngữ, định tuyến mỗi cảnh báo tới đúng một nhóm phân tích trước khi gộp
-(`classification.py`), rồi để chính profile đã ghim của từng nhóm đánh giá cảnh báo của nhóm
-đó. Hiện ghép được một profile `command-injection-*` với `path-traversal-v0.2`. Worker, cơ sở
-dữ liệu, API và giao diện **chưa** dùng đường này; nó chỉ chạy qua
-`backend/scripts/scan_families.py` và ghi kết quả ra thư mục. Thiết kế, bất biến và trạng thái:
-[plans/multi-cwe.md](plans/multi-cwe.md).
+### 3.1 Lượt quét nhiều nhóm CWE (profile `multi-cwe-v0.1`)
+
+Profile ghép không có luật hay chính sách riêng: manifest của nó ghim manifest của các profile
+thành viên theo hash, mỗi thành viên ứng với một **nhóm phân tích**
+(`command-injection` → CWE-78, `path-traversal` → CWE-22). Đặc tả:
+[COMPOSITION.md](../profiles/multi-cwe-v0.1/COMPOSITION.md).
+
+1. **Chạy công cụ một lần** (`app/workflows/scans/families.py`): công cụ sàng lọc và CodeQL của
+   thành viên đứng đầu chạy như ở profile đơn, tạo **một** database CodeQL cho mỗi ngôn ngữ. Gói
+   truy vấn của thành viên CWE-22 được phân tích trên chính database đó, trong một lượt riêng
+   (`codeql-path-traversal`) có SARIF, log, thời gian và `tool_run` riêng. Hai gói truy vấn không
+   bao giờ đi chung một lệnh.
+2. **Phân loại** (`classification.py`): mỗi cảnh báo giữ ba dữ kiện tách biệt — `reported_cwes`
+   (nhãn công cụ, nguyên văn), `mapped_cwes` (CWE của định nghĩa rule đã ghim, có thể nhiều) và
+   `analysis_family`. Nhóm chỉ được gán khi xác định được đúng một nhóm.
+3. **Định tuyến trước khi gộp:** cảnh báo của mỗi nhóm được đưa cho đúng hàm đánh giá của profile
+   thành viên (`scan_language` hoặc `scan_language_evidence`). Cảnh báo của nhóm này không bao giờ
+   vào bộ gộp của nhóm kia. Với cùng snapshot, đơn vị và đánh giá của một nhóm bằng kết quả quét
+   riêng profile thành viên.
+4. **Không cảnh báo nào nằm ngoài một đơn vị.** Lớp ghép tạo hai loại đơn vị, luôn ở mức U, luôn ở
+   danh sách rà, không bao giờ bị gạn: `F00_FAMILY_UNRESOLVED` (không xác định được nhóm, ghi nhóm
+   `unassigned`) và `F10_FAMILY_NOT_RANKED` (nhóm chạy dở hoặc bước đánh giá của nhóm thất bại nên
+   thành viên không xếp hạng gì).
+5. **Ba trạng thái tách biệt:** trạng thái lượt quét và lượt chạy của từng nhóm
+   (`completed/partial/failed`); trạng thái bằng chứng của từng đơn vị (`evidence_state`: bị bác
+   bỏ, đã đối chiếu mà không bác bỏ, chưa đủ, không lấy được, không áp dụng, chưa thẩm định); và
+   quyết định gạn (`disposition`). Chỉ "bị bác bỏ" mới dẫn tới "đã gạn". Lỗi của lượt chạy chỉ phục
+   vụ một nhóm không làm đổi kết quả của nhóm khác.
+6. **Không có điều kiện gạn dùng chung.** G1–G4 thuộc nhóm lệnh; điều kiện của pack v0.2 thuộc nhóm
+   đường dẫn. Profile ghép không thêm hay nới điều kiện nào.
+
+Công cụ dòng lệnh `backend/scripts/scan_families.py` chạy cùng lớp ghép này mà không qua cơ sở dữ
+liệu, và so lượt quét ghép với lượt quét riêng từng profile. Thiết kế, bất biến và kết quả kiểm
+chứng: [plans/multi-cwe.md](plans/multi-cwe.md).
 
 ## 4. Dữ liệu
 
@@ -130,11 +158,17 @@ dữ liệu, API và giao diện **chưa** dùng đường này; nó chỉ chạ
 | `source_snapshots` | Archive bất biến: tọa độ nguồn, SHA-256, provenance |
 | `scans` | Trạng thái lượt quét, phiên bản scanner/profile, artifact |
 | `tool_runs` | Một lần chạy của một công cụ cho một ngôn ngữ |
-| `findings` | Cảnh báo thô đã chuẩn hóa, giữ nguyên `raw_result` |
-| `location_units`, `unit_findings` | Đơn vị vị trí, khóa ứng viên (`candidate_key`) và liên kết tới cảnh báo |
+| `findings` | Cảnh báo thô đã chuẩn hóa, giữ nguyên `raw_result` và nhãn CWE của công cụ (`cwe_ids`). Lượt quét ghép ghi thêm bản ghi phân loại vào `evidence.classification` và cơ sở gán nhóm vào `classification_source`, không ghi đè nhãn gốc |
+| `location_units`, `unit_findings` | Đơn vị vị trí, khóa ứng viên (`candidate_key`), nhóm phân tích (`analysis_family`, chỉ lượt quét ghép ghi) và liên kết tới cảnh báo |
 | `unit_assessments` | Mức ưu tiên, quyết định, lý do, hash của chính sách, `disposition` (`review`/`filtered`) và bản ghi gạn trong `evidence` |
 
-Migration nằm ở `backend/migrations/versions/` (0001–0007) và không được sửa sau khi merge.
+Lượt quét ghép ghi vào `scans.config` phiên bản cách ghép, manifest và hash của từng thành viên,
+và việc từng nhóm đã làm ở mỗi ngôn ngữ; đơn vị và đánh giá của mỗi nhóm mang phiên bản bộ gộp và
+chính sách của chính nhóm đó. Lượt quét bằng profile đơn không ghi gì mới: nhóm của nó được suy
+ra từ profile khi đọc, nên dữ liệu cũ không bị viết lại.
+
+Migration nằm ở `backend/migrations/versions/` (0001–0008) và không được sửa sau khi merge.
+`0008` thêm cột `location_units.analysis_family` (cho phép rỗng).
 Xóa theo cascade: project → snapshot → scan → tool_run → finding.
 
 ## 5. API
@@ -145,8 +179,8 @@ Xóa theo cascade: project → snapshot → scan → tool_run → finding.
 | POST, GET | `/projects` | Tạo; liệt kê có phân trang, sắp xếp, tìm kiếm |
 | GET | `/projects/{id}` | Chi tiết dự án |
 | POST | `/projects/{id}/scans` | Tạo lượt quét npm hoặc GitHub |
-| GET | `/scans/{id}`, `/scans/{id}/units`, `/scans/{id}/units/{unit_id}` | Trạng thái, hàng đợi, bằng chứng |
-| GET | `/scans/{id}/report`, `/scans/{id}/report.sarif` | Báo cáo trước–sau; SARIF hợp nhất |
+| GET | `/scans/{id}`, `/scans/{id}/units`, `/scans/{id}/units/{unit_id}` | Trạng thái, các nhóm phân tích (`families`), hàng đợi, bằng chứng. `/units` lọc được theo `family`, `tier`, `tool`, `disposition`; mỗi đơn vị có `analysis_family`, `cwe`, `evidence_state`, `kept_because` |
+| GET | `/scans/{id}/report`, `/scans/{id}/report.sarif` | Báo cáo trước–sau, có số liệu theo từng nhóm; SARIF hợp nhất, mỗi cảnh báo mang nhóm, CWE của nhóm, nhãn CWE công cụ báo và CWE theo rule đã ghim |
 
 Hợp đồng HTTP nằm trong [frontend/openapi.json](../frontend/openapi.json). Kiểu dữ liệu
 TypeScript được sinh từ file này, và CI kiểm tra hai bên khớp nhau.
@@ -158,8 +192,10 @@ Các trang:
 - Tổng quan;
 - Dự án (danh sách và chi tiết có tab);
 - Lượt quét (hướng dẫn tạo từ dự án);
-- Chi tiết lượt quét (trạng thái tự làm mới, hàng đợi theo mức, danh sách rà chính và đã
-  gạn, bảng bằng chứng, khối thẩm định, báo cáo trước–sau có nút tải JSON và SARIF);
+- Chi tiết lượt quét (trạng thái tự làm mới, bảng nhóm phân tích theo CWE kèm trạng thái lượt
+  chạy và bước bằng chứng của từng nhóm, lọc theo nhóm/mức/công cụ/danh sách, cột trạng thái bằng
+  chứng, hàng đợi theo mức, danh sách rà chính và đã gạn, bảng bằng chứng, khối thẩm định, báo cáo
+  trước–sau theo nhóm có nút tải JSON và SARIF);
 - Cảnh báo, Hệ thống, 404.
 
 Tính năng mà backend chưa hỗ trợ được ghi rõ là "Chưa triển khai"; giao diện không hiển thị
@@ -171,6 +207,9 @@ dữ liệu mẫu hay kết quả giả. Cấu trúc và quy tắc của fronten
 - API liệt kê mọi lượt quét, và trang cảnh báo tổng hợp toàn hệ thống.
 - Với profile CWE-22: hiển thị bảng bằng chứng (`Evidence.ql`: cơ chế, guard, dòng mã) và
   v0.3.
+- Nhóm CWE ngoài CWE-78 và CWE-22; CWE-22 cho JavaScript/TypeScript; lượt chạy công cụ phục vụ
+  nhiều nhóm (nên trạng thái "chưa xác định nhóm" chưa gặp trên dữ liệu thật); điều kiện gạn cho
+  bất kỳ nhóm mới nào.
 - Phiếu rà soát: người rà chưa ghi được kết luận đúng/sai cho từng ứng viên.
 - Gói bằng chứng cho JavaScript/TypeScript; đối chiếu hai lượt quét của cùng một nguồn.
 - Đăng nhập, phân quyền, TLS, quản lý secret, hạn mức tài nguyên và worker quét cô lập.

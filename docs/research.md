@@ -338,6 +338,14 @@ trình bày cả hai kịch bản.
      Hợp mọi nguồn báo 7/7 vị trí lỗi đã biết ở lượt hoàn tất (CodeQL riêng 6, Semgrep riêng 3) và
      9/9 tính cả lượt chạy dở; 0 bị gạn. Chỉ có nhãn dương tính và chỉ 9 vị trí. Xem
      [pairs-v1/](../experiments/evaluation/pairs-v1/README.md).
+   - Profile ghép `multi-cwe-v0.1` (15/11, nhánh `feat/multi-cwe-core`, kiểm chứng kỹ thuật trên dữ
+     liệu phát triển): một lượt quét chạy CWE-78 và CWE-22 trên cùng một database CodeQL, định
+     tuyến mỗi cảnh báo tới đúng một nhóm rồi dùng nguyên profile thành viên để thẩm định. Trên
+     OWASP BenchmarkPython, mỗi nhóm cho đúng kết quả của lượt quét riêng profile đó (51 và 188
+     cảnh báo; 24 và 125 đơn vị; 2 và 62 đơn vị đã gạn), không cảnh báo nào mất hay nằm trong hai
+     đơn vị. Không có nhãn nào được dùng và không có số liệu hiệu quả gạn mới: các điều kiện gạn
+     vẫn là G1–G4 và pack v0.2 như đã đo. Dữ liệu này không có file nào chứa cả hai nhóm, nên việc
+     chống gộp nhầm mới chỉ có kiểm thử tổng hợp. Xem [plans/multi-cwe.md](plans/multi-cwe.md).
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng

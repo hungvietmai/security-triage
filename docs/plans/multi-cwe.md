@@ -12,8 +12,9 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
 - **Bản này là bản đã chỉnh** sau khi chủ đề án rà bản kế hoạch đầu; các điểm thay đổi và lý do nằm ở
   [mục 7](#7-quyết-định-và-lý-do).
 - **Cập nhật cùng ngày:** P1a đã được triển khai trên nhánh `feat/multi-cwe-core`; mã, kiểm thử và
-  kết quả lượt quét thật nằm ở [mục 16](#16-trạng-thái-p1a-2026-11-15). Các mục 1–15 giữ nguyên là
-  bản thiết kế; chỗ nào thực tế khác kế hoạch thì được ghi ngay tại chỗ và ở mục 16. P1b chưa bắt đầu.
+  kết quả lượt quét thật nằm ở [mục 16](#16-trạng-thái-p1a-2026-11-15). P1b (tích hợp vào ứng dụng
+  web) nằm ở [mục 17](#17-trạng-thái-p1b-2026-11-15). Các mục 1–15 giữ nguyên là bản thiết kế; chỗ
+  nào thực tế khác kế hoạch thì được ghi ngay tại chỗ và ở mục 16, 17.
 
 ## 1. Kết luận ngắn
 
@@ -787,4 +788,147 @@ Hook pre-push và CI chưa chạy vì chưa push.
 ### 16.7 Đầu việc tiếp theo
 
 **P1b-1 — profile ghép (schema 2):** một manifest ghim manifest của các thành viên theo hash, để
-lượt quét ghép có định danh và hash riêng như bốn profile hiện tại. Chưa làm gì cho P1b.
+lượt quét ghép có định danh và hash riêng như bốn profile hiện tại. P1b đã được làm sau đó; xem
+mục 17.
+
+## 17. Trạng thái P1b (2026-11-15)
+
+P1b tích hợp lõi của P1a vào ứng dụng web. Làm trên `e8bf32a` và, theo quyết định của chủ đề án,
+commit vào `feat/multi-cwe-core` tách theo đầu việc; **chưa push**. **Chủ đề án chưa kết luận
+nghiệm thu P1b**: việc rà mục này và đầu ra ở `artifacts/multi-cwe-p1b/` còn chờ. Không file nào dưới `experiments/`, `rules/`, `tools/` hay
+bốn thư mục profile cũ thay đổi; logic G1–G4 và điều kiện an toàn của pack v0.2 không đổi.
+
+### 17.1 Đã làm theo từng đầu việc
+
+| # | Kết quả | File chính |
+|---|---|---|
+| P1b-1 | Profile ghép `multi-cwe-v0.1` (`"kind": "composite"`, schema 2) ghim manifest của `command-injection-v0.3` và `path-traversal-v0.2` cùng đặc tả; loader kiểm hash rồi nạp từng thành viên bằng loader của chính nó; worker từ chối khởi động nếu profile ghép khai nhóm mà mã không xử lý | `profiles/multi-cwe-v0.1/`, `backend/app/scanners/profile.py`, `backend/scripts/check_worker.py`, `backend/app/core/config.py` |
+| P1b-2 | Migration `0008`: cột `location_units.analysis_family` (cho phép rỗng). Phân loại của cảnh báo lưu ở `findings.evidence.classification`, cạnh nhãn gốc. Đọc kết quả của lượt quét ghép theo `scan_id`, vì mỗi nhóm mang phiên bản riêng | `backend/migrations/versions/0008_unit_analysis_family.py`, `features/triage/models.py`, `workflows/scans/persist.py`, `results.py` |
+| P1b-3 | `scan_snapshot` chạy profile ghép; lượt `codeql-path-traversal` thành `tool_run` riêng; giới hạn thời gian tính đủ mọi bước kể cả bước bằng chứng (`worst_case_seconds`), sửa luôn quan sát 3 của mục 3.6 | `workflows/scans/task.py`, `families.py` |
+| P1b-4 | API: `families` ở lượt quét; `analysis_family`, `cwe`, `evidence_state`, `kept_because` ở đơn vị; bộ lọc `family`; `mapped_cwes` và nhóm ở từng cảnh báo; báo cáo theo nhóm; SARIF mang nhóm và hai loại nhãn CWE | `workflows/scans/schemas.py`, `service.py`, `report.py`, `router.py`, `frontend/openapi.json` |
+| P1b-5 | Giao diện: chọn profile đa CWE; bảng nhóm CWE với trạng thái lượt chạy và bước bằng chứng; lọc theo nhóm qua URL; cột trạng thái bằng chứng; chi tiết đơn vị và báo cáo theo nhóm | `frontend/src/features/scans/`, `frontend/src/app/routes/scans/` |
+| P1b-6 | Không tối ưu gì: số đo cho thấy chưa có nút thắt cần xử lý (mục 17.4) | — |
+| P1b-7 | **Không làm** (tùy chọn): profile đơn vẫn đi đường cũ, `analysis.py` không đổi | — |
+| P1b-8 | `architecture.md`, `README.md` (hướng dẫn sử dụng), hai `AGENTS.md`, `validation.md`, tài liệu này | — |
+
+**Khác với thiết kế ban đầu của P1b:** lớp ghép giờ bảo đảm *mọi* cảnh báo nằm trong đúng một đơn
+vị. Ở P1a, cảnh báo của một nhóm chạy dở hoặc thất bại chỉ nằm trong `findings.json` ("unranked").
+Trong ứng dụng, như thế chúng sẽ không hiện ở danh sách rà và không vào SARIF. Vì vậy lớp ghép tạo
+đơn vị `F10_FAMILY_NOT_RANKED` cho chúng (mức U, luôn ở danh sách rà, không bao giờ gạn). Kết quả
+của chính thành viên không đổi, nên nguyên tắc tương đương ở mục 5.1 vẫn giữ. Profile đơn giữ hành
+vi cũ: lượt `path-traversal-v0.2` chạy dở vẫn không tạo đơn vị nào.
+
+### 17.2 Ba trạng thái tách biệt
+
+| Thông tin | Trường | Giá trị |
+|---|---|---|
+| Lượt quét và lượt chạy của từng nhóm | `status` của lượt quét; `families[].runs[].status`; `evidence_steps` | `completed`, `partial`, `failed` |
+| Bằng chứng của từng đơn vị | `evidence_state` | `refuted`, `not_refuted`, `insufficient`, `unavailable`, `not_applicable`, `not_assessed` |
+| Quyết định gạn | `disposition`, `filter_rule`, `kept_because` | `review`, `filtered` |
+
+Chỉ `refuted` dẫn tới `filtered`. Lượt quét chạy dở, bước bằng chứng lỗi và nhóm chưa xếp hạng cho
+`unavailable`; bằng chứng không bác bỏ hoặc mâu thuẫn cho `not_refuted`; cả hai đều giữ cảnh báo.
+
+### 17.3 Kiểm thử
+
+| Kiểm tra | Baseline (`e8bf32a`) | Sau P1b |
+|---|---|---|
+| Backend cục bộ, `uv run pytest --cov` | 540 đạt, 2 bỏ qua | 584 đạt, 2 bỏ qua; độ phủ 95,54% |
+| Backend trong Docker trên PostgreSQL | 542 đạt | 586 đạt; độ phủ 95,67% |
+| `ruff check`, `ruff format --check`, `mypy` | Sạch | Sạch (141 file) |
+| Golden 15 kịch bản của bốn profile | 16/16 | 16/16, không file golden nào đổi |
+| Kiểm thử thực nghiệm | 153 đạt | 153 đạt, không sửa sổ đăng ký nào |
+| Frontend `npm run check` | 67 đạt | 76 đạt |
+| Playwright với HTTP giả | 2 đạt | 2 đạt (kiểm thử stack thật bị bỏ qua khi không có `FULL_STACK_URL`) |
+
+Kiểm thử mới: `backend/tests/scanners/test_composite_profile.py` (loader, manifest sai),
+`tests/workflows/scans/test_composite_members.py` (nhóm lạ, kiểm tra khi worker khởi động),
+`tests/workflows/scans/test_composite_scan.py` (worker → cơ sở dữ liệu → API → báo cáo → SARIF; lượt
+pack chạy dở; rule lạ; database hỏng; cảnh báo chưa xác định nhóm; profile đơn; hàng lịch sử trước
+khi có bước gạn; bảng trạng thái bằng chứng), `tests/test_migration_0008.py`,
+`frontend/tests/integration/scans/families.test.tsx`, `frontend/tests/e2e/multi-cwe-full-stack.spec.ts`.
+
+**Lỗi do kiểm thử trên dữ liệu thật tìm ra:** truy vấn đếm theo nhóm chạy được trên SQLite nhưng bị
+PostgreSQL từ chối (`GROUP BY` theo biểu thức có tham số). Bộ kiểm thử cục bộ không thấy; phép so
+lịch sử ở mục 17.4 thấy ngay ở lượt quét đầu tiên. Đã sửa, và bộ kiểm thử trong Docker trên
+PostgreSQL bao phủ đúng truy vấn này.
+
+### 17.4 Kiểm chứng trên stack thật
+
+Stack dựng bằng `docker compose up --build`, cơ sở dữ liệu cục bộ đang chứa dữ liệu lịch sử ở
+revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bởi Git), gồm bản sao lưu
+`pg_dump` chụp trước khi nâng cấp.
+
+1. **Migration trên dữ liệu thật.** `0007 → 0008` chạy trên 366 lượt quét, 5.791 cảnh báo, 3.557
+   đơn vị. Số hàng và mã băm nội dung của `location_units`, `unit_assessments`, `findings` trước và
+   sau giống nhau; cột mới rỗng ở cả 3.557 hàng; `alembic check` không thấy lệch. Vòng
+   `base → head → 0007 → head → base → head` chạy trên một cơ sở dữ liệu tạm.
+2. **Dữ liệu lịch sử qua API mới.** Mọi lượt quét được đọc qua API của image cũ rồi của image mới
+   (`/scans/{id}`, toàn bộ `/units`, ba chi tiết đơn vị đầu, `/report`, `/report.sarif`): 366 lượt
+   quét, 3.557 đơn vị, 599 chi tiết, 5.791 kết quả SARIF. **Không giá trị nào API cũ trả về bị đổi
+   hay mất**; API mới chỉ thêm trường. Nhóm suy ra đúng theo profile: 3.525 đơn vị CWE-78, 32 đơn vị
+   CWE-22.
+3. **Luồng đầu-cuối từ giao diện** (`multi-cwe-full-stack.spec.ts`, Chromium, 3,5 phút): tạo lượt
+   quét `multi-cwe-v0.1` cho OWASP BenchmarkPython `f129148` bằng biểu mẫu, chờ worker quét bằng
+   công cụ thật, lọc theo CWE qua URL, mở chi tiết đơn vị, tải báo cáo JSON và SARIF.
+
+   | | Nhóm lệnh (CWE-78) | Nhóm đường dẫn (CWE-22) |
+   |---|---|---|
+   | Cảnh báo | 51 | 188 |
+   | Đơn vị | 24 | 125 |
+   | Danh sách rà chính / đã gạn | 22 / 2 | 63 / 62 |
+   | Trạng thái bằng chứng của đơn vị | 2 bị bác bỏ, 15 không bác bỏ, 7 chưa đủ | 62 bị bác bỏ, 63 không bác bỏ |
+   | Khóa đơn vị, mức, quyết định so với lượt ghép của P1a | Giống nhau | Giống nhau |
+
+   239 cảnh báo, mỗi cảnh báo liên kết với đúng một đơn vị; SARIF tải về có 239 kết quả, 51 và 188
+   theo nhóm; chỉ kết quả của đơn vị đã gạn có `suppressions`. JavaScript của kho này không có cảnh
+   báo nào.
+4. **Profile ghép trên nguồn chỉ có JavaScript** (`curling@0.2.0`, quét bằng cả hai profile): lượt
+   `multi-cwe-v0.1` cho đúng đơn vị, mức, quyết định, lý do và các bước báo cáo của lượt
+   `command-injection-v0.3`; chỉ nhóm lệnh tham gia.
+5. **Hai nhóm trong cùng một file, công cụ thật.** Vì dữ liệu ở mục 16 không có file nào chứa cả hai
+   nhóm, một nguồn phát triển tổng hợp (một file Flask, không bao giờ được thực thi) được lưu thành
+   snapshot và quét qua hàng đợi thật bằng ba profile. Ở dòng 29, lời gọi `open(...)` là đối số của
+   `os.system(...)`: cảnh báo CWE-22 (cột 64–85) nằm **bên trong** lời gọi CWE-78 (cột 16–94).
+
+   | | Kết quả của `multi-cwe-v0.1` |
+   |---|---|
+   | Cảnh báo | 12 (Semgrep 2, Bandit 4, CodeQL 2, lượt pack CWE-22 4), mỗi cảnh báo trong đúng một đơn vị |
+   | Đơn vị | 3 thuộc CWE-78, 2 thuộc CWE-22; 0 đơn vị chứa cảnh báo của nhóm khác |
+   | Dòng 29 | Hai đơn vị: `os.system` (CWE-78, `D20_STRONG`) và vị trí của `open` (CWE-22, `EV_KEPT_NO_PROOF`) |
+   | Gạn | 1 đơn vị CWE-78 (lệnh hằng `ls -l`, G2); SARIF có 12 kết quả, 2 kết quả mang `suppressions` |
+   | So với quét riêng | Nhóm lệnh bằng lượt `command-injection-v0.3`; nhóm đường dẫn bằng lượt `path-traversal-v0.2` |
+
+6. **Lượt chạy dở, công cụ thật.** Cùng nguồn đó thêm một file Python 2 không phân tích được. Lượt
+   `multi-cwe-v0.1` kết thúc `partial`: bộ định vị lời gọi của nhóm lệnh chạy dở, nên cả 3 đơn vị
+   CWE-78 ở lại danh sách rà với `run_incomplete` và trạng thái bằng chứng "không lấy được" — kể cả
+   đơn vị lệnh hằng mà lượt hoàn tất đã gạn. Nhóm CWE-22 hoàn tất và cho đúng 2 đơn vị như khi quét
+   riêng: lỗi của nhóm này không lan sang nhóm kia. 0 đơn vị bị gạn, 12/12 cảnh báo còn trong SARIF.
+7. **Lượt quét thất bại tạo từ biểu mẫu** (`curling@99.99.99`, profile đa CWE): trang lượt quét hiện
+   "Scan thất bại" kèm lý do của máy chủ và không hiện bảng đơn vị nào.
+8. **Ba ca trên được kiểm lại trong giao diện bằng Chromium:** hai hàng ở `app.py:29` thuộc hai nhóm;
+   lọc CWE-22 chỉ còn hàng của nhóm đó; trang lượt chạy dở hiện trạng thái từng nhóm, "Đã gạn: 0" và
+   lý do giữ trong chi tiết đơn vị.
+9. **Chi phí trong worker** (một lần đo): Python tạo database 12,4 s, phân tích nhóm lệnh 41,5 s,
+   bằng chứng nhóm lệnh 31,4 s, lượt pack CWE-22 32,4 s; cả lượt quét hai ngôn ngữ khoảng 3,5 phút.
+   Các số này nhỏ hơn nhiều so với mục 16.4 vì ở đó thư mục đầu ra nằm trên ổ gắn từ Windows.
+
+### 17.5 Chưa đạt hoặc chưa kiểm chứng
+
+- **Một phần ca lỗi vẫn chỉ có kiểm thử tự động** (SQLite và PostgreSQL, công cụ giả): lượt pack
+  CWE-22 chạy dở hoặc trả rule lạ (đơn vị `F10_FAMILY_NOT_RANKED`), database CodeQL hỏng, bước bằng
+  chứng lỗi, cảnh báo chưa xác định nhóm. Trên stack thật mới gặp: lượt chạy dở của nhóm lệnh và
+  lượt quét thất bại khi thu nhận nguồn (mục 17.4, điểm 6 và 7). Không có cách tự nhiên để làm
+  CodeQL thật chạy dở trên dữ liệu đã thử: file sai cú pháp không làm lượt CodeQL thành `partial`.
+- Hai nhóm trong cùng một file đã được chạy bằng công cụ thật, nhưng trên **nguồn tổng hợp tự
+  viết**, không phải mã của một dự án có thật; BenchmarkPython không có file nào như vậy (mục 16.5).
+- Hook pre-push và CI chưa chạy vì chưa push (hook pre-commit đã chạy ở từng commit). Trang "Cảnh
+  báo" tổng hợp và API liệt kê lượt quét vẫn chưa có, như trước.
+- `multi-cwe-v0.1` chưa có số liệu đánh giá riêng; số liệu ở trên là kiểm chứng kỹ thuật trên dữ
+  liệu phát triển, không dùng nhãn.
+- P1b-7 (cho profile đơn đi qua lớp ghép) không làm; hai đường vẫn song song ở `task.py`.
+
+### 17.6 Đầu việc tiếp theo
+
+Thuộc quyền chủ đề án: kết luận nghiệm thu P1b sau khi rà; quyết định có làm P1b-7 hay không; và nhóm CWE đầu tiên của P2,
+với giao thức và gói bằng chứng riêng trước khi nhóm đó được phép gạn.

@@ -9,7 +9,7 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong bốn profile:
+  một commit GitHub, chọn một trong năm profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
@@ -25,6 +25,11 @@ và CodeQL. Repository gồm hai phần:
     ([pairs-v1](experiments/evaluation/pairs-v1/README.md));
   - `path-traversal-v0.2`: CWE-22, Python, CodeQL với bằng chứng an toàn v0.2. Cảnh báo có
     bằng chứng an toàn xuống cuối hàng đợi, không bị xóa.
+  - `multi-cwe-v0.1`: quét CWE-78 và CWE-22 trong **một lượt**, ghép `command-injection-v0.3`
+    với `path-traversal-v0.2` trên cùng một database CodeQL. Mỗi cảnh báo thuộc đúng một nhóm
+    CWE và được thẩm định bằng profile của nhóm đó. Mới kiểm chứng kỹ thuật trên dữ liệu phát
+    triển ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md)); cách dùng ở
+    [mục dưới](#quét-nhiều-cwe-trong-một-lượt).
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
 
 ## Tài liệu
@@ -76,6 +81,27 @@ Các service chạy lâu dài dùng `restart: unless-stopped`, tự khởi độ
 hoặc khi Docker khởi động lại (trừ khi bạn đã `stop`/`down`).
 `down` giữ các named volume. Chỉ dùng `down --volumes` khi chủ động muốn xóa dữ liệu local.
 Chạy lại `docker compose up --build -d` sau khi thay đổi dependencies hoặc migration.
+
+## Quét nhiều CWE trong một lượt
+
+1. Mở một dự án, bấm **Tạo scan**, chọn profile **"CWE-78 + CWE-22 · Đa CWE trong một lượt
+   quét"** (`multi-cwe-v0.1`), rồi nhập package npm hoặc commit GitHub như thường lệ.
+2. Trang lượt quét tự cập nhật. Khi quét xong, bảng **Nhóm phân tích (CWE)** cho biết với từng
+   nhóm: profile nào đã thẩm định, lượt chạy của nhóm kết thúc ra sao, các bước bằng chứng của
+   nhóm ở trạng thái nào, và có bao nhiêu đơn vị ở danh sách rà chính, đã gạn, hoặc được giữ lại
+   vì chưa xếp hạng được.
+3. Bấm tên một nhóm để lọc đơn vị theo CWE; bộ lọc nằm trong URL (`?family=path-traversal`) và kết
+   hợp được với mức ưu tiên, công cụ và danh sách "Đã gạn".
+4. Trong bảng đơn vị, cột **Thẩm định** là quyết định gạn, cột **Bằng chứng** là trạng thái bằng
+   chứng. Hai cột này khác nhau có chủ ý: thiếu bằng chứng, bằng chứng mâu thuẫn hay lượt quét
+   chạy dở đều giữ cảnh báo ở danh sách rà chính.
+5. Mở một đơn vị để xem nhóm, lý do giữ hoặc gạn, bằng chứng, và với từng cảnh báo gốc: nhãn CWE
+   do công cụ báo, CWE theo rule đã ghim và lượt chạy đã sinh ra nó.
+6. Cuối trang, **Báo cáo trước–sau** có bảng theo từng nhóm; tải báo cáo JSON hoặc SARIF hợp nhất
+   (mỗi cảnh báo mang nhóm và CWE; cảnh báo đã gạn có `suppressions`, không bị xóa).
+
+Giới hạn: CWE-22 chỉ có trên Python; lượt quét ghép chạy lâu hơn một profile đơn nhưng chỉ tạo
+database CodeQL một lần. Profile đơn vẫn dùng được như trước.
 
 ## Phát triển trong Docker, tự tải lại code
 
@@ -194,11 +220,14 @@ hay kết quả quét giả.
 ## Scanner trong worker
 
 Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep, CodeQL,
-Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm ba scan profile
-[`profiles/command-injection-v0.1/`](profiles/command-injection-v0.1/profile.json),
-[`profiles/command-injection-v0.2/`](profiles/command-injection-v0.2/profile.json) và
-[`profiles/path-traversal-v0.2/`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
-[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)). Worker từ chối
+Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm năm scan profile:
+[`command-injection-v0.1`](profiles/command-injection-v0.1/profile.json),
+[`command-injection-v0.2`](profiles/command-injection-v0.2/profile.json),
+[`command-injection-v0.3`](profiles/command-injection-v0.3/profile.json),
+[`path-traversal-v0.2`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
+[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và profile ghép
+[`multi-cwe-v0.1`](profiles/multi-cwe-v0.1/profile.json), vốn chỉ ghim manifest của hai profile
+thành viên. Worker từ chối
 khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
 kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
 

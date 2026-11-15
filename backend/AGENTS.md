@@ -101,10 +101,26 @@ Record concurrency settings with scan provenance when changing execution behavio
 run once, one CodeQL database is created, every finding is routed to one analysis family
 before anything is merged, and each family is assessed by its member profile's existing
 entry point (`scan_language` or `scan_language_evidence`). A finding whose family cannot be
-named stays unassigned at priority U; a new family filters nothing until its own evidence
-has been evaluated. Only the development CLI `scripts/scan_families.py` reaches this code:
-the worker task, the database and the API do not use it yet (plan and status:
-`../docs/plans/multi-cwe.md`).
+named stays unassigned at priority U, and findings a family could not rank are held as
+units at priority U (`F10_FAMILY_NOT_RANKED`), so every finding of a composite scan sits in
+exactly one unit. A new family filters nothing until its own evidence has been evaluated.
+
+A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`) pins its members'
+manifests; `scanners/profile.py` loads it, `families.members_of` checks that it names
+families in `families.FAMILIES`, and `task.scan_snapshot` runs it. `families.to_language_result`
+turns a composite run into one `LanguageResult` with a part per family; `persist.py` writes
+tool runs and findings per language and units per part, with `location_units.analysis_family`
+and the finding's classification in `findings.evidence`. Reads select a composite scan's
+units by scan alone (`service.result_filters`); a single-profile scan stores no family and
+gets it from its profile on read (`service.scan_family`). `service.evidence_state` is the
+one place that turns a filter record into what the evidence says: keep it separate from the
+scan status and from `disposition`. The development CLI `scripts/scan_families.py` runs the
+same composition without the database and compares it with single-profile scans. Plan,
+invariants and status: `../docs/plans/multi-cwe.md`.
+
+To add an analysis family: add it to `families.FAMILIES` and its profiles to
+`FAMILY_OF_PROFILE`, give it a member profile, and leave it without filter conditions until
+they have been evaluated for that family. Never reuse another family's filter rule.
 
 `tests/golden/legacy/` pins what the four existing profiles produce for fixed synthetic
 inputs (`tests/workflows/scans/test_legacy_golden.py`). A golden file changes only with an
