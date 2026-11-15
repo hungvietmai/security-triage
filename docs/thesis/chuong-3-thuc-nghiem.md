@@ -32,6 +32,8 @@ chấm và mã băm của cấu hình được ghi lại trước khi quét, và
 | I3. Ba ứng dụng luyện tập Python | Độc lập | 3 ứng dụng Flask | 6 vị trí lỗi đã công bố |
 | I4. Bộ kiểm thử luật của kho semgrep-rules | Độc lập | 210 dòng mã minh họa (185 Python, 25 JavaScript/TypeScript) | 135 có lỗi, 75 an toàn; nhãn của tác giả luật |
 | I5. Hai mươi công cụ dòng lệnh Python | Độc lập | Mã ứng dụng thật trên GitHub, chọn bằng một truy vấn tìm kiếm cố định | Không có nhãn; chỉ kiểm các ứng viên bị gạn |
+| P1. Tập phát triển của `pairs-v1` | Phát triển (quét lần đầu) | 34 cặp phiên bản lỗi/vá của CVE thật; chỉ quét bản có lỗi | 26 vị trí lỗi đã biết, xác định trước khi quét |
+| J1. 84 package npm đã quét ở các đợt trước | Phát triển | Quét lại bằng phiên bản 0.3 để so đối sánh | 69 vị trí lỗi đã biết; không có nhãn an toàn |
 
 **Cách chọn I2.** SecBench.js là bộ dữ liệu lỗ hổng thật của package npm; mỗi mục có mã CVE hoặc
 mã khuyến cáo và vị trí lời gọi nguy hiểm. Đợt I2 lấy **toàn bộ** các mục chèn lệnh mà dự án
@@ -57,9 +59,12 @@ và "an toàn". Nhãn được dựng bằng script; nội dung các tệp khôn
   nó; kết luận về Semgrep vì vậy chỉ dựa trên 146 vị trí còn lại.
 - I1 và I3 là ứng dụng cố ý có lỗ hổng, lỗi được viết ở dạng dễ thấy. Package trong I2 phần lớn
   nhỏ.
-- Dự án còn một tập 50 cặp phiên bản lỗi/vá của CVE thật đã khóa nguồn (`pairs-v1`), trong đó 16
-  cặp là tập giữ lại. **Tập này chưa được quét.** Tập giữ lại chỉ dùng được một lần và quy định
-  nghiên cứu yêu cầu công bố giao thức trước khi mở; quyết định này thuộc về chủ đề án.
+- `pairs-v1` là tập 50 cặp phiên bản lỗi/vá của CVE thật đã khóa nguồn. **Tập phát triển** (34
+  cặp) đã được quét một lần bằng phiên bản 0.2 sau khi chủ đề án thông qua một bản sửa đổi giao
+  thức; mọi cặp được quét đúng các byte đã khóa. **Tập giữ lại** (16 cặp) **chưa được quét**:
+  nó chỉ dùng được một lần và được để dành cho phiên bản cuối của quy trình.
+- J1 gồm các nguồn đã quét trước đó, trong đó 10 nguồn đã được đọc mã để tìm lỗi cần sửa. Kết
+  quả trên J1 là kết quả phát triển, không phải kiểm tra độc lập.
 
 ### 3.1.2. Môi trường và cấu hình chạy
 
@@ -90,6 +95,8 @@ các gói bằng chứng **không thay đổi** giữa ba đợt.
 | JS-2 | I1 (2 ứng dụng) | Lỗi đã công bố có được báo không | Độ bao phủ trên 2 vị trí |
 | JS-3 | I2 (52 package) | Q1 trên lỗ hổng thật; bước gạn có gây hại không | Độ bao phủ theo từng cấu hình; số lỗi thật bị gạn; mức ưu tiên |
 | JS-4 | I4 (25 vị trí) | Q1 khi có cả nhãn an toàn | TP, FP, FN, TN, độ chính xác, độ bao phủ, F1 |
+| JS-5 | P1 (24 cặp JavaScript) | Q1 trên CVE thật của tập phát triển | Độ bao phủ theo từng cấu hình trên vị trí lỗi đã biết |
+| JS-6 | J1 | Bản sửa đối sánh (phiên bản 0.3) gộp thêm được bao nhiêu cảnh báo, có ghép nhầm không; điều kiện gạn hẹp cho JavaScript có hoạt động đúng không | Số ứng viên ở hàng U trước và sau; cảnh báo mới gộp; ghép nhầm; ứng viên bị gạn |
 
 Bước gạn chưa có gói bằng chứng cho JavaScript/TypeScript. Các kịch bản JS vì thế trả lời Q1 và
 kiểm tra rằng bước thẩm định không làm mất lỗi thật; chúng không đo được lợi ích của bước gạn.
@@ -104,6 +111,7 @@ kiểm tra rằng bước thẩm định không làm mất lỗi thật; chúng 
 | PY-4 | D3 | Bước thẩm định bằng CodeQL trên nhóm lỗi thứ hai (CWE-22) | Số cảnh báo sai được loại và lỗi thật bị loại nhầm |
 | PY-5 | I4 (185 vị trí) | Q1 và Q2 trên mã chưa từng xem có cả nhãn an toàn | TP, FP, FN, TN, độ chính xác, độ bao phủ, F1; số vị trí an toàn và có lỗi bị gạn |
 | PY-6 | I5 (20 kho) | Bước gạn có hành động ở lượt quét hoàn tất không, và có gạn đúng không | Số ứng viên bị gạn theo quy tắc; phán quyết của một phép kiểm độc lập với ứng dụng cho từng ứng viên bị gạn |
+| PY-7 | P1 (10 cặp Python) | Q1 và phần "mất" của Q2 trên CVE thật của tập phát triển | Độ bao phủ; vị trí lỗi bị gạn; kiểm các ứng viên bị gạn |
 
 ### 3.2.3. Kịch bản so sánh trước và sau thẩm định
 
@@ -363,6 +371,70 @@ Kết quả "không loại nhầm" trên mã thật dựa trên hai giả địn
 hơn, ba cảnh báo bị loại ở một kho trở thành "chưa xác định". Chạy lại qua nguyên mẫu cho đúng
 kết quả của nghiên cứu: một kho giữ cả 3 cảnh báo, một kho có cả 3 cảnh báo ở danh sách "Đã gạn".
 
+**(i) CVE thật của tập phát triển `pairs-v1`, phiên bản 0.2 (JS-5, PY-7).** 34 cặp, mỗi cặp quét
+bản có lỗi một lần; 30 lượt hoàn tất, 4 lượt chạy dở. Cả 34 nguồn được tải lại qua nguyên mẫu và
+có đúng mã băm SHA-256 đã khóa. 26 cặp có vị trí lỗi đã biết, 22 trong số đó thuộc lượt hoàn
+tất.
+
+| Cấu hình | Vị trí lỗi đã biết được báo (trên 22) | Tỷ lệ |
+|---|---:|---:|
+| Semgrep riêng | 11 | 0,50 |
+| CodeQL riêng | 18 | 0,82 |
+| ESLint riêng | 12 | 0,55 |
+| Semgrep ∪ CodeQL | 19 | 0,86 |
+| **Hợp mọi nguồn** | **21** | **0,95** |
+| Sau gạn | 21 | 0,95 |
+| Nhóm rà trước (P1+P2) | 18 | 0,82 |
+
+- Tính cả bốn lượt chạy dở: 25 trên 26 vị trí được báo. Hai vị trí chỉ CodeQL báo, một vị trí
+  chỉ ESLint báo, một vị trí chỉ Bandit báo.
+- Không vị trí lỗi đã biết nào bị gạn.
+- Ngoài các vị trí đã biết còn 821 ứng viên chưa có nhãn, phần lớn ở các kho Python lớn; 71
+  trong số đó bị gạn, tất cả theo quy tắc lệnh hằng (G2). Phép kiểm độc lập của đợt I5 xác nhận
+  cả 71 có lệnh là chuỗi hằng.
+- Đây là dữ liệu phát triển: các nguồn này được dự án chọn và chuẩn bị từ trước, dù chưa từng
+  quét. Kết quả không thay cho đánh giá trên tập giữ lại.
+
+**(j) Sửa đối sánh và thử điều kiện gạn cho JavaScript/TypeScript, phiên bản 0.3 (JS-6).** Ở
+đợt I2, bốn vị trí lỗi có công cụ báo đúng dòng nhưng cảnh báo nằm ở hàng U. Chẩn đoán trên
+đầu ra đã lưu cho thấy cả bốn do khâu định vị lời gọi: hai ca vì Semgrep bỏ qua thư mục
+`build/`, hai ca vì luật định vị thiếu dạng bí danh hai bước. Phiên bản 0.3 sửa hai nguyên nhân
+đó (mục 2.3.3) và thêm quy tắc gạn G4 (mục 2.4.3). 84 package npm đã quét trước đó được quét
+lại; 10 package đã được đọc mã để tìm lỗi, 74 package chưa.
+
+| Chỉ số (phiên bản 0.2 → 0.3) | 10 nguồn đã đọc mã | 74 nguồn chưa đọc mã | Cả 84 |
+|---|---:|---:|---:|
+| Ứng viên JavaScript | 18 → 15 | 132 → 131 | 150 → 146 |
+| Ứng viên ở hàng U | 13 → 0 | 24 → 14 | 37 → 14 |
+| Cảnh báo từng ở U, nay gộp vào đúng lời gọi | 13 | 10 | **23** |
+| Cảnh báo mới gộp nhưng nằm ngoài vùng mã của lời gọi (ghép nhầm) | 0 | 0 | **0** |
+| Cảnh báo trước gộp được, nay ở U | 0 | 0 | 0 |
+| Vị trí lỗi đã biết được báo | 2 → 8 (trên 10) | 53 → 54 (trên 59) | 55 → 62 (trên 69) |
+| Vị trí lỗi đã biết bị gạn | 0 | 0 | 0 |
+| Ứng viên bị gạn | 1 | 0 | 1 |
+
+- *Đối sánh.* 23 cảnh báo được gộp thêm, không ca nào ghép nhầm theo phép kiểm vùng mã, và
+  không cảnh báo nào mất lời gọi đã có. Trên ca tổng hợp, bộ định vị v1 nhận đúng 13 dạng lời
+  gọi phải định vị và bỏ qua đúng 6 dạng không phải `child_process`; hai lời gọi liền kề được
+  giữ thành hai ứng viên.
+- *Phần chưa gộp được.* 14 cảnh báo vẫn ở hàng U và được giữ riêng: 8 cảnh báo của CodeQL nêu
+  cùng lúc nhiều lời gọi dùng chung một chuỗi lệnh; 4 cảnh báo của ESLint đặt ở dòng nhập
+  module; 1 ở tệp đã đóng gói; 1 ở lời gọi qua thư viện bọc.
+- *Điều kiện gạn.* Bằng chứng "lệnh là hằng" của Semgrep CE đúng trên 20 ca tổng hợp (6 ca hằng
+  được nhận, 14 ca không hằng không bị nhận). Để có nhãn đối chứng, một bộ gán nhãn độc lập
+  (dùng bộ phân tích cú pháp `espree`, không dùng Semgrep) xét cả 120 ứng viên gọi `exec` hoặc
+  `execSync`: 1 ứng viên có lệnh hằng, 116 không hằng, 3 không đọc được. G4 gạn đúng ứng viên
+  có lệnh hằng (1/1) và không gạn ứng viên nào có lệnh không hằng (0/116). Ứng viên bị gạn là
+  `exec(ipCommand, ...)` trong `arpping`, biến chỉ nhận hai chuỗi hằng theo hệ điều hành; vị trí
+  lỗi đã công bố của chính package đó vẫn ở danh sách rà chính.
+- *Tác động.* Nhóm cảnh báo sai mà G4 xử lý chỉ chiếm 1 trong 146 ứng viên JavaScript. G4 đúng
+  nhưng gần như không giảm khối lượng rà soát trên dữ liệu này, vì các luật bắt mẫu cho
+  JavaScript hiếm khi báo một lệnh hằng.
+- *Điều không kết luận được.* Hàng U giảm chỉ chứng minh đối sánh tốt hơn. Nhãn đối chứng chỉ
+  bao phủ nhóm lệnh hằng; các loại cảnh báo sai khác trên JavaScript chưa có nhãn nên chưa đo
+  được. Số vị trí lỗi "được báo" tăng vì cách đếm cần một ứng viên có lời gọi; các công cụ đã
+  báo những vị trí đó từ trước.
+
 ### 3.3.3. Thời gian chạy theo từng bước và tổng thời gian chạy
 
 Mỗi nguồn được đo một lần trên máy cá nhân, các công cụ chạy song song từng đôi; các con số chỉ
@@ -376,6 +448,7 @@ cho biết bậc độ lớn.
 | I3 (3 ứng dụng Python) | 3 | Trung vị 15,3 | |
 | I4 (một kho, hai ngôn ngữ), lượt quét lại | 1 | 165 | CodeQL phân tích: 39 giây (Python), 76 giây (JavaScript, chạy dở); bằng chứng CodeQL 28 giây, bằng chứng Semgrep 2 giây |
 | I5 (20 kho Python) | 20 | Trung vị 17,0; lớn nhất 36,2; tổng 377 | |
+| P1 (34 cặp, phiên bản 0.2) | 34 | Trung vị 14,8; lớn nhất 410; tổng 1.833 | Các kho Python lớn chiếm phần lớn thời gian |
 
 Thời gian từng bước, trung vị trên 46 lượt của I2 có chạy công cụ, và lượt D1:
 
@@ -443,6 +516,18 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
     báo đúng nằm ở hàng U thay vì được gộp (chưa sửa: cần một phiên bản bộ định vị mới); và
     thông báo lỗi không rõ khi phiên bản package không còn tồn tại.
 
+**Về phiên bản 0.3.**
+
+11. *Một phần cảnh báo ở hàng U là lỗi của khâu định vị, không phải cảnh báo khó.* Sửa phạm vi
+    tệp và luật định vị đưa 23 trong 37 cảnh báo về đúng lời gọi mà không ghép nhầm ca nào. Phần
+    còn lại ở hàng U có lý do cụ thể và được giữ riêng.
+12. *Quy tắc gạn cho JavaScript đúng nhưng tác động nhỏ.* Đối chiếu với nhãn đối chứng độc lập,
+    quy tắc lệnh hằng gạn đúng 1/1 và gạn nhầm 0/116. Nhưng nhóm cảnh báo sai này chỉ có một ca
+    trong 84 nguồn. Muốn giảm cảnh báo sai trên JavaScript một cách đáng kể cần bằng chứng cho
+    các loại khác, và dữ liệu có nhãn an toàn để kiểm nghiệm chúng.
+13. *Trên CVE thật của tập phát triển, lấy hợp các nguồn báo 21/22 vị trí đã biết* (CodeQL riêng
+    18), và quy tắc lệnh hằng gạn 71 ứng viên, đều được kiểm lại là lệnh hằng.
+
 **Giới hạn của kết luận.**
 
 - Độ chính xác và F1 trên dữ liệu độc lập chỉ có ở I4: mã minh họa của luật, không phải mã ứng
@@ -457,7 +542,8 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
   dòng. Ngoài hai lượt bị hỏng, lỗi này có thể đã làm sai vùng đối số ở tệp JavaScript khác có
   xuống dòng kiểu Windows, khiến số vị trí được báo thấp hơn thực tế. Các nguồn này không được
   quét lại, để giữ nguyên tắc mỗi nguồn quét một lần.
-- Tập giữ lại `pairs-v1` chưa được mở.
+- Tập giữ lại của `pairs-v1` chưa được mở; nó được để dành cho phiên bản cuối. Kết quả trên tập
+  phát triển của `pairs-v1` và trên 84 package quét lại là kết quả phát triển.
 - Thời gian được đo một lần cho mỗi nguồn.
 - Chưa có phép đo với người rà: chưa biết quy trình có giảm thời gian rà soát thực tế không.
 
@@ -472,7 +558,8 @@ xem, nhưng phần nó loại được ở đó chỉ là các lời gọi có l
 chứng luồng dữ liệu mới chỉ thấy hoạt động trên dữ liệu phát triển. Thứ tự rà soát cho một
 nhóm rà trước chính xác, nhưng nhóm đó chỉ bao phủ tốt khi CodeQL báo được luồng dữ liệu.
 
-Bốn việc cần làm để có kết luận mạnh hơn: mở tập giữ lại `pairs-v1` theo đúng giao thức; gán
-nhãn một mẫu ứng viên trên mã ứng dụng thật để tính độ chính xác; viết gói bằng chứng cho
-JavaScript/TypeScript; và xét lại phạm vi của nguyên tắc "chạy dở thì giữ" để một tệp không
+Bốn việc cần làm để có kết luận mạnh hơn: mở tập giữ lại của `pairs-v1` cho phiên bản cuối, theo
+đúng giao thức; gán nhãn một mẫu ứng viên trên mã ứng dụng thật, nhất là JavaScript, để tính độ
+chính xác và kiểm nghiệm quy tắc gạn G4; mở rộng bằng chứng gạn cho JavaScript/TypeScript ngoài
+nhóm lệnh hằng; và xét lại phạm vi của nguyên tắc "chạy dở thì giữ" để một tệp không
 phân tích được không tắt bước gạn của cả lượt quét.

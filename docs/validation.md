@@ -58,6 +58,10 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 | 2026-11-14 | như trên | Docker Compose, cục bộ | Service `test` trên PostgreSQL: **464 đạt**, coverage 94,87%. Image worker dựng lại; quét lại `semgrep-rules` một lần (ngoài kết quả đã đăng ký): `partial` (bước định vị Python bỏ qua tệp sai cú pháp; CodeQL JavaScript chạy dở), 552 cảnh báo → 345 ứng viên, 0 đã gạn. Tệp nén được quét trùng SHA-256 với tệp dùng để dựng nhãn. Trên 210 vị trí có nhãn: hợp mọi nguồn P 0,66 / R 0,71 / F1 0,69 | [results/posthoc-after-fix.json](../experiments/evaluation/independent-labeled/results/posthoc-after-fix.json) |
 | 2026-11-14 | như trên, cùng manifest; worker có cả hai bản sửa của ngày này | Docker Compose, cục bộ; kiểm tra độc lập đợt 5, băm lúc 15:25 UTC, mỗi nguồn quét một lần | 20 công cụ dòng lệnh Python chọn bằng một truy vấn tìm kiếm cố định: **18 `completed`, 1 `partial`, 1 `failed`** (ứng dụng từ chối tệp nén có mục `bin/bash` không an toàn). Ở 18 lượt hoàn tất: 145 ứng viên, **19 đã gạn**, tất cả theo G2; lượt `partial` không gạn gì. Đây là lần đầu quy tắc G2 gạn ứng viên trên lượt quét thật | [independent-filter/READING.md](../experiments/evaluation/independent-filter/READING.md) |
 | 2026-11-15 | như trên; không đổi mã | Windows, cục bộ | Phép kiểm độc lập đã đăng ký trên 19 ứng viên bị gạn (đọc tệp ở commit đã ghim): 17 `constant_command`, 2 `not_constant`. Đọc lại hai ca sau: lệnh là chuỗi hằng bọc trong `int()`/`bool()`; phép kiểm viết trước đã xét cả lời gọi bọc ngoài. Thực nghiệm: **126 đạt** (`PYTHONUTF8=1`) | lần cập nhật tài liệu này |
+| 2026-11-15 | `f1e7c0c` (Amendment 06, cấu hình v0.2 đóng băng) | Docker Compose, cục bộ; tập phát triển của `pairs-v1`, mỗi cặp quét bản có lỗi một lần | 34 lượt: **30 `completed`, 4 `partial`**; cả 34 nguồn có đúng SHA-256 đã khóa; `freeze.py check` không đổi sau lượt cuối. Hợp mọi nguồn báo 21/22 vị trí đã biết ở lượt hoàn tất, 0 bị gạn. 71 ứng viên chưa có nhãn bị gạn theo G2, cả 71 được phép kiểm độc lập xác nhận là lệnh hằng. Kết quả commit ở `bb1eaac`; **tập giữ lại chưa quét** | [pairs-v1/](../experiments/evaluation/pairs-v1/README.md) |
+| 2026-11-15 | working tree trên `bb1eaac` (profile `command-injection-v0.3`: phạm vi tệp Semgrep, bộ định vị v1, quy tắc G4; chưa commit) | Windows, cục bộ | Backend: **483 đạt, 2 bỏ qua** (SQLite), coverage nhánh 94,60%; ruff, format, mypy sạch. Thực nghiệm: **138 đạt** (`PYTHONUTF8=1`). Frontend `npm run check`: **67 test / 14 file** đạt; E2E Playwright với HTTP giả: **2 đạt**. `build_profile.py --check` sạch (v0.2 không đổi); `openapi.json` xuất lại | lần cập nhật tài liệu này |
+| 2026-11-15 | như trên | Docker Compose, cục bộ | Service `test` trên PostgreSQL: **485 đạt**, coverage 94,75%. Trong image worker với Semgrep 1.178.0 thật: bộ định vị v1 **19/19 ca**, luật bằng chứng lệnh hằng **20/20 ca**. 84 package npm quét lại bằng v0.3 (cùng một manifest `1b3b824a…`): 78 `completed`, 6 `partial`; hàng U 37 → 14 ứng viên, 23 cảnh báo gộp thêm, 0 ghép nhầm; 1 ứng viên bị gạn theo G4. Nhãn đối chứng độc lập (`espree`, 19/19 ca tổng hợp) trên 120 ứng viên gọi `exec`/`execSync`: 1 lệnh hằng, G4 gạn đúng 1/1 và gạn nhầm 0/116 | [js-matching-v0.3/](../experiments/evaluation/js-matching-v0.3/READING.md) |
+| 2026-11-15 | như trên | Toàn stack thật, Chromium qua Playwright trên máy chủ, `http://localhost:5173` | [js-matching-demo.mjs](demo/js-matching-demo.mjs): qua mọi bước. `kill-process-by-name`: hai lời gọi, mỗi lời gọi gộp cảnh báo của CodeQL và ESLint, ở danh sách rà chính. `arpping`: một ứng viên ở "Đã gạn" với quy tắc G4, bằng chứng và cảnh báo gốc. Lần chạy đầu thất bại vì container frontend còn giữ địa chỉ cũ của API (502); chạy lại sau khi dựng lại frontend | [demo/README.md](demo/README.md) |
 
 **Chưa xác minh:**
 
@@ -79,13 +83,20 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 - **Cài lại `node_modules` trên Windows:** `npm ci` có thể lỗi `EPERM` nếu VS Code đang giữ
   native binding của oxlint. Khi đó đóng tiến trình đang giữ file, hoặc dùng `npm install`.
 - **Bộ định vị lời gọi JavaScript bỏ qua một số cách khai báo `child_process`** (phát hiện
-  2026-11-14, chưa sửa). Ví dụ `var exec = childProcess.exec; exec(...)` trong
+  2026-11-14; sửa trong profile `command-injection-v0.3` ngày 2026-11-15, profile v0.1 và v0.2
+  giữ nguyên hành vi cũ). Ví dụ `var exec = childProcess.exec; exec(...)` trong
   `kill-process-by-name@1.0.5` và `child_process.exec(...)` trong `umount@1.1.6`: luật
   `sink-locator-v0` không định vị lời gọi, nên cảnh báo đúng dòng lỗi của CodeQL và ESLint
   thành ứng viên `unmatched_location` ở hàng U thay vì được gộp. Trên đợt kiểm tra độc lập
   thứ hai có 4 ca trong 43 lượt quét hoàn tất. Sửa cần phiên bản bộ định vị và profile mới.
 - **Thông báo lỗi khi phiên bản npm không tồn tại** (phát hiện 2026-11-14, chưa sửa): registry
   trả `"version not found"`, lượt quét thất bại đúng nhưng ghi `Malformed registry metadata`.
+
+- **Mã bị quét quyết định được phạm vi tệp của Semgrep** (phát hiện 2026-11-15). Một tệp
+  `.semgrepignore` trong mã bị quét, kể cả ở thư mục con, làm Semgrep bỏ qua tệp tùy ý; khi
+  không có tệp đó Semgrep tự bỏ qua `build/`, `dist/`, `test/`… Ảnh hưởng luật phát hiện, luật
+  định vị và luật bằng chứng. Profile `command-injection-v0.3` ghi tệp của riêng worker; profile
+  v0.1, v0.2 và `path-traversal-v0.2` **chưa được sửa**.
 
 ## 4. Lỗi đã sửa
 

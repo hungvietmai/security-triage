@@ -176,6 +176,25 @@ trong ba căn cứ, và căn cứ được lưu lại:
 Khóa của một **đơn vị** gồm phiên bản mã, tệp, vùng mã của lời gọi và vai trò của đối số (lệnh
 shell, tên chương trình, danh sách tham số).
 
+**Bộ định vị lời gọi JavaScript và phạm vi tệp (phiên bản 0.3).** Việc gộp chỉ làm được khi lời
+gọi đã được định vị. Dữ liệu chưa từng xem cho thấy hai nguyên nhân khiến cảnh báo đúng dòng lỗi
+vẫn không có lời gọi để gộp vào, và cả hai đều nằm ở khâu định vị chứ không ở khâu đối sánh:
+
+- *Phạm vi tệp không thống nhất giữa các công cụ.* Semgrep, công cụ chạy luật định vị, mặc định
+  bỏ qua các thư mục như `build/`, `dist/`, `test/`, trong khi CodeQL và ESLint vẫn quét chúng.
+  Ngoài ra một tệp `.semgrepignore` nằm trong mã bị quét có thể làm Semgrep bỏ qua tệp tùy ý.
+  Từ phiên bản 0.3, worker tự ghi tệp này (chỉ bỏ `node_modules/`) và xóa mọi tệp cùng tên
+  trong bản giải nén, nên mã bị quét không còn quyết định được phạm vi.
+- *Luật định vị thiếu các cách khai báo thường gặp.* Bộ định vị v1 giữ mọi luật của v0 và thêm
+  bí danh hai bước (`var exec = cp.exec`), destructuring, hàm đã `promisify`, `require` nội
+  tuyến và tiền tố `node:`. Một tên chỉ được coi là lời gọi thực thi lệnh khi nó được buộc vào
+  module `child_process` trong cùng tệp; `db.exec(sql)` hay `regex.exec(text)` không được định
+  vị.
+
+Ba căn cứ ghép không đổi. Cảnh báo vẫn thiếu căn cứ thì được giữ riêng, ví dụ cảnh báo của
+CodeQL nêu cùng lúc nhiều lời gọi dùng chung một chuỗi lệnh, hay cảnh báo của ESLint đặt ở dòng
+nhập module.
+
 **(3) Gộp thành ứng viên rà soát.** Các đơn vị thuộc cùng một lời gọi tạo thành một **ứng viên**,
 vì người rà xem một lời gọi một lần. Ứng viên là đơn vị đếm của mọi bảng số liệu trong đề án.
 
@@ -251,7 +270,7 @@ bằng chứng chỉ ra rằng luồng đó chỉ đi qua phép gán chết.
 | CWE-78 | Python | CodeQL (gói bằng chứng v0.2) | Nhánh điều kiện hằng; đọc phần tử hằng của tập hợp; đoạn đường dẫn bị định tuyến cố định |
 | CWE-78 | Python | Bandit cùng chứng minh của hệ thống | Toàn bộ lệnh là chuỗi hằng |
 | CWE-22 | Python | CodeQL (gói bằng chứng v0.2) | Các kiểm tra đường dẫn làm luồng không còn khai thác được |
-| CWE-78 | JavaScript/TypeScript | Chưa có | Bước thẩm định chỉ xếp ưu tiên, không gạn |
+| CWE-78 | JavaScript/TypeScript | Semgrep CE (luật lệnh hằng, từ phiên bản 0.3) | Chuỗi lệnh của lời gọi `exec` hoặc `execSync` là hằng lúc biên dịch |
 
 Mỗi gói bằng chứng là một phiên bản cố định, có mã băm trong hồ sơ quét. Thay đổi một rào chắn
 đòi hỏi một phiên bản gói và một hồ sơ mới. Việc chưa có gói bằng chứng cho JavaScript/TypeScript
@@ -268,6 +287,7 @@ tắc đã thỏa.
 | G3 — nhánh không bao giờ chạy | Semgrep CE (mã nguồn mở) | (a) Luật đối chứng báo lệnh của ứng viên, luật bằng chứng không báo. (b) Mọi luồng do công cụ khác báo tại lời gọi đều kèm đường đi, và mỗi đường đi có một bước nằm trên dòng của một phép gán chết. (c) Truy vấn bằng chứng của CodeQL, nếu có, không còn báo luồng đó |
 | G1 — bằng chứng an toàn của CodeQL | CodeQL | (a) Ứng viên có luồng do truy vấn mặc định báo. (b) Truy vấn đối chứng báo đúng vị trí đó. (c) Truy vấn có bằng chứng không còn báo. (d) Không công cụ nào khác khẳng định luồng dữ liệu tại lời gọi |
 | G2 — lệnh là hằng | Bandit cùng chứng minh của hệ thống | (a) Hệ thống chứng minh toàn bộ lệnh là chuỗi hằng. (b) Bandit xếp lời gọi ở mức dành cho lệnh hằng. (c) Không công cụ nào khẳng định luồng dữ liệu |
+| G4 — lệnh hằng trên JavaScript/TypeScript (phiên bản 0.3) | Semgrep CE (mã nguồn mở) | (a) Lời gọi là `exec` hoặc `execSync` của `child_process`, tức nhận toàn bộ lệnh trong một chuỗi. (b) Luật bằng chứng báo đúng vùng mã của lời gọi đó là có chuỗi lệnh hằng, kể cả khi lệnh đi qua biến. (c) Không công cụ nào khẳng định luồng dữ liệu tới lệnh |
 
 Điều kiện (b) của G3 nối phép phân tích trong một hàm của Semgrep với khẳng định liên hàm của công
 cụ khác: G3 chỉ gạn khi chính đường đi mà công cụ kia đưa ra cũng đi qua nhánh chết.
@@ -351,8 +371,8 @@ Chương này đã trình bày quy trình bốn bước và nguyên mẫu cài �
 
 Giới hạn của thiết kế:
 
-- Bước gạn chỉ có gói bằng chứng cho Python. Với JavaScript/TypeScript, quy trình gộp và xếp ưu
-  tiên nhưng không gạn.
+- Với JavaScript/TypeScript, bước gạn chỉ có một quy tắc hẹp (G4, lệnh hằng). Các tình huống an
+  toàn khác chưa có bằng chứng, và dữ liệu hiện có chỉ chứa một ca thỏa G4.
 - Cảnh báo chỉ do luật khớp mẫu báo không có bằng chứng bác bỏ nên không bị gạn; lượng cảnh báo
   này có thể lớn trên mã thực tế.
 - Luật `detect-child-process` của eslint-plugin-security chỉ bao phủ `exec()`.

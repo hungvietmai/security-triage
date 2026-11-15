@@ -9,7 +9,7 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong ba profile:
+  một commit GitHub, chọn một trong bốn profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
@@ -18,6 +18,10 @@ và CodeQL. Repository gồm hai phần:
     sách riêng. Đã đo trên dữ liệu phát triển và trên ba đợt mã chưa từng xem (chỉ có nhãn
     dương tính); chưa đo trên tập giữ lại `pairs-v1`
     ([docs/thesis/chuong-3-thuc-nghiem.md](docs/thesis/chuong-3-thuc-nghiem.md));
+  - `command-injection-v0.3`: như v0.2, thêm bộ định vị lời gọi JavaScript v1, phạm vi tệp của
+    Semgrep do worker quyết định, và quy tắc gạn lệnh hằng cho JavaScript/TypeScript. Mới đo
+    trên dữ liệu phát triển
+    ([js-matching-v0.3](experiments/evaluation/js-matching-v0.3/READING.md));
   - `path-traversal-v0.2`: CWE-22, Python, CodeQL với bằng chứng an toàn v0.2. Cảnh báo có
     bằng chứng an toàn xuống cuối hàng đợi, không bị xóa.
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.

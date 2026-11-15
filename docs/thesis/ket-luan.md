@@ -40,8 +40,11 @@ Các kết quả chính:
   toàn mà dự án chưa từng xem, quy trình đạt F1 0,69, cao hơn mọi công cụ chạy riêng, nhưng độ
   chính xác 0,66 thấp hơn Semgrep (0,88) và CodeQL (1,00). Trên bộ OWASP, F1 của quy trình
   (0,84) không vượt CodeQL chạy riêng (0,85). Trên mã ứng dụng thật chưa có số đo độ chính xác.
-- Bước gạn chưa có gói bằng chứng cho JavaScript/TypeScript.
-- Tập giữ lại gồm các cặp phiên bản lỗi/vá của CVE thật chưa được dùng.
+- Với JavaScript/TypeScript, bước gạn chỉ có một quy tắc hẹp cho lệnh hằng, mới thấy hoạt động
+  trên một ca thật; chưa có dữ liệu có nhãn an toàn để đánh giá nó.
+- Tập giữ lại gồm các cặp phiên bản lỗi/vá của CVE thật chưa được dùng; nó được để dành cho
+  phiên bản cuối. Trên tập phát triển của cùng bộ dữ liệu, quy trình báo 21/22 vị trí lỗi đã
+  biết.
 - Nguyên mẫu chạy cục bộ cho một người dùng; chưa có cấu hình mẫu để gắn vào hệ thống tích hợp
   liên tục và chưa được đánh giá với người rà soát.
 
@@ -49,7 +52,8 @@ Các kết quả chính:
 
 - Viết gói bằng chứng cho JavaScript/TypeScript và mở rộng các tình huống an toàn cho Python dựa
   trên mã thực tế thay vì benchmark.
-- Hoàn thiện bộ định vị lời gọi JavaScript, nơi dữ liệu độc lập đã chỉ ra các ca chưa gộp được.
+- Tiếp tục hoàn thiện đối sánh trên JavaScript: phiên bản 0.3 đã đưa 23 trong 37 cảnh báo ghép
+  hụt về đúng lời gọi; phần còn lại cần cách biểu diễn một cảnh báo liên quan tới nhiều lời gọi.
 - Đánh giá trên tập giữ lại và trên một mẫu ứng viên có người gán nhãn, để đo độ chính xác.
 - Mở rộng sang nhóm lỗi khác theo cách đã làm với duyệt đường dẫn (CWE-22).
 - Cung cấp giao diện dòng lệnh để tích hợp vào quy trình tích hợp liên tục.

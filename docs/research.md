@@ -321,6 +321,15 @@ trình bày cả hai kịch bản.
      "lệnh là hằng" (G2). Phép kiểm độc lập đã đăng ký chấp nhận 17, đánh 2 là "không hằng";
      đọc lại cho thấy cả hai là lệnh hằng bọc trong lời gọi khác. G1 và G3 không gạn ứng viên
      nào. Xem [independent-filter/READING.md](../experiments/evaluation/independent-filter/READING.md).
+   - `pairs-v1` (15/11): theo Amendment 06, tập phát triển (34 cặp) được quét một lần bằng v0.2,
+     đúng các byte đã khóa: hợp mọi nguồn báo 21/22 vị trí đã biết ở lượt hoàn tất (CodeQL riêng
+     18, Semgrep riêng 11), 0 bị gạn. Theo Amendment 07, **tập giữ lại chưa quét** và được để
+     dành cho phiên bản cuối. Xem [pairs-v1/](../experiments/evaluation/pairs-v1/README.md).
+   - Profile `command-injection-v0.3` (15/11, dữ liệu phát triển): sửa hai nguyên nhân ghép hụt
+     trên JavaScript (Semgrep bỏ qua thư mục; luật định vị thiếu dạng bí danh) và thêm quy tắc
+     gạn G4 cho lệnh hằng. Trên 84 package npm đã quét trước đó: hàng U 37 → 14 ứng viên, 23 cảnh
+     báo gộp thêm, 0 ghép nhầm; G4 gạn 1 ứng viên. Chưa có nhãn an toàn cho JavaScript nên chưa
+     kết luận được về giảm cảnh báo sai. Xem [js-matching-v0.3/](../experiments/evaluation/js-matching-v0.3/READING.md).
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng

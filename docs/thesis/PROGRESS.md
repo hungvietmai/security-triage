@@ -2,7 +2,7 @@
 
 Ghi lại để tiếp tục khi phiên làm việc bị gián đoạn. Cập nhật lần cuối: 2026-11-14.
 Mọi thay đổi sau commit `1d581a6` đang nằm ở working tree của nhánh `feat/cwe22-triage`,
-**chưa commit**.
+đã commit cục bộ (chưa push), kể cả phần phiên bản 0.3.
 
 ## Mục tiêu
 
@@ -53,7 +53,13 @@ kết hợp Semgrep và CodeQL". CWE-78 là kịch bản chính; CWE-22 trên Py
    hành động ở lượt quét hoàn tất không ([independent-filter/](../../experiments/evaluation/independent-filter/PROTOCOL.md)).
    Kết quả và phần đọc lại: [READING.md](../../experiments/evaluation/independent-filter/READING.md). **Không quét lại.**
 18. Danh mục tài liệu tham khảo đã sửa: [tai-lieu-tham-khao.md](tai-lieu-tham-khao.md).
-19. Văn bản ba chương và Kết luận: [chuong-1-tong-quan.md](chuong-1-tong-quan.md),
+19. `pairs-v1`: Amendment 06 (quét tập phát triển rồi tập giữ lại) và Amendment 07 (hoãn tập giữ
+   lại cho phiên bản cuối). Tập phát triển đã quét bằng v0.2: [pairs-v1/](../../experiments/evaluation/pairs-v1/README.md).
+   **Chưa cặp giữ lại nào bị quét.**
+20. Profile `command-injection-v0.3`: phạm vi tệp của Semgrep do worker quyết định, bộ định vị
+   lời gọi JavaScript v1, quy tắc gạn G4 (lệnh hằng). So sánh v0.2 → v0.3 trên 84 nguồn:
+   [js-matching-v0.3/](../../experiments/evaluation/js-matching-v0.3/READING.md).
+21. Văn bản ba chương và Kết luận: [chuong-1-tong-quan.md](chuong-1-tong-quan.md),
    [chuong-2-thiet-ke.md](chuong-2-thiet-ke.md), [chuong-3-thuc-nghiem.md](chuong-3-thuc-nghiem.md),
    [ket-luan.md](ket-luan.md).
 
@@ -75,13 +81,14 @@ Ghi trong [docs/validation.md](../validation.md), mục 2, các dòng ngày 2026
 
 ## Việc tiếp theo
 
-1. Commit (chưa làm; chờ chủ đề án xem lại). Không commit file PDF đề cương.
-2. Quyết định có dùng tập giữ lại `pairs-v1` hay không. Nếu có: làm theo bốn bước ở
-   [pairs-v1/README.md](../../experiments/evaluation/pairs-v1/README.md) (commit và push giao
-   thức **trước khi** quét cặp nào; bước này chỉ chủ đề án làm được).
+1. Push khi chủ đề án quyết định (chưa push gì). Không commit file PDF đề cương.
+2. Mở tập giữ lại của `pairs-v1` cho phiên bản cuối: chốt phiên bản, viết bản sửa đổi giao thức,
+   `freeze.py write`, commit, `freeze.py gate`, rồi quét (xem
+   [pairs-v1/README.md](../../experiments/evaluation/pairs-v1/README.md)). Chỉ chủ đề án quyết định được.
 3. Gán nhãn một mẫu ứng viên ngoài vị trí lỗi đã biết để tính độ chính xác trên mã thật.
-4. Gói bằng chứng cho JavaScript/TypeScript; phiên bản mới của bộ định vị lời gọi JavaScript
-   (4 ca chưa gộp được nằm ở `independent-secbench/results/posthoc-missed.json`).
+4. Dữ liệu JavaScript có nhãn an toàn để kiểm nghiệm quy tắc gạn G4; cách biểu diễn một cảnh
+   báo liên quan tới nhiều lời gọi (14 cảnh báo còn ở hàng U, xem
+   `js-matching-v0.3/READING.md`).
 5. Duyệt văn bản ba chương, chuyển sang mẫu trình bày của Học viện; sửa danh mục tài liệu tham
    khảo theo bảng đối chiếu ở cuối Chương 1 ([1], [6], [8] sai tác giả; không tìm thấy [9]).
 6. Quyết định có thu hẹp nguyên tắc "chạy dở thì giữ" xuống mức tệp hay không: hiện một tệp

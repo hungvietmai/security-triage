@@ -2,8 +2,8 @@
 
 Đề án thạc sĩ định hướng ứng dụng **"Xây dựng quy trình sàng lọc và thẩm định cảnh báo lỗ hổng
 kết hợp Semgrep và CodeQL"**. Thư mục này chứa bản thảo ba chương, bảng đối chiếu với đề cương và
-những gì cần để trình diễn. Cập nhật: 2026-11-14, working tree của nhánh `feat/cwe22-triage`
-(chưa commit).
+những gì cần để trình diễn. Cập nhật: 2026-11-15, nhánh `feat/cwe22-triage`: mọi thay đổi đã commit cục bộ, kể cả phần
+phiên bản 0.3. Chưa push gì.
 
 | Tài liệu | Dùng cho |
 |---|---|
@@ -16,6 +16,7 @@ những gì cần để trình diễn. Cập nhật: 2026-11-14, working tree c�
 | [chapter-2-notes.md](chapter-2-notes.md), [chapter-3-results.md](chapter-3-results.md) | Ghi chú nguồn cho Chương 2 và 3: căn cứ mã nguồn, bảng số liệu chi tiết trên dữ liệu phát triển |
 | [../demo/README.md](../demo/README.md) | Ảnh và kịch bản trình diễn trên ứng dụng chạy thật |
 | [PROGRESS.md](PROGRESS.md) | Việc đã làm và bước tiếp theo, để tiếp tục khi gián đoạn |
+| [../../profiles/command-injection-v0.3/PRIORITY_V0_3.md](../../profiles/command-injection-v0.3/PRIORITY_V0_3.md) | Đặc tả phiên bản 0.3: phạm vi tệp của Semgrep, bộ định vị v1, quy tắc gạn G4 |
 
 Ba chương và phần Kết luận là văn bản đầy đủ theo đề mục của đề cương, viết bằng Markdown. Việc
 còn lại để thành quyển nộp là của chủ đề án: duyệt nội dung, chuyển sang mẫu trình bày của
@@ -81,7 +82,7 @@ liệu: *phát triển* là dữ liệu đã xem khi xây dựng quy trình; *đ
 | Precision, recall, F1 khi đủ nhãn | Đạt trên dữ liệu phát triển (bảng a). Trên dữ liệu độc lập: **đạt ngoài kết quả đã đăng ký** — lượt quét đã đăng ký của đợt 4 thất bại vì lỗi của nguyên mẫu; số liệu lấy từ lượt quét lại sau khi sửa (hợp mọi nguồn: P 0,66, R 0,71, F1 0,69; Semgrep riêng 0,88/0,36/0,51; CodeQL riêng 1,00/0,15/0,26). Chưa có trên mã ứng dụng thật | Bảng (a) và (f) của [chuong-3 §3.3.2](chuong-3-thuc-nghiem.md#332-mức-giảm-cảnh-báo-sai-theo-đối-chiếu); [DEVIATIONS.md](../../experiments/evaluation/independent-labeled/DEVIATIONS.md) |
 | Chốt tiêu chí lọc trước khi chấm; ghi tập phát triển, nguồn nhãn, giới hạn | Đạt, kèm giới hạn: tiêu chí được thiết kế khi đã biết benchmark; đăng ký bằng mã băm cục bộ, chưa commit | [experiments/evaluation/README.md](../../experiments/evaluation/README.md); năm tệp `PREREGISTRATION.json`; sai lệch được ghi ở hai tệp `DEVIATIONS.md` ([đợt 2–3](../../experiments/evaluation/independent-secbench/DEVIATIONS.md), [đợt 4](../../experiments/evaluation/independent-labeled/DEVIATIONS.md)) |
 | Kiểm tra trên mã chưa từng xem | Đạt, phạm vi: 79 nguồn (52 package npm có CVE thật, 6 ứng dụng luyện tập, 1 kho mã minh họa có hai loại nhãn, 20 công cụ dòng lệnh Python không có nhãn) | JS: 32/43 vị trí ở lượt quét hoàn tất được báo (CodeQL riêng 27, Semgrep riêng 12). Python: 7/7. Mã minh họa: 96/135 vị trí có lỗi. Không vị trí nào bị gạn. [independent-labeled/](../../experiments/evaluation/independent-labeled/PROTOCOL.md), [independent/](../../experiments/evaluation/independent/PROTOCOL.md), [independent-secbench/](../../experiments/evaluation/independent-secbench/PROTOCOL.md), [independent-python/](../../experiments/evaluation/independent-python/PROTOCOL.md) |
-| Đánh giá trên tập giữ lại `pairs-v1` | **Bị chặn có chủ ý; cần chủ đề án quyết định.** Bộ chấm đã sẵn sàng và đã kiểm thử | Bốn điều kiện chặn, người gỡ được và lệnh chạy: [experiments/evaluation/pairs-v1/README.md](../../experiments/evaluation/pairs-v1/README.md) |
+| Đánh giá trên `pairs-v1` | Tập phát triển: **đã chạy** (phiên bản 0.2, dữ liệu phát triển). Tập giữ lại: **chưa mở**, chủ đề án để dành cho phiên bản cuối | Tập phát triển: 34/34 cặp quét đúng byte đã khóa; hợp mọi nguồn báo 21/22 vị trí đã biết ở lượt hoàn tất (CodeQL riêng 18), 0 bị gạn ([result.json](../../experiments/evaluation/pairs-v1/development/result.json)). Tập giữ lại: [Amendment 07](../../experiments/amendments/AMENDMENT_07_HELD_OUT_POSTPONED.md) |
 | Báo cáo cả kết quả ngang hoặc kém đối chứng | Đạt | F1 sau gạn 0,84 so với CodeQL riêng 0,85; G2 gạn 0 ca; trên dữ liệu độc lập bước gạn không gạn gì (ở đợt 4 vì lượt quét chạy dở); 11/43 lỗ hổng thật không được báo; độ chính xác của hợp các nguồn (0,66) thấp hơn Semgrep và CodeQL chạy riêng; nhóm rà trước chỉ chứa 37/135 vị trí có lỗi của đợt 4; 3 lượt quét hỏng vì hai lỗi của nguyên mẫu |
 | CWE-22 báo riêng làm minh họa | Đạt | [chuong-3 §3.3.2(h)](chuong-3-thuc-nghiem.md#332-mức-giảm-cảnh-báo-sai-theo-đối-chiếu) |
 | Trình diễn trên ứng dụng chạy thật: ca một công cụ báo được giữ, ca trùng được gộp, ca sai được gạn có lý do, mở lại bản gốc, xuất báo cáo | Đạt | [adjudication-demo.mjs](../demo/adjudication-demo.mjs) chạy qua trên stack thật; ảnh trong [../demo/](../demo/README.md) |
@@ -90,15 +91,36 @@ liệu: *phát triển* là dữ liệu đã xem khi xây dựng quy trình; *đ
 | Bước gạn hành động trên mã chưa từng xem, ở lượt quét hoàn tất | Đạt cho quy tắc G2; chưa đạt cho G1 và G3 | Đợt 5: 18/20 lượt hoàn tất, 19/145 ứng viên bị gạn. Phép kiểm độc lập đã đăng ký: 17 lệnh hằng, 2 bị đánh "không hằng"; đọc lại sau đó cho thấy cả hai là lệnh hằng bọc trong `int()`/`bool()`. [READING.md](../../experiments/evaluation/independent-filter/READING.md) |
 | Hướng dẫn chạy; ghi chú Chương 2–3 | Đạt | Tài liệu trong thư mục này |
 
+## Giai đoạn JavaScript/TypeScript (phiên bản 0.3, ngày 2026-11-15)
+
+Toàn bộ là dữ liệu phát triển; chi tiết ở [READING.md](../../experiments/evaluation/js-matching-v0.3/READING.md).
+
+| Tiêu chí | Trạng thái | Minh chứng |
+|---|---|---|
+| Tìm nguyên nhân bốn ca ghép hụt từ đầu ra đã lưu | Đạt | Hai ca do Semgrep bỏ qua `build/`, hai ca do luật định vị thiếu bí danh hai bước; không ca nào do bước chuẩn hóa hay đối sánh. [READING.md §1](../../experiments/evaluation/js-matching-v0.3/READING.md) |
+| Sửa nguyên nhân khái quát được | Đạt | Phạm vi tệp do worker quyết định; bộ định vị v1 là tập cha của v0. [PRIORITY_V0_3.md](../../profiles/command-injection-v0.3/PRIORITY_V0_3.md) |
+| Kiểm thử ca phải ghép và ca hai lời gọi gần nhau phải giữ riêng | Đạt | Semgrep thật: 19/19 ca định vị; [test_javascript_matching.py](../../backend/tests/triage/test_javascript_matching.py); backend 483 test đạt |
+| Giữ riêng và ghi lý do khi thiếu căn cứ | Đạt | 14 cảnh báo vẫn ở hàng U, bốn nhóm lý do. [READING.md §4](../../experiments/evaluation/js-matching-v0.3/READING.md) |
+| Đo riêng số ca ghép đúng được cải thiện và số ca ghép nhầm | Đạt (dữ liệu phát triển) | 84 nguồn: hàng U 37 → 14 ứng viên; 23 cảnh báo gộp thêm; 0 ghép nhầm; 0 mất ghép. [compare.json](../../experiments/evaluation/js-matching-v0.3/results/compare.json) |
+| Chọn một nhóm cảnh báo sai hẹp cho JS/TS và xác định công cụ có đủ bằng chứng không | Đạt | Nhóm lệnh hằng; Semgrep CE đủ bằng chứng: 20/20 ca tổng hợp (6 hằng, 14 không hằng) |
+| Tích hợp điều kiện gạn vào cấu hình mới, giữ đường dẫn về cảnh báo gốc và lý do | Đạt | Quy tắc G4 trong profile `command-injection-v0.3`; bản ghi thẩm định có luật bằng chứng, vùng mã lời gọi, mã băm tệp luật |
+| Im lặng của công cụ hoặc việc ghép được không đủ để gạn | Đạt | G4 đòi bằng chứng đúng vùng mã lời gọi và không có công cụ nào khẳng định luồng; 7 ca phải giữ trong kiểm thử |
+| Báo riêng số cảnh báo sai gạn đúng, cảnh báo đúng gạn nhầm, ca chưa đủ căn cứ | Đạt, với nhãn đối chứng độc lập cho nhóm lệnh hằng | 120 ứng viên gọi `exec`/`execSync`: cảnh báo sai nhóm lệnh hằng gạn đúng 1/1; ứng viên lệnh không hằng gạn nhầm 0/116; 0/62 vị trí lỗi đã biết bị gạn; 3 không đọc được. [constant-reference.json](../../experiments/evaluation/js-matching-v0.3/results/constant-reference.json) |
+| Kết luận về điều kiện gạn đã thử | Đạt: G4 đúng (1/1, 0/116) nhưng tác động không đáng kể (1/146 ứng viên JavaScript). Các loại cảnh báo sai khác **chưa đo được vì chưa có nhãn** | [READING.md §5](../../experiments/evaluation/js-matching-v0.3/READING.md) |
+| Ghi rõ dữ liệu dùng để sửa và dữ liệu dùng để đánh giá | Đạt | 10 nguồn đã đọc mã, 74 nguồn chưa đọc mã, báo tách riêng. [README.md](../../experiments/evaluation/js-matching-v0.3/README.md) |
+| Kiểm thử luồng bị ảnh hưởng trên ứng dụng; trình diễn một ca JS/TS | Đạt | [js-matching-demo.mjs](../demo/js-matching-demo.mjs) chạy qua trên stack thật; ảnh trong [../demo/](../demo/README.md) |
+| Đoạn bổ sung cho Chương 2–3 | Đạt | [chuong-2 §2.3.3, §2.4.2, §2.4.3](chuong-2-thiet-ke.md), [chuong-3 §3.3.2 (i), (j)](chuong-3-thuc-nghiem.md) |
+| Giữ kết quả nghiên cứu đã khóa | Đạt | Profile v0.2 không đổi một byte; tệp đã đăng ký của các đợt độc lập không đổi, hai tệp mã quy trình thay đổi được ghi ở [PIPELINE_CHANGES.json](../../experiments/evaluation/PIPELINE_CHANGES.json) |
+
 ## Còn thiếu, và thao tác cần có
 
 | Việc | Vì sao chưa có | Thao tác còn thiếu |
 |---|---|---|
-| Đánh giá trên tập giữ lại `pairs-v1` | Tập chỉ mở được một lần; quy định nghiên cứu yêu cầu commit giao thức và cấu hình trước; bộ lưu trữ nguồn đã khóa không có trên máy này | Chủ đề án quyết định, commit và push, khôi phục `artifacts/pair-sources/`, rồi chạy bốn lệnh ở [pairs-v1/README.md](../../experiments/evaluation/pairs-v1/README.md) |
+| Mở tập giữ lại của `pairs-v1` | Chủ đề án quyết định để dành lần mở duy nhất cho phiên bản cuối (Amendment 07) | Chốt phiên bản cuối; viết bản sửa đổi giao thức nêu phiên bản đó; `freeze.py write`, commit, `freeze.py gate`; rồi chạy theo [pairs-v1/README.md](../../experiments/evaluation/pairs-v1/README.md) |
 | Độ chính xác trên mã ứng dụng thật cho CWE-78 | Dữ liệu độc lập có nhãn an toàn chỉ là mã minh họa của luật (đợt 4) | Một người gán nhãn mẫu ứng viên ngoài vị trí lỗi đã biết (47 ứng viên của đợt 2 là điểm bắt đầu) |
 | Quy tắc gạn dựa trên luồng dữ liệu (G1, G3) hành động trên dữ liệu độc lập | Ở đợt 5 bước gạn đã hành động ở lượt quét hoàn tất (19/145 ứng viên, đều là lệnh hằng, quy tắc G2). G1 và G3 chưa gạn ứng viên nào ngoài dữ liệu phát triển | Dữ liệu độc lập có cảnh báo sai thuộc loại nhánh chết hoặc rào chắn mà gói bằng chứng mô tả; hoặc mở rộng gói bằng chứng theo mã thật |
 | Bước gạn bị tắt khi lượt quét chạy dở | Thiết kế bảo thủ: một tệp không phân tích được là đủ | Quyết định có thu hẹp nguyên tắc "chạy dở thì giữ" xuống mức tệp (cần phiên bản bộ quy tắc mới và đánh giá lại) |
-| Gói bằng chứng cho JavaScript/TypeScript | Chưa viết | Viết và đánh giá một gói truy vấn mới; cần phiên bản profile mới |
-| Bộ định vị lời gọi JavaScript bỏ qua một số cách khai báo `child_process` | Bộ định vị đang ghim phiên bản `sink-locator-v0` | Phiên bản bộ định vị mới và profile mới; 4 ca cụ thể nằm ở [posthoc-missed.json](../../experiments/evaluation/independent-secbench/results/posthoc-missed.json) |
+| Kiểm nghiệm bước gạn cho JavaScript/TypeScript | Phiên bản 0.3 có một quy tắc hẹp (G4, lệnh hằng) với bằng chứng của Semgrep CE; dữ liệu chỉ có một ca thật và không có nhãn an toàn | Dữ liệu JavaScript có nhãn an toàn, hoặc một người gán nhãn 17 ứng viên P3 và 14 ứng viên U của 84 nguồn đã quét; chi tiết ở [READING.md](../../experiments/evaluation/js-matching-v0.3/READING.md) |
+| 14 cảnh báo JavaScript vẫn ở hàng U sau phiên bản 0.3 | Thiếu căn cứ ghép: một cảnh báo nêu nhiều lời gọi (8), cảnh báo ở dòng nhập module (4), tệp đã đóng gói (1), thư viện bọc `mz/child_process` (1) | Cách biểu diễn một cảnh báo liên quan tới nhiều lời gọi; mở rộng danh sách module của bộ định vị |
 | Dùng danh mục tài liệu tham khảo đã sửa | Danh mục của đề cương ghi sai tác giả ở [1], [6], [8] và có mục [9] không tìm thấy; bản đã sửa nằm ở [tai-lieu-tham-khao.md](tai-lieu-tham-khao.md) | Chủ đề án duyệt bản đã sửa, kiểm số trang và DOI của [1], đọc lại [5] |
 | Phiếu rà soát của người rà, tích hợp CI/CD | Ngoài phạm vi đợt này | Xem [commitments.md](commitments.md) |
