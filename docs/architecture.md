@@ -113,6 +113,15 @@ Lõi quét (`app/scanners`) và lõi thẩm định (`app/triage`) được dùn
 [run_pilot.py](../experiments/run_pilot.py). Job CI `scan-parity` quét `curling@0.2.0` qua cả
 hai đường và yêu cầu kết quả giống nhau.
 
+**Lượt quét ghép nhiều nhóm CWE (chỉ có ở công cụ dòng lệnh phát triển, từ 2026-11-15).**
+`app/workflows/scans/families.py` chạy công cụ một lần và tạo một database CodeQL cho mỗi ngôn
+ngữ, định tuyến mỗi cảnh báo tới đúng một nhóm phân tích trước khi gộp
+(`classification.py`), rồi để chính profile đã ghim của từng nhóm đánh giá cảnh báo của nhóm
+đó. Hiện ghép được một profile `command-injection-*` với `path-traversal-v0.2`. Worker, cơ sở
+dữ liệu, API và giao diện **chưa** dùng đường này; nó chỉ chạy qua
+`backend/scripts/scan_families.py` và ghi kết quả ra thư mục. Thiết kế, bất biến và trạng thái:
+[plans/multi-cwe.md](plans/multi-cwe.md).
+
 ## 4. Dữ liệu
 
 | Bảng | Nội dung |

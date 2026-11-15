@@ -34,6 +34,7 @@ và CodeQL. Repository gồm hai phần:
 | [docs/research.md](docs/research.md) | Câu hỏi nghiên cứu, diễn tiến, kết quả, việc còn mở, quy ước tài liệu |
 | [docs/architecture.md](docs/architecture.md) | Kiến trúc ứng dụng, luồng quét, dữ liệu, API, những gì chưa có |
 | [docs/validation.md](docs/validation.md) | Hook, CI, kết quả kiểm chứng đã ghi nhận, lỗi đã biết |
+| [docs/plans/multi-cwe.md](docs/plans/multi-cwe.md) | Kế hoạch (chưa triển khai): kiến trúc đa CWE, đặc tả bất biến, đầu việc P1a/P1b |
 | [docs/thesis/](docs/thesis/README.md) | Hồ sơ đề án: bản thảo ba chương và Kết luận, đối chiếu cam kết đề cương, bảng tiêu chí, hướng dẫn trình diễn, tiến độ |
 | [docs/performance.md](docs/performance.md) | Số đo hiệu năng backend (2026-10-07) |
 | [docs/demo/](docs/demo/README.md) | Demo toàn stack quét `curling@0.2.0` (2026-10-08) |
