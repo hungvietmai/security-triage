@@ -13,7 +13,8 @@ from app.scanners.sources import validate_github, validate_npm
 Tier = Literal["P1", "P2", "U", "P3", "P4"]
 TIERS: tuple[Tier, ...] = ("P1", "P2", "U", "P3", "P4")  # queue order, for display only
 Tool = Literal["semgrep", "bandit", "eslint", "codeql"]
-# "filtered": a tool proved the candidate false; it left the main review list, kept on file.
+# "filtered": the candidate met a filter condition of its family, so it left the main review
+# list and is kept on file. It is evidence against the alert, not a verified false positive.
 Disposition = Literal["review", "filtered"]
 # An analysis family of a scan; "unassigned" holds findings whose family could not be named.
 FamilyName = Literal["command-injection", "path-traversal", "unassigned"]
@@ -257,7 +258,11 @@ class ReportFamily(BaseModel):
     family: FamilyName
     cwe: str | None
     label: str
-    raw_alerts: int
+    raw_alerts: int = Field(description="Every stored result of the family's units")
+    evidence_results: int = Field(
+        description="Of those, results of a safety-evidence query stored with a unit"
+    )
+    detection_alerts: int = Field(description="raw_alerts without evidence_results")
     units: int
     candidates: int
     main_list: int
@@ -268,11 +273,24 @@ class ReportFamily(BaseModel):
 
 
 class ReportStages(BaseModel):
-    raw_alerts: int = Field(description="Alerts of every detection tool, before merging")
+    raw_alerts: int = Field(description="Every stored result of every tool pass")
+    evidence_results: int = Field(
+        description="Of those, results of a safety-evidence query that its member stores with "
+        "the unit they belong to; they are not alerts of their own"
+    )
+    detection_alerts: int = Field(
+        description="raw_alerts without evidence_results: the alerts the detection tools reported"
+    )
+    unranked_alerts: int = Field(
+        description="Results in no unit, because an incomplete single-profile run ranked "
+        "nothing. Not in the review list; counted here and exported in SARIF"
+    )
     units: int = Field(description="Alerts merged by call and argument role")
     candidates: int = Field(description="Units merged by call: one review item each")
     main_list: int = Field(description="Candidates left after filtering")
-    filtered: int = Field(description="Candidates a tool proved false; kept on file")
+    filtered: int = Field(
+        description="Candidates that met a filter condition of their family; kept on file"
+    )
     demoted: int = Field(description="Main-list candidates ranked P3 or P4, not filtered")
 
 

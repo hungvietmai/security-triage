@@ -357,6 +357,11 @@ def test_the_report_and_the_sarif_export_keep_every_alert_of_both_families(clien
     assert [m["profile_id"] for m in report["composition"]["members"]] == [COMMAND, PATH]
     assert report["stages"] == {
         "raw_alerts": 13,
+        # The path member stores its evidence query's three results with their units; they
+        # are counted apart, so "before" is the ten alerts the detection queries reported.
+        "evidence_results": 3,
+        "detection_alerts": 10,
+        "unranked_alerts": 0,
         "units": 6,
         "candidates": 6,
         "main_list": 5,
@@ -373,11 +378,22 @@ def test_the_report_and_the_sarif_export_keep_every_alert_of_both_families(clien
     assert (command["units"], command["candidates"], command["main_list"]) == (2, 2, 2)
     assert (command["filtered"], command["filtered_by_rule"]) == (0, {})
     assert (path["raw_alerts"], path["units"], path["main_list"], path["filtered"]) == (7, 4, 3, 1)
+    assert (command["detection_alerts"], command["evidence_results"]) == (6, 0)
+    # Four baseline locations; the three that stay in the main list each carry one evidence result.
+    assert (path["detection_alerts"], path["evidence_results"]) == (4, 3)
     assert path["filtered_by_rule"] == {"G1_CODEQL_SAFETY_EVIDENCE": 1}
     assert path["evidence_states"] == {"refuted": 1, "not_refuted": 3}
     assert path["main_list_by_priority"]["P1"] == 3
     # The families' counts add up to the scan's; no candidate is counted in two families.
-    for key in ("raw_alerts", "units", "candidates", "main_list", "filtered"):
+    for key in (
+        "raw_alerts",
+        "detection_alerts",
+        "evidence_results",
+        "units",
+        "candidates",
+        "main_list",
+        "filtered",
+    ):
         assert command[key] + path[key] == report["stages"][key]
     assert Counter(c["analysis_family"] for c in report["candidates"]) == {
         "command-injection": 2,
@@ -408,6 +424,14 @@ def test_the_report_and_the_sarif_export_keep_every_alert_of_both_families(clien
             ["cwe-022"],
         )
         assert properties["familyStatus"] == "resolved"
+    # Every result is ranked, and an evidence-query result is told from a detection alert.
+    assert all(item["ranked"] for item in triage)
+    assert Counter(item["resultRole"] for item in triage) == {"detection": 10, "evidence_query": 3}
+    assert {
+        result["ruleId"]
+        for result in results
+        if result["properties"]["securityTriage"]["resultRole"] == "evidence_query"
+    } == {"st/cwe-22/all"}
     suppressed = [r for r in results if "suppressions" in r]
     # Only the alert the path evidence refuted is suppressed, and it is still exported.
     assert [r["properties"]["securityTriage"]["evidenceState"] for r in suppressed] == ["refuted"]
@@ -417,6 +441,58 @@ def test_the_report_and_the_sarif_export_keep_every_alert_of_both_families(clien
         for r in results
         if r not in suppressed
     )
+
+
+def test_alerts_of_an_incomplete_single_profile_run_are_counted_and_exported(client, engine):
+    # path-traversal-v0.2 alone ranks nothing when its run is partial (as before): no unit is
+    # made. The alerts must still be visible in the report and present in the SARIF export.
+    scan_id = _single(engine, {"app.py": PATH_SOURCE}, PATH, fake_evidence_pipeline("partial"))
+    assert client.get(f"/api/v1/scans/{scan_id}").json()["status"] == "partial"
+    assert _units(client, scan_id) == []
+
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    assert report["stages"]["raw_alerts"] == 3
+    assert report["stages"]["unranked_alerts"] == 3
+    assert (report["stages"]["units"], report["stages"]["candidates"]) == (0, 0)
+    assert report["families"] == []
+
+    sarif = client.get(f"/api/v1/scans/{scan_id}/report.sarif").json()
+    results = [result for run in sarif["runs"] for result in run["results"]]
+    assert len(results) == 3
+    for result in results:
+        triage = result["properties"]["securityTriage"]
+        assert (triage["ranked"], triage["unitKey"], triage["priority"]) == (False, None, None)
+        assert (triage["disposition"], triage["evidenceState"]) == ("review", "unavailable")
+        assert (triage["analysisFamily"], triage["cwe"]) == ("path-traversal", "CWE-22")
+        assert triage["resultRole"] == "unknown"
+        assert "suppressions" not in result
+        assert result["locations"][0]["physicalLocation"]["artifactLocation"]["uri"] == "app.py"
+
+
+def test_a_single_evidence_profile_counts_its_evidence_results_apart(client, engine):
+    scan_id = _single(engine, {"app.py": PATH_SOURCE}, PATH, fake_evidence_pipeline())
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    # Two baseline alerts; the evidence query still reports one of them.
+    stages = report["stages"]
+    assert (stages["raw_alerts"], stages["detection_alerts"], stages["evidence_results"]) == (
+        3,
+        2,
+        1,
+    )
+    assert (stages["unranked_alerts"], stages["main_list"], stages["filtered"]) == (0, 1, 1)
+    (family,) = report["families"]
+    assert (family["raw_alerts"], family["detection_alerts"], family["evidence_results"]) == (
+        3,
+        2,
+        1,
+    )
+    sarif = client.get(f"/api/v1/scans/{scan_id}/report.sarif").json()
+    roles = Counter(
+        result["properties"]["securityTriage"]["resultRole"]
+        for run in sarif["runs"]
+        for result in run["results"]
+    )
+    assert roles == {"detection": 2, "evidence_query": 1}
 
 
 @pytest.mark.parametrize(

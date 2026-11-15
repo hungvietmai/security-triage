@@ -186,6 +186,8 @@ test.describe("multi-CWE scan on the complete stack", () => {
       families: {
         family: string;
         raw_alerts: number;
+        detection_alerts: number;
+        evidence_results: number;
         units: number;
         filtered: number;
       }[];
@@ -203,6 +205,20 @@ test.describe("multi-CWE scan on the complete stack", () => {
     expect(
       exported.families.reduce((sum, family) => sum + family.raw_alerts, 0),
     ).toBe(exported.stages.raw_alerts);
+    // "Before" is the detection alerts; evidence-query results are counted apart, and a
+    // composite scan leaves no alert unranked.
+    expect(
+      exported.stages.detection_alerts + exported.stages.evidence_results,
+    ).toBe(exported.stages.raw_alerts);
+    expect(exported.stages.unranked_alerts).toBe(0);
+    for (const family of exported.families)
+      expect(family.detection_alerts + family.evidence_results).toBe(
+        family.raw_alerts,
+      );
+    const commandFamily = exported.families.find(
+      (family) => family.family === "command-injection",
+    );
+    expect(commandFamily?.evidence_results).toBe(0);
 
     const [download] = await Promise.all([
       page.waitForEvent("download"),
@@ -221,7 +237,12 @@ test.describe("multi-CWE scan on the complete stack", () => {
         results: {
           suppressions?: unknown[];
           properties: {
-            securityTriage: { analysisFamily: string; disposition: string };
+            securityTriage: {
+              analysisFamily: string;
+              disposition: string;
+              ranked: boolean;
+              resultRole: string;
+            };
           };
         }[];
       }[];
@@ -240,6 +261,15 @@ test.describe("multi-CWE scan on the complete stack", () => {
     }
     for (const family of exported.families)
       expect(byFamily.get(family.family)).toBe(family.raw_alerts);
+    expect(
+      results.every((result) => result.properties.securityTriage.ranked),
+    ).toBe(true);
+    expect(
+      results.filter(
+        (result) =>
+          result.properties.securityTriage.resultRole === "evidence_query",
+      ).length,
+    ).toBe(exported.stages.evidence_results);
     save(
       "summary.json",
       JSON.stringify(

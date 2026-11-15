@@ -1509,7 +1509,18 @@
           },
           "raw_alerts": {
             "type": "integer",
-            "title": "Raw Alerts"
+            "title": "Raw Alerts",
+            "description": "Every stored result of the family's units"
+          },
+          "evidence_results": {
+            "type": "integer",
+            "title": "Evidence Results",
+            "description": "Of those, results of a safety-evidence query stored with a unit"
+          },
+          "detection_alerts": {
+            "type": "integer",
+            "title": "Detection Alerts",
+            "description": "raw_alerts without evidence_results"
           },
           "units": {
             "type": "integer",
@@ -1575,6 +1586,8 @@
           "cwe",
           "label",
           "raw_alerts",
+          "evidence_results",
+          "detection_alerts",
           "units",
           "candidates",
           "main_list",
@@ -1591,7 +1604,22 @@
           "raw_alerts": {
             "type": "integer",
             "title": "Raw Alerts",
-            "description": "Alerts of every detection tool, before merging"
+            "description": "Every stored result of every tool pass"
+          },
+          "evidence_results": {
+            "type": "integer",
+            "title": "Evidence Results",
+            "description": "Of those, results of a safety-evidence query that its member stores with the unit they belong to; they are not alerts of their own"
+          },
+          "detection_alerts": {
+            "type": "integer",
+            "title": "Detection Alerts",
+            "description": "raw_alerts without evidence_results: the alerts the detection tools reported"
+          },
+          "unranked_alerts": {
+            "type": "integer",
+            "title": "Unranked Alerts",
+            "description": "Results in no unit, because an incomplete single-profile run ranked nothing. Not in the review list; counted here and exported in SARIF"
           },
           "units": {
             "type": "integer",
@@ -1611,7 +1639,7 @@
           "filtered": {
             "type": "integer",
             "title": "Filtered",
-            "description": "Candidates a tool proved false; kept on file"
+            "description": "Candidates that met a filter condition of their family; kept on file"
           },
           "demoted": {
             "type": "integer",
@@ -1622,6 +1650,9 @@
         "type": "object",
         "required": [
           "raw_alerts",
+          "evidence_results",
+          "detection_alerts",
+          "unranked_alerts",
           "units",
           "candidates",
           "main_list",

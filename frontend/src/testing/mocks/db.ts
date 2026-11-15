@@ -9,6 +9,11 @@ export const db = {
   projects: [] as Project[],
   scans: [] as Scan[],
   units: {} as Record<string, Unit[]>,
+  /** Per scan: stored results that are not detection alerts of a ranked unit. */
+  results: {} as Record<
+    string,
+    { evidence_results?: number; unranked_alerts?: number }
+  >,
 };
 
 let sequence = 0;
@@ -18,6 +23,7 @@ export function resetDb() {
   db.projects = [];
   db.scans = [];
   db.units = {};
+  db.results = {};
 }
 
 export function makeScan(overrides: Partial<Scan> = {}): Scan {

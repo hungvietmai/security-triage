@@ -115,6 +115,9 @@ export async function installBrowserApi(page: Page, { failed = false } = {}) {
         raw_alerts: { codeql: 1, semgrep: 2 },
         stages: {
           raw_alerts: 3,
+          evidence_results: 0,
+          detection_alerts: 3,
+          unranked_alerts: 0,
           units: units.length,
           candidates: units.length,
           main_list: units.length,

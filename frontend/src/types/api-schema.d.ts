@@ -525,8 +525,21 @@ export interface components {
       cwe: string | null;
       /** Label */
       label: string;
-      /** Raw Alerts */
+      /**
+       * Raw Alerts
+       * @description Every stored result of the family's units
+       */
       raw_alerts: number;
+      /**
+       * Evidence Results
+       * @description Of those, results of a safety-evidence query stored with a unit
+       */
+      evidence_results: number;
+      /**
+       * Detection Alerts
+       * @description raw_alerts without evidence_results
+       */
+      detection_alerts: number;
       /** Units */
       units: number;
       /** Candidates */
@@ -555,9 +568,24 @@ export interface components {
     ReportStages: {
       /**
        * Raw Alerts
-       * @description Alerts of every detection tool, before merging
+       * @description Every stored result of every tool pass
        */
       raw_alerts: number;
+      /**
+       * Evidence Results
+       * @description Of those, results of a safety-evidence query that its member stores with the unit they belong to; they are not alerts of their own
+       */
+      evidence_results: number;
+      /**
+       * Detection Alerts
+       * @description raw_alerts without evidence_results: the alerts the detection tools reported
+       */
+      detection_alerts: number;
+      /**
+       * Unranked Alerts
+       * @description Results in no unit, because an incomplete single-profile run ranked nothing. Not in the review list; counted here and exported in SARIF
+       */
+      unranked_alerts: number;
       /**
        * Units
        * @description Alerts merged by call and argument role
@@ -575,7 +603,7 @@ export interface components {
       main_list: number;
       /**
        * Filtered
-       * @description Candidates a tool proved false; kept on file
+       * @description Candidates that met a filter condition of their family; kept on file
        */
       filtered: number;
       /**

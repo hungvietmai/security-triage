@@ -17,12 +17,29 @@ import {
   type ScanReport,
 } from "@/features/scans/types";
 
-const STAGES: { key: keyof ScanReport["stages"]; label: string }[] = [
-  { key: "raw_alerts", label: "Cảnh báo thô của mọi công cụ" },
+// `whenPresent` rows describe an exception; they are shown only when the count is not zero.
+const STAGES: {
+  key: keyof ScanReport["stages"];
+  label: string;
+  whenPresent?: boolean;
+}[] = [
+  { key: "detection_alerts", label: "Cảnh báo của các công cụ phát hiện" },
+  {
+    key: "evidence_results",
+    label:
+      "Kết quả của truy vấn bằng chứng lưu kèm đơn vị (không phải cảnh báo riêng)",
+    whenPresent: true,
+  },
+  {
+    key: "unranked_alerts",
+    label:
+      "Cảnh báo chưa xếp hạng vì lượt chạy dở: không có trong danh sách rà, có trong SARIF",
+    whenPresent: true,
+  },
   { key: "units", label: "Đơn vị sau khi gộp theo lời gọi và vai trò đối số" },
   { key: "candidates", label: "Ứng viên rà soát (mỗi lời gọi một mục)" },
   { key: "main_list", label: "Danh sách rà chính sau khi gạn" },
-  { key: "filtered", label: "Đã gạn vì có bằng chứng là cảnh báo sai" },
+  { key: "filtered", label: "Đã gạn vì thỏa điều kiện gạn của nhóm" },
   {
     key: "demoted",
     label: "Chỉ hạ ưu tiên (P3/P4), vẫn trong danh sách rà chính",
@@ -121,13 +138,15 @@ export function ScanReportPanel({ scanId }: { scanId: string }) {
       <Counts
         label="Các bước của quy trình"
         head={["Bước", "Số lượng"]}
-        rows={STAGES.map(({ key, label }) => [label, report.stages[key]])}
+        rows={STAGES.filter(
+          ({ key, whenPresent }) => !whenPresent || report.stages[key] > 0,
+        ).map(({ key, label }) => [label, report.stages[key]])}
       />
       <Counts
         label="Trước–sau theo nhóm phân tích"
         head={[
           "Nhóm",
-          "Cảnh báo thô",
+          "Cảnh báo phát hiện",
           "Đơn vị",
           "Ứng viên",
           "Danh sách rà chính",
@@ -136,7 +155,9 @@ export function ScanReportPanel({ scanId }: { scanId: string }) {
         ]}
         rows={report.families.map((family) => [
           FAMILIES[family.family],
-          family.raw_alerts,
+          family.evidence_results > 0
+            ? `${family.detection_alerts} (và ${family.evidence_results} kết quả truy vấn bằng chứng)`
+            : family.detection_alerts,
           family.units,
           family.candidates,
           family.main_list,

@@ -385,6 +385,10 @@ def test_report_counts_detection_merging_and_filtering(client, engine, project_i
     # Three alerts of one call: one unit, one candidate, filtered on evidence.
     assert report["stages"] == {
         "raw_alerts": 3,
+        # All three are detection alerts; the evidence step's results are never stored as alerts.
+        "evidence_results": 0,
+        "detection_alerts": 3,
+        "unranked_alerts": 0,
         "units": 1,
         "candidates": 1,
         "main_list": 0,

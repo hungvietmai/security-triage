@@ -68,6 +68,8 @@ export const scansHandlers = [
     const units = db.units[scan.id] ?? [];
     const filtered = units.filter((unit) => unit.disposition === "filtered");
     const tools = [...new Set(units.flatMap((unit) => unit.tools))].sort();
+    const evidence = db.results[scan.id]?.evidence_results ?? 0;
+    const unranked = db.results[scan.id]?.unranked_alerts ?? 0;
     const report: Schemas["ScanReport"] = {
       scan_id: scan.id,
       status: scan.status,
@@ -84,7 +86,10 @@ export const scansHandlers = [
       },
       raw_alerts: Object.fromEntries(tools.map((tool) => [tool, 1])),
       stages: {
-        raw_alerts: units.length + 1,
+        raw_alerts: units.length + 1 + evidence + unranked,
+        evidence_results: evidence,
+        detection_alerts: units.length + 1 + unranked,
+        unranked_alerts: unranked,
         units: units.length,
         candidates: units.length,
         main_list: units.length - filtered.length,
@@ -117,6 +122,8 @@ export const scansHandlers = [
           cwe: family.cwe,
           label: family.label,
           raw_alerts: mine.length,
+          evidence_results: 0,
+          detection_alerts: mine.length,
           units: mine.length,
           candidates: mine.length,
           main_list: mine.length - gone.length,

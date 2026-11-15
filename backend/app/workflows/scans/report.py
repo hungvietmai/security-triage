@@ -1,11 +1,21 @@
 """Before/after report of one scan and its merged SARIF export. Functions take a Session.
 
 "Before" is everything the detection tools reported. "After" is the main review list: the
-candidates left once alerts of one call are merged and the candidates a tool proved false are
-filtered. Filtered candidates stay in the report with the rule that removed them.
+candidates left once alerts of one call are merged and the candidates that meet a filter
+condition of their family are filtered. Filtered candidates stay in the report with the rule
+that removed them; the count is not a count of verified false positives.
 
 A scan with several analysis families reports the same counts per family as well; a candidate
 belongs to exactly one family.
+
+Two kinds of stored result are counted apart from the alerts, so "before" is not overstated
+and nothing is silently dropped:
+
+  evidence results  what a safety-evidence query reported. Such a member links them to the unit
+                    next to the detection alert they confirm; they are not alerts of their own.
+  unranked alerts   results in no unit, because a single-profile run was incomplete and its
+                    member ranked nothing. They are not in the review list; the report counts
+                    them and the SARIF export carries them.
 """
 
 from typing import Any
@@ -18,7 +28,12 @@ from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.workflows.scans import service
-from app.workflows.scans.families import FAMILIES, UNASSIGNED
+from app.workflows.scans.families import (
+    FAMILIES,
+    NOT_RANKED_DECISION,
+    UNASSIGNED,
+    UNRESOLVED_DECISION,
+)
 from app.workflows.scans.schemas import TIERS
 
 SARIF_SCHEMA = "https://json.schemastore.org/sarif-2.1.0.json"
@@ -33,6 +48,20 @@ _EVIDENCE_STATES = (
     "not_applicable",
     "not_assessed",
 )
+
+
+# The role a safety-evidence member records for each result of its unit ("baseline" or this).
+_EVIDENCE_QUERY = "evidence"
+_HELD_DECISIONS = (UNRESOLVED_DECISION, NOT_RANKED_DECISION)
+
+
+def _evidence_results(assessment: UnitAssessment) -> set[str]:
+    """Raw IDs of the unit's results that came from an evidence query, as its member recorded."""
+    return {
+        record["raw_id"]
+        for record in assessment.evidence.get("finding_evidence", [])
+        if isinstance(record, dict) and record.get("query") == _EVIDENCE_QUERY
+    }
 
 
 def _rows(session: Session, scan: Scan) -> list[tuple[LocationUnit, UnitAssessment]]:
@@ -114,10 +143,12 @@ def _family_reports(
 ) -> list[dict[str, Any]]:
     single = service.scan_family(scan)
     units: dict[str, int] = {}
-    for unit, _ in rows:
+    evidence: dict[str, int] = {}
+    for unit, assessment in rows:
         family = unit.analysis_family or single
         if family is not None:
             units[family] = units.get(family, 0) + 1
+            evidence[family] = evidence.get(family, 0) + len(_evidence_results(assessment))
     reports = []
     for name in (*FAMILIES, UNASSIGNED):
         mine = [c for c in candidates if c["analysis_family"] == name]
@@ -131,6 +162,8 @@ def _family_reports(
                 "cwe": service.family_cwe(name),
                 "label": FAMILIES[name].label if name in FAMILIES else "Chưa xác định nhóm",
                 "raw_alerts": sum(c["raw_alerts"] for c in mine),
+                "evidence_results": evidence.get(name, 0),
+                "detection_alerts": sum(c["raw_alerts"] for c in mine) - evidence.get(name, 0),
                 "units": units.get(name, 0),
                 "candidates": len(mine),
                 "main_list": len(main),
@@ -172,6 +205,7 @@ def build_report(session: Session, scan: Scan) -> dict[str, Any]:
         )
     }
     candidates = _candidates(scan, rows, alerts)
+    evidence_results = sum(len(_evidence_results(assessment)) for _, assessment in rows)
     main = [c for c in candidates if c["disposition"] == "review"]
     filtered = [c for c in candidates if c["disposition"] == "filtered"]
     tools = sorted({tool for c in candidates for tool in c["tools"]})
@@ -192,6 +226,9 @@ def build_report(session: Session, scan: Scan) -> dict[str, Any]:
         "raw_alerts": raw_alerts,
         "stages": {
             "raw_alerts": sum(raw_alerts.values()),
+            "evidence_results": evidence_results,
+            "detection_alerts": sum(raw_alerts.values()) - evidence_results,
+            "unranked_alerts": sum(raw_alerts.values()) - sum(alerts.values()),
             "units": len(rows),
             "candidates": len(candidates),
             "main_list": len(main),
@@ -215,27 +252,37 @@ def build_report(session: Session, scan: Scan) -> dict[str, Any]:
 
 
 def build_sarif(session: Session, scan: Scan) -> dict[str, Any]:
-    """Every original alert, one run per tool pass, annotated with its candidate and disposition.
+    """Every stored result, one run per tool pass, annotated with its candidate and disposition.
 
     A filtered candidate's alerts carry a SARIF suppression with the filter reason, so a SARIF
     viewer hides them by default without losing them. An alert also carries its analysis
     family and, when the scan classified it, the CWEs of its pinned rule next to the CWEs the
     tool itself reported.
+
+    A result in no unit is exported too, marked `ranked: false`: an incomplete single-profile
+    run ranked nothing, and its alerts must still reach the reader. `resultRole` tells a
+    detection alert from the result of a safety-evidence query stored with the same unit; it
+    is "unknown" where no member recorded the role (unranked results and units the
+    composition holds).
     """
-    by_unit = {unit.id: (unit, assessment) for unit, assessment in _rows(session, scan)}
+    rows = _rows(session, scan)
+    by_unit = {unit.id: (unit, assessment) for unit, assessment in rows}
+    evidence_results = {
+        (unit.id, raw_id) for unit, assessment in rows for raw_id in _evidence_results(assessment)
+    }
     single = service.scan_family(scan)
     found = session.execute(
         select(Finding, ToolRun, UnitFinding.unit_id)
         .join(ToolRun, ToolRun.id == Finding.tool_run_id)
-        .join(UnitFinding, UnitFinding.finding_id == Finding.id)
+        .outerjoin(UnitFinding, UnitFinding.finding_id == Finding.id)
         .where(ToolRun.scan_id == scan.id)
         .order_by(ToolRun.language, ToolRun.tool, Finding.result_index)
     ).all()
     runs: dict[tuple[str, str], dict[str, Any]] = {}
     for finding, run, unit_id in found:
-        if unit_id not in by_unit:
+        if unit_id is not None and unit_id not in by_unit:
             continue
-        unit, assessment = by_unit[unit_id]
+        unit, assessment = by_unit[unit_id] if unit_id is not None else (None, None)
         raw = finding.evidence.get("raw_result", {})
         # The rule table of the original run is not exported, so its indexes would dangle.
         result = {key: value for key, value in raw.items() if key not in {"ruleIndex", "rule"}}
@@ -255,22 +302,47 @@ def build_sarif(session: Session, scan: Scan) -> dict[str, Any]:
             # Paths relative to the source root, also for tools that report absolute URIs.
             location = {"artifactLocation": {"uri": finding.file_path}, "region": region}
             result["locations"] = [{"physicalLocation": location}]
-        adjudication = assessment.evidence.get("adjudication")
-        family = unit.analysis_family or single
-        triage: dict[str, Any] = {
-            "candidateKey": unit.candidate_key or unit.unit_key,
-            "unitKey": unit.unit_key,
-            "priority": assessment.priority,
-            "decisionId": assessment.decision_id,
-            "disposition": assessment.disposition,
-            "filterRule": (adjudication or {}).get("rule"),
-            "analysisFamily": family,
-            "cwe": service.family_cwe(family),
-            "evidenceState": service.evidence_state(
-                assessment.disposition, assessment.decision_id, adjudication
-            ),
-            "reportedCwes": finding.cwe_ids,
-        }
+        triage: dict[str, Any]
+        if unit is None or assessment is None:
+            adjudication = None
+            # Never ranked, so never filtered: the alert stays for review, with no evidence.
+            triage = {
+                "candidateKey": None,
+                "unitKey": None,
+                "priority": None,
+                "decisionId": None,
+                "disposition": "review",
+                "filterRule": None,
+                "analysisFamily": single,
+                "cwe": service.family_cwe(single),
+                "evidenceState": "unavailable",
+                "reportedCwes": finding.cwe_ids,
+                "ranked": False,
+                "resultRole": "unknown",
+            }
+        else:
+            adjudication = assessment.evidence.get("adjudication")
+            family = unit.analysis_family or single
+            if (unit.id, finding.evidence.get("raw_id")) in evidence_results:
+                role = "evidence_query"
+            else:
+                role = "unknown" if assessment.decision_id in _HELD_DECISIONS else "detection"
+            triage = {
+                "candidateKey": unit.candidate_key or unit.unit_key,
+                "unitKey": unit.unit_key,
+                "priority": assessment.priority,
+                "decisionId": assessment.decision_id,
+                "disposition": assessment.disposition,
+                "filterRule": (adjudication or {}).get("rule"),
+                "analysisFamily": family,
+                "cwe": service.family_cwe(family),
+                "evidenceState": service.evidence_state(
+                    assessment.disposition, assessment.decision_id, adjudication
+                ),
+                "reportedCwes": finding.cwe_ids,
+                "ranked": True,
+                "resultRole": role,
+            }
         classification = finding.evidence.get("classification")
         if classification is not None:
             triage["mappedCwes"] = classification["mapped_cwes"]
@@ -280,7 +352,7 @@ def build_sarif(session: Session, scan: Scan) -> dict[str, Any]:
             **(raw.get("properties") if isinstance(raw.get("properties"), dict) else {}),
             "securityTriage": triage,
         }
-        if assessment.disposition == "filtered":
+        if assessment is not None and assessment.disposition == "filtered":
             result["suppressions"] = [
                 {
                     "kind": "external",

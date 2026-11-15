@@ -106,6 +106,54 @@ describe("Adjudication on the scan page", () => {
     ).toBeInTheDocument();
   });
 
+  it("counts evidence results and unranked alerts apart from the alerts", async () => {
+    const { scan } = seed();
+    db.results[scan.id] = { evidence_results: 4, unranked_alerts: 3 };
+    await renderApp(`/scans/${scan.id}`);
+    const report = within(
+      await main().findByRole("region", { name: "Báo cáo trước–sau" }),
+    );
+    const stages = within(
+      await report.findByRole("table", { name: "Các bước của quy trình" }),
+    );
+    // Two units and one more alert, plus the three alerts no unit holds.
+    expect(
+      within(
+        stages.getByRole("row", { name: /Cảnh báo của các công cụ phát hiện/ }),
+      ).getByText("6"),
+    ).toBeInTheDocument();
+    expect(
+      within(
+        stages.getByRole("row", { name: /Kết quả của truy vấn bằng chứng/ }),
+      ).getByText("4"),
+    ).toBeInTheDocument();
+    expect(
+      within(
+        stages.getByRole("row", { name: /Cảnh báo chưa xếp hạng/ }),
+      ).getByText("3"),
+    ).toBeInTheDocument();
+  });
+
+  it("leaves the exception rows out when there is nothing to report", async () => {
+    const { scan } = seed();
+    await renderApp(`/scans/${scan.id}`);
+    const report = within(
+      await main().findByRole("region", { name: "Báo cáo trước–sau" }),
+    );
+    const stages = within(
+      await report.findByRole("table", { name: "Các bước của quy trình" }),
+    );
+    expect(
+      stages.getByRole("row", { name: /Cảnh báo của các công cụ phát hiện/ }),
+    ).toBeInTheDocument();
+    expect(
+      stages.queryByRole("row", { name: /Kết quả của truy vấn bằng chứng/ }),
+    ).not.toBeInTheDocument();
+    expect(
+      stages.queryByRole("row", { name: /Cảnh báo chưa xếp hạng/ }),
+    ).not.toBeInTheDocument();
+  });
+
   it("renders the before/after report with export links", async () => {
     const { scan } = seed();
     await renderApp(`/scans/${scan.id}`);
@@ -122,7 +170,7 @@ describe("Adjudication on the scan page", () => {
     ).toBeInTheDocument();
     expect(
       within(
-        stages.getByRole("row", { name: /Đã gạn vì có bằng chứng/ }),
+        stages.getByRole("row", { name: /Đã gạn vì thỏa điều kiện gạn/ }),
       ).getByText("1"),
     ).toBeInTheDocument();
     const sources = within(
