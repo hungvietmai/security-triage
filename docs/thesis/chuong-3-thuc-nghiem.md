@@ -427,6 +427,12 @@ lại; 10 package đã được đọc mã để tìm lỗi, 74 package chưa.
   có lệnh hằng (1/1) và không gạn ứng viên nào có lệnh không hằng (0/116). Ứng viên bị gạn là
   `exec(ipCommand, ...)` trong `arpping`, biến chỉ nhận hai chuỗi hằng theo hệ điều hành; vị trí
   lỗi đã công bố của chính package đó vẫn ở danh sách rà chính.
+- *Trên JavaScript có nhãn.* Bộ I4 có 25 vị trí JavaScript có nhãn (15 có lỗi, 10 an toàn). Quét
+  lại bằng phiên bản 0.3, hợp mọi nguồn báo 12 vị trí có lỗi thay vì 6: độ bao phủ 0,40 → 0,80,
+  độ chính xác 1,00 → 0,86 (2 vị trí an toàn nay được tính là báo sai), F1 0,57 → 0,83. Khác
+  biệt đến từ đối sánh; công cụ phát hiện không đổi. Lượt quét chạy dở nên không quy tắc gạn
+  nào hoạt động và không vị trí có nhãn nào bị gạn. Kho này đã được quét trước đó, nên đây là
+  kết quả phát triển.
 - *Tác động.* Nhóm cảnh báo sai mà G4 xử lý chỉ chiếm 1 trong 146 ứng viên JavaScript. G4 đúng
   nhưng gần như không giảm khối lượng rà soát trên dữ liệu này, vì các luật bắt mẫu cho
   JavaScript hiếm khi báo một lệnh hằng.
