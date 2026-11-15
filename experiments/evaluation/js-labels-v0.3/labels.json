@@ -1,0 +1,477 @@
+{
+  "description": "Labels of the JavaScript and TypeScript candidates of the v0.3 exports of 84 npm sources that are not known vulnerable sites. Criteria: PROTOCOL.md.",
+  "assigned_by": "AI coding assistant (Claude), reading the package source",
+  "assigned_on": "2026-11-15",
+  "reviewed_by": null,
+  "review_note": "No person has checked these labels. Fill reviewed_by with the reviewer's role and the date, and list changed labels here, only after the review sheet has been read.",
+  "labels": [
+    {
+      "id": "_thi.ng__egf_0.3.0|tags.js|25",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`body` of a #gpg tag comes from the parsed EGF text and is put inside `echo \"${body}\" | gpg --decrypt`."
+    },
+    {
+      "id": "_thi.ng__egf_0.3.0|lib/index.umd.js|None",
+      "label": "safe",
+      "class": "not_a_command_sink",
+      "reason": "The alert points at `require(\"child_process\")` in the minified bundle; that expression runs no command."
+    },
+    {
+      "id": "arpping_2.0.0|index.js|145",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Each `ip` of the `range` argument of the public `arp()` is interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "arpping_2.0.0|index.js|60",
+      "label": "safe",
+      "class": "constant_command",
+      "reason": "`ipCommand` is set once at module load to 'ipconfig' or 'ifconfig' depending on the platform."
+    },
+    {
+      "id": "blamer_0.1.13|src/vcs/svn.js|38",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`path.basename(file)` and `args`, both arguments of the blame function, are concatenated into `svn blame`."
+    },
+    {
+      "id": "codecov_3.6.4|lib/codecov.js|480",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`root` is `path.resolve(args.options.root || query.root || '.')`, a command-line option, concatenated into `find`."
+    },
+    {
+      "id": "codecov_3.6.4|lib/codecov.js|None",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 356 about the same `root` value reaching the shell commands on lines 419 and 480."
+    },
+    {
+      "id": "deferred-exec_0.3.1|lib/deferred-exec.js|46",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`spawn(command, args, options)` runs the caller's program without a shell unless the caller's options ask for one; the API exists to run what the caller passes."
+    },
+    {
+      "id": "enpeem_2.2.0|index.js|114",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`cmd` is built from keys and values of `options.cmdOptions` of the public update function."
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|11",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|26",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|193",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The file name argument `f` is interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|71",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote."
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|99",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`recCmd(f, o)` builds the command from the arguments `f` and `o`; double quotes around them do not stop `$()` or a closing quote."
+    },
+    {
+      "id": "extra-asciinema_1.0.0|index.js|None",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Seven unmatched alerts on the concatenations inside `recCmd`, whose result is executed on lines 71 and 99."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|8",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|27",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|46",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|65",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|83",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|101",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input1`, `input2`, `x`, `y`, `start`, `end` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|119",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input1`, `input2`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|137",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input`, `text`, `x`, `y` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|155",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `input`, `audio` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "ffmpegdotjs_0.0.4|index.js|173",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `audio`, `image` and `output` are interpolated into the shell command string without quoting or validation; `fs.existsSync` on the inputs does not constrain the output name."
+    },
+    {
+      "id": "freespace_1.0.4|index.js|49",
+      "label": "safe",
+      "class": "validated_or_escaped",
+      "reason": "On Windows only `charAt(0)` of the value is used, and the regex checked before requires that character to be a letter or '/'."
+    },
+    {
+      "id": "freespace_1.0.4|index.js|67",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`driveOrMountRegex` only constrains the first character; the rest of the argument reaches `df -P ... | awk`."
+    },
+    {
+      "id": "freespace_1.0.4|index.js|65",
+      "label": "safe",
+      "class": "validated_or_escaped",
+      "reason": "On Windows only `charAt(0)` of the value is used, and the regex checked before requires that character to be a letter or '/'."
+    },
+    {
+      "id": "get-npm-package-version_1.0.6|index.js|14",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `packageName` and `registry` are interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "git-add-remote_1.0.0|index.js|31",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`name` and `url` are only checked to be strings and then concatenated into `git remote add`."
+    },
+    {
+      "id": "git-lib_1.6.0|git.js|27",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`options` and `message` of `commit()` are concatenated into `git commit`."
+    },
+    {
+      "id": "git-lib_1.6.0|git.js|126",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Each `file` of `revert(files)` is concatenated into `git checkout --`."
+    },
+    {
+      "id": "git-lib_1.6.0|git.js|223",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`branch` of `checkout()` is concatenated into `git checkout`."
+    },
+    {
+      "id": "git-lib_1.6.0|git.js|236",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`newBranchName` is concatenated into `git checkout -b`."
+    },
+    {
+      "id": "git-lib_1.6.0|git.js|249",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`branch` of `deleteBranch()` is concatenated into `git branch -d`."
+    },
+    {
+      "id": "git-parse_1.0.4|dist/checkout_commit.js|None",
+      "label": "safe",
+      "class": "not_a_command_sink",
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+    },
+    {
+      "id": "git-parse_1.0.4|dist/git_diff.js|None",
+      "label": "safe",
+      "class": "not_a_command_sink",
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+    },
+    {
+      "id": "git-parse_1.0.4|dist/git_log_stream.js|None",
+      "label": "safe",
+      "class": "not_a_command_sink",
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+    },
+    {
+      "id": "git-parse_1.0.4|dist/git_pull.js|None",
+      "label": "safe",
+      "class": "not_a_command_sink",
+      "reason": "The alert points at the `require(\"child_process\")` line; that line runs no command."
+    },
+    {
+      "id": "git_0.1.5|lib/git/git_file_operations.js|128",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`dir` of `GitFileOperations.fs_rmdir_r`, which the package index re-exports, is concatenated into `rm -rf`; no caller inside the package constrains it."
+    },
+    {
+      "id": "google-cloudstorage-commands_0.0.1|index.js|22",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "google-cloudstorage-commands_0.0.1|index.js|39",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The `bucket` argument is interpolated into the shell command string without quoting or validation."
+    },
+    {
+      "id": "grunt-shell_4.0.0|tasks/shell.js|46",
+      "label": "undetermined",
+      "class": null,
+      "reason": "The task runs the command written in the Gruntfile; whether untrusted data is in it depends on that configuration."
+    },
+    {
+      "id": "gulp-shell_0.8.0|lib/index.js|36",
+      "label": "undetermined",
+      "class": null,
+      "reason": "The plugin runs the command template of the gulpfile with a shell; whether untrusted data is in it depends on that configuration."
+    },
+    {
+      "id": "imagickal_5.0.1|lib/imagickal.js|77",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`path` of `dimensions()` is concatenated into `identify`."
+    },
+    {
+      "id": "imagickal_5.0.1|lib/commands.js|276",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`this.get(src, dst)` joins the caller's paths into the command; `pipeOrPath` only wraps them in double quotes."
+    },
+    {
+      "id": "kill-port-process_0.0.1|src/index.js|63",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`pid` is returned by the dependency `pid-from-port`, whose code is outside the package."
+    },
+    {
+      "id": "kill-process-by-name_1.0.5|index.js|9",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`programname` is concatenated into `taskkill`."
+    },
+    {
+      "id": "killport_1.0.1|index.js|29",
+      "label": "safe",
+      "class": "validated_or_escaped",
+      "reason": "Each `pid` is `+blocks[1]`, a number parsed from the `lsof` output; non-numeric values are dropped."
+    },
+    {
+      "id": "launch-editor_2.14.1|index.js|167",
+      "label": "undetermined",
+      "class": null,
+      "reason": "On Windows the editor and file name go to cmd.exe after `^` escaping written for this package; its strength cannot be judged from the code."
+    },
+    {
+      "id": "launch-editor_2.14.1|index.js|172",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`spawn(editor, args)` uses no shell, but the program name comes from the caller, the environment or the process list."
+    },
+    {
+      "id": "local-devices_2.0.0|src/index.js|None",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Unmatched alert on line 114: `address` of the exported function is concatenated into `arp -n`."
+    },
+    {
+      "id": "lsof_0.1.0|lib/lsof.js|9",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`pid` of the exported `raw()` is concatenated into `lsof -p`."
+    },
+    {
+      "id": "lsof_0.1.0|lib/lsof.js|71",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`port` of the exported `rawUdpPort()` is concatenated into `lsof -i udp:`."
+    },
+    {
+      "id": "monorepo-build_0.1.9|lib/index.test.js|12",
+      "label": "safe",
+      "class": "test_or_example_code",
+      "reason": "A jest mock inside the package's own test file; it runs the commands the tests produce."
+    },
+    {
+      "id": "node-gyp_13.0.2|lib/node-gyp.js|175",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`spawn(command, args, opts)` uses no shell by default; the program is the toolchain found from configuration and environment."
+    },
+    {
+      "id": "node-latex-pdf_0.0.2|node-latex-pdf.js|15",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`dest_file` and `src_file` are concatenated into `pdflatex`."
+    },
+    {
+      "id": "node-notifier_10.0.1|lib/utils.js|59",
+      "label": "safe",
+      "class": "validated_or_escaped",
+      "reason": "The notifier path goes through `shellwords.escape`; the options come from `constructArgumentList`, which keeps allow-listed keys and escapes `\"`, `$`, backtick and backslash inside double quotes."
+    },
+    {
+      "id": "nodemon_3.1.14|lib/monitor/run.js|346",
+      "label": "safe",
+      "class": "internal_values_only",
+      "reason": "`child.pid` is the numeric id of the process nodemon itself spawned."
+    },
+    {
+      "id": "nodemon_3.1.14|lib/monitor/run.js|430",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`pid` values come from `psTree`; `sig` is derived from `config.signal`, whose validation is in another module."
+    },
+    {
+      "id": "nodemon_3.1.14|lib/monitor/run.js|434",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`child.pid` is a number; `sig` is derived from `config.signal`, whose validation is in another module."
+    },
+    {
+      "id": "nodemon_3.1.14|lib/version.js|79",
+      "label": "safe",
+      "class": "internal_values_only",
+      "reason": "`command(cmd)` is a local wrapper; its three callers in the file pass string literals."
+    },
+    {
+      "id": "npm-git-publish_0.2.4-beta|lib/publish.js|198",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "Wrapper around `exec`; callers pass commands with the tag name and extra branch names of the caller's options inside double quotes only."
+    },
+    {
+      "id": "pdf-image_1.0.5|index.js|104",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The command contains `pdfFilePath` and the convert options given to the constructor, in double quotes only."
+    },
+    {
+      "id": "pdfinfojs_0.3.6|lib/pdfinfo.js|28",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command."
+    },
+    {
+      "id": "pdfinfojs_0.3.6|lib/pdfinfo.js|72",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "`filename` of the constructor is wrapped in double quotes and joined into the `pdfinfo` command."
+    },
+    {
+      "id": "portkiller_1.0.2|index.js|22",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`pid` is a token of the output of the previous `lsof` command, which itself contains the `port` argument."
+    },
+    {
+      "id": "ps-visitor_0.0.2|index.js|56",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The `extra` argument is appended to `ps aux |`."
+    },
+    {
+      "id": "ps-visitor_0.0.2|index.js|444",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The `signal` argument, only trimmed, is put into `kill -l`."
+    },
+    {
+      "id": "react-dev-utils_11.0.0|openBrowser.js|92",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`encodeURI(url)` leaves `$(` and `)` intact inside double quotes; `url` is the development server address from configuration."
+    },
+    {
+      "id": "react-dev-utils_11.0.0|launchEditor.js|378",
+      "label": "undetermined",
+      "class": null,
+      "reason": "On Windows the file name is checked against an allow-list first, but `editor` passed to `cmd.exe /C` comes from REACT_EDITOR or the process list."
+    },
+    {
+      "id": "release-it_21.1.0|lib/shell.js|60",
+      "label": "undetermined",
+      "class": null,
+      "reason": "Runs the hook and command strings of the release configuration; whether untrusted data is in them depends on that configuration."
+    },
+    {
+      "id": "release-it_21.1.0|lib/shell.js|90",
+      "label": "undetermined",
+      "class": null,
+      "reason": "On Windows the npm, yarn or pnpm argument array is joined and run with a shell; the arguments come from other modules and configuration."
+    },
+    {
+      "id": "roar-pidusage_1.1.6|lib/helpers.js|12",
+      "label": "safe",
+      "class": "internal_values_only",
+      "reason": "Both callers of `getconf` in the package pass the literals 'CLK_TCK' and 'PAGESIZE'."
+    },
+    {
+      "id": "shelljs_0.10.0|src/exec.js|147",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`shell.exec(cmd)` exists to run the caller's command string."
+    },
+    {
+      "id": "shelljs_0.10.0|src/exec-child.js|41",
+      "label": "undetermined",
+      "class": null,
+      "reason": "Child script of `shell.exec`; it runs the command string the parent wrote for it."
+    },
+    {
+      "id": "ts-process-promises_1.0.2|lib/process-promises.js|83",
+      "label": "undetermined",
+      "class": null,
+      "reason": "`spawn(command, args, options)` runs the caller's program without a shell unless the caller's options ask for one; the API exists to run what the caller passes."
+    },
+    {
+      "id": "wincred_1.0.2|index.ts|20",
+      "label": "vulnerable",
+      "class": null,
+      "reason": "The arguments `pythonLancher` and `target` are interpolated into the shell command string without quoting or validation."
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "labels_assigned_by": "AI coding assistant (Claude), reading the package source",
+  "labels_reviewed_by": null,
+  "groups": {
+    "all": {
+      "units": 140,
+      "labels": {
+        "vulnerable": {
+          "cve": 62,
+          "assistant": 47
+        },
+        "safe": {
+          "cve": 0,
+          "assistant": 14
+        },
+        "undetermined": {
+          "cve": 0,
+          "assistant": 17
+        }
+      },
+      "known_sites_without_candidate": 7,
+      "configurations": {
+        "semgrep": {
+          "tp": 50,
+          "fp": 5,
+          "undetermined": 10,
+          "fn": 66,
+          "precision": 0.9091,
+          "recall_upper_bound": 0.431,
+          "f1_upper_bound": 0.5848
+        },
+        "codeql": {
+          "tp": 91,
+          "fp": 2,
+          "undetermined": 2,
+          "fn": 25,
+          "precision": 0.9785,
+          "recall_upper_bound": 0.7845,
+          "f1_upper_bound": 0.8708
+        },
+        "eslint": {
+          "tp": 78,
+          "fp": 11,
+          "undetermined": 9,
+          "fn": 38,
+          "precision": 0.8764,
+          "recall_upper_bound": 0.6724,
+          "f1_upper_bound": 0.761
+        },
+        "semgrep ∪ codeql": {
+          "tp": 100,
+          "fp": 5,
+          "undetermined": 12,
+          "fn": 16,
+          "precision": 0.9524,
+          "recall_upper_bound": 0.8621,
+          "f1_upper_bound": 0.905
+        },
+        "all sources": {
+          "tp": 109,
+          "fp": 14,
+          "undetermined": 17,
+          "fn": 7,
+          "precision": 0.8862,
+          "recall_upper_bound": 0.9397,
+          "f1_upper_bound": 0.9122
+        },
+        "all sources, after filtering": {
+          "tp": 109,
+          "fp": 13,
+          "undetermined": 17,
+          "fn": 7,
+          "precision": 0.8934,
+          "recall_upper_bound": 0.9397,
+          "f1_upper_bound": 0.916
+        },
+        "first tiers (P1+P2), after filtering": {
+          "tp": 94,
+          "fp": 5,
+          "undetermined": 11,
+          "fn": 22,
+          "precision": 0.9495,
+          "recall_upper_bound": 0.8103,
+          "f1_upper_bound": 0.8744
+        }
+      },
+      "filter": {
+        "vulnerable": 0,
+        "safe": 1,
+        "undetermined": 0
+      },
+      "filter_rules": [
+        "G4_JS_CONSTANT_COMMAND"
+      ],
+      "safe_left_in_review_list": {
+        "total": 13,
+        "by_class": {
+          "internal_values_only": 3,
+          "not_a_command_sink": 5,
+          "test_or_example_code": 1,
+          "validated_or_escaped": 4
+        },
+        "by_priority": {
+          "P1": 2,
+          "P2": 3,
+          "U": 5,
+          "P3": 3,
+          "P4": 0
+        }
+      }
+    },
+    "not_read_when_fixing": {
+      "units": 125,
+      "labels": {
+        "vulnerable": {
+          "cve": 54,
+          "assistant": 42
+        },
+        "safe": {
+          "cve": 0,
+          "assistant": 13
+        },
+        "undetermined": {
+          "cve": 0,
+          "assistant": 16
+        }
+      },
+      "known_sites_without_candidate": 5,
+      "configurations": {
+        "semgrep": {
+          "tp": 45,
+          "fp": 5,
+          "undetermined": 9,
+          "fn": 56,
+          "precision": 0.9,
+          "recall_upper_bound": 0.4455,
+          "f1_upper_bound": 0.596
+        },
+        "codeql": {
+          "tp": 81,
+          "fp": 2,
+          "undetermined": 2,
+          "fn": 20,
+          "precision": 0.9759,
+          "recall_upper_bound": 0.802,
+          "f1_upper_bound": 0.8804
+        },
+        "eslint": {
+          "tp": 69,
+          "fp": 10,
+          "undetermined": 9,
+          "fn": 32,
+          "precision": 0.8734,
+          "recall_upper_bound": 0.6832,
+          "f1_upper_bound": 0.7667
+        },
+        "semgrep ∪ codeql": {
+          "tp": 88,
+          "fp": 5,
+          "undetermined": 11,
+          "fn": 13,
+          "precision": 0.9462,
+          "recall_upper_bound": 0.8713,
+          "f1_upper_bound": 0.9072
+        },
+        "all sources": {
+          "tp": 96,
+          "fp": 13,
+          "undetermined": 16,
+          "fn": 5,
+          "precision": 0.8807,
+          "recall_upper_bound": 0.9505,
+          "f1_upper_bound": 0.9143
+        },
+        "all sources, after filtering": {
+          "tp": 96,
+          "fp": 13,
+          "undetermined": 16,
+          "fn": 5,
+          "precision": 0.8807,
+          "recall_upper_bound": 0.9505,
+          "f1_upper_bound": 0.9143
+        },
+        "first tiers (P1+P2), after filtering": {
+          "tp": 82,
+          "fp": 5,
+          "undetermined": 10,
+          "fn": 19,
+          "precision": 0.9425,
+          "recall_upper_bound": 0.8119,
+          "f1_upper_bound": 0.8723
+        }
+      },
+      "filter": {
+        "vulnerable": 0,
+        "safe": 0,
+        "undetermined": 0
+      },
+      "filter_rules": [],
+      "safe_left_in_review_list": {
+        "total": 13,
+        "by_class": {
+          "internal_values_only": 3,
+          "not_a_command_sink": 5,
+          "test_or_example_code": 1,
+          "validated_or_escaped": 4
+        },
+        "by_priority": {
+          "P1": 2,
+          "P2": 3,
+          "U": 5,
+          "P3": 3,
+          "P4": 0
+        }
+      }
+    }
+  }
+}

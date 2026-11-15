@@ -46,6 +46,9 @@ freeze = _load("freeze", PAIRS_KIT / "freeze.py")
 JS_MATCHING = ROOT / "experiments" / "evaluation" / "js-matching-v0.3"
 js_compare = _load("js_compare", JS_MATCHING / "compare.py")
 constant_reference = _load("constant_reference", JS_MATCHING / "constant_reference.py")
+JS_LABELS = ROOT / "experiments" / "evaluation" / "js-labels-v0.3"
+js_label_sheet = _load("js_label_sheet", JS_LABELS / "label_sheet.py")
+js_label_score = _load("js_label_score", JS_LABELS / "score_labels.py")
 
 EVALUATION = ROOT / "experiments" / "evaluation"
 PIPELINE_CHANGES = json.loads((EVALUATION / "PIPELINE_CHANGES.json").read_bytes())[
@@ -1030,6 +1033,107 @@ class ConstantReferenceTests(unittest.TestCase):
         ]
         self.assertEqual(verdicts, expected)
         self.assertEqual(len(names), 19)
+
+
+class JavaScriptLabelScoringTests(unittest.TestCase):
+    """Scoring of the v0.3 exports against candidate labels (js-labels-v0.3)."""
+
+    @staticmethod
+    def _unit(label, tools, priority, *, filtered=False, source="assistant", kind=None):
+        return {
+            "label": label,
+            "source": source,
+            "class": kind,
+            "tools": tools,
+            "priority": priority,
+            "filtered": filtered,
+            "filter_rules": ["G4_JS_CONSTANT_COMMAND"] if filtered else [],
+        }
+
+    def test_counts_rates_and_filter_outcome_on_synthetic_units(self):
+        units = [
+            self._unit("vulnerable", ["codeql"], "P1", source="cve"),
+            self._unit("vulnerable", ["semgrep"], "P2"),
+            self._unit("safe", ["eslint"], "P3", filtered=True, kind="constant_command"),
+            self._unit("safe", ["eslint", "semgrep"], "P3", kind="internal_values_only"),
+            self._unit("undetermined", ["eslint"], "U"),
+        ]
+        result = js_label_score.score(units, missed_known=1)
+        everything = result["configurations"]["all sources"]
+        self.assertEqual(
+            (everything["tp"], everything["fp"], everything["undetermined"], everything["fn"]),
+            (2, 2, 1, 1),
+        )
+        self.assertEqual(everything["precision"], 0.5)
+        self.assertEqual(everything["recall_upper_bound"], 0.6667)
+        after = result["configurations"]["all sources, after filtering"]
+        self.assertEqual((after["tp"], after["fp"], after["precision"]), (2, 1, 0.6667))
+        first = result["configurations"]["first tiers (P1+P2), after filtering"]
+        self.assertEqual((first["tp"], first["fp"], first["precision"]), (2, 0, 1.0))
+        self.assertEqual(result["configurations"]["semgrep"]["fp"], 1)
+        self.assertEqual(result["filter"], {"vulnerable": 0, "safe": 1, "undetermined": 0})
+        self.assertEqual(
+            result["safe_left_in_review_list"]["by_class"], {"internal_values_only": 1}
+        )
+        self.assertEqual(result["labels"]["vulnerable"], {"cve": 1, "assistant": 1})
+
+    def test_a_line_is_filtered_only_when_every_candidate_on_it_is(self):
+        filtered = {"tools": ["eslint"], "priority": "P3", "disposition": "filtered"}
+        kept = {"tools": ["codeql"], "priority": "P2", "disposition": "review"}
+        unit = js_label_score.merge([{**filtered, "filter_rules": ["G4"]}, kept])
+        self.assertEqual(
+            (unit["filtered"], unit["priority"], unit["tools"]), (False, "P2", ["codeql", "eslint"])
+        )
+        self.assertTrue(js_label_score.merge([filtered])["filtered"])
+
+    def test_committed_score_is_reproduced_from_the_saved_exports_and_labels(self):
+        expected = json.loads((JS_LABELS / "results" / "score.json").read_bytes())
+        self.assertEqual(js_label_score.evaluate(), expected)
+        everything = expected["groups"]["all"]
+        self.assertEqual(everything["units"], 140)
+        self.assertEqual(everything["filter"], {"vulnerable": 0, "safe": 1, "undetermined": 0})
+
+    def test_every_item_has_one_label_with_a_reason_and_a_valid_class(self):
+        meta = json.loads((JS_LABELS / "labels.json").read_bytes())
+        labels = {row["id"]: row for row in meta["labels"]}
+        self.assertEqual(sorted(labels), sorted(item["id"] for item in js_label_sheet.items()))
+        classes = {
+            "constant_command",
+            "internal_values_only",
+            "validated_or_escaped",
+            "no_shell",
+            "not_a_command_sink",
+            "test_or_example_code",
+        }
+        for row in labels.values():
+            with self.subTest(id=row["id"]):
+                self.assertIn(row["label"], js_label_score.LABELS)
+                self.assertTrue(row["reason"].strip())
+                self.assertEqual(row["class"] in classes, row["label"] == "safe")
+
+    def test_labels_are_not_presented_as_reviewed_without_a_review_record(self):
+        # The labels were assigned by an AI assistant. A reviewer may be recorded only together
+        # with a note of what the review changed.
+        meta = json.loads((JS_LABELS / "labels.json").read_bytes())
+        self.assertIn("AI", meta["assigned_by"])
+        if meta["reviewed_by"] is not None:
+            self.assertRegex(meta["reviewed_by"], r"\d{4}-\d{2}-\d{2}")
+            self.assertNotIn("No person has checked", meta["review_note"])
+
+    def test_protocol_and_sheet_builder_are_the_registered_files(self):
+        import hashlib
+
+        registered = json.loads((JS_LABELS / "PREREGISTRATION.json").read_bytes())["sha256"]
+        for name in ("PROTOCOL.md", "label_sheet.py"):
+            relative = f"experiments/evaluation/js-labels-v0.3/{name}"
+            actual = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
+            self.assertEqual(actual, registered[relative])
+        # score_labels.py differs by one sort key; README.md records both hashes.
+        readme = (JS_LABELS / "README.md").read_text(encoding="utf-8")
+        scoring = "experiments/evaluation/js-labels-v0.3/score_labels.py"
+        self.assertIn(registered[scoring][:8], readme)
+        current = hashlib.sha256((ROOT / scoring).read_bytes()).hexdigest()
+        self.assertIn(current[:8], readme)
 
 
 if __name__ == "__main__":
