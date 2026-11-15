@@ -1,0 +1,1395 @@
+{
+  "described": {
+    "disposition_counts": {
+      "filtered": 0,
+      "review": 2
+    },
+    "families": [
+      {
+        "cwe": "CWE-78",
+        "family": "command-injection",
+        "filtered": 0,
+        "held": 0,
+        "label": "Command injection",
+        "profile_id": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "review": 2,
+        "runs": [
+          {
+            "error": null,
+            "evidence_steps": {
+              "semgrep-evidence": "completed"
+            },
+            "language": "python",
+            "raw_findings": 4,
+            "status": "partial"
+          }
+        ],
+        "units": 2
+      },
+      {
+        "cwe": "CWE-22",
+        "family": "path-traversal",
+        "filtered": 0,
+        "held": 0,
+        "label": "Path traversal",
+        "profile_id": "path-traversal-v0.2",
+        "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+        "review": 0,
+        "runs": [
+          {
+            "error": null,
+            "evidence_steps": {
+              "codeql-path-traversal": "failed"
+            },
+            "language": "python",
+            "raw_findings": 0,
+            "status": "failed"
+          }
+        ],
+        "units": 0
+      }
+    ],
+    "policy_version": "family-composition-v0.1",
+    "profile": "multi-cwe-v0.1",
+    "reconciler_version": "family-composition-v0.1",
+    "status": "partial",
+    "tool_runs": [
+      [
+        "python",
+        "bandit",
+        "completed",
+        "1.9.4"
+      ],
+      [
+        "python",
+        "codeql",
+        "failed",
+        "2.27.1"
+      ],
+      [
+        "python",
+        "codeql-path-traversal",
+        "failed",
+        "2.27.1"
+      ],
+      [
+        "python",
+        "semgrep",
+        "completed",
+        "1.178.0"
+      ],
+      [
+        "python",
+        "semgrep-evidence",
+        "completed",
+        "1.178.0"
+      ]
+    ],
+    "unit_counts": {
+      "P1": 0,
+      "P2": 2,
+      "P3": 0,
+      "P4": 0,
+      "U": 0
+    }
+  },
+  "report": {
+    "candidates": [
+      {
+        "analysis_family": "command-injection",
+        "basis": "same_call_site",
+        "candidate_key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+        "cwe": "CWE-78",
+        "disposition": "review",
+        "evidence_state": "unavailable",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P2",
+        "raw_alerts": 2,
+        "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+        "sink_kind": "os.system",
+        "start_line": 3,
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "unit_ids": 1
+      },
+      {
+        "analysis_family": "command-injection",
+        "basis": "same_call_site",
+        "candidate_key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+        "cwe": "CWE-78",
+        "disposition": "review",
+        "evidence_state": "unavailable",
+        "filter_rule": null,
+        "filter_rules": [],
+        "path": "app.py",
+        "priority": "P2",
+        "raw_alerts": 2,
+        "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+        "sink_kind": "os.system",
+        "start_line": 6,
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "unit_ids": 1
+      }
+    ],
+    "composition": {
+      "members": [
+        {
+          "family": "command-injection",
+          "profile_id": "command-injection-v0.3",
+          "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406"
+        },
+        {
+          "family": "path-traversal",
+          "profile_id": "path-traversal-v0.2",
+          "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e"
+        }
+      ],
+      "specification_sha256": "5e597c9f8d4abd005a81730508f8ae0f900f9eb708a03f240c7e1e709fb9cefd",
+      "version": "family-composition-v0.1"
+    },
+    "families": [
+      {
+        "candidates": 2,
+        "cwe": "CWE-78",
+        "detection_alerts": 4,
+        "evidence_results": 0,
+        "evidence_states": {
+          "unavailable": 2
+        },
+        "family": "command-injection",
+        "filtered": 0,
+        "filtered_by_rule": {},
+        "label": "Command injection",
+        "main_list": 2,
+        "main_list_by_priority": {
+          "P1": 0,
+          "P2": 2,
+          "P3": 0,
+          "P4": 0,
+          "U": 0
+        },
+        "raw_alerts": 4,
+        "units": 2
+      }
+    ],
+    "filtered_by_rule": {},
+    "main_list_by_priority": {
+      "P1": 0,
+      "P2": 2,
+      "P3": 0,
+      "P4": 0,
+      "U": 0
+    },
+    "raw_alerts": {
+      "bandit": 2,
+      "semgrep": 2
+    },
+    "sources": {
+      "bandit": {
+        "candidates": 2,
+        "only": 0
+      },
+      "semgrep": {
+        "candidates": 2,
+        "only": 0
+      }
+    },
+    "stages": {
+      "candidates": 2,
+      "demoted": 0,
+      "detection_alerts": 4,
+      "evidence_results": 0,
+      "filtered": 0,
+      "main_list": 2,
+      "raw_alerts": 4,
+      "units": 2,
+      "unranked_alerts": 0
+    }
+  },
+  "sarif": [
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 15,
+                  "endLine": 3,
+                  "startColumn": 1,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "B605",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "unavailable",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 51,
+                  "endLine": 6,
+                  "startColumn": 1,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "B605",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "unavailable",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "cwe-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "bandit",
+        "version": "1.9.4"
+      }
+    },
+    {
+      "results": [
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 14,
+                  "endLine": 3,
+                  "startColumn": 11,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "ruleId": "dangerous-system-call",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "unavailable",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "CWE-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          },
+          "suppressed": false
+        },
+        {
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "app.py"
+                },
+                "region": {
+                  "endColumn": 50,
+                  "endLine": 6,
+                  "startColumn": 11,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "ruleId": "dangerous-system-call",
+          "securityTriage": {
+            "analysisFamily": "command-injection",
+            "candidateKey": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+            "cwe": "CWE-78",
+            "decisionId": "D30_HIGH",
+            "disposition": "review",
+            "evidenceState": "unavailable",
+            "familyBasis": "pass_provenance",
+            "familyStatus": "resolved",
+            "filterRule": null,
+            "mappedCwes": [
+              "CWE-78"
+            ],
+            "priority": "P2",
+            "ranked": true,
+            "reportedCwes": [
+              "CWE-78"
+            ],
+            "resultRole": "detection",
+            "unitKey": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          },
+          "suppressed": false
+        }
+      ],
+      "tool": {
+        "name": "semgrep",
+        "version": "1.178.0"
+      }
+    }
+  ],
+  "scan": {
+    "artifacts": [
+      "python/assessments.json",
+      "python/bandit.ini",
+      "python/classification.json",
+      "python/findings.json",
+      "python/rule-0.yaml",
+      "python/rule-1.yaml",
+      "python/rule-2.yaml",
+      "python/rule-3.yaml",
+      "python/run.json",
+      "python/units.json"
+    ],
+    "assessments_artifact": [
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "run_incomplete"
+          ],
+          "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "argument_role": "shell_command",
+        "blocker_proof": null,
+        "candidate": {
+          "basis": "same_call_site",
+          "key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+          "priority": "P2",
+          "tools": [
+            "bandit",
+            "semgrep"
+          ],
+          "unit_ids": [
+            "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+          ]
+        },
+        "command_literal": false,
+        "decision_id": "D30_HIGH",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "audit_oriented": true,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "B605",
+            "claim_family": "audit",
+            "claim_kind": "call_site_pattern",
+            "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "bandit:0:0",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "B605",
+            "source_location": null,
+            "source_type": "unknown",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "bandit",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          },
+          {
+            "audit_oriented": false,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "dangerous-system-call",
+            "claim_family": "flow",
+            "claim_kind": "modeled_remote_argument_flow",
+            "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "semgrep:0:0",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "tmp.dangerous-system-call",
+            "source_location": null,
+            "source_type": "remote",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "semgrep",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          }
+        ],
+        "mapping_status": "mapped",
+        "matched_conditions": [
+          "audit_claim",
+          "execution_candidate",
+          "flow_claim",
+          "important_unknown",
+          "not verified_blocker",
+          "shell_semantics",
+          "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+          "{'all': ['flow_claim', 'important_unknown']}",
+          "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+        ],
+        "policy_id": "command-injection-priority",
+        "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "agreement": false,
+          "audit_claim": true,
+          "evidence_conflict": false,
+          "execution_candidate": true,
+          "flow_claim": true,
+          "important_unknown": true,
+          "shell_semantics": true,
+          "strong_flow": false,
+          "unresolved_unit": false,
+          "verified_blocker": false
+        },
+        "priority": "P2",
+        "reason": "Ưu tiên cao: audit_claim, execution_candidate, flow_claim, important_unknown, not verified_blocker, shell_semantics, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+        "reconciler_version": "reconcile-v0.1",
+        "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+        "rule_claims_version": "rule-claims-v3",
+        "shell_state": "absent",
+        "source_types": [
+          "remote",
+          "unknown"
+        ],
+        "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "trace_lengths_by_tool": {
+          "bandit": [
+            0
+          ],
+          "semgrep": [
+            0
+          ]
+        },
+        "traces_by_tool": {
+          "bandit": false,
+          "semgrep": false
+        },
+        "unit_id": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370",
+        "unknown_fields": [
+          "flow_claim_without_valid_endpoint_trace",
+          "source_library_input_or_unknown"
+        ]
+      },
+      {
+        "adjudication": {
+          "evidence": [],
+          "kept_because": [
+            "run_incomplete"
+          ],
+          "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+          "rule": null,
+          "rules": [],
+          "status": "kept",
+          "version": "adjudicate-v0.3"
+        },
+        "argument_role": "shell_command",
+        "blocker_proof": null,
+        "candidate": {
+          "basis": "same_call_site",
+          "key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+          "priority": "P2",
+          "tools": [
+            "bandit",
+            "semgrep"
+          ],
+          "unit_ids": [
+            "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+          ]
+        },
+        "command_literal": false,
+        "decision_id": "D30_HIGH",
+        "disposition": "review",
+        "finding_evidence": [
+          {
+            "audit_oriented": true,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "B605",
+            "claim_family": "audit",
+            "claim_kind": "call_site_pattern",
+            "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "bandit:0:1",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "B605",
+            "source_location": null,
+            "source_type": "unknown",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "bandit",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          },
+          {
+            "audit_oriented": false,
+            "candidate_status": "cwe78_candidate",
+            "canonical_rule_id": "dangerous-system-call",
+            "claim_family": "flow",
+            "claim_kind": "modeled_remote_argument_flow",
+            "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+            "definition_verified": true,
+            "endpoint_argument_span": null,
+            "endpoint_location": null,
+            "endpoint_role": null,
+            "has_trace": false,
+            "raw_id": "semgrep:0:1",
+            "rule_claims_version": "rule-claims-v3",
+            "rule_id": "tmp.dangerous-system-call",
+            "source_location": null,
+            "source_type": "remote",
+            "source_type_basis": "pinned_rule_definition",
+            "tool": "semgrep",
+            "trace_length": 0,
+            "trace_ref": null,
+            "trace_status": "missing"
+          }
+        ],
+        "mapping_status": "mapped",
+        "matched_conditions": [
+          "audit_claim",
+          "execution_candidate",
+          "flow_claim",
+          "important_unknown",
+          "not verified_blocker",
+          "shell_semantics",
+          "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+          "{'all': ['flow_claim', 'important_unknown']}",
+          "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+        ],
+        "policy_id": "command-injection-priority",
+        "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+        "policy_version": "0.2",
+        "predicate_values": {
+          "agreement": false,
+          "audit_claim": true,
+          "evidence_conflict": false,
+          "execution_candidate": true,
+          "flow_claim": true,
+          "important_unknown": true,
+          "shell_semantics": true,
+          "strong_flow": false,
+          "unresolved_unit": false,
+          "verified_blocker": false
+        },
+        "priority": "P2",
+        "reason": "Ưu tiên cao: audit_claim, execution_candidate, flow_claim, important_unknown, not verified_blocker, shell_semantics, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+        "reconciler_version": "reconcile-v0.1",
+        "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+        "rule_claims_version": "rule-claims-v3",
+        "shell_state": "absent",
+        "source_types": [
+          "remote",
+          "unknown"
+        ],
+        "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "trace_lengths_by_tool": {
+          "bandit": [
+            0
+          ],
+          "semgrep": [
+            0
+          ]
+        },
+        "traces_by_tool": {
+          "bandit": false,
+          "semgrep": false
+        },
+        "unit_id": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d",
+        "unknown_fields": [
+          "flow_claim_without_valid_endpoint_trace",
+          "source_library_input_or_unknown"
+        ]
+      }
+    ],
+    "classification": [
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "semgrep:0:0",
+        "reported_cwes": [
+          "CWE-78"
+        ],
+        "rule_id": "tmp.dangerous-system-call",
+        "tool": "semgrep",
+        "tool_pass": "semgrep",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "bandit:0:0",
+        "reported_cwes": [
+          "cwe-78"
+        ],
+        "rule_id": "B605",
+        "tool": "bandit",
+        "tool_pass": "bandit",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "semgrep:0:1",
+        "reported_cwes": [
+          "CWE-78"
+        ],
+        "rule_id": "tmp.dangerous-system-call",
+        "tool": "semgrep",
+        "tool_pass": "semgrep",
+        "unresolved_reason": null
+      },
+      {
+        "analysis_family": "command-injection",
+        "candidate_families": [
+          "command-injection"
+        ],
+        "family_basis": "pass_provenance",
+        "family_status": "resolved",
+        "mapped_cwes": [
+          "CWE-78"
+        ],
+        "mapped_cwes_basis": "rule_claims:rule-claims-v3",
+        "raw_id": "bandit:0:1",
+        "reported_cwes": [
+          "cwe-78"
+        ],
+        "rule_id": "B605",
+        "tool": "bandit",
+        "tool_pass": "bandit",
+        "unresolved_reason": null
+      }
+    ],
+    "config": {
+      "composition": {
+        "members": [
+          {
+            "family": "command-injection",
+            "profile_id": "command-injection-v0.3",
+            "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406"
+          },
+          {
+            "family": "path-traversal",
+            "profile_id": "path-traversal-v0.2",
+            "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e"
+          }
+        ],
+        "specification_sha256": "5e597c9f8d4abd005a81730508f8ae0f900f9eb708a03f240c7e1e709fb9cefd",
+        "version": "family-composition-v0.1"
+      },
+      "families": {
+        "python": [
+          {
+            "cwe": "CWE-78",
+            "error": null,
+            "evidence_steps": {
+              "semgrep-evidence": "completed"
+            },
+            "family": "command-injection",
+            "held_units": 0,
+            "policy_versions": [
+              "0.2"
+            ],
+            "profile_id": "command-injection-v0.3",
+            "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+            "raw_findings": 4,
+            "status": "partial",
+            "unit_version": "reconcile-v0.1",
+            "units": 2
+          },
+          {
+            "cwe": "CWE-22",
+            "error": null,
+            "evidence_steps": {
+              "codeql-path-traversal": "failed"
+            },
+            "family": "path-traversal",
+            "held_units": 0,
+            "policy_versions": [],
+            "profile_id": "path-traversal-v0.2",
+            "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+            "raw_findings": 0,
+            "status": "failed",
+            "unit_version": "safety-evidence-units-v1",
+            "units": 0
+          }
+        ]
+      },
+      "languages": [
+        "python"
+      ],
+      "profile_id": "multi-cwe-v0.1",
+      "profile_sha256": "e29a96a76733d2040ac1abf4cd02d6df7a0908bc6997aa2516cc521498da3564"
+    },
+    "error_message": "python/codeql-create: failed; python/codeql: CodeQL extraction failed; python/codeql-path-traversal: No CodeQL database to run evidence queries on",
+    "policy_version": "family-composition-v0.1",
+    "reconciler_version": "family-composition-v0.1",
+    "run": {
+      "composition_version": "family-composition-v0.1",
+      "conservation": {
+        "families": {
+          "command-injection": {
+            "held_units": 0,
+            "in_units": 4,
+            "not_ranked": 0,
+            "routed": 4,
+            "units": 2
+          },
+          "path-traversal": {
+            "held_units": 0,
+            "in_units": 0,
+            "not_ranked": 0,
+            "routed": 0,
+            "units": 0
+          }
+        },
+        "raw_findings": 4,
+        "unassigned": {
+          "routed": 0,
+          "units": 0
+        }
+      },
+      "members": [
+        {
+          "codeql_query_files": null,
+          "error": null,
+          "family": "command-injection",
+          "profile_id": "command-injection-v0.3",
+          "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+          "raw_findings": 4,
+          "status": "partial",
+          "unit_version": "reconcile-v0.1",
+          "units": 2
+        },
+        {
+          "codeql_query_files": null,
+          "error": null,
+          "family": "path-traversal",
+          "profile_id": "path-traversal-v0.2",
+          "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+          "raw_findings": 0,
+          "status": "failed",
+          "unit_version": "safety-evidence-units-v1",
+          "units": 0
+        }
+      ],
+      "status": "partial",
+      "steps": {
+        "bandit": {
+          "kind": "detection",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "codeql": {
+          "kind": "detection",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "failed"
+        },
+        "codeql-create": {
+          "kind": "shared",
+          "serves": [
+            "command-injection",
+            "path-traversal"
+          ],
+          "status": "failed"
+        },
+        "codeql-path-traversal": {
+          "kind": "detection+evidence",
+          "serves": [
+            "path-traversal"
+          ],
+          "status": "failed"
+        },
+        "codeql-version": {
+          "kind": "version",
+          "serves": [
+            "command-injection",
+            "path-traversal"
+          ],
+          "status": "completed"
+        },
+        "semgrep": {
+          "kind": "detection",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "semgrep-evidence": {
+          "kind": "evidence",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        },
+        "sink-locator": {
+          "kind": "locator",
+          "serves": [
+            "command-injection"
+          ],
+          "status": "completed"
+        }
+      }
+    },
+    "status": "partial",
+    "units_artifact": [
+      {
+        "argument_role": "shell_command",
+        "callee": "os.system",
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "bandit:0:0",
+            "tool": "bandit"
+          },
+          {
+            "mapping_method": "containment",
+            "mapping_status": "mapped",
+            "raw_id": "semgrep:0:0",
+            "tool": "semgrep"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "bandit:0:0",
+          "semgrep:0:0"
+        ],
+        "reported_region": null,
+        "sink_kind": "os.system",
+        "sink_span": {
+          "endColumn": 15,
+          "endLine": 3,
+          "startColumn": 1,
+          "startLine": 3
+        },
+        "snapshot_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "unit_id": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+      },
+      {
+        "argument_role": "shell_command",
+        "callee": "os.system",
+        "mapping_status": "mapped",
+        "mappings": [
+          {
+            "mapping_method": "exact_span",
+            "mapping_status": "mapped",
+            "raw_id": "bandit:0:1",
+            "tool": "bandit"
+          },
+          {
+            "mapping_method": "containment",
+            "mapping_status": "mapped",
+            "raw_id": "semgrep:0:1",
+            "tool": "semgrep"
+          }
+        ],
+        "path": "app.py",
+        "raw_finding_ids": [
+          "bandit:0:1",
+          "semgrep:0:1"
+        ],
+        "reported_region": null,
+        "sink_kind": "os.system",
+        "sink_span": {
+          "endColumn": 51,
+          "endLine": 6,
+          "startColumn": 1,
+          "startLine": 6
+        },
+        "snapshot_sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "unit_id": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+      }
+    ]
+  },
+  "units": [
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "run_incomplete"
+        ],
+        "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "command-injection",
+      "argument_role": "shell_command",
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "same_call_site",
+        "key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+        "priority": "P2",
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "unit_ids": [
+          "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370"
+        ]
+      },
+      "candidate_key": "ac6b6a8910eabf7b276ad0c30e00b3c1bf1bb682dc0a4a9ae24d13400173c920",
+      "cwe": "CWE-78",
+      "decision_id": "D30_HIGH",
+      "disposition": "review",
+      "end_column": 15,
+      "end_line": 3,
+      "evidence_state": "unavailable",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "audit_oriented": true,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "B605",
+          "claim_family": "audit",
+          "claim_kind": "call_site_pattern",
+          "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "bandit:0:0",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "B605",
+          "source_location": null,
+          "source_type": "unknown",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "bandit",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        },
+        {
+          "audit_oriented": false,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "dangerous-system-call",
+          "claim_family": "flow",
+          "claim_kind": "modeled_remote_argument_flow",
+          "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "semgrep:0:0",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "tmp.dangerous-system-call",
+          "source_location": null,
+          "source_type": "remote",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "semgrep",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "cwe-78"
+          ],
+          "end_column": 15,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "bandit:0:0",
+          "raw_rule_id": "B605",
+          "rule_id": "B605",
+          "start_column": 1,
+          "start_line": 3,
+          "tool": "bandit",
+          "tool_pass": "bandit",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "CWE-78"
+          ],
+          "end_column": 14,
+          "end_line": 3,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "semgrep:0:0",
+          "raw_rule_id": "tmp.dangerous-system-call",
+          "rule_id": "dangerous-system-call",
+          "start_column": 11,
+          "start_line": 3,
+          "tool": "semgrep",
+          "tool_pass": "semgrep",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "run_incomplete"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "audit_claim",
+        "execution_candidate",
+        "flow_claim",
+        "important_unknown",
+        "not verified_blocker",
+        "shell_semantics",
+        "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+        "{'all': ['flow_claim', 'important_unknown']}",
+        "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+      ],
+      "path": "app.py",
+      "policy_id": "command-injection-priority",
+      "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "agreement": false,
+        "audit_claim": true,
+        "evidence_conflict": false,
+        "execution_candidate": true,
+        "flow_claim": true,
+        "important_unknown": true,
+        "shell_semantics": true,
+        "strong_flow": false,
+        "unresolved_unit": false,
+        "verified_blocker": false
+      },
+      "priority": "P2",
+      "reason": "Ưu tiên cao: audit_claim, execution_candidate, flow_claim, important_unknown, not verified_blocker, shell_semantics, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+      "reconciler_version": "reconcile-v0.1",
+      "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+      "rule_claims_version": "rule-claims-v3",
+      "shell_state": "absent",
+      "sink_kind": "os.system",
+      "source_types": [
+        "remote",
+        "unknown"
+      ],
+      "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+      "start_column": 1,
+      "start_line": 3,
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "unit_key": "8d364ac079f8890c7539f7751fb94ab60f59ffd817be7332004ed946ad7fe370",
+      "unknown_fields": [
+        "flow_claim_without_valid_endpoint_trace",
+        "source_library_input_or_unknown"
+      ]
+    },
+    {
+      "adjudication": {
+        "evidence": [],
+        "kept_because": [
+          "run_incomplete"
+        ],
+        "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+        "rule": null,
+        "rules": [],
+        "status": "kept",
+        "version": "adjudicate-v0.3"
+      },
+      "analysis_family": "command-injection",
+      "argument_role": "shell_command",
+      "blocker_proof": null,
+      "candidate": {
+        "basis": "same_call_site",
+        "key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+        "priority": "P2",
+        "tools": [
+          "bandit",
+          "semgrep"
+        ],
+        "unit_ids": [
+          "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d"
+        ]
+      },
+      "candidate_key": "fa6c138cbbdeebf18d07b6a1659e73bc0cde66b5a307f06133b1d0c2c938496e",
+      "cwe": "CWE-78",
+      "decision_id": "D30_HIGH",
+      "disposition": "review",
+      "end_column": 51,
+      "end_line": 6,
+      "evidence_state": "unavailable",
+      "filter_rule": null,
+      "finding_evidence": [
+        {
+          "audit_oriented": true,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "B605",
+          "claim_family": "audit",
+          "claim_kind": "call_site_pattern",
+          "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "bandit:0:1",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "B605",
+          "source_location": null,
+          "source_type": "unknown",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "bandit",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        },
+        {
+          "audit_oriented": false,
+          "candidate_status": "cwe78_candidate",
+          "canonical_rule_id": "dangerous-system-call",
+          "claim_family": "flow",
+          "claim_kind": "modeled_remote_argument_flow",
+          "definition_sha256": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+          "definition_verified": true,
+          "endpoint_argument_span": null,
+          "endpoint_location": null,
+          "endpoint_role": null,
+          "has_trace": false,
+          "raw_id": "semgrep:0:1",
+          "rule_claims_version": "rule-claims-v3",
+          "rule_id": "tmp.dangerous-system-call",
+          "source_location": null,
+          "source_type": "remote",
+          "source_type_basis": "pinned_rule_definition",
+          "tool": "semgrep",
+          "trace_length": 0,
+          "trace_ref": null,
+          "trace_status": "missing"
+        }
+      ],
+      "findings": [
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "cwe-78"
+          ],
+          "end_column": 51,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "bandit:0:1",
+          "raw_rule_id": "B605",
+          "rule_id": "B605",
+          "start_column": 1,
+          "start_line": 6,
+          "tool": "bandit",
+          "tool_pass": "bandit",
+          "unresolved_reason": null
+        },
+        {
+          "analysis_family": "command-injection",
+          "cwe_ids": [
+            "CWE-78"
+          ],
+          "end_column": 50,
+          "end_line": 6,
+          "family_basis": "pass_provenance",
+          "family_status": "resolved",
+          "file_path": "app.py",
+          "language": "python",
+          "mapped_cwes": [
+            "CWE-78"
+          ],
+          "raw_id": "semgrep:0:1",
+          "raw_rule_id": "tmp.dangerous-system-call",
+          "rule_id": "dangerous-system-call",
+          "start_column": 11,
+          "start_line": 6,
+          "tool": "semgrep",
+          "tool_pass": "semgrep",
+          "unresolved_reason": null
+        }
+      ],
+      "kept_because": [
+        "run_incomplete"
+      ],
+      "mapping_status": "mapped",
+      "matched_conditions": [
+        "audit_claim",
+        "execution_candidate",
+        "flow_claim",
+        "important_unknown",
+        "not verified_blocker",
+        "shell_semantics",
+        "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+        "{'all': ['flow_claim', 'important_unknown']}",
+        "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+      ],
+      "path": "app.py",
+      "policy_id": "command-injection-priority",
+      "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+      "policy_version": "0.2",
+      "predicate_values": {
+        "agreement": false,
+        "audit_claim": true,
+        "evidence_conflict": false,
+        "execution_candidate": true,
+        "flow_claim": true,
+        "important_unknown": true,
+        "shell_semantics": true,
+        "strong_flow": false,
+        "unresolved_unit": false,
+        "verified_blocker": false
+      },
+      "priority": "P2",
+      "reason": "Ưu tiên cao: audit_claim, execution_candidate, flow_claim, important_unknown, not verified_blocker, shell_semantics, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+      "reconciler_version": "reconcile-v0.1",
+      "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+      "rule_claims_version": "rule-claims-v3",
+      "shell_state": "absent",
+      "sink_kind": "os.system",
+      "source_types": [
+        "remote",
+        "unknown"
+      ],
+      "spec_sha256": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+      "start_column": 1,
+      "start_line": 6,
+      "tools": [
+        "bandit",
+        "semgrep"
+      ],
+      "unit_key": "e690291c5019afbf1f4e3d9a127c9b64b2077c19b3761e1a302510f4b30b702d",
+      "unknown_fields": [
+        "flow_claim_without_valid_endpoint_trace",
+        "source_library_input_or_unknown"
+      ]
+    }
+  ]
+}
