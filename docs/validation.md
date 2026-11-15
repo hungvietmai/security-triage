@@ -73,6 +73,9 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 | 2026-11-15 | nhánh `feat/multi-cwe-core`: các commit P1b của kế hoạch đa CWE trên `e8bf32a`, đo trước khi commit | Windows, `uv`: `ruff check`, `ruff format --check`, `mypy`, `pytest --cov`; `docker compose --profile test run --build --rm test` trên PostgreSQL; `unittest discover` cho thực nghiệm; `npm run check` và `npx playwright test` ở frontend. Chưa chạy hook hay CI | Backend 584 đạt, 2 bỏ qua, độ phủ 95,54% (baseline 540); trong Docker trên PostgreSQL 586 đạt, độ phủ 95,67%; 15 kịch bản golden của bốn profile không đổi; thực nghiệm 153 đạt; frontend 76 đạt (baseline 67); Playwright với HTTP giả 2 đạt | [plans/multi-cwe.md §17.3](plans/multi-cwe.md#173-kiểm-thử) |
 | 2026-11-15 | như trên | Stack `docker compose up --build` trên cơ sở dữ liệu cục bộ có 366 lượt quét lịch sử ở revision `0007` (đã `pg_dump` trước); so câu trả lời của API image cũ và image mới cho mọi lượt quét; vòng nâng/hạ migration trên cơ sở dữ liệu tạm | `0007 → 0008` giữ nguyên số hàng và mã băm nội dung của 3.557 đơn vị, 3.557 đánh giá, 5.791 cảnh báo; 0 giá trị API cũ trả về bị đổi trên 366 lượt quét, 3.557 đơn vị, 5.791 kết quả SARIF; `alembic check` sạch. Lần chạy đầu API mới trả lỗi 500 trên PostgreSQL (truy vấn đếm theo nhóm), đã sửa rồi so lại | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
 | 2026-11-15 | như trên | Chromium trên stack thật: `FULL_STACK_URL=http://127.0.0.1:5173 npx playwright test multi-cwe-full-stack`; nguồn OWASP BenchmarkPython `f129148` (dữ liệu phát triển) và `curling@0.2.0` | Lượt quét `multi-cwe-v0.1` tạo từ biểu mẫu hoàn tất: 239 cảnh báo, 149 đơn vị (24 CWE-78, 125 CWE-22), 64 đã gạn; lọc theo CWE, chi tiết đơn vị, báo cáo JSON và SARIF (239 kết quả) đều đúng; khóa đơn vị và quyết định trùng lượt ghép của P1a. Với `curling`, profile ghép cho đúng kết quả của `command-injection-v0.3`. Một nguồn tổng hợp có hai nhóm trong cùng file, quét bằng công cụ thật qua hàng đợi: cảnh báo CWE-22 nằm trong lời gọi CWE-78 vẫn là hai đơn vị, 0 đơn vị lẫn nhóm, mỗi nhóm bằng lượt quét riêng. Cùng nguồn thêm một file sai cú pháp: lượt quét `partial`, 0 đơn vị bị gạn, nhóm CWE-22 không đổi. Lượt quét không thu nhận được nguồn hiện "thất bại" kèm lý do. Đơn vị `F10_FAMILY_NOT_RANKED`, database hỏng và cảnh báo chưa xác định nhóm mới chỉ có kiểm thử tự động | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
+| 2026-11-15 | `04c8e8a` (đầu nhánh `feat/multi-cwe-core`) | Stack thật, thêm một worker cùng image nghe hàng đợi riêng với tệp bọc `codeql` tiêm đúng một lỗi mỗi lượt; nguồn tổng hợp có hai nhóm trong cùng file | `database create` thất bại: lượt quét `partial`, nhóm lệnh không gạn gì, nhóm đường dẫn thất bại. Lượt pack CWE-22 thoát mã lỗi: 4 cảnh báo thành 2 đơn vị `F10_FAMILY_NOT_RANKED` ở danh sách rà, nhóm lệnh không đổi. Bước bằng chứng nhóm lệnh thất bại: đơn vị có luồng ở lại với `evidence_step_failed`. Cả ba lượt giữ đủ cảnh báo trong SARIF, 0 đơn vị lẫn nhóm | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
+| 2026-11-15 | `04c8e8a` | Stack thật; `adeyosemanputra/pygoat@2aa4cc1` (dữ liệu phát triển) quét bằng ba profile, tiêu chí ghi trước khi quét | Một lượt quét có cả hai nhóm (4 đơn vị CWE-78, 3 đơn vị CWE-22), 14/14 cảnh báo trong đúng một đơn vị, mỗi nhóm bằng lượt quét riêng. **Tiêu chí "một file có cả hai nhóm" không đạt**; không thử kho khác | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
+| 2026-11-15 | `04c8e8a` | Không push: `sh .husky/pre-push`; các bước CI chạy được tại chỗ; `scan_parity.py` với CLI chạy trong image worker | Script pre-push đạt (frontend 76, backend 585); `openapi.json` và kiểu sinh ra khớp; build, Compose, `check_worker`, `alembic check` đạt; `scan-parity` trên `curling@0.2.0` đạt mọi điều kiện. **`pip-audit` không đạt: `msgpack 1.2.2`, `CVE-2026-114613`**. Job `reconciliation-integration` chưa chạy | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
 
 **Chưa xác minh:**
 
@@ -80,12 +83,17 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 - Toàn stack Docker trên các commit ngày 27/10 (`2344e5b` đã được kiểm, xem bảng trên).
 - Image `experiments/Dockerfile` và các job CI dùng nó sau khi `install-scanners.sh` cài thêm
   Bandit, Node.js và ESLint: chưa dựng lại ở máy cục bộ.
-- Bước truy vấn bằng chứng thất bại trên lượt quét thật: mới có test. (Lượt quét chạy dở đã gặp
-  trên lượt quét thật ngày 2026-11-14: không ứng viên nào bị gạn, đúng thiết kế.)
+- Bước truy vấn bằng chứng thất bại **tự phát** trên lượt quét thật: chưa gặp. Ngày 2026-11-15 nó
+  được tạo bằng lỗi tiêm ở ranh giới công cụ (bảng trên). (Lượt quét chạy dở đã gặp trên lượt quét
+  thật ngày 2026-11-14: không ứng viên nào bị gạn, đúng thiết kế.)
 - Quy tắc gạn G1 và G3 trên dữ liệu độc lập: chưa có lượt quét độc lập nào có ứng viên đủ bằng
   chứng cho hai quy tắc này. (G2 đã gạn 19 ứng viên trên lượt quét thật ngày 2026-11-14.)
 
 ## 3. Lỗi đã biết
+
+- **`pip-audit` báo `msgpack 1.2.2` có `CVE-2026-114613`** (phát hiện 2026-11-15, bản sửa 1.2.3).
+  `backend/uv.lock` không đổi từ 2026-09-26, nên bước `pip-audit` của CI sẽ không đạt cho tới khi
+  dependency này được nâng. Chưa sửa.
 
 - **Script bị khóa trên Windows:** code chưa khóa đọc/ghi bằng UTF-8. Các script bị khóa (v0.3,
   owasp-bp-pilot, wave-c, `known_locations.py`, `patch_hunks.py`…) vẫn dùng bảng mã mặc định và

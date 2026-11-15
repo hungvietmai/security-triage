@@ -909,21 +909,55 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
 8. **Ba ca trên được kiểm lại trong giao diện bằng Chromium:** hai hàng ở `app.py:29` thuộc hai nhóm;
    lọc CWE-22 chỉ còn hàng của nhóm đó; trang lượt chạy dở hiện trạng thái từng nhóm, "Đã gạn: 0" và
    lý do giữ trong chi tiết đơn vị.
-9. **Chi phí trong worker** (một lần đo): Python tạo database 12,4 s, phân tích nhóm lệnh 41,5 s,
+9. **Lỗi công cụ tiêm ở ranh giới công cụ.** Một worker thứ hai, cùng image, nghe một hàng đợi riêng
+   và có một tệp bọc `codeql` đứng trước trên `PATH`; tệp bọc gọi CodeQL thật trừ đúng một lỗi được
+   chọn. Mã ứng dụng, profile và CodeQL không đổi. Nguồn là snapshot tổng hợp ở điểm 5.
+
+   | Lỗi tiêm | Lượt quét | Nhóm lệnh | Nhóm đường dẫn | Cảnh báo |
+   |---|---|---|---|---|
+   | `database create` thất bại | `partial`, nêu lỗi của cả hai lượt CodeQL | Chạy dở: 3 đơn vị từ công cụ sàng lọc, đều `run_incomplete`, 0 gạn | Thất bại, không có cảnh báo nào để giữ | 6/6 trong SARIF |
+   | Lượt pack CWE-22 phân tích xong nhưng thoát mã khác 0 | `partial` | Không đổi so với lượt sạch (1 đơn vị gạn theo G2) | Thất bại; 4 cảnh báo thành **2 đơn vị `F10_FAMILY_NOT_RANKED`**, mức U, danh sách rà, bằng chứng "không lấy được" | 12/12 trong SARIF |
+   | Truy vấn bằng chứng của nhóm lệnh thất bại | `completed`, bước `codeql-evidence` ghi `failed` | 2 đơn vị có luồng ở lại với `evidence_step_failed`; đơn vị lệnh hằng vẫn gạn theo G2 vì không cần bước này | Không đổi | 12/12 trong SARIF |
+
+   Ở cả ba lượt: mỗi cảnh báo nằm trong đúng một đơn vị và không đơn vị nào lẫn nhóm.
+10. **Dự án có thật, tiêu chí ghi trước.** Trước khi quét, tiêu chí và ứng viên duy nhất được ghi vào
+    `artifacts/multi-cwe-p1b/real-project-CRITERIA.json`: `adeyosemanputra/pygoat@2aa4cc1` (dữ liệu
+    phát triển; từng bị loại trước khi quét ở đợt kiểm tra độc lập đầu tiên, nên chưa bao giờ thuộc
+    một lượt quét đã đăng ký). Kết quả: một lượt quét có cả hai nhóm — 4 đơn vị CWE-78, 3 đơn vị
+    CWE-22, 14 cảnh báo mỗi cái trong đúng một đơn vị, 0 đơn vị lẫn nhóm, mỗi nhóm bằng lượt quét
+    riêng. **Tiêu chí "có file chứa đơn vị của cả hai nhóm" không đạt:** hai nhóm nằm ở các file khác
+    nhau. Theo đúng điều đã ghi trước, không thử thêm kho nào.
+11. **Hook pre-push và các bước CI chạy được tại chỗ** (không push): script `.husky/pre-push` đạt
+    (frontend 76, backend 585 kiểm thử); `openapi.json` khớp API đang chạy; kiểu sinh ra khớp
+    `openapi.json`; `npm run build`, hai cấu hình Compose, `check_worker` và `alembic check` đạt.
+    `pip-audit` **không đạt**: `msgpack 1.2.2` có `CVE-2026-114613` (bản sửa 1.2.3). P1b không đổi
+    dependency nào (`uv.lock` không đổi từ 26/09), nên bước này của CI sẽ đỏ dù có P1b hay không.
+12. **`scan-parity`:** CLI nghiên cứu (chạy trong image worker thay cho image thực nghiệm của CI) và
+    API cho cùng kết quả trên `curling@0.2.0` với profile mặc định v0.1: cùng `unit_id`, mức, số cảnh
+    báo theo công cụ và theo đơn vị, hash chính sách, và đúng một đơn vị P1.
+13. **Chi phí trong worker** (một lần đo): Python tạo database 12,4 s, phân tích nhóm lệnh 41,5 s,
    bằng chứng nhóm lệnh 31,4 s, lượt pack CWE-22 32,4 s; cả lượt quét hai ngôn ngữ khoảng 3,5 phút.
    Các số này nhỏ hơn nhiều so với mục 16.4 vì ở đó thư mục đầu ra nằm trên ổ gắn từ Windows.
 
 ### 17.5 Chưa đạt hoặc chưa kiểm chứng
 
-- **Một phần ca lỗi vẫn chỉ có kiểm thử tự động** (SQLite và PostgreSQL, công cụ giả): lượt pack
-  CWE-22 chạy dở hoặc trả rule lạ (đơn vị `F10_FAMILY_NOT_RANKED`), database CodeQL hỏng, bước bằng
-  chứng lỗi, cảnh báo chưa xác định nhóm. Trên stack thật mới gặp: lượt chạy dở của nhóm lệnh và
-  lượt quét thất bại khi thu nhận nguồn (mục 17.4, điểm 6 và 7). Không có cách tự nhiên để làm
-  CodeQL thật chạy dở trên dữ liệu đã thử: file sai cú pháp không làm lượt CodeQL thành `partial`.
-- Hai nhóm trong cùng một file đã được chạy bằng công cụ thật, nhưng trên **nguồn tổng hợp tự
-  viết**, không phải mã của một dự án có thật; BenchmarkPython không có file nào như vậy (mục 16.5).
-- Hook pre-push và CI chưa chạy vì chưa push (hook pre-commit đã chạy ở từng commit). Trang "Cảnh
-  báo" tổng hợp và API liệt kê lượt quét vẫn chưa có, như trước.
+- **Ca lỗi do công cụ trên stack thật là lỗi được tiêm**, không phải lỗi tự phát: database hỏng,
+  lượt pack CWE-22 thoát mã lỗi (đơn vị `F10_FAMILY_NOT_RANKED`) và bước bằng chứng lỗi đều đến từ
+  tệp bọc `codeql` (điểm 9). Lỗi tự phát đã gặp chỉ có lượt chạy dở của nhóm lệnh và lượt quét không
+  thu nhận được nguồn (điểm 6, 7).
+- **Cảnh báo chưa xác định nhóm chỉ có kiểm thử tự động.** Với `multi-cwe-v0.1`, mỗi lượt chạy công
+  cụ phục vụ đúng một thành viên nên trạng thái này không thể sinh ra trên stack thật; nó chỉ xuất
+  hiện khi một profile sau này cho một lượt chạy phục vụ nhiều nhóm.
+- **Hai nhóm trong cùng một file chưa có trên mã của dự án có thật.** Công cụ thật đã chạy trên
+  nguồn tổng hợp tự viết (điểm 5); trên hai nguồn thật đã quét (BenchmarkPython, pygoat) hai nhóm
+  nằm ở các file khác nhau, và tiêu chí ghi trước cho pygoat không đạt (điểm 10).
+- **`pip-audit` không đạt** vì `msgpack 1.2.2` (điểm 11); chưa nâng phiên bản vì đổi dependency nằm
+  ngoài P1b.
+- Commit `dc1db13` không qua `tsc` của frontend khi đứng một mình: một dòng của `get-units.ts` nằm
+  ở commit kế tiếp. Đầu nhánh thì sạch.
+- CI trên GitHub chưa chạy vì chưa push; hook pre-commit đã chạy ở từng commit và script pre-push
+  đã chạy tại chỗ (điểm 11). Job `reconciliation-integration` của CI (dựng image thực nghiệm) chưa
+  chạy tại chỗ. Trang "Cảnh báo" tổng hợp và API liệt kê lượt quét vẫn chưa có, như trước.
 - `multi-cwe-v0.1` chưa có số liệu đánh giá riêng; số liệu ở trên là kiểm chứng kỹ thuật trên dữ
   liệu phát triển, không dùng nhãn.
 - P1b-7 (cho profile đơn đi qua lớp ghép) không làm; hai đường vẫn song song ở `task.py`.
