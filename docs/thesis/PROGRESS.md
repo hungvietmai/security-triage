@@ -84,14 +84,16 @@ Ghi trong [docs/validation.md](../validation.md), mục 2, các dòng ngày 2026
 
 1. Push khi chủ đề án quyết định (nhánh trên remote đang ở `3feb328`; các commit sau đó chỉ ở local). Không commit file PDF đề cương.
 2. Tập giữ lại của `pairs-v1` đã dùng xong; phiên bản sau v0.3 cần một tập giữ lại mới.
-3. Nhãn cho 78 ứng viên JavaScript của 84 nguồn đã có, do trợ lý AI gán (15/11): 47 có lỗi, 14
-   an toàn, 17 chưa xác định. **Chưa có người kiểm**; phiếu rà ở
-   `artifacts/js-labels-v0.3/REVIEW_SHEET.md`, cách ghi nhận ở
+3. Nhãn cho 78 ứng viên JavaScript của 84 nguồn do trợ lý AI gán (15/11). Chủ đề án đã rà 31
+   nhãn (mọi nhãn an toàn và chưa xác định) và sửa 12; sau khi rà: 54 có lỗi, 11 an toàn, 13 chưa
+   xác định. **Còn 47 nhãn "có lỗi" chưa được người kiểm**: tệp rà ở
+   `artifacts/js-labels-v0.3/REVIEW_VULNERABLE_47.md`, cách ghi nhận ở
    [js-labels-v0.3/](../../experiments/evaluation/js-labels-v0.3/README.md). Mã ứng dụng thật ngoài các package này
    vẫn chưa có nhãn.
-4. Bằng chứng gạn cho bốn loại cảnh báo sai JavaScript còn lại (dòng `require`, giá trị đã kiểm
-   tra hoặc trích dẫn, giá trị nội bộ, mã kiểm thử); cách biểu diễn một cảnh báo liên quan tới
-   nhiều lời gọi (14 cảnh báo còn ở hàng U, xem `js-matching-v0.3/READING.md`).
+4. Bằng chứng gạn cho các loại cảnh báo sai JavaScript còn lại (giá trị đã kiểm tra hoặc trích
+   dẫn, giá trị nội bộ, lời gọi không qua shell); bộ định vị chưa thấy lời gọi qua
+   `_child_process.default.exec` của mã Babel (`git-parse`); cách biểu diễn một cảnh báo liên quan
+   tới nhiều lời gọi (14 cảnh báo còn ở hàng U, xem `js-matching-v0.3/READING.md`).
 5. Duyệt văn bản ba chương, chuyển sang mẫu trình bày của Học viện; sửa danh mục tài liệu tham
    khảo theo bảng đối chiếu ở cuối Chương 1 ([1], [6], [8] sai tác giả; không tìm thấy [9]).
 6. Quyết định có thu hẹp nguyên tắc "chạy dở thì giữ" xuống mức tệp hay không: hiện một tệp
