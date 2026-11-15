@@ -20,7 +20,7 @@ from app.scanners.process import (
     tool_version,
 )
 from app.scanners.sarif import Finding
-from app.scanners.semgrep import run_semgrep, run_semgrep_evidence
+from app.scanners.semgrep import control_semgrep_targets, run_semgrep, run_semgrep_evidence
 
 PipelineStatus = Literal["completed", "partial", "failed"]
 
@@ -72,6 +72,7 @@ def run_pipeline(
     eslint_binary: str = "eslint",
     codeql_evidence: Mapping[str, Any] | None = None,
     semgrep_evidence: Mapping[str, Any] | None = None,
+    semgrep_target_selection: str | None = None,
     invoke_fn: InvokeCallable = invoke,
     tool_version_fn: ToolVersionCallable = tool_version,
 ) -> PipelineResult:
@@ -84,9 +85,13 @@ def run_pipeline(
     recorded as the step "codeql-evidence" and never changes the scan's status.
     `semgrep_evidence` is {rules: {path, sha256}}: a pinned file of evidence rules that
     Semgrep runs after its scan, recorded as the step "semgrep-evidence" the same way.
+    `semgrep_target_selection` names the ignore file the worker writes into the extracted
+    source before any tool runs (see `control_semgrep_targets`); None keeps Semgrep's default.
     """
     if max_workers < 1:
         raise ValueError("Scanner workers must be positive")
+    if semgrep_target_selection is not None:
+        control_semgrep_targets(source, semgrep_target_selection)
 
     def run_one(
         tool: ToolName, prior_steps: dict[str, ProcessRecord] | None = None

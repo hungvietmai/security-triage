@@ -94,3 +94,27 @@ BASE=http://localhost:5173 OUT=../artifacts/demo-adjudication \
 The script is piped to Node so that `playwright` resolves from `frontend/node_modules`.
 This is a demonstration on development data, not an evaluation: the numbers it checks are
 the ones recorded in [docs/thesis/chapter-3-results.md](../thesis/chapter-3-results.md).
+
+## JavaScript matching and the constant-command filter (profile v0.3)
+
+**Complete stack, no mocked HTTP.** [js-matching-demo.mjs](js-matching-demo.mjs) opens two
+scans the worker finished with profile `command-injection-v0.3` and fails if the page shows
+anything else than expected. Both packages are development data.
+
+| Step | Package | What the page shows | Screenshot |
+|---|---|---|---|
+| Matching | `kill-process-by-name@1.0.5` | Two calls through a two-step alias (`var exec = childProcess.exec`), each with the alerts of CodeQL and ESLint; nothing unmatched. With v0.2 all four alerts were unmatched (queue U) | [js-matching-scan.png](js-matching-scan.png) |
+| Decision: kept | same | The call stays in the main review list; the original alerts of both tools are listed | [js-matching-kept-detail.png](js-matching-kept-detail.png) |
+| Decision: filtered | `arpping@2.0.0` | One call, reported by ESLint only, is in the filtered list with rule G4 | [js-filtered-list.png](js-filtered-list.png) |
+| Reopen | same | The decision shows the evidence rule, the span of the call and the hash of the rule file; the original alert is still there | [js-filtered-detail.png](js-filtered-detail.png) |
+
+```bash
+cd frontend
+BASE=http://localhost:5173 OUT=../artifacts/demo-js-matching \
+  SCAN_KEPT=<scan_id in experiments/evaluation/js-matching-v0.3/inputs/kill-process-by-name_1.0.5/report.json> \
+  SCAN_FILTERED=<scan_id in .../inputs/arpping_2.0.0/report.json> \
+  node --input-type=module - < ../docs/demo/js-matching-demo.mjs
+```
+
+Run on 2026-11-15: all five steps passed. The scan IDs exist only in the local database; scan
+the two packages again with profile v0.3 to reproduce.

@@ -18,6 +18,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from app.scanners.semgrep import TARGET_SELECTIONS
+
 
 class ProfileError(ValueError):
     """The profile is malformed, incomplete, or a pinned file does not match its hash."""
@@ -192,6 +194,9 @@ def load_profile(root: Path, manifest: str) -> ScanProfile:
                         raise ProfileError(f"Config and profile pin {query} differently")
                 if set(evidence["queries"]) != set(evidence["query_sha256"]):
                     raise ProfileError("Evidence queries and their hashes differ")
+            selection = config.get("semgrep_target_selection")
+            if selection is not None and selection not in TARGET_SELECTIONS:
+                raise ProfileError(f"Unknown Semgrep target selection: {selection}")
             semgrep_evidence = config.get("adjudication", {}).get("semgrep_evidence")
             if semgrep_evidence is not None:
                 rules = semgrep_evidence["rules"]

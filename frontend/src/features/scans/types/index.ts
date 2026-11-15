@@ -44,6 +44,8 @@ export const FILTER_RULES: Record<string, string> = {
     "Semgrep chứng minh luồng chỉ đi qua nhánh không bao giờ chạy",
   G1_CODEQL_SAFETY_EVIDENCE: "Bằng chứng an toàn của CodeQL loại hết luồng",
   G2_LITERAL_COMMAND: "Lệnh là hằng (hệ thống và Bandit cùng xác nhận)",
+  G4_JS_CONSTANT_COMMAND:
+    "Semgrep chứng minh chuỗi lệnh của lời gọi JavaScript là hằng",
 };
 export const UNITS_PAGE_SIZE = 20;
 export const SCAN_POLL_INTERVAL = 3_000;

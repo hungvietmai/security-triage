@@ -1,0 +1,55 @@
+{
+  "profile_id": "command-injection-v0.3",
+  "languages": {
+    "javascript": {
+      "config": "profiles/command-injection-v0.3/javascript.json",
+      "sink_locator": "experiments/locators/sink-locator-v1-javascript.yaml"
+    },
+    "python": {
+      "config": "profiles/command-injection-v0.3/python.json"
+    }
+  },
+  "policy": {
+    "source": "profiles/command-injection-v0.2/priority-v0.2.yaml",
+    "compiled": "profiles/command-injection-v0.2/priority-v0.2.json"
+  },
+  "specification": "profiles/command-injection-v0.3/PRIORITY_V0_3.md",
+  "rule_claims": "profiles/command-injection-v0.2/rule-claims-v3.json",
+  "semgrep_rule_ids": {
+    "experiments/rules/batch-01/dangerous-spawn-shell.yaml": "dangerous-spawn-shell",
+    "experiments/rules/batch-01/detect-child-process.yaml": "detect-child-process",
+    "experiments/rules/batch-01/shelljs-exec-injection.yaml": "shelljs-exec-injection",
+    "experiments/rules/batch-01/spawn-shell-true.yaml": "spawn-shell-true",
+    "experiments/rules/python-upstream/dangerous-subprocess-use.yaml": "dangerous-subprocess-use",
+    "experiments/rules/python-upstream/dangerous-system-call.yaml": "dangerous-system-call",
+    "experiments/rules/python-upstream/subprocess-injection.yaml": "subprocess-injection",
+    "experiments/rules/python-upstream/subprocess-shell-true.yaml": "subprocess-shell-true"
+  },
+  "files": {
+    "experiments/locators/sink-locator-v1-javascript.yaml": "e12eb294f0b6c16e2e0a6e039e4bb6a5747f1135cce483da127e4d3bbe35f443",
+    "experiments/rules/batch-01/dangerous-spawn-shell.yaml": "1a81f91e9ad9ea4c62a9b0bda4dcf3cf2fc1bb6f2d9e2580ea3effa6bfe9ba74",
+    "experiments/rules/batch-01/detect-child-process.yaml": "baee696b05b3c38fa5a82435ae458026ec81ce9a6e6a73116d68dc963496296c",
+    "experiments/rules/batch-01/shelljs-exec-injection.yaml": "adfff907f257d82341c060dca56d2361bc2e750c89243b89b781d0d9678000bb",
+    "experiments/rules/batch-01/spawn-shell-true.yaml": "452fb593301edca721a151ed3c051f428ca1df1fc1af613380d58b076601b5ba",
+    "experiments/rules/python-upstream/dangerous-subprocess-use.yaml": "9aaf4e9fcb13afed4e60c04def4132f9f7f2baac3414dc1d7bbd5dcb29db0586",
+    "experiments/rules/python-upstream/dangerous-system-call.yaml": "07337088f457e2a1c96ca707bb598ad0676a53290ee5f19d82105fe87e10bf43",
+    "experiments/rules/python-upstream/subprocess-injection.yaml": "3999fd54bda682edd0391678e362cd8c70b313d4aeb24252179f374604c73d66",
+    "experiments/rules/python-upstream/subprocess-shell-true.yaml": "753ba9d29d592b3d7f5086e671e424ee05138acbf75a39b663d92aa3275f5380",
+    "profiles/command-injection-v0.2/priority-v0.2.json": "bd62725526a88eebf5966ddac057018e5654b834ba91f45d77500f24f02f1dbf",
+    "profiles/command-injection-v0.2/priority-v0.2.yaml": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+    "profiles/command-injection-v0.2/rule-claims-v3.json": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+    "profiles/command-injection-v0.3/PRIORITY_V0_3.md": "c8beb99c3833b767e2fb32dd14a33af01951e16dbaf667bcd02df15274ac9ac7",
+    "profiles/command-injection-v0.3/javascript.json": "8dd7c88dd051ccbb09b49fdc158a6b80404a1372ee411646f504ae331421bd52",
+    "profiles/command-injection-v0.3/python.json": "9e04329f3427d9aea82de4bf94e033b575df01c2d17488f8ef81952c5240c7a5",
+    "rules/codeql/command-injection-evidence-v0.2/SafetyEvidence.qll": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+    "rules/codeql/command-injection-evidence-v0.2/codeql-pack.lock.yml": "b4e2a719729f32ab25998458b1a3685fabf1957c48ce6b3c6ff074b17e658a27",
+    "rules/codeql/command-injection-evidence-v0.2/qlpack.yml": "f2de0c359b69dd017e6285bde4df4a169f451fd197565ffdf89171192f85904a",
+    "rules/codeql/command-injection-evidence-v0.2/queries/cwe78_all.ql": "c586238c8a3b56ab9f82753249bae6f8cae89f333b60d17410817d1ddce5d609",
+    "rules/codeql/command-injection-evidence-v0.2/queries/cwe78_none.ql": "d2b2caa767431ccdefdf5901f716a5fcc84848f7b0bc96000ff6b5adcfeabb32",
+    "rules/semgrep/command-injection-evidence-js-v0.1/constant-command.yaml": "810115dbee745a886c3cb00c18e38c2aca5dfe92a6acdcc92f5502e2bee232f3",
+    "rules/semgrep/command-injection-evidence-v0.1/dead-branch.yaml": "8a3b503535dd443ab31b068f4075a717f87a735591ca78300cdc4c55b961b789",
+    "tools/bandit/bandit.ini": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+    "tools/eslint/eslint.config.mjs": "1081d255fe8fa6e06fff141ce3bf8649cdbadf77393ac474428096ccb348de7e",
+    "tools/eslint/package-lock.json": "544d56db0947129eb5a82ebfb566d606b7ad63f19967b92fd3cca684e2e01e85"
+  }
+}

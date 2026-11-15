@@ -23,7 +23,7 @@ from typing import Any, Literal
 from app.triage.reconcile import _canonical_id, _region, contains, normalized_path
 from app.triage.types import Span
 
-ADJUDICATION_VERSION = "adjudicate-v0.2"
+ADJUDICATION_VERSION = "adjudicate-v0.3"
 Disposition = Literal["review", "filtered"]
 REVIEW: Disposition = "review"
 FILTERED: Disposition = "filtered"
@@ -32,6 +32,7 @@ FILTERED: Disposition = "filtered"
 SEMGREP_DEAD_BRANCH = "G3_SEMGREP_DEAD_BRANCH"
 CODEQL_SAFETY_EVIDENCE = "G1_CODEQL_SAFETY_EVIDENCE"
 LITERAL_COMMAND = "G2_LITERAL_COMMAND"
+JS_CONSTANT_COMMAND = "G4_JS_CONSTANT_COMMAND"
 # Reasons a candidate stays in the main list, recorded so a reviewer sees what was missing.
 RUN_INCOMPLETE = "run_incomplete"
 NO_EVIDENCE = "no_refuting_evidence"
@@ -47,6 +48,9 @@ FLOW_WITHOUT_TRACE = "flow_claim_without_a_trace_to_check"
 # Bandit tests that rate a call LOW exactly when its command argument is a string literal
 # (bandit/plugins/injection_shell.py, _evaluate_shell_call).
 _BANDIT_LITERAL_TESTS = frozenset({"B602", "B605"})
+# Calls whose first argument is the whole shell command. With spawn or execFile a constant
+# program still takes arguments, so a constant first argument proves nothing there.
+_SHELL_STRING_SINKS = frozenset({"child_process.exec", "child_process.execSync"})
 _TIER_ORDER = {"P1": 0, "P2": 1, "U": 2, "P3": 3, "P4": 4}
 
 _REASONS = {
@@ -62,6 +66,11 @@ _REASONS = {
     "độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW "
     "dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh "
     "báo gốc được giữ để xem lại.",
+    JS_CONSTANT_COMMAND: "Đã gạn khỏi danh sách rà chính: luật bằng chứng của Semgrep chứng minh "
+    "chuỗi lệnh của lời gọi này là hằng lúc biên dịch (kể cả khi lệnh được truyền qua biến), và "
+    "lời gọi nhận toàn bộ lệnh trong một chuỗi (exec, execSync). Không công cụ nào khẳng định "
+    "luồng dữ liệu tới lệnh; cảnh báo còn lại chỉ bắt mẫu cú pháp. Cảnh báo gốc được giữ để xem "
+    "lại.",
 }
 _KEPT = {
     RUN_INCOMPLETE: "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
@@ -149,6 +158,16 @@ def semgrep_evidence_index(
             path, (start_line, _, end_line, _) = location
             index["dead"].add((path, start_line, end_line))
     return index
+
+
+def constant_evidence_index(findings: Sequence[Finding], *, rule: str) -> set[Location]:
+    """Call locations whose command string the constant-command evidence rule reports."""
+    found: set[Location] = set()
+    for finding in findings:
+        location = _location(finding)
+        if location is not None and str(finding.get("rule_id") or "").rsplit(".", 1)[-1] == rule:
+            found.add(location)
+    return found
 
 
 def _bandit_literal(finding: Finding) -> bool | None:
@@ -295,6 +314,47 @@ def _literal_rule(
     ], []
 
 
+def _constant_rule(
+    units: Sequence[Mapping[str, Any]],
+    flow_claims: Sequence[Finding],
+    evidence: Mapping[str, Any] | None,
+) -> Verdict:
+    """G4: Semgrep proves the shell command string of the call a compile-time constant."""
+    calls = [(unit["path"], unit["sink_span"]) for unit in units if unit.get("sink_span")]
+    if evidence is None or not calls:
+        return None, []
+    if any(unit.get("sink_kind") not in _SHELL_STRING_SINKS for unit in units):
+        return None, []
+    if evidence["status"] != "completed":
+        return None, [EVIDENCE_STEP_FAILED]
+    constant: set[Location] = evidence["locations"]
+    proven = [
+        (
+            path,
+            (span["startLine"], span["startColumn"], span["endLine"], span["endColumn"]),
+        )
+        in constant
+        for path, span in calls
+    ]
+    # The evidence must be about exactly this call, not about a call around or inside it.
+    if not all(proven):
+        return None, []
+    if flow_claims:
+        return None, [INDEPENDENT_FLOW_CLAIM]
+    path, span = calls[0]
+    return [
+        {
+            "rule": JS_CONSTANT_COMMAND,
+            "tool": evidence["tool"],
+            "tool_version": evidence["tool_version"],
+            "kind": "command_is_a_compile_time_constant",
+            "evidence_rule": evidence["evidence_rule"],
+            "call": {"path": path, **span},
+            "rules_sha256": evidence["rules_sha256"],
+        }
+    ], []
+
+
 def _decide(
     units: Sequence[Mapping[str, Any]],
     members: Sequence[Mapping[str, Any]],
@@ -303,6 +363,7 @@ def _decide(
     complete: bool,
     codeql_evidence: Mapping[str, Any] | None,
     semgrep_evidence: Mapping[str, Any] | None,
+    constant_evidence: Mapping[str, Any] | None,
 ) -> dict[str, Any]:
     """One candidate's decision. Every rule is checked; any satisfied rule filters."""
     if not complete:
@@ -331,6 +392,7 @@ def _decide(
         _semgrep_rule(calls, flow_claims, semgrep_evidence, codeql_verdict[1]),
         codeql_verdict,
         _literal_rule(members, findings, flow_claims),
+        _constant_rule(units, flow_claims, constant_evidence),
     ]
     evidence = [record for records, _ in verdicts if records for record in records]
     rules = list(dict.fromkeys(record["rule"] for record in evidence))
@@ -360,6 +422,7 @@ def adjudicate(
     complete: bool,
     codeql_evidence: Mapping[str, Any] | None = None,
     semgrep_evidence: Mapping[str, Any] | None = None,
+    constant_evidence: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Return the assessments with their candidate, disposition and adjudication record.
 
@@ -367,8 +430,10 @@ def adjudicate(
     status, baseline_rules, evidence_rule, query_sha256, locations}, with locations from
     `codeql_evidence_index`. `semgrep_evidence` describes a run of Semgrep's dead-branch rules:
     {tool, tool_version, status, baseline_rule, evidence_rule, dead_code_rule, rules_sha256,
-    locations}, with locations from `semgrep_evidence_index`. `complete` is False when any
-    scanner of the run was partial or failed; nothing is filtered then.
+    locations}, with locations from `semgrep_evidence_index`. `constant_evidence` describes a
+    run of Semgrep's constant-command rule: {tool, tool_version, status, evidence_rule,
+    rules_sha256, locations}, with locations from `constant_evidence_index`. `complete` is False
+    when any scanner of the run was partial or failed; nothing is filtered then.
     """
     by_unit = {assessment["unit_id"]: assessment for assessment in assessments}
     by_raw_id = {finding["raw_id"]: finding for finding in findings}
@@ -392,6 +457,7 @@ def adjudicate(
             complete=complete,
             codeql_evidence=codeql_evidence,
             semgrep_evidence=semgrep_evidence,
+            constant_evidence=constant_evidence,
         )
         if decision["rules"]:
             reason = " ".join(

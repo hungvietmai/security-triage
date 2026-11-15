@@ -4,7 +4,7 @@ import pytest
 
 from app.scanners.process import ProcessRecord
 from app.scanners.provenance import digest
-from app.scanners.semgrep import run_semgrep, run_sink_locator
+from app.scanners.semgrep import control_semgrep_targets, run_semgrep, run_sink_locator
 
 
 def test_run_semgrep_preserves_cli_arguments(tmp_path):
@@ -160,3 +160,22 @@ def test_run_sink_locator_returns_json_and_fails_closed(tmp_path):
             timeout_seconds=1,
             invoke_fn=failing_invoke,
         )
+
+
+def test_the_scanned_source_cannot_decide_which_files_semgrep_skips(tmp_path):
+    # A repository can ship ignore files at any depth; Semgrep would honour each of them.
+    (tmp_path / "build").mkdir()
+    (tmp_path / "build" / "app.js").write_text("exec(x)\n", encoding="utf-8")
+    (tmp_path / ".semgrepignore").write_text("build/\n", encoding="utf-8")
+    (tmp_path / "build" / ".semgrepignore").write_text("*.js\n", encoding="utf-8")
+
+    assert control_semgrep_targets(tmp_path, "worker-controlled-v1") == 2
+    assert [p.relative_to(tmp_path).as_posix() for p in tmp_path.rglob(".semgrepignore")] == [
+        ".semgrepignore"
+    ]
+    assert (tmp_path / ".semgrepignore").read_bytes() == b"node_modules/\n"
+    # Source files are left alone, and a second call (the next language) changes nothing.
+    assert control_semgrep_targets(tmp_path, "worker-controlled-v1") == 1
+    assert (tmp_path / "build" / "app.js").read_text(encoding="utf-8") == "exec(x)\n"
+    with pytest.raises(KeyError):
+        control_semgrep_targets(tmp_path, "unknown-selection")

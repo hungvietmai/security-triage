@@ -42,15 +42,20 @@ class GitHubSource(InputSchema):
 
 class ScanCreate(InputSchema):
     source: Annotated[NpmSource | GitHubSource, Field(discriminator="kind")]
-    profile: Literal["command-injection-v0.1", "command-injection-v0.2", "path-traversal-v0.2"] = (
-        Field(
-            default="command-injection-v0.1",
-            description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
-            "CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit "
-            "(Python) and eslint-plugin-security (JavaScript/TypeScript) added to the "
-            "screening step, priority policy v0.2. path-traversal-v0.2: CWE-22, Python, "
-            "CodeQL safety evidence.",
-        )
+    profile: Literal[
+        "command-injection-v0.1",
+        "command-injection-v0.2",
+        "command-injection-v0.3",
+        "path-traversal-v0.2",
+    ] = Field(
+        default="command-injection-v0.1",
+        description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
+        "CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit "
+        "(Python) and eslint-plugin-security (JavaScript/TypeScript) added to the "
+        "screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the "
+        "JavaScript sink locator v1, a Semgrep target selection the scanned source cannot "
+        "change, and a constant-command filter rule for JavaScript/TypeScript. "
+        "path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
     )
 
 

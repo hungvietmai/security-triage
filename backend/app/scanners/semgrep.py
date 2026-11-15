@@ -96,6 +96,28 @@ def run_semgrep(
     return record, findings, complete
 
 
+# What Semgrep may skip, by selection name. The scanned source never decides this.
+TARGET_SELECTIONS = {"worker-controlled-v1": "node_modules/\n"}
+
+
+def control_semgrep_targets(source: Path, selection: str) -> int:
+    """Replace every `.semgrepignore` of the extracted source by one the worker controls.
+
+    Without such a file Semgrep skips `build/`, `dist/`, `test/` and other folders by default,
+    while CodeQL, Bandit and ESLint scan them, so their alerts there had no located call to be
+    merged with. A `.semgrepignore` shipped inside the source could also hide files from every
+    Semgrep step. Returns the number of files removed.
+    """
+    removed = 0
+    for path in sorted(source.rglob(".semgrepignore")):
+        path.unlink()
+        removed += 1
+    (source / ".semgrepignore").write_text(
+        TARGET_SELECTIONS[selection], encoding="utf-8", newline="\n"
+    )
+    return removed
+
+
 def run_sink_locator(
     *,
     binary: str,

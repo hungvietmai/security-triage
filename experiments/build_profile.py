@@ -20,7 +20,11 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = "profiles/command-injection-v0.1/profile.json"
-MANIFESTS = (MANIFEST, "profiles/command-injection-v0.2/profile.json")
+MANIFESTS = (
+    MANIFEST,
+    "profiles/command-injection-v0.2/profile.json",
+    "profiles/command-injection-v0.3/profile.json",
+)
 # Screening tools a language config may add, and the files each one pins.
 SCREENING_FILES = {"bandit": ("config",), "eslint": ("config", "lockfile")}
 

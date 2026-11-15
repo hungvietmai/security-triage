@@ -1,0 +1,249 @@
+# sink-locator-v1: every rule of sink-locator-v0 (the "v0form" rules at the end, patterns
+# unchanged) plus the forms v0 missed. Two rules may report the same call; the reader keeps
+# one sink per call span.
+rules:
+  - id: sink-locator-v1-child-process-namespace
+    message: "sink-locator-v1: child_process namespace call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $CP = require("$MOD");
+              ...
+          - pattern-inside: |
+              import * as $CP from "$MOD";
+              ...
+          - pattern-inside: |
+              import $CP from "$MOD";
+              ...
+      - metavariable-regex:
+          metavariable: $MOD
+          regex: ^(node:)?child_process$
+      - pattern: $CP.$M(...)
+      - metavariable-regex:
+          metavariable: $M
+          regex: ^(exec|execSync|spawn|spawnSync|execFile|execFileSync|fork)$
+
+  - id: sink-locator-v1-child-process-member-alias
+    message: "sink-locator-v1: alias of a child_process function"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FN = require("$MOD").$M;
+              ...
+          - patterns:
+              - pattern-inside: |
+                  $CP = require("$MOD");
+                  ...
+              - pattern-inside: |
+                  $FN = $CP.$M;
+                  ...
+          - pattern-inside: |
+              import { $M as $FN } from "$MOD";
+              ...
+      - metavariable-regex:
+          metavariable: $MOD
+          regex: ^(node:)?child_process$
+      - metavariable-regex:
+          metavariable: $M
+          regex: ^(exec|execSync|spawn|spawnSync|execFile|execFileSync|fork)$
+      - pattern: $FN(...)
+
+  - id: sink-locator-v1-child-process-destructured
+    message: "sink-locator-v1: destructured child_process function"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              const { ..., $M, ... } = require("$MOD");
+              ...
+          - pattern-inside: |
+              var { ..., $M, ... } = require("$MOD");
+              ...
+          - pattern-inside: |
+              let { ..., $M, ... } = require("$MOD");
+              ...
+          - pattern-inside: |
+              import { $M } from "$MOD";
+              ...
+      - metavariable-regex:
+          metavariable: $MOD
+          regex: ^(node:)?child_process$
+      - metavariable-regex:
+          metavariable: $M
+          regex: ^(exec|execSync|spawn|spawnSync|execFile|execFileSync|fork)$
+      - pattern: $M(...)
+
+  - id: sink-locator-v1-child-process-promisified
+    message: "sink-locator-v1: promisified child_process function"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FN = $U.promisify(require("$MOD").$M);
+              ...
+          - pattern-inside: |
+              $FN = promisify(require("$MOD").$M);
+              ...
+          - patterns:
+              - pattern-inside: |
+                  $CP = require("$MOD");
+                  ...
+              - pattern-either:
+                  - pattern-inside: |
+                      $FN = $U.promisify($CP.$M);
+                      ...
+                  - pattern-inside: |
+                      $FN = promisify($CP.$M);
+                      ...
+      - metavariable-regex:
+          metavariable: $MOD
+          regex: ^(node:)?child_process$
+      - metavariable-regex:
+          metavariable: $M
+          regex: ^(exec|execFile)$
+      - pattern: $FN(...)
+
+  - id: sink-locator-v1-child-process-inline-require
+    message: "sink-locator-v1: call on an inline require of child_process"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern: require("$MOD").$M(...)
+      - metavariable-regex:
+          metavariable: $MOD
+          regex: ^(node:)?child_process$
+      - metavariable-regex:
+          metavariable: $M
+          regex: ^(exec|execSync|spawn|spawnSync|execFile|execFileSync|fork)$
+
+  - id: sink-locator-v1-shelljs-namespace
+    message: "sink-locator-v1: shelljs exec call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: shelljs
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $SHELL = require('shelljs');
+              ...
+          - pattern-inside: |
+              import * as $SHELL from 'shelljs';
+              ...
+          - pattern-inside: |
+              import $SHELL from 'shelljs';
+              ...
+      - pattern: $SHELL.exec(...)
+
+  - id: sink-locator-v1-v0form-child-process-namespace
+    message: "sink-locator-v1 (v0 form): child_process namespace call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $CP = require('child_process');
+              ...
+          - pattern-inside: |
+              import * as $CP from 'child_process';
+              ...
+          - pattern-inside: |
+              import $CP from 'child_process';
+              ...
+      - pattern-either:
+          - pattern: $CP.exec(...)
+          - pattern: $CP.execSync(...)
+          - pattern: $CP.spawn(...)
+          - pattern: $CP.spawnSync(...)
+          - pattern: $CP.execFile(...)
+          - pattern: $CP.execFileSync(...)
+          - pattern: $CP.fork(...)
+
+  - id: sink-locator-v1-v0form-child-process-direct-require
+    message: "sink-locator-v1 (v0 form): child_process direct require alias"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FN = require('child_process').exec;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').execSync;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').spawn;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').spawnSync;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').execFile;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').execFileSync;
+              ...
+          - pattern-inside: |
+              $FN = require('child_process').fork;
+              ...
+      - pattern: $FN(...)
+
+  - id: sink-locator-v1-v0form-child-process-import-alias
+    message: "sink-locator-v1 (v0 form): child_process imported call"
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      locator_version: sink-locator-v1
+      sink_family: child_process
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              import { exec as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { execSync as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { spawn as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { spawnSync as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { execFile as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { execFileSync as $FN } from 'child_process';
+              ...
+          - pattern-inside: |
+              import { fork as $FN } from 'child_process';
+              ...
+      - pattern: $FN(...)

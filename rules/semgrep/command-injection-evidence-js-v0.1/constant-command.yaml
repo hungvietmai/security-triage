@@ -1,0 +1,13 @@
+rules:
+  - id: st-js-constant-command
+    message: "The command string of this call is a compile-time constant."
+    languages: [javascript, typescript]
+    severity: INFO
+    metadata:
+      evidence_pack: command-injection-evidence-js-v0.1
+      kind: command_is_a_compile_time_constant
+    pattern-either:
+      - pattern: exec("...", ...)
+      - pattern: execSync("...", ...)
+      - pattern: $X.exec("...", ...)
+      - pattern: $X.execSync("...", ...)

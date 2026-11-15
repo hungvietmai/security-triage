@@ -295,7 +295,8 @@ def _js_case(arg0, suffix="", *, kind="child_process.exec"):
     if suffix:
         from app.triage.sinks_javascript import _argument_ranges
 
-        for position, (a, b) in enumerate(_argument_ranges(source), 1):
+        ranges = _argument_ranges(source, source.find("("), source.rfind(")"))
+        for position, (a, b) in enumerate(ranges, 1):
             if position == 1:
                 continue
             text = source[a:b].strip()

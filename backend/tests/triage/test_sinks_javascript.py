@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from app.triage.sinks_javascript import parse_javascript_sink_output
 
 RECORDED = Path(__file__).with_name("fixtures") / "sink-locator-v0-recorded.json"
@@ -230,3 +232,84 @@ def test_javascript_reader_validates_semgrep_shape_offsets_and_call_expression()
         assert str(exc) == "Located JavaScript sink is not a call expression"
     else:
         raise AssertionError("non-call locator result was accepted")
+
+
+@pytest.mark.parametrize(
+    ("source", "call", "rule", "callee", "kind", "arguments"),
+    [
+        (
+            "var cp = require('child_process');\nvar run = cp.exec;\nrun('pkill -f ' + name);\n",
+            "run('pkill -f ' + name)",
+            "member-alias",
+            "run",
+            "child_process.exec",
+            ["'pkill -f ' + name"],
+        ),
+        (
+            "const util = require('util');\n"
+            "const execAsync = util.promisify(require('child_process').exec);\n"
+            "execAsync(cmd);\n",
+            "execAsync(cmd)",
+            "promisified",
+            "execAsync",
+            "child_process.exec",
+            ["cmd"],
+        ),
+        (
+            "require('child_process').execSync(cmd, { cwd: dir });\n",
+            "require('child_process').execSync(cmd, { cwd: dir })",
+            "inline-require",
+            "require('child_process').execSync",
+            "child_process.execSync",
+            ["cmd", "{ cwd: dir }"],
+        ),
+        (
+            # The binding renames the function: the name alone would say exec.
+            "exec = require('child_process').execSync;\nexec(command);\n",
+            "exec(command)",
+            "member-alias",
+            "exec",
+            "child_process.execSync",
+            ["command"],
+        ),
+        (
+            'const cp_1 = require("child_process");\n(0, cp_1.exec)(cmd);\n',
+            "(0, cp_1.exec)(cmd)",
+            "namespace",
+            "(0, cp_1.exec)",
+            "child_process.exec",
+            ["cmd"],
+        ),
+        (
+            "const cp = require('node:child_process');\nconst start = cp.spawn;\n"
+            "start('tar', ['-xf', file]);\n",
+            "start('tar', ['-xf', file])",
+            "member-alias",
+            "start",
+            "child_process.spawn",
+            ["'tar'", "['-xf', file]"],
+        ),
+    ],
+)
+def test_javascript_reader_resolves_the_forms_the_v1_locator_adds(
+    source, call, rule, callee, kind, arguments
+):
+    payload, sources = _one_result(source, call, f"rules.sink-locator-v1-child-process-{rule}")
+    (sink,) = parse_javascript_sink_output(payload, sources)
+    assert (sink["callee"], sink["sink_kind"]) == (callee, kind)
+    assert [argument["text"] for argument in sink["args"]] == arguments
+
+
+def test_javascript_reader_rejects_a_locator_version_it_does_not_know():
+    payload, sources = _one_result("x(y);\n", "x(y)", "rules.sink-locator-v9-child-process")
+    with pytest.raises(ValueError, match="Unexpected JavaScript sink-locator rule"):
+        parse_javascript_sink_output(payload, sources)
+
+
+def test_a_call_reported_by_two_locator_rules_is_one_sink():
+    source = "const { execSync: run } = require('child_process');\nrun(cmd);\n"
+    first, sources = _one_result(source, "run(cmd)", "rules.sink-locator-v1-child-process-x")
+    second, _ = _one_result(source, "run(cmd)", "rules.sink-locator-v1-v0form-child-process-y")
+    merged = json.dumps({"results": json.loads(first)["results"] + json.loads(second)["results"]})
+    (sink,) = parse_javascript_sink_output(merged, sources)
+    assert (sink["callee"], sink["sink_kind"]) == ("run", "child_process.execSync")

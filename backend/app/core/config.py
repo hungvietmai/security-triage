@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     scan_profiles: dict[str, str] = {
         "command-injection-v0.1": "profiles/command-injection-v0.1/profile.json",
         "command-injection-v0.2": "profiles/command-injection-v0.2/profile.json",
+        "command-injection-v0.3": "profiles/command-injection-v0.3/profile.json",
         "path-traversal-v0.2": "profiles/path-traversal-v0.2/profile.json",
     }
     # CodeQL bundle directory; query packs live under qlpacks/ (tools/install-scanners.sh).

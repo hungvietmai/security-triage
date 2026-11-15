@@ -50,6 +50,7 @@ export const createScanInputSchema = z.object({
   profile: z.enum([
     "command-injection-v0.1",
     "command-injection-v0.2",
+    "command-injection-v0.3",
     "path-traversal-v0.2",
   ]),
 }) satisfies z.ZodType<ScanCreate>;
@@ -67,6 +68,11 @@ export const SCAN_PROFILES: Record<
     label: "CWE-78 · Command injection (thêm Bandit, ESLint)",
     description:
       "Sàng lọc bằng Semgrep cùng Bandit (Python) hoặc eslint-plugin-security (JavaScript/TypeScript), thẩm định bằng CodeQL; xếp hàng đợi theo chính sách ưu tiên v0.2.",
+  },
+  "command-injection-v0.3": {
+    label: "CWE-78 · Command injection (v0.3: đối sánh JavaScript tốt hơn)",
+    description:
+      "Như v0.2, thêm bộ định vị lời gọi JavaScript v1, phạm vi tệp của Semgrep do worker quyết định, và quy tắc gạn lệnh hằng cho JavaScript/TypeScript.",
   },
   "path-traversal-v0.2": {
     label: "CWE-22 · Path traversal (bằng chứng an toàn)",

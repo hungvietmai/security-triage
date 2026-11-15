@@ -14,7 +14,12 @@ from app.scanners.process import InvokeCallable, ProcessRecord
 from app.scanners.profile import EvidenceProfile, ScanProfile
 from app.scanners.provenance import digest
 from app.scanners.semgrep import run_sink_locator
-from app.triage.adjudicate import adjudicate, codeql_evidence_index, semgrep_evidence_index
+from app.triage.adjudicate import (
+    adjudicate,
+    codeql_evidence_index,
+    constant_evidence_index,
+    semgrep_evidence_index,
+)
 from app.triage.assess import assert_finding_conservation, assess_units, verified_definitions
 from app.triage.policy import validate_policy
 from app.triage.reconcile import RECONCILIATION_VERSION, ReconciledUnit, reconcile_findings
@@ -101,7 +106,7 @@ def _codeql_evidence(config: dict[str, Any], result: PipelineResult) -> dict[str
 def _semgrep_evidence(config: dict[str, Any], result: PipelineResult) -> dict[str, Any] | None:
     """What Semgrep's dead-branch evidence rules reported, for `adjudicate`."""
     spec = config.get("adjudication", {}).get("semgrep_evidence")
-    if spec is None:
+    if spec is None or "baseline_rule" not in spec:
         return None
     step = result.steps.get("semgrep-evidence")
     found = [f for f in result.evidence_findings if f["tool"] == "semgrep-evidence"]
@@ -119,6 +124,23 @@ def _semgrep_evidence(config: dict[str, Any], result: PipelineResult) -> dict[st
             evidence_rule=spec["evidence_rule"],
             dead_code_rule=spec["dead_code_rule"],
         ),
+    }
+
+
+def _constant_evidence(config: dict[str, Any], result: PipelineResult) -> dict[str, Any] | None:
+    """What Semgrep's constant-command evidence rule reported, for `adjudicate`."""
+    spec = config.get("adjudication", {}).get("semgrep_evidence")
+    if spec is None or "constant_rule" not in spec:
+        return None
+    step = result.steps.get("semgrep-evidence")
+    found = [f for f in result.evidence_findings if f["tool"] == "semgrep-evidence"]
+    return {
+        "tool": "semgrep",
+        "tool_version": f"Semgrep CE {config['semgrep_version']}, evidence rules {spec['version']}",
+        "status": step["status"] if step else "not_run",
+        "evidence_rule": spec["constant_rule"],
+        "rules_sha256": spec["rules"]["sha256"],
+        "locations": constant_evidence_index(found, rule=spec["constant_rule"]),
     }
 
 
@@ -190,6 +212,7 @@ def _assess_pipeline(
         complete=result.status == "completed" and locator["status"] == "completed",
         codeql_evidence=_codeql_evidence(config, result),
         semgrep_evidence=_semgrep_evidence(config, result),
+        constant_evidence=_constant_evidence(config, result),
     )
     return units, assessments
 
@@ -243,6 +266,7 @@ def scan_language(
             else None
         ),
         semgrep_evidence=config.get("adjudication", {}).get("semgrep_evidence"),
+        semgrep_target_selection=config.get("semgrep_target_selection"),
         invoke_fn=invoke_fn,
     )
     versions = {"semgrep": config["semgrep_version"], "codeql": config["codeql_version"]}

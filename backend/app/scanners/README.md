@@ -23,3 +23,13 @@ Rules:
   a failed or timed-out tool is never reported as zero findings.
 - Keep tool agreement, triage priority and evaluation labels separate.
 - Check the CodeQL terms for the intended repositories and deployment before distributing its CLI.
+
+## Semgrep target selection
+
+A language configuration may set `semgrep_target_selection` (profile `command-injection-v0.3`
+uses `worker-controlled-v1`). `control_semgrep_targets` in `semgrep.py` then removes every
+`.semgrepignore` from the extracted source and writes one at its root that ignores only
+`node_modules/`. Without it Semgrep skips `build/`, `dist/`, `test/` and similar folders by
+default, and a `.semgrepignore` shipped inside the scanned source can hide files from the
+detection rules, the sink locator and the evidence rules. Profiles without the setting keep
+Semgrep's default selection.
