@@ -1,0 +1,3355 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "e9785886-65c5-4b88-a9b1-7a72c457ba64"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scancodeio/__init__.py"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 20,
+                  "endLine": 55,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "52f2d4252010df672d48a92c554b4fec3597a8da23a6cf1cb2ff9e74c24dc2af",
+              "unitKey": "6080e5c05b933beecccf00450f4bd65f13194bdac08452b7046fa9fd670c85ca",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True seems safe, but may be changed in the future, consider rewriting without shell"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scancodeio/__init__.py"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 20,
+                  "endLine": 55,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "52f2d4252010df672d48a92c554b4fec3597a8da23a6cf1cb2ff9e74c24dc2af",
+              "unitKey": "6080e5c05b933beecccf00450f4bd65f13194bdac08452b7046fa9fd670c85ca",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell: Seems safe, but may be changed in the future, consider rewriting without shell"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/management/commands/graph.py"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 16,
+                  "endLine": 35,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "48fb205cb18fc0566d1ac2e7a1e4fd7418d5dc2e5e9dc4cdc6886616ac46157f",
+              "unitKey": "822c359c9c4451db30185f72e1feaffd3a346fd21c1c793fcd8e9de3609a031a",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/management/commands/graph.py"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 16,
+                  "endLine": 35,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "48fb205cb18fc0566d1ac2e7a1e4fd7418d5dc2e5e9dc4cdc6886616ac46157f",
+              "unitKey": "822c359c9c4451db30185f72e1feaffd3a346fd21c1c793fcd8e9de3609a031a",
+              "priority": "P4",
+              "decisionId": "D10_LITERAL",
+              "disposition": "filtered",
+              "filterRule": "G2_LITERAL_COMMAND"
+            }
+          },
+          "suppressions": [
+            {
+              "kind": "external",
+              "status": "accepted",
+              "justification": "Đã gạn khỏi danh sách rà chính: toàn bộ lệnh là chuỗi hằng theo hai nguồn độc lập (chứng minh whole_command_literal_v1 của hệ thống và Bandit xếp lời gọi ở mức LOW dành cho đối số lệnh là hằng). Không công cụ nào khẳng định luồng dữ liệu tới lệnh. Cảnh báo gốc được giữ để xem lại."
+            }
+          ]
+        },
+        {
+          "level": "error",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell, possible injection detected, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/management/commands/graph.py"
+                },
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 9,
+                  "endLine": 121,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "fb1c9c423975c1236afc8084a0729d0ab837655166dd447601177069602bf219",
+              "unitKey": "78140f631c9a1c7d6115a9b95865a172bdaa7b610ffcdc0fbf489f3788fd0196",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell, possible injection detected, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py"
+                },
+                "region": {
+                  "startLine": 276,
+                  "startColumn": 28,
+                  "endLine": 276,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "7b5c195be6fd1f8959bb05377b038416edad78fc5be7ef1c36f4bbf3191afb52",
+              "unitKey": "3e09fb8e830fdb6ff915bb3998e66c310accb9cb6c48a0c14acc125ed221f713",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py"
+                },
+                "region": {
+                  "startLine": 279,
+                  "startColumn": 15,
+                  "endLine": 280,
+                  "endColumn": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "cc97936ac25fea3d4ad9846d4b6fb22b9a12a714eed82e877db371e048eea2bd",
+              "unitKey": "33c6d0f7a2efc3f2d517c651c854c842d90c5624ed934b01010b7ebae38c9ffc",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "codeql",
+          "version": "2.27.1"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "e9785886-65c5-4b88-a9b1-7a72c457ba64"
+      },
+      "results": [
+        {
+          "ruleId": "py/command-line-injection",
+          "message": {
+            "text": "This command line depends on a [user-provided value](1)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "dict.get",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 61,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 77,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 79,
+                            "startColumn": 61
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 212,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 217,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 264,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 276,
+                            "startColumn": 55
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "dict.get",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 61,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 77,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 79,
+                            "startColumn": 61
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 52,
+                            "startLine": 252,
+                            "startColumn": 40
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for .0"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 252,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 252,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 252,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Yield [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 252,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ListComp [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 252,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 252,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 254,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 201,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 133,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 139,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 145,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 264,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 273,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "str.join",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 273,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 273,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 276,
+                            "startColumn": 55
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py"
+                },
+                "region": {
+                  "startLine": 276,
+                  "startColumn": 55,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "user-provided value"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 39,
+                  "startLine": 77,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/forms.py",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 39,
+                  "startLine": 77,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/forms.py",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "54b08bc7583c062f:1",
+            "primaryLocationStartColumnFingerprint": "46"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "7b5c195be6fd1f8959bb05377b038416edad78fc5be7ef1c36f4bbf3191afb52",
+              "unitKey": "3e09fb8e830fdb6ff915bb3998e66c310accb9cb6c48a0c14acc125ed221f713",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "py/command-line-injection",
+          "message": {
+            "text": "This command line depends on a [user-provided value](1)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "dict.get",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 61,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 77,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 79,
+                            "startColumn": 61
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 212,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 217,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 264,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 280,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 39,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "dict.get",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 61,
+                            "startLine": 77,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 77,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 71,
+                            "startLine": 79,
+                            "startColumn": 61
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/forms.py",
+                            "index": 1,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 52,
+                            "startLine": 252,
+                            "startColumn": 40
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for .0"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 252,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 252,
+                            "startColumn": 33
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 252,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Yield [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 252,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for ListComp [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 252,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 13,
+                            "startLine": 252,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls [List element]"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 254,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 201,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 133,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 8,
+                            "startLine": 139,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 45,
+                            "startLine": 145,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 264,
+                            "startColumn": 17
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 27,
+                            "startLine": 273,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "str.join",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 273,
+                            "startColumn": 15
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 273,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for cmd"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 280,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/__init__.py",
+                            "index": 0,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py"
+                },
+                "region": {
+                  "startLine": 280,
+                  "startColumn": 9,
+                  "endColumn": 12
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "user-provided value"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 39,
+                  "startLine": 77,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/forms.py",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 39,
+                  "startLine": 77,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/forms.py",
+                  "index": 1,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "b5e79fbdfe61f737:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "cc97936ac25fea3d4ad9846d4b6fb22b9a12a714eed82e877db371e048eea2bd",
+              "unitKey": "33c6d0f7a2efc3f2d517c651c854c842d90c5624ed934b01010b7ebae38c9ffc",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "py/shell-command-constructed-from-input",
+          "message": {
+            "text": "This f-string which depends on [library input](1) is later used in a [shell command](2).\nThis f-string which depends on [library input](3) is later used in a [shell command](2).\nThis f-string which depends on [library input](4) is later used in a [shell command](2).\nThis f-string which depends on [library input](5) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 133,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 141,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 201,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 133,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 141,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 201,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 133,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 141,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for validated_data"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 212,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for validated_data"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 223,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "collection.pop",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 223,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 223,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 50,
+                            "startLine": 228,
+                            "startColumn": 40
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 201,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 47,
+                            "startLine": 133,
+                            "startColumn": 31
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 28,
+                            "startLine": 141,
+                            "startColumn": 12
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py"
+                },
+                "region": {
+                  "startLine": 140,
+                  "startColumn": 9,
+                  "endLine": 141,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 47,
+                  "startLine": 133,
+                  "startColumn": 31
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 285,
+                  "endColumn": 6,
+                  "startLine": 279,
+                  "startColumn": 15
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 185,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 20,
+                  "startLine": 242,
+                  "startColumn": 16
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 5,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 212,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/api/serializers.py",
+                  "index": 3,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 47,
+                  "startLine": 133,
+                  "startColumn": 31
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 28,
+                  "startLine": 141,
+                  "startColumn": 12
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 185,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 20,
+                  "startLine": 242,
+                  "startColumn": 16
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 212,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/api/serializers.py",
+                  "index": 3,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "1d002d4f9c457af5:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "cc97936ac25fea3d4ad9846d4b6fb22b9a12a714eed82e877db371e048eea2bd",
+              "unitKey": "33c6d0f7a2efc3f2d517c651c854c842d90c5624ed934b01010b7ebae38c9ffc",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "ruleId": "py/shell-command-constructed-from-input",
+          "message": {
+            "text": "This f-string which depends on [library input](1) is later used in a [shell command](2).\nThis f-string which depends on [library input](3) is later used in a [shell command](2).\nThis f-string which depends on [library input](4) is later used in a [shell command](2).\nThis f-string which depends on [library input](5) is later used in a [shell command](2)."
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 214,
+                            "startColumn": 28
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for to"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 185,
+                            "startColumn": 42
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for download_directory"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 23,
+                            "startLine": 195,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "AdditionalTaintStep",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for output_file"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 16,
+                            "startLine": 196,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for target"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 11,
+                            "startLine": 197,
+                            "startColumn": 5
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for target"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 53,
+                            "startLine": 214,
+                            "startColumn": 47
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 214,
+                            "startColumn": 28
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for validated_data"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 212,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for validated_data"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 36,
+                            "startLine": 223,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "taxa": [
+                        {
+                          "id": "collection.pop",
+                          "properties": {
+                            "CodeQL/DataflowRole": "step"
+                          }
+                        }
+                      ],
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for Attribute()"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 58,
+                            "startLine": 223,
+                            "startColumn": 22
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 19,
+                            "startLine": 223,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for input_urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 50,
+                            "startLine": 228,
+                            "startColumn": 40
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/api/serializers.py",
+                            "index": 3,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for urls"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 20,
+                            "startLine": 242,
+                            "startColumn": 16
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 12,
+                            "startLine": 254,
+                            "startColumn": 9
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for url"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 37,
+                            "startLine": 258,
+                            "startColumn": 34
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 40,
+                            "startLine": 185,
+                            "startColumn": 24
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "message": {
+                          "text": "ControlFlowNode for docker_reference"
+                        },
+                        "physicalLocation": {
+                          "region": {
+                            "endColumn": 44,
+                            "startLine": 214,
+                            "startColumn": 28
+                          },
+                          "artifactLocation": {
+                            "uri": "scanpipe/pipes/fetch.py",
+                            "index": 2,
+                            "uriBaseId": "%SRCROOT%"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py"
+                },
+                "region": {
+                  "startLine": 213,
+                  "startColumn": 9,
+                  "endLine": 214,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "id": 1,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 185,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "shell command"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endLine": 285,
+                  "endColumn": 6,
+                  "startLine": 279,
+                  "startColumn": 15
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py",
+                  "index": 0,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 185,
+                  "startColumn": 42
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 4,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 20,
+                  "startLine": 242,
+                  "startColumn": 16
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "id": 5,
+              "message": {
+                "text": "library input"
+              },
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 212,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/api/serializers.py",
+                  "index": 3,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 40,
+                  "startLine": 185,
+                  "startColumn": 24
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 214,
+                  "startColumn": 28
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 44,
+                  "startLine": 185,
+                  "startColumn": 42
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 53,
+                  "startLine": 214,
+                  "startColumn": 47
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 20,
+                  "startLine": 242,
+                  "startColumn": 16
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/fetch.py",
+                  "index": 2,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "region": {
+                  "endColumn": 36,
+                  "startLine": 212,
+                  "startColumn": 22
+                },
+                "artifactLocation": {
+                  "uri": "scanpipe/api/serializers.py",
+                  "index": 3,
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "primaryLocationLineHash": "8edfb8c4fb4d4d80:1",
+            "primaryLocationStartColumnFingerprint": "0"
+          },
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "cc97936ac25fea3d4ad9846d4b6fb22b9a12a714eed82e877db371e048eea2bd",
+              "unitKey": "33c6d0f7a2efc3f2d517c651c854c842d90c5624ed934b01010b7ebae38c9ffc",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "e9785886-65c5-4b88-a9b1-7a72c457ba64"
+      },
+      "results": [
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'Popen' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scanpipe/pipes/__init__.py"
+                },
+                "region": {
+                  "startLine": 281,
+                  "startColumn": 15,
+                  "endLine": 281,
+                  "endColumn": 19
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "cc97936ac25fea3d4ad9846d4b6fb22b9a12a714eed82e877db371e048eea2bd",
+              "unitKey": "33c6d0f7a2efc3f2d517c651c854c842d90c5624ed934b01010b7ebae38c9ffc",
+              "priority": "P1",
+              "decisionId": "D20_STRONG",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

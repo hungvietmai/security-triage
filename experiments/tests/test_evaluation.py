@@ -858,9 +858,25 @@ class PairsDevelopmentResultTests(unittest.TestCase):
                     actual = hashlib.sha256((folder / name).read_bytes()).hexdigest()
                     self.assertEqual(actual, sha256)
 
-    def test_no_held_out_pair_has_been_scanned(self):
-        self.assertFalse((PAIRS_KIT / "held_out" / "inputs").exists())
-        self.assertFalse((PAIRS_KIT / "HELD_OUT_GATE.json").exists())
+    def test_a_held_out_scan_exists_only_after_the_recorded_gate(self):
+        # Amendment 08: the frozen hashes are checked and the commit recorded before the first
+        # held-out scan. Exports without that record would be an unregistered run.
+        if (PAIRS_KIT / "held_out" / "inputs").exists():
+            gate = json.loads((PAIRS_KIT / "HELD_OUT_GATE.json").read_bytes())
+            self.assertTrue(gate["frozen_files_unchanged"])
+            self.assertRegex(gate["commit"], r"^[0-9a-f]{40}$")
+            frozen = json.loads((PAIRS_KIT / "FROZEN_CONFIGURATION_v0.3.json").read_bytes())
+            self.assertIn("profiles/command-injection-v0.3/profile.json", frozen["sha256"])
+
+    def test_rehearsal_of_v0_3_on_the_python_development_pairs_is_reproduced(self):
+        run = PAIRS_KIT / "development-v0.3-python"
+        labels = json.loads((run / "labels.json").read_bytes())
+        expected = json.loads((run / "result.json").read_bytes())
+        self.assertEqual(score_pairs.score(labels, run / "inputs"), expected)
+        self.assertEqual((expected["pairs"], expected["scored_pairs"]), (9, 9))
+        statuses = expected["result"]["scan_statuses"]
+        self.assertNotIn("failed", statuses)
+        self.assertEqual(expected["result"]["summary"]["filtered"], 0)
 
 
 class JavaScriptMatchingTests(unittest.TestCase):

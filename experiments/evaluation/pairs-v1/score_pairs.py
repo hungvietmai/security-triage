@@ -1,6 +1,6 @@
 """Collect and score one split of pairs-v1 under Amendment 06.
 
-    python experiments/evaluation/pairs-v1/score_pairs.py collect <run-dir>
+    python experiments/evaluation/pairs-v1/score_pairs.py collect <run-dir> [--profile ID]
     python experiments/evaluation/pairs-v1/score_pairs.py score <run-dir> [--json OUT]
 
 `<run-dir>/labels.json` comes from pair_labels.py. `collect` scans every source once through
@@ -23,10 +23,10 @@ sys.path.insert(0, str(HERE))
 import configurations  # noqa: E402
 import pair_labels  # noqa: E402
 
-PROFILE = "command-injection-v0.2"
+DEFAULT_PROFILE = "command-injection-v0.2"
 
 
-def collect(run):
+def collect(run, profile=DEFAULT_PROFILE):
     labels = json.loads((run / "labels.json").read_bytes())
     log = run / "collection.log"
     for source in labels["sources"]:
@@ -37,7 +37,7 @@ def collect(run):
             coordinate = ["npm", source["package"], source["version"]]
         else:
             coordinate = ["github", source["owner"], source["repo"], source["commit"]]
-        command = [sys.executable, str(HERE.parent / "collect_report.py"), str(folder), PROFILE]
+        command = [sys.executable, str(HERE.parent / "collect_report.py"), str(folder), profile]
         done = subprocess.run(
             command + coordinate, capture_output=True, text=True, encoding="utf-8", check=False
         )
@@ -77,9 +77,10 @@ def main(argv=None):
     parser.add_argument("action", choices=("collect", "score"))
     parser.add_argument("run", type=Path)
     parser.add_argument("--json", type=Path)
+    parser.add_argument("--profile", default=DEFAULT_PROFILE)
     args = parser.parse_args(argv)
     if args.action == "collect":
-        return collect(args.run)
+        return collect(args.run, args.profile)
     labels = json.loads((args.run / "labels.json").read_bytes())
     scored = score(labels, args.run / "inputs")
     if args.json:

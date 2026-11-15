@@ -1,11 +1,13 @@
-"""Record and check the frozen configuration of the pairs-v1 evaluation (Amendment 06).
+"""Record and check the frozen configuration of the pairs-v1 held-out run (Amendment 08).
 
     python experiments/evaluation/pairs-v1/freeze.py write    # before the first development scan
     python experiments/evaluation/pairs-v1/freeze.py check    # exit 1 when a frozen file changed
     python experiments/evaluation/pairs-v1/freeze.py gate     # before the first held-out scan
 
-`write` stores the SHA-256 of every frozen file in FROZEN_CONFIGURATION.json. `gate` repeats the
-check and, when nothing changed, writes HELD_OUT_GATE.json with the commit the worktree is at.
+`write` stores the SHA-256 of every frozen file in FROZEN_CONFIGURATION_v0.3.json. `gate`
+repeats the check and, when nothing changed, writes HELD_OUT_GATE.json with the commit the
+worktree is at. FROZEN_CONFIGURATION.json is the record of the v0.2 development run
+(Amendment 06) and is no longer written or checked.
 """
 
 import hashlib
@@ -21,13 +23,19 @@ ROOT = HERE.parents[2]
 # tool or acquire a source are left out on purpose: a crash there may be fixed between the
 # development rehearsal and the held-out run.
 PATTERNS = (
-    "profiles/command-injection-v0.2/*",
+    "profiles/command-injection-v0.3/*",
+    "profiles/command-injection-v0.2/priority-v0.2.yaml",
+    "profiles/command-injection-v0.2/priority-v0.2.json",
+    "profiles/command-injection-v0.2/rule-claims-v3.json",
     "backend/app/triage/*.py",
+    # The target selection decides which files Semgrep sees.
+    "backend/app/scanners/semgrep.py",
     "rules/semgrep/command-injection-evidence-v0.1/dead-branch.yaml",
+    "rules/semgrep/command-injection-evidence-js-v0.1/constant-command.yaml",
     "rules/codeql/command-injection-evidence-v0.2/*.qll",
     "rules/codeql/command-injection-evidence-v0.2/*.yml",
     "rules/codeql/command-injection-evidence-v0.2/queries/*.ql",
-    "experiments/locators/sink-locator-v0-javascript.yaml",
+    "experiments/locators/sink-locator-v1-javascript.yaml",
     "experiments/rules/python-upstream/*.yaml",
     "experiments/rules/batch-01/*.yaml",
     "tools/pins.env",
@@ -39,9 +47,9 @@ PATTERNS = (
     "experiments/evaluation/independent-secbench/configurations.py",
     "experiments/evaluation/pairs-v1/pair_labels.py",
     "experiments/evaluation/pairs-v1/score_pairs.py",
-    "experiments/evaluation/pairs-v1/development/labels.json",
     "experiments/evaluation/pairs-v1/held_out/labels.json",
     "experiments/amendments/AMENDMENT_06_PRODUCT_PIPELINE_ON_PAIRS_V1.md",
+    "experiments/amendments/AMENDMENT_08_HELD_OUT_WITH_V0_3.md",
 )
 
 
@@ -63,7 +71,7 @@ def changed(record, current):
 
 def main(argv=None):
     action = (argv if argv is not None else sys.argv[1:])[0]
-    target = HERE / "FROZEN_CONFIGURATION.json"
+    target = HERE / "FROZEN_CONFIGURATION_v0.3.json"
     if action == "write":
         record = {
             "written_utc": datetime.now(UTC).isoformat(timespec="seconds"),

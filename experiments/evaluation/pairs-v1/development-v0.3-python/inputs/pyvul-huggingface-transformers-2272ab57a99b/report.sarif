@@ -1,0 +1,1428 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "bandit",
+          "version": "1.9.4"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "f1acb4a0-e585-4e20-b0ba-ea46b195687d"
+      },
+      "results": [
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/legacy/seq2seq/test_data/fsmt/build-eval-data.py"
+                },
+                "region": {
+                  "startLine": 23,
+                  "startColumn": 21,
+                  "endLine": 23,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "088a93dfaea23d38ecb2d7cef16e74be2e4b2d8cdb4a5e7ae5cee0aec7385046",
+              "unitKey": "3f2f11e428c8df1bd91fdbf48446e44591813b58d929a69f0a09d481de7e92c7",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "examples/legacy/seq2seq/test_data/fsmt/build-eval-data.py"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 21,
+                  "endLine": 25,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "2ee741ef39a402505f3ab99e8dcc91883bb89eab43dcbe0b38a595099583b1b5",
+              "unitKey": "f691fa5add7d96f2f79c4c966ad5e47549d93ac9b946a93de9e62ca5ce289437",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "scripts/benchmark/trainer-benchmark.py"
+                },
+                "region": {
+                  "startLine": 214,
+                  "startColumn": 14,
+                  "endLine": 214,
+                  "endColumn": 65
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "17035973ff1678eb870d1270f12d0890a22033b3cd1015b76534a58831c88012",
+              "unitKey": "0b5beb0fa9e8653a28b84ec8eb3bb9a6d58dd021e86cdcf836858925268d41f5",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/commands/lfs.py"
+                },
+                "region": {
+                  "startLine": 87,
+                  "startColumn": 9,
+                  "endLine": 88,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "45e85567d22ef6113c55368f35182b5e15b019a4d37846df261673feb936e54c",
+              "unitKey": "b2a1b4274cb329bf25bfc57ad6b002572a39ea6abf404e40bea32e93cd98045e",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/commands/lfs.py"
+                },
+                "region": {
+                  "startLine": 90,
+                  "startColumn": 9,
+                  "endLine": 91,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "4ea3ef54b23cf83c41d94dd1fd6c1afb6949aba5f5ab57065fb03ffe19eed34b",
+              "unitKey": "e18f5139beaf5c88d3c33ac451828798705431e377860bad67feebcabdf24760",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/commands/user.py"
+                },
+                "region": {
+                  "startLine": 159,
+                  "startColumn": 22,
+                  "endLine": 159,
+                  "endColumn": 67
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "fc6d5ebd11cac82e4d35a2a1ed449fe532747ff061ef1cf7588cc0a1b2fd9715",
+              "unitKey": "0b46d640924986af9b9bf8ceba223843f807d888d0c1167be68d37beec9b1547",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/commands/user.py"
+                },
+                "region": {
+                  "startLine": 159,
+                  "startColumn": 22,
+                  "endLine": 159,
+                  "endColumn": 67
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "fc6d5ebd11cac82e4d35a2a1ed449fe532747ff061ef1cf7588cc0a1b2fd9715",
+              "unitKey": "0b46d640924986af9b9bf8ceba223843f807d888d0c1167be68d37beec9b1547",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/commands/user.py"
+                },
+                "region": {
+                  "startLine": 165,
+                  "startColumn": 22,
+                  "endLine": 165,
+                  "endColumn": 71
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "d09d6afb4732fe2ec9b83630440a5a85bd8b16be1df3b88d1f8b7e17a838c794",
+              "unitKey": "cad5b93b2f829aaf195951c2ef8d024020fdb554d843cdb26e7c795815abd693",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/commands/user.py"
+                },
+                "region": {
+                  "startLine": 165,
+                  "startColumn": 22,
+                  "endLine": 165,
+                  "endColumn": 71
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "d09d6afb4732fe2ec9b83630440a5a85bd8b16be1df3b88d1f8b7e17a838c794",
+              "unitKey": "cad5b93b2f829aaf195951c2ef8d024020fdb554d843cdb26e7c795815abd693",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/onnx/__main__.py"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 12,
+                  "endLine": 59,
+                  "endColumn": 84
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "21d7b68cdb8e4f72a3d82dfb74648fa645896434e36935e9b7df5c8e9b6cd2e6",
+              "unitKey": "ee2fcffb048794445d08eba56debac6f4b5b724d34b066e2d81f8b73edfe0a53",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/pipelines/audio_classification.py"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 26,
+                  "endLine": 54,
+                  "endColumn": 105
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "dbc97a1199355165b35f4538b92c2935a512127540982e8622a4896eb1754e48",
+              "unitKey": "4b2cd8db49c1f2c37551b8e8cdcad9fdc459c2b9ceb093b9f7b8ff2a34cc74c6",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/pipelines/audio_utils.py"
+                },
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 14,
+                  "endLine": 34,
+                  "endColumn": 93
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "6c6a7e1f789ddb97993a3939e39b27541d12fde227afad69d625f4989f9aa8fa",
+              "unitKey": "9af64f07ffa70c2434ae0948f76ef8d84a5877dbaf52c60c8a6503699e162327",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/pipelines/audio_utils.py"
+                },
+                "region": {
+                  "startLine": 221,
+                  "startColumn": 14,
+                  "endLine": 221,
+                  "endColumn": 87
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "fb176515c417c5acc749d9e0c4a3d9ed15c235c9d585c96a09cad9c4b1c5e622",
+              "unitKey": "93d178cb1d3780a2fc9301e92fb91bf841e6db066ca3ede9ae27933ba89a389c",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/pipelines/audio_utils.py"
+                },
+                "region": {
+                  "startLine": 238,
+                  "startColumn": 26,
+                  "endLine": 238,
+                  "endColumn": 102
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "9357415be288283b11679404de35d92c833bae79a2e6ae80c49909addb9d3964",
+              "unitKey": "52a280dca352a0aaddcb6e34a4b92d709fd045270c8ea8c51e3c8fb1c7801212",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/testing_utils.py"
+                },
+                "region": {
+                  "startLine": 1991,
+                  "startColumn": 18,
+                  "endLine": 1991,
+                  "endColumn": 76
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "a8522b1b8558adcf28c4ed1f520baba6f0405b172e0e1fbcd66d5226d9649c1b",
+              "unitKey": "0b4e556b2839a5a2e084ef957782f0915c0c851311d8ba1dbddcb427f614ac35",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/utils/import_utils.py"
+                },
+                "region": {
+                  "startLine": 570,
+                  "startColumn": 9,
+                  "endLine": 570,
+                  "endColumn": 59
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "d1d07f290d82eceee6e33d96afc11686cd5ce9b3363f88720867376a3aae6056",
+              "unitKey": "b4b8c7c980623bbb648c46f62a83ea722d5ff6ea01787bcc995e882352d99044",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/deepspeed/test_model_zoo.py"
+                },
+                "region": {
+                  "startLine": 363,
+                  "startColumn": 9,
+                  "endLine": 363,
+                  "endColumn": 47
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "2db7f47b3b658cab1bdf54620ff37a26749864b0c05413dc00593e16d9b7a59e",
+              "unitKey": "c51dd2fee57d30a222fcd6509766345b1d429552aafdb5aafdb6bad2d08a8bb6",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B607",
+          "message": {
+            "text": "Starting a process with a partial executable path"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/pipelines/test_pipelines_automatic_speech_recognition.py"
+                },
+                "region": {
+                  "startLine": 1465,
+                  "startColumn": 9,
+                  "endLine": 1465,
+                  "endColumn": 77
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "792daed2a5d147cef96a35ebd646ab56bb15cb7dd997f2685604373a0b9ae9ee",
+              "unitKey": "1ab9772c4b44bf44213aae50a004e5f4cfb765f4722b84ce6bfb1cb8cd83b901",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/pipelines/test_pipelines_automatic_speech_recognition.py"
+                },
+                "region": {
+                  "startLine": 1465,
+                  "startColumn": 9,
+                  "endLine": 1465,
+                  "endColumn": 77
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "792daed2a5d147cef96a35ebd646ab56bb15cb7dd997f2685604373a0b9ae9ee",
+              "unitKey": "1ab9772c4b44bf44213aae50a004e5f4cfb765f4722b84ce6bfb1cb8cd83b901",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/sagemaker/scripts/pytorch/run_ddp.py"
+                },
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 9,
+                  "endLine": 46,
+                  "endColumn": 40
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "651975ec3dbe1210e2a91d6b3ef48953d15d2d51b4cfc52de339557570979b1e",
+              "unitKey": "9f89d5a7c2a831acd18c9e644efc836ceea5216e85de10c657f018b917d07f3b",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/sagemaker/test_multi_node_data_parallel.py"
+                },
+                "region": {
+                  "startLine": 51,
+                  "startColumn": 13,
+                  "endLine": 52,
+                  "endColumn": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "188471516d43ca9d4b04ee8297cfa28300a6b49f1fe511bc6b04fe498525c3b9",
+              "unitKey": "004c352f413450f05701a9dd96ceff065db7f7c0c58275be2ee7d15ad2a46ae9",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/sagemaker/test_multi_node_model_parallel.py"
+                },
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 13,
+                  "endLine": 45,
+                  "endColumn": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "18575f72f29bdbed36705a5eb4d7de733c2467459127c67771133196b8d04141",
+              "unitKey": "33721bfebf58de8c09567df0321e059aeb20fcc250f7ea1e9bf10a428bb29a83",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/sagemaker/test_single_node_gpu.py"
+                },
+                "region": {
+                  "startLine": 44,
+                  "startColumn": 13,
+                  "endLine": 45,
+                  "endColumn": 14
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "1bcb36a42bc303b126bd55e2f7c2068fb6bd6262d7673b9e4b9a57e5bcfbbd21",
+              "unitKey": "aa623ca007b0fb0985ebe764ca617d9e62a14c87a9f0ceb27f8045351c9f1edc",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/trainer/test_trainer.py"
+                },
+                "region": {
+                  "startLine": 2428,
+                  "startColumn": 23,
+                  "endLine": 2429,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "b480ba6fe4a4f9fa5391472634757896b9740e237e14783fbe9014cf1878ac10",
+              "unitKey": "6f86a06153c1a3979475691ff1753553cfd092576f9577dfcb0180ba6e7f6ef4",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 18,
+                  "endLine": 65,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "3c63edb7e4a65c4ce87e4d1262c54ab3e567f18441005cfe313ac76d744e869a",
+              "unitKey": "cd1d63d53fe730e3b9a517b214222f368b6f0cecaa6cd07387c16bc15b2219e4",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 104,
+                  "startColumn": 18,
+                  "endLine": 104,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "af630f2bac0650e25a3986b3b7ba2a324dde1a486d1a0f1f3b9669aa4f33a934",
+              "unitKey": "f93f54f84467f9e1697c0002cbc3bae930250747352fca84372073b188f8318f",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 139,
+                  "startColumn": 18,
+                  "endLine": 139,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "4080a993fe574d730c8e238309ae3c77d10342378cf18d916ac8e8911d5b4805",
+              "unitKey": "8571bc5ffd0864cb7f7d431fc86418c99597c9039bcbae4f5b11e364390df2c6",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 153,
+                  "startColumn": 18,
+                  "endLine": 153,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "2ad74fc941400c2419baf445f75b63d889dbc568488eb4bc8d8f7b5bc7e9aa62",
+              "unitKey": "4c6bb071adbf2f579aa8efe66bbc5ef15621d3e4d0d35b7586ff31f6cfadcea7",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 175,
+                  "startColumn": 18,
+                  "endLine": 175,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "cc5c058a0fc9097c06bd8c52210e718d8a1f803d1dbb8f9c2bc9a06f9c779d51",
+              "unitKey": "ae96945a57238c92c060b85dfdf70e38b019aa073502ef7dd1febea081e10aa3",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 198,
+                  "startColumn": 18,
+                  "endLine": 198,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "74425b23a9d35677eb974ef9b1bd84d3ad1e7e2342bb23bdaa5f4e79fc92e4b7",
+              "unitKey": "514c6cd9229b9a6f6bef3eaa3827491f3f61fa75b1628ee4817b2dbc583ca0e0",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/utils/test_offline.py"
+                },
+                "region": {
+                  "startLine": 204,
+                  "startColumn": 18,
+                  "endLine": 204,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "f7a12857cde11e5cba712cf7adff42e2513e12b3c6a484e31a8f718a526eca99",
+              "unitKey": "5b31f63ce78459dd9ef660d65933f163d1c45a96e3058d491df8caa33a7ce628",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/check_copies.py"
+                },
+                "region": {
+                  "startLine": 505,
+                  "startColumn": 15,
+                  "endLine": 505,
+                  "endColumn": 111
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "cfb9e5437dd0636526340979a857924ec9c0f223f01c750c03a7aea356a515a9",
+              "unitKey": "f3a12b31662ccdb30f19838666c76a660fc6275bded01d4bb32aef0deacfbd69",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B602",
+          "message": {
+            "text": "subprocess call with shell=True identified, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/check_self_hosted_runner.py"
+                },
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 14,
+                  "endLine": 13,
+                  "endColumn": 69
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "2897674d0e4c6cc2e86bebc882d27ba6f2ee752890ff6e5396848e6ac1012bdb",
+              "unitKey": "d9406fc310aecee0b21c49177427264311fe5d018b4f6ab3954ceea4c457b5ef",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/get_modified_files.py"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 18,
+                  "endLine": 27,
+                  "endColumn": 77
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "1259264b9088cada79caa0d9295cc8459ff8802c3b21b1f8bfe5be55e1bbabb2",
+              "unitKey": "86e7e7f0cdcc386eda3023e7aa48eac6911d4e06b9335326cadbc3466c57ba69",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "note",
+          "ruleId": "B603",
+          "message": {
+            "text": "subprocess call - check for execution of untrusted input."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/get_modified_files.py"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 5,
+                  "endLine": 29,
+                  "endColumn": 94
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "LOW",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "a85073755e15bfeaa92296c92d87bf0f1a32cdfc95ca75c33fd1467f9c278f64",
+              "unitKey": "466931a9d4a3410a4a853d4db382cffc83907152d32295171f63b6298d93232b",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell, possible injection detected, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/past_ci_versions.py"
+                },
+                "region": {
+                  "startLine": 119,
+                  "startColumn": 5,
+                  "endLine": 119,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "dcba0718b9fa441363c1bd5427c9435aa4a928ec1c3bd5fccf4bb5adb1de84c2",
+              "unitKey": "7b0946275cd4403d1ed80d01b9d2e22946c056318814b7ecc22fa7db0d49dd2e",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        },
+        {
+          "level": "error",
+          "ruleId": "B605",
+          "message": {
+            "text": "Starting a process with a shell, possible injection detected, security issue."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/past_ci_versions.py"
+                },
+                "region": {
+                  "startLine": 125,
+                  "startColumn": 5,
+                  "endLine": 125,
+                  "endColumn": 62
+                }
+              }
+            }
+          ],
+          "properties": {
+            "issue_severity": "HIGH",
+            "issue_confidence": "HIGH",
+            "securityTriage": {
+              "candidateKey": "379effdd974e7d7b0a3d580029bf51dbe48209eacc714b67d01731a2286be06c",
+              "unitKey": "776b638a40a08c9b4c39f33ab7e04a31e23a3e47474b3c8ca0e4ba121bc6ccca",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          }
+        }
+      ]
+    },
+    {
+      "tool": {
+        "driver": {
+          "name": "semgrep",
+          "version": "1.178.0"
+        }
+      },
+      "properties": {
+        "language": "python",
+        "scanId": "f1acb4a0-e585-4e20-b0ba-ea46b195687d"
+      },
+      "results": [
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'Popen' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/transformers/onnx/__main__.py"
+                },
+                "region": {
+                  "startLine": 59,
+                  "startColumn": 79,
+                  "endLine": 59,
+                  "endColumn": 83
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "21d7b68cdb8e4f72a3d82dfb74648fa645896434e36935e9b7df5c8e9b6cd2e6",
+              "unitKey": "ee2fcffb048794445d08eba56debac6f4b5b724d34b066e2d81f8b73edfe0a53",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'check_call' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/deepspeed/test_model_zoo.py"
+                },
+                "region": {
+                  "startLine": 363,
+                  "startColumn": 42,
+                  "endLine": 363,
+                  "endColumn": 46
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "2db7f47b3b658cab1bdf54620ff37a26749864b0c05413dc00593e16d9b7a59e",
+              "unitKey": "c51dd2fee57d30a222fcd6509766345b1d429552aafdb5aafdb6bad2d08a8bb6",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'run' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/sagemaker/scripts/pytorch/run_ddp.py"
+                },
+                "region": {
+                  "startLine": 46,
+                  "startColumn": 35,
+                  "endLine": 46,
+                  "endColumn": 39
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "651975ec3dbe1210e2a91d6b3ef48953d15d2d51b4cfc52de339557570979b1e",
+              "unitKey": "9f89d5a7c2a831acd18c9e644efc836ceea5216e85de10c657f018b917d07f3b",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        },
+        {
+          "ruleId": "subprocess-shell-true",
+          "message": {
+            "text": "Found 'subprocess' function 'run' with 'shell=True'. This is dangerous because this call will spawn the command using a shell process. Doing so propagates current shell settings and variables, which makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "utils/check_self_hosted_runner.py"
+                },
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 40,
+                  "endLine": 13,
+                  "endColumn": 44
+                }
+              }
+            }
+          ],
+          "properties": {
+            "securityTriage": {
+              "candidateKey": "2897674d0e4c6cc2e86bebc882d27ba6f2ee752890ff6e5396848e6ac1012bdb",
+              "unitKey": "d9406fc310aecee0b21c49177427264311fe5d018b4f6ab3954ceea4c457b5ef",
+              "priority": "P3",
+              "decisionId": "D40_REVIEW",
+              "disposition": "review",
+              "filterRule": null
+            }
+          },
+          "fingerprints": {
+            "matchBasedId/v1": "requires login"
+          }
+        }
+      ]
+    }
+  ]
+}

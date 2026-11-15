@@ -1,0 +1,1321 @@
+{
+  "split": "pairs-v1, split development: vulnerable versions and resolved known locations; Python pairs only (rehearsal of v0.3)",
+  "pairs": 9,
+  "scored_pairs": 9,
+  "left_out": [],
+  "not_acquired_when_locked": [
+    "pyvul-ray-project-ray-193ff8c80067"
+  ],
+  "result": {
+    "summary": {
+      "documented_sites": 5,
+      "reported": 5,
+      "in_first_tiers": 2,
+      "filtered": 0,
+      "missed": 0
+    },
+    "sources": [
+      {
+        "id": "pyvul-PaddlePaddle-Paddle-49bec1760535",
+        "source": "github:PaddlePaddle/Paddle@5252c5d358807edcb5b61b06e4853b894478c0bf",
+        "snapshot_sha256": "4e003011a8d65f96f9b95e358ceca386105885f7ce825f093855ef6cc1f201e1",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 475,
+          "units": 341,
+          "candidates": 341,
+          "main_list": 307,
+          "filtered": 34,
+          "demoted": 255
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 341,
+          "main_list_by_priority": {
+            "P1": 39,
+            "P2": 9,
+            "U": 4,
+            "P3": 255,
+            "P4": 0
+          },
+          "filtered": [
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 261,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 274,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 298,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 301,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 314,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 338,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 340,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 343,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 356,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 358,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "python/paddle/distributed/fleet/base/role_maker.py",
+              "line": 289,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "python/paddle/incubate/distributed/fleet/role_maker.py",
+              "line": 996,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "setup.py",
+              "line": 760,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/auto_parallel/amp_o2_pass.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ir/pir/fused_pass/test_fused_gemm_epilogue_pass.py",
+              "line": 30,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ir/pir/fused_pass/test_fused_weight_only_linear_pass.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_block_multihead_attention.py",
+              "line": 47,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_flash_attention.py",
+              "line": 36,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_flash_attention_deterministic.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_fused_linear_param_grad_add.py",
+              "line": 26,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_memory_efficient_attention.py",
+              "line": 35,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_addmm_op.py",
+              "line": 27,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_attention_op.py",
+              "line": 30,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_fused_attention_op.py",
+              "line": 28,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_matmul_op.py",
+              "line": 28,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_mv_op.py",
+              "line": 27,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_pca_lowrank.py",
+              "line": 26,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_variable_length_memory_efficient_attention.py",
+              "line": 34,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_fl_ps.py",
+              "line": 47,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_fl_ps.py",
+              "line": 52,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_fl_ps.py",
+              "line": 53,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_gpubox_ps.py",
+              "line": 29,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_gpubox_ps.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/quantization/test_weight_only_linear.py",
+              "line": 37,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            }
+          ]
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 339,
+            "only": 274
+          },
+          "codeql": {
+            "candidates": 50,
+            "only": 2
+          },
+          "semgrep": {
+            "candidates": 24,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 417.8,
+          "steps": {
+            "bandit": 38.5,
+            "codeql": 160.6,
+            "semgrep": 11.7,
+            "codeql-create": 85.4,
+            "codeql-evidence": 122.5,
+            "semgrep-evidence": 20.0
+          }
+        }
+      },
+      {
+        "id": "pyvul-PaddlePaddle-Paddle-c5f6862d118d",
+        "source": "github:PaddlePaddle/Paddle@e64a054ff6b3964070fb2eb24c9aace2db5965eb",
+        "snapshot_sha256": "ee06506ca29c567151fe41d9bc145d00d6a91c6ff946afaba22446098760ec82",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 476,
+          "units": 342,
+          "candidates": 342,
+          "main_list": 308,
+          "filtered": 34,
+          "demoted": 256
+        },
+        "sites": [
+          {
+            "path": "python/paddle/utils/download.py",
+            "line": 204,
+            "basis": "PyVul_deleted_or_modified_lines",
+            "reported": true,
+            "tools": [
+              "bandit",
+              "semgrep"
+            ],
+            "priority": "P3",
+            "in_first_tiers": false,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              204
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 341,
+          "main_list_by_priority": {
+            "P1": 39,
+            "P2": 9,
+            "U": 4,
+            "P3": 255,
+            "P4": 0
+          },
+          "filtered": [
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 261,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 274,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 298,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 301,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 314,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 338,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 340,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 343,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 356,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "paddle/scripts/conda_build.py",
+              "line": 358,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "python/paddle/distributed/fleet/base/role_maker.py",
+              "line": 289,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "python/paddle/incubate/distributed/fleet/role_maker.py",
+              "line": 996,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "setup.py",
+              "line": 760,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/auto_parallel/amp_o2_pass.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ir/pir/fused_pass/test_fused_gemm_epilogue_pass.py",
+              "line": 30,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ir/pir/fused_pass/test_fused_weight_only_linear_pass.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_block_multihead_attention.py",
+              "line": 46,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_flash_attention.py",
+              "line": 36,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_flash_attention_deterministic.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_fused_linear_param_grad_add.py",
+              "line": 26,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_memory_efficient_attention.py",
+              "line": 35,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_addmm_op.py",
+              "line": 27,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_attention_op.py",
+              "line": 30,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_fused_attention_op.py",
+              "line": 28,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_matmul_op.py",
+              "line": 28,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_mv_op.py",
+              "line": 27,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_sparse_pca_lowrank.py",
+              "line": 26,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/legacy_test/test_variable_length_memory_efficient_attention.py",
+              "line": 34,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_fl_ps.py",
+              "line": 47,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_fl_ps.py",
+              "line": 52,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_fl_ps.py",
+              "line": 53,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_gpubox_ps.py",
+              "line": 29,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/ps/test_gpubox_ps.py",
+              "line": 31,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "test/quantization/test_weight_only_linear.py",
+              "line": 37,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            }
+          ]
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 340,
+            "only": 275
+          },
+          "codeql": {
+            "candidates": 50,
+            "only": 2
+          },
+          "semgrep": {
+            "candidates": 24,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 415.3,
+          "steps": {
+            "bandit": 38.3,
+            "codeql": 159.1,
+            "semgrep": 11.6,
+            "codeql-create": 84.1,
+            "codeql-evidence": 123.2,
+            "semgrep-evidence": 20.2
+          }
+        }
+      },
+      {
+        "id": "pyvul-celery-celery-1f7ad7e6df1e",
+        "source": "github:celery/celery@2d8dbc2a8087bbb60590465031ebd5138b8eb359",
+        "snapshot_sha256": "f724666c5d1e15e5d55f7614d897792fba037144eba4dbd18570efef99d12091",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 3,
+          "units": 3,
+          "candidates": 3,
+          "main_list": 3,
+          "filtered": 0,
+          "demoted": 3
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 3,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 3,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 3,
+            "only": 3
+          }
+        },
+        "seconds": {
+          "wall": 32.5,
+          "steps": {
+            "bandit": 2.8,
+            "codeql": 12.6,
+            "semgrep": 2.6,
+            "codeql-create": 9.2,
+            "codeql-evidence": 6.2,
+            "semgrep-evidence": 5.1
+          }
+        }
+      },
+      {
+        "id": "pyvul-dwisiswant0-apkleaks-a966e781499f",
+        "source": "github:dwisiswant0/apkleaks@8577b7af6224bf0a5455b552963c46721308d2ff",
+        "snapshot_sha256": "07d51d7d2fb9e3ac093f5ec081517c51246d4c0becf0a81131a162f9f7a26987",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 1,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 1
+        },
+        "sites": [
+          {
+            "path": "apkleaks/apkleaks.py",
+            "line": 88,
+            "basis": "PyVul_deleted_or_modified_lines",
+            "reported": true,
+            "tools": [
+              "bandit"
+            ],
+            "priority": "P3",
+            "in_first_tiers": false,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              88
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 0,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 0,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 1,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 14.2,
+          "steps": {
+            "bandit": 0.2,
+            "codeql": 5.7,
+            "semgrep": 1.3,
+            "codeql-create": 2.9,
+            "codeql-evidence": 4.7,
+            "semgrep-evidence": 1.1
+          }
+        }
+      },
+      {
+        "id": "pyvul-huggingface-transformers-2272ab57a99b",
+        "source": "github:huggingface/transformers@87a6cf41d0faa2df5bd464273534e928c6ac6e99",
+        "snapshot_sha256": "7327ae0ac42bf816fb395f4d5064cdb3097d76b86744cdaf974c60e980783604",
+        "scan_status": "partial",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 41,
+          "units": 34,
+          "candidates": 34,
+          "main_list": 34,
+          "filtered": 0,
+          "demoted": 34
+        },
+        "sites": [
+          {
+            "path": "src/transformers/onnx/__main__.py",
+            "line": 59,
+            "basis": "PyVul_deleted_or_modified_lines",
+            "reported": true,
+            "tools": [
+              "bandit",
+              "semgrep"
+            ],
+            "priority": "P3",
+            "in_first_tiers": false,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              59
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 33,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 33,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 34,
+            "only": 30
+          },
+          "semgrep": {
+            "candidates": 4,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 392.7,
+          "steps": {
+            "bandit": 40.2,
+            "codeql": 229.8,
+            "semgrep": 16.9,
+            "codeql-create": 111.3,
+            "semgrep-evidence": 18.3
+          }
+        }
+      },
+      {
+        "id": "pyvul-nexB-scancode.io-07ec0de1964b",
+        "source": "github:nexB/scancode.io@2f5a6cce23058684633326fc27b0f052a218b64e",
+        "snapshot_sha256": "dd53d6ae1d1d663056428ea66702ee934e596ed7c5cc1958d4ecb6b6b40e250b",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 12,
+          "units": 5,
+          "candidates": 5,
+          "main_list": 4,
+          "filtered": 1,
+          "demoted": 2
+        },
+        "sites": [
+          {
+            "path": "scanpipe/pipes/__init__.py",
+            "line": 279,
+            "basis": "PyVul_deleted_or_modified_lines",
+            "reported": true,
+            "tools": [
+              "bandit",
+              "codeql",
+              "semgrep"
+            ],
+            "priority": "P1",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              276,
+              279
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 4,
+          "main_list_by_priority": {
+            "P1": 1,
+            "P2": 0,
+            "U": 0,
+            "P3": 2,
+            "P4": 0
+          },
+          "filtered": [
+            {
+              "path": "scanpipe/management/commands/graph.py",
+              "line": 35,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            }
+          ]
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 5,
+            "only": 3
+          },
+          "codeql": {
+            "candidates": 2,
+            "only": 0
+          },
+          "semgrep": {
+            "candidates": 1,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 43.2,
+          "steps": {
+            "bandit": 1.0,
+            "codeql": 16.5,
+            "semgrep": 3.1,
+            "codeql-create": 10.1,
+            "codeql-evidence": 6.6,
+            "semgrep-evidence": 9.9,
+            "eslint": 2.6,
+            "sink-locator": 4.3
+          }
+        }
+      },
+      {
+        "id": "pyvul-pgadmin-org-pgadmin4-35f05e49b363",
+        "source": "github:pgadmin-org/pgadmin4@61fa8b16c90590b59c624e440187441349020e1a",
+        "snapshot_sha256": "1d6f651a7427714944b40ae5c9e39c253957afe0b3616ef4adf73b9f464ef375",
+        "scan_status": "partial",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 34,
+          "units": 23,
+          "candidates": 20,
+          "main_list": 18,
+          "filtered": 2,
+          "demoted": 14
+        },
+        "sites": [
+          {
+            "path": "web/pgadmin/misc/__init__.py",
+            "line": 274,
+            "basis": "PyVul_deleted_or_modified_lines",
+            "reported": true,
+            "tools": [
+              "bandit",
+              "codeql",
+              "semgrep"
+            ],
+            "priority": "P1",
+            "in_first_tiers": true,
+            "filtered": false,
+            "filter_rules": [],
+            "same_file_candidate_lines": [
+              274
+            ]
+          }
+        ],
+        "unlabeled": {
+          "total": 19,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 3,
+            "U": 0,
+            "P3": 14,
+            "P4": 0
+          },
+          "filtered": [
+            {
+              "path": "web/pgadmin/utils/driver/psycopg3/generate_keywords.py",
+              "line": 20,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            },
+            {
+              "path": "web/pgadmin/utils/driver/psycopg3/generate_keywords.py",
+              "line": 21,
+              "tools": [
+                "bandit"
+              ],
+              "filter_rules": [
+                "G2_LITERAL_COMMAND"
+              ]
+            }
+          ]
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 20,
+            "only": 12
+          },
+          "codeql": {
+            "candidates": 4,
+            "only": 0
+          },
+          "semgrep": {
+            "candidates": 5,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 101.5,
+          "steps": {
+            "bandit": 5.0,
+            "codeql": 42.1,
+            "semgrep": 6.0,
+            "codeql-create": 31.1,
+            "codeql-evidence": 13.7,
+            "semgrep-evidence": 11.2,
+            "eslint": 2.7,
+            "sink-locator": 2.4
+          }
+        }
+      },
+      {
+        "id": "pyvul-pypa-pip-389cb799d0da",
+        "source": "github:pypa/pip@71df02c412998aa07c358ad04388e1573b3c5348",
+        "snapshot_sha256": "aad93f38c58a795c6a74e291c3307e0a119341520f0daa0ee85322b38781fe80",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 65,
+          "units": 45,
+          "candidates": 45,
+          "main_list": 45,
+          "filtered": 0,
+          "demoted": 44
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 45,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 1,
+            "P3": 44,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 45,
+            "only": 43
+          },
+          "semgrep": {
+            "candidates": 2,
+            "only": 0
+          }
+        },
+        "seconds": {
+          "wall": 70.8,
+          "steps": {
+            "bandit": 5.9,
+            "codeql": 24.3,
+            "semgrep": 3.9,
+            "codeql-create": 17.8,
+            "codeql-evidence": 19.7,
+            "semgrep-evidence": 11.4
+          }
+        }
+      },
+      {
+        "id": "pyvul-savon-noir-python-libnmap-c36fecde9001",
+        "source": "github:savon-noir/python-libnmap@28060b437e800d9bc9840cca8f171ce7a3fb34dd",
+        "snapshot_sha256": "13c443625e21f09c1ebc29b6005628d90b21effe1a657d1f62cd7f4c8b8f50e8",
+        "scan_status": "completed",
+        "profile": "command-injection-v0.3",
+        "profile_sha256": "1b3b824acbead5fc9a115cce03a7b28e31b5b20c75cb94da0ecf210433862406",
+        "stages": {
+          "raw_alerts": 1,
+          "units": 1,
+          "candidates": 1,
+          "main_list": 1,
+          "filtered": 0,
+          "demoted": 1
+        },
+        "sites": [],
+        "unlabeled": {
+          "total": 1,
+          "main_list_by_priority": {
+            "P1": 0,
+            "P2": 0,
+            "U": 0,
+            "P3": 1,
+            "P4": 0
+          },
+          "filtered": []
+        },
+        "sources": {
+          "bandit": {
+            "candidates": 1,
+            "only": 1
+          }
+        },
+        "seconds": {
+          "wall": 15.9,
+          "steps": {
+            "bandit": 0.3,
+            "codeql": 6.5,
+            "semgrep": 1.3,
+            "codeql-create": 3.4,
+            "codeql-evidence": 4.9,
+            "semgrep-evidence": 1.2
+          }
+        }
+      }
+    ],
+    "scan_statuses": {
+      "completed": 7,
+      "partial": 2
+    },
+    "configurations": {
+      "documented_sites_scanned": 3,
+      "reported_by_configuration": {
+        "semgrep": 2,
+        "codeql": 1,
+        "eslint": 0,
+        "semgrep ∪ codeql": 2,
+        "all sources": 3,
+        "all sources, after filtering": 3,
+        "first tiers (P1+P2), after filtering": 1
+      },
+      "reported_by_one_tool_only": {
+        "semgrep": 0,
+        "codeql": 0,
+        "eslint": 0,
+        "bandit": 1
+      },
+      "lost_to_filtering": 0,
+      "kept_sites_by_priority": {
+        "P1": 1,
+        "P2": 0,
+        "U": 0,
+        "P3": 2,
+        "P4": 0
+      }
+    },
+    "unlabeled": {
+      "total": 787,
+      "filtered": 71,
+      "main_list_by_priority": {
+        "P1": 79,
+        "P2": 21,
+        "U": 9,
+        "P3": 607,
+        "P4": 0
+      }
+    },
+    "wall_seconds": {
+      "scans": 9,
+      "total": 1503.9,
+      "median": 70.8,
+      "max": 417.8
+    }
+  }
+}
