@@ -1,0 +1,387 @@
+{
+  "assessment_rows": [
+    {
+      "decision_id": "D10_LITERAL",
+      "disposition": "review",
+      "matched_conditions": [
+        "audit_claim",
+        "execution_candidate",
+        "important_unknown",
+        "shell_semantics",
+        "verified_blocker",
+        "{'all': ['execution_candidate', 'verified_blocker']}"
+      ],
+      "policy_id": "command-injection-priority",
+      "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+      "policy_version": "0.2",
+      "priority": "P4",
+      "reason": "Đã xác minh toàn bộ lệnh thuộc miền literal hẹp: {'id': 'whole_command_literal_v1', 'sink_kind': 'os.system', 'sink_span': {'startLine': 2, 'startColumn': 1, 'endLine': 2, 'endColumn': 19}, 'source_sha256': '8ff7f41d1a04056594ab8705be8e3c362cd439de3edb59cbc2f94a8ef3900648', 'expression': \"'ls -l'\", 'resolved_command': 'ls -l', 'assumptions': 'trusted POSIX runtime, executable and environment'}; giữ cảnh báo để rà soát, không kết luận an toàn.",
+      "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+      "rule_claims_version": "rule-claims-v3",
+      "spec_sha256": "628ce17da62ce5d7413709e70e9d73cc4f106887022cfff063e41351c4745bb9",
+      "unit_key": "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b"
+    }
+  ],
+  "finding_rows": [
+    {
+      "cwe_ids": [
+        "CWE-78"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "reconcile-v0.1",
+      "raw_id": "bandit:0:0",
+      "raw_rule_id": "B605",
+      "region": [
+        2,
+        1,
+        2,
+        19
+      ],
+      "rule_id": "B605",
+      "tool": "bandit"
+    },
+    {
+      "cwe_ids": [
+        "CWE-78"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "reconcile-v0.1",
+      "raw_id": "semgrep:0:0",
+      "raw_rule_id": "tmp.subprocess-shell-true",
+      "region": [
+        2,
+        11,
+        2,
+        18
+      ],
+      "rule_id": "subprocess-shell-true",
+      "tool": "semgrep"
+    }
+  ],
+  "languages": {
+    "python": {
+      "assessments": [
+        {
+          "adjudication": {
+            "evidence": [],
+            "kept_because": [
+              "run_incomplete"
+            ],
+            "reason": "Lượt quét chưa hoàn tất nên không gạn cảnh báo nào.",
+            "rule": null,
+            "rules": [],
+            "status": "kept",
+            "version": "adjudicate-v0.3"
+          },
+          "argument_role": "shell_command",
+          "blocker_proof": {
+            "assumptions": "trusted POSIX runtime, executable and environment",
+            "expression": "'ls -l'",
+            "id": "whole_command_literal_v1",
+            "resolved_command": "ls -l",
+            "sink_kind": "os.system",
+            "sink_span": {
+              "endColumn": 19,
+              "endLine": 2,
+              "startColumn": 1,
+              "startLine": 2
+            },
+            "source_sha256": "8ff7f41d1a04056594ab8705be8e3c362cd439de3edb59cbc2f94a8ef3900648"
+          },
+          "candidate": {
+            "basis": "same_call_site",
+            "key": "62a0f0c6474942e5eeabb3ccd2b46921b638ce5c0b2b74217f28065911be318d",
+            "priority": "P4",
+            "tools": [
+              "bandit",
+              "semgrep"
+            ],
+            "unit_ids": [
+              "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b"
+            ]
+          },
+          "command_literal": true,
+          "decision_id": "D10_LITERAL",
+          "disposition": "review",
+          "finding_evidence": [
+            {
+              "audit_oriented": true,
+              "candidate_status": "cwe78_candidate",
+              "canonical_rule_id": "B605",
+              "claim_family": "audit",
+              "claim_kind": "call_site_pattern",
+              "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+              "definition_verified": true,
+              "endpoint_argument_span": null,
+              "endpoint_location": null,
+              "endpoint_role": null,
+              "has_trace": false,
+              "raw_id": "bandit:0:0",
+              "rule_claims_version": "rule-claims-v3",
+              "rule_id": "B605",
+              "source_location": null,
+              "source_type": "unknown",
+              "source_type_basis": "pinned_rule_definition",
+              "tool": "bandit",
+              "trace_length": 0,
+              "trace_ref": null,
+              "trace_status": "missing"
+            },
+            {
+              "audit_oriented": true,
+              "candidate_status": "cwe78_candidate",
+              "canonical_rule_id": "subprocess-shell-true",
+              "claim_family": "audit",
+              "claim_kind": "shell_usage_audit",
+              "definition_sha256": "753ba9d29d592b3d7f5086e671e424ee05138acbf75a39b663d92aa3275f5380",
+              "definition_verified": true,
+              "endpoint_argument_span": null,
+              "endpoint_location": null,
+              "endpoint_role": null,
+              "has_trace": false,
+              "raw_id": "semgrep:0:0",
+              "rule_claims_version": "rule-claims-v3",
+              "rule_id": "tmp.subprocess-shell-true",
+              "source_location": null,
+              "source_type": "unknown",
+              "source_type_basis": "pinned_rule_definition",
+              "tool": "semgrep",
+              "trace_length": 0,
+              "trace_ref": null,
+              "trace_status": "missing"
+            }
+          ],
+          "mapping_status": "mapped",
+          "matched_conditions": [
+            "audit_claim",
+            "execution_candidate",
+            "important_unknown",
+            "shell_semantics",
+            "verified_blocker",
+            "{'all': ['execution_candidate', 'verified_blocker']}"
+          ],
+          "policy_id": "command-injection-priority",
+          "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+          "policy_version": "0.2",
+          "predicate_values": {
+            "agreement": false,
+            "audit_claim": true,
+            "evidence_conflict": false,
+            "execution_candidate": true,
+            "flow_claim": false,
+            "important_unknown": true,
+            "shell_semantics": true,
+            "strong_flow": false,
+            "unresolved_unit": false,
+            "verified_blocker": true
+          },
+          "priority": "P4",
+          "reason": "Đã xác minh toàn bộ lệnh thuộc miền literal hẹp: {'id': 'whole_command_literal_v1', 'sink_kind': 'os.system', 'sink_span': {'startLine': 2, 'startColumn': 1, 'endLine': 2, 'endColumn': 19}, 'source_sha256': '8ff7f41d1a04056594ab8705be8e3c362cd439de3edb59cbc2f94a8ef3900648', 'expression': \"'ls -l'\", 'resolved_command': 'ls -l', 'assumptions': 'trusted POSIX runtime, executable and environment'}; giữ cảnh báo để rà soát, không kết luận an toàn.",
+          "reconciler_version": "reconcile-v0.1",
+          "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+          "rule_claims_version": "rule-claims-v3",
+          "shell_state": "absent",
+          "source_types": [
+            "unknown"
+          ],
+          "spec_sha256": "628ce17da62ce5d7413709e70e9d73cc4f106887022cfff063e41351c4745bb9",
+          "tools": [
+            "bandit",
+            "semgrep"
+          ],
+          "trace_lengths_by_tool": {
+            "bandit": [
+              0
+            ],
+            "semgrep": [
+              0
+            ]
+          },
+          "traces_by_tool": {
+            "bandit": false,
+            "semgrep": false
+          },
+          "unit_id": "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b",
+          "unknown_fields": [
+            "source_library_input_or_unknown"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "mapping_status": "unresolved",
+          "message": "command injection",
+          "raw_id": "semgrep:0:0",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-78"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 18,
+            "endLine": 2,
+            "startColumn": 11,
+            "startLine": 2
+          },
+          "rule_id": "tmp.subprocess-shell-true",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "d7ed08fece54c5a96f5a15542b5cda0358f1cb7b7f5b42a73e1d17900ad93cf2",
+          "technical_verdict": "unresolved",
+          "tool": "semgrep"
+        },
+        {
+          "mapping_status": "unresolved",
+          "message": "command injection",
+          "raw_id": "bandit:0:0",
+          "raw_result": {
+            "properties": {
+              "issue_severity": "LOW"
+            }
+          },
+          "reported_cwes": [
+            "CWE-78"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 19,
+            "endLine": 2,
+            "startColumn": 1,
+            "startLine": 2
+          },
+          "rule_id": "B605",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "d7ed08fece54c5a96f5a15542b5cda0358f1cb7b7f5b42a73e1d17900ad93cf2",
+          "technical_verdict": "unresolved",
+          "tool": "bandit"
+        }
+      ],
+      "run": {
+        "profile_id": "command-injection-v0.2",
+        "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+        "raw_findings": 2,
+        "status": "partial",
+        "steps": {
+          "bandit": "completed",
+          "codeql": "completed",
+          "codeql-evidence": "completed",
+          "semgrep": "completed",
+          "semgrep-evidence": "completed",
+          "sink-locator": "partial"
+        }
+      },
+      "units": [
+        {
+          "argument_role": "shell_command",
+          "callee": "os.system",
+          "mapping_status": "mapped",
+          "mappings": [
+            {
+              "mapping_method": "exact_span",
+              "mapping_status": "mapped",
+              "raw_id": "bandit:0:0",
+              "tool": "bandit"
+            },
+            {
+              "mapping_method": "containment",
+              "mapping_status": "mapped",
+              "raw_id": "semgrep:0:0",
+              "tool": "semgrep"
+            }
+          ],
+          "path": "app.py",
+          "raw_finding_ids": [
+            "bandit:0:0",
+            "semgrep:0:0"
+          ],
+          "reported_region": null,
+          "sink_kind": "os.system",
+          "sink_span": {
+            "endColumn": 19,
+            "endLine": 2,
+            "startColumn": 1,
+            "startLine": 2
+          },
+          "snapshot_sha256": "d7ed08fece54c5a96f5a15542b5cda0358f1cb7b7f5b42a73e1d17900ad93cf2",
+          "tools": [
+            "bandit",
+            "semgrep"
+          ],
+          "unit_id": "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b"
+        }
+      ]
+    }
+  },
+  "scan": {
+    "policy_version": "0.2",
+    "profile_id": "command-injection-v0.2",
+    "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+    "reconciler_version": "reconcile-v0.1",
+    "status": "partial"
+  },
+  "tool_runs": [
+    [
+      "python",
+      "bandit",
+      "completed",
+      "1.9.4"
+    ],
+    [
+      "python",
+      "codeql",
+      "completed",
+      "2.27.1"
+    ],
+    [
+      "python",
+      "codeql-evidence",
+      "completed",
+      "2.27.1"
+    ],
+    [
+      "python",
+      "semgrep",
+      "completed",
+      "1.178.0"
+    ],
+    [
+      "python",
+      "semgrep-evidence",
+      "completed",
+      "1.178.0"
+    ]
+  ],
+  "unit_finding_rows": [
+    [
+      "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b",
+      "bandit:0:0",
+      "exact_span"
+    ],
+    [
+      "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b",
+      "semgrep:0:0",
+      "containment"
+    ]
+  ],
+  "unit_rows": [
+    {
+      "argument_role": "shell_command",
+      "candidate_key": "62a0f0c6474942e5eeabb3ccd2b46921b638ce5c0b2b74217f28065911be318d",
+      "locator_version": "sink-locator-v0",
+      "mapping_status": "mapped",
+      "path": "app.py",
+      "reconciler_version": "reconcile-v0.1",
+      "region": [
+        2,
+        1,
+        2,
+        19
+      ],
+      "sink_kind": "os.system",
+      "unit_key": "6dd851ae9bd08b8a4a84a93233e5e7dd008b699a1795e7de63bd5363ac401c2b"
+    }
+  ]
+}

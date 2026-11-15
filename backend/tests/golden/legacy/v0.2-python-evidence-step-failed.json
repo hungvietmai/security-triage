@@ -1,0 +1,466 @@
+{
+  "assessment_rows": [
+    {
+      "decision_id": "D30_HIGH",
+      "disposition": "review",
+      "matched_conditions": [
+        "agreement",
+        "audit_claim",
+        "execution_candidate",
+        "flow_claim",
+        "important_unknown",
+        "not strong_flow",
+        "not verified_blocker",
+        "shell_semantics",
+        "{'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}",
+        "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+        "{'all': ['flow_claim', 'important_unknown']}",
+        "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+      ],
+      "policy_id": "command-injection-priority",
+      "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+      "policy_version": "0.2",
+      "priority": "P2",
+      "reason": "Ưu tiên cao: agreement, audit_claim, execution_candidate, flow_claim, important_unknown, not strong_flow, not verified_blocker, shell_semantics, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+      "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+      "rule_claims_version": "rule-claims-v3",
+      "spec_sha256": "628ce17da62ce5d7413709e70e9d73cc4f106887022cfff063e41351c4745bb9",
+      "unit_key": "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b"
+    }
+  ],
+  "finding_rows": [
+    {
+      "cwe_ids": [
+        "CWE-78"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "reconcile-v0.1",
+      "raw_id": "bandit:0:0",
+      "raw_rule_id": "B605",
+      "region": [
+        2,
+        1,
+        2,
+        15
+      ],
+      "rule_id": "B605",
+      "tool": "bandit"
+    },
+    {
+      "cwe_ids": [
+        "CWE-78"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "reconcile-v0.1",
+      "raw_id": "codeql:0:0",
+      "raw_rule_id": "py/command-line-injection",
+      "region": [
+        2,
+        11,
+        2,
+        14
+      ],
+      "rule_id": "py/command-line-injection",
+      "tool": "codeql"
+    },
+    {
+      "cwe_ids": [
+        "CWE-78"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "reconcile-v0.1",
+      "raw_id": "semgrep:0:0",
+      "raw_rule_id": "tmp.subprocess-shell-true",
+      "region": [
+        2,
+        11,
+        2,
+        14
+      ],
+      "rule_id": "subprocess-shell-true",
+      "tool": "semgrep"
+    }
+  ],
+  "languages": {
+    "python": {
+      "assessments": [
+        {
+          "adjudication": {
+            "evidence": [],
+            "kept_because": [
+              "evidence_step_failed"
+            ],
+            "reason": "Bước chạy truy vấn bằng chứng không hoàn tất nên không đối chiếu được.",
+            "rule": null,
+            "rules": [],
+            "status": "kept",
+            "version": "adjudicate-v0.3"
+          },
+          "argument_role": "shell_command",
+          "blocker_proof": null,
+          "candidate": {
+            "basis": "same_call_site",
+            "key": "a6cfa7b8f0667666ec043c59e20243a1249f55ffef74eb8a1f3301e2aa0fba48",
+            "priority": "P2",
+            "tools": [
+              "bandit",
+              "codeql",
+              "semgrep"
+            ],
+            "unit_ids": [
+              "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b"
+            ]
+          },
+          "command_literal": false,
+          "decision_id": "D30_HIGH",
+          "disposition": "review",
+          "finding_evidence": [
+            {
+              "audit_oriented": true,
+              "candidate_status": "cwe78_candidate",
+              "canonical_rule_id": "B605",
+              "claim_family": "audit",
+              "claim_kind": "call_site_pattern",
+              "definition_sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1",
+              "definition_verified": true,
+              "endpoint_argument_span": null,
+              "endpoint_location": null,
+              "endpoint_role": null,
+              "has_trace": false,
+              "raw_id": "bandit:0:0",
+              "rule_claims_version": "rule-claims-v3",
+              "rule_id": "B605",
+              "source_location": null,
+              "source_type": "unknown",
+              "source_type_basis": "pinned_rule_definition",
+              "tool": "bandit",
+              "trace_length": 0,
+              "trace_ref": null,
+              "trace_status": "missing"
+            },
+            {
+              "audit_oriented": false,
+              "candidate_status": "cwe78_candidate",
+              "canonical_rule_id": "py/command-line-injection",
+              "claim_family": "flow",
+              "claim_kind": "modeled_command_line_flow",
+              "definition_sha256": "aaa9684ea22778f9bd8e032dc825adb7cf48f01203174c6e0b014b9d9ba1922c",
+              "definition_verified": true,
+              "endpoint_argument_span": null,
+              "endpoint_location": null,
+              "endpoint_role": null,
+              "has_trace": false,
+              "raw_id": "codeql:0:0",
+              "rule_claims_version": "rule-claims-v3",
+              "rule_id": "py/command-line-injection",
+              "source_location": null,
+              "source_type": "remote",
+              "source_type_basis": "pinned_rule_definition",
+              "tool": "codeql",
+              "trace_length": 0,
+              "trace_ref": null,
+              "trace_status": "missing"
+            },
+            {
+              "audit_oriented": true,
+              "candidate_status": "cwe78_candidate",
+              "canonical_rule_id": "subprocess-shell-true",
+              "claim_family": "audit",
+              "claim_kind": "shell_usage_audit",
+              "definition_sha256": "753ba9d29d592b3d7f5086e671e424ee05138acbf75a39b663d92aa3275f5380",
+              "definition_verified": true,
+              "endpoint_argument_span": null,
+              "endpoint_location": null,
+              "endpoint_role": null,
+              "has_trace": false,
+              "raw_id": "semgrep:0:0",
+              "rule_claims_version": "rule-claims-v3",
+              "rule_id": "tmp.subprocess-shell-true",
+              "source_location": null,
+              "source_type": "unknown",
+              "source_type_basis": "pinned_rule_definition",
+              "tool": "semgrep",
+              "trace_length": 0,
+              "trace_ref": null,
+              "trace_status": "missing"
+            }
+          ],
+          "mapping_status": "mapped",
+          "matched_conditions": [
+            "agreement",
+            "audit_claim",
+            "execution_candidate",
+            "flow_claim",
+            "important_unknown",
+            "not strong_flow",
+            "not verified_blocker",
+            "shell_semantics",
+            "{'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}",
+            "{'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}",
+            "{'all': ['flow_claim', 'important_unknown']}",
+            "{'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}"
+          ],
+          "policy_id": "command-injection-priority",
+          "policy_sha256": "5871819299fa7fab4e01b1ca2f62c262e2379f00934947311c13e3790c637cc5",
+          "policy_version": "0.2",
+          "predicate_values": {
+            "agreement": true,
+            "audit_claim": true,
+            "evidence_conflict": false,
+            "execution_candidate": true,
+            "flow_claim": true,
+            "important_unknown": true,
+            "shell_semantics": true,
+            "strong_flow": false,
+            "unresolved_unit": false,
+            "verified_blocker": false
+          },
+          "priority": "P2",
+          "reason": "Ưu tiên cao: agreement, audit_claim, execution_candidate, flow_claim, important_unknown, not strong_flow, not verified_blocker, shell_semantics, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}, {'all': ['execution_candidate', {'not': 'verified_blocker'}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}]}, {'all': ['flow_claim', 'important_unknown']}, {'any': ['strong_flow', {'all': ['flow_claim', 'important_unknown']}, {'all': ['agreement', 'audit_claim', {'not': 'strong_flow'}]}]}; còn thiếu ['flow_claim_without_valid_endpoint_trace', 'source_library_input_or_unknown']; nguồn ['remote', 'unknown'].",
+          "reconciler_version": "reconcile-v0.1",
+          "rule_claims_sha256": "833fd765d3ebb223692a33a886acc3836b11ece2ea54c4f47dbe6a413df23994",
+          "rule_claims_version": "rule-claims-v3",
+          "shell_state": "absent",
+          "source_types": [
+            "remote",
+            "unknown"
+          ],
+          "spec_sha256": "628ce17da62ce5d7413709e70e9d73cc4f106887022cfff063e41351c4745bb9",
+          "tools": [
+            "bandit",
+            "codeql",
+            "semgrep"
+          ],
+          "trace_lengths_by_tool": {
+            "bandit": [
+              0
+            ],
+            "codeql": [
+              0
+            ],
+            "semgrep": [
+              0
+            ]
+          },
+          "traces_by_tool": {
+            "bandit": false,
+            "codeql": false,
+            "semgrep": false
+          },
+          "unit_id": "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b",
+          "unknown_fields": [
+            "flow_claim_without_valid_endpoint_trace",
+            "source_library_input_or_unknown"
+          ]
+        }
+      ],
+      "findings": [
+        {
+          "mapping_status": "unresolved",
+          "message": "command injection",
+          "raw_id": "semgrep:0:0",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-78"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 14,
+            "endLine": 2,
+            "startColumn": 11,
+            "startLine": 2
+          },
+          "rule_id": "tmp.subprocess-shell-true",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "dce326ff53b8ff9864018932a340fc07ba64a504def18b887caa915ec1d59d2b",
+          "technical_verdict": "unresolved",
+          "tool": "semgrep"
+        },
+        {
+          "mapping_status": "unresolved",
+          "message": "command injection",
+          "raw_id": "codeql:0:0",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-78"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 14,
+            "endLine": 2,
+            "startColumn": 11,
+            "startLine": 2
+          },
+          "rule_id": "py/command-line-injection",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "dce326ff53b8ff9864018932a340fc07ba64a504def18b887caa915ec1d59d2b",
+          "technical_verdict": "unresolved",
+          "tool": "codeql"
+        },
+        {
+          "mapping_status": "unresolved",
+          "message": "command injection",
+          "raw_id": "bandit:0:0",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-78"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 15,
+            "endLine": 2,
+            "startColumn": 1,
+            "startLine": 2
+          },
+          "rule_id": "B605",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "dce326ff53b8ff9864018932a340fc07ba64a504def18b887caa915ec1d59d2b",
+          "technical_verdict": "unresolved",
+          "tool": "bandit"
+        }
+      ],
+      "run": {
+        "profile_id": "command-injection-v0.2",
+        "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+        "raw_findings": 3,
+        "status": "completed",
+        "steps": {
+          "bandit": "completed",
+          "codeql": "completed",
+          "codeql-evidence": "failed",
+          "semgrep": "completed",
+          "semgrep-evidence": "completed",
+          "sink-locator": "completed"
+        }
+      },
+      "units": [
+        {
+          "argument_role": "shell_command",
+          "callee": "os.system",
+          "mapping_status": "mapped",
+          "mappings": [
+            {
+              "mapping_method": "exact_span",
+              "mapping_status": "mapped",
+              "raw_id": "bandit:0:0",
+              "tool": "bandit"
+            },
+            {
+              "mapping_method": "containment",
+              "mapping_status": "mapped",
+              "raw_id": "codeql:0:0",
+              "tool": "codeql"
+            },
+            {
+              "mapping_method": "containment",
+              "mapping_status": "mapped",
+              "raw_id": "semgrep:0:0",
+              "tool": "semgrep"
+            }
+          ],
+          "path": "app.py",
+          "raw_finding_ids": [
+            "bandit:0:0",
+            "codeql:0:0",
+            "semgrep:0:0"
+          ],
+          "reported_region": null,
+          "sink_kind": "os.system",
+          "sink_span": {
+            "endColumn": 15,
+            "endLine": 2,
+            "startColumn": 1,
+            "startLine": 2
+          },
+          "snapshot_sha256": "dce326ff53b8ff9864018932a340fc07ba64a504def18b887caa915ec1d59d2b",
+          "tools": [
+            "bandit",
+            "codeql",
+            "semgrep"
+          ],
+          "unit_id": "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b"
+        }
+      ]
+    }
+  },
+  "scan": {
+    "policy_version": "0.2",
+    "profile_id": "command-injection-v0.2",
+    "profile_sha256": "6993df05bfc4cadc375383365dfb4e0f2e2513907592cefd4c670d4f900b9e0d",
+    "reconciler_version": "reconcile-v0.1",
+    "status": "completed"
+  },
+  "tool_runs": [
+    [
+      "python",
+      "bandit",
+      "completed",
+      "1.9.4"
+    ],
+    [
+      "python",
+      "codeql",
+      "completed",
+      "2.27.1"
+    ],
+    [
+      "python",
+      "codeql-evidence",
+      "failed",
+      "2.27.1"
+    ],
+    [
+      "python",
+      "semgrep",
+      "completed",
+      "1.178.0"
+    ],
+    [
+      "python",
+      "semgrep-evidence",
+      "completed",
+      "1.178.0"
+    ]
+  ],
+  "unit_finding_rows": [
+    [
+      "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b",
+      "bandit:0:0",
+      "exact_span"
+    ],
+    [
+      "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b",
+      "codeql:0:0",
+      "containment"
+    ],
+    [
+      "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b",
+      "semgrep:0:0",
+      "containment"
+    ]
+  ],
+  "unit_rows": [
+    {
+      "argument_role": "shell_command",
+      "candidate_key": "a6cfa7b8f0667666ec043c59e20243a1249f55ffef74eb8a1f3301e2aa0fba48",
+      "locator_version": "sink-locator-v0",
+      "mapping_status": "mapped",
+      "path": "app.py",
+      "reconciler_version": "reconcile-v0.1",
+      "region": [
+        2,
+        1,
+        2,
+        15
+      ],
+      "sink_kind": "os.system",
+      "unit_key": "3ebe4c1a954caa38fd1f32e220f20cd3813768a458c568649b3394f5319de33b"
+    }
+  ]
+}

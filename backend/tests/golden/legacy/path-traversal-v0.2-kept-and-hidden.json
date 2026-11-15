@@ -1,0 +1,457 @@
+{
+  "assessment_rows": [
+    {
+      "decision_id": "EV_KEPT_NO_PROOF",
+      "disposition": "review",
+      "matched_conditions": [
+        "baseline_alert",
+        "retained_by_evidence_query"
+      ],
+      "policy_id": "cwe22-safety-evidence",
+      "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+      "policy_version": "0.2",
+      "priority": "P1",
+      "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+      "unit_key": "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc"
+    },
+    {
+      "decision_id": "EV_HIDDEN_BY_EVIDENCE",
+      "disposition": "filtered",
+      "matched_conditions": [
+        "baseline_alert",
+        "removed_by_safety_evidence"
+      ],
+      "policy_id": "cwe22-safety-evidence",
+      "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+      "policy_version": "0.2",
+      "priority": "P4",
+      "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+      "unit_key": "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794"
+    }
+  ],
+  "finding_rows": [
+    {
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "safety-evidence-units-v1",
+      "raw_id": "codeql:0:0",
+      "raw_rule_id": "st/cwe-22/none",
+      "region": [
+        2,
+        6,
+        2,
+        24
+      ],
+      "rule_id": "st/cwe-22/none",
+      "tool": "codeql"
+    },
+    {
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "safety-evidence-units-v1",
+      "raw_id": "codeql:0:1",
+      "raw_rule_id": "st/cwe-22/none",
+      "region": [
+        3,
+        6,
+        3,
+        24
+      ],
+      "rule_id": "st/cwe-22/none",
+      "tool": "codeql"
+    },
+    {
+      "cwe_ids": [
+        "CWE-22"
+      ],
+      "file_path": "app.py",
+      "language": "python",
+      "mapping_version": "safety-evidence-units-v1",
+      "raw_id": "codeql:0:2",
+      "raw_rule_id": "st/cwe-22/all",
+      "region": [
+        2,
+        6,
+        2,
+        24
+      ],
+      "rule_id": "st/cwe-22/all",
+      "tool": "codeql"
+    }
+  ],
+  "languages": {
+    "python": {
+      "assessments": [
+        {
+          "adjudication": {
+            "evidence": [],
+            "kept_because": [
+              "evidence_query_still_reports_flow"
+            ],
+            "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+            "rule": null,
+            "rules": [],
+            "status": "kept",
+            "version": "adjudicate-v0.3"
+          },
+          "baseline_rule": "st/cwe-22/none",
+          "candidate": {
+            "basis": "single_location",
+            "key": "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc",
+            "priority": "P1",
+            "tools": [
+              "codeql"
+            ],
+            "unit_ids": [
+              "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc"
+            ]
+          },
+          "decision_id": "EV_KEPT_NO_PROOF",
+          "disposition": "review",
+          "evidence_rule": "st/cwe-22/all",
+          "finding_evidence": [
+            {
+              "message": "flow from source",
+              "query": "baseline",
+              "raw_id": "codeql:0:0",
+              "rule_id": "st/cwe-22/none"
+            },
+            {
+              "message": "flow from source",
+              "query": "evidence",
+              "raw_id": "codeql:0:2",
+              "rule_id": "st/cwe-22/all"
+            }
+          ],
+          "matched_conditions": [
+            "baseline_alert",
+            "retained_by_evidence_query"
+          ],
+          "policy_id": "cwe22-safety-evidence",
+          "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+          "policy_version": "0.2",
+          "predicate_values": {
+            "baseline_alert": true,
+            "retained_by_evidence_query": true
+          },
+          "priority": "P1",
+          "reason": "Truy vấn có bằng chứng an toàn vẫn báo vị trí này: chưa chứng minh được an toàn, cần rà soát.",
+          "reconciler_version": "safety-evidence-units-v1",
+          "rule_claims_sha256": "",
+          "rule_claims_version": "not-applicable",
+          "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc",
+          "unknown_fields": []
+        },
+        {
+          "adjudication": {
+            "evidence": [
+              {
+                "baseline_rules": [
+                  "st/cwe-22/none"
+                ],
+                "evidence_rule": "st/cwe-22/all",
+                "kind": "safety_evidence_query_removed_every_flow",
+                "refuted_raw_ids": [
+                  "codeql:0:1"
+                ],
+                "rule": "G1_CODEQL_SAFETY_EVIDENCE",
+                "tool": "codeql-safety-evidence"
+              }
+            ],
+            "kept_because": [],
+            "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+            "rule": "G1_CODEQL_SAFETY_EVIDENCE",
+            "rules": [
+              "G1_CODEQL_SAFETY_EVIDENCE"
+            ],
+            "status": "filtered",
+            "version": "adjudicate-v0.3"
+          },
+          "baseline_rule": "st/cwe-22/none",
+          "candidate": {
+            "basis": "single_location",
+            "key": "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794",
+            "priority": "P4",
+            "tools": [
+              "codeql"
+            ],
+            "unit_ids": [
+              "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794"
+            ]
+          },
+          "decision_id": "EV_HIDDEN_BY_EVIDENCE",
+          "disposition": "filtered",
+          "evidence_rule": "st/cwe-22/all",
+          "finding_evidence": [
+            {
+              "message": "flow from source",
+              "query": "baseline",
+              "raw_id": "codeql:0:1",
+              "rule_id": "st/cwe-22/none"
+            }
+          ],
+          "matched_conditions": [
+            "baseline_alert",
+            "removed_by_safety_evidence"
+          ],
+          "policy_id": "cwe22-safety-evidence",
+          "policy_sha256": "8c7a6f77e1de96ac60775ff9628683e15c5b48ee9c6340b0669398fd7817ce2c",
+          "policy_version": "0.2",
+          "predicate_values": {
+            "baseline_alert": true,
+            "retained_by_evidence_query": false
+          },
+          "priority": "P4",
+          "reason": "Bằng chứng an toàn chặn mọi luồng được báo tới vị trí này (barrier hoặc loại trừ sink đã được chứng minh). Cảnh báo được giữ ở mức ưu tiên thấp nhất, không bị xóa.",
+          "reconciler_version": "safety-evidence-units-v1",
+          "rule_claims_sha256": "",
+          "rule_claims_version": "not-applicable",
+          "spec_sha256": "982080f505c144ffa5fdfac60a979d57fc687418f4812deb40a96f0ca2a6a9e9",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794",
+          "unknown_fields": []
+        }
+      ],
+      "findings": [
+        {
+          "mapping_status": "unresolved",
+          "message": "flow from source",
+          "raw_id": "codeql:0:0",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-22"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 2,
+            "startColumn": 6,
+            "startLine": 2
+          },
+          "rule_id": "st/cwe-22/none",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "technical_verdict": "unresolved",
+          "tool": "codeql"
+        },
+        {
+          "mapping_status": "unresolved",
+          "message": "flow from source",
+          "raw_id": "codeql:0:1",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-22"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 3,
+            "startColumn": 6,
+            "startLine": 3
+          },
+          "rule_id": "st/cwe-22/none",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "technical_verdict": "unresolved",
+          "tool": "codeql"
+        },
+        {
+          "mapping_status": "unresolved",
+          "message": "flow from source",
+          "raw_id": "codeql:0:2",
+          "raw_result": {},
+          "reported_cwes": [
+            "CWE-22"
+          ],
+          "reported_path": "app.py",
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 2,
+            "startColumn": 6,
+            "startLine": 2
+          },
+          "rule_id": "st/cwe-22/all",
+          "scope_verdict": "unresolved",
+          "sink_identity": null,
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "technical_verdict": "unresolved",
+          "tool": "codeql"
+        }
+      ],
+      "run": {
+        "profile_id": "path-traversal-v0.2",
+        "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+        "raw_findings": 3,
+        "status": "completed",
+        "steps": {
+          "codeql": "completed"
+        }
+      },
+      "units": [
+        {
+          "argument_role": null,
+          "callee": null,
+          "mapping_status": "mapped",
+          "mappings": [
+            {
+              "mapping_method": "exact_span",
+              "mapping_status": "mapped",
+              "raw_id": "codeql:0:0",
+              "tool": "codeql"
+            },
+            {
+              "mapping_method": "exact_span",
+              "mapping_status": "mapped",
+              "raw_id": "codeql:0:2",
+              "tool": "codeql"
+            }
+          ],
+          "path": "app.py",
+          "raw_finding_ids": [
+            "codeql:0:0",
+            "codeql:0:2"
+          ],
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 2,
+            "startColumn": 6,
+            "startLine": 2
+          },
+          "sink_kind": "codeql-path-injection-sink",
+          "sink_span": {
+            "endColumn": 24,
+            "endLine": 2,
+            "startColumn": 6,
+            "startLine": 2
+          },
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc"
+        },
+        {
+          "argument_role": null,
+          "callee": null,
+          "mapping_status": "mapped",
+          "mappings": [
+            {
+              "mapping_method": "exact_span",
+              "mapping_status": "mapped",
+              "raw_id": "codeql:0:1",
+              "tool": "codeql"
+            }
+          ],
+          "path": "app.py",
+          "raw_finding_ids": [
+            "codeql:0:1"
+          ],
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 3,
+            "startColumn": 6,
+            "startLine": 3
+          },
+          "sink_kind": "codeql-path-injection-sink",
+          "sink_span": {
+            "endColumn": 24,
+            "endLine": 3,
+            "startColumn": 6,
+            "startLine": 3
+          },
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794"
+        }
+      ]
+    }
+  },
+  "scan": {
+    "policy_version": "0.2",
+    "profile_id": "path-traversal-v0.2",
+    "profile_sha256": "65f9c8006a7980d35684dc0cef1a8dcd2efd9f60cc82589253eb087c8d27209e",
+    "reconciler_version": "safety-evidence-units-v1",
+    "status": "completed"
+  },
+  "tool_runs": [
+    [
+      "python",
+      "codeql",
+      "completed",
+      "2.27.1"
+    ]
+  ],
+  "unit_finding_rows": [
+    [
+      "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc",
+      "codeql:0:0",
+      "exact_span"
+    ],
+    [
+      "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc",
+      "codeql:0:2",
+      "exact_span"
+    ],
+    [
+      "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794",
+      "codeql:0:1",
+      "exact_span"
+    ]
+  ],
+  "unit_rows": [
+    {
+      "argument_role": null,
+      "candidate_key": "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc",
+      "locator_version": "codeql-reported-location",
+      "mapping_status": "mapped",
+      "path": "app.py",
+      "reconciler_version": "safety-evidence-units-v1",
+      "region": [
+        2,
+        6,
+        2,
+        24
+      ],
+      "sink_kind": "codeql-path-injection-sink",
+      "unit_key": "31d8d0f077cf63652e577ee295b7a7571a5150dada63bf5437968c3b3d376afc"
+    },
+    {
+      "argument_role": null,
+      "candidate_key": "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794",
+      "locator_version": "codeql-reported-location",
+      "mapping_status": "mapped",
+      "path": "app.py",
+      "reconciler_version": "safety-evidence-units-v1",
+      "region": [
+        3,
+        6,
+        3,
+        24
+      ],
+      "sink_kind": "codeql-path-injection-sink",
+      "unit_key": "e1d41ef3536933cf8292a40e5055c63eb746629ee6462ca699311d137ec6f794"
+    }
+  ]
+}
