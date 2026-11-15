@@ -795,8 +795,10 @@ mục 17.
 
 P1b tích hợp lõi của P1a vào ứng dụng web. Làm trên `e8bf32a` và, theo quyết định của chủ đề án,
 commit vào `feat/multi-cwe-core` tách theo đầu việc; **chưa push**. **Chủ đề án chưa kết luận
-nghiệm thu P1b**: việc rà mục này và đầu ra ở `artifacts/multi-cwe-p1b/` còn chờ. Không file nào dưới `experiments/`, `rules/`, `tools/` hay
-bốn thư mục profile cũ thay đổi; logic G1–G4 và điều kiện an toàn của pack v0.2 không đổi.
+nghiệm thu P1b.** Lần rà gần nhất (2026-11-15) chủ đề án đánh giá chưa đạt vì chưa có dự án thật
+nào có hai nhóm trong cùng một file; lượt quét bổ sung theo yêu cầu đó (mục 17.4, điểm 10) đã có
+kết quả và còn chờ chủ đề án xem. Không file nào dưới `experiments/`, `rules/`, `tools/` hay bốn
+thư mục profile cũ thay đổi; logic G1–G4 và điều kiện an toàn của pack v0.2 không đổi.
 
 ### 17.1 Đã làm theo từng đầu việc
 
@@ -927,11 +929,21 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
     CWE-22, 14 cảnh báo mỗi cái trong đúng một đơn vị, 0 đơn vị lẫn nhóm, mỗi nhóm bằng lượt quét
     riêng. **Tiêu chí "có file chứa đơn vị của cả hai nhóm" không đạt:** hai nhóm nằm ở các file khác
     nhau. Theo đúng điều đã ghi trước, không thử thêm kho nào.
+    Sau khi xem kết quả này, chủ đề án đánh giá P1b chưa đạt và yêu cầu tìm thêm dự án có thật.
+    Ứng viên thứ hai được chọn **bằng cách đọc mã nguồn**, không dựa vào đầu ra công cụ quét, và
+    tiêu chí cùng quy tắc dừng được ghi trước ở `real-project-2-CRITERIA.json`: `sgabe/DSVPWA@961f86d`,
+    file `dsvpwa/handlers.py` (bốn kho khác bị loại khi đọc vì thiếu một trong hai loại sink).
+    **Tiêu chí đạt:** trong lượt `multi-cwe-v0.1`, `dsvpwa/handlers.py` có 1 đơn vị CWE-78 (dòng 205,
+    `subprocess.check_output`, `D20_STRONG`) và 2 đơn vị CWE-22 (dòng 134 và 137, `EV_KEPT_NO_PROOF`).
+    10 cảnh báo, mỗi cái trong đúng một đơn vị; 0 đơn vị lẫn nhóm; nhóm lệnh (3 đơn vị) và nhóm đường
+    dẫn (2 đơn vị) đều bằng lượt quét riêng profile của mình. Ở kho này không có đơn vị CWE-22 nào
+    nằm bên trong một lời gọi CWE-78.
 11. **Hook pre-push và các bước CI chạy được tại chỗ** (không push): script `.husky/pre-push` đạt
     (frontend 76, backend 585 kiểm thử); `openapi.json` khớp API đang chạy; kiểu sinh ra khớp
     `openapi.json`; `npm run build`, hai cấu hình Compose, `check_worker` và `alembic check` đạt.
-    `pip-audit` **không đạt**: `msgpack 1.2.2` có `CVE-2026-114613` (bản sửa 1.2.3). P1b không đổi
-    dependency nào (`uv.lock` không đổi từ 26/09), nên bước này của CI sẽ đỏ dù có P1b hay không.
+    `pip-audit` lúc đó **không đạt** vì ba dependency phát triển (`msgpack`, `filelock`, `certifi`)
+    trong `uv.lock` không đổi từ 26/09; theo quyết định của chủ đề án chúng đã được nâng ở commit
+    `cce07c1`, và `pip-audit` nay báo không còn lỗ hổng nào.
 12. **`scan-parity`:** CLI nghiên cứu (chạy trong image worker thay cho image thực nghiệm của CI) và
     API cho cùng kết quả trên `curling@0.2.0` với profile mặc định v0.1: cùng `unit_id`, mức, số cảnh
     báo theo công cụ và theo đơn vị, hash chính sách, và đúng một đơn vị P1.
@@ -948,13 +960,12 @@ revision `0007`. Đầu ra ở `artifacts/multi-cwe-p1b/` (không theo dõi bở
 - **Cảnh báo chưa xác định nhóm chỉ có kiểm thử tự động.** Với `multi-cwe-v0.1`, mỗi lượt chạy công
   cụ phục vụ đúng một thành viên nên trạng thái này không thể sinh ra trên stack thật; nó chỉ xuất
   hiện khi một profile sau này cho một lượt chạy phục vụ nhiều nhóm.
-- **Hai nhóm trong cùng một file chưa có trên mã của dự án có thật.** Công cụ thật đã chạy trên
-  nguồn tổng hợp tự viết (điểm 5); trên hai nguồn thật đã quét (BenchmarkPython, pygoat) hai nhóm
-  nằm ở các file khác nhau, và tiêu chí ghi trước cho pygoat không đạt (điểm 10).
-- **`pip-audit` không đạt** vì `msgpack 1.2.2` (điểm 11); chưa nâng phiên bản vì đổi dependency nằm
-  ngoài P1b.
+- **Hai nhóm trong cùng một file trên dự án có thật chỉ có một ca:** `dsvpwa/handlers.py` (điểm 10).
+  Ở pygoat và BenchmarkPython hai nhóm nằm ở các file khác nhau. **Ca lồng nhau** — cảnh báo CWE-22
+  nằm bên trong một lời gọi CWE-78, chỗ bộ gộp cũ sẽ gộp nhầm — vẫn chỉ có trên nguồn tổng hợp tự
+  viết (điểm 5).
 - Commit `dc1db13` không qua `tsc` của frontend khi đứng một mình: một dòng của `get-units.ts` nằm
-  ở commit kế tiếp. Đầu nhánh thì sạch.
+  ở commit kế tiếp. Đầu nhánh thì sạch; chủ đề án quyết định để nguyên.
 - CI trên GitHub chưa chạy vì chưa push; hook pre-commit đã chạy ở từng commit và script pre-push
   đã chạy tại chỗ (điểm 11). Job `reconciliation-integration` của CI (dựng image thực nghiệm) chưa
   chạy tại chỗ. Trang "Cảnh báo" tổng hợp và API liệt kê lượt quét vẫn chưa có, như trước.

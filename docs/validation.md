@@ -76,6 +76,7 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 | 2026-11-15 | `04c8e8a` (đầu nhánh `feat/multi-cwe-core`) | Stack thật, thêm một worker cùng image nghe hàng đợi riêng với tệp bọc `codeql` tiêm đúng một lỗi mỗi lượt; nguồn tổng hợp có hai nhóm trong cùng file | `database create` thất bại: lượt quét `partial`, nhóm lệnh không gạn gì, nhóm đường dẫn thất bại. Lượt pack CWE-22 thoát mã lỗi: 4 cảnh báo thành 2 đơn vị `F10_FAMILY_NOT_RANKED` ở danh sách rà, nhóm lệnh không đổi. Bước bằng chứng nhóm lệnh thất bại: đơn vị có luồng ở lại với `evidence_step_failed`. Cả ba lượt giữ đủ cảnh báo trong SARIF, 0 đơn vị lẫn nhóm | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
 | 2026-11-15 | `04c8e8a` | Stack thật; `adeyosemanputra/pygoat@2aa4cc1` (dữ liệu phát triển) quét bằng ba profile, tiêu chí ghi trước khi quét | Một lượt quét có cả hai nhóm (4 đơn vị CWE-78, 3 đơn vị CWE-22), 14/14 cảnh báo trong đúng một đơn vị, mỗi nhóm bằng lượt quét riêng. **Tiêu chí "một file có cả hai nhóm" không đạt**; không thử kho khác | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
 | 2026-11-15 | `04c8e8a` | Không push: `sh .husky/pre-push`; các bước CI chạy được tại chỗ; `scan_parity.py` với CLI chạy trong image worker | Script pre-push đạt (frontend 76, backend 585); `openapi.json` và kiểu sinh ra khớp; build, Compose, `check_worker`, `alembic check` đạt; `scan-parity` trên `curling@0.2.0` đạt mọi điều kiện. **`pip-audit` không đạt: `msgpack 1.2.2`, `CVE-2026-114613`**. Job `reconciliation-integration` chưa chạy | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
+| 2026-11-15 | `cce07c1` | Stack thật dựng lại sau khi nâng dependency; `sgabe/DSVPWA@961f86d` (dữ liệu phát triển) quét bằng ba profile; kho được chọn bằng cách đọc mã nguồn và tiêu chí ghi trước khi quét | **Tiêu chí đạt:** `dsvpwa/handlers.py` có 1 đơn vị CWE-78 (dòng 205) và 2 đơn vị CWE-22 (dòng 134, 137) trong cùng lượt quét `multi-cwe-v0.1`; 10/10 cảnh báo trong đúng một đơn vị, 0 đơn vị lẫn nhóm, mỗi nhóm bằng lượt quét riêng. Không có đơn vị CWE-22 nào nằm bên trong một lời gọi CWE-78 ở kho này; ca lồng nhau vẫn chỉ có trên nguồn tổng hợp | [plans/multi-cwe.md §17.4](plans/multi-cwe.md#174-kiểm-chứng-trên-stack-thật) |
 
 **Chưa xác minh:**
 
@@ -91,9 +92,6 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 
 ## 3. Lỗi đã biết
 
-- **`pip-audit` báo `msgpack 1.2.2` có `CVE-2026-114613`** (phát hiện 2026-11-15, bản sửa 1.2.3).
-  `backend/uv.lock` không đổi từ 2026-09-26, nên bước `pip-audit` của CI sẽ không đạt cho tới khi
-  dependency này được nâng. Chưa sửa.
 
 - **Script bị khóa trên Windows:** code chưa khóa đọc/ghi bằng UTF-8. Các script bị khóa (v0.3,
   owasp-bp-pilot, wave-c, `known_locations.py`, `patch_hunks.py`…) vẫn dùng bảng mã mặc định và
@@ -121,6 +119,14 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
   nguồn có mang tệp đó. Có kiểm thử; đã thử trong worker với Semgrep 1.178.0 trên `kill-process-by-name@1.0.5` có kèm một tệp `.semgrepignore` chứa `*.js`: trước khi xóa, luật định vị thấy 0 lời gọi; sau khi xóa, 2 lời gọi. Backend sau bản sửa: 484 đạt (SQLite), 486 đạt (Docker/PostgreSQL).
 
 ## 4. Lỗi đã sửa
+
+- **`pip-audit` không đạt (phát hiện và sửa 2026-11-15, commit `cce07c1`).** Ba gói trong
+  `backend/uv.lock`, không đổi từ 2026-09-26, có lỗ hổng đã công bố: `msgpack 1.2.2`
+  (`CVE-2026-114613`), `filelock 4.0.3` (`CVE-2026-112912`, `CVE-2026-112908`) và `certifi 2026.7.22`
+  (`PYSEC-2026-4320`). Cả ba chỉ là dependency phát triển do chính `pip-audit` kéo vào, không có
+  trong image API hay worker. Nâng lên `1.2.4`, `4.2.10`, `2026.10.23`; `pip-audit` trong image kiểm
+  thử báo không còn lỗ hổng nào và bộ kiểm thử trên PostgreSQL đạt 587. Lần báo đầu trong ngày chỉ
+  nêu `msgpack` vì đầu ra bị cắt.
 
 - **CodeQL không trích xuất được kho có TypeScript (sửa 2026-11-14).** Bộ trích xuất JavaScript
   của CodeQL gọi `node` trên PATH để đọc file `.ts`; image worker trước đó không có Node.js, nên
