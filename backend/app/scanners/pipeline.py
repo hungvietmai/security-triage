@@ -20,7 +20,12 @@ from app.scanners.process import (
     tool_version,
 )
 from app.scanners.sarif import Finding
-from app.scanners.semgrep import control_semgrep_targets, run_semgrep, run_semgrep_evidence
+from app.scanners.semgrep import (
+    control_semgrep_targets,
+    remove_source_ignore_files,
+    run_semgrep,
+    run_semgrep_evidence,
+)
 
 PipelineStatus = Literal["completed", "partial", "failed"]
 
@@ -86,12 +91,15 @@ def run_pipeline(
     `semgrep_evidence` is {rules: {path, sha256}}: a pinned file of evidence rules that
     Semgrep runs after its scan, recorded as the step "semgrep-evidence" the same way.
     `semgrep_target_selection` names the ignore file the worker writes into the extracted
-    source before any tool runs (see `control_semgrep_targets`); None keeps Semgrep's default.
+    source before any tool runs (see `control_semgrep_targets`); None keeps Semgrep's default
+    selection. In both cases an ignore file shipped inside the scanned source is removed.
     """
     if max_workers < 1:
         raise ValueError("Scanner workers must be positive")
     if semgrep_target_selection is not None:
         control_semgrep_targets(source, semgrep_target_selection)
+    else:
+        remove_source_ignore_files(source)
 
     def run_one(
         tool: ToolName, prior_steps: dict[str, ProcessRecord] | None = None

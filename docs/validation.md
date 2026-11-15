@@ -95,8 +95,11 @@ Mỗi kết quả chỉ đúng cho commit và môi trường đã ghi. Chưa ch�
 - **Mã bị quét quyết định được phạm vi tệp của Semgrep** (phát hiện 2026-11-15). Một tệp
   `.semgrepignore` trong mã bị quét, kể cả ở thư mục con, làm Semgrep bỏ qua tệp tùy ý; khi
   không có tệp đó Semgrep tự bỏ qua `build/`, `dist/`, `test/`… Ảnh hưởng luật phát hiện, luật
-  định vị và luật bằng chứng. Profile `command-injection-v0.3` ghi tệp của riêng worker; profile
-  v0.1, v0.2 và `path-traversal-v0.2` **chưa được sửa**.
+  định vị và luật bằng chứng. **Đã sửa cùng ngày cho mọi profile:** worker xóa các tệp
+  `.semgrepignore` do mã bị quét mang theo trước khi chạy công cụ. Profile
+  `command-injection-v0.3` còn ghi tệp của riêng worker; các profile khác giữ phạm vi mặc định
+  của Semgrep (vẫn bỏ qua `build/`, `dist/`, `test/`…), nên kết quả của chúng chỉ đổi với
+  nguồn có mang tệp đó. Có kiểm thử; đã thử trong worker với Semgrep 1.178.0 trên `kill-process-by-name@1.0.5` có kèm một tệp `.semgrepignore` chứa `*.js`: trước khi xóa, luật định vị thấy 0 lời gọi; sau khi xóa, 2 lời gọi. Backend sau bản sửa: 484 đạt (SQLite), 486 đạt (Docker/PostgreSQL).
 
 ## 4. Lỗi đã sửa
 

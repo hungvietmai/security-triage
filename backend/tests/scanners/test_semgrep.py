@@ -4,7 +4,12 @@ import pytest
 
 from app.scanners.process import ProcessRecord
 from app.scanners.provenance import digest
-from app.scanners.semgrep import control_semgrep_targets, run_semgrep, run_sink_locator
+from app.scanners.semgrep import (
+    control_semgrep_targets,
+    remove_source_ignore_files,
+    run_semgrep,
+    run_sink_locator,
+)
 
 
 def test_run_semgrep_preserves_cli_arguments(tmp_path):
@@ -179,3 +184,17 @@ def test_the_scanned_source_cannot_decide_which_files_semgrep_skips(tmp_path):
     assert (tmp_path / "build" / "app.js").read_text(encoding="utf-8") == "exec(x)\n"
     with pytest.raises(KeyError):
         control_semgrep_targets(tmp_path, "unknown-selection")
+
+
+def test_ignore_files_shipped_in_the_source_are_removed_and_nothing_else(tmp_path):
+    # Profiles without a target selection keep Semgrep's default; the source still must not
+    # be able to add its own exclusions.
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "lib" / "app.py").write_text("import os\n", encoding="utf-8")
+    (tmp_path / ".semgrepignore").write_text("*.py\n", encoding="utf-8")
+    (tmp_path / "lib" / ".semgrepignore").write_text("app.py\n", encoding="utf-8")
+
+    assert remove_source_ignore_files(tmp_path) == 2
+    assert list(tmp_path.rglob(".semgrepignore")) == []
+    assert (tmp_path / "lib" / "app.py").read_text(encoding="utf-8") == "import os\n"
+    assert remove_source_ignore_files(tmp_path) == 0

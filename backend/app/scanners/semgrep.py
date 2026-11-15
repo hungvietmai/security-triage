@@ -100,6 +100,20 @@ def run_semgrep(
 TARGET_SELECTIONS = {"worker-controlled-v1": "node_modules/\n"}
 
 
+def remove_source_ignore_files(source: Path) -> int:
+    """Delete every `.semgrepignore` the scanned source ships; return how many there were.
+
+    Semgrep honours such a file at any depth, so a repository could hide files from the
+    detection rules, the sink locator and the evidence rules. Without one, Semgrep applies its
+    built-in default selection, which is what a profile without a target selection keeps.
+    """
+    removed = 0
+    for path in sorted(source.rglob(".semgrepignore")):
+        path.unlink()
+        removed += 1
+    return removed
+
+
 def control_semgrep_targets(source: Path, selection: str) -> int:
     """Replace every `.semgrepignore` of the extracted source by one the worker controls.
 
@@ -108,10 +122,7 @@ def control_semgrep_targets(source: Path, selection: str) -> int:
     merged with. A `.semgrepignore` shipped inside the source could also hide files from every
     Semgrep step. Returns the number of files removed.
     """
-    removed = 0
-    for path in sorted(source.rglob(".semgrepignore")):
-        path.unlink()
-        removed += 1
+    removed = remove_source_ignore_files(source)
     (source / ".semgrepignore").write_text(
         TARGET_SELECTIONS[selection], encoding="utf-8", newline="\n"
     )

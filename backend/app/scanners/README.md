@@ -32,4 +32,5 @@ uses `worker-controlled-v1`). `control_semgrep_targets` in `semgrep.py` then rem
 `node_modules/`. Without it Semgrep skips `build/`, `dist/`, `test/` and similar folders by
 default, and a `.semgrepignore` shipped inside the scanned source can hide files from the
 detection rules, the sink locator and the evidence rules. Profiles without the setting keep
-Semgrep's default selection.
+Semgrep's default selection, but `remove_source_ignore_files` still deletes every
+`.semgrepignore` the scanned source ships, so the source cannot add exclusions of its own.
