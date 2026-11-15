@@ -1,7 +1,8 @@
 # Tổng quan nghiên cứu
 
-Điểm vào duy nhất cho trạng thái nghiên cứu. Cập nhật ngày 29/10/2026 trên nhánh
-`feat/research-safety-evidence`. Mọi số liệu dẫn từ báo cáo đã commit; mỗi mục có liên kết tới nguồn.
+Điểm vào duy nhất cho trạng thái nghiên cứu. Mục 1–4 mô tả giai đoạn nghiên cứu CWE-22 tới
+ngày 29/10/2026 (nhánh `feat/research-safety-evidence`); mục 5 được cập nhật tới ngày
+15/11/2026 trên nhánh `feat/cwe22-triage`. Mọi số liệu dẫn từ báo cáo đã commit; mỗi mục có liên kết tới nguồn.
 
 Nhiều tài liệu nghiên cứu bị khóa bằng SHA-256 và không được sửa, kể cả
 [RESEARCH_LOG.md](../experiments/RESEARCH_LOG.md) (dừng ở mục ngày 2026-10-08). Vì vậy,
@@ -323,8 +324,8 @@ trình bày cả hai kịch bản.
      nào. Xem [independent-filter/READING.md](../experiments/evaluation/independent-filter/READING.md).
    - `pairs-v1` (15/11): theo Amendment 06, tập phát triển (34 cặp) được quét một lần bằng v0.2,
      đúng các byte đã khóa: hợp mọi nguồn báo 21/22 vị trí đã biết ở lượt hoàn tất (CodeQL riêng
-     18, Semgrep riêng 11), 0 bị gạn. Theo Amendment 07, **tập giữ lại chưa quét** và được để
-     dành cho phiên bản cuối. Xem [pairs-v1/](../experiments/evaluation/pairs-v1/README.md).
+     18, Semgrep riêng 11), 0 bị gạn. Amendment 07 hoãn tập giữ lại; nó được mở sau đó bằng
+     v0.3 theo Amendment 08 (mục bên dưới). Xem [pairs-v1/](../experiments/evaluation/pairs-v1/README.md).
    - Profile `command-injection-v0.3` (15/11, dữ liệu phát triển): sửa hai nguyên nhân ghép hụt
      trên JavaScript (Semgrep bỏ qua thư mục; luật định vị thiếu dạng bí danh) và thêm quy tắc
      gạn G4 cho lệnh hằng. Trên 84 package npm đã quét trước đó: hàng U 37 → 14 ứng viên, 23 cảnh
