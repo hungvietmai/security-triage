@@ -328,8 +328,9 @@ trình bày cả hai kịch bản.
    - Profile `command-injection-v0.3` (15/11, dữ liệu phát triển): sửa hai nguyên nhân ghép hụt
      trên JavaScript (Semgrep bỏ qua thư mục; luật định vị thiếu dạng bí danh) và thêm quy tắc
      gạn G4 cho lệnh hằng. Trên 84 package npm đã quét trước đó: hàng U 37 → 14 ứng viên, 23 cảnh
-     báo gộp thêm, 0 ghép nhầm; G4 gạn 1 ứng viên. Chưa có nhãn an toàn cho JavaScript nên chưa
-     kết luận được về giảm cảnh báo sai. Xem [js-matching-v0.3/](../experiments/evaluation/js-matching-v0.3/READING.md).
+     báo gộp thêm, 0 ghép nhầm; G4 gạn 1 ứng viên. Nhãn cho mọi ứng viên JavaScript của 84 package
+     (15/11, nhãn do trợ lý AI gán, chưa được người kiểm): 14/123 ứng viên đã quyết định là cảnh báo sai, bước gạn chuyển đi
+     1 và gạn nhầm 0; xem [js-labels-v0.3/](../experiments/evaluation/js-labels-v0.3/README.md). Xem [js-matching-v0.3/](../experiments/evaluation/js-matching-v0.3/READING.md).
    - Tập held-out của `pairs-v1` (15/11, Amendment 08): v0.3 được đóng băng bằng mã băm và commit
      trước, rồi 16 cặp được quét một lần, đúng các byte đã khóa: 12 lượt hoàn tất, 4 chạy dở.
      Hợp mọi nguồn báo 7/7 vị trí lỗi đã biết ở lượt hoàn tất (CodeQL riêng 6, Semgrep riêng 3) và

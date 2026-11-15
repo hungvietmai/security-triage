@@ -100,6 +100,7 @@ các gói bằng chứng **không thay đổi** giữa ba đợt.
 | JS-5 | P1 (24 cặp JavaScript) | Q1 trên CVE thật của tập phát triển | Độ bao phủ theo từng cấu hình trên vị trí lỗi đã biết |
 | JS-6 | J1 | Bản sửa đối sánh (phiên bản 0.3) gộp thêm được bao nhiêu cảnh báo, có ghép nhầm không; điều kiện gạn hẹp cho JavaScript có hoạt động đúng không | Số ứng viên ở hàng U trước và sau; cảnh báo mới gộp; ghép nhầm; ứng viên bị gạn |
 | JS-7, PY-8 | H1 | Q1 và phần "mất" của Q2 trên tập giữ lại, với cấu hình đóng băng trước khi quét | Vị trí lỗi đã biết được báo theo từng cấu hình; vị trí bị gạn; mức ưu tiên |
+| JS-8 | J1 (84 package, đầu ra phiên bản 0.3 đã lưu) | Q2 trên JavaScript: tỷ lệ cảnh báo sai trong danh sách rà và phần bước gạn chuyển đi, với nhãn do trợ lý AI gán, chưa được người kiểm | TP, FP, chưa xác định theo từng cấu hình; cảnh báo sai còn lại theo loại |
 
 Bước gạn chưa có gói bằng chứng cho JavaScript/TypeScript. Các kịch bản JS vì thế trả lời Q1 và
 kiểm tra rằng bước thẩm định không làm mất lỗi thật; chúng không đo được lợi ích của bước gạn.
@@ -440,7 +441,7 @@ lại; 10 package đã được đọc mã để tìm lỗi, 74 package chưa.
   nhưng gần như không giảm khối lượng rà soát trên dữ liệu này, vì các luật bắt mẫu cho
   JavaScript hiếm khi báo một lệnh hằng.
 - *Điều không kết luận được.* Hàng U giảm chỉ chứng minh đối sánh tốt hơn. Nhãn đối chứng chỉ
-  bao phủ nhóm lệnh hằng; các loại cảnh báo sai khác trên JavaScript chưa có nhãn nên chưa đo
+  bao phủ nhóm lệnh hằng; các loại cảnh báo sai khác trên JavaScript không đo được bằng nhãn đó (xem mục (l)) nên chưa đo
   được. Số vị trí lỗi "được báo" tăng vì cách đếm cần một ứng viên có lời gọi; các công cụ đã
   báo những vị trí đó từ trước.
 
@@ -472,6 +473,41 @@ Kết quả này thuận cho mục tiêu phát hiện, nhưng phạm vi của n�
 nêu một tỷ lệ, chỉ có nhãn dương tính nên không có độ chính xác, và nó không cho biết bước gạn
 có ích hay không. Tập giữ lại nay đã được dùng và không còn là dữ liệu độc lập cho phiên bản
 sau.
+
+**(l) Nhãn cho mọi ứng viên JavaScript của phiên bản 0.3 (JS-8).** Để đo cảnh báo sai ngoài
+nhóm lệnh hằng, mọi ứng viên JavaScript/TypeScript của 84 package ở mục (j) được gán nhãn; không
+quét lại gì. 62 ứng viên trùng vị trí lỗi đã biết giữ nhãn CVE. 78 ứng viên còn lại được **trợ
+lý lập trình AI gán nhãn bằng cách đọc mã nguồn**, theo yêu cầu của chủ đề án, với tiêu chí
+được chốt và ghi mã băm trước khi tạo phiếu; phiếu không ghi công cụ nào báo, mức ưu tiên hay
+quyết định giữ/gạn. **Chưa có người nào kiểm các nhãn này**, và trợ lý gán nhãn cũng là bên đã
+viết bộ định vị và quy tắc G4. Vì vậy các số dưới đây là ước lượng trên dữ liệu phát triển,
+không phải đánh giá độc lập. Nhãn gán được: 47 có lỗi, 14 an toàn, 17 chưa xác định (phần lớn
+là package có mục đích chạy lệnh của bên gọi, như `shelljs` hay `grunt-shell`).
+
+| Cấu hình | TP | FP | Chưa xác định | FN | Độ chính xác | Độ bao phủ (cận trên) | F1 (cận trên) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Semgrep riêng | 50 | 5 | 10 | 66 | 0,91 | 0,43 | 0,58 |
+| CodeQL riêng | 91 | 2 | 2 | 25 | 0,98 | 0,78 | 0,87 |
+| ESLint riêng | 78 | 11 | 9 | 38 | 0,88 | 0,67 | 0,76 |
+| Semgrep ∪ CodeQL | 100 | 5 | 12 | 16 | 0,95 | 0,86 | 0,91 |
+| Hợp mọi nguồn | 109 | 14 | 17 | 7 | 0,89 | 0,94 | 0,91 |
+| Sau gạn | 109 | 13 | 17 | 7 | 0,89 | 0,94 | 0,92 |
+| Nhóm rà trước (P1+P2), sau gạn | 94 | 5 | 11 | 22 | 0,95 | 0,81 | 0,87 |
+
+- *Bước gạn.* Nó chuyển đi 1 trong 14 ứng viên an toàn (lệnh hằng, quy tắc G4) và không ứng
+  viên có lỗi nào. 13 ứng viên an toàn còn lại vẫn nằm trong danh sách rà: 5 cảnh báo của
+  ESLint chỉ vào dòng `require` (đều ở hàng U), 4 ca giá trị đã được kiểm tra hoặc trích dẫn
+  trước khi ghép, 3 ca lệnh chỉ ghép từ giá trị do package tự đặt (gồm hằng truyền qua một hàm
+  bọc), 1 ca mã kiểm thử. Năm trong số đó nằm ở P1 hoặc P2.
+- *Đọc kết quả.* Theo các nhãn này, danh sách rà JavaScript chủ yếu là cảnh báo đúng (109 trên
+  123 ứng viên đã quyết định), nên phần có thể gạn vốn nhỏ. Bước gạn hiện có **không giảm**
+  cảnh báo sai ngoài nhóm lệnh hằng; mỗi loại còn lại cần một loại bằng chứng mà quy trình
+  chưa có.
+- *Giới hạn.* Độ bao phủ và F1 là cận trên, vì mẫu số chỉ gồm vị trí có lỗi mà một công cụ
+  hoặc một CVE đã chỉ ra. Một đơn vị là một mục của danh sách rà, không phải một lỗ hổng. Trên
+  74 package mà mã chưa từng được đọc khi sửa đối sánh, độ chính xác của hợp mọi nguồn là 0,88
+  cả trước và sau gạn. Chi tiết, tiêu chí và cách rà lại nhãn:
+  [js-labels-v0.3/](../../experiments/evaluation/js-labels-v0.3/README.md).
 
 ### 3.3.3. Thời gian chạy theo từng bước và tổng thời gian chạy
 
@@ -563,7 +599,7 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
 12. *Quy tắc gạn cho JavaScript đúng nhưng tác động nhỏ.* Đối chiếu với nhãn đối chứng độc lập,
     quy tắc lệnh hằng gạn đúng 1/1 và gạn nhầm 0/116. Nhưng nhóm cảnh báo sai này chỉ có một ca
     trong 84 nguồn. Muốn giảm cảnh báo sai trên JavaScript một cách đáng kể cần bằng chứng cho
-    các loại khác, và dữ liệu có nhãn an toàn để kiểm nghiệm chúng.
+    các loại khác (kết luận 15).
 13. *Trên CVE thật của tập phát triển, lấy hợp các nguồn báo 21/22 vị trí đã biết* (CodeQL riêng
     18), và quy tắc lệnh hằng gạn 71 ứng viên, đều được kiểm lại là lệnh hằng.
 
@@ -573,6 +609,14 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
     CodeQL chạy riêng báo 6 trên 7 vị trí ở các lượt hoàn tất; phần chênh là một vị trí Python
     chỉ Bandit báo. Đây là bằng chứng độc lập cho mục tiêu thứ nhất, ở quy mô số đếm. Nó không
     bổ sung gì cho mục tiêu thứ hai.
+
+**Về cảnh báo sai trên JavaScript.**
+
+15. *Với nhãn do trợ lý AI gán và chưa được người kiểm, 14 trong 123 ứng viên JavaScript đã
+    quyết định là cảnh báo sai, và bước gạn chỉ chuyển đi một.* Mười ba ca còn lại thuộc bốn
+    loại mà quy trình chưa có bằng chứng để gạn. Không ứng viên có lỗi nào bị gạn. Đây là ước
+    lượng trên dữ liệu phát triển; nó cho biết bước gạn JavaScript hiện an toàn nhưng gần như
+    không có tác dụng, và chỉ ra loại bằng chứng cần bổ sung.
 
 **Giới hạn của kết luận.**
 
@@ -605,8 +649,9 @@ xem, nhưng phần nó loại được ở đó chỉ là các lời gọi có l
 chứng luồng dữ liệu mới chỉ thấy hoạt động trên dữ liệu phát triển. Thứ tự rà soát cho một
 nhóm rà trước chính xác, nhưng nhóm đó chỉ bao phủ tốt khi CodeQL báo được luồng dữ liệu.
 
-Ba việc cần làm để có kết luận mạnh hơn: gán nhãn một mẫu ứng viên trên mã ứng dụng thật, nhất
-là JavaScript, để tính độ chính xác và kiểm nghiệm các quy tắc gạn; mở rộng bằng chứng gạn
-ngoài nhóm lệnh hằng; và xét lại phạm vi của nguyên tắc "chạy dở thì giữ" để một tệp không
+Ba việc cần làm để có kết luận mạnh hơn: một người rà lại 78 nhãn do trợ lý AI gán và gán nhãn
+một mẫu ứng viên trên mã ứng dụng thật; mở rộng bằng chứng gạn sang các loại cảnh báo sai đã
+thấy trên JavaScript (cảnh báo chỉ vào dòng `require`, giá trị đã kiểm tra hoặc trích dẫn, lệnh
+ghép từ giá trị nội bộ); và xét lại phạm vi của nguyên tắc "chạy dở thì giữ" để một tệp không
 phân tích được không tắt bước gạn của cả lượt quét. Tập giữ lại của `pairs-v1` đã được dùng;
 một đánh giá độc lập cho phiên bản sau cần một tập mới.
