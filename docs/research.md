@@ -59,7 +59,7 @@ Thiết kế: [giao thức v1.0.0](../experiments/EVALUATION_PROTOCOL.md) và
   ứng dụng web đang chạy (xem [architecture.md](architecture.md)).
 - **pairs-v1** ([pairs/README.md](../experiments/pairs/README.md)): 50 cặp lỗi/vá được khóa
   nguồn (Ray lỗi tải do vượt 50 MiB). Vị trí lỗi đã xác định cho 26/34 cặp phát triển và
-  9/16 cặp held-out. **Chưa quét cặp nào**, nên tập held-out này vẫn chưa được mở.
+  9/16 cặp held-out. Cập nhật 15/11: tập phát triển đã quét bằng v0.2 và tập held-out đã mở một lần bằng v0.3 (xem mục 5).
 - Toàn bộ nhãn của giai đoạn này do assistant viết, chưa có người duyệt.
 
 ### 3.2 BenchmarkPython bốn CWE (15/10)
@@ -330,12 +330,17 @@ trình bày cả hai kịch bản.
      gạn G4 cho lệnh hằng. Trên 84 package npm đã quét trước đó: hàng U 37 → 14 ứng viên, 23 cảnh
      báo gộp thêm, 0 ghép nhầm; G4 gạn 1 ứng viên. Chưa có nhãn an toàn cho JavaScript nên chưa
      kết luận được về giảm cảnh báo sai. Xem [js-matching-v0.3/](../experiments/evaluation/js-matching-v0.3/READING.md).
+   - Tập held-out của `pairs-v1` (15/11, Amendment 08): v0.3 được đóng băng bằng mã băm và commit
+     trước, rồi 16 cặp được quét một lần, đúng các byte đã khóa: 12 lượt hoàn tất, 4 chạy dở.
+     Hợp mọi nguồn báo 7/7 vị trí lỗi đã biết ở lượt hoàn tất (CodeQL riêng 6, Semgrep riêng 3) và
+     9/9 tính cả lượt chạy dở; 0 bị gạn. Chỉ có nhãn dương tính và chỉ 9 vị trí. Xem
+     [pairs-v1/](../experiments/evaluation/pairs-v1/README.md).
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
      CWE-22, đánh giá với người dùng. Hồ sơ đề án và bảng tiêu chí:
      [thesis/README.md](thesis/README.md).
-7. **Tập held-out CWE-78** (16 cặp, chưa quét): quyết định chính thức bỏ hay dùng tiếp.
+7. **Tập held-out CWE-78** (16 cặp): đã mở một lần ngày 15/11 cho profile `command-injection-v0.3` theo Amendment 08. Hợp mọi nguồn báo 9/9 vị trí lỗi đã biết, 0 bị gạn; không còn dùng được cho phiên bản sau.
 8. **Script bị khóa trên Windows:** code chưa khóa đã được sửa để đọc/ghi UTF-8 (27/10), nhưng
    các script bị khóa vẫn dùng bảng mã mặc định. Trên Windows phải chạy chúng với `PYTHONUTF8=1`.
 

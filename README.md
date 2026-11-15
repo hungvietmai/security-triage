@@ -15,13 +15,14 @@ và CodeQL. Repository gồm hai phần:
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
     Python, eslint-plugin-security cho JavaScript/TypeScript); CodeQL thẩm định bằng truy
     vấn bằng chứng an toàn và ứng viên có bằng chứng là cảnh báo sai được gạn sang danh
-    sách riêng. Đã đo trên dữ liệu phát triển và trên ba đợt mã chưa từng xem (chỉ có nhãn
-    dương tính); chưa đo trên tập giữ lại `pairs-v1`
+    sách riêng. Đã đo trên dữ liệu phát triển, trên các đợt mã chưa từng xem và trên tập phát
+    triển của `pairs-v1`
     ([docs/thesis/chuong-3-thuc-nghiem.md](docs/thesis/chuong-3-thuc-nghiem.md));
   - `command-injection-v0.3`: như v0.2, thêm bộ định vị lời gọi JavaScript v1, phạm vi tệp của
-    Semgrep do worker quyết định, và quy tắc gạn lệnh hằng cho JavaScript/TypeScript. Mới đo
-    trên dữ liệu phát triển
-    ([js-matching-v0.3](experiments/evaluation/js-matching-v0.3/READING.md));
+    Semgrep do worker quyết định, và quy tắc gạn lệnh hằng cho JavaScript/TypeScript. Đã đo trên
+    dữ liệu phát triển và, với cấu hình đóng băng trước, trên tập giữ lại của `pairs-v1`: 9/9 vị
+    trí lỗi đã biết được báo, không vị trí nào bị gạn; chỉ có nhãn dương tính
+    ([pairs-v1](experiments/evaluation/pairs-v1/README.md));
   - `path-traversal-v0.2`: CWE-22, Python, CodeQL với bằng chứng an toàn v0.2. Cảnh báo có
     bằng chứng an toàn xuống cuối hàng đợi, không bị xóa.
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.

@@ -33,6 +33,7 @@ chấm và mã băm của cấu hình được ghi lại trước khi quét, và
 | I4. Bộ kiểm thử luật của kho semgrep-rules | Độc lập | 210 dòng mã minh họa (185 Python, 25 JavaScript/TypeScript) | 135 có lỗi, 75 an toàn; nhãn của tác giả luật |
 | I5. Hai mươi công cụ dòng lệnh Python | Độc lập | Mã ứng dụng thật trên GitHub, chọn bằng một truy vấn tìm kiếm cố định | Không có nhãn; chỉ kiểm các ứng viên bị gạn |
 | P1. Tập phát triển của `pairs-v1` | Phát triển (quét lần đầu) | 34 cặp phiên bản lỗi/vá của CVE thật; chỉ quét bản có lỗi | 26 vị trí lỗi đã biết, xác định trước khi quét |
+| H1. Tập giữ lại của `pairs-v1` | **Giữ lại**: chọn và khóa từ tháng 10, chưa từng quét cho tới khi phiên bản 0.3 được đóng băng | 16 cặp phiên bản lỗi/vá của CVE thật; chỉ quét bản có lỗi, một lần | 9 vị trí lỗi đã biết (8 JavaScript, 1 Python), xác định trước khi quét |
 | J1. 84 package npm đã quét ở các đợt trước | Phát triển | Quét lại bằng phiên bản 0.3 để so đối sánh | 69 vị trí lỗi đã biết; không có nhãn an toàn |
 
 **Cách chọn I2.** SecBench.js là bộ dữ liệu lỗ hổng thật của package npm; mỗi mục có mã CVE hoặc
@@ -60,9 +61,10 @@ và "an toàn". Nhãn được dựng bằng script; nội dung các tệp khôn
 - I1 và I3 là ứng dụng cố ý có lỗ hổng, lỗi được viết ở dạng dễ thấy. Package trong I2 phần lớn
   nhỏ.
 - `pairs-v1` là tập 50 cặp phiên bản lỗi/vá của CVE thật đã khóa nguồn. **Tập phát triển** (34
-  cặp) đã được quét một lần bằng phiên bản 0.2 sau khi chủ đề án thông qua một bản sửa đổi giao
-  thức; mọi cặp được quét đúng các byte đã khóa. **Tập giữ lại** (16 cặp) **chưa được quét**:
-  nó chỉ dùng được một lần và được để dành cho phiên bản cuối của quy trình.
+  cặp) được quét một lần bằng phiên bản 0.2. **Tập giữ lại** (16 cặp) chỉ dùng được một lần:
+  nó được mở ngày 2026-11-15 cho phiên bản 0.3, sau khi cấu hình được đóng băng bằng mã băm và
+  commit. Mọi cặp của cả hai tập được quét đúng các byte đã khóa. Tập này chỉ có nhãn dương
+  tính và chỉ 9 vị trí, nên nó cho số đếm về phát hiện, không cho độ chính xác.
 - J1 gồm các nguồn đã quét trước đó, trong đó 10 nguồn đã được đọc mã để tìm lỗi cần sửa. Kết
   quả trên J1 là kết quả phát triển, không phải kiểm tra độc lập.
 
@@ -97,6 +99,7 @@ các gói bằng chứng **không thay đổi** giữa ba đợt.
 | JS-4 | I4 (25 vị trí) | Q1 khi có cả nhãn an toàn | TP, FP, FN, TN, độ chính xác, độ bao phủ, F1 |
 | JS-5 | P1 (24 cặp JavaScript) | Q1 trên CVE thật của tập phát triển | Độ bao phủ theo từng cấu hình trên vị trí lỗi đã biết |
 | JS-6 | J1 | Bản sửa đối sánh (phiên bản 0.3) gộp thêm được bao nhiêu cảnh báo, có ghép nhầm không; điều kiện gạn hẹp cho JavaScript có hoạt động đúng không | Số ứng viên ở hàng U trước và sau; cảnh báo mới gộp; ghép nhầm; ứng viên bị gạn |
+| JS-7, PY-8 | H1 | Q1 và phần "mất" của Q2 trên tập giữ lại, với cấu hình đóng băng trước khi quét | Vị trí lỗi đã biết được báo theo từng cấu hình; vị trí bị gạn; mức ưu tiên |
 
 Bước gạn chưa có gói bằng chứng cho JavaScript/TypeScript. Các kịch bản JS vì thế trả lời Q1 và
 kiểm tra rằng bước thẩm định không làm mất lỗi thật; chúng không đo được lợi ích của bước gạn.
@@ -441,6 +444,35 @@ lại; 10 package đã được đọc mã để tìm lỗi, 74 package chưa.
   được. Số vị trí lỗi "được báo" tăng vì cách đếm cần một ứng viên có lời gọi; các công cụ đã
   báo những vị trí đó từ trước.
 
+**(k) Tập giữ lại của `pairs-v1`, phiên bản 0.3 (JS-7, PY-8).** Đây là phép đo duy nhất trong
+chương được thực hiện trên dữ liệu giữ lại theo đúng nghĩa: 16 cặp được chọn và khóa nguồn từ
+tháng 10, vị trí lỗi được xác định trước khi có bất kỳ đầu ra công cụ nào, và không cặp nào
+được quét cho tới khi phiên bản 0.3 hoàn tất. Trình tự: chạy thử phiên bản 0.3 trên 9 cặp
+Python của tập phát triển (không lượt nào lỗi); ghi mã băm của 48 tệp quyết định phát hiện, gộp,
+xếp ưu tiên, gạn và chấm; commit; kiểm lại mã băm và commit bản ghi kiểm; rồi quét mỗi cặp một
+lần. Cả 16 nguồn có đúng mã băm đã khóa; 12 lượt hoàn tất, 4 lượt chạy dở, không lượt nào lỗi.
+
+| Cấu hình | Vị trí lỗi đã biết được báo (trên 7, ở lượt quét hoàn tất) |
+|---|---:|
+| Semgrep riêng | 3 |
+| CodeQL riêng | 6 |
+| ESLint riêng | 4 |
+| Semgrep ∪ CodeQL | 6 |
+| **Hợp mọi nguồn** | **7** |
+| Sau gạn | 7 |
+| Nhóm rà trước (P1+P2) | 6 |
+
+- Tính cả bốn lượt chạy dở, cả 9 trên 9 vị trí đã biết đều được báo (8 JavaScript, 1 Python).
+- Vị trí Python duy nhất chỉ Bandit báo và nằm ở P3; hai vị trí JavaScript chỉ CodeQL báo.
+  Semgrep ∪ CodeQL, hai công cụ trong tên đề tài, báo 6 trên 7.
+- Không vị trí lỗi nào bị gạn. Bước gạn cũng không gạn ứng viên nào trong lượt này.
+- Ngoài các vị trí đã biết còn 156 ứng viên chưa có nhãn (142 ở P3, 7 ở hàng U).
+
+Kết quả này thuận cho mục tiêu phát hiện, nhưng phạm vi của nó hẹp: chín vị trí là quá ít để
+nêu một tỷ lệ, chỉ có nhãn dương tính nên không có độ chính xác, và nó không cho biết bước gạn
+có ích hay không. Tập giữ lại nay đã được dùng và không còn là dữ liệu độc lập cho phiên bản
+sau.
+
 ### 3.3.3. Thời gian chạy theo từng bước và tổng thời gian chạy
 
 Mỗi nguồn được đo một lần trên máy cá nhân, các công cụ chạy song song từng đôi; các con số chỉ
@@ -455,6 +487,7 @@ cho biết bậc độ lớn.
 | I4 (một kho, hai ngôn ngữ), lượt quét lại | 1 | 165 | CodeQL phân tích: 39 giây (Python), 76 giây (JavaScript, chạy dở); bằng chứng CodeQL 28 giây, bằng chứng Semgrep 2 giây |
 | I5 (20 kho Python) | 20 | Trung vị 17,0; lớn nhất 36,2; tổng 377 | |
 | P1 (34 cặp, phiên bản 0.2) | 34 | Trung vị 14,8; lớn nhất 410; tổng 1.833 | Các kho Python lớn chiếm phần lớn thời gian |
+| H1 (16 cặp, phiên bản 0.3) | 16 | Trung vị 15,1; lớn nhất 111; tổng 490 | |
 
 Thời gian từng bước, trung vị trên 46 lượt của I2 có chạy công cụ, và lượt D1:
 
@@ -534,6 +567,13 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
 13. *Trên CVE thật của tập phát triển, lấy hợp các nguồn báo 21/22 vị trí đã biết* (CodeQL riêng
     18), và quy tắc lệnh hằng gạn 71 ứng viên, đều được kiểm lại là lệnh hằng.
 
+**Về tập giữ lại.**
+
+14. *Trên chín lỗ hổng thật của tập giữ lại, quy trình báo đủ cả chín và không gạn nhầm ca nào.*
+    CodeQL chạy riêng báo 6 trên 7 vị trí ở các lượt hoàn tất; phần chênh là một vị trí Python
+    chỉ Bandit báo. Đây là bằng chứng độc lập cho mục tiêu thứ nhất, ở quy mô số đếm. Nó không
+    bổ sung gì cho mục tiêu thứ hai.
+
 **Giới hạn của kết luận.**
 
 - Độ chính xác và F1 trên dữ liệu độc lập chỉ có ở I4: mã minh họa của luật, không phải mã ứng
@@ -548,8 +588,9 @@ giải nén, cơ sở dữ liệu đã tạo), nên trên D1 chúng thêm khoả
   dòng. Ngoài hai lượt bị hỏng, lỗi này có thể đã làm sai vùng đối số ở tệp JavaScript khác có
   xuống dòng kiểu Windows, khiến số vị trí được báo thấp hơn thực tế. Các nguồn này không được
   quét lại, để giữ nguyên tắc mỗi nguồn quét một lần.
-- Tập giữ lại của `pairs-v1` chưa được mở; nó được để dành cho phiên bản cuối. Kết quả trên tập
-  phát triển của `pairs-v1` và trên 84 package quét lại là kết quả phát triển.
+- Tập giữ lại của `pairs-v1` chỉ có 9 vị trí lỗi đã biết và chỉ có nhãn dương tính; bốn trong
+  mười sáu lượt quét chạy dở. Kết quả trên tập phát triển của `pairs-v1` và trên 84 package quét
+  lại là kết quả phát triển.
 - Thời gian được đo một lần cho mỗi nguồn.
 - Chưa có phép đo với người rà: chưa biết quy trình có giảm thời gian rà soát thực tế không.
 
@@ -564,8 +605,8 @@ xem, nhưng phần nó loại được ở đó chỉ là các lời gọi có l
 chứng luồng dữ liệu mới chỉ thấy hoạt động trên dữ liệu phát triển. Thứ tự rà soát cho một
 nhóm rà trước chính xác, nhưng nhóm đó chỉ bao phủ tốt khi CodeQL báo được luồng dữ liệu.
 
-Bốn việc cần làm để có kết luận mạnh hơn: mở tập giữ lại của `pairs-v1` cho phiên bản cuối, theo
-đúng giao thức; gán nhãn một mẫu ứng viên trên mã ứng dụng thật, nhất là JavaScript, để tính độ
-chính xác và kiểm nghiệm quy tắc gạn G4; mở rộng bằng chứng gạn cho JavaScript/TypeScript ngoài
-nhóm lệnh hằng; và xét lại phạm vi của nguyên tắc "chạy dở thì giữ" để một tệp không
-phân tích được không tắt bước gạn của cả lượt quét.
+Ba việc cần làm để có kết luận mạnh hơn: gán nhãn một mẫu ứng viên trên mã ứng dụng thật, nhất
+là JavaScript, để tính độ chính xác và kiểm nghiệm các quy tắc gạn; mở rộng bằng chứng gạn
+ngoài nhóm lệnh hằng; và xét lại phạm vi của nguyên tắc "chạy dở thì giữ" để một tệp không
+phân tích được không tắt bước gạn của cả lượt quét. Tập giữ lại của `pairs-v1` đã được dùng;
+một đánh giá độc lập cho phiên bản sau cần một tập mới.

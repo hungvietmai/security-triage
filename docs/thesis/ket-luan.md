@@ -42,9 +42,9 @@ Các kết quả chính:
   (0,84) không vượt CodeQL chạy riêng (0,85). Trên mã ứng dụng thật chưa có số đo độ chính xác.
 - Với JavaScript/TypeScript, bước gạn chỉ có một quy tắc hẹp cho lệnh hằng, mới thấy hoạt động
   trên một ca thật; chưa có dữ liệu có nhãn an toàn để đánh giá nó.
-- Tập giữ lại gồm các cặp phiên bản lỗi/vá của CVE thật chưa được dùng; nó được để dành cho
-  phiên bản cuối. Trên tập phát triển của cùng bộ dữ liệu, quy trình báo 21/22 vị trí lỗi đã
-  biết.
+- Tập giữ lại gồm các cặp phiên bản lỗi/vá của CVE thật đã được dùng một lần cho phiên bản 0.3:
+  quy trình báo cả 9 vị trí lỗi đã biết và không gạn nhầm ca nào. Nhưng chín vị trí là quá ít
+  để nêu một tỷ lệ, và tập này chỉ có nhãn dương tính.
 - Nguyên mẫu chạy cục bộ cho một người dùng; chưa có cấu hình mẫu để gắn vào hệ thống tích hợp
   liên tục và chưa được đánh giá với người rà soát.
 
@@ -54,7 +54,8 @@ Các kết quả chính:
   trên mã thực tế thay vì benchmark.
 - Tiếp tục hoàn thiện đối sánh trên JavaScript: phiên bản 0.3 đã đưa 23 trong 37 cảnh báo ghép
   hụt về đúng lời gọi; phần còn lại cần cách biểu diễn một cảnh báo liên quan tới nhiều lời gọi.
-- Đánh giá trên tập giữ lại và trên một mẫu ứng viên có người gán nhãn, để đo độ chính xác.
+- Đánh giá trên một mẫu ứng viên có người gán nhãn để đo độ chính xác, và trên một tập giữ lại
+  mới cho các phiên bản sau.
 - Mở rộng sang nhóm lỗi khác theo cách đã làm với duyệt đường dẫn (CWE-22).
 - Cung cấp giao diện dòng lệnh để tích hợp vào quy trình tích hợp liên tục.
 - Nghiên cứu dùng mô hình ngôn ngữ lớn để giải thích cảnh báo hoặc gợi ý sửa lỗi trong báo cáo,

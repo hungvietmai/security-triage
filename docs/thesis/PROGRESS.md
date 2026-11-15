@@ -53,9 +53,10 @@ kết hợp Semgrep và CodeQL". CWE-78 là kịch bản chính; CWE-22 trên Py
    hành động ở lượt quét hoàn tất không ([independent-filter/](../../experiments/evaluation/independent-filter/PROTOCOL.md)).
    Kết quả và phần đọc lại: [READING.md](../../experiments/evaluation/independent-filter/READING.md). **Không quét lại.**
 18. Danh mục tài liệu tham khảo đã sửa: [tai-lieu-tham-khao.md](tai-lieu-tham-khao.md).
-19. `pairs-v1`: Amendment 06 (quét tập phát triển rồi tập giữ lại) và Amendment 07 (hoãn tập giữ
-   lại cho phiên bản cuối). Tập phát triển đã quét bằng v0.2: [pairs-v1/](../../experiments/evaluation/pairs-v1/README.md).
-   **Chưa cặp giữ lại nào bị quét.**
+19. `pairs-v1`: Amendment 06 (tập phát triển, v0.2), Amendment 07 (hoãn tập giữ lại) và Amendment
+   08 (mở tập giữ lại cho v0.3). **Tập giữ lại đã được quét một lần ngày 2026-11-15**: hợp mọi
+   nguồn báo 9/9 vị trí lỗi đã biết, 0 bị gạn. Không quét lại:
+   [pairs-v1/](../../experiments/evaluation/pairs-v1/README.md).
 20. Profile `command-injection-v0.3`: phạm vi tệp của Semgrep do worker quyết định, bộ định vị
    lời gọi JavaScript v1, quy tắc gạn G4 (lệnh hằng). So sánh v0.2 → v0.3 trên 84 nguồn:
    [js-matching-v0.3/](../../experiments/evaluation/js-matching-v0.3/READING.md).
@@ -82,9 +83,7 @@ Ghi trong [docs/validation.md](../validation.md), mục 2, các dòng ngày 2026
 ## Việc tiếp theo
 
 1. Push khi chủ đề án quyết định (chưa push gì). Không commit file PDF đề cương.
-2. Mở tập giữ lại của `pairs-v1` cho phiên bản cuối: chốt phiên bản, viết bản sửa đổi giao thức,
-   `freeze.py write`, commit, `freeze.py gate`, rồi quét (xem
-   [pairs-v1/README.md](../../experiments/evaluation/pairs-v1/README.md)). Chỉ chủ đề án quyết định được.
+2. Tập giữ lại của `pairs-v1` đã dùng xong; phiên bản sau v0.3 cần một tập giữ lại mới.
 3. Gán nhãn một mẫu ứng viên ngoài vị trí lỗi đã biết để tính độ chính xác trên mã thật.
 4. Dữ liệu JavaScript có nhãn an toàn để kiểm nghiệm quy tắc gạn G4; cách biểu diễn một cảnh
    báo liên quan tới nhiều lời gọi (14 cảnh báo còn ở hàng U, xem

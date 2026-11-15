@@ -19,7 +19,7 @@ Người dùng chọn một trong bốn profile khi tạo lượt quét:
 |---|---|---|
 | `command-injection-v0.1` (mặc định) | CWE-78; JavaScript và Python; Semgrep và CodeQL | Gộp cảnh báo theo sink, xếp P1–P4/U theo chính sách ưu tiên v0.1 |
 | `command-injection-v0.2` | CWE-78; JavaScript/TypeScript và Python. Sàng lọc: Semgrep cùng Bandit (Python) hoặc ESLint với eslint-plugin-security (JavaScript/TypeScript). Thẩm định: CodeQL | Như v0.1, theo chính sách ưu tiên v0.2: "đồng thuận" là CodeQL cùng ít nhất một công cụ sàng lọc. **Chưa được đánh giá** |
-| `command-injection-v0.3` | Như v0.2 | Như v0.2, với ba điểm khác: worker quyết định phạm vi tệp của Semgrep (mã bị quét không tự ẩn tệp được); bộ định vị lời gọi JavaScript v1 nhận thêm bí danh hai bước, destructuring, `promisify`, `require` nội tuyến; quy tắc gạn G4 cho lời gọi `exec`/`execSync` có lệnh hằng. **Mới đo trên dữ liệu phát triển** |
+| `command-injection-v0.3` | Như v0.2 | Như v0.2, với ba điểm khác: worker quyết định phạm vi tệp của Semgrep (mã bị quét không tự ẩn tệp được); bộ định vị lời gọi JavaScript v1 nhận thêm bí danh hai bước, destructuring, `promisify`, `require` nội tuyến; quy tắc gạn G4 cho lời gọi `exec`/`execSync` có lệnh hằng. Đã đo trên dữ liệu phát triển và trên tập giữ lại của `pairs-v1` (9 vị trí lỗi đã biết, chỉ nhãn dương tính) |
 | `path-traversal-v0.2` | CWE-22; Python; chỉ CodeQL | Cảnh báo của truy vấn baseline. Nếu truy vấn có bằng chứng an toàn v0.2 vẫn báo thì ở **P1**; nếu bằng chứng đã loại mọi luồng thì xuống **P4**. Không xóa cảnh báo nào |
 
 Profile `path-traversal-v0.2` dùng đúng pack đã đánh giá trong nghiên cứu

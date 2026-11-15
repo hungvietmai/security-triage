@@ -8,7 +8,7 @@ Mọi bảng dưới đây tái lập được từ tệp đã lưu trong repo; 
 > Mục 3.7 là đợt kiểm tra đầu tiên trên mã chưa từng xem. Hai đợt sau (52 package npm có CVE
 > thật; ba ứng dụng Python) được trình bày trong bản thảo
 > [chuong-3-thuc-nghiem.md](chuong-3-thuc-nghiem.md), mục 3.3. Tập CVE lỗi/vá `pairs-v1`
-> (50 cặp, 16 cặp giữ lại) chưa từng được quét.
+> (50 cặp, 16 cặp giữ lại) được quét sau đó, ngày 2026-11-15; xem mục 3.3.2 (i) và (k) của bản thảo.
 
 ## 3.1 Thiết lập
 
