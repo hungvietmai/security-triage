@@ -88,7 +88,8 @@ Ghi trong [docs/validation.md](../validation.md), mục 2, các dòng ngày 2026
    nhãn (15/11; sửa 12, tách một ca thành bảy). Kết quả: 60 có lỗi, 11 an toàn, 13 chưa xác
    định; hợp mọi nguồn TP 122, FP 11; bước gạn chuyển đi 1 cảnh báo sai, gạn nhầm 0. Xem
    [js-labels-v0.3/](../../experiments/evaluation/js-labels-v0.3/README.md). Mã ứng dụng thật ngoài các package này
-   vẫn chưa có nhãn, và chưa có người rà thứ hai.
+   vẫn chưa có nhãn. Người rà thứ hai: gói rà mù cho 38 đơn vị đã chuẩn bị (15/11), chưa có
+   phiếu trả lời.
 4. Bằng chứng gạn cho các loại cảnh báo sai JavaScript còn lại (giá trị đã kiểm tra hoặc trích
    dẫn, giá trị nội bộ, lời gọi không qua shell); bộ định vị chưa thấy lời gọi qua
    `_child_process.default.exec` của mã Babel (`git-parse`); cách biểu diễn một cảnh báo liên quan

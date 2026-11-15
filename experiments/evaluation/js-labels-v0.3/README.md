@@ -81,6 +81,37 @@ Full output: [results/score.json](results/score.json).
 - 13 units are `undetermined`, most of them packages whose purpose is to run the caller's
   command (`shelljs`, `grunt-shell`, `gulp-shell`, `release-it`, ...). They count neither way.
 
+## Second review by a person outside the project (prepared, not done)
+
+`EVALUATION_PROTOCOL.md` section 4 asks for an independent second review of every proposed
+suppression and of a deterministic 20% sample of the other resolved units, and for
+disclosure when no second reviewer is available. The owner chose this route on 2026-11-15.
+
+- **Subset:** 38 of the 146 units: every unit labeled safe or filtered (11) and every fifth
+  of the other units by sorted id (27: 15 known vulnerable sites, 10 reviewed vulnerable
+  labels, 2 undetermined). The known sites check the reviewer against labels the project
+  did not make. Ids and order: [second-review/selection.json](second-review/selection.json).
+- **Packet:** code only. It names no tool, priority, filter decision or existing label, and
+  it does not say which items are known sites.
+- **Status: no answer has been received.** Until one is scored, every number above rests on
+  one reviewer, the project owner, who saw the assistant's proposals.
+
+```bash
+python experiments/evaluation/js-labels-v0.3/second_review.py packet \
+  artifacts/js-labels-v0.3/second-review --cache artifacts/js-labels-v0.3/cache
+python experiments/evaluation/js-labels-v0.3/second_review.py score \
+  <answers.csv> --json experiments/evaluation/js-labels-v0.3/second-review/agreement.json
+```
+
+Send `PACKET.md` and `answers.csv` from that folder (ignored by git) to the reviewer, and
+nothing else from this repository. `score` reports observed agreement, Cohen's kappa, the
+confusion table and every disagreement, overall, on the known sites and on the units first
+labeled safe. Disagreements are reported, not overwritten; a label changes only through a
+recorded reconciliation.
+
+Not covered by this subset: the candidates the filter removed in the Python runs (19 in
+`independent-filter/`, 71 in the pairs-v1 development run). They were checked against their
+source by a script, not by a person.
 ## Deviations from the registered files
 
 - `score_labels.py` failed on its first run: sorting units raised `TypeError` for unmatched
@@ -105,6 +136,7 @@ Full output: [results/score.json](results/score.json).
 | `label_sheet.py` | Lists the items; builds the blind labeling sheet and the full review sheet from npm |
 | `review_pending.py` | Builds one Markdown file with the labels no person has reviewed yet (none at present) |
 | `labels.json` | The 84 labels with class, reason, who proposed them and each review decision and note |
+| `second_review.py`, `second-review/selection.json` | Selects the subset for an outside reviewer, builds the blind packet and scores the answers |
 | `score_labels.py`, `results/score.json` | Scoring against the saved v0.3 exports and its output |
 
 The review file the owner marked is `artifacts/js-labels-v0.3/REVIEW_VULNERABLE_47.md` (ignored

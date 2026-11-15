@@ -49,6 +49,7 @@ constant_reference = _load("constant_reference", JS_MATCHING / "constant_referen
 JS_LABELS = ROOT / "experiments" / "evaluation" / "js-labels-v0.3"
 js_label_sheet = _load("js_label_sheet", JS_LABELS / "label_sheet.py")
 js_label_score = _load("js_label_score", JS_LABELS / "score_labels.py")
+js_second_review = _load("js_second_review", JS_LABELS / "second_review.py")
 
 EVALUATION = ROOT / "experiments" / "evaluation"
 PIPELINE_CHANGES = json.loads((EVALUATION / "PIPELINE_CHANGES.json").read_bytes())[
@@ -1145,6 +1146,44 @@ class JavaScriptLabelScoringTests(unittest.TestCase):
         unmatched = sorted(i.rsplit("|", 1)[1] for i in split if "|U" in i)
         self.assertEqual(unmatched, ["U31", "U35", "U40", "U41", "U42", "U43", "U45"])
         self.assertFalse([row["id"] for row in labels if row["id"].endswith("|None")])
+
+    def test_second_review_subset_is_every_safe_or_filtered_unit_and_every_fifth_other(self):
+        units = [
+            {"id": f"u{n:02d}", "label": "vulnerable", "filtered": False} for n in range(1, 13)
+        ]
+        units[2].update(label="safe")
+        units[6].update(label="undetermined", filtered=True)
+        chosen = js_second_review.choose(units)
+        # Others, sorted: u01 u02 u04 u05 u06 | u08 u09 u10 u11 u12 -> the fifth and the tenth.
+        self.assertEqual(sorted(chosen), ["u03", "u06", "u07", "u12"])
+        self.assertEqual(chosen, js_second_review.choose(list(reversed(units))))
+
+    def test_committed_second_review_selection_is_reproduced_and_holds_only_ids(self):
+        committed = json.loads((JS_LABELS / "second-review" / "selection.json").read_bytes())
+        units, _ = js_label_score.build_units()["all"]
+        expected = js_second_review.choose(units)
+        self.assertEqual([item["id"] for item in committed["items"]], expected)
+        self.assertEqual({key for item in committed["items"] for key in item}, {"number", "id"})
+        safe = {unit["id"] for unit in units if unit["label"] == "safe"}
+        self.assertTrue(safe <= set(expected))
+
+    def test_second_review_instructions_name_no_tool_priority_or_existing_label(self):
+        text = js_second_review.INSTRUCTIONS.lower()
+        for word in ("semgrep", "codeql", "eslint", "bandit", "ưu tiên", "đã gạn", "cve"):
+            self.assertNotIn(word, text)
+
+    def test_agreement_and_kappa_on_synthetic_answers(self):
+        first = {"a": "vulnerable", "b": "vulnerable", "c": "safe", "d": "safe"}
+        second = {"a": "vulnerable", "b": "safe", "c": "safe", "d": "safe"}
+        result = js_second_review.agreement(first, second)
+        self.assertEqual((result["agreed"], result["units"]), (3, 4))
+        self.assertEqual(result["observed_agreement"], 0.75)
+        # Expected agreement 0.5 * 0.25 + 0.5 * 0.75 = 0.5, so kappa = 0.5.
+        self.assertEqual(result["cohen_kappa"], 0.5)
+        self.assertEqual(
+            result["disagreements"], [{"id": "b", "first": "vulnerable", "second": "safe"}]
+        )
+        self.assertEqual(js_second_review.cohen_kappa([]), (None, None))
 
     def test_protocol_is_the_registered_file_and_script_changes_are_recorded(self):
         import hashlib
