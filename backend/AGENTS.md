@@ -66,7 +66,7 @@ backend/
 │   ├── workflows/         # Multi-feature flows: scans/ (API, execution, persistence)
 │   └── workers/           # Celery app (composition); tasks live in workflows/
 ├── migrations/            # Alembic; versions/NNNN_description.py
-├── scripts/               # One-off CLIs: init_storage, export_openapi, check_worker
+├── scripts/               # One-off CLIs: init_storage, export_openapi, check_worker, scan_families
 └── tests/                 # Mirrors app/: core/, features/<f>/, cross-cutting tests at the root
 ```
 
@@ -96,6 +96,20 @@ The worker runs up to `SCANNER_WORKERS` independent tools per language (default 
 and `ARTIFACT_UPLOAD_WORKERS` streamed artifact uploads (default 4). Languages
 remain sequential; standalone `run_pipeline()` calls default to sequential tools.
 Record concurrency settings with scan provenance when changing execution behavior.
+
+`classification.py` and `families.py` hold the composite (multi-family) scan: the scanners
+run once, one CodeQL database is created, every finding is routed to one analysis family
+before anything is merged, and each family is assessed by its member profile's existing
+entry point (`scan_language` or `scan_language_evidence`). A finding whose family cannot be
+named stays unassigned at priority U; a new family filters nothing until its own evidence
+has been evaluated. Only the development CLI `scripts/scan_families.py` reaches this code:
+the worker task, the database and the API do not use it yet (plan and status:
+`../docs/plans/multi-cwe.md`).
+
+`tests/golden/legacy/` pins what the four existing profiles produce for fixed synthetic
+inputs (`tests/workflows/scans/test_legacy_golden.py`). A golden file changes only with an
+intended, explained behaviour change: regenerate with `UPDATE_GOLDEN=1`, review the diff and
+commit it with the change that caused it.
 
 ## Architecture rules
 
