@@ -16,7 +16,8 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
   web) nằm ở [mục 17](#17-trạng-thái-p1b-2026-11-15). Các mục 1–15 giữ nguyên là bản thiết kế; chỗ
   nào thực tế khác kế hoạch thì được ghi ngay tại chỗ và ở mục 16, 17. Lần rà nghiệm thu kỹ thuật
   P1 nằm ở [mục 18](#18-nghiệm-thu-kỹ-thuật-p1-2026-11-15); thẩm định và thiết kế tối thiểu cho
-  CWE-89 ở [mục 19](#19-p2--thẩm-định-và-thiết-kế-tối-thiểu-cho-cwe-89-2026-11-15).
+  CWE-89 ở [mục 19](#19-p2--thẩm-định-và-thiết-kế-tối-thiểu-cho-cwe-89-2026-11-15); P2a (profile
+  `multi-cwe-v0.2`, CWE-89 chỉ phát hiện và giữ) ở [mục 20](#20-trạng-thái-p2a-2026-11-15).
 
 ## 1. Kết luận ngắn
 
@@ -1188,6 +1189,8 @@ P1 chưa đóng cho tới khi nguyên nhân được xử lý.
 ## 19. P2 — thẩm định và thiết kế tối thiểu cho CWE-89 (2026-11-15)
 
 Chỉ là thẩm định và thiết kế. Không có mã, profile hay rule nào của CWE-89 được thêm ở lần rà này.
+Các bước 1–5 của mục 19.4 (P2a) đã được triển khai sau đó; kết quả ở
+[mục 20](#20-trạng-thái-p2a-2026-11-15).
 
 ### 19.1 Kiến trúc hiện tại cho phép và không cho phép gì
 
@@ -1289,7 +1292,8 @@ Bước 1–5 là P2a (phương án A trong cấu trúc của B). Bước 6–7 
 7. Trường hợp xấu nhất về thời gian nhỏ hơn giới hạn mềm, giới hạn cứng nhỏ hơn visibility timeout;
    chi phí từng lượt được ghi.
 8. Không cần migration; dữ liệu cũ đọc như trước (so sánh API trên các lượt quét đã lưu).
-9. CI xanh trên một pull request, và có một job chạy profile ghép bằng công cụ thật.
+9. CI xanh trên một pull request, và có một job chạy profile ghép bằng công cụ thật. *Ngày
+   2026-11-16 chủ đề án tách tiêu chí này khỏi P2a: nó thuộc một đầu việc CI/CD riêng, làm sau.*
 10. Không file bị ghim hay sổ đăng ký nghiên cứu nào thay đổi; không dùng nhãn; báo cáo chỉ nói
     "phát hiện và giữ", không nêu số giảm cảnh báo sai cho CWE-89.
 
@@ -1305,3 +1309,259 @@ Bước 1–5 là P2a (phương án A trong cấu trúc của B). Bước 6–7 
 - Kết quả bằng chứng lưu như cảnh báo (L4) nay được báo cáo tách riêng, nhưng chỉ khi thành viên ghi
   vai trò của từng kết quả. Bộ xử lý mới không nên lưu kết quả bằng chứng như cảnh báo; nếu có, nó
   phải ghi vai trò như `safety_evidence` đang làm.
+
+## 20. Trạng thái P2a (2026-11-15)
+
+P2a thêm profile `multi-cwe-v0.2`: một lượt quét xử lý CWE-78, CWE-22 và CWE-89. CWE-89 dùng truy
+vấn chuẩn của CodeQL và **chỉ được phát hiện và giữ**: không xếp hạng, không gạn. Đây là các bước
+1–5 của mục 19.4. Semgrep, Bandit và mọi cơ chế gạn cho CWE-89 chưa làm. Không nhãn nào được dùng,
+không dữ liệu held-out hay cặp đã đóng băng nào được quét, không file bị ghim nào bị sửa.
+
+**Trạng thái mã đã kiểm thử:** nhánh cục bộ `feat/multi-cwe-p2a`, dựng trên `ffc218b`. Mọi kiểm thử
+ở mục này chạy trên cây làm việc trước khi commit; sau đó, theo quyết định của chủ đề án, thay đổi
+được commit tách theo đầu việc trên nhánh này, **chưa push**. Cây `backend/`, `frontend/`, `profiles/` đã kiểm thử có
+mã Git `2e6ed328e7945274b8bc7aa0dbeac6cf0454c369` ở lượt hồi quy mục 20.5 (tính sau lượt chạy; từ
+lúc dựng image tới lúc đó chỉ có file kiểm thử và tài liệu thay đổi) và
+`081b3da00fd72afc6865f4be2499fd8be683a351` sau khi thêm kiểm thử trình duyệt của `v0.2`; mã ứng dụng
+và profile giống nhau ở hai cây; image API và worker đang chạy chứa đúng mã ứng dụng
+và profile của cây đó (so hash). Đầu ra thô: `artifacts/multi-cwe-p2a/` (không vào Git).
+
+### 20.1 Đã làm
+
+| Việc | File |
+|---|---|
+| Kiểu profile `detection`: ghim theo hash truy vấn của gói chuẩn CodeQL, khai CWE ánh xạ của từng rule và mức cố định | `backend/app/scanners/profile.py` (`DetectionProfile`, `load_detection_profile`) |
+| Bộ xử lý "phát hiện và giữ": mỗi vị trí được báo là một đơn vị ở danh sách rà | `backend/app/workflows/scans/detection.py` (mới) |
+| Lớp ghép chọn bộ xử lý theo kiểu thành viên; nhóm `sql-injection` | `backend/app/workflows/scans/families.py` |
+| Thành viên `sql-injection-v0.1` và profile ghép `multi-cwe-v0.2` | `profiles/sql-injection-v0.1/`, `profiles/multi-cwe-v0.2/` |
+| Cấu hình, hợp đồng API, lý do giữ mới, giới hạn thời gian | `core/config.py`, `workflows/scans/schemas.py`, `service.py`, `task.py`, `workers/celery_app.py` |
+| Giao diện: lựa chọn profile, nhãn nhóm CWE-89, lý do giữ | `frontend/src/features/scans/`, `openapi.json`, `api-schema.d.ts` |
+| CLI phát triển quét riêng một thành viên `detection` | `backend/scripts/scan_families.py` |
+
+Giữ nguyên: `profiles/multi-cwe-v0.1/` và bốn profile cũ (không file nào đổi); G1–G4; mọi file bị
+ghim bởi bản đăng ký nghiên cứu (`triage/*.py`, `analysis.py`, `semgrep.py`, `acquisition.py`);
+`experiments/`, `rules/`, `tools/`; schema database (không migration mới; `alembic check` sạch).
+`multi-cwe-v0.2` ghim hai thành viên đầu bằng đúng hash mà `multi-cwe-v0.1` ghim và dùng cùng phiên
+bản cách ghép `family-composition-v0.1`.
+
+Truy vấn đã ghim: `Security/CWE-089/SqlInjection.ql` của `codeql/python-queries` 1.8.11 (rule
+`py/sql-injection`, CWE-89) và của `codeql/javascript-queries` 2.4.6 (rule `js/sql-injection`,
+CWE-89, CWE-90, CWE-943). Mỗi ngôn ngữ có một lượt `codeql-sql-injection` trên database mà nhóm
+lệnh đã tạo; không database nào được tạo thêm.
+
+### 20.2 Đối chứng trước khi sửa mã
+
+Trước khi sửa dòng mã nào (mã `ffc218b`, cây làm việc sạch), `multi-cwe-v0.1` được quét trên stack
+thật với hai nguồn phát triển: `python artifacts/multi-cwe-p2a/scan_snapshot.py multi-cwe-v0.1
+baseline-v0.1`. Kết quả đầy đủ (lượt quét, mọi đơn vị kèm cảnh báo, báo cáo, SARIF) ở
+`artifacts/multi-cwe-p2a/baseline-v0.1/`.
+
+| Nguồn | Snapshot | CWE-78 | CWE-22 |
+|---|---|---|---|
+| OWASP BenchmarkPython `f129148` | `0defda4c…` | 51 kết quả, 24 đơn vị, 2 gạn | 188 kết quả (125 cảnh báo phát hiện), 125 đơn vị, 62 gạn |
+| Nguồn tổng hợp ba nhóm `artifacts/multi-cwe-p2a/dev-source/three/` (`app.py`, `server.js`, `routes.ts`; tự viết, không bao giờ được chạy) | `9a310328…` | 19 kết quả, 7 đơn vị, 1 gạn | 6 kết quả, 3 đơn vị, 0 gạn |
+
+Hai kho thật đã dùng ở P1 (`pygoat@2aa4cc1`, `DSVPWA@961f86d`) lấy bản đối chứng từ lượt quét
+`multi-cwe-v0.1` đã lưu trước khi sửa mã.
+
+Cùng lúc, kết quả của `multi-cwe-v0.1` được ghim bằng tám file golden mới
+(`backend/tests/golden/composite/multi-cwe-v0.1-*.json`,
+`tests/workflows/scans/test_composite_golden.py`), sinh từ mã chưa sửa.
+
+### 20.3 Đối chứng sau khi sửa: `v0.2` so với `v0.1`, và CWE-89 so với CodeQL chạy riêng
+
+Lệnh: `scan_snapshot.py multi-cwe-v0.2 v0.2`, `scan_repo.py scan multi-cwe-v0.2 v0.2 …` cho hai kho
+thật, rồi `python artifacts/multi-cwe-p2a/compare.py` (đầu ra: `comparison.txt`, `comparison.json`).
+Lượt CodeQL riêng không dùng mã ứng dụng: trong một container của image worker, `codeql database
+create` rồi `codeql database analyze` với đúng một truy vấn đã ghim, trên cùng snapshot
+(`independent_codeql.sh`, `independent_repo.sh`; SARIF ở `independent/`).
+
+| Nguồn | CWE-78 và CWE-22: `v0.2` so với đối chứng `v0.1` | CWE-89 trong `v0.2` | So với CodeQL chạy riêng |
+|---|---|---|---|
+| BenchmarkPython | 24 và 125 đơn vị: đơn vị, báo cáo theo nhóm và SARIF giống hệt | 0 cảnh báo | 0 và 0 |
+| Nguồn tổng hợp ba nhóm | 7 và 3 đơn vị: giống hệt | 8 cảnh báo (4 `py/sql-injection`, 4 `js/sql-injection` ở `server.js` và `routes.ts`), 8 đơn vị | 8 và 8, khớp theo ngôn ngữ, rule và vị trí |
+| `pygoat` (mã thật) | 4 và 3 đơn vị: giống hệt | 1 cảnh báo `py/sql-injection` (`dockerized_labs/sql_injection_lab/app.py:57`), 1 đơn vị | 1 và 1, khớp |
+| `DSVPWA` (mã thật) | 3 và 2 đơn vị: giống hệt | 0 cảnh báo | 0 và 0 |
+| `fportantier/vulpy@5249cc8` (mã thật, Python) | 1 và 1 đơn vị: giống hệt | 3 cảnh báo `py/sql-injection`, 3 đơn vị | 3 và 3, khớp |
+| `anxolerd/dvpwa@4a8f4a4` (mã thật, Python) | 0 và 0 đơn vị | 0 cảnh báo | 0 và 0 |
+| `OWASP/NodeGoat@c5cb68a` (mã thật, JavaScript) | 1 đơn vị CWE-78: giống hệt; không có CWE-22 | 2 cảnh báo `js/sql-injection`, 2 đơn vị | 2 và 2, khớp |
+| `juice-shop/juice-shop@266448a` (mã thật, TypeScript và JavaScript) | 0 và 0 đơn vị ở cả hai lượt | 7 cảnh báo `js/sql-injection` trong bốn file `routes/*.ts`, 7 đơn vị | 7 và 7, khớp |
+
+Juice Shop được thêm sau cùng (`large-source-CRITERIA.json`, ghi trước khi quét) vì chưa có cảnh báo
+CWE-89 nào trên mã TypeScript thật. Trên kho này CodeQL **tự** báo lượt chạy JavaScript/TypeScript là
+chưa hoàn tất (50 cảnh báo `js/parse-error` của trình trích xuất), ở cả `multi-cwe-v0.1` lẫn
+`multi-cwe-v0.2`, nên lượt quét ghi `partial`; xem mục 20.4.
+
+Ba kho cuối được thêm sau, để phép so với CodeQL chạy riêng không chỉ dựa trên nguồn tự viết. Tiêu
+chí, quy tắc chọn (theo tên và mục đích công bố của kho, không theo đầu ra công cụ quét) và quy tắc
+dừng được ghi trước khi quét ở `more-sources-CRITERIA.json`. `vulpy` chỉ được nêu trong một giao thức
+như ứng viên bị loại trước khi quét; hai kho kia không có trong sổ đăng ký nào. Vì không có lượt quét
+nào của ba kho này từ trước khi sửa mã, bản `multi-cwe-v0.1` để so được quét trên mã đã sửa — mã mà
+bốn nguồn đầu cho thấy vẫn cho đúng kết quả `v0.1` cũ.
+
+"Giống hệt" là so khóa đơn vị, vị trí, loại sink, mức, quyết định, lý do, ứng viên, công cụ, lý do
+giữ, trạng thái bằng chứng, bản ghi gạn, phiên bản chính sách và từng cảnh báo (lượt chạy, rule, vị
+trí, nhãn CWE). Ở mọi lượt `v0.2`: mỗi kết quả nằm trong đúng một đơn vị, 0 đơn vị lẫn nhóm, 0 kết
+quả chưa xếp hạng, số kết quả SARIF bằng số kết quả đã lưu.
+
+Với CWE-89 (21 cảnh báo trên năm nguồn có cảnh báo: 8 trên nguồn tổng hợp, 13 trên mã thật gồm 4
+Python, 2 JavaScript và 7 TypeScript):
+
+- Cả 21 đơn vị ở danh sách rà chính, mức `U`, quyết định `K10_DETECTED_KEPT`. **0 đơn vị bị gạn**; 0
+  kết quả SARIF mang `suppressions`. Ở 14 đơn vị của lượt chạy hoàn tất, lý do giữ là
+  `no_filter_condition_for_family` và trạng thái bằng chứng là "chưa đủ"; ở 7 đơn vị của Juice Shop
+  có thêm `run_incomplete` và trạng thái là "không lấy được".
+- Lưu và xuất SARIF giữ nguyên mã rule, vị trí, nhãn gốc của công cụ (`cwe-089`; với JavaScript
+  `cwe-089`, `cwe-090`, `cwe-943`), CWE ánh xạ theo manifest (`CWE-89`; `CWE-89`, `CWE-90`,
+  `CWE-943`) và nguồn cảnh báo (công cụ `codeql`, lượt `codeql-sql-injection`).
+- Chỗ hai nhóm gặp nhau trên nguồn tổng hợp, quét bằng công cụ thật: `app.py:67` có cảnh báo CWE-89
+  (cột 55) nằm bên trong lời gọi `os.system` của nhóm lệnh (cột 16) và `app.py:74` có cảnh báo
+  CWE-89 và CWE-22 trên cùng một dòng. Mỗi cảnh báo ở đơn vị của nhóm mình.
+
+**Hai lần công cụ so sánh báo lệch, cả hai do cách so sánh** (bản đầu ra đầu tiên giữ ở
+`comparison-first-attempt.txt`):
+
+1. So với CodeQL chạy riêng: tôi điền `endLine` cho SARIF độc lập trong khi ứng dụng lưu vùng mã như
+   công cụ viết (thiếu `endLine` thì để trống). Vùng mã gốc giống nhau.
+2. Một lượt `multi-cwe-v0.1` chạy lại sau khi sửa mã khác bản đối chứng ở nhóm CWE-22: CodeQL ghi hai
+   kết quả của cùng file `BenchmarkTest00090.py` theo thứ tự ngược lại, nên chỉ số trong raw ID đổi
+   chỗ. Khóa đơn vị, vị trí và quyết định của 125 đơn vị giống hệt. Hai lượt `multi-cwe-v0.1` chạy
+   thêm trên cùng mã cho đúng thứ tự của bản đối chứng; bốn lượt lưu trước khi sửa mã cũng ổn định
+   (`order-stability.txt`). Hiện tượng gặp 1 lần trong 3 lượt và không phụ thuộc mã ứng dụng. Công
+   cụ so sánh nay so theo nội dung (lượt chạy, rule, file, vùng mã) thay vì theo chỉ số.
+
+Sau khi sửa công cụ so sánh, mọi phép kiểm ở cả tám nguồn đều đạt.
+
+### 20.4 Ca lỗi có kiểm soát
+
+Trên stack thật, một worker thứ hai cùng image với tệp bọc `codeql` (như mục 17.4, điểm 9), nguồn
+tổng hợp ba nhóm; mỗi lượt được so theo nội dung với một lượt sạch chạy cùng cách
+(`python artifacts/multi-cwe-p2a/sql_faults.py`, đầu ra `sql-faults.txt`).
+
+| Lỗi tiêm vào lượt `codeql-sql-injection` | Lượt quét | Nhóm CWE-89 | Nhóm CWE-78 và CWE-22 |
+|---|---|---|---|
+| Không lỗi | `completed` | 8 đơn vị `K10_DETECTED_KEPT`, 0 gạn | 7 và 3 đơn vị |
+| Phân tích xong, SARIF bị đánh dấu "chưa hoàn tất" (`executionSuccessful: false`) | `partial`; lượt chạy ghi `partial` ở cả hai ngôn ngữ | 8 cảnh báo vẫn là 8 đơn vị `K10_DETECTED_KEPT` ở danh sách rà, lý do giữ thêm `run_incomplete`, bằng chứng "không lấy được"; đủ 8 trong SARIF, 0 `suppressions` | Giống lượt sạch |
+| Phân tích xong, ghi SARIF, rồi thoát mã lỗi | `partial`; lượt chạy ghi `failed` ở cả hai ngôn ngữ | 8 cảnh báo đã thu được thành 8 đơn vị `F10_FAMILY_NOT_RANKED`, mức U, danh sách rà, bằng chứng "không lấy được"; đủ 8 trong SARIF, 0 `suppressions` | Giống lượt sạch |
+| Thất bại trước khi ghi kết quả | `partial`; lỗi ghi "produced no SARIF output" | Không có cảnh báo nào để giữ; nhóm ghi `failed` | Giống lượt sạch |
+
+**Lượt chạy dở tự phát.** Trên Juice Shop không có lỗi tiêm nào: chính CodeQL báo 50 cảnh báo
+`js/parse-error` nên lượt `codeql-sql-injection` của JavaScript/TypeScript ghi `partial`. Bảy cảnh
+báo CWE-89 nó đã báo vẫn thành bảy đơn vị ở danh sách rà với `run_incomplete`, 0 gạn, đủ bảy trong
+SARIF, và khớp lượt CodeQL chạy riêng. Lượt `codeql` của nhóm lệnh trên cùng kho cũng `partial` ở cả
+hai profile.
+
+Cảnh báo của rule không được ghim chỉ có kiểm thử với công cụ giả lập (`test_sql_family.py`).
+
+**Trên trình duyệt thật** (Chromium, stack thật, `node ../artifacts/multi-cwe-p2a/ui_check.mjs`, đầu
+ra `ui-check.json` và hai ảnh chụp): biểu mẫu tạo scan có profile mới kèm mô tả; trang lượt quét
+`v0.2` của nguồn tổng hợp liệt kê ba nhóm; lọc theo CWE-89 cho đúng 8 đơn vị của cả ba file, đều
+"Chưa đủ bằng chứng" và ở danh sách rà chính; danh sách "Đã gạn" của nhóm này rỗng; chi tiết một đơn
+vị TypeScript hiện nhãn gốc `cwe-089, cwe-090, cwe-943`, CWE ánh xạ `CWE-89, CWE-90, CWE-943`, nhóm
+và lượt chạy `codeql-sql-injection`; bảng trước–sau có dòng CWE-89 với 8 cảnh báo, 0 gạn. Trang của
+lượt quét có lượt CWE-89 thất bại ghi "Scan hoàn thành một phần", hai ngôn ngữ `failed`, và 8 đơn vị
+giữ lại với "Không lấy được bằng chứng".
+
+### 20.5 Kiểm thử hồi quy
+
+Một lệnh trên trạng thái mã cuối: `bash artifacts/multi-cwe-p2a/final/run_all.sh` (đầu ra `run.txt`
+và các file cùng thư mục).
+
+| # | Lệnh | Đạt | Bỏ qua |
+|---|---|---|---|
+| 1 | `uv run pytest -q -rs --cov` (SQLite, công cụ giả lập) | 652 | 2 (`test_process.py:65`, `:157`, nhóm tiến trình POSIX trên Windows) |
+| 2 | `docker compose --profile test run --build --rm test` (PostgreSQL, công cụ giả lập) | 654 | 0 |
+| 3 | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` | sạch | — |
+| 4 | `python -m unittest discover -s experiments/tests` (Python 3.12) | 153 | 0 |
+| 5 | `npm run check`, `npm run build`, `npm run test:e2e` (API giả lập) | Vitest 80; Playwright 2 | 1 lúc chạy; 2 sau khi thêm kiểm thử stack thật của `v0.2` (cả hai chạy riêng ở dòng 7 và 9) |
+| 6 | `scripts.export_openapi` so với `frontend/openapi.json`; `scripts.check_worker` | giống hệt; worker nhận cả sáu profile | — |
+| 7 | `npx playwright test multi-cwe-full-stack` (công cụ thật, `multi-cwe-v0.1` từ biểu mẫu tới SARIF) | 1: 239 kết quả, 149 đơn vị, 64 gạn, như trước | 0 |
+| 8 | `legacy_regression.py` (công cụ thật, bốn profile cũ so với lượt quét lưu ngày 14/11) | 4/5 giống hệt; ca v0.1 như mục 18.3 | — |
+| 9 | `FULL_STACK_URL=… npx playwright test multi-cwe-v02-full-stack` (công cụ thật, `multi-cwe-v0.2` từ biểu mẫu tới SARIF; thêm sau lượt chạy trên, mã ứng dụng không đổi) | 1 | 0 |
+
+Dòng 9 là kiểm thử mới `frontend/tests/e2e/multi-cwe-v02-full-stack.spec.ts`: chọn profile ba nhóm
+trên biểu mẫu, quét `pygoat@2aa4cc1` bằng công cụ thật, chờ trang tự cập nhật, lọc theo CWE-89, mở
+chi tiết đơn vị, tải báo cáo JSON và SARIF. Kết quả lượt `ad3b3994…`: ba nhóm, 15 kết quả, 8 đơn vị,
+1 đơn vị CWE-89 ở danh sách rà, SARIF đủ 15 kết quả và kết quả CWE-89 không mang `suppressions`. Đầu
+ra: `artifacts/multi-cwe-p2a/e2e-v02/`.
+
+Trong dòng 1 và 2:
+
+- 15 golden của bốn profile cũ không đổi.
+- 8 golden của `multi-cwe-v0.1` sinh từ mã chưa sửa vẫn khớp sau khi sửa
+  (`golden-v0.1-before-change.sha256`: 8/8 file không đổi một byte).
+- 8 golden mới ghim `multi-cwe-v0.2`.
+- Kiểm thử mới: `tests/scanners/test_detection_profile.py` (17), `tests/workflows/scans/
+  test_sql_family.py` (25), và hai kiểm thử giao diện trong `families.test.tsx`.
+- Hai kiểm thử cũ dùng "sql-injection" làm ví dụ về tên **không tồn tại** được đổi sang một tên
+  khác; ý nghĩa của chúng không đổi.
+
+### 20.6 Thời gian quét và giới hạn chạy
+
+Giây của từng bước CodeQL (worker đã chạy các truy vấn ít nhất một lần; mỗi ô một lần đo):
+
+| Bước | BenchmarkPython `v0.1` (trước) | BenchmarkPython `v0.2` | Nguồn tổng hợp `v0.1` (trước) | Nguồn tổng hợp `v0.2` |
+|---|---|---|---|---|
+| Python `codeql-create` | 15,5 | 14,9 | 2,7 | 2,9 |
+| Python `codeql` | 11,2 | 11,1 | 9,4 | 8,7 |
+| Python `codeql-evidence` | 9,8 | 10,1 | 6,6 | 7,3 |
+| Python `codeql-path-traversal` | 8,3 | 8,8 | 5,8 | 5,6 |
+| Python `codeql-sql-injection` | — | 6,4 | — | 5,5 |
+| JS/TS `codeql-create` | 7,3 | 7,4 | 5,4 | 5,4 |
+| JS/TS `codeql` | 8,4 | 8,5 | 7,8 | 7,6 |
+| JS/TS `codeql-sql-injection` | — | 5,1 | — | 5,2 |
+| Mọi bước của lượt quét | 76,9 | 88,3 | 47,3 | 57,9 |
+
+- Hai lượt CWE-89 thêm khoảng 11 giây cho một lượt quét (+15% và +22% trên hai nguồn nhỏ này). Các
+  bước của hai nhóm cũ không đổi quá sai số giữa các lần đo. Trên Juice Shop, kho lớn nhất đã quét:
+  78,0 giây với `v0.1` và 87,6 giây với `v0.2`; lượt CWE-89 của JavaScript/TypeScript mất 9,8 giây
+  trên database tạo trong 17,7 giây.
+- **Lần đầu sau khi dựng lại image** bộ đệm biên dịch truy vấn của CodeQL trống: lượt `v0.2` đầu
+  tiên mất 297 giây cho cùng nguồn, trong đó `codeql-sql-injection` là 21,8 giây (Python) và 53,5
+  giây (JS/TS). Chi phí này có ở mọi profile, không riêng CWE-89.
+- **Có cần chỉnh giới hạn chạy: có, vì phép tính trường hợp xấu nhất, không vì số đo.** Giới hạn mềm
+  của task phải lớn hơn tổng timeout của mọi bước (`task.worst_case_seconds`): `multi-cwe-v0.1` cần
+  8.760 giây, `multi-cwe-v0.2` cần 9.960 giây (thêm hai lượt 600 giây), vượt giới hạn mềm cũ 9.000
+  giây. Đã chỉnh: giới hạn mềm 10.200 giây, giới hạn cứng 11.700 giây, visibility timeout của broker
+  từ 3 lên 4 giờ (14.400 giây). Kiểm thử `test_task_time_limits_…` chạy cho cả sáu profile. Timeout
+  600 giây của lượt CWE-89 bằng timeout của các bước khác của nhóm lệnh; số đo lớn nhất gặp là 53,5
+  giây.
+
+### 20.7 Quyết định kỹ thuật cần chủ đề án biết
+
+- **Mức `U` cho mọi đơn vị CWE-89.** Nhóm chưa có chính sách xếp hạng nào được đo, nên mức `U` ở
+  đây nghĩa là "chưa xếp hạng". Hệ quả: trong hàng đợi, cảnh báo CWE-89 đứng sau P1 và P2 của hai
+  nhóm kia. Mức này được ghim trong manifest của `sql-injection-v0.1`; đổi nó là một phiên bản
+  profile mới.
+- **Visibility timeout của broker tăng lên 4 giờ** cho mọi lượt quét: một task bị mất worker sẽ được
+  giao lại muộn hơn một giờ so với trước.
+- **Phiên bản cách ghép giữ là `family-composition-v0.1`.** Đổi hằng số này sẽ làm đổi phiên bản ghi
+  trong lượt quét và mã của đơn vị giữ ở `multi-cwe-v0.1`.
+- **`sql-injection-v0.1` không chọn được như một profile riêng**: nó cần database do thành viên khác
+  tạo.
+
+### 20.8 Chưa kiểm chứng
+
+- **CI trên GitHub chưa chạy**, và chưa có job CI nào quét profile ghép bằng công cụ thật. Đây là
+  tiêu chí 9 của mục 19.5; chủ đề án đã tách nó khỏi P2a thành một đầu việc CI/CD riêng (2026-11-16),
+  nên nó không còn là điều kiện của P2a nhưng vẫn là việc chưa làm.
+- **Cảnh báo CWE-89 trên mã thật có 13**, trên bốn kho (`pygoat` 1, `vulpy` 3, `NodeGoat` 2,
+  Juice Shop 7); ba trong tám nguồn không có cảnh báo CWE-89 nào. Kho lớn nhất đã quét là Juice Shop
+  (tạo database JavaScript/TypeScript khoảng 20 giây); **chưa có số đo trên kho lớn hơn thế**.
+  BenchmarkPython có 16 ca kiểm thử thuộc loại `sqli` theo cột danh mục của
+  file kết quả mong đợi của nó, nhưng truy vấn chuẩn không báo ca nào, cả trong ứng dụng lẫn khi chạy riêng; nguyên nhân chưa
+  được tìm hiểu và không nhãn nào được dùng để đánh giá.
+- **Cảnh báo của rule không được ghim** chỉ có kiểm thử với công cụ giả lập (mục 20.4).
+- Hai kiểm thử trình duyệt trên stack thật không nằm trong bộ chạy mặc định (bị bỏ qua khi không có
+  `FULL_STACK_URL`); chúng được chạy tay như ở mục 20.5.
+- Nhánh `feat/multi-cwe-p2a` chưa push.
+
+### 20.9 Kết luận
+
+**P2a hoàn tất.** Có kết quả đối chứng thực tế (mục 20.2–20.4) và kiểm thử hồi quy đạt (mục 20.5).
+Chín tiêu chí của mục 19.5 thuộc P2a đều có bằng chứng. Tiêu chí 9 (CI xanh và một job quét profile
+ghép bằng công cụ thật) được chủ đề án tách thành đầu việc CI/CD riêng ngày 2026-11-16 và **chưa
+được làm**. Các giới hạn ở mục 20.8 đi kèm kết luận này.
+
+Bước tiếp theo theo mục 19.4 là P2b (lượt `semgrep-sql-injection`, `bandit-sql-injection`, bộ định vị
+sink SQL); điều kiện gạn cho CWE-89 vẫn nằm ngoài P2.

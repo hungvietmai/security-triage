@@ -349,6 +349,12 @@ trình bày cả hai kịch bản.
      đây không phải số cảnh báo sai đã xác minh. Trên mã thật, một file có cả hai nhóm mới gặp một
      lần (`sgabe/DSVPWA`, `dsvpwa/handlers.py`); ca cảnh báo CWE-22 nằm bên trong một lời gọi CWE-78
      vẫn chỉ có trên nguồn tổng hợp. Xem [plans/multi-cwe.md](plans/multi-cwe.md), mục 17 và 18.
+   - Profile ghép `multi-cwe-v0.2` (15/11, nhánh `feat/multi-cwe-p2a`, kiểm chứng kỹ thuật trên dữ
+     liệu phát triển): thêm nhóm CWE-89 cho Python và JavaScript/TypeScript bằng truy vấn chuẩn của
+     CodeQL, **chỉ phát hiện và giữ**. Không có chính sách xếp hạng, không có điều kiện gạn và
+     **không có số liệu hiệu quả nào** cho CWE-89; không nhãn nào được dùng. Hai nhóm CWE-78 và
+     CWE-22 cho đúng kết quả của `multi-cwe-v0.1`. Xem [plans/multi-cwe.md](plans/multi-cwe.md),
+     mục 20.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
