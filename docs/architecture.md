@@ -114,11 +114,15 @@ Mọi cổng chỉ bind `127.0.0.1`. Ứng dụng dành cho **một người dù
    Báo cáo tách hai loại kết quả đã lưu khỏi số cảnh báo. `evidence_results` là kết quả của
    truy vấn bằng chứng mà profile `path-traversal-v0.2` lưu kèm đơn vị; chúng không phải cảnh
    báo riêng, nên cột "trước" dùng `detection_alerts` (= `raw_alerts` − `evidence_results`).
-   `unranked_alerts` là cảnh báo không nằm trong đơn vị nào, vì lượt chạy dở của một profile
-   đơn không xếp hạng gì: chúng không có trong danh sách rà, nhưng được đếm ở báo cáo và có
-   trong SARIF với `ranked: false`. Mỗi kết quả SARIF mang `resultRole` (`detection`,
-   `evidence_query` hoặc `unknown`). Lượt quét ghép không để cảnh báo nào ở trạng thái chưa xếp
-   hạng: nó tạo đơn vị giữ `F10_FAMILY_NOT_RANKED`.
+   `unranked_alerts` là kết quả đã lưu mà không nằm trong đơn vị nào: chỉ còn ở dữ liệu ghi trước
+   khi cảnh báo chưa xếp hạng được giữ thành đơn vị; chúng được đếm ở báo cáo và có trong SARIF
+   với `ranked: false`. Mỗi kết quả SARIF mang `resultRole` (`detection`, `evidence_query` hoặc
+   `unknown`).
+
+   Không lượt quét mới nào để cảnh báo ngoài đơn vị. Lượt quét ghép giữ cảnh báo của nhóm chưa
+   xếp hạng thành đơn vị `F10_FAMILY_NOT_RANKED`; lượt quét profile đơn làm đúng như vậy qua
+   `families.hold_unranked` khi profile không xếp hạng gì (ví dụ `path-traversal-v0.2` chạy dở):
+   mỗi vị trí được báo là một đơn vị mức U ở danh sách rà, không bao giờ bị gạn.
 
 Lõi quét (`app/scanners`) và lõi thẩm định (`app/triage`) được dùng chung với CLI thực nghiệm
 [run_pilot.py](../experiments/run_pilot.py). Job CI `scan-parity` quét `curling@0.2.0` qua cả

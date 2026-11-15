@@ -333,15 +333,23 @@ def test_scanner_failure_is_final_without_triage(engine, storage, make_scan):
         assert _count(session, LocationUnit) == 0
 
 
-def test_partial_evidence_run_ranks_nothing(engine, storage, make_scan):
-    # Without the evidence query's complete results, a kept alert would look hidden.
+def test_partial_evidence_run_ranks_nothing_and_holds_every_alert(engine, storage, make_scan):
+    # Without the evidence query's complete results, a kept alert would look hidden, so the
+    # profile ranks nothing. Its alerts are held for review: one unit per reported location.
     scan_id = make_scan({"app.py": PATH_SOURCE}, profile="path-traversal-v0.2")
     pipeline = fake_evidence_pipeline("partial")
     assert _execute(engine, storage, scan_id, run_pipeline_fn=pipeline) == "partial"
     with Session(engine) as session:
         assert session.get_one(Scan, scan_id).config["profile_id"] == "path-traversal-v0.2"
         assert _count(session, Finding) == 3
-        assert _count(session, LocationUnit) == 0
+        assert _count(session, UnitFinding) == 3
+        assert _count(session, LocationUnit) == 2
+        assessments = session.scalars(select(UnitAssessment)).all()
+        assert {(a.priority, a.disposition, a.decision_id) for a in assessments} == {
+            ("U", "review", "F10_FAMILY_NOT_RANKED")
+        }
+        # A single-profile scan stores no family on its units; reads derive it from the profile.
+        assert {unit.analysis_family for unit in session.scalars(select(LocationUnit))} == {None}
 
 
 def test_unknown_profile_fails_the_scan(engine, storage, make_scan):

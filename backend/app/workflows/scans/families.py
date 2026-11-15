@@ -270,7 +270,7 @@ def _claim(member: Member, language: str) -> Claim:
 
 def _held_units(
     findings: Sequence[Finding],
-    records: Mapping[str, Classification],
+    records: Mapping[str, Mapping[str, Any]],
     *,
     family: str,
     decision: str,
@@ -340,6 +340,46 @@ def _held_units(
             }
         )
     return HeldUnits(family, units, assessments)
+
+
+def hold_unranked(result: LanguageResult, *, family: str) -> LanguageResult:
+    """A single-profile run whose member ranked nothing: its alerts as units held for review.
+
+    Scanned alone, a safety-evidence profile makes no unit when its run is incomplete, because
+    ranking needs both queries' complete results. Its alerts were then stored without a unit
+    and so never reached the review list. They are held here exactly as a composite scan holds
+    the alerts of a family that ranked nothing: one unit per reported location, priority U,
+    in the review list, never filtered. A run that ranked its alerts, or has none, is
+    returned unchanged.
+    """
+    findings = result.pipeline.findings
+    if not findings or result.units:
+        return result
+    records = {
+        finding["raw_id"]: {
+            "raw_id": finding["raw_id"],
+            "tool": finding["tool"],
+            "rule_id": finding["rule_id"],
+            "message": finding["message"],
+        }
+        for finding in findings
+    }
+    state = "chạy dở" if result.pipeline.status == "partial" else "thất bại"
+    held = _held_units(
+        findings,
+        records,
+        family=family,
+        decision=NOT_RANKED_DECISION,
+        codes=[NOT_RANKED],
+        reason=f"Lượt quét nhóm {family} {state} nên chưa xếp hạng cảnh báo này",
+    )
+    return dataclasses.replace(
+        result,
+        units=held.units,
+        assessments=held.assessments,
+        unit_version=COMPOSITION_VERSION,
+        locator_version=HELD_LOCATOR_VERSION,
+    )
 
 
 def check_conservation(

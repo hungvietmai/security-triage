@@ -41,8 +41,10 @@ from app.workflows.scans.analysis import RunPipeline, scan_language, scan_langua
 from app.workflows.scans.exceptions import INFRA_ERRORS
 from app.workflows.scans.families import (
     COMPOSITION_VERSION,
+    FAMILY_OF_PROFILE,
     AnalyzePass,
     family_summaries,
+    hold_unranked,
     members_of,
     scan_language_families,
     to_language_result,
@@ -244,6 +246,19 @@ def scan_snapshot(
                     run_pipeline_fn=run_pipeline_fn,
                     invoke_fn=invoke_fn,
                 )
+            family = FAMILY_OF_PROFILE.get(profile.profile_id)
+            if not isinstance(profile, CompositeProfile) and family is not None:
+                ranked = language_result
+                # Alerts the profile did not rank must still reach the review list.
+                language_result = hold_unranked(ranked, family=family)
+                if language_result is not ranked:
+                    for name, rows in (
+                        ("units.json", language_result.units),
+                        ("assessments.json", language_result.assessments),
+                    ):
+                        (output / name).write_text(
+                            json.dumps(rows, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+                        )
             results.append(language_result)
             artifacts.update(
                 _upload(

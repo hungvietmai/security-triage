@@ -16,6 +16,7 @@ from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.scanners.sources import github_coordinate, npm_coordinate
 from app.workflows.scans.exceptions import UnitNotFound
 from app.workflows.scans.families import (
+    COMPOSITION_VERSION,
     FAMILIES,
     FAMILY_OF_PROFILE,
     NOT_RANKED,
@@ -115,14 +116,16 @@ def result_filters(scan: Scan) -> list[ColumnElement[bool]]:
     """Units and assessments of exactly the versions this scan was written with.
 
     A composite scan's units carry their own family's versions, so they are selected by scan
-    alone: persistence replaces all of a scan's units in one transaction.
+    alone: persistence replaces all of a scan's units in one transaction. A single-profile
+    scan may also hold units the composition made for alerts its profile did not rank
+    (`families.hold_unranked`); they carry the composition's version.
     """
     if is_composite(scan):
         return [LocationUnit.scan_id == scan.id]
     return [
         LocationUnit.scan_id == scan.id,
-        LocationUnit.reconciler_version == scan.reconciler_version,
-        UnitAssessment.policy_version == scan.policy_version,
+        LocationUnit.reconciler_version.in_((scan.reconciler_version, COMPOSITION_VERSION)),
+        UnitAssessment.policy_version.in_((scan.policy_version, COMPOSITION_VERSION)),
     ]
 
 

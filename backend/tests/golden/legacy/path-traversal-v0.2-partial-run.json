@@ -1,5 +1,40 @@
 {
-  "assessment_rows": [],
+  "assessment_rows": [
+    {
+      "decision_id": "F10_FAMILY_NOT_RANKED",
+      "disposition": "review",
+      "matched_conditions": [
+        "family_not_ranked",
+        "family_not_ranked"
+      ],
+      "policy_id": "family-composition",
+      "policy_sha256": "",
+      "policy_version": "family-composition-v0.1",
+      "priority": "U",
+      "reason": "Lượt quét nhóm path-traversal chạy dở nên chưa xếp hạng cảnh báo này. Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng.",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "spec_sha256": "",
+      "unit_key": "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc"
+    },
+    {
+      "decision_id": "F10_FAMILY_NOT_RANKED",
+      "disposition": "review",
+      "matched_conditions": [
+        "family_not_ranked",
+        "family_not_ranked"
+      ],
+      "policy_id": "family-composition",
+      "policy_sha256": "",
+      "policy_version": "family-composition-v0.1",
+      "priority": "U",
+      "reason": "Lượt quét nhóm path-traversal chạy dở nên chưa xếp hạng cảnh báo này. Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng.",
+      "rule_claims_sha256": "",
+      "rule_claims_version": "not-applicable",
+      "spec_sha256": "",
+      "unit_key": "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa"
+    }
+  ],
   "finding_rows": [
     {
       "cwe_ids": [
@@ -7,7 +42,7 @@
       ],
       "file_path": "app.py",
       "language": "python",
-      "mapping_version": "safety-evidence-units-v1",
+      "mapping_version": "family-composition-v0.1",
       "raw_id": "codeql:0:0",
       "raw_rule_id": "st/cwe-22/none",
       "region": [
@@ -25,7 +60,7 @@
       ],
       "file_path": "app.py",
       "language": "python",
-      "mapping_version": "safety-evidence-units-v1",
+      "mapping_version": "family-composition-v0.1",
       "raw_id": "codeql:0:1",
       "raw_rule_id": "st/cwe-22/none",
       "region": [
@@ -43,7 +78,7 @@
       ],
       "file_path": "app.py",
       "language": "python",
-      "mapping_version": "safety-evidence-units-v1",
+      "mapping_version": "family-composition-v0.1",
       "raw_id": "codeql:0:2",
       "raw_rule_id": "st/cwe-22/all",
       "region": [
@@ -58,7 +93,130 @@
   ],
   "languages": {
     "python": {
-      "assessments": [],
+      "assessments": [
+        {
+          "adjudication": {
+            "evidence": [],
+            "kept_because": [
+              "family_not_ranked"
+            ],
+            "reason": "Lượt quét nhóm path-traversal chạy dở nên chưa xếp hạng cảnh báo này. Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng.",
+            "rule": null,
+            "rules": [],
+            "status": "kept",
+            "version": "family-composition-v0.1"
+          },
+          "analysis_family": "path-traversal",
+          "candidate": {
+            "basis": "unmatched_location",
+            "key": "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa",
+            "priority": "U",
+            "tools": [
+              "codeql"
+            ],
+            "unit_ids": [
+              "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa"
+            ]
+          },
+          "decision_id": "F10_FAMILY_NOT_RANKED",
+          "disposition": "review",
+          "finding_evidence": [
+            {
+              "message": "flow from source",
+              "raw_id": "codeql:0:0",
+              "rule_id": "st/cwe-22/none",
+              "tool": "codeql"
+            },
+            {
+              "message": "flow from source",
+              "raw_id": "codeql:0:2",
+              "rule_id": "st/cwe-22/all",
+              "tool": "codeql"
+            }
+          ],
+          "matched_conditions": [
+            "family_not_ranked",
+            "family_not_ranked"
+          ],
+          "policy_id": "family-composition",
+          "policy_sha256": "",
+          "policy_version": "family-composition-v0.1",
+          "predicate_values": {
+            "held_by_composition": true
+          },
+          "priority": "U",
+          "reason": "Lượt quét nhóm path-traversal chạy dở nên chưa xếp hạng cảnh báo này. Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng.",
+          "reconciler_version": "family-composition-v0.1",
+          "rule_claims_sha256": "",
+          "rule_claims_version": "not-applicable",
+          "spec_sha256": "",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa",
+          "unknown_fields": [
+            "assessment"
+          ]
+        },
+        {
+          "adjudication": {
+            "evidence": [],
+            "kept_because": [
+              "family_not_ranked"
+            ],
+            "reason": "Lượt quét nhóm path-traversal chạy dở nên chưa xếp hạng cảnh báo này. Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng.",
+            "rule": null,
+            "rules": [],
+            "status": "kept",
+            "version": "family-composition-v0.1"
+          },
+          "analysis_family": "path-traversal",
+          "candidate": {
+            "basis": "unmatched_location",
+            "key": "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc",
+            "priority": "U",
+            "tools": [
+              "codeql"
+            ],
+            "unit_ids": [
+              "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc"
+            ]
+          },
+          "decision_id": "F10_FAMILY_NOT_RANKED",
+          "disposition": "review",
+          "finding_evidence": [
+            {
+              "message": "flow from source",
+              "raw_id": "codeql:0:1",
+              "rule_id": "st/cwe-22/none",
+              "tool": "codeql"
+            }
+          ],
+          "matched_conditions": [
+            "family_not_ranked",
+            "family_not_ranked"
+          ],
+          "policy_id": "family-composition",
+          "policy_sha256": "",
+          "policy_version": "family-composition-v0.1",
+          "predicate_values": {
+            "held_by_composition": true
+          },
+          "priority": "U",
+          "reason": "Lượt quét nhóm path-traversal chạy dở nên chưa xếp hạng cảnh báo này. Cảnh báo được giữ nguyên nhãn, ở mức U, và không quy tắc gạn nào được áp dụng.",
+          "reconciler_version": "family-composition-v0.1",
+          "rule_claims_sha256": "",
+          "rule_claims_version": "not-applicable",
+          "spec_sha256": "",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc",
+          "unknown_fields": [
+            "assessment"
+          ]
+        }
+      ],
       "findings": [
         {
           "mapping_status": "unresolved",
@@ -136,7 +294,75 @@
           "codeql": "partial"
         }
       },
-      "units": []
+      "units": [
+        {
+          "argument_role": null,
+          "callee": null,
+          "mapping_status": "unmapped",
+          "mappings": [
+            {
+              "mapping_method": null,
+              "mapping_status": "unmapped",
+              "raw_id": "codeql:0:0",
+              "tool": "codeql"
+            },
+            {
+              "mapping_method": null,
+              "mapping_status": "unmapped",
+              "raw_id": "codeql:0:2",
+              "tool": "codeql"
+            }
+          ],
+          "path": "app.py",
+          "raw_finding_ids": [
+            "codeql:0:0",
+            "codeql:0:2"
+          ],
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 2,
+            "startColumn": 6,
+            "startLine": 2
+          },
+          "sink_kind": null,
+          "sink_span": null,
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa"
+        },
+        {
+          "argument_role": null,
+          "callee": null,
+          "mapping_status": "unmapped",
+          "mappings": [
+            {
+              "mapping_method": null,
+              "mapping_status": "unmapped",
+              "raw_id": "codeql:0:1",
+              "tool": "codeql"
+            }
+          ],
+          "path": "app.py",
+          "raw_finding_ids": [
+            "codeql:0:1"
+          ],
+          "reported_region": {
+            "endColumn": 24,
+            "endLine": 3,
+            "startColumn": 6,
+            "startLine": 3
+          },
+          "sink_kind": null,
+          "sink_span": null,
+          "snapshot_sha256": "27fa49c253a1ba67350982ecb80346ef2289f27794ef2dd30b4a0589c3f1abdc",
+          "tools": [
+            "codeql"
+          ],
+          "unit_id": "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc"
+        }
+      ]
     }
   },
   "scan": {
@@ -154,6 +380,55 @@
       "2.27.1"
     ]
   ],
-  "unit_finding_rows": [],
-  "unit_rows": []
+  "unit_finding_rows": [
+    [
+      "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc",
+      "codeql:0:1",
+      null
+    ],
+    [
+      "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa",
+      "codeql:0:0",
+      null
+    ],
+    [
+      "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa",
+      "codeql:0:2",
+      null
+    ]
+  ],
+  "unit_rows": [
+    {
+      "argument_role": null,
+      "candidate_key": "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc",
+      "locator_version": "reported-location",
+      "mapping_status": "unmapped",
+      "path": "app.py",
+      "reconciler_version": "family-composition-v0.1",
+      "region": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "sink_kind": null,
+      "unit_key": "70955aa3780e874c6f1b23a1133a7e3338ae55f88b98d462dc2fc470824128cc"
+    },
+    {
+      "argument_role": null,
+      "candidate_key": "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa",
+      "locator_version": "reported-location",
+      "mapping_status": "unmapped",
+      "path": "app.py",
+      "reconciler_version": "family-composition-v0.1",
+      "region": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "sink_kind": null,
+      "unit_key": "e8127087a119036c26bc077f070aecc1b02d490e1cbefff6bc9a611f58b174aa"
+    }
+  ]
 }

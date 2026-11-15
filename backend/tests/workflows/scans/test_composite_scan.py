@@ -93,6 +93,12 @@ def _single(engine: Engine, files: dict[str, str], profile: str, pipeline: Any) 
     return scan_id
 
 
+def _detail(client: TestClient, scan_id: str, unit: dict[str, Any]) -> dict[str, Any]:
+    response = client.get(f"/api/v1/scans/{scan_id}/units/{unit['id']}")
+    assert response.status_code == 200, response.text
+    return dict(response.json())
+
+
 def _units(client: TestClient, scan_id: str, **params: Any) -> list[dict[str, Any]]:
     response = client.get(f"/api/v1/scans/{scan_id}/units", params={"limit": 100, **params})
     assert response.status_code == 200, response.text
@@ -443,9 +449,70 @@ def test_the_report_and_the_sarif_export_keep_every_alert_of_both_families(clien
     )
 
 
-def test_alerts_of_an_incomplete_single_profile_run_are_counted_and_exported(client, engine):
-    # path-traversal-v0.2 alone ranks nothing when its run is partial (as before): no unit is
-    # made. The alerts must still be visible in the report and present in the SARIF export.
+def test_an_incomplete_single_profile_run_holds_its_alerts_for_review(client, engine):
+    # path-traversal-v0.2 alone ranks nothing when its run is partial. Its alerts are held as
+    # units at priority U, as a composite scan holds them, so they reach the review list.
+    scan_id = _single(engine, {"app.py": PATH_SOURCE}, PATH, fake_evidence_pipeline("partial"))
+    scan = client.get(f"/api/v1/scans/{scan_id}").json()
+    assert scan["status"] == "partial"
+    assert scan["unit_counts"] == {"P1": 0, "P2": 0, "U": 2, "P3": 0, "P4": 0}
+    assert scan["disposition_counts"] == {"review": 2, "filtered": 0}
+    (family,) = scan["families"]
+    assert (family["family"], family["units"], family["held"]) == ("path-traversal", 2, 2)
+
+    units = _units(client, scan_id)
+    # A held unit has no located call; its place is the place its alerts were reported at.
+    assert [(unit["path"], unit["start_line"]) for unit in units] == [("app.py", None)] * 2
+    lines = [
+        {finding["start_line"] for finding in _detail(client, scan_id, unit)["findings"]}
+        for unit in units
+    ]
+    assert sorted(lines, key=min) == [{2}, {3}]
+    for unit in units:
+        assert (unit["priority"], unit["disposition"]) == ("U", "review")
+        assert unit["decision_id"] == families.NOT_RANKED_DECISION
+        assert (unit["analysis_family"], unit["cwe"]) == ("path-traversal", "CWE-22")
+        assert (unit["evidence_state"], unit["kept_because"]) == (
+            "unavailable",
+            [families.NOT_RANKED],
+        )
+        assert "chạy dở" in unit["reason"]
+    details = [_detail(client, scan_id, unit) for unit in units]
+    assert sorted(len(detail["findings"]) for detail in details) == [1, 2]
+    assert {detail["reconciler_version"] for detail in details} == {COMPOSITION_VERSION}
+
+    report = client.get(f"/api/v1/scans/{scan_id}/report").json()
+    stages = report["stages"]
+    assert (stages["raw_alerts"], stages["unranked_alerts"], stages["units"]) == (3, 0, 2)
+    assert (stages["main_list"], stages["filtered"]) == (2, 0)
+    sarif = client.get(f"/api/v1/scans/{scan_id}/report.sarif").json()
+    results = [result for run in sarif["runs"] for result in run["results"]]
+    assert len(results) == 3
+    for result in results:
+        triage = result["properties"]["securityTriage"]
+        assert (triage["ranked"], triage["priority"], triage["disposition"]) == (
+            True,
+            "U",
+            "review",
+        )
+        # The profile ranked nothing, so no one recorded which query a result came from.
+        assert triage["resultRole"] == "unknown"
+        assert "suppressions" not in result
+
+
+def test_a_completed_single_profile_run_is_not_held(client, engine):
+    scan_id = _single(engine, {"app.py": PATH_SOURCE}, PATH, fake_evidence_pipeline())
+    units = _units(client, scan_id)
+    assert sorted(unit["decision_id"] for unit in units) == [
+        "EV_HIDDEN_BY_EVIDENCE",
+        "EV_KEPT_NO_PROOF",
+    ]
+
+
+def test_stored_alerts_without_a_unit_are_counted_and_exported(client, engine, monkeypatch):
+    # Rows as they were written before unranked alerts were held: findings in no unit. The
+    # report must still count them and the SARIF export must still carry them.
+    monkeypatch.setattr(scan_task, "hold_unranked", lambda result, **_: result)
     scan_id = _single(engine, {"app.py": PATH_SOURCE}, PATH, fake_evidence_pipeline("partial"))
     assert client.get(f"/api/v1/scans/{scan_id}").json()["status"] == "partial"
     assert _units(client, scan_id) == []

@@ -103,7 +103,10 @@ before anything is merged, and each family is assessed by its member profile's e
 entry point (`scan_language` or `scan_language_evidence`). A finding whose family cannot be
 named stays unassigned at priority U, and findings a family could not rank are held as
 units at priority U (`F10_FAMILY_NOT_RANKED`), so every finding of a composite scan sits in
-exactly one unit. A new family filters nothing until its own evidence has been evaluated.
+exactly one unit. A single-profile scan whose profile ranked nothing (a partial
+`path-traversal-v0.2` run) holds its alerts the same way through `families.hold_unranked`,
+called from `task.scan_snapshot`; never leave a stored finding without a unit. A new family
+filters nothing until its own evidence has been evaluated.
 
 A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`) pins its members'
 manifests; `scanners/profile.py` loads it, `families.members_of` checks that it names
