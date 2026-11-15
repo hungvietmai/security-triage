@@ -127,6 +127,8 @@ export async function installBrowserApi(page: Page, { failed = false } = {}) {
         },
         main_list_by_priority: { P1: 1, P2: 1, U: 0, P3: 0, P4: 0 },
         filtered_by_rule: {},
+        families: [],
+        composition: null,
         candidates: [],
       } satisfies Schemas["ScanReport"]);
     const unit = units.find(

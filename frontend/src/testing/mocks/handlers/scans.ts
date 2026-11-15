@@ -43,13 +43,15 @@ export const scansHandlers = [
     const tier = search.get("tier");
     const tool = search.get("tool");
     const disposition = search.get("disposition");
+    const family = search.get("family");
     const limit = Number(search.get("limit") ?? 20);
     const offset = Number(search.get("offset") ?? 0);
     const units = (db.units[String(params.scanId)] ?? []).filter(
       (unit) =>
         (!tier || unit.priority === tier) &&
         (!tool || unit.tools.includes(tool)) &&
-        (!disposition || unit.disposition === disposition),
+        (!disposition || unit.disposition === disposition) &&
+        (!family || unit.analysis_family === family),
     );
     const page: Schemas["UnitPage"] = {
       items: units.slice(offset, offset + limit),
@@ -105,6 +107,26 @@ export const scansHandlers = [
       filtered_by_rule: Object.fromEntries(
         filtered.map((unit) => [unit.filter_rule ?? "unspecified", 1]),
       ),
+      families: scan.families.map((family) => {
+        const mine = units.filter(
+          (unit) => unit.analysis_family === family.family,
+        );
+        const gone = mine.filter((unit) => unit.disposition === "filtered");
+        return {
+          family: family.family,
+          cwe: family.cwe,
+          label: family.label,
+          raw_alerts: mine.length,
+          units: mine.length,
+          candidates: mine.length,
+          main_list: mine.length - gone.length,
+          filtered: gone.length,
+          main_list_by_priority: { P1: 0, P2: 0, U: 0, P3: 0, P4: 0 },
+          filtered_by_rule: {},
+          evidence_states: {},
+        };
+      }),
+      composition: null,
       candidates: [],
     };
     return HttpResponse.json(report);

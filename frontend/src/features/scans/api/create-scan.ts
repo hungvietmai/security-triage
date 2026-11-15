@@ -52,6 +52,7 @@ export const createScanInputSchema = z.object({
     "command-injection-v0.2",
     "command-injection-v0.3",
     "path-traversal-v0.2",
+    "multi-cwe-v0.1",
   ]),
 }) satisfies z.ZodType<ScanCreate>;
 
@@ -78,6 +79,11 @@ export const SCAN_PROFILES: Record<
     label: "CWE-22 · Path traversal (bằng chứng an toàn)",
     description:
       "CodeQL cho Python. Cảnh báo có bằng chứng an toàn được xếp cuối hàng đợi, không bị xóa.",
+  },
+  "multi-cwe-v0.1": {
+    label: "CWE-78 + CWE-22 · Đa CWE trong một lượt quét",
+    description:
+      "Quét command-injection-v0.3 và path-traversal-v0.2 trong cùng một lượt, dùng chung một database CodeQL. Mỗi cảnh báo thuộc đúng một nhóm CWE và được thẩm định bằng profile của nhóm đó; CWE-22 chỉ có trên Python.",
   },
 };
 

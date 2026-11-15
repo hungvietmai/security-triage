@@ -3,6 +3,9 @@
 "Before" is everything the detection tools reported. "After" is the main review list: the
 candidates left once alerts of one call are merged and the candidates a tool proved false are
 filtered. Filtered candidates stay in the report with the rule that removed them.
+
+A scan with several analysis families reports the same counts per family as well; a candidate
+belongs to exactly one family.
 """
 
 from typing import Any
@@ -14,12 +17,22 @@ from app.features.findings.models import Finding
 from app.features.scans.models import Scan, ToolRun
 from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
+from app.workflows.scans import service
+from app.workflows.scans.families import FAMILIES, UNASSIGNED
 from app.workflows.scans.schemas import TIERS
 
 SARIF_SCHEMA = "https://json.schemastore.org/sarif-2.1.0.json"
 _TIER_ORDER: dict[str, int] = {tier: index for index, tier in enumerate(TIERS)}
 # Candidates the policy ranks below the tiers a reviewer reads first; still in the main list.
 _DEMOTED = {"P3", "P4"}
+_EVIDENCE_STATES = (
+    "refuted",
+    "not_refuted",
+    "insufficient",
+    "unavailable",
+    "not_applicable",
+    "not_assessed",
+)
 
 
 def _rows(session: Session, scan: Scan) -> list[tuple[LocationUnit, UnitAssessment]]:
@@ -28,27 +41,29 @@ def _rows(session: Session, scan: Scan) -> list[tuple[LocationUnit, UnitAssessme
         for unit, assessment in session.execute(
             select(LocationUnit, UnitAssessment)
             .join(UnitAssessment, UnitAssessment.unit_id == LocationUnit.id)
-            .where(
-                LocationUnit.scan_id == scan.id,
-                LocationUnit.reconciler_version == scan.reconciler_version,
-                UnitAssessment.policy_version == scan.policy_version,
-            )
+            .where(*service.result_filters(scan))
             .order_by(LocationUnit.path, LocationUnit.start_line, LocationUnit.unit_key)
         )
     ]
 
 
 def _candidates(
-    rows: list[tuple[LocationUnit, UnitAssessment]], alerts: dict[Any, int]
+    scan: Scan, rows: list[tuple[LocationUnit, UnitAssessment]], alerts: dict[Any, int]
 ) -> list[dict[str, Any]]:
     """One record per candidate; units written before candidates existed stand alone."""
+    single = service.scan_family(scan)
     grouped: dict[str, list[tuple[LocationUnit, UnitAssessment]]] = {}
     for unit, assessment in rows:
         grouped.setdefault(unit.candidate_key or unit.unit_key, []).append((unit, assessment))
     candidates = []
     for key, members in grouped.items():
         first_unit, first = members[0]
-        adjudication = first.evidence.get("adjudication") or {}
+        adjudication = first.evidence.get("adjudication")
+        family = first_unit.analysis_family or single
+        # Units of one candidate are decided together; "filtered" needs every one.
+        disposition = (
+            "filtered" if all(a.disposition == "filtered" for _, a in members) else "review"
+        )
         candidates.append(
             {
                 "candidate_key": key,
@@ -58,17 +73,19 @@ def _candidates(
                 "sink_kind": first_unit.sink_kind,
                 "tools": sorted({tool for _, a in members for tool in a.evidence.get("tools", [])}),
                 "priority": min((a.priority for _, a in members), key=_TIER_ORDER.__getitem__),
-                # Units of one candidate are decided together; "filtered" needs every one.
-                "disposition": "filtered"
-                if all(a.disposition == "filtered" for _, a in members)
-                else "review",
-                "filter_rule": adjudication.get("rule"),
+                "disposition": disposition,
+                "filter_rule": (adjudication or {}).get("rule"),
                 # Every rule whose evidence was complete, not only the first.
-                "filter_rules": adjudication.get("rules")
-                or ([adjudication["rule"]] if adjudication.get("rule") else []),
-                "reason": adjudication.get("reason") or first.reason,
+                "filter_rules": (adjudication or {}).get("rules")
+                or [rule for rule in [(adjudication or {}).get("rule")] if rule],
+                "reason": (adjudication or {}).get("reason") or first.reason,
                 "unit_ids": [unit.id for unit, _ in members],
                 "raw_alerts": sum(alerts.get(unit.id, 0) for unit, _ in members),
+                "analysis_family": family,
+                "cwe": service.family_cwe(family),
+                "evidence_state": service.evidence_state(
+                    disposition, first.decision_id, adjudication
+                ),
             }
         )
     candidates.sort(
@@ -81,6 +98,55 @@ def _candidates(
         )
     )
     return candidates
+
+
+def _by_rule(filtered: list[dict[str, Any]]) -> dict[str, int]:
+    """A candidate is counted under every rule that filtered it, so the sum can exceed them."""
+    by_rule: dict[str, int] = {}
+    for candidate in filtered:
+        for rule in candidate["filter_rules"] or ["unspecified"]:
+            by_rule[rule] = by_rule.get(rule, 0) + 1
+    return by_rule
+
+
+def _family_reports(
+    candidates: list[dict[str, Any]], rows: list[tuple[LocationUnit, UnitAssessment]], scan: Scan
+) -> list[dict[str, Any]]:
+    single = service.scan_family(scan)
+    units: dict[str, int] = {}
+    for unit, _ in rows:
+        family = unit.analysis_family or single
+        if family is not None:
+            units[family] = units.get(family, 0) + 1
+    reports = []
+    for name in (*FAMILIES, UNASSIGNED):
+        mine = [c for c in candidates if c["analysis_family"] == name]
+        if not mine:
+            continue
+        main = [c for c in mine if c["disposition"] == "review"]
+        filtered = [c for c in mine if c["disposition"] == "filtered"]
+        reports.append(
+            {
+                "family": name,
+                "cwe": service.family_cwe(name),
+                "label": FAMILIES[name].label if name in FAMILIES else "Chưa xác định nhóm",
+                "raw_alerts": sum(c["raw_alerts"] for c in mine),
+                "units": units.get(name, 0),
+                "candidates": len(mine),
+                "main_list": len(main),
+                "filtered": len(filtered),
+                "main_list_by_priority": {
+                    tier: sum(c["priority"] == tier for c in main) for tier in TIERS
+                },
+                "filtered_by_rule": _by_rule(filtered),
+                "evidence_states": {
+                    state: count
+                    for state in _EVIDENCE_STATES
+                    if (count := sum(c["evidence_state"] == state for c in mine))
+                },
+            }
+        )
+    return reports
 
 
 def build_report(session: Session, scan: Scan) -> dict[str, Any]:
@@ -105,16 +171,10 @@ def build_report(session: Session, scan: Scan) -> dict[str, Any]:
             .group_by(ToolRun.tool)
         )
     }
-    candidates = _candidates(rows, alerts)
+    candidates = _candidates(scan, rows, alerts)
     main = [c for c in candidates if c["disposition"] == "review"]
     filtered = [c for c in candidates if c["disposition"] == "filtered"]
     tools = sorted({tool for c in candidates for tool in c["tools"]})
-    # A candidate is counted under every rule that filtered it, so the sum can exceed
-    # the number of filtered candidates.
-    by_rule: dict[str, int] = {}
-    for candidate in filtered:
-        for rule in candidate["filter_rules"] or ["unspecified"]:
-            by_rule[rule] = by_rule.get(rule, 0) + 1
     return {
         "scan_id": scan.id,
         "status": scan.status,
@@ -147,18 +207,23 @@ def build_report(session: Session, scan: Scan) -> dict[str, Any]:
             for tool in tools
         },
         "main_list_by_priority": {tier: sum(c["priority"] == tier for c in main) for tier in TIERS},
-        "filtered_by_rule": by_rule,
+        "filtered_by_rule": _by_rule(filtered),
+        "families": _family_reports(candidates, rows, scan),
+        "composition": scan.config.get("composition"),
         "candidates": candidates,
     }
 
 
 def build_sarif(session: Session, scan: Scan) -> dict[str, Any]:
-    """Every original alert, one run per tool, annotated with its candidate and disposition.
+    """Every original alert, one run per tool pass, annotated with its candidate and disposition.
 
     A filtered candidate's alerts carry a SARIF suppression with the filter reason, so a SARIF
-    viewer hides them by default without losing them.
+    viewer hides them by default without losing them. An alert also carries its analysis
+    family and, when the scan classified it, the CWEs of its pinned rule next to the CWEs the
+    tool itself reported.
     """
     by_unit = {unit.id: (unit, assessment) for unit, assessment in _rows(session, scan)}
+    single = service.scan_family(scan)
     found = session.execute(
         select(Finding, ToolRun, UnitFinding.unit_id)
         .join(ToolRun, ToolRun.id == Finding.tool_run_id)
@@ -190,24 +255,37 @@ def build_sarif(session: Session, scan: Scan) -> dict[str, Any]:
             # Paths relative to the source root, also for tools that report absolute URIs.
             location = {"artifactLocation": {"uri": finding.file_path}, "region": region}
             result["locations"] = [{"physicalLocation": location}]
-        adjudication = assessment.evidence.get("adjudication") or {}
+        adjudication = assessment.evidence.get("adjudication")
+        family = unit.analysis_family or single
+        triage: dict[str, Any] = {
+            "candidateKey": unit.candidate_key or unit.unit_key,
+            "unitKey": unit.unit_key,
+            "priority": assessment.priority,
+            "decisionId": assessment.decision_id,
+            "disposition": assessment.disposition,
+            "filterRule": (adjudication or {}).get("rule"),
+            "analysisFamily": family,
+            "cwe": service.family_cwe(family),
+            "evidenceState": service.evidence_state(
+                assessment.disposition, assessment.decision_id, adjudication
+            ),
+            "reportedCwes": finding.cwe_ids,
+        }
+        classification = finding.evidence.get("classification")
+        if classification is not None:
+            triage["mappedCwes"] = classification["mapped_cwes"]
+            triage["familyStatus"] = classification["family_status"]
+            triage["familyBasis"] = classification["family_basis"]
         result["properties"] = {
             **(raw.get("properties") if isinstance(raw.get("properties"), dict) else {}),
-            "securityTriage": {
-                "candidateKey": unit.candidate_key or unit.unit_key,
-                "unitKey": unit.unit_key,
-                "priority": assessment.priority,
-                "decisionId": assessment.decision_id,
-                "disposition": assessment.disposition,
-                "filterRule": adjudication.get("rule"),
-            },
+            "securityTriage": triage,
         }
         if assessment.disposition == "filtered":
             result["suppressions"] = [
                 {
                     "kind": "external",
                     "status": "accepted",
-                    "justification": adjudication.get("reason") or assessment.reason,
+                    "justification": (adjudication or {}).get("reason") or assessment.reason,
                 }
             ]
         entry = runs.setdefault(

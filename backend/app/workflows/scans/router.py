@@ -12,6 +12,7 @@ from app.workflows.scans import report, service
 from app.workflows.scans.dependencies import ScanDep
 from app.workflows.scans.schemas import (
     Disposition,
+    FamilyName,
     SarifLog,
     ScanAccepted,
     ScanCreate,
@@ -57,13 +58,15 @@ def list_units(
     tier: Tier | None = None,
     tool: Tool | None = None,
     disposition: Disposition | None = None,
+    family: FamilyName | None = None,
 ) -> UnitPage:
     """Location units in queue order (P1, P2, U, P3, P4, then unit_key).
 
     `disposition=review` is the main review list; `filtered` lists what evidence removed.
+    `family` selects one analysis family (one CWE) of the scan.
     """
     units = service.list_units(
-        session, scan, page=page, tier=tier, tool=tool, disposition=disposition
+        session, scan, page=page, tier=tier, tool=tool, disposition=disposition, family=family
     )
     return UnitPage.from_result(units)
 

@@ -15,6 +15,19 @@ TIERS: tuple[Tier, ...] = ("P1", "P2", "U", "P3", "P4")  # queue order, for disp
 Tool = Literal["semgrep", "bandit", "eslint", "codeql"]
 # "filtered": a tool proved the candidate false; it left the main review list, kept on file.
 Disposition = Literal["review", "filtered"]
+# An analysis family of a scan; "unassigned" holds findings whose family could not be named.
+FamilyName = Literal["command-injection", "path-traversal", "unassigned"]
+# What the evidence says about a unit. This is not the scan's status and not the filter
+# decision (`disposition`): only "refuted" ever leads to "filtered".
+#   refuted         a tool's evidence shows the alerts are false;
+#   not_refuted     evidence was examined and does not refute the alerts, or contradicts it;
+#   insufficient    no evidence, or evidence without the confirmation a filter rule needs;
+#   unavailable     the run or an evidence step was incomplete, so nothing could be checked;
+#   not_applicable  the unit has no analysis family, so no filter condition applies;
+#   not_assessed    a scan written before filtering existed.
+EvidenceState = Literal[
+    "refuted", "not_refuted", "insufficient", "unavailable", "not_applicable", "not_assessed"
+]
 
 
 class NpmSource(InputSchema):
@@ -47,6 +60,7 @@ class ScanCreate(InputSchema):
         "command-injection-v0.2",
         "command-injection-v0.3",
         "path-traversal-v0.2",
+        "multi-cwe-v0.1",
     ] = Field(
         default="command-injection-v0.1",
         description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
@@ -55,7 +69,9 @@ class ScanCreate(InputSchema):
         "screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the "
         "JavaScript sink locator v1, a Semgrep target selection the scanned source cannot "
         "change, and a constant-command filter rule for JavaScript/TypeScript. "
-        "path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
+        "path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: "
+        "command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; "
+        "each alert is routed to one analysis family and assessed by that member profile.",
     )
 
 
@@ -84,6 +100,36 @@ class ToolRunRead(ReadSchema):
     error_message: str | None
 
 
+class FamilyRun(BaseModel):
+    """What one family did in one language of a composite scan."""
+
+    language: str
+    status: str = Field(description="State of the family's own run: completed, partial, failed")
+    error: str | None
+    raw_findings: int
+    evidence_steps: dict[str, str] = Field(
+        description="State of each step whose results are this family's evidence"
+    )
+
+
+class FamilyRead(BaseModel):
+    """One analysis family of a scan: who assessed it and how its units are disposed."""
+
+    family: FamilyName
+    cwe: str | None = Field(description="The family's CWE; none for unassigned findings")
+    label: str
+    profile_id: str | None = Field(description="The pinned member profile that assessed it")
+    profile_sha256: str | None
+    runs: list[FamilyRun] = Field(description="Per language; empty for a single-profile scan")
+    units: int
+    review: int
+    filtered: int
+    held: int = Field(
+        description="Units kept for review because no family could be named or the family "
+        "ranked nothing"
+    )
+
+
 class ScanRead(BaseModel):
     id: uuid.UUID
     project_id: uuid.UUID
@@ -100,6 +146,9 @@ class ScanRead(BaseModel):
     unit_counts: dict[Tier, int]
     disposition_counts: dict[Disposition, int] = Field(
         description="Units in the main review list and units filtered on evidence"
+    )
+    families: list[FamilyRead] = Field(
+        description="Analysis families of the scan; one for a single-profile scan"
     )
 
 
@@ -121,6 +170,13 @@ class UnitSummary(BaseModel):
     disposition: Disposition
     candidate_key: str | None = Field(description="Shared by units of the same call")
     filter_rule: str | None = Field(description="Rule that filtered the candidate, if any")
+    analysis_family: FamilyName | None = Field(
+        description="The family that assessed the unit; follows from the profile for a "
+        "single-profile scan"
+    )
+    cwe: str | None = Field(description="The family's CWE")
+    evidence_state: EvidenceState
+    kept_because: list[str] = Field(description="Why the unit stays in the review list")
 
 
 class UnitPage(Page[UnitSummary]):
@@ -140,7 +196,15 @@ class FindingRead(BaseModel):
     start_column: int | None
     end_column: int | None
     message: str
-    cwe_ids: list[str]
+    cwe_ids: list[str] = Field(description="CWEs the tool reported, exactly as it wrote them")
+    mapped_cwes: list[str] | None = Field(
+        description="CWEs of the pinned rule definition; null when the scan did not classify"
+    )
+    analysis_family: str | None
+    family_status: str | None = Field(description="resolved or unresolved")
+    family_basis: str | None = Field(description="pass_provenance or pinned_rule_set")
+    unresolved_reason: str | None
+    tool_pass: str | None = Field(description="The tool pass that produced the finding")
     raw_result: dict[str, Any]
 
 
@@ -182,6 +246,25 @@ class ReportCandidate(BaseModel):
     reason: str
     unit_ids: list[uuid.UUID]
     raw_alerts: int
+    analysis_family: FamilyName | None
+    cwe: str | None
+    evidence_state: EvidenceState
+
+
+class ReportFamily(BaseModel):
+    """The before/after counts of one analysis family."""
+
+    family: FamilyName
+    cwe: str | None
+    label: str
+    raw_alerts: int
+    units: int
+    candidates: int
+    main_list: int
+    filtered: int
+    main_list_by_priority: dict[Tier, int]
+    filtered_by_rule: dict[str, int]
+    evidence_states: dict[EvidenceState, int] = Field(description="Candidates per state")
 
 
 class ReportStages(BaseModel):
@@ -220,6 +303,10 @@ class ScanReport(BaseModel):
     main_list_by_priority: dict[Tier, int]
     filtered_by_rule: dict[str, int] = Field(
         description="Filtered candidates per rule; one candidate can satisfy several rules"
+    )
+    families: list[ReportFamily] = Field(description="The same counts per analysis family")
+    composition: dict[str, Any] | None = Field(
+        description="For a composite scan: composition version and the pinned member profiles"
     )
     candidates: list[ReportCandidate]
 

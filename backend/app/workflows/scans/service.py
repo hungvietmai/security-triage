@@ -3,7 +3,7 @@
 import uuid
 from typing import Any
 
-from sqlalchemy import ColumnElement, case, exists, func, select
+from sqlalchemy import ColumnElement, case, exists, false, func, or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -15,9 +15,18 @@ from app.features.sources.models import SourceSnapshot
 from app.features.triage.models import LocationUnit, UnitAssessment, UnitFinding
 from app.scanners.sources import github_coordinate, npm_coordinate
 from app.workflows.scans.exceptions import UnitNotFound
+from app.workflows.scans.families import (
+    FAMILIES,
+    FAMILY_OF_PROFILE,
+    NOT_RANKED,
+    NOT_RANKED_DECISION,
+    UNASSIGNED,
+    UNRESOLVED_DECISION,
+)
 from app.workflows.scans.schemas import (
     TIERS,
     Disposition,
+    FamilyName,
     NpmSource,
     ScanCreate,
     Tier,
@@ -83,12 +92,121 @@ def create_scan(session: Session, project: Project, data: ScanCreate, *, bucket:
     return scan
 
 
-def _results(scan: Scan) -> list[ColumnElement[bool]]:
-    """Units and assessments of exactly the versions this scan was written with."""
+# Reasons a unit is kept that say the evidence could not be examined at all.
+_EVIDENCE_UNAVAILABLE = {"run_incomplete", "evidence_step_failed", NOT_RANKED}
+# Reasons that say there was nothing, or not enough, to examine.
+_EVIDENCE_INSUFFICIENT = {"no_refuting_evidence", "literal_proof_without_second_source"}
+_HELD_DECISIONS = (UNRESOLVED_DECISION, NOT_RANKED_DECISION)
+
+
+def is_composite(scan: Scan) -> bool:
+    """Whether the scan was written by a composite profile (several analysis families)."""
+    return bool(scan.config.get("composition"))
+
+
+def result_filters(scan: Scan) -> list[ColumnElement[bool]]:
+    """Units and assessments of exactly the versions this scan was written with.
+
+    A composite scan's units carry their own family's versions, so they are selected by scan
+    alone: persistence replaces all of a scan's units in one transaction.
+    """
+    if is_composite(scan):
+        return [LocationUnit.scan_id == scan.id]
     return [
         LocationUnit.scan_id == scan.id,
         LocationUnit.reconciler_version == scan.reconciler_version,
         UnitAssessment.policy_version == scan.policy_version,
+    ]
+
+
+def scan_family(scan: Scan) -> str | None:
+    """The one family of a single-profile scan, from the profile recorded on the scan."""
+    profile = scan.config.get("profile_id") or scan.config.get("profile")
+    return FAMILY_OF_PROFILE.get(profile) if isinstance(profile, str) else None
+
+
+def family_cwe(family: str | None) -> str | None:
+    return FAMILIES[family].cwe if family in FAMILIES else None
+
+
+def evidence_state(disposition: str, decision_id: str, adjudication: dict[str, Any] | None) -> str:
+    """What the evidence says about a unit; see `EvidenceState` in the schemas."""
+    if adjudication is None:
+        return "not_assessed"
+    if decision_id == UNRESOLVED_DECISION:
+        return "not_applicable"
+    if disposition == "filtered":
+        return "refuted"
+    kept = set(adjudication.get("kept_because") or [])
+    if kept & _EVIDENCE_UNAVAILABLE:
+        return "unavailable"
+    if kept <= _EVIDENCE_INSUFFICIENT:
+        return "insufficient"
+    return "not_refuted"
+
+
+def _families(session: Session, scan: Scan) -> list[dict[str, Any]]:
+    """The scan's analysis families with their unit counts."""
+    counted = session.execute(
+        select(
+            LocationUnit.analysis_family,
+            UnitAssessment.disposition,
+            UnitAssessment.decision_id,
+            func.count(),
+        )
+        .join(UnitAssessment, UnitAssessment.unit_id == LocationUnit.id)
+        .where(*result_filters(scan))
+        # Grouped by the column itself: PostgreSQL does not accept an expression with bound
+        # parameters as the same expression in SELECT and GROUP BY.
+        .group_by(
+            LocationUnit.analysis_family,
+            UnitAssessment.disposition,
+            UnitAssessment.decision_id,
+        )
+    ).all()
+    single = scan_family(scan)
+    counts: dict[str, dict[str, int]] = {}
+    for stored, disposition, decision_id, count in counted:
+        held = decision_id in _HELD_DECISIONS
+        family = stored or single
+        if family is None:
+            continue
+        entry = counts.setdefault(family, {"units": 0, "review": 0, "filtered": 0, "held": 0})
+        entry["units"] += count
+        entry[disposition] += count
+        entry["held"] += count if held else 0
+
+    recorded: dict[str, dict[str, Any]] = {}
+    runs: dict[str, list[dict[str, Any]]] = {}
+    for language, summaries in (scan.config.get("families") or {}).items():
+        for summary in summaries:
+            recorded.setdefault(summary["family"], summary)
+            runs.setdefault(summary["family"], []).append(
+                {
+                    "language": language,
+                    "status": summary["status"],
+                    "error": summary["error"],
+                    "raw_findings": summary["raw_findings"],
+                    "evidence_steps": summary["evidence_steps"],
+                }
+            )
+    if not is_composite(scan) and single is not None and counts:
+        recorded[single] = {
+            "profile_id": scan.config.get("profile_id") or scan.config.get("profile"),
+            "profile_sha256": scan.config.get("profile_sha256"),
+        }
+    names = [name for name in (*FAMILIES, UNASSIGNED) if name in recorded or name in counts]
+    return [
+        {
+            "family": name,
+            "cwe": family_cwe(name),
+            "label": FAMILIES[name].label if name in FAMILIES else "Chưa xác định nhóm",
+            "profile_id": recorded.get(name, {}).get("profile_id"),
+            "profile_sha256": recorded.get(name, {}).get("profile_sha256"),
+            "runs": runs.get(name, []),
+            **counts.get(name, {"units": 0, "review": 0, "filtered": 0, "held": 0}),
+        }
+        for name in names
     ]
 
 
@@ -100,14 +218,14 @@ def describe_scan(session: Session, scan: Scan) -> dict[str, Any]:
     counted = session.execute(
         select(UnitAssessment.priority, func.count())
         .join(LocationUnit, LocationUnit.id == UnitAssessment.unit_id)
-        .where(*_results(scan))
+        .where(*result_filters(scan))
         .group_by(UnitAssessment.priority)
     ).all()
     counts = dict.fromkeys(TIERS, 0) | {priority: count for priority, count in counted}
     dispositions = session.execute(
         select(UnitAssessment.disposition, func.count())
         .join(LocationUnit, LocationUnit.id == UnitAssessment.unit_id)
-        .where(*_results(scan))
+        .where(*result_filters(scan))
         .group_by(UnitAssessment.disposition)
     ).all()
     return {
@@ -125,10 +243,12 @@ def describe_scan(session: Session, scan: Scan) -> dict[str, Any]:
         "tool_runs": runs,
         "unit_counts": counts,
         "disposition_counts": {"review": 0, "filtered": 0} | dict(dispositions),
+        "families": _families(session, scan),
     }
 
 
 def _summary(
+    scan: Scan,
     unit: LocationUnit,
     *,
     priority: str,
@@ -136,9 +256,15 @@ def _summary(
     reason: str,
     tools: list[str],
     disposition: str,
-    filter_rule: str | None,
+    adjudication: dict[str, Any] | None,
 ) -> dict[str, Any]:
+    family = unit.analysis_family or scan_family(scan)
+    filter_rule = (adjudication or {}).get("rule")
     return {
+        "analysis_family": family,
+        "cwe": family_cwe(family),
+        "evidence_state": evidence_state(disposition, decision_id, adjudication),
+        "kept_because": (adjudication or {}).get("kept_because") or [],
         "id": unit.id,
         "unit_key": unit.unit_key,
         "path": unit.path,
@@ -167,14 +293,21 @@ def list_units(
     tier: Tier | None,
     tool: Tool | None,
     disposition: Disposition | None = None,
+    family: FamilyName | None = None,
 ) -> PageResult[dict[str, Any]]:
     """P1, P2, U, P3, P4, then unit_key: a total order, so pages never overlap."""
     statement = (
         select(LocationUnit)
         .join(UnitAssessment, UnitAssessment.unit_id == LocationUnit.id)
-        .where(*_results(scan))
+        .where(*result_filters(scan))
         .order_by(_QUEUE_ORDER, LocationUnit.unit_key)
     )
+    if family is not None:
+        if is_composite(scan):
+            statement = statement.where(LocationUnit.analysis_family == family)
+        elif family != scan_family(scan):
+            # A single-profile scan has one family; its units carry no family of their own.
+            statement = statement.where(false())
     if tier is not None:
         statement = statement.where(UnitAssessment.priority == tier)
     if disposition is not None:
@@ -185,7 +318,8 @@ def list_units(
             .where(UnitFinding.unit_id == LocationUnit.id)
             .where(Finding.id == UnitFinding.finding_id)
             .where(ToolRun.id == Finding.tool_run_id)
-            .where(ToolRun.tool == tool)
+            # A tool's pass on a shared database is its own run, named "<tool>-<family>".
+            .where(or_(ToolRun.tool == tool, ToolRun.tool.like(f"{tool}-%")))
         )
     result = paginate(session, statement, page)
     assessments = {}
@@ -201,23 +335,21 @@ def list_units(
                     UnitAssessment.reason,
                     UnitAssessment.evidence["tools"].label("tools"),
                     UnitAssessment.disposition,
-                    UnitAssessment.evidence["adjudication"]["rule"].label("filter_rule"),
-                ).where(
-                    UnitAssessment.unit_id.in_([unit.id for unit in result.items]),
-                    UnitAssessment.policy_version == scan.policy_version,
-                )
+                    UnitAssessment.evidence["adjudication"].label("adjudication"),
+                ).where(UnitAssessment.unit_id.in_([unit.id for unit in result.items]))
             )
         }
     return PageResult(
         items=[
             _summary(
+                scan,
                 unit,
                 priority=assessments[unit.id].priority,
                 decision_id=assessments[unit.id].decision_id,
                 reason=assessments[unit.id].reason,
                 tools=assessments[unit.id].tools or [],
                 disposition=assessments[unit.id].disposition,
-                filter_rule=assessments[unit.id].filter_rule,
+                adjudication=assessments[unit.id].adjudication,
             )
             for unit in result.items
         ],
@@ -231,7 +363,7 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
     row = session.execute(
         select(LocationUnit, UnitAssessment)
         .join(UnitAssessment, UnitAssessment.unit_id == LocationUnit.id)
-        .where(LocationUnit.id == unit_id, *_results(scan))
+        .where(LocationUnit.id == unit_id, *result_filters(scan))
     ).one_or_none()
     if row is None:
         raise UnitNotFound()
@@ -246,13 +378,14 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
     evidence = assessment.evidence
     return {
         **_summary(
+            scan,
             unit,
             priority=assessment.priority,
             decision_id=assessment.decision_id,
             reason=assessment.reason,
             tools=evidence.get("tools", []),
             disposition=assessment.disposition,
-            filter_rule=(evidence.get("adjudication") or {}).get("rule"),
+            adjudication=evidence.get("adjudication"),
         ),
         "candidate": evidence.get("candidate"),
         "adjudication": evidence.get("adjudication"),
@@ -273,7 +406,8 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
         "findings": [
             {
                 "id": finding.id,
-                "tool": run.tool,
+                # The tool that reported it; a pass on a shared database is named in tool_pass.
+                "tool": (finding.evidence.get("classification") or {}).get("tool") or run.tool,
                 "language": run.language,
                 "raw_id": finding.evidence.get("raw_id"),
                 "rule_id": finding.rule_id,
@@ -285,6 +419,18 @@ def get_unit(session: Session, scan: Scan, unit_id: uuid.UUID) -> dict[str, Any]
                 "end_column": finding.end_column,
                 "message": finding.message,
                 "cwe_ids": finding.cwe_ids,
+                # The classification is stored next to the tool's own labels, never over them.
+                **{
+                    key: (finding.evidence.get("classification") or {}).get(key)
+                    for key in (
+                        "mapped_cwes",
+                        "analysis_family",
+                        "family_status",
+                        "family_basis",
+                        "unresolved_reason",
+                        "tool_pass",
+                    )
+                },
                 "raw_result": finding.evidence.get("raw_result", {}),
             }
             for finding, run in findings

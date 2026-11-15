@@ -128,6 +128,7 @@ export interface paths {
      * @description Location units in queue order (P1, P2, U, P3, P4, then unit_key).
      *
      *     `disposition=review` is the main review list; `filtered` lists what evidence removed.
+     *     `family` selects one analysis family (one CWE) of the scan.
      */
     get: operations["list_units_api_v1_scans__scan_id__units_get"];
     put?: never;
@@ -210,6 +211,71 @@ export interface components {
       /** Detail */
       detail: string;
     };
+    /**
+     * FamilyRead
+     * @description One analysis family of a scan: who assessed it and how its units are disposed.
+     */
+    FamilyRead: {
+      /**
+       * Family
+       * @enum {string}
+       */
+      family: "command-injection" | "path-traversal" | "unassigned";
+      /**
+       * Cwe
+       * @description The family's CWE; none for unassigned findings
+       */
+      cwe: string | null;
+      /** Label */
+      label: string;
+      /**
+       * Profile Id
+       * @description The pinned member profile that assessed it
+       */
+      profile_id: string | null;
+      /** Profile Sha256 */
+      profile_sha256: string | null;
+      /**
+       * Runs
+       * @description Per language; empty for a single-profile scan
+       */
+      runs: components["schemas"]["FamilyRun"][];
+      /** Units */
+      units: number;
+      /** Review */
+      review: number;
+      /** Filtered */
+      filtered: number;
+      /**
+       * Held
+       * @description Units kept for review because no family could be named or the family ranked nothing
+       */
+      held: number;
+    };
+    /**
+     * FamilyRun
+     * @description What one family did in one language of a composite scan.
+     */
+    FamilyRun: {
+      /** Language */
+      language: string;
+      /**
+       * Status
+       * @description State of the family's own run: completed, partial, failed
+       */
+      status: string;
+      /** Error */
+      error: string | null;
+      /** Raw Findings */
+      raw_findings: number;
+      /**
+       * Evidence Steps
+       * @description State of each step whose results are this family's evidence
+       */
+      evidence_steps: {
+        [key: string]: string;
+      };
+    };
     /** FindingRead */
     FindingRead: {
       /**
@@ -239,8 +305,35 @@ export interface components {
       end_column: number | null;
       /** Message */
       message: string;
-      /** Cwe Ids */
+      /**
+       * Cwe Ids
+       * @description CWEs the tool reported, exactly as it wrote them
+       */
       cwe_ids: string[];
+      /**
+       * Mapped Cwes
+       * @description CWEs of the pinned rule definition; null when the scan did not classify
+       */
+      mapped_cwes: string[] | null;
+      /** Analysis Family */
+      analysis_family: string | null;
+      /**
+       * Family Status
+       * @description resolved or unresolved
+       */
+      family_status: string | null;
+      /**
+       * Family Basis
+       * @description pass_provenance or pinned_rule_set
+       */
+      family_basis: string | null;
+      /** Unresolved Reason */
+      unresolved_reason: string | null;
+      /**
+       * Tool Pass
+       * @description The tool pass that produced the finding
+       */
+      tool_pass: string | null;
       /** Raw Result */
       raw_result: {
         [key: string]: unknown;
@@ -401,6 +494,62 @@ export interface components {
       unit_ids: string[];
       /** Raw Alerts */
       raw_alerts: number;
+      /** Analysis Family */
+      analysis_family:
+        ("command-injection" | "path-traversal" | "unassigned") | null;
+      /** Cwe */
+      cwe: string | null;
+      /**
+       * Evidence State
+       * @enum {string}
+       */
+      evidence_state:
+        | "refuted"
+        | "not_refuted"
+        | "insufficient"
+        | "unavailable"
+        | "not_applicable"
+        | "not_assessed";
+    };
+    /**
+     * ReportFamily
+     * @description The before/after counts of one analysis family.
+     */
+    ReportFamily: {
+      /**
+       * Family
+       * @enum {string}
+       */
+      family: "command-injection" | "path-traversal" | "unassigned";
+      /** Cwe */
+      cwe: string | null;
+      /** Label */
+      label: string;
+      /** Raw Alerts */
+      raw_alerts: number;
+      /** Units */
+      units: number;
+      /** Candidates */
+      candidates: number;
+      /** Main List */
+      main_list: number;
+      /** Filtered */
+      filtered: number;
+      /** Main List By Priority */
+      main_list_by_priority: {
+        [key: string]: number;
+      };
+      /** Filtered By Rule */
+      filtered_by_rule: {
+        [key: string]: number;
+      };
+      /**
+       * Evidence States
+       * @description Candidates per state
+       */
+      evidence_states: {
+        [key: string]: number;
+      };
     };
     /** ReportStages */
     ReportStages: {
@@ -472,7 +621,7 @@ export interface components {
         | components["schemas"]["GitHubSource"];
       /**
        * Profile
-       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.
+       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile.
        * @default command-injection-v0.1
        * @enum {string}
        */
@@ -480,7 +629,8 @@ export interface components {
         | "command-injection-v0.1"
         | "command-injection-v0.2"
         | "command-injection-v0.3"
-        | "path-traversal-v0.2";
+        | "path-traversal-v0.2"
+        | "multi-cwe-v0.1";
     };
     /** ScanRead */
     ScanRead: {
@@ -527,6 +677,11 @@ export interface components {
       disposition_counts: {
         [key: string]: number;
       };
+      /**
+       * Families
+       * @description Analysis families of the scan; one for a single-profile scan
+       */
+      families: components["schemas"]["FamilyRead"][];
     };
     /**
      * ScanReport
@@ -591,6 +746,18 @@ export interface components {
       filtered_by_rule: {
         [key: string]: number;
       };
+      /**
+       * Families
+       * @description The same counts per analysis family
+       */
+      families: components["schemas"]["ReportFamily"][];
+      /**
+       * Composition
+       * @description For a composite scan: composition version and the pinned member profiles
+       */
+      composition: {
+        [key: string]: unknown;
+      } | null;
       /** Candidates */
       candidates: components["schemas"]["ReportCandidate"][];
     };
@@ -693,6 +860,33 @@ export interface components {
        * @description Rule that filtered the candidate, if any
        */
       filter_rule: string | null;
+      /**
+       * Analysis Family
+       * @description The family that assessed the unit; follows from the profile for a single-profile scan
+       */
+      analysis_family:
+        ("command-injection" | "path-traversal" | "unassigned") | null;
+      /**
+       * Cwe
+       * @description The family's CWE
+       */
+      cwe: string | null;
+      /**
+       * Evidence State
+       * @enum {string}
+       */
+      evidence_state:
+        | "refuted"
+        | "not_refuted"
+        | "insufficient"
+        | "unavailable"
+        | "not_applicable"
+        | "not_assessed";
+      /**
+       * Kept Because
+       * @description Why the unit stays in the review list
+       */
+      kept_because: string[];
       /** Matched Conditions */
       matched_conditions: string[];
       /** Predicate Values */
@@ -812,6 +1006,33 @@ export interface components {
        * @description Rule that filtered the candidate, if any
        */
       filter_rule: string | null;
+      /**
+       * Analysis Family
+       * @description The family that assessed the unit; follows from the profile for a single-profile scan
+       */
+      analysis_family:
+        ("command-injection" | "path-traversal" | "unassigned") | null;
+      /**
+       * Cwe
+       * @description The family's CWE
+       */
+      cwe: string | null;
+      /**
+       * Evidence State
+       * @enum {string}
+       */
+      evidence_state:
+        | "refuted"
+        | "not_refuted"
+        | "insufficient"
+        | "unavailable"
+        | "not_applicable"
+        | "not_assessed";
+      /**
+       * Kept Because
+       * @description Why the unit stays in the review list
+       */
+      kept_because: string[];
     };
     /** ValidationError */
     ValidationError: {
@@ -1085,6 +1306,7 @@ export interface operations {
         tier?: ("P1" | "P2" | "U" | "P3" | "P4") | null;
         tool?: ("semgrep" | "bandit" | "eslint" | "codeql") | null;
         disposition?: ("review" | "filtered") | null;
+        family?: ("command-injection" | "path-traversal" | "unassigned") | null;
         /** @description Maximum number of items to return */
         limit?: number;
         /** @description Number of items to skip */

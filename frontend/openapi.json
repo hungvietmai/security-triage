@@ -368,7 +368,7 @@
           "scans"
         ],
         "summary": "List Units",
-        "description": "Location units in queue order (P1, P2, U, P3, P4, then unit_key).\n\n`disposition=review` is the main review list; `filtered` lists what evidence removed.",
+        "description": "Location units in queue order (P1, P2, U, P3, P4, then unit_key).\n\n`disposition=review` is the main review list; `filtered` lists what evidence removed.\n`family` selects one analysis family (one CWE) of the scan.",
         "operationId": "list_units_api_v1_scans__scan_id__units_get",
         "parameters": [
           {
@@ -444,6 +444,27 @@
                 }
               ],
               "title": "Disposition"
+            }
+          },
+          {
+            "name": "family",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "command-injection",
+                    "path-traversal",
+                    "unassigned"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Family"
             }
           },
           {
@@ -697,6 +718,144 @@
         "title": "ErrorResponse",
         "description": "Body of every error response; matches FastAPI's own HTTPException shape."
       },
+      "FamilyRead": {
+        "properties": {
+          "family": {
+            "type": "string",
+            "enum": [
+              "command-injection",
+              "path-traversal",
+              "unassigned"
+            ],
+            "title": "Family"
+          },
+          "cwe": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cwe",
+            "description": "The family's CWE; none for unassigned findings"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "profile_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile Id",
+            "description": "The pinned member profile that assessed it"
+          },
+          "profile_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile Sha256"
+          },
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/FamilyRun"
+            },
+            "type": "array",
+            "title": "Runs",
+            "description": "Per language; empty for a single-profile scan"
+          },
+          "units": {
+            "type": "integer",
+            "title": "Units"
+          },
+          "review": {
+            "type": "integer",
+            "title": "Review"
+          },
+          "filtered": {
+            "type": "integer",
+            "title": "Filtered"
+          },
+          "held": {
+            "type": "integer",
+            "title": "Held",
+            "description": "Units kept for review because no family could be named or the family ranked nothing"
+          }
+        },
+        "type": "object",
+        "required": [
+          "family",
+          "cwe",
+          "label",
+          "profile_id",
+          "profile_sha256",
+          "runs",
+          "units",
+          "review",
+          "filtered",
+          "held"
+        ],
+        "title": "FamilyRead",
+        "description": "One analysis family of a scan: who assessed it and how its units are disposed."
+      },
+      "FamilyRun": {
+        "properties": {
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "State of the family's own run: completed, partial, failed"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "raw_findings": {
+            "type": "integer",
+            "title": "Raw Findings"
+          },
+          "evidence_steps": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Evidence Steps",
+            "description": "State of each step whose results are this family's evidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "language",
+          "status",
+          "error",
+          "raw_findings",
+          "evidence_steps"
+        ],
+        "title": "FamilyRun",
+        "description": "What one family did in one language of a composite scan."
+      },
       "FindingRead": {
         "properties": {
           "id": {
@@ -802,7 +961,81 @@
               "type": "string"
             },
             "type": "array",
-            "title": "Cwe Ids"
+            "title": "Cwe Ids",
+            "description": "CWEs the tool reported, exactly as it wrote them"
+          },
+          "mapped_cwes": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mapped Cwes",
+            "description": "CWEs of the pinned rule definition; null when the scan did not classify"
+          },
+          "analysis_family": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Family"
+          },
+          "family_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Status",
+            "description": "resolved or unresolved"
+          },
+          "family_basis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Basis",
+            "description": "pass_provenance or pinned_rule_set"
+          },
+          "unresolved_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unresolved Reason"
+          },
+          "tool_pass": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tool Pass",
+            "description": "The tool pass that produced the finding"
           },
           "raw_result": {
             "additionalProperties": true,
@@ -825,6 +1058,12 @@
           "end_column",
           "message",
           "cwe_ids",
+          "mapped_cwes",
+          "analysis_family",
+          "family_status",
+          "family_basis",
+          "unresolved_reason",
+          "tool_pass",
           "raw_result"
         ],
         "title": "FindingRead"
@@ -1180,6 +1419,45 @@
           "raw_alerts": {
             "type": "integer",
             "title": "Raw Alerts"
+          },
+          "analysis_family": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "command-injection",
+                  "path-traversal",
+                  "unassigned"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Family"
+          },
+          "cwe": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cwe"
+          },
+          "evidence_state": {
+            "type": "string",
+            "enum": [
+              "refuted",
+              "not_refuted",
+              "insufficient",
+              "unavailable",
+              "not_applicable",
+              "not_assessed"
+            ],
+            "title": "Evidence State"
           }
         },
         "type": "object",
@@ -1196,9 +1474,117 @@
           "filter_rules",
           "reason",
           "unit_ids",
-          "raw_alerts"
+          "raw_alerts",
+          "analysis_family",
+          "cwe",
+          "evidence_state"
         ],
         "title": "ReportCandidate"
+      },
+      "ReportFamily": {
+        "properties": {
+          "family": {
+            "type": "string",
+            "enum": [
+              "command-injection",
+              "path-traversal",
+              "unassigned"
+            ],
+            "title": "Family"
+          },
+          "cwe": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cwe"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "raw_alerts": {
+            "type": "integer",
+            "title": "Raw Alerts"
+          },
+          "units": {
+            "type": "integer",
+            "title": "Units"
+          },
+          "candidates": {
+            "type": "integer",
+            "title": "Candidates"
+          },
+          "main_list": {
+            "type": "integer",
+            "title": "Main List"
+          },
+          "filtered": {
+            "type": "integer",
+            "title": "Filtered"
+          },
+          "main_list_by_priority": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "P1",
+                "P2",
+                "U",
+                "P3",
+                "P4"
+              ]
+            },
+            "type": "object",
+            "title": "Main List By Priority"
+          },
+          "filtered_by_rule": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Filtered By Rule"
+          },
+          "evidence_states": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "refuted",
+                "not_refuted",
+                "insufficient",
+                "unavailable",
+                "not_applicable",
+                "not_assessed"
+              ]
+            },
+            "type": "object",
+            "title": "Evidence States",
+            "description": "Candidates per state"
+          }
+        },
+        "type": "object",
+        "required": [
+          "family",
+          "cwe",
+          "label",
+          "raw_alerts",
+          "units",
+          "candidates",
+          "main_list",
+          "filtered",
+          "main_list_by_priority",
+          "filtered_by_rule",
+          "evidence_states"
+        ],
+        "title": "ReportFamily",
+        "description": "The before/after counts of one analysis family."
       },
       "ReportStages": {
         "properties": {
@@ -1323,10 +1709,11 @@
               "command-injection-v0.1",
               "command-injection-v0.2",
               "command-injection-v0.3",
-              "path-traversal-v0.2"
+              "path-traversal-v0.2",
+              "multi-cwe-v0.1"
             ],
             "title": "Profile",
-            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence.",
+            "description": "command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile.",
             "default": "command-injection-v0.1"
           }
         },
@@ -1465,6 +1852,14 @@
             "type": "object",
             "title": "Disposition Counts",
             "description": "Units in the main review list and units filtered on evidence"
+          },
+          "families": {
+            "items": {
+              "$ref": "#/components/schemas/FamilyRead"
+            },
+            "type": "array",
+            "title": "Families",
+            "description": "Analysis families of the scan; one for a single-profile scan"
           }
         },
         "type": "object",
@@ -1482,7 +1877,8 @@
           "snapshot",
           "tool_runs",
           "unit_counts",
-          "disposition_counts"
+          "disposition_counts",
+          "families"
         ],
         "title": "ScanRead"
       },
@@ -1629,6 +2025,27 @@
             "title": "Filtered By Rule",
             "description": "Filtered candidates per rule; one candidate can satisfy several rules"
           },
+          "families": {
+            "items": {
+              "$ref": "#/components/schemas/ReportFamily"
+            },
+            "type": "array",
+            "title": "Families",
+            "description": "The same counts per analysis family"
+          },
+          "composition": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Composition",
+            "description": "For a composite scan: composition version and the pinned member profiles"
+          },
           "candidates": {
             "items": {
               "$ref": "#/components/schemas/ReportCandidate"
@@ -1655,6 +2072,8 @@
           "sources",
           "main_list_by_priority",
           "filtered_by_rule",
+          "families",
+          "composition",
           "candidates"
         ],
         "title": "ScanReport",
@@ -1968,6 +2387,55 @@
             "title": "Filter Rule",
             "description": "Rule that filtered the candidate, if any"
           },
+          "analysis_family": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "command-injection",
+                  "path-traversal",
+                  "unassigned"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Family",
+            "description": "The family that assessed the unit; follows from the profile for a single-profile scan"
+          },
+          "cwe": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cwe",
+            "description": "The family's CWE"
+          },
+          "evidence_state": {
+            "type": "string",
+            "enum": [
+              "refuted",
+              "not_refuted",
+              "insufficient",
+              "unavailable",
+              "not_applicable",
+              "not_assessed"
+            ],
+            "title": "Evidence State"
+          },
+          "kept_because": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Kept Because",
+            "description": "Why the unit stays in the review list"
+          },
           "matched_conditions": {
             "items": {
               "type": "string"
@@ -2108,6 +2576,10 @@
           "disposition",
           "candidate_key",
           "filter_rule",
+          "analysis_family",
+          "cwe",
+          "evidence_state",
+          "kept_because",
           "matched_conditions",
           "predicate_values",
           "unknown_fields",
@@ -2310,6 +2782,55 @@
             ],
             "title": "Filter Rule",
             "description": "Rule that filtered the candidate, if any"
+          },
+          "analysis_family": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "command-injection",
+                  "path-traversal",
+                  "unassigned"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Family",
+            "description": "The family that assessed the unit; follows from the profile for a single-profile scan"
+          },
+          "cwe": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cwe",
+            "description": "The family's CWE"
+          },
+          "evidence_state": {
+            "type": "string",
+            "enum": [
+              "refuted",
+              "not_refuted",
+              "insufficient",
+              "unavailable",
+              "not_applicable",
+              "not_assessed"
+            ],
+            "title": "Evidence State"
+          },
+          "kept_because": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Kept Because",
+            "description": "Why the unit stays in the review list"
           }
         },
         "type": "object",
@@ -2330,7 +2851,11 @@
           "tools",
           "disposition",
           "candidate_key",
-          "filter_rule"
+          "filter_rule",
+          "analysis_family",
+          "cwe",
+          "evidence_state",
+          "kept_because"
         ],
         "title": "UnitSummary"
       },
