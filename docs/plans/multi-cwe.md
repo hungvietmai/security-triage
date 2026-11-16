@@ -19,7 +19,9 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
   CWE-89 ở [mục 19](#19-p2--thẩm-định-và-thiết-kế-tối-thiểu-cho-cwe-89-2026-11-15); P2a (profile
   `multi-cwe-v0.2`, CWE-89 chỉ phát hiện và giữ) ở [mục 20](#20-trạng-thái-p2a-2026-11-15); P2b
   (profile `multi-cwe-v0.3`, CWE-89 bằng Semgrep, Bandit và CodeQL, có số đo trên dữ liệu phát triển
-  có nhãn) ở [mục 21](#21-trạng-thái-p2b-2026-11-16).
+  có nhãn) ở [mục 21](#21-trạng-thái-p2b-2026-11-16); đợt đánh giá để đề xuất cấu hình CWE-89
+  (truy vết cảnh báo Semgrep JS/TS của Juice Shop, lợi ích của phép gộp JS/TS, Bandit trên tập
+  Python độc lập SVEN) ở [mục 22](#22-đánh-giá-cấu-hình-cwe-89-cho-python-và-jsts-2026-11-16).
 
 ## 1. Kết luận ngắn
 
@@ -1321,7 +1323,7 @@ không dữ liệu held-out hay cặp đã đóng băng nào được quét, kh�
 
 **Trạng thái mã đã kiểm thử:** nhánh cục bộ `feat/multi-cwe-p2a`, dựng trên `ffc218b`. Mọi kiểm thử
 ở mục này chạy trên cây làm việc trước khi commit; sau đó, theo quyết định của chủ đề án, thay đổi
-được commit tách theo đầu việc trên nhánh này, **chưa push**. Cây `backend/`, `frontend/`, `profiles/` đã kiểm thử có
+được commit tách theo đầu việc trên nhánh này, **chưa push** lúc ghi (đã push sau đó, mục 22.7). Cây `backend/`, `frontend/`, `profiles/` đã kiểm thử có
 mã Git `2e6ed328e7945274b8bc7aa0dbeac6cf0454c369` ở lượt hồi quy mục 20.5 (tính sau lượt chạy; từ
 lúc dựng image tới lúc đó chỉ có file kiểm thử và tài liệu thay đổi) và
 `081b3da00fd72afc6865f4be2499fd8be683a351` sau khi thêm kiểm thử trình duyệt của `v0.2`; mã ứng dụng
@@ -1556,7 +1558,7 @@ Giây của từng bước CodeQL (worker đã chạy các truy vấn ít nhất
 - **Cảnh báo của rule không được ghim** chỉ có kiểm thử với công cụ giả lập (mục 20.4).
 - Hai kiểm thử trình duyệt trên stack thật không nằm trong bộ chạy mặc định (bị bỏ qua khi không có
   `FULL_STACK_URL`); chúng được chạy tay như ở mục 20.5.
-- Nhánh `feat/multi-cwe-p2a` chưa push.
+- Nhánh `feat/multi-cwe-p2a` chưa push lúc ghi; đã push tới `402566f` sau đó (mục 22.7).
 
 ### 20.9 Kết luận
 
@@ -1625,7 +1627,7 @@ dữ liệu held-out hay cặp đã đóng băng nào được quét, không fil
 CI/CD và tự động gạn CWE-89 nằm ngoài P2b.
 
 **Trạng thái mã đã kiểm thử:** nhánh cục bộ `feat/multi-cwe-p2a` tại `aea3dc2` cộng thay đổi **chưa
-commit**, chưa push. Cây đã kiểm thử và lệnh: mục 21.7. Hai lượt quét có nhãn chạy trên mã ứng dụng
+commit**, chưa push (sau đó commit và push, mục 21.7 và 22.7). Cây đã kiểm thử và lệnh: mục 21.7. Hai lượt quét có nhãn chạy trên mã ứng dụng
 có hash `83c58e8179b5ff7b` (giống hệt trong image worker) và profile có hash ở mục 21.1
 (`artifacts/multi-cwe-p2b/labeled-run-state.txt`). Đầu ra thô: `artifacts/multi-cwe-p2b/` (không vào
 Git).
@@ -1924,7 +1926,7 @@ Giây của từng lượt CWE-89 (mỗi ô một lần đo, lượt quét có n
 ### 21.10 Chưa kiểm chứng
 
 - **CI trên GitHub chưa chạy** (đầu việc CI/CD riêng, như P2a). Thay đổi P2b đã commit cục bộ
-  (`557735e`, `64b6d78` và commit tài liệu kế tiếp); nhánh `feat/multi-cwe-p2a` chưa push.
+  (`557735e`, `64b6d78`, `402566f`); nhánh `feat/multi-cwe-p2a` đã push tới `402566f` (mục 22.7).
 - **JavaScript/TypeScript chưa có bộ định vị lời gọi SQL**, nên chưa có cảnh báo nào được gộp giữa
   công cụ ở ngôn ngữ này.
 - **Độ đúng của phép gộp** chỉ có kiểm thử tự động và các nguồn không nhãn. Trên BenchmarkPython không
@@ -1943,7 +1945,7 @@ Giây của từng lượt CWE-89 (mỗi ô một lần đo, lượt quét có n
 và qua giao diện (mục 21.3, 21.6, 21.7); khi một công cụ CWE-89 bất kỳ hỏng, kết quả còn lại vẫn xuất
 hiện với trạng thái chạy dở (mục 21.4); CWE-78 và CWE-22 cho kết quả như `v0.2` ở mọi nguồn; SARIF giữ
 mọi cảnh báo gốc; hồi quy đạt (mục 21.7); có số liệu đối chứng cho từng công cụ (mục 21.6). Thay đổi
-đã commit cục bộ (`557735e`, `64b6d78`), chưa push; CI chưa chạy.
+đã commit (`557735e`, `64b6d78`) và nhánh đã push tới `402566f` (mục 22.7); CI chưa chạy.
 
 Trên tập đã đo:
 
@@ -1961,3 +1963,346 @@ Trên tập đã đo:
 Bước tiếp theo, nếu chủ đề án chọn: bộ định vị lời gọi SQL cho JavaScript/TypeScript; xét lại việc
 đưa Bandit vào nhóm CWE-89 dựa trên số liệu trên; nhãn âm tính trên mã thật trước khi nghĩ tới bất kỳ
 điều kiện gạn nào cho CWE-89.
+
+## 22. Đánh giá cấu hình CWE-89 cho Python và JS/TS (2026-11-16)
+
+Đợt đánh giá để đề xuất cấu hình CWE-89, dùng `multi-cwe-v0.3` (mục 21) làm mốc đối chứng. Không
+sửa mã, luật, cấu hình hay phép gộp. Không quét lại BenchmarkPython hay Juice Shop. Các số đo P2b ở
+mục 21 và `artifacts/multi-cwe-p2b/` giữ nguyên.
+
+- **Commit đã đo:** `402566f4b02d888d7ae2764776f5d06fd4df07c7`.
+  - Mã ứng dụng trong image worker có hash `83c58e8179b5ff7b`, giống cây làm việc và giống P2b.
+  - Hash profile như mục 21.1; Semgrep 1.178.0, Bandit 1.9.4, CodeQL 2.27.1.
+  - Ghi ở `artifacts/cwe89-eval/sven-run-state.txt`.
+- **Đầu ra:** `artifacts/cwe89-eval/`, không vào git.
+- **Trạng thái nhãn:** nhãn ở mục 22.2 là đề xuất, chưa được duyệt.
+
+### 22.1 Nguồn dữ liệu và lệnh tái lập
+
+| Bước | Dữ liệu | Lệnh (từ gốc repo) | Đầu ra |
+|---|---|---|---|
+| 1 | Lượt quét đã lưu `1dc10be3…` (Juice Shop `266448ab`), mã nguồn cục bộ `artifacts/multi-cwe-p2b/juice/src` | `docker compose exec -T api python - 194e5825-028c-48de-9b79-fa245fdb3e60 < artifacts/cwe89-eval/snapshot_hashes.py > artifacts/cwe89-eval/juice-stored/snapshot-hashes.json`; `python artifacts/cwe89-eval/compare_snapshot.py`; với mỗi tệp `K` trong `codeql.sarif`, `codeql-sql-injection.sarif`, `semgrep-sql-injection.sarif`, `codeql-create.stdout.log`: `docker compose exec -T api python - 1dc10be3-7949-43f9-96ce-70d72c2f6178 javascript/K < artifacts/cwe89-eval/scan_artifacts.py > artifacts/cwe89-eval/juice-stored/K`; `python artifacts/cwe89-eval/juice_trace.py` | `juice-stored/`, `juice-trace.json`, `juice-trace.txt` |
+| 2 | Như bước 1 | `python artifacts/cwe89-eval/js_merge_estimate.py` (gọi `js_sql_sites.mjs`) | `merge-estimate.json`, `merge-estimate.txt` |
+| 3 | SVEN `eth-sri/sven@e8449a0d`, `data_train_val/{train,val}/cwe-089.jsonl`; file gốc tại commit sửa từ `raw.githubusercontent.com` | với `S` là `train` và `val`: `curl -o artifacts/cwe89-eval/sven-download/S-cwe-089.jsonl https://raw.githubusercontent.com/eth-sri/sven/e8449a0d54a5ae0bbdc6bb236330b8c7ec71df57/data_train_val/S/cwe-089.jsonl` (sha256 train `b47eb0e2…`, val `5dc8065a…`, đầy đủ trong `PROTOCOL-SVEN.md`; `build_sven.py` kiểm lại); `python -I artifacts/cwe89-eval/build_sven.py`; `python artifacts/cwe89-eval/scan_corpus.py file`; `python artifacts/cwe89-eval/scan_corpus.py fragment`; `python -I artifacts/cwe89-eval/measure_sven.py file`; `python -I artifacts/cwe89-eval/measure_sven.py fragment`; `python -I artifacts/cwe89-eval/sven_posthoc.py` | `PROTOCOL-SVEN.md`, `PROTOCOL-SVEN-DEVIATIONS.md`, `sven-download/`, `sven-corpus-*/`, `sven-scan-*.json`, `sven-measure-*.{json,txt}`, `sven-posthoc-file.*` |
+
+Bước 3 chỉ chạy lại được trên một stack mới. `scan_corpus.py` từ chối quét khi đã có
+`sven-scan-*.json`, và `build_sven.py` từ chối ghi vào thư mục tập đã có.
+
+### 22.2 Truy vết 12 cảnh báo Semgrep JS/TS ngoài tập có nhãn (Juice Shop)
+
+**Dữ liệu dùng:**
+
+- Lượt quét đã lưu `1dc10be3-7949-43f9-96ce-70d72c2f6178` (`multi-cwe-v0.3`, Juice Shop
+  `266448ab`, snapshot `f47f3dfe…`).
+- Mã nguồn cục bộ `artifacts/multi-cwe-p2b/juice/src`: giống từng byte với snapshot đã quét. Đã so
+  1498/1498 tệp với bản lưu trong kho đối tượng (`juice-stored/snapshot-hashes.json`).
+- SARIF thô của hai lượt CodeQL JavaScript trong cùng lượt quét, tải lại từ kho đối tượng:
+  - `codeql.sarif`, lượt CWE-78: 0 kết quả;
+  - `codeql-sql-injection.sarif`: 7 kết quả, là toàn bộ kết quả CodeQL JavaScript của lượt quét.
+
+Không quét lại.
+
+**Vị trí của 12 cảnh báo:** cả 12 nằm trong 4 tệp `data/static/codefixes/`, mỗi tệp đúng 3 cảnh báo
+(3 luật) trên cùng một lời gọi `models.sequelize.query(...)`.
+
+**Nhãn:** là **đề xuất, chờ chủ đề án duyệt từng mục**. Nhãn xét đoạn mã như đang viết; cột "Chạy
+trong ứng dụng" xét riêng. Tên đầy đủ của ba luật:
+
+- `raw-query` = `javascript.sequelize.security.audit.sequelize-raw-query.sequelize-raw-query`
+- `express-seq` = `javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection`
+- `tainted-sql` = `javascript.express.security.injection.tainted-sql-string.tainted-sql-string`
+
+Cả ba luật đều ghi CWE-89.
+
+| # | Mã cảnh báo (mục rà) | Tệp:dòng:cột | Quy tắc | Cảnh báo CodeQL tương ứng | Căn cứ | Nhãn đề xuất | Chạy trong ứng dụng |
+|---|---|---|---|---|---|---|---|
+| 1 | `semgrep-sql-injection:0:0` (`0fe54b58`) | `dbSchemaChallenge_1.ts:5:5–163` | `raw-query` | không có (E) | A, F | Có lỗi | không |
+| 2 | `semgrep-sql-injection:0:1` (`840af573`) | `dbSchemaChallenge_1.ts:5:28–162` | `express-seq` | không có (E) | A, F | Có lỗi | không |
+| 3 | `semgrep-sql-injection:0:2` (`ed192ef3`) | `dbSchemaChallenge_1.ts:5:74–82` | `tainted-sql` | không có (E) | A, F | Có lỗi | không |
+| 4 | `semgrep-sql-injection:0:3` (`2ad3a8d9`) | `dbSchemaChallenge_3.ts:11:5–161` | `raw-query` | không có (E) | B, F | An toàn | không |
+| 5 | `semgrep-sql-injection:0:4` (`efbde5e9`) | `dbSchemaChallenge_3.ts:11:28–159` | `express-seq` | không có (E) | B, F | An toàn | không |
+| 6 | `semgrep-sql-injection:0:5` (`b785def2`) | `dbSchemaChallenge_3.ts:11:74–82` | `tainted-sql` | không có (E) | B, F | An toàn | không |
+| 7 | `semgrep-sql-injection:0:6` (`5f21afd2`) | `unionSqlInjectionChallenge_1.ts:6:5–161` | `raw-query` | không có (E) | C, F | Có lỗi | không |
+| 8 | `semgrep-sql-injection:0:7` (`8f944110`) | `unionSqlInjectionChallenge_1.ts:6:28–159` | `express-seq` | không có (E) | C, F | Có lỗi | không |
+| 9 | `semgrep-sql-injection:0:8` (`d7517818`) | `unionSqlInjectionChallenge_1.ts:6:74–82` | `tainted-sql` | không có (E) | C, F | Có lỗi | không |
+| 10 | `semgrep-sql-injection:0:9` (`e2dff7ff`) | `unionSqlInjectionChallenge_3.ts:10:5–161` | `raw-query` | không có (E) | D, F | An toàn | không |
+| 11 | `semgrep-sql-injection:0:10` (`5dbb2fea`) | `unionSqlInjectionChallenge_3.ts:10:28–159` | `express-seq` | không có (E) | D, F | An toàn | không |
+| 12 | `semgrep-sql-injection:0:11` (`e015936f`) | `unionSqlInjectionChallenge_3.ts:10:74–82` | `tainted-sql` | không có (E) | D, F | An toàn | không |
+
+Mọi tệp đều nằm dưới `data/static/codefixes/`. Ở mỗi lời gọi:
+
+- `raw-query` trùm cả lời gọi;
+- `express-seq` trỏ vào đối số chuỗi SQL;
+- `tainted-sql` trỏ vào biến `criteria` được chèn vào chuỗi.
+
+**Căn cứ (phân tích tĩnh mã như đang viết):**
+
+- **A, `dbSchemaChallenge_1.ts` (Có lỗi):**
+  - `criteria` lấy từ `req.query.q`, chỉ bị cắt còn 200 ký tự, rồi nối thẳng vào chuỗi SQL ở dòng 5.
+  - Không có `replacements` hay `bind`: giống hệt `routes/search.ts:23`, vị trí có nhãn dương tính.
+  - Khớp ghi chú của chính Juice Shop (`dbSchemaChallenge.info.yml`, bản sửa 1).
+- **B, `dbSchemaChallenge_3.ts` (An toàn, trái với ghi chú của Juice Shop):**
+  - Dòng 7 trả 400 khi `criteria` khớp `/"|'|;|and|or|;|#/i`, nên chuỗi tới dòng 11 không chứa dấu `'`.
+  - Giá trị nằm trong literal `'%…%'` của SQLite (`models/index.ts`: `dialect: 'sqlite'`). Literal
+    SQLite chỉ đóng bằng dấu `'`, còn `\` không phải ký tự thoát.
+  - Mảng hay object từ query string làm `criteria.match` ném `TypeError` trước khi truy vấn chạy.
+  - Còn lại chỉ là chèn ký tự đại diện `%` và `_` của `LIKE`, không đổi cú pháp câu lệnh.
+  - Ghi chú của Juice Shop (bản sửa 3) chỉ nói chung rằng danh sách chặn "có thể bị vượt qua", không
+    nêu cách nào.
+- **C, `unionSqlInjectionChallenge_1.ts` (Có lỗi):**
+  - Dòng 5 gọi `criteria.replace(...)` nhưng bỏ kết quả, vì chuỗi JS bất biến; kể cả nếu gán lại,
+    biểu thức không có cờ `g` chỉ xóa lần khớp đầu.
+  - `criteria` tới dòng 6 không đổi và vào thẳng template SQL như `routes/search.ts:23`.
+  - Khớp ghi chú của Juice Shop (bản sửa 1).
+- **D, `unionSqlInjectionChallenge_3.ts` (An toàn, trái với ghi chú của Juice Shop):**
+  - Điều kiện dòng 6 `!criteria.startsWith("apple") || !criteria.startsWith("orange")` đúng với mọi
+    chuỗi, vì không chuỗi nào bắt đầu bằng cả hai từ. Hàm luôn trả 400 ở dòng 7–8; mảng hay object
+    làm `startsWith` ném `TypeError`.
+  - Lời gọi truy vấn ở dòng 10 không bao giờ chạy.
+  - Ghi chú của Juice Shop (bản sửa 3: vẫn tiêm được bằng `orange')) UNION …`) mô tả ý định của bản
+    sửa, không phải mã như đang viết. Vế sau của ghi chú, rằng bản sửa làm hỏng tìm kiếm, khớp với
+    mã.
+- **E, CodeQL:**
+  - CodeQL đã trích xuất cả 4 tệp: có thông báo `js/baseline/expected-extracted-files` và không có
+    `js/parse-error` nào cho chúng. Cả hai lượt CodeQL JavaScript không có kết quả nào trong 4 tệp.
+  - Cùng mẫu mã ở `routes/search.ts:23` được CodeQL báo (`codeql-sql-injection:0:5`).
+  - **Đã kiểm:** các tệp không có import nào, nên `models` và `Request` không được khai báo, và hàm
+    `searchProducts` của chúng không được đăng ký làm route ở đâu.
+  - **Chưa kiểm (suy luận):** vì vậy CodeQL không thấy nguồn từ request hay điểm thực thi của
+    Sequelize. Không chạy CodeQL lại trên tệp Juice Shop để thử.
+- **F, phạm vi:**
+  - Đây là tệp dữ liệu của thử thách sửa mã: `routes/vulnCodeFixes.ts` đọc chúng bằng
+    `fs.readFileSync` để hiển thị, và không tệp nào import chúng.
+  - Cấu hình CodeQL (`paths-ignore`), ESLint và Code Climate của chính Juice Shop bỏ qua
+    `data/static/codefixes`; giao thức P2b cũng loại thư mục này khỏi nhãn.
+  - Vì vậy **không cảnh báo nào trong 12 trỏ tới mã chạy trong ứng dụng**: xét ở mức ứng dụng đã triển
+    khai, cả 12 không khai thác được.
+
+**Tổng hợp đề xuất:**
+
+- Xét đoạn mã: 6 Có lỗi (A, C), 6 An toàn (B, D), 0 Chưa xác định.
+- 6 mục An toàn trái với ghi chú của Juice Shop; nên duyệt kỹ hai tệp này trước.
+- Ngoài 12 cảnh báo: Semgrep không báo hai bản sửa đúng `dbSchemaChallenge_2_correct.ts` và
+  `unionSqlInjectionChallenge_2_correct.ts`, cả hai đều dùng `replacements`. Semgrep không phân tích
+  được 12 tệp codefix của ba thử thách đăng nhập: 15 lỗi cú pháp, lệch D4 của P2b.
+
+**Ngoài phạm vi CWE-89:**
+
+- **Trong 12 cảnh báo Semgrep:** không cảnh báo nào ngoài phạm vi CWE-89 xét theo điểm thực thi hay
+  nhãn của luật; cả 12 là câu SQL thô của Sequelize. Cả 12 nằm ngoài mã chạy của ứng dụng (F).
+- **Trong 7 cảnh báo CodeQL của cùng lượt quét:** 5 cảnh báo là truy vấn NoSQL, vì `js/sql-injection`
+  gộp cả NoSQL và ghi `cwe-089`, `cwe-090`, `cwe-943`. Chúng là lời gọi `findOne`/`update` trên
+  `db.reviewsCollection` ở:
+  - `routes/likeProductReviews.ts:25`, `:36`, `:43`, `:51`;
+  - `routes/updateProductReviews.ts:18`, vị trí có nhãn NoSQL.
+
+  Đây là CWE-943, không phải CWE-89. Hai cảnh báo còn lại nằm ở hai vị trí SQL có nhãn.
+
+### 22.3 Lợi ích của phép gộp cảnh báo JS/TS
+
+**Quy tắc ước lượng** là quy tắc Python của `sql-injection-v0.2` mang sang JS/TS: cảnh báo của mọi
+công cụ và mọi luật chỉ thành một mục khi vùng báo nằm trọn trong cùng một lời gọi thực thi SQL.
+
+- **Lời gọi thực thi SQL:** lời gọi trong cùng nhất có tên `query`, `execute`, `raw`, `whereRaw`,
+  `fromRaw` hoặc `literal`, là các phương thức điểm thực thi mà 12 luật JS của pack có nêu.
+- **Còn lại** mỗi cảnh báo là một mục.
+- **Cách tính:**
+  - bộ định vị thử nghiệm `artifacts/cwe89-eval/js_sql_sites.mjs`, dùng trình phân tích cú pháp
+    TypeScript của `frontend/node_modules`; chỉ dùng cho phép ước lượng, không thuộc ứng dụng;
+  - script `js_merge_estimate.py`, đọc lượt quét đã lưu, không quét lại.
+
+| Nhóm | Cảnh báo | Mục hiện nay | Mục khi gộp | Giảm | Cảnh báo gốc theo nhóm |
+|---|---|---|---|---|---|
+| `routes/login.ts:34` (`models.sequelize.query`, có nhãn) | 4 (CodeQL + 3 luật Semgrep) | 4 | 1 | 3 | `codeql-sql-injection:0:4`, `semgrep-sql-injection:0:12`, `:0:13`, `:0:14` |
+| `routes/search.ts:23` (có nhãn) | 4 (CodeQL + 3 luật Semgrep) | 4 | 1 | 3 | `codeql-sql-injection:0:5`, `semgrep-sql-injection:0:15`, `:0:16`, `:0:17` |
+| 4 tệp codefix (mục 22.2) | 12 (3 luật Semgrep mỗi lời gọi) | 12 | 4 | 8 | `semgrep-sql-injection:0:0`–`:0:11`, ba cảnh báo liền nhau mỗi tệp |
+| 5 cảnh báo NoSQL của CodeQL | 5 | 5 | 5 | 0 | `codeql-sql-injection:0:0`–`:0:3`, `:0:6`: không nằm trong lời gọi nào ở trên |
+| **Tổng** | **25** | **25** | **11** | **14** | |
+
+**Phân tích phần giảm:**
+
+- 6 trong 14 là gộp giữa công cụ, ở hai vị trí có nhãn.
+- 8 là gộp giữa các luật của cùng Semgrep, ở 4 tệp codefix.
+- Chỉ trong mã chạy của ứng dụng (bỏ `data/static/codefixes`): 13 mục còn 7, giảm 6.
+- 8 mục codefix cũng mất nếu chỉ loại thư mục đó khỏi quét, không cần bộ định vị. Juice Shop tự làm
+  việc này trong cấu hình CodeQL của nó, nhưng cách này chỉ đúng riêng cho dự án này.
+- Riêng Semgrep: 18 cảnh báo thành 6 mục. Ba luật Semgrep luôn cùng báo ở mỗi lời gọi
+  `sequelize.query` có chuỗi SQL dựng từ dữ liệu vào, nên hai trong ba cảnh báo là thừa.
+
+**Ánh xạ mơ hồ:**
+
+- Mọi vùng SQL nằm trọn trong đúng một lời gọi; không vùng nào nằm trong hai lời gọi lồng nhau. Vùng
+  của `raw-query` trùng đúng với cả lời gọi.
+- Chạy bộ định vị trên toàn cây (673 tệp `.ts`/`.js`) cho 26 lời gọi:
+  - 21 là `models.sequelize.query`: 3 ở `routes/`, 18 ở `codefixes/`;
+  - 5 là `fixture.debugElement.query` trong kiểm thử Angular, không phải SQL.
+
+  Một bộ định vị chỉ dựa vào tên sẽ coi 5 lời gọi này là điểm thực thi SQL. Hiện không có cảnh báo
+  nào rơi vào chúng, nên chưa gây gộp sai.
+- Trường hợp Python đã gặp, câu SQL dựng ở một câu lệnh riêng rồi mới truyền vào lời gọi như Bandit
+  trên BenchmarkPython, không có ở Juice Shop. Ở dạng đó vùng báo nằm ngoài lời gọi, nên không gộp
+  được.
+- Cỡ mẫu nhỏ: 6 lời gọi SQL có cảnh báo, một ORM (Sequelize), một kho.
+
+### 22.4 Bandit trên một tập Python độc lập (SVEN)
+
+**Giao thức:**
+
+- `artifacts/cwe89-eval/PROTOCOL-SVEN.md`, sha256
+  `b57d75ba0966ea22a7697457802ff38fdf5ddc942ed335614ea675d900d2d8a4`, chốt lúc 2026-11-16T10:03:47Z.
+- Giao thức được chốt trước khi dựng tập và trước khi công cụ nào chạy: lượt quét đầu tạo lúc
+  10:05:05Z. Hash của bốn script cũng được ghi trong giao thức và vẫn khớp sau khi đo.
+- **Một sai lệch** (`PROTOCOL-SVEN-DEVIATIONS.md`, D1): giao thức hứa số mục rà theo từng nhóm, nhưng
+  script đo chỉ tính cho cả tập và vùng có nhãn. Phân bố theo nhóm bên dưới vì thế là quan sát sau
+  khi đo. Không số nào của giao thức đổi.
+
+**Dữ liệu:**
+
+- **Nguồn:** SVEN `eth-sri/sven@e8449a0d54a5ae0bbdc6bb236330b8c7ec71df57`, 204 cặp hàm Python CWE-89
+  (184 train, 20 val, không cặp trùng). Mỗi cặp là hàm trước và sau một commit sửa lỗi.
+  - **Ca dương:** hàm trước khi sửa.
+  - **Ca âm:** hàm sau khi sửa.
+- **Độc lập:** không file nào của dự án nhắc tới SVEN, và không kho nào trong 71 kho của nó có trong
+  dữ liệu dự án.
+- **Biến thể "file" (chính):** quét cả file tại commit sửa.
+  - 174 ca, 251 file, 56 kho.
+  - 30 ca bị loại theo tiêu chí cơ học: 11 do file trả 404 (5 file khác nhau), 3 do không tìm thấy
+    hàm, 16 do file không qua `ast.parse`.
+  - Theo mục 4 của giao thức: 117 ca có lời gọi thực thi (`execute`…), 57 ca qua hàm bọc. 101 ca có
+    import thư viện cơ sở dữ liệu trong file, 73 ca không.
+- **Biến thể "fragment" (độ nhạy):** mỗi hàm đứng riêng trong một file; 204 ca (140 có lời gọi thực
+  thi, 64 qua hàm bọc), 408 file.
+
+**Lượt quét:** mỗi biến thể quét một lần bằng `multi-cwe-v0.3`, cả hai `completed`.
+
+- File: `bed105e3-9fea-41e3-8c3c-cbca1d0e9970`, snapshot `418bfdd7…`.
+- Fragment: `dde8e6d8-af99-48cf-bf53-5df452c9bc47`, snapshot `deb81bfc…`.
+- "CodeQL + Semgrep" được suy ra từ chính lượt quét bằng cách bỏ cảnh báo Bandit.
+
+**Biến thể "file", 174 ca dương và 174 ca âm:**
+
+| | CodeQL | Semgrep | Bandit | CodeQL + Semgrep | CodeQL + Semgrep + Bandit |
+|---|---|---|---|---|---|
+| Ca dương bị báo | 7 | 126 | 167 | 126 | 171 |
+| Ca âm bị báo | 0 | 4 | 23 | 4 | 24 |
+| Cảnh báo thô | 7 | 648 | 613 | 655 | 1268 |
+| Cảnh báo ngoài vùng có nhãn | 0 | 304 | 372 | 304 | 676 |
+| Mục rà trong vùng có nhãn | — | — | — | 193 | 343 |
+| Mục rà cả tập | — | — | — | 403 | 833 |
+| Thời gian lượt (giây) | 6,5 | 6,6 | 1,9 | — | — |
+
+**Giá trị tăng thêm của Bandit (CodeQL + Semgrep + Bandit so với CodeQL + Semgrep):**
+
+| Nhóm | Ca | Ca dương riêng Bandit bổ sung | Ca âm riêng Bandit báo thêm | Ca dương cả ba công cụ đều bỏ sót |
+|---|---|---|---|---|
+| **Biến thể "file", tất cả** | 174 | **45** | **20** | 3 |
+| Có lời gọi thực thi trong hàm | 117 | 0 | 0 | 1 |
+| Qua hàm bọc | 57 | 45 | 20 | 2 |
+| Có import thư viện cơ sở dữ liệu | 101 | 10 | 5 | 2 |
+| Không có import | 73 | 35 | 15 | 1 |
+| **Biến thể "fragment", tất cả** | 204 | **50** | **23** | 3 |
+| Có lời gọi thực thi trong hàm | 140 | 0 | 0 | 1 |
+| Qua hàm bọc | 64 | 50 | 23 | 2 |
+
+**Mục rà tăng sau gộp:**
+
+- Biến thể "file":
+  - +150 trong vùng có nhãn (193 lên 343);
+  - +430 trên cả tập (403 lên 833). Con số cả tập bị phóng đại, vì mã ngoài hàm có nhãn lặp lại ở
+    mỗi bản sao của một file.
+- Biến thể "fragment": +172 (226 lên 398).
+- 185 mục ở biến thể "file" chứa cảnh báo của hơn một công cụ, nằm trong cùng một lời gọi.
+
+Biến thể "fragment" cho cùng kết luận. Ở đó CodeQL không báo ca nào, vì không có ngữ cảnh.
+
+**Quan sát sau khi đo** (`sven_posthoc.py`; không phải chỉ số của giao thức):
+
+- **Phân bố 150 mục Bandit thêm trong vùng có nhãn:**
+  - 61 mục nằm trong hàm có lời gọi thực thi (59 phía dương, 2 phía âm), nơi Bandit không thêm ca
+    nào. Bandit báo ở dòng dựng chuỗi, Semgrep báo ở lời gọi `execute`, nên hai bên không gộp được,
+    như trên BenchmarkPython.
+  - 89 mục nằm trong hàm qua hàm bọc (67 dương, 22 âm).
+- **20 ca âm riêng Bandit báo** (đọc trọn câu lệnh bị báo, chưa xác minh đầy đủ):
+  - 18 ca chỉ dựng câu SQL từ hằng:
+    - 6 ca chèn tên bảng lấy từ hằng hay cấu hình (`.format(TABLE_NAME)`, `CFG("…_table_name")`,
+      `% (self.table)`);
+    - 12 ca dùng f-string hay nối chuỗi không chứa dữ liệu vào, còn giá trị đi qua tham số `%s`/`?`.
+  - 2 ca cần duyệt: `RandyRomero/photoGPSbot clean_cache` (`f'WHERE chat_id in {user_ids} '`) và
+    `DKelle/Smash_stats h2h` (`'{player1}'` được thay bởi hàm `db.exec(sql, args)` của dự án).
+- **45 ca dương riêng Bandit bổ sung:** đều là luật B608. Chúng đến từ 12 kho, trong đó 4 kho góp 31
+  ca: `DKelle/Smash_stats` 10, `ShaominLi/Twitter_project` 9, `RandyRomero/photoGPSbot` 6,
+  `sgosal2/tiger-boards-backend` 6. Cỡ mẫu thực vì thế gần với 12 dự án hơn là 45 ca độc lập.
+- **Bandit báo cả hai phía ở 18/45 ca:** với 18 ca dương riêng Bandit bổ sung, Bandit vẫn báo hàm sau
+  khi sửa. Đó chính là 18 trong 20 ca âm riêng Bandit báo thêm. Chỉ ở 27 ca, Bandit báo riêng bản có
+  lỗi.
+- **BenchmarkPython khớp với nhóm "có lời gọi thực thi" của SVEN:** cả 16 ca `sqli` đều có `.execute(`,
+  và trên tập đó Bandit cũng không thêm ca đúng nào so với Semgrep (mục 21.6).
+
+**Áp quy tắc chốt trước** (mục 8 của giao thức, biến thể "file"): Bandit bổ sung 45 ca dương, không
+ít hơn 20 ca âm nó báo thêm. Kết quả: **đề xuất dùng thường xuyên**.
+
+### 22.5 Đề xuất cấu hình
+
+Đề xuất để chủ đề án quyết định bước triển khai tiếp theo. Mọi thay đổi đều cần một phiên bản
+profile mới (ví dụ `sql-injection-v0.3` trong `multi-cwe-v0.4`) và một lượt đo mới, vì `v0.2`/`v0.3`
+đã khóa.
+
+**Python:**
+
+| Công cụ | Đề xuất | Căn cứ |
+|---|---|---|
+| CodeQL | Dùng thường xuyên (mốc) | 0 ca âm bị báo trên cả hai tập. Độ phủ thấp khi thiếu ngữ cảnh (0/5 BenchmarkPython, 7/174 SVEN), nhưng là công cụ duy nhất theo luồng dữ liệu giữa các file. Chạy trên cơ sở dữ liệu dùng chung, khoảng 5–7 giây |
+| Semgrep | Dùng thường xuyên | BenchmarkPython: 5/5 ca đúng, 0 ca sai. SVEN: 126/174 ca dương, 4/174 ca âm; 116/117 ca có lời gọi thực thi |
+| Bandit | Dùng thường xuyên, theo quy tắc chốt trước, **kèm điều kiện về khối lượng rà** | SVEN: +45 ca dương, +20 ca âm, +150 mục rà trong vùng có nhãn (tăng 78%). Toàn bộ phần bổ sung nằm ở mã qua hàm bọc. Ở mã có lời gọi thực thi, Bandit chỉ thêm mục trùng (SVEN: 0 ca thêm; BenchmarkPython: 0 ca thêm, 11 ca sai). Quan sát sau khi đo: ở 18/45 ca thêm, Bandit cũng báo cả bản đã sửa |
+
+**Điều kiện cho Bandit:**
+
+- Nếu khối lượng rà là ràng buộc chính, có thể để Bandit tùy chọn cho mã gọi thẳng `execute`.
+- Cách giữ được lợi ích mà giảm mục trùng là nối cảnh báo B608 với lời gọi dùng chuỗi đó trong cùng
+  hàm, ví dụ một luật đơn vị `sql-call-site-v2`. Trên SVEN, cách này gộp được tối đa 61 trong 150 mục
+  thêm. Đây là ước lượng trên, chưa đo; cần phiên bản mới và lượt đo mới.
+
+**JavaScript/TypeScript:**
+
+| Công cụ | Đề xuất | Căn cứ |
+|---|---|---|
+| CodeQL | Dùng thường xuyên (mốc) | Báo 2/2 vị trí SQL có nhãn ở Juice Shop. 5 cảnh báo còn lại là NoSQL (CWE-943, mục 22.2) |
+| Semgrep | Để tùy chọn | Không thêm vị trí có nhãn nào. 6/18 cảnh báo trùng CodeQL. 12/18 nằm ở mã không chạy trong ứng dụng; trong đó 6 có lỗi nếu xét đoạn mã (đề xuất, mục 22.2). Mới có một kho, 2 vị trí; cần một tập JS/TS có nhãn thứ hai trước khi dùng thường xuyên |
+| Bandit | Không áp dụng | Chỉ quét Python |
+
+**Phép gộp JS/TS: nên làm, ở quy mô nhỏ, đi cùng Semgrep JS/TS.**
+
+- **Lợi ích:** trên Juice Shop, 25 mục còn 11, giảm 14; riêng ở mã chạy trong ứng dụng, 13 mục còn
+  7.
+- **Chi phí:** bộ định vị thử nghiệm khoảng 80 dòng, dùng trình phân tích cú pháp TypeScript.
+- **Mơ hồ:** 5 lời gọi `debugElement.query` không phải SQL; hiện chưa gây gộp sai.
+- **Phụ thuộc vào Semgrep JS/TS:** chỉ có ích khi Semgrep JS/TS chạy. Lượt CodeQL đứng một mình chỉ
+  có một cảnh báo mỗi vị trí, nên nếu bỏ Semgrep JS/TS thì phép gộp gần như không còn tác dụng.
+
+### 22.6 Giới hạn và phần chưa kiểm chứng
+
+- **Nhãn mục 22.2 chưa được duyệt.** 6 mục trái với ghi chú của Juice Shop (B, D) cần xem trước.
+- **Nhãn SVEN chưa được dự án kiểm lại.** "Sau khi sửa" không chứng minh cả hàm an toàn; 2 trong 20
+  ca âm riêng Bandit báo cần duyệt.
+- **Mỗi file SVEN được quét riêng, không có phần còn lại của kho** (mục 9 của giao thức). Với một
+  lượt quét cả kho, CodeQL có thể thấy hàm bọc và nguồn mà ở đây nó không thấy, nên con số "Bandit
+  bổ sung" có thể cao hơn thực tế.
+- **JS/TS:**
+  - một kho, một ORM, 6 lời gọi SQL có cảnh báo;
+  - bộ định vị thử nghiệm không thuộc ứng dụng và không có kiểm thử;
+  - chưa có tập JS/TS có nhãn thứ hai.
+- **CI chưa chạy** (mục 22.7).
+
+### 22.7 Trạng thái Git
+
+**Kiểm ngày 2026-11-16 từ ref cục bộ, không liên lạc máy chủ:**
+
+- `git status -sb` cho `## feat/multi-cwe-p2a...origin/feat/multi-cwe-p2a`: không lệch.
+- `refs/remotes/origin/feat/multi-cwe-p2a` là `402566f`, trùng `HEAD`.
+- Nhánh vì thế đã được push tới `402566f`, gồm cả ba commit P2b. Ref theo dõi chỉ đổi khi push hay
+  fetch từ máy này, nên đây là trạng thái ở lần liên lạc cuối với remote.
+
+**CI:** `ci.yml` chỉ chạy khi push lên `main` hoặc khi có pull request. Từ máy này không kiểm được có
+pull request hay không, nên trạng thái CI chưa xác minh.
+
+**Lúc ghi mục này:** mục 22 và các dòng trạng thái sửa cùng lúc chưa được commit.

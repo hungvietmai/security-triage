@@ -356,7 +356,7 @@ trình bày cả hai kịch bản.
      CWE-22 cho đúng kết quả của `multi-cwe-v0.1`. Xem [plans/multi-cwe.md](plans/multi-cwe.md),
      mục 20. CodeQL không báo ca `sqli` nào của BenchmarkPython vì kết nối cơ sở dữ liệu đến từ hàm
      của chính benchmark, mà CodeQL không mô hình hóa là kết nối SQL (mục 20.11).
-   - Profile ghép `multi-cwe-v0.3` (16/11, P2b, commit `64b6d78`, chưa push; đo kỹ thuật trên dữ liệu
+   - Profile ghép `multi-cwe-v0.3` (16/11, P2b, commit `64b6d78`, đã push; đo kỹ thuật trên dữ liệu
      phát triển có nhãn, **không** phải đánh giá độc lập): nhóm CWE-89 chạy thêm Semgrep (37 file luật
      thượng nguồn, chọn cơ học) và Bandit, chỉ gộp cảnh báo nằm trong cùng một lời gọi thực thi truy
      vấn của Python. Giao thức đo ghi và băm trước khi chạy hai công cụ trên nguồn có nhãn; mỗi nguồn
@@ -366,6 +366,12 @@ trình bày cả hai kịch bản.
      trí SQL có nhãn, chỉ nhãn dương tính): CodeQL và Semgrep đều báo cả 2 vị trí; Semgrep không bổ
      sung vị trí nào, thêm 18 mục rà. Chỉ là số đếm trên tập rất nhỏ. Xem
      [plans/multi-cwe.md](plans/multi-cwe.md), mục 21.
+   - Đánh giá cấu hình CWE-89 (16/11, mốc `multi-cwe-v0.3`, không quét lại nguồn có nhãn): 12 cảnh
+     báo Semgrep JS/TS ngoài nhãn của Juice Shop đều nằm trong `data/static/codefixes/`, mã không chạy
+     trong ứng dụng (nhãn đề xuất 6 Có lỗi, 6 An toàn, chờ duyệt). Gộp theo lời gọi SQL được ước lượng
+     giảm 25 mục còn 11. Bandit trên tập Python độc lập SVEN (174 cặp hàm, giao thức băm trước khi
+     quét): thêm 45 ca dương mà CodeQL + Semgrep bỏ sót, nhưng cũng báo thêm 20 ca âm và 150 mục rà;
+     toàn bộ phần thêm nằm ở mã gọi SQL qua hàm bọc. Đề xuất cấu hình: [plans/multi-cwe.md](plans/multi-cwe.md), mục 22.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
