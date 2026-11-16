@@ -372,6 +372,13 @@ trình bày cả hai kịch bản.
      giảm 25 mục còn 11. Bandit trên tập Python độc lập SVEN (174 cặp hàm, giao thức băm trước khi
      quét): thêm 45 ca dương mà CodeQL + Semgrep bỏ sót, nhưng cũng báo thêm 20 ca âm và 150 mục rà;
      toàn bộ phần thêm nằm ở mã gọi SQL qua hàm bọc. Đề xuất cấu hình: [plans/multi-cwe.md](plans/multi-cwe.md), mục 22.
+   - Profile thử nghiệm `multi-cwe-v0.4` (16/11): cảnh báo Bandit B608 ở câu gán dựng chuỗi SQL được
+     nối với cảnh báo CodeQL hoặc Semgrep tại lời gọi thực thi chuỗi đó khi biến chỉ được gán và đọc
+     một lần. Chạy lại trên SARIF đã lưu của SVEN (giao thức băm trước, một sai lệch ghi lại): mục rà
+     trong vùng có nhãn từ 343 xuống 306, không mất ca dương nào; 60/60 liên kết rà tay đúng. Sau gộp,
+     Bandit thêm 45 ca dương, 20 ca âm và 113 mục rà so với CodeQL + Semgrep; đề xuất bật thường
+     xuyên. SonarQube Community Build không có phân tích taint nên đối chứng chưa đo được. Xem
+     [plans/multi-cwe.md](plans/multi-cwe.md), mục 23.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng

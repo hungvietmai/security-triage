@@ -21,7 +21,9 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
   (profile `multi-cwe-v0.3`, CWE-89 bằng Semgrep, Bandit và CodeQL, có số đo trên dữ liệu phát triển
   có nhãn) ở [mục 21](#21-trạng-thái-p2b-2026-11-16); đợt đánh giá để đề xuất cấu hình CWE-89
   (truy vết cảnh báo Semgrep JS/TS của Juice Shop, lợi ích của phép gộp JS/TS, Bandit trên tập
-  Python độc lập SVEN) ở [mục 22](#22-đánh-giá-cấu-hình-cwe-89-cho-python-và-jsts-2026-11-16).
+  Python độc lập SVEN) ở [mục 22](#22-đánh-giá-cấu-hình-cwe-89-cho-python-và-jsts-2026-11-16);
+  profile thử nghiệm `multi-cwe-v0.4` (nối cảnh báo Bandit với lời gọi SQL) và giá trị Bandit sau gộp
+  ở [mục 23](#23-phép-gộp-bandit-với-lời-gọi-sql-và-giá-trị-bandit-sau-gộp-2026-11-16).
 
 ## 1. Kết luận ngắn
 
@@ -2306,3 +2308,290 @@ profile mới (ví dụ `sql-injection-v0.3` trong `multi-cwe-v0.4`) và một l
 pull request hay không, nên trạng thái CI chưa xác minh.
 
 **Lúc ghi mục này:** mục 22 và các dòng trạng thái sửa cùng lúc chưa được commit.
+
+## 23. Phép gộp Bandit với lời gọi SQL và giá trị Bandit sau gộp (2026-11-16)
+
+Profile ghép thử nghiệm `multi-cwe-v0.4`, thành viên CWE-89 `sql-injection-v0.3`.
+
+- **Cấu hình thử nghiệm:** giữ đủ CodeQL, Semgrep và Bandit, cùng luật và cấu hình như `v0.3`.
+- **Khác biệt duy nhất:** phép gộp đơn vị Python `sql-call-site-v2`. Cảnh báo Bandit B608 ở câu
+  gán dựng chuỗi SQL được nối với cảnh báo CodeQL hoặc Semgrep tại lời gọi thực thi chuỗi đó.
+- **Không đổi:**
+  - các profile đã khóa;
+  - `multi-cwe-v0.3`, `sql-injection-v0.2` và luật Semgrep;
+  - số đo của mục 21 và 22.
+- **Không quét lại nguồn có nhãn nào:** phép gộp cũ và mới được chạy lại trên SARIF đã lưu của lượt
+  quét SVEN ở mục 22.4.
+- **SonarQube:** chạy độc lập, bên ngoài profile, worker và API.
+
+### 23.1 Phép gộp mới (`sql-call-site-v2`)
+
+Đặc tả: [profiles/sql-injection-v0.3/DETECTION.md](../../profiles/sql-injection-v0.3/DETECTION.md),
+mục 2. Mã: `sql_sites.locate_sql_strings`, `string_link` và `detection.link_decisions`.
+
+**Điều kiện nối.** Một cảnh báo B608 nằm ngoài mọi lời gọi được nối vào đơn vị của đúng một lời gọi
+thực thi khi đủ cả sáu điều:
+
+1. Vùng báo trùng một chuỗi literal (hay phần literal của f-string) mà vế phải của
+   `tên = <biểu thức>` được dựng từ đó. "Dựng từ" chỉ gồm `+`, `%` và `.format()`.
+2. `tên` chỉ được gán bằng câu đó trong phạm vi.
+3. `tên` không xuất hiện ở phạm vi lồng nhau.
+4. `tên` được đọc đúng một lần: đối số đầu của một lời gọi thực thi sau câu gán.
+5. Các dòng của câu gán và của lời gọi đều là ASCII.
+6. Lời gọi đó đã có cảnh báo CodeQL hoặc Semgrep.
+
+Phạm vi là module, class hoặc hàm, nên phép nối cũng áp cho câu gán ở cấp module hay class, không
+chỉ trong hàm.
+
+**Giữ riêng.** Có phép gán lại (`+=`, tham số cùng tên, biến vòng lặp, `global`…), nhiều lời gọi
+thực thi, biến còn được đọc ở chỗ khác, hay câu SQL đi vào hàm bọc chưa xác định: cảnh báo giữ đơn
+vị riêng, kèm lý do.
+
+**Truy vết.**
+
+- Cảnh báo được nối giữ vị trí, quy tắc và nhãn CWE gốc.
+- `UnitFinding.match_rule` là `explicit_link`.
+- Bằng chứng đơn vị có `linked_by`: biến và câu gán.
+- Lý do của đơn vị ghi dòng và biến.
+- JavaScript/TypeScript và hai nhóm CWE-78, CWE-22 không đổi.
+
+**Phát triển.** Luật được viết trên:
+
+- kiểm thử tổng hợp: `test_sql_string_links.py`, 25 ca; `test_sql_linked_merge.py`, 5 ca, gồm một
+  lượt quét lưu qua worker và API;
+- năm lượt quét `v0.3` đã lưu của nguồn phát triển không nhãn.
+
+Một lần chỉnh trước khi chốt: phần literal của f-string (pygoat). Một lần sửa sau lần chạy đầu trên
+SVEN, sai lệch D1:
+
+- **Vấn đề:** với chuỗi nhiều dòng, Bandit 1.9.4 ghi `endLine` không phải dòng cuối của chuỗi.
+- **Sửa:** luật so dòng đầu, cột đầu và cột cuối, không so `endLine`.
+- **Ghi lại:** `artifacts/cwe89-eval/PROTOCOL-MERGE-DEVIATIONS.md`.
+
+### 23.2 Lệnh, phiên bản, đầu ra
+
+**Trạng thái mã:**
+
+- Commit `402566f` cộng thay đổi chưa commit; cây đã kiểm thử: `9d6334a10e527f4eac36ea60d210f49234cd6929`.
+- Mã ứng dụng trong image worker có hash `4b17731a08fe1175`, giống cây làm việc.
+- Hash profile:
+  - `sql-injection-v0.3`: `5f33257e0909c8e7c5d2a27778309ff0c1bbbff9af4aa009ec43ad7cacd23c38`;
+  - `multi-cwe-v0.4`: `24441fd8e0c4825a398baa19e23e4c26593dad0acfc9bba1cefcdf052091d0fc`.
+
+**Công cụ:**
+
+- Bandit 1.9.4, Semgrep CE 1.178.0, CodeQL 2.27.1: các cảnh báo được chạy lại phép gộp do chính các
+  bản này sinh ra trong lượt quét SVEN.
+- SonarQube Community Build 26.11.0.134175: image `sonarqube@sha256:65541acc…`.
+- SonarScanner CLI 8.4.0.16527: image `sonar-scanner-cli@sha256:6e6eca4d…`.
+
+**Giao thức:** `artifacts/cwe89-eval/PROTOCOL-MERGE.md`.
+
+- sha256 `fa7cc7ea2faa67b36ca7410a1c281a2b5f1427a29e2403bee256916bc2b7a8fc`, chốt
+  2026-11-16T11:16:06Z, trước lần chạy đầu của phép gộp mới trên SVEN.
+- Sai lệch D1 ở `PROTOCOL-MERGE-DEVIATIONS.md`.
+
+**Lệnh, chạy từ gốc repo:**
+
+1. Lấy cảnh báo và đơn vị đã lưu của lượt quét SVEN:
+   - `docker compose exec -T api python - bed105e3-9fea-41e3-8c3c-cbca1d0e9970 python/findings.json < artifacts/cwe89-eval/scan_artifacts.py > artifacts/cwe89-eval/sven-stored-file/findings.json`
+   - tương tự với `python/units.json`.
+2. Chạy lại phép gộp:
+   - `cd backend && PYTHONPATH=. uv run python ../artifacts/cwe89-eval/replay_merge.py ../artifacts/cwe89-eval/sven-stored-file ../artifacts/cwe89-eval/sven-corpus-file/src MODE [--without bandit] ../artifacts/cwe89-eval/merge/replay-NAME.json`
+   - `MODE` là `sql-call-site-v1` hoặc `sql-call-site-v2`; bốn lần chạy ở mục 2 của giao thức.
+3. Đo, rồi phân tích sau đo:
+   - `python -I artifacts/cwe89-eval/measure_merge.py`
+   - `python -I artifacts/cwe89-eval/merge_posthoc.py`
+4. Nguồn phát triển:
+   - `python artifacts/cwe89-eval/fetch_stored_scan.py SCAN SNAPSHOT artifacts/cwe89-eval/dev-replay/NAME`, rồi `replay_merge.py` trên thư mục đó;
+   - lượt quét thật: `python artifacts/cwe89-eval/scan_dev_v04.py NAME...`;
+   - so sánh: `python artifacts/cwe89-eval/compare_v04.py NAME...`, `python artifacts/cwe89-eval/sarif_preserved_v04.py`.
+5. SonarQube:
+   - máy chủ: `docker network create cwe89-sonar`, rồi `docker run -d --name cwe89-sonarqube --network cwe89-sonar -p 127.0.0.1:9000:9000 -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true sonarqube:community`;
+   - thiết lập qua API, với tài khoản `admin`:
+     - đổi mật khẩu mặc định: `POST api/users/change_password`;
+     - tạo dự án: `POST api/projects/create` với `project=cwe89-sven-file`;
+     - tạo token: `POST api/user_tokens/generate` với `type=PROJECT_ANALYSIS_TOKEN`;
+   - xác minh trước khi đo:
+     - bản và phiên bản: `api/navigation/global`, `api/server/version`;
+     - kho luật Python: `api/rules/repositories?language=py`;
+     - luật CWE-89 và luật đang bật: `api/rules/search?languages=py&cwe=89`, `api/rules/search?qprofile=<profile mặc định>&activation=true&languages=py&cwe=89`;
+     - kiểm luật taint: `api/rules/show?key=pythonsecurity:S3649`;
+     - đầu ra ở `sonarqube/*.json` và `state.txt`;
+   - quét: `docker run --rm --network cwe89-sonar -v <sven-corpus-file/src>:/usr/src:ro -e SONAR_HOST_URL=http://cwe89-sonarqube:9000 -e SONAR_TOKEN=… sonarsource/sonar-scanner-cli -Dsonar.projectKey=cwe89-sven-file -Dsonar.sources=. -Dsonar.inclusions=**/*.py -Dsonar.python.version=3.12 -Dsonar.scm.disabled=true`;
+   - đo: `python -I artifacts/cwe89-eval/sonar_measure.py TỆP_MẬT_KHẨU`. Tệp chứa mật khẩu `admin` cục bộ và không lưu trong repo.
+6. Hồi quy: `bash artifacts/cwe89-eval/final/run_all.sh`.
+
+**Đầu ra:** `artifacts/cwe89-eval/merge/`, `dev-replay/`, `dev-v04/`, `sonarqube/`, `final/`, không
+vào git.
+
+### 23.3 Hiệu quả gộp trên cùng SARIF đã lưu (SVEN, 174 cặp)
+
+| Lần chạy | Cảnh báo | Mục rà cả tập | Mục rà trong vùng có nhãn | Mục có cảnh báo của hơn một công cụ |
+|---|---|---|---|---|
+| Gộp cũ (`v0.3`), ba công cụ | 1268 | 833 | **343** | 185 |
+| Gộp mới, theo giao thức lúc chốt | 1268 | 775 | 322 | 241 |
+| **Gộp mới, sau sửa D1** | 1268 | **731** | **306** | 285 |
+
+**Kiểm tra bắt buộc:**
+
+- Chạy lại phép gộp cũ cho đúng 833 mục đã lưu: cùng ID, cùng cảnh báo trong từng mục.
+- Mỗi cảnh báo nằm trong đúng một mục.
+- Số ca dương và ca âm bị báo không đổi: 171 và 24.
+- Cả **45/45** ca dương mà riêng Bandit bổ sung vẫn có mục rà chứa cảnh báo Bandit của ca đó.
+- Không mục nào bị gạn. Điều này đúng theo cấu trúc mã: `keep_detected_v2` chỉ sinh mục ở danh sách
+  rà. Bản chạy lại không giữ đánh giá của từng mục, nên trên SVEN điều này không được kiểm riêng; nó
+  đã được kiểm trên sáu lượt quét thật `v0.4` (mục 23.6).
+
+**So với mốc ước lượng 61.** Mốc 61 là số mục chỉ có Bandit, trong vùng có nhãn, ở hàm có lời gọi
+thực thi.
+
+- Phép gộp mới nối được **37** mục trong số đó; theo giao thức lúc chốt là 21.
+- 24 mục còn lại đều ở hàm có lời gọi thực thi: 19 vì biến bị gán lại, 5 vì vùng báo không phải
+  chuỗi được gán.
+- 89 mục Bandit ở hàm qua hàm bọc không đổi: không có lời gọi thực thi nào để nối.
+- Trên cả tập có 102 liên kết; 65 liên kết còn lại nối mục ở các hàm khác của cùng file.
+
+**Lý do của 613 cảnh báo B608** (toàn bộ cảnh báo Bandit của lượt quét đều là B608):
+
+| Lý do | Số cảnh báo |
+|---|---|
+| Đã nằm trong lời gọi (gộp từ `v0.3`) | 185 |
+| Nối mới | 102 |
+| Không lời gọi thực thi nào nhận biến (hàm bọc, `return`…) | 202 |
+| Biến bị gán lại | 84 |
+| Vùng báo không phải chuỗi được gán (ví dụ `q = db.query("…")`) | 22 |
+| Không nằm trong câu gán đơn | 18 |
+
+**Rà thủ công** 60 liên kết rút ngẫu nhiên (seed `20261116`) trong 102:
+
+- Kết quả: **60 đúng, 0 sai, 0 chưa xác định** (`merge/link-review.md`).
+- Ở mọi liên kết, chuỗi được báo là một phần của câu SQL gán cho biến, và lời gọi được nối chạy đúng
+  biến đó.
+- Kết luận chỉ nói về liên kết. Nhiều câu SQL trong mẫu chỉ ghép hằng, nên cảnh báo được nối vẫn có
+  thể là cảnh báo sai.
+
+### 23.4 Giá trị của Bandit sau khi đã gộp
+
+Cùng dữ liệu, cùng nhãn, cùng phép gộp mới. Cấu hình hai công cụ được tính lại từ đầu vào đã bỏ cảnh
+báo Bandit.
+
+| Cấu hình (SVEN biến thể "file", 174 ca dương, 174 ca âm) | Ca dương bị báo | Ca âm bị báo | Mục rà trong vùng có nhãn | Mục rà cả tập | Giới hạn so sánh |
+|---|---|---|---|---|---|
+| `v0.3` (gộp cũ, CodeQL + Semgrep + Bandit) | 171 | 24 | 343 | 833 | Lượt quét đã lưu |
+| Gộp mới có Bandit (`v0.4`) | 171 | 24 | 306 | 731 | Chạy lại trên SARIF đã lưu, sau sửa D1 (theo giao thức lúc chốt: 322 và 775) |
+| Gộp mới bỏ Bandit (CodeQL + Semgrep) | 126 | 4 | 193 | 403 | Chạy lại, đầu vào bỏ Bandit; giống hệt gộp cũ bỏ Bandit |
+| SonarQube độc lập: Community Build 26.11.0.134175, luật CWE-89 duy nhất `python:S2077` | 0 | 0 | 0 | 0 | Đã chạy ngoài Security Triage, trên cùng 251 file, cùng cách ghép với nhãn, chỉ tính kết quả SonarQube tự tạo. Bản này không có phân tích taint (S3649), nên **đối chứng phân tích injection chưa đo được**; các số 0 chỉ là kết quả của S2077 (mục 23.5) |
+
+**Bandit bổ sung, sau gộp:**
+
+- 45 ca dương mà CodeQL và Semgrep đều không báo (26% trong 174 ca);
+- 20 ca âm báo thêm;
+- **+113 mục rà** trong vùng có nhãn, từ 193 lên 306 (trước khi gộp mới là +150);
+- +328 mục rà trên cả tập.
+
+Cả 45 ca thêm đều ở hàm gọi SQL qua hàm bọc, và đến từ 12 kho (mục 22.4).
+
+**Quy tắc chốt trước** (mục 5 của giao thức):
+
+- Chi phí rà nền là 193/126 = 1,53 mục cho mỗi ca dương.
+- Chi phí rà biên của Bandit là 113/45 = **2,51**. Ngưỡng 2 lần chi phí nền là 3,06, nên kết quả
+  là **bật thường xuyên**.
+- Theo kết quả lúc chốt (129/45 = 2,87), kết luận cũng như vậy. Trước khi gộp mới (150/45 = 3,33),
+  quy tắc này sẽ cho "chỉ khi rà sâu".
+
+### 23.5 Đối chứng SonarQube
+
+**Đã xác minh trước khi đo** (`artifacts/cwe89-eval/sonarqube/state.txt`):
+
+- **Bản:** `community`, phiên bản 26.11.0.134175.
+- **Kho luật Python:** chỉ có `python` và các kho nhập kết quả ngoài (`external_*`). Không có kho
+  `pythonsecurity`; luật taint S3649 không tồn tại (`api/rules/show` trả 404).
+- **Luật Python gắn CWE-89:** chỉ `python:S2077` ("SQL queries should not be dynamically
+  formatted"; kiểu `VULNERABILITY`, thẻ `former-hotspot`). Luật này đang bật trong profile mặc định
+  "Sonar way core", là profile dự án đã dùng. Cách luật này nhận diện câu SQL không được tìm hiểu.
+
+**Kết luận:** môi trường không có phân tích injection theo luồng dữ liệu, nên dòng đối chứng
+SonarQube là **chưa đo được**. Không dùng SonarQube Cloud; mã nguồn không rời khỏi máy.
+
+**Chú thích, không phải đối chứng injection:**
+
+- Cùng 251 file của biến thể "file", cùng cách ghép với nhãn, chỉ tính kết quả SonarQube tự tạo.
+- `python:S2077` báo **0** cảnh báo, nên 0 ca dương, 0 ca âm, 0 mục rà. Trên cùng tập, Bandit B608
+  báo 613 cảnh báo. Vì sao S2077 không báo gì chưa được tìm hiểu.
+- Phân tích có chạy: 251 file được đánh chỉ mục, 261 cảnh báo của các luật khác, ví dụ S5332 và
+  S4502.
+
+### 23.6 Hồi quy
+
+**Lượt quét thật `multi-cwe-v0.4`** trên sáu nguồn phát triển không nhãn của P2b:
+
+- Mỗi nguồn quét đúng snapshot mà lượt `v0.3` đã quét (`scan_dev_v04.py`, `queue_scan.py`).
+- So sánh: `dev-v04/compare.txt`. Sáu nguồn đều **đạt**:
+  - CWE-78 và CWE-22: đơn vị, báo cáo nhóm và SARIF giống hệt `v0.3`;
+  - tập cảnh báo CWE-89 giống hệt theo nội dung;
+  - mỗi mục `v0.3` nằm gọn trong một mục `v0.4`;
+  - mọi mục ở danh sách rà, không gạn, không `suppressions`;
+  - SARIF có mọi kết quả.
+- `sarif_preserved_v04.py`: mỗi kết quả SARIF giữ vùng, thông điệp, nhãn CWE và quy tắc gốc của
+  công cụ (`sarif-preserved-v04.json`).
+- Nguồn tổng hợp được quét hai lần, do script gửi lặp; hai lượt cho cùng kết quả.
+
+| Nguồn | Trạng thái | Cảnh báo CWE-89 | Mục `v0.3` → `v0.4` | Liên kết mới |
+|---|---|---|---|---|
+| nguồn tổng hợp | completed | 30 | 12 → 12 | 0 |
+| pygoat | completed | 8 | 5 → 5 | 0: biến còn được đọc khi hiển thị câu SQL |
+| vulpy | completed | 21 | 6 → 6 | 0: mọi B608 đã nằm trong lời gọi |
+| dsvpwa | completed | 4 | 2 → 2 | 0 |
+| dvpwa | completed | 3 | 2 → **1** | 1 |
+| nodegoat | partial, như `v0.3` | 2 (JS) | 2 → 2 | 0: JavaScript/TypeScript không đổi |
+
+**Bộ hồi quy** (`bash artifacts/cwe89-eval/final/run_all.sh`, đầu ra `final/run.txt`):
+
+- Trạng thái đã kiểm thử: `402566f` cộng thay đổi chưa commit, cây
+  `9d6334a10e527f4eac36ea60d210f49234cd6929` (`final/tested-state.txt`).
+- Mã trong image worker: `4b17731a08fe1175`.
+
+| # | Lệnh | Đạt | Bỏ qua |
+|---|---|---|---|
+| 1 | `uv run pytest -q -rs --cov` (SQLite) | 723 | 2 (nhóm tiến trình POSIX trên Windows) |
+| 2 | `docker compose --profile test run --build --rm test` (PostgreSQL) | 725, độ phủ 95,67% | 0 |
+| 3 | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` | sạch; không lỗ hổng đã biết | — |
+| 4 | `python -m unittest discover -s experiments/tests` | 153 | 0 |
+| 5 | `npm run check`, `npm run build`, `npm run test:e2e` (API giả lập) | Vitest 82; build; Playwright 2 | 3 (kiểm thử stack thật, dòng 7 và 9) |
+| 6 | `scripts.export_openapi` so với `frontend/openapi.json`; `scripts.check_worker` | giống hệt; worker nhận cả tám profile | — |
+| 7 | `multi-cwe-full-stack.spec` (công cụ thật, `multi-cwe-v0.1`) | 1: 239 kết quả, 149 đơn vị, 64 gạn, như trước | 0 |
+| 8 | `legacy_regression.py` (bốn profile cũ, công cụ thật) | 4/5 giống hệt; ca `command-injection-v0.1` khác đúng như mục 18.3 | — |
+| 9 | `multi-cwe-v02-full-stack`, `multi-cwe-v03-full-stack` (PyGoat) | 2 | 0 |
+| 10 | Golden, thực nghiệm, công cụ, pack và profile cũ (gồm `multi-cwe-v0.3`, `sql-injection-v0.2`, `rules/semgrep/sql-injection-v0.1`) | 0 file đổi; hash `sql-injection-v0.2` và `multi-cwe-v0.3` bằng hash đã ghim | — |
+
+**Kiểm thử mới:**
+
+- `test_sql_string_links.py`: 25 ca.
+- `test_sql_linked_merge.py`: 5 ca.
+- Một ca giao diện cho lựa chọn `multi-cwe-v0.4`.
+
+Các golden của bốn profile cũ và của `multi-cwe-v0.1`, `v0.2` không đổi một byte.
+
+### 23.7 Đề xuất và giới hạn
+
+**Đề xuất: bật Bandit thường xuyên cho CWE-89 ở Python, cùng với phép gộp mới.**
+
+- Trên tập độc lập SVEN, Bandit là nguồn duy nhất của 45/174 ca dương, cả 45 đều ở mã gọi SQL qua
+  hàm bọc, nơi CodeQL và Semgrep không thấy.
+- Sau khi gộp, giá là 113 mục rà thêm, 2,51 mục cho mỗi ca dương thêm, và 20 ca âm báo thêm. Đọc tay
+  ở mục 22.4 cho thấy 18 trong 20 ca âm đó chỉ ghép hằng.
+- **Nếu khối lượng rà là ràng buộc chính:** để Bandit "chỉ khi rà sâu" cho mã gọi thẳng `execute`.
+  Ở đó Bandit không thêm ca dương nào, trên cả SVEN lẫn BenchmarkPython.
+- **Việc tiếp theo nên làm:** nối thêm trường hợp biến bị gán lại một cách tuần tự (`sql = …; sql +=
+  …`). Đây là 19 trong 24 mục trùng còn lại.
+
+**Giới hạn:**
+
+- **Dữ liệu:** một tập, quét từng file, không có phần còn lại của kho. Nhãn SVEN chưa được dự án
+  kiểm lại.
+- **Phạm vi phép gộp:** chỉ áp cho B608 ở Python.
+- **Quy tắc đề xuất:** không mù với phân bố 89/61 đã biết; ngưỡng 2 lần là lựa chọn của người đo.
+- **SonarQube:** chưa đo được.
+- **Kiểm thử:** chưa có kiểm thử trình duyệt trên stack thật cho `v0.4`. Lượt quét thật chạy qua
+  API và worker (mục 23.6). CI chưa chạy.
