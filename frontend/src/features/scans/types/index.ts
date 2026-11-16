@@ -55,6 +55,7 @@ export const FAMILIES = {
   "command-injection": "CWE-78 · Command injection",
   "path-traversal": "CWE-22 · Path traversal",
   "sql-injection": "CWE-89 · SQL injection",
+  "cross-site-scripting": "CWE-79 · Cross-site scripting (XSS)",
   unassigned: "Chưa xác định nhóm",
 } as const satisfies Record<Family, string>;
 // What the evidence says about a unit. Separate from the scan's status and from the filter

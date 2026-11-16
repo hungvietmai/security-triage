@@ -13,10 +13,11 @@ viên rà soát và gạn những ứng viên có bằng chứng cụ thể là 
 trạng thái lượt quét, danh sách rà chính và danh sách đã gạn theo hàng đợi P1→P4, bằng chứng
 của từng đơn vị và báo cáo trước–sau.
 
-Người dùng chọn một trong tám profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
-`multi-cwe-v0.1` ghép hai profile có sẵn vào một lượt quét, `multi-cwe-v0.2` thêm nhóm CWE-89, và
-`multi-cwe-v0.3` cho nhóm CWE-89 chạy ba công cụ, và `multi-cwe-v0.4` (thử nghiệm) gộp thêm cảnh báo
-Bandit ở dòng dựng câu SQL với lời gọi thực thi nó:
+Người dùng chọn một trong chín profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
+`multi-cwe-v0.1` ghép hai profile có sẵn vào một lượt quét, `multi-cwe-v0.2` thêm nhóm CWE-89,
+`multi-cwe-v0.3` cho nhóm CWE-89 chạy ba công cụ, `multi-cwe-v0.4` (thử nghiệm) gộp thêm cảnh báo
+Bandit ở dòng dựng câu SQL với lời gọi thực thi nó, và `multi-cwe-v0.5` (thử nghiệm) thêm nhóm
+CWE-79 cho JavaScript/TypeScript:
 
 | Profile | Phạm vi | Cách xếp hàng đợi |
 |---|---|---|
@@ -28,6 +29,7 @@ Bandit ở dòng dựng câu SQL với lời gọi thực thi nó:
 | `multi-cwe-v0.2` | Như `multi-cwe-v0.1`, thêm CWE-89 (Python và JavaScript/TypeScript; chỉ CodeQL); ghim thêm manifest của `sql-injection-v0.1` | Hai nhóm đầu như `multi-cwe-v0.1`. Nhóm `sql-injection` **chỉ phát hiện và giữ**: mỗi vị trí CodeQL báo là một đơn vị mức **U** ("chưa xếp hạng") ở danh sách rà chính; không có chính sách xếp hạng và không có điều kiện gạn |
 | `multi-cwe-v0.3` | Như `multi-cwe-v0.2`, nhưng CWE-89 dùng Semgrep (Python và JavaScript/TypeScript; 37 file luật thượng nguồn nguyên văn), Bandit (Python; `B608`, `B610`, `B611`) và CodeQL; ghim manifest của `sql-injection-v0.2` | Hai nhóm đầu như `multi-cwe-v0.1`. Nhóm `sql-injection` chỉ phát hiện và giữ, mức **U**; cảnh báo của nhiều công cụ chỉ thành một đơn vị khi cùng nằm trong một lời gọi thực thi truy vấn SQL của Python, còn lại mỗi vị trí của mỗi công cụ là một đơn vị. Đã đo trên dữ liệu phát triển có nhãn: [plans/multi-cwe.md §21](plans/multi-cwe.md#21-trạng-thái-p2b-2026-11-16) |
 | `multi-cwe-v0.4` (thử nghiệm) | Như `multi-cwe-v0.3`, cùng công cụ và luật; ghim manifest của `sql-injection-v0.3` | Như `multi-cwe-v0.3`, thêm: cảnh báo Bandit B608 ở câu gán `tên = <chuỗi SQL>` vào đơn vị của lời gọi thực thi duy nhất đọc `tên`, nếu lời gọi đó có cảnh báo CodeQL hoặc Semgrep và biến chỉ được gán một lần. Đo bằng cách chạy lại trên SARIF đã lưu: [plans/multi-cwe.md §23](plans/multi-cwe.md#23-phép-gộp-bandit-với-lời-gọi-sql-và-giá-trị-bandit-sau-gộp-2026-11-16) |
+| `multi-cwe-v0.5` (thử nghiệm) | Ba nhóm của `multi-cwe-v0.4` (cùng manifest), thêm CWE-79 (JavaScript/TypeScript; bảy truy vấn CodeQL trong `Security/CWE-079/`); ghim thêm manifest của `cross-site-scripting-v0.1` | Ba nhóm đầu như `multi-cwe-v0.4`. Nhóm `cross-site-scripting` **chỉ phát hiện và giữ**: mỗi vị trí CodeQL báo là một đơn vị mức **U** ở danh sách rà chính; không có chính sách xếp hạng, không có điều kiện gạn. Đối chứng và đo: [plans/multi-cwe.md §24](plans/multi-cwe.md) |
 
 Profile `path-traversal-v0.2` dùng đúng pack đã đánh giá trong nghiên cứu
 ([rules/codeql/path-traversal-v0.2/](../rules/codeql/path-traversal-v0.2/README.md)), trùng từng
@@ -200,6 +202,15 @@ thành viên theo hash, mỗi thành viên ứng với một **nhóm phân tích
    - **Truy vết:** cảnh báo được nối có `match_rule` là `explicit_link` và `linked_by` trong bằng
      chứng. Mọi B608 không nối được có lý do, ghi trong bản ghi chạy lại.
    - **Phạm vi:** JavaScript/TypeScript và hai nhóm kia không đổi so với `multi-cwe-v0.3`.
+10. **Nhóm cross-site scripting** (`multi-cwe-v0.5`, thành viên `cross-site-scripting-v0.1`,
+   [DETECTION.md](../profiles/cross-site-scripting-v0.1/DETECTION.md)). Một profile `detection`
+   schema 1 chỉ có cấu hình JavaScript: lượt `codeql-cross-site-scripting` chạy bảy truy vấn chuẩn
+   trong `Security/CWE-079/` của `codeql/javascript-queries` 2.4.6 trên database JavaScript dùng
+   chung, một luồng, giới hạn 600 giây. `detection.keep_detected` làm mỗi vị trí được báo thành một
+   đơn vị mức U ở danh sách rà; hai truy vấn báo cùng vùng chung một đơn vị, mỗi cảnh báo giữ rule
+   và nhãn CWE riêng. Mã đơn vị có tên nhóm, nên cảnh báo XSS trùng vị trí với cảnh báo CWE-78 hay
+   CWE-89 vẫn là đơn vị riêng. Lượt Python không có nhóm này. Ba nhóm kia cho đúng kết quả của
+   `multi-cwe-v0.4`. Giới hạn thời gian mềm của tác vụ tăng lên 12 600 giây để chứa lượt thêm này.
 
 Công cụ dòng lệnh `backend/scripts/scan_families.py` chạy cùng lớp ghép này mà không qua cơ sở dữ
 liệu, và so lượt quét ghép với lượt quét riêng từng profile. Thiết kế, bất biến và kết quả kiểm

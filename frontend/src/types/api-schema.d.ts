@@ -221,7 +221,11 @@ export interface components {
        * @enum {string}
        */
       family:
-        "command-injection" | "path-traversal" | "sql-injection" | "unassigned";
+        | "command-injection"
+        | "path-traversal"
+        | "sql-injection"
+        | "cross-site-scripting"
+        | "unassigned";
       /**
        * Cwe
        * @description The family's CWE; none for unassigned findings
@@ -501,6 +505,7 @@ export interface components {
             | "command-injection"
             | "path-traversal"
             | "sql-injection"
+            | "cross-site-scripting"
             | "unassigned"
           )
         | null;
@@ -528,7 +533,11 @@ export interface components {
        * @enum {string}
        */
       family:
-        "command-injection" | "path-traversal" | "sql-injection" | "unassigned";
+        | "command-injection"
+        | "path-traversal"
+        | "sql-injection"
+        | "cross-site-scripting"
+        | "unassigned";
       /** Cwe */
       cwe: string | null;
       /** Label */
@@ -657,7 +666,7 @@ export interface components {
         | components["schemas"]["GitHubSource"];
       /**
        * Profile
-       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile. multi-cwe-v0.2: the same two members plus sql-injection-v0.1 (CWE-89, Python and JavaScript/TypeScript, CodeQL only), whose alerts are detected and kept for review: nothing ranks or filters them. multi-cwe-v0.3: the same three families, with sql-injection-v0.2 running Semgrep (unchanged upstream rules), Bandit (Python) and CodeQL for CWE-89; their alerts are merged only inside one located SQL execution call and are all kept for review. multi-cwe-v0.4 (experimental): as multi-cwe-v0.3, with sql-injection-v0.3, which also joins a Bandit B608 alert on the statement that builds a SQL string to the CodeQL or Semgrep alert at the one execution call that runs it (Python).
+       * @description command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and CodeQL, priority policy v0.1. command-injection-v0.2: the same with Bandit (Python) and eslint-plugin-security (JavaScript/TypeScript) added to the screening step, priority policy v0.2. command-injection-v0.3: v0.2 with the JavaScript sink locator v1, a Semgrep target selection the scanned source cannot change, and a constant-command filter rule for JavaScript/TypeScript. path-traversal-v0.2: CWE-22, Python, CodeQL safety evidence. multi-cwe-v0.1: command-injection-v0.3 and path-traversal-v0.2 in one scan on one CodeQL database; each alert is routed to one analysis family and assessed by that member profile. multi-cwe-v0.2: the same two members plus sql-injection-v0.1 (CWE-89, Python and JavaScript/TypeScript, CodeQL only), whose alerts are detected and kept for review: nothing ranks or filters them. multi-cwe-v0.3: the same three families, with sql-injection-v0.2 running Semgrep (unchanged upstream rules), Bandit (Python) and CodeQL for CWE-89; their alerts are merged only inside one located SQL execution call and are all kept for review. multi-cwe-v0.4 (experimental): as multi-cwe-v0.3, with sql-injection-v0.3, which also joins a Bandit B608 alert on the statement that builds a SQL string to the CodeQL or Semgrep alert at the one execution call that runs it (Python). multi-cwe-v0.5 (experimental): the three families of multi-cwe-v0.4 plus cross-site-scripting-v0.1 (CWE-79, JavaScript/TypeScript), the seven standard CodeQL queries under Security/CWE-079 run on the same database; their alerts are detected and kept for review: nothing ranks or filters them.
        * @default command-injection-v0.1
        * @enum {string}
        */
@@ -669,7 +678,8 @@ export interface components {
         | "multi-cwe-v0.1"
         | "multi-cwe-v0.2"
         | "multi-cwe-v0.3"
-        | "multi-cwe-v0.4";
+        | "multi-cwe-v0.4"
+        | "multi-cwe-v0.5";
     };
     /** ScanRead */
     ScanRead: {
@@ -908,6 +918,7 @@ export interface components {
             | "command-injection"
             | "path-traversal"
             | "sql-injection"
+            | "cross-site-scripting"
             | "unassigned"
           )
         | null;
@@ -1060,6 +1071,7 @@ export interface components {
             | "command-injection"
             | "path-traversal"
             | "sql-injection"
+            | "cross-site-scripting"
             | "unassigned"
           )
         | null;
@@ -1362,6 +1374,7 @@ export interface operations {
               | "command-injection"
               | "path-traversal"
               | "sql-injection"
+              | "cross-site-scripting"
               | "unassigned"
             )
           | null;

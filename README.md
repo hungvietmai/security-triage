@@ -9,7 +9,7 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong tám profile:
+  một commit GitHub, chọn một trong chín profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
@@ -44,6 +44,12 @@ và CodeQL. Repository gồm hai phần:
     thực thi chuỗi đó, khi biến chỉ được gán một lần và chỉ được đọc ở đúng lời gọi ấy. Đo bằng cách
     chạy lại phép gộp trên SARIF đã lưu của tập SVEN
     ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 23).
+  - `multi-cwe-v0.5` (**thử nghiệm**): ba nhóm của `multi-cwe-v0.4`, thêm nhóm **cross-site
+    scripting (CWE-79)** cho JavaScript/TypeScript: bảy truy vấn XSS chuẩn của CodeQL
+    (`Security/CWE-079/`) chạy trên cùng database. CWE-79 **chỉ được phát hiện và giữ**. Ba nhóm cũ
+    cho đúng kết quả của `v0.4`. Trên tập có nhãn OSSF CVE Benchmark, CWE-79 phát hiện 14 trong 41 ca
+    đo được; nhãn của tập này không độc lập với CodeQL
+    ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 24).
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
 
 ## Tài liệu
@@ -136,7 +142,15 @@ gọi `execute(sql)`, khi biến chỉ được gán một lần và chỉ đư�
 nhiều lời gọi hay hàm bọc thì vẫn là đơn vị riêng. Cảnh báo được nối giữ vị trí gốc; chi tiết đơn vị
 ghi biến và câu gán đã nối nó.
 
-Giới hạn: CWE-22 chỉ có trên Python; CWE-89 chưa gộp cảnh báo giữa công cụ ở JavaScript/TypeScript
+Profile thử nghiệm **"CWE-78 + CWE-22 + CWE-89 + CWE-79 · Thử nghiệm: thêm XSS cho
+JavaScript/TypeScript"** (`multi-cwe-v0.5`) giữ nguyên ba nhóm của `multi-cwe-v0.4` (cùng manifest)
+và thêm nhóm "CWE-79 · Cross-site scripting (XSS)". Nhóm này chạy bảy truy vấn XSS chuẩn của CodeQL
+(phản xạ, lưu trữ, dựa trên DOM, qua văn bản DOM, qua ngoại lệ, plugin jQuery, thư viện dựng HTML)
+trong một lượt `codeql-cross-site-scripting` trên database JavaScript dùng chung. Mỗi vị trí CodeQL
+báo là một mục ở mức U trong danh sách rà chính; cảnh báo XSS không bao giờ chung mục với cảnh báo
+của nhóm khác, kể cả khi trùng dòng. Lượt XSS lỗi hay chạy dở chỉ ảnh hưởng nhóm CWE-79.
+
+Giới hạn: CWE-22 chỉ có trên Python, CWE-79 chỉ có trên JavaScript/TypeScript; CWE-89 chưa gộp cảnh báo giữa công cụ ở JavaScript/TypeScript
 (chưa có bộ định vị lời gọi), và trên dữ liệu đã đo Semgrep và Bandit làm tăng đáng kể số mục cần rà
 (mục 21.6 của kế hoạch); lượt quét ghép chạy lâu hơn một profile đơn nhưng chỉ tạo database CodeQL
 một lần. Profile đơn và `multi-cwe-v0.1` vẫn dùng được như trước.
@@ -258,21 +272,24 @@ hay kết quả quét giả.
 ## Scanner trong worker
 
 Image worker ([`backend/Dockerfile.worker`](backend/Dockerfile.worker)) cài Semgrep, CodeQL,
-Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm bảy scan profile:
+Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm chín scan profile:
 [`command-injection-v0.1`](profiles/command-injection-v0.1/profile.json),
 [`command-injection-v0.2`](profiles/command-injection-v0.2/profile.json),
 [`command-injection-v0.3`](profiles/command-injection-v0.3/profile.json),
 [`path-traversal-v0.2`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
-[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và bốn profile ghép
+[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và năm profile ghép
 [`multi-cwe-v0.1`](profiles/multi-cwe-v0.1/profile.json),
 [`multi-cwe-v0.2`](profiles/multi-cwe-v0.2/profile.json),
-[`multi-cwe-v0.3`](profiles/multi-cwe-v0.3/profile.json) và
-[`multi-cwe-v0.4`](profiles/multi-cwe-v0.4/profile.json), vốn chỉ ghim manifest của các profile
+[`multi-cwe-v0.3`](profiles/multi-cwe-v0.3/profile.json),
+[`multi-cwe-v0.4`](profiles/multi-cwe-v0.4/profile.json) và
+[`multi-cwe-v0.5`](profiles/multi-cwe-v0.5/profile.json), vốn chỉ ghim manifest của các profile
 thành viên. Thành viên [`sql-injection-v0.1`](profiles/sql-injection-v0.1/profile.json) chỉ chạy
 bên trong `multi-cwe-v0.2`, và [`sql-injection-v0.2`](profiles/sql-injection-v0.2/profile.json)
 (luật Semgrep ở [`rules/semgrep/sql-injection-v0.1/`](rules/semgrep/sql-injection-v0.1/README.md))
 chỉ bên trong `multi-cwe-v0.3`, [`sql-injection-v0.3`](profiles/sql-injection-v0.3/profile.json)
-chỉ bên trong `multi-cwe-v0.4`. Worker từ chối
+bên trong `multi-cwe-v0.4` và `multi-cwe-v0.5`, và
+[`cross-site-scripting-v0.1`](profiles/cross-site-scripting-v0.1/profile.json) chỉ bên trong
+`multi-cwe-v0.5`. Worker từ chối
 khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
 kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
 

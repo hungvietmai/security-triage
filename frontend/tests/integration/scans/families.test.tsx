@@ -462,6 +462,144 @@ describe("A scan with several analysis families", () => {
     ).toBeInTheDocument();
   });
 
+  it("offers the four-family profile and says cross-site scripting is only detected and kept", async () => {
+    const project = makeProject();
+    db.projects = [project];
+    const { user } = await renderApp(`/projects/${project.id}`);
+    await user.click(await main().findByRole("button", { name: "Tạo scan" }));
+    const dialog = within(screen.getByRole("dialog", { name: "Tạo scan mới" }));
+    await user.click(dialog.getByRole("combobox", { name: "Profile" }));
+    await user.click(
+      screen.getByRole("option", {
+        name: "CWE-78 + CWE-22 + CWE-89 + CWE-79 · Thử nghiệm: thêm XSS cho JavaScript/TypeScript",
+      }),
+    );
+    expect(
+      dialog.getByText(/bảy truy vấn XSS chuẩn của CodeQL/),
+    ).toBeInTheDocument();
+    let input: Schemas["ScanCreate"] | undefined;
+    server.use(
+      http.post(
+        "/api/v1/projects/:projectId/scans",
+        async ({ request, params }) => {
+          input = (await request.json()) as Schemas["ScanCreate"];
+          const scan = makeScan({
+            project_id: String(params.projectId),
+            profile: "multi-cwe-v0.5",
+          });
+          db.scans = [scan];
+          return HttpResponse.json(
+            {
+              scan_id: scan.id,
+              snapshot_id: scan.snapshot.id,
+              status: "queued",
+            },
+            { status: 202 },
+          );
+        },
+      ),
+    );
+    await user.type(dialog.getByLabelText("Tên npm"), "demo");
+    await user.type(dialog.getByLabelText("Phiên bản"), "1.0.0");
+    await user.click(dialog.getByRole("button", { name: "Tạo scan" }));
+    await waitFor(() =>
+      expect(input).toEqual({
+        source: { kind: "npm", package: "demo", version: "1.0.0" },
+        profile: "multi-cwe-v0.5",
+      }),
+    );
+  });
+
+  it("shows a cross-site scripting unit in its own family, kept for review", async () => {
+    const xss: Family = {
+      family: "cross-site-scripting",
+      cwe: "CWE-79",
+      label: "Cross-site scripting",
+      profile_id: "cross-site-scripting-v0.1",
+      profile_sha256: "4".repeat(64),
+      runs: [
+        {
+          language: "javascript",
+          status: "completed",
+          error: null,
+          raw_findings: 1,
+          evidence_steps: {},
+        },
+      ],
+      units: 1,
+      review: 1,
+      filtered: 0,
+      held: 0,
+    };
+    const scan = makeScan({
+      profile: "multi-cwe-v0.5",
+      reconciler_version: "family-composition-v0.1",
+      policy_version: "family-composition-v0.1",
+      unit_counts: { P1: 1, P2: 0, U: 1, P3: 0, P4: 0 },
+      disposition_counts: { review: 2, filtered: 0 },
+      families: [COMMAND, xss],
+    });
+    const command = makeUnit({ path: "run.py" });
+    const page = makeUnit({
+      path: "pages.js",
+      priority: "U",
+      sink_kind: "codeql-reported-sink",
+      argument_role: null,
+      shell_state: null,
+      analysis_family: "cross-site-scripting",
+      cwe: "CWE-79",
+      tools: ["codeql"],
+      decision_id: "K10_DETECTED_KEPT",
+      evidence_state: "insufficient",
+      kept_because: ["no_filter_condition_for_family"],
+      adjudication: {
+        status: "kept",
+        rule: null,
+        rules: [],
+        kept_because: ["no_filter_condition_for_family"],
+        reason: "Nhóm phân tích này chưa có điều kiện gạn nào đã được đo.",
+        evidence: [],
+      },
+    });
+    page.findings[0] = {
+      ...page.findings[0],
+      tool: "codeql",
+      rule_id: "js/reflected-xss",
+      cwe_ids: ["cwe-079", "cwe-116"],
+      mapped_cwes: ["CWE-79", "CWE-116"],
+      analysis_family: "cross-site-scripting",
+      family_status: "resolved",
+      family_basis: "pass_provenance",
+      tool_pass: "codeql-cross-site-scripting",
+    };
+    db.scans = [scan];
+    db.units[scan.id] = [command, page];
+
+    const { user } = await renderApp(
+      `/scans/${scan.id}?family=cross-site-scripting`,
+    );
+    expect(
+      await main().findByRole("button", {
+        name: "CWE-79 · Cross-site scripting (XSS): 1",
+      }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      main().queryByRole("button", { name: "Xem đơn vị run.py:12" }),
+    ).not.toBeInTheDocument();
+    await user.click(
+      await main().findByRole("button", { name: "Xem đơn vị pages.js:12" }),
+    );
+    const sheet = within(await screen.findByRole("dialog"));
+    expect(
+      await sheet.findByText("CWE-79 · Cross-site scripting (XSS)"),
+    ).toBeInTheDocument();
+    expect(sheet.getByText("Chưa đủ bằng chứng")).toBeInTheDocument();
+    expect(sheet.getByText(/cwe-079/)).toBeInTheDocument();
+    expect(
+      sheet.getByText("Nằm trong danh sách rà chính."),
+    ).toBeInTheDocument();
+  });
+
   it("shows a SQL injection unit as kept for review with no evidence to weigh", async () => {
     const sql: Family = {
       family: "sql-injection",

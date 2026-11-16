@@ -1,0 +1,52 @@
+{
+  "kind": "detection",
+  "profile_id": "cross-site-scripting-v0.1",
+  "languages": {
+    "javascript": {
+      "config": "profiles/cross-site-scripting-v0.1/javascript.json"
+    }
+  },
+  "rules": {
+    "javascript": {
+      "js/xss-through-exception": [
+        "CWE-79",
+        "CWE-116"
+      ],
+      "js/reflected-xss": [
+        "CWE-79",
+        "CWE-116"
+      ],
+      "js/stored-xss": [
+        "CWE-79",
+        "CWE-116"
+      ],
+      "js/html-constructed-from-input": [
+        "CWE-79",
+        "CWE-116"
+      ],
+      "js/unsafe-jquery-plugin": [
+        "CWE-79",
+        "CWE-116"
+      ],
+      "js/xss": [
+        "CWE-79",
+        "CWE-116"
+      ],
+      "js/xss-through-dom": [
+        "CWE-79",
+        "CWE-116"
+      ]
+    }
+  },
+  "priority": "U",
+  "policy": {
+    "id": "cross-site-scripting-detect-and-keep",
+    "version": "0.1",
+    "source": "profiles/cross-site-scripting-v0.1/DETECTION.md"
+  },
+  "specification": "profiles/cross-site-scripting-v0.1/DETECTION.md",
+  "files": {
+    "profiles/cross-site-scripting-v0.1/DETECTION.md": "7134068bef3a9c7706837ddf24612ba2861a606281725bdf30101684e82554cc",
+    "profiles/cross-site-scripting-v0.1/javascript.json": "f70f33694d3f762b9b4099dc6c18e6a6fc8a893e462a56c43d65a25a5bd788bd"
+  }
+}

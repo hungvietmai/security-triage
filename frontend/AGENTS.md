@@ -80,10 +80,13 @@ A family that is only detected and kept (`sql-injection`, CWE-89, profiles `mult
 evidence state "Chưa đủ bằng chứng" and is never in the filtered list. Under `multi-cwe-v0.3` one
 unit may hold alerts of several tools (Semgrep, Bandit, CodeQL) when they lie inside one SQL
 execution call; under `multi-cwe-v0.4` a Bandit alert on the statement that builds the query may
-also join the unit of the call that runs it. The unit sheet lists each alert with its own pass and
-location. `tests/e2e/multi-cwe-full-stack.spec.ts` (`multi-cwe-v0.1`),
-`tests/e2e/multi-cwe-v02-full-stack.spec.ts` (`multi-cwe-v0.2`) and
-`tests/e2e/multi-cwe-v03-full-stack.spec.ts` (`multi-cwe-v0.3`) are the browser tests
+also join the unit of the call that runs it. The experimental `multi-cwe-v0.5` adds the family
+`cross-site-scripting` (CWE-79, JavaScript/TypeScript, CodeQL only), detected and kept the same
+way. The unit sheet lists each alert with its own pass and location.
+`tests/e2e/multi-cwe-full-stack.spec.ts` (`multi-cwe-v0.1`),
+`tests/e2e/multi-cwe-v02-full-stack.spec.ts` (`multi-cwe-v0.2`),
+`tests/e2e/multi-cwe-v03-full-stack.spec.ts` (`multi-cwe-v0.3`) and
+`tests/e2e/multi-cwe-v05-full-stack.spec.ts` (`multi-cwe-v0.5`) are the browser tests
 against the complete stack; they are skipped unless `FULL_STACK_URL` is set.
 
 ## Architecture rules

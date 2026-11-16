@@ -1,0 +1,36 @@
+{
+  "config_id": "cross-site-scripting-v0.1-javascript",
+  "purpose": "Experimental scan: detect CWE-79 in JavaScript and TypeScript with the seven standard CodeQL queries under Security/CWE-079 and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [],
+  "codeql_queries": [
+    "Security/CWE-079/ExceptionXss.ql",
+    "Security/CWE-079/ReflectedXss.ql",
+    "Security/CWE-079/StoredXss.ql",
+    "Security/CWE-079/UnsafeHtmlConstruction.ql",
+    "Security/CWE-079/UnsafeJQueryPlugin.ql",
+    "Security/CWE-079/Xss.ql",
+    "Security/CWE-079/XssThroughDom.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-079/ExceptionXss.ql": "c6db7547b03624fd3a5e00cdb306428496d126cc443699b9cae96f5bd4d641dd",
+    "Security/CWE-079/ReflectedXss.ql": "9c4044e96f2af9a8bd8db123628d91d7895be8fe15b56a533c9943be3d440498",
+    "Security/CWE-079/StoredXss.ql": "f58eaff8847ae3c175975a18d1dcafda8b279f845d931a33146b6f66cfae1572",
+    "Security/CWE-079/UnsafeHtmlConstruction.ql": "26c953a6d0c21e421189d0d1be9305cb8b97e96fdca2c864f35f2f450b542643",
+    "Security/CWE-079/UnsafeJQueryPlugin.ql": "98356c79fb419f8bf01a6f59657813158d64c8184de2fbe60ddf1b2b232dc6ef",
+    "Security/CWE-079/Xss.ql": "bfbd13ad80c2740ad8ce1f7a8e73107477422ea3045f0dfe0dd19ef446ed31e9",
+    "Security/CWE-079/XssThroughDom.ql": "60f222e257b88d798fd84ca45319adc2378336e74ddbc137f2aeb78b0a4ea50f"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "sha256": "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833",
+    "javascript_query_pack": "2.4.6"
+  },
+  "language": "javascript"
+}

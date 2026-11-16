@@ -85,6 +85,10 @@ FAMILIES = {
     "path-traversal": Family("path-traversal", "CWE-22", "Path traversal", EvidenceProfile),
     # Detected and kept only: no ranking policy and no filter condition has been evaluated.
     "sql-injection": Family("sql-injection", "CWE-89", "SQL injection", DetectionProfile),
+    # JavaScript/TypeScript only, detected and kept like sql-injection.
+    "cross-site-scripting": Family(
+        "cross-site-scripting", "CWE-79", "Cross-site scripting", DetectionProfile
+    ),
 }
 # The analysis family each pinned profile handles. A profile that is not listed cannot be a
 # member: its family, and with it the conditions under which it may filter, is unknown.
@@ -96,6 +100,7 @@ FAMILY_OF_PROFILE = {
     "sql-injection-v0.1": "sql-injection",
     "sql-injection-v0.2": "sql-injection",
     "sql-injection-v0.3": "sql-injection",
+    "cross-site-scripting-v0.1": "cross-site-scripting",
 }
 # A member whose queries run on the shared database gets its own analysis pass. Its raw IDs
 # start with this prefix and the family, so they stay unique next to the primary CodeQL pass.

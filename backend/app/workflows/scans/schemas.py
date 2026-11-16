@@ -17,7 +17,9 @@ Tool = Literal["semgrep", "bandit", "eslint", "codeql"]
 # list and is kept on file. It is evidence against the alert, not a verified false positive.
 Disposition = Literal["review", "filtered"]
 # An analysis family of a scan; "unassigned" holds findings whose family could not be named.
-FamilyName = Literal["command-injection", "path-traversal", "sql-injection", "unassigned"]
+FamilyName = Literal[
+    "command-injection", "path-traversal", "sql-injection", "cross-site-scripting", "unassigned"
+]
 # What the evidence says about a unit. This is not the scan's status and not the filter
 # decision (`disposition`): only "refuted" ever leads to "filtered".
 #   refuted         a tool's evidence shows the alerts are false;
@@ -65,6 +67,7 @@ class ScanCreate(InputSchema):
         "multi-cwe-v0.2",
         "multi-cwe-v0.3",
         "multi-cwe-v0.4",
+        "multi-cwe-v0.5",
     ] = Field(
         default="command-injection-v0.1",
         description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
@@ -84,7 +87,10 @@ class ScanCreate(InputSchema):
         "call and are all kept for review. multi-cwe-v0.4 (experimental): as multi-cwe-v0.3, "
         "with sql-injection-v0.3, which also joins a Bandit B608 alert on the statement that "
         "builds a SQL string to the CodeQL or Semgrep alert at the one execution call that runs "
-        "it (Python).",
+        "it (Python). multi-cwe-v0.5 (experimental): the three families of multi-cwe-v0.4 plus "
+        "cross-site-scripting-v0.1 (CWE-79, JavaScript/TypeScript), the seven standard CodeQL "
+        "queries under Security/CWE-079 run on the same database; their alerts are detected and "
+        "kept for review: nothing ranks or filters them.",
     )
 
 

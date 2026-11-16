@@ -56,6 +56,7 @@ export const createScanInputSchema = z.object({
     "multi-cwe-v0.2",
     "multi-cwe-v0.3",
     "multi-cwe-v0.4",
+    "multi-cwe-v0.5",
   ]),
 }) satisfies z.ZodType<ScanCreate>;
 
@@ -105,6 +106,12 @@ export const SCAN_PROFILES: Record<
       "CWE-78 + CWE-22 + CWE-89 · Thử nghiệm: nối cảnh báo Bandit với lời gọi SQL",
     description:
       "Như multi-cwe-v0.3, thêm một bước gộp cho Python: cảnh báo Bandit ở câu gán dựng chuỗi SQL được nối với cảnh báo CodeQL hoặc Semgrep tại lời gọi thực thi chuỗi đó, khi biến chỉ được gán một lần và chỉ được dùng ở đúng lời gọi ấy. Các trường hợp khác giữ mục riêng; mọi mục vẫn ở danh sách rà chính.",
+  },
+  "multi-cwe-v0.5": {
+    label:
+      "CWE-78 + CWE-22 + CWE-89 + CWE-79 · Thử nghiệm: thêm XSS cho JavaScript/TypeScript",
+    description:
+      "Như multi-cwe-v0.4, thêm nhóm cross-site scripting (CWE-79) cho JavaScript/TypeScript: bảy truy vấn XSS chuẩn của CodeQL chạy trên cùng database. Cảnh báo CWE-79 chưa được xếp hạng hay gạn: tất cả ở danh sách rà chính.",
   },
 };
 

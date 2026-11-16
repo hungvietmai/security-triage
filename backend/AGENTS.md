@@ -110,8 +110,8 @@ called from `task.scan_snapshot`; never leave a stored finding without a unit. A
 filters nothing until its own evidence has been evaluated.
 
 A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`,
-`profiles/multi-cwe-v0.2/`, `profiles/multi-cwe-v0.3/` and `profiles/multi-cwe-v0.4/`) pins its
-members' manifests;
+`profiles/multi-cwe-v0.2/`, `profiles/multi-cwe-v0.3/`, `profiles/multi-cwe-v0.4/` and
+`profiles/multi-cwe-v0.5/`) pins its members' manifests;
 `scanners/profile.py` loads it, `families.members_of` checks that it names families in `families.FAMILIES`, and
 `task.scan_snapshot` runs it. `families.to_language_result`
 turns a composite run into one `LanguageResult` with a part per family; `persist.py` writes
@@ -150,6 +150,15 @@ argument of one execution call, and `detection.link_decisions` joins a Bandit B6
 that statement's string literals to the call's unit when the call holds a CodeQL or Semgrep alert
 (mapping `explicit_link`, `linked_by` in the evidence, units `detection-units-v3`). Every other B608
 keeps its own unit, with the reason. Keep the v1 path byte-identical: the new mode is opt-in.
+
+`profiles/cross-site-scripting-v0.1/` (family `cross-site-scripting`, CWE-79, member of the
+experimental `multi-cwe-v0.5`) is a schema-1 detection profile with a JavaScript configuration only:
+its pass `codeql-cross-site-scripting` runs the seven standard queries under `Security/CWE-079/` on
+the shared JavaScript database, one thread (two threads ran out of CodeQL's 2048 MB while
+compiling), and `detection.keep_detected` keeps one unit per reported location. The Python run of a
+four-family scan has three families. The other three families of `multi-cwe-v0.5` are those of
+`multi-cwe-v0.4`, byte for byte; `tests/workflows/scans/test_xss_family.py` checks it.
+
 The task's time limits and the broker's visibility timeout cover the largest profile
 (`task.worst_case_seconds`); change them together.
 
