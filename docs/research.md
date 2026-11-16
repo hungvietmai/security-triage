@@ -379,10 +379,19 @@ trình bày cả hai kịch bản.
      Bandit thêm 45 ca dương, 20 ca âm và 113 mục rà so với CodeQL + Semgrep; đề xuất bật thường
      xuyên. SonarQube Community Build không có phân tích taint nên đối chứng chưa đo được. Xem
      [plans/multi-cwe.md](plans/multi-cwe.md), mục 23.
+   - Profile thử nghiệm `multi-cwe-v0.5` (16/11): thêm nhóm CWE-79 cho JavaScript/TypeScript, bảy truy vấn
+     CodeQL trong `Security/CWE-079/`, chỉ phát hiện và giữ. Ba nhóm cũ giống `v0.4` trên bảy nguồn phát
+     triển; cảnh báo XSS giống CodeQL chạy riêng. Trên OSSF CVE Benchmark (49 ca XSS-only, giao thức băm
+     trước khi quét, mỗi commit quét một lần): phát hiện **14/41** ca đo được (tầng có tên truy vấn trong
+     phạm vi 14/34), 1/41 vị trí đã vá vẫn bị báo, 387 mục rà trên 87 commit, 372/390 cảnh báo ngoài vị
+     trí có nhãn. Nhãn không độc lập với CodeQL (lời giải thích dùng tên truy vấn của nó), nhưng
+     CodeQL 2.27.1 không báo gì trong 24 tệp có nhãn. Xem [plans/multi-cwe.md](plans/multi-cwe.md),
+     mục 24.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
-     CWE-22, đánh giá với người dùng. Hồ sơ đề án và bảng tiêu chí:
+     CWE-22, Semgrep và đối chứng SonarQube cho CWE-79, CWE-79 cho Python, đánh giá với người dùng.
+     Hồ sơ đề án và bảng tiêu chí:
      [thesis/README.md](thesis/README.md).
 7. **Tập held-out CWE-78** (16 cặp): đã mở một lần ngày 15/11 cho profile `command-injection-v0.3` theo Amendment 08. Hợp mọi nguồn báo 9/9 vị trí lỗi đã biết, 0 bị gạn; không còn dùng được cho phiên bản sau.
 8. **Script bị khóa trên Windows:** code chưa khóa đã được sửa để đọc/ghi UTF-8 (27/10), nhưng

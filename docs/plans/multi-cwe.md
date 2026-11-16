@@ -23,7 +23,9 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
   (truy vết cảnh báo Semgrep JS/TS của Juice Shop, lợi ích của phép gộp JS/TS, Bandit trên tập
   Python độc lập SVEN) ở [mục 22](#22-đánh-giá-cấu-hình-cwe-89-cho-python-và-jsts-2026-11-16);
   profile thử nghiệm `multi-cwe-v0.4` (nối cảnh báo Bandit với lời gọi SQL) và giá trị Bandit sau gộp
-  ở [mục 23](#23-phép-gộp-bandit-với-lời-gọi-sql-và-giá-trị-bandit-sau-gộp-2026-11-16).
+  ở [mục 23](#23-phép-gộp-bandit-với-lời-gọi-sql-và-giá-trị-bandit-sau-gộp-2026-11-16); profile thử
+  nghiệm `multi-cwe-v0.5` (thêm CWE-79 cho JavaScript/TypeScript bằng CodeQL, đối chứng với `v0.4` và
+  đo trên OSSF CVE Benchmark) ở [mục 24](#24-nhóm-cwe-79-cho-javascripttypescript-profile-multi-cwe-v05-2026-11-16).
 
 ## 1. Kết luận ngắn
 
@@ -2595,3 +2597,426 @@ Các golden của bốn profile cũ và của `multi-cwe-v0.1`, `v0.2` không đ
 - **SonarQube:** chưa đo được.
 - **Kiểm thử:** chưa có kiểm thử trình duyệt trên stack thật cho `v0.4`. Lượt quét thật chạy qua
   API và worker (mục 23.6). CI chưa chạy.
+
+## 24. Nhóm CWE-79 cho JavaScript/TypeScript: profile `multi-cwe-v0.5` (2026-11-16)
+
+Profile ghép thử nghiệm `multi-cwe-v0.5`: ba nhóm của `multi-cwe-v0.4` cộng nhóm **cross-site
+scripting (CWE-79)** cho JavaScript/TypeScript, chỉ bằng CodeQL, chỉ phát hiện và giữ.
+
+- **Mốc đối chứng:** `multi-cwe-v0.4` ở commit `0d0ad04`, chạy trên image worker dựng từ commit đó
+  (mã ứng dụng `4b17731a08fe1175`, giữ lại dưới tên `security-triage-worker:v04-0d0ad04`) trước mọi
+  thay đổi.
+- **Không đổi:** `multi-cwe-v0.4` và ba thành viên của nó (cùng manifest, cùng hash), các profile đã
+  khóa, golden, dữ liệu nghiên cứu, các số đo của mục 20–23.
+- **Không quét bằng `v0.5`, không đo lại CWE-89:** nguồn có nhãn của CWE-89 (BenchmarkPython, Juice
+  Shop), SVEN, các cặp đã đóng băng hay giữ lại. BenchmarkPython chỉ được quét lại trong bộ hồi quy
+  (24.9), bằng `multi-cwe-v0.1` và `command-injection-v0.2`, không có lượt CWE-89 nào. Tập có nhãn của
+  CWE-79 là một bộ dữ liệu mới, chưa dùng ở dự án (24.7).
+- **Ngoài phạm vi, để các lượt đo sau:** Semgrep cho XSS, đối chứng SonarQube, CWE-79 cho Python.
+
+### 24.1 Thành viên CWE-79 (`cross-site-scripting-v0.1`)
+
+Đặc tả: [profiles/cross-site-scripting-v0.1/DETECTION.md](../../profiles/cross-site-scripting-v0.1/DETECTION.md).
+
+- **Kiểu:** profile `detection` schema 1, chỉ có cấu hình JavaScript. Dùng lại nguyên đường xử lý của
+  `sql-injection-v0.1`: một lượt có tên trên database dùng chung, `detection.keep_detected`, mỗi vị trí
+  được báo là một đơn vị mức U, quyết định `K10_DETECTED_KEPT`, lý do giữ
+  `no_filter_condition_for_family`.
+- **Truy vấn:** mọi truy vấn của `codeql/javascript-queries` 2.4.6 (CodeQL 2.27.1) nằm trong
+  `Security/CWE-079/`. Cách chọn chỉ theo vị trí trong gói, ghi trước khi chạy trên dữ liệu nào. Cả bảy
+  thuộc bộ `javascript-code-scanning.qls`.
+
+| Rule | Biến thể XSS | sha256 của tệp `.ql` |
+|---|---|---|
+| `js/reflected-xss` | phản xạ, phía máy chủ | `9c4044e9…` |
+| `js/stored-xss` | lưu trữ, phía máy chủ (nguồn theo mô hình CodeQL: chủ yếu tên tệp) | `f58eaff8…` |
+| `js/xss` | dựa trên DOM, phía trình duyệt | `bfbd13ad…` |
+| `js/xss-through-dom` | văn bản DOM ghi lại dưới dạng HTML | `60f222e2…` |
+| `js/xss-through-exception` | thông điệp ngoại lệ ghi dưới dạng HTML | `c6db7547…` |
+| `js/unsafe-jquery-plugin` | tùy chọn plugin jQuery dùng như HTML | `98356c79…` |
+| `js/html-constructed-from-input` | đầu vào hàm thư viện ghép vào HTML | `26c953a6…` |
+
+- **CWE ánh xạ:** CWE-79 và CWE-116, đúng các nhãn `external/cwe/*` của bảy truy vấn. Nhãn CodeQL gắn
+  (`cwe-079`, `cwe-116`) giữ nguyên ở `reported_cwes`.
+- **Truy vấn có nhãn `cwe-079` nhưng không chọn:** 14 truy vấn, gói xếp vào CWE-94 (chèn mã), CWE-116
+  (chất lượng bộ làm sạch), CWE-601 (chuyển hướng), CWE-915 (ô nhiễm prototype), một kiểm tra cấu hình
+  Electron và bốn truy vấn thử nghiệm. Danh sách và lý do: mục 1 của DETECTION.md.
+- **Cấu hình chạy:** một lượt `database analyze` cho bảy truy vấn, `--threads 1`, `--ram=2048`, giới
+  hạn 600 giây. Bản đầu dùng `--threads 2`; trên dữ liệu phát triển CodeQL hết bộ nhớ khi biên dịch hai
+  truy vấn cùng lúc, nên đổi về một luồng trước khi chốt (24.4).
+- **Hai chỗ sửa chữ trong đặc tả trước khi chốt**, không đổi hành vi: số truy vấn thử nghiệm bị loại
+  (bốn, không phải ba); và mục 4 mô tả đúng hai trạng thái lỗi như lượt tiêm lỗi cho thấy (ghi SARIF
+  rồi thoát lỗi là "thất bại", cảnh báo giữ thành `F10_FAMILY_NOT_RANKED`; chỉ SARIF ghi lượt chạy
+  chưa xong mới là "chạy dở"). Băm manifest cuối: `cross-site-scripting-v0.1`
+  `af7af94a3c2abcdbfdae0900f42e0f0874309b2c8256ab82967b2b9839ca5439`, `multi-cwe-v0.5`
+  `11dfc98179cd5172a547429eb29b219f76fd25c82e3a7455ef07150491e3953a`.
+
+### 24.2 Thay đổi mã
+
+- `families.py`: nhóm `cross-site-scripting` (CWE-79, `DetectionProfile`) và profile thành viên của
+  nó. Không có mã xử lý riêng cho nhóm này.
+- `config.py`, `schemas.py`: profile `multi-cwe-v0.5` và giá trị `cross-site-scripting` của
+  `FamilyName`; `frontend/openapi.json` và `api-schema.d.ts` xuất lại.
+- `task.py`: `SOFT_TIME_LIMIT` từ 12 000 lên 12 600 giây. Trường hợp xấu nhất của `multi-cwe-v0.5` là
+  12 360 giây (`v0.4`: 11 760, cộng một lượt 600 giây). `TIME_LIMIT` là 14 100 giây, vẫn dưới thời
+  gian hiển thị lại của broker (14 400).
+- Giao diện: lựa chọn "CWE-78 + CWE-22 + CWE-89 + CWE-79 · Thử nghiệm: thêm XSS cho
+  JavaScript/TypeScript" và nhãn nhóm "CWE-79 · Cross-site scripting (XSS)".
+- Kiểm thử:
+  - `test_xss_family.py`, 12 ca: profile; ba nhóm cũ giống `v0.4` trên cùng công cụ giả lập; cảnh báo
+    XSS trùng vị trí với cảnh báo CWE-78 hay CWE-89 vẫn là đơn vị riêng; hai rule cùng vùng chung một
+    đơn vị; ba kiểu lỗi của lượt XSS; rule không ghim; lưu qua worker, API, báo cáo và SARIF;
+  - hai ca giao diện;
+  - `multi-cwe-v05-full-stack.spec.ts`: từ chọn profile tới tải SARIF, trên stack thật;
+  - `test_families.py`: ví dụ "profile chưa có nhóm" đổi từ `cross-site-scripting-v0.1`, nay đã có
+    nhóm, sang một ID khác.
+
+### 24.3 Mốc trước khi sửa
+
+Chạy `multi-cwe-v0.4` trên bảy nguồn phát triển không nhãn, bằng image của `0d0ad04`, trước khi sửa
+mã. Kết quả lưu ở `artifacts/cwe79-eval/baseline-v04/`: lượt quét, mọi đơn vị kèm cảnh báo, quyết định
+gạn và trạng thái bằng chứng, báo cáo trước–sau, SARIF.
+
+- **Năm nguồn GitHub** của P2b: pygoat, vulpy, DSVPWA, dvpwa, NodeGoat, cùng snapshot như các lượt
+  `v0.3` và `v0.4` trước.
+- **Nguồn tổng hợp ba nhóm** của P2a/P2b.
+- **Đầu vào phát triển bốn nhóm, mới** (`artifacts/cwe79-eval/dev-input/four-families/`, snapshot
+  `dbe4b64d…`): ba tệp của nguồn tổng hợp ba nhóm, thêm ba tệp:
+  - `pages.js`: XSS phản xạ; một dòng có cả lệnh `exec` (CWE-78) và `res.send` HTML; một dòng có cả
+    truy vấn SQL (CWE-89) và `res.send` HTML; một ca có `escape-html`;
+  - `views.ts`: XSS phản xạ trong TypeScript, và một ca gửi `text/plain`;
+  - `public/client.js`: URL ghi vào `innerHTML`, văn bản DOM ghi vào `innerHTML`, và một ca dùng
+    `textContent`.
+
+Mã tạo đầu vào bốn nhóm: `seed_dir.py` của mục 22. Mã ứng dụng trong image mốc là `4b17731a08fe1175`,
+đúng như cây đã commit.
+
+### 24.4 Đối chứng 1: CWE-78, CWE-22, CWE-89 so với `v0.4`
+
+So theo nội dung, như P2b: mọi đơn vị với quyết định, lý do, trạng thái bằng chứng và cảnh báo
+(lượt, rule, tệp, vùng, nhãn CWE); báo cáo của nhóm; các kết quả SARIF của nhóm; bản ghi nhóm của
+lượt quét. Script `compare_v05.py`, đầu ra `compare-v05.txt`.
+
+| Nguồn | Trạng thái `v0.4` → `v0.5` | Đơn vị CWE-78 / 22 / 89 | Ba nhóm giống `v0.4` | `v0.4` dựng lại giống mốc | Cảnh báo / đơn vị CWE-79 |
+|---|---|---|---|---|---|
+| bốn nhóm (tổng hợp) | completed → completed | 8 / 3 / 14 | có | có | 7 / 7 |
+| ba nhóm (tổng hợp) | completed → completed | 7 / 3 / 12 | có | có | 0 / 0 |
+| pygoat | completed → completed | 4 / 3 / 5 | có | có | 3 / 3 |
+| vulpy | completed → completed | 1 / 1 / 6 | có | có | 0 / 0 |
+| DSVPWA | completed → completed | 3 / 2 / 2 | có | có | 1 / 1 |
+| dvpwa | completed → completed | 0 / 0 / 1 | có | có | 11 / 11 |
+| NodeGoat | partial → partial (Semgrep, như `v0.3`) | 1 / — / 2 | có | có | 0 / 0 |
+
+- **Đối chứng của phép đối chứng:** `v0.4` cũng được quét lại trên image mới (`dev-v04-new-image/`).
+  Nó giống mốc, nên mã mới không đổi gì ở `v0.4`.
+- **CodeQL không tất định ở một chỗ:** với một cảnh báo CWE-89 của vulpy, CodeQL ghi các đường dữ
+  liệu (`codeFlows`) theo thứ tự khác và đánh số tệp theo thứ tự đó. Điều này xảy ra cả khi chạy lại
+  chính `v0.4`. Phép so coi các đường là một tập và bỏ số thứ tự tệp, như P2b đã làm với
+  `relatedLocations`. Mọi thứ khác của cảnh báo, kể cả vùng và thông điệp, giống hệt.
+- **Mọi cảnh báo CWE-79:**
+  - thuộc một trong bảy rule, đến từ lượt `codeql-cross-site-scripting`;
+  - nằm trong đúng một đơn vị của nhóm mình, mức U, `K10_DETECTED_KEPT`, danh sách rà chính, trạng
+    thái bằng chứng "chưa đủ";
+  - không bị gạn, không có `suppressions`.
+- **Trên đầu vào bốn nhóm:**
+  - cảnh báo XSS ở dòng 23 và dòng 28 của `pages.js` là đơn vị riêng, cạnh đơn vị CWE-78 (dòng 23)
+    và hai đơn vị CWE-89 (dòng 28) cùng dòng;
+  - TypeScript: hai cảnh báo trong `views.ts`;
+  - ba rule khác nhau báo: `js/reflected-xss` 5, `js/xss` 1, `js/xss-through-dom` 1;
+  - không báo ca `escape-html` và ca `textContent`;
+  - **có báo** ca `res.type("text/plain").send(...)`, mà đầu vào ghi là không có XSS: CodeQL không
+    xét kiểu nội dung của phản hồi. Đây là một cảnh báo sai trên dữ liệu phát triển.
+- **Trên mã thật:** 15 cảnh báo, ở pygoat (3, trong script của tệp HTML), DSVPWA (1, `dom-xss.js`)
+  và dvpwa (11, tất cả trong thư viện `materialize.js` đi kèm mã). Thư viện đi kèm là một nguồn mục
+  rà đáng kể: 11 trên 12 mục của dvpwa.
+
+**Lỗi tự nhiên trước khi chốt.** Bản đầu của cấu hình dùng `--threads 2`. Trên cả bảy nguồn, lượt
+CWE-79 thất bại vì CodeQL hết bộ nhớ khi biên dịch truy vấn (`dev-v05-oom/`). Ba nhóm còn lại vẫn
+giống mốc trên cả bảy nguồn (`compare-v05-oom.txt`). Cấu hình được đổi sang một luồng. Một bản nữa,
+`dev-v05-spec1/`, chạy với bản đặc tả trước khi sửa hai chỗ chữ (24.1); kết quả giống hệt.
+
+### 24.5 Đối chứng 2: CWE-79 so với CodeQL chạy riêng
+
+`standalone_codeql.sh` chạy riêng CodeQL, bên ngoài ứng dụng:
+
+- trong một container dùng một lần, từ image worker (cùng bundle CodeQL, cùng gói truy vấn);
+- trên đúng tệp nén snapshot mà ứng dụng đã quét, giải nén như worker;
+- tạo database mới với tham số của `run_codeql`, rồi chạy bảy truy vấn với tham số của
+  `run_codeql_evidence`.
+
+Không dùng chung database, không có lượt nào khác. So theo tập bội (rule, tệp, dòng/cột đầu, dòng/cột
+cuối); vùng không có `endLine` kết thúc ở dòng đầu, cả hai phía. Script `compare_standalone.py`, đầu ra
+`compare-standalone.json`.
+
+| Nguồn | Cảnh báo ứng dụng | CodeQL chạy riêng | Giống nhau | SARIF xuất ra so với SARIF của CodeQL | Nhãn CWE so với tag của rule |
+|---|---|---|---|---|---|
+| bốn nhóm | 7 | 7 | có | giống | giống |
+| ba nhóm | 0 | 0 | có | giống | — |
+| pygoat | 3 | 3 | có | giống | giống |
+| vulpy | 0 | 0 | có | giống | — |
+| DSVPWA | 1 | 1 | có | giống | giống |
+| dvpwa | 11 | 11 | có | giống | giống |
+| NodeGoat | 0 | 0 | có | giống | — |
+
+- Băm của bảy tệp `.ql` CodeQL chạy riêng dùng bằng băm đã ghim trong profile.
+- "SARIF xuất ra": rule, tệp, vùng và **thông điệp** của mọi kết quả CWE-79 trong SARIF hợp nhất bằng
+  đúng tập kết quả trong SARIF của CodeQL chạy riêng.
+- "Nhãn CWE": `reportedCwes` của mỗi kết quả bằng các tag `external/cwe/*` của rule trong SARIF của
+  CodeQL.
+- Theo từng kết quả, trên mọi nhóm của bảy lượt `v0.5` (`sarif_preserved_v05.py`, đầu ra
+  `sarif-preserved-v05.json`): 203 kết quả SARIF, bằng đúng 203 cảnh báo đã lưu. Mỗi kết quả giữ vùng,
+  thông điệp và nhãn CWE của kết quả gốc của công cụ; 59 rule Semgrep CWE-89 truy được về tệp luật đã
+  ghim. Đạt cả bảy.
+
+**Chi phí.**
+
+- Lượt CWE-79 mất 15–18 giây trên pygoat khi bộ nhớ đệm biên dịch của worker đã có, và 200–250
+  giây ở lượt đầu sau khi dựng lại worker, chủ yếu là biên dịch bảy truy vấn.
+- Một lượt quét `v0.5` của nguồn GitHub phát triển mất 47–122 giây, so với 31–75 giây của `v0.4`.
+- CodeQL chạy riêng, không có bộ nhớ đệm, mất 197–310 giây cho bước phân tích.
+
+### 24.6 Luồng giao diện đến SARIF, và lỗi ở lượt CWE-79
+
+**Luồng giao diện** (`tests/e2e/multi-cwe-v05-full-stack.spec.ts`, trên stack thật, PyGoat):
+
+- chọn profile bốn nhóm trong biểu mẫu, nguồn GitHub, gửi;
+- trang lượt quét hiện bốn nhóm; hàng CWE-79 ghi `cross-site-scripting-v0.1`, `javascript: completed`;
+- lọc theo nhóm CWE-79, mở chi tiết một đơn vị;
+- tải báo cáo JSON và SARIF hợp nhất.
+
+Kết quả: đạt.
+
+- Lượt quét `2fa2fa81…`, `completed`. Đơn vị theo nhóm: CWE-78 4, CWE-22 3, CWE-89 5, CWE-79 3; tất cả
+  ở danh sách rà chính.
+- SARIF có 25 kết quả, bằng số cảnh báo đã lưu. Ba kết quả CWE-79, mỗi kết quả đúng rule CodeQL, nhãn
+  `cwe-079`, không bị ẩn.
+
+**Lỗi có kiểm soát** (`xss_faults.py`, đầu ra `xss-faults.txt`):
+
+- Một worker thứ hai nghe hàng đợi `faults`, có tệp bọc `codeql` đứng đầu `PATH`
+  (`artifacts/cwe79-eval/fault/`).
+- Tệp bọc gọi CodeQL thật, trừ đúng lỗi ghi trong `fault/mode`, và chỉ cho lệnh phân tích có truy vấn
+  `CWE-079`.
+- Nguồn: đầu vào bốn nhóm. Mỗi lượt lỗi được so theo nội dung với một lượt sạch chạy cùng cách.
+
+| Lỗi tiêm vào | Lượt quét | Lượt `codeql-cross-site-scripting` | Nhóm CWE-79 | CWE-78, CWE-22, CWE-89 |
+|---|---|---|---|---|
+| không lỗi | `completed` | `completed` | 7 cảnh báo, 7 đơn vị `K10_DETECTED_KEPT`, "chưa đủ" | 8, 3, 14 đơn vị |
+| thoát lỗi, chưa ghi SARIF | `partial` | `failed` | 0 cảnh báo; nhóm "thất bại" | giống lượt sạch |
+| ghi SARIF rồi thoát lỗi | `partial` | `failed` | 7 cảnh báo giữ lại thành 7 đơn vị `F10_FAMILY_NOT_RANKED`, mức U, danh sách rà, "không lấy được" | giống lượt sạch |
+| SARIF ghi lượt chạy chưa xong | `partial` | `partial` | 7 cảnh báo, 7 đơn vị K10 với `run_incomplete`, "không lấy được" | giống lượt sạch |
+
+- Trong cả bốn lượt: mọi cảnh báo đã lưu nằm trong đúng một đơn vị và có trong SARIF (67 hay 60 kết
+  quả), không đơn vị nào trộn hai nhóm, không kết quả CWE-79 nào bị ẩn.
+- Lỗi hết bộ nhớ thật ở 24.4 là một ca "thoát lỗi, chưa ghi SARIF" xảy ra tự nhiên trên cả bảy nguồn.
+
+### 24.7 Đo CWE-79 trên tập có nhãn: OSSF CVE Benchmark
+
+Kết quả này là **đánh giá trên tập có nhãn**, tách khỏi nghiệm thu kỹ thuật (24.10).
+
+**Giao thức:** `artifacts/cwe79-eval/PROTOCOL-XSS.md`.
+
+- sha256 `714e5ae2f08aa4a2082f90c7f328bcbecf5376fe3b064a8a513be3f269c0daaa`, chốt
+  2026-11-16T14:48:09Z, trước lượt quét đầu tiên trên tập này.
+- `PROTOCOL-XSS.sha256` băm cùng lúc mọi thứ quyết định phép đo: script chọn ca, quét, chấm; tệp nén
+  của bộ dữ liệu; mã commit đầy đủ; kết quả kiểm trùng; hai manifest.
+- `ossf_scan.py` kiểm các băm đó, mã ứng dụng của worker và hai manifest worker đang dùng trước khi gửi.
+  Sau lượt quét, `sha256sum -c` vẫn khớp mọi tệp.
+- Hai sai lệch (`PROTOCOL-XSS-DEVIATIONS.md`), không đổi số đo nào:
+  - D1: nhãn trạng thái `acquisition_failed` gồm cả lượt quét không có tệp của ngôn ngữ nào;
+  - D2: đã đọc trạng thái (không đọc cảnh báo) của các lượt CodeQL khác để giải thích lượt chạy dở.
+
+**Bộ dữ liệu.** OpenSSF CVE Benchmark ở commit `91c59fd5`: CVE thật của các dự án JavaScript/TypeScript.
+Mỗi CVE có commit trước bản vá với vị trí điểm yếu (tệp, dòng) và commit bản vá.
+
+- **Chọn ca:** danh sách CWE có CWE-79, và mọi CWE khác trong đó là CWE-116 hay CWE-20.
+- **Kết quả chọn:** 49 ca, 38 kho, 50 vị trí, 87 commit. Bị loại 34 ca có CWE-79 đi cùng ô nhiễm
+  prototype, chèn mã hay chuyển hướng.
+- **Không trùng** với dữ liệu nào dự án đã dùng: kiểm bằng chuỗi và bằng các trường định danh.
+- **Thiên lệch đã biết, ghi trước khi quét:** phần lớn lời giải thích là nguyên văn tên một truy vấn
+  CodeQL, và bộ dữ liệu có tích hợp sẵn CodeQL. Số phát hiện được ở đây vì thế **không độc lập với
+  công cụ**.
+  - Giao thức gọi đây là "cận trên lạc quan". Kết quả không ủng hộ điều đó: CodeQL 2.27.1 không báo
+    gì trong 24 tệp có nhãn.
+  - Driver CodeQL của chính bộ dữ liệu chọn truy vấn theo CWE của ca, dùng bundle mới nhất lúc chạy và
+    không cài thư viện phụ thuộc. Phiên bản và cấu hình đã dùng để đặt nhãn thì không biết.
+
+**Cách đo:**
+
+- Mỗi commit được ứng dụng tải từ GitHub và quét **một lần** bằng `multi-cwe-v0.5`. Chỉ đọc cảnh báo
+  của nhóm `cross-site-scripting`.
+- **Ca dương được phát hiện:** có cảnh báo CWE-79 cùng tệp, bắt đầu đúng dòng điểm yếu. Đây là quy
+  tắc của chính bộ dữ liệu.
+- **Ca âm bị báo:** có cảnh báo CWE-79 ở dòng điểm yếu sau khi chuyển sang bản vá bằng phép so dòng.
+- **Tầng A:** lời giải thích là tên một trong bảy truy vấn trong phạm vi. **Tầng B:** lời giải thích
+  khác.
+
+**Trạng thái của 87 commit:**
+
+| Trạng thái nhóm CWE-79 | Commit |
+|---|---|
+| `completed` | 73 |
+| `partial` (jquery hai commit, knockout hai commit, angular.js hai commit; mọi lượt CodeQL của lượt quét đều `partial`) | 6 |
+| không đo được: HTTP 404 từ codeload (fork `linxiaowu66/swagger-ui`, `apache/uima-ducc`) | 4 |
+| không đo được: tệp nén vượt 50 MB (`strapi/strapi`) | 2 |
+| không đo được: không có tệp của ngôn ngữ nào (`tnantoka/public`, chỉ có `bin/public` không đuôi; D1) | 2 |
+
+**Kết quả** (`ossf-measure.txt`):
+
+| | Ca | Không đo được | Lượt chạy dở | Đo được (commit trước bản vá `completed`) | Ca dương phát hiện | Ca dương bỏ sót |
+|---|---|---|---|---|---|---|
+| Tất cả | 49 | 5 | 3 (0 phát hiện) | 41 | **14** | **27** |
+| Tầng A | 38 | 3 | 1 (0 phát hiện) | 34 | 14 | 20 |
+| Tầng B | 11 | 2 | 2 (0 phát hiện) | 7 | 0 | 7 |
+
+- **Tỉ lệ phát hiện:** 14/41 ca đo được; 14/34 ở tầng A, 0/7 ở tầng B.
+- **Quy tắc vùng:** vùng báo chứa dòng điểm yếu cho đúng 14 ca, không thêm ca nào.
+- **Rule phát hiện:** `js/reflected-xss` 7, `js/xss-through-dom` 5, `js/unsafe-jquery-plugin` 2,
+  `js/stored-xss` 1, `js/html-constructed-from-input` 1. Hai ca có hai rule: CVE-2018-16484 và
+  CVE-2019-12313.
+- **Ca âm:** đo được 41 ca. **Bị báo: 1** (CVE-2018-16484, `nunnly/m-server`).
+  - Dòng điểm yếu không đổi qua bản vá; bản vá sửa ở chỗ khác, và CodeQL vẫn báo đúng dòng đó.
+  - Trong 14 ca mà ca dương được phát hiện, 1 ca âm bị báo. Trong 27 ca dương bị bỏ sót, 0 ca âm bị
+    báo, nhưng số này không có nghĩa, vì ở bản lỗi CodeQL cũng không báo.
+  - Cách chuyển dòng: 33 vị trí bị thay, 11 không đổi, 1 bị xóa, 5 không đo được.
+- **Mục cần rà:**
+  - 387 đơn vị CWE-79 (390 cảnh báo) trên 87 commit, mỗi commit tính một lần;
+  - 201 đơn vị trên 39 commit trước bản vá có nhóm CWE-79 (36 `completed`, 3 chạy dở): trung vị 2 mỗi
+    commit, nhiều nhất 48 (bootstrap), 13 commit không có đơn vị nào;
+  - 16 đơn vị chứa cảnh báo ở vị trí có nhãn.
+- **Cảnh báo ngoài tập có nhãn:** 372 trên 390, mỗi commit tính một lần: 187 ở commit trước bản vá,
+  185 ở commit bản vá. Chúng chưa có nhãn, nên không phải dương tính giả đã xác minh.
+  - `js/xss-through-dom` chiếm 296 trên 390 cảnh báo.
+  - Trên dữ liệu phát triển, nhiều cảnh báo loại này nằm trong thư viện đi kèm mã, như
+    `materialize.js` của dvpwa.
+
+**Mô tả sau đo** (`ossf_posthoc.py`, viết sau khi xem kết quả, không đổi số nào ở trên).
+
+- **Tệp có trong snapshot đã quét:** cả 28 vị trí bị bỏ sót (27 ca). Phép kiểm này chỉ đọc tệp nén
+  đã lưu; việc CodeQL có trích xuất tệp đó hay không thì chưa kiểm.
+- **24 vị trí:** CodeQL không báo cảnh báo CWE-79 nào trong cả tệp đó.
+- **4 vị trí:** có cảnh báo ở dòng khác cùng tệp, gần nhất cách 8 dòng. Không ca nào là lệch dòng nhỏ.
+
+Vậy phần bỏ sót không do cách ghép theo dòng: CodeQL 2.27.1 không báo ở các tệp đó. Lý do chưa được
+kiểm; có thể là:
+
+- tệp không được trích xuất;
+
+- mô hình nguồn và đích của thư viện;
+- mã chạy trong trình duyệt nhận dữ liệu qua API của thư viện;
+- không có `node_modules` khi quét.
+
+**Giới hạn của phép đo:**
+
+- Nhãn không độc lập với CodeQL (xem trên); không biết phiên bản và cấu hình đã dùng để đặt nhãn.
+- 41 ca đo được là một mẫu nhỏ, chỉ của các thư viện và ứng dụng JavaScript mã nguồn mở.
+- Chỉ đo ở dòng điểm yếu đã biết; 372 cảnh báo còn lại chưa được rà.
+- Ca âm chỉ là vị trí đã vá, không phải mã an toàn bất kỳ.
+- Tệp không đuôi, kho vượt giới hạn tải và kho đã mất trên GitHub không đo được.
+
+### 24.8 Lệnh, phiên bản, đầu ra
+
+**Trạng thái mã:**
+
+- Commit `0d0ad04` (`multi-cwe-v0.4` đã chốt) cộng thay đổi chưa commit. Cây `backend/`, `frontend/`,
+  `profiles/`, `rules/` đã kiểm thử: `46d2573632b332fdba4a118ea2ca2874cdc22c74`.
+- Mã ứng dụng trong image worker: `93c658820937f424`, giống cây làm việc. Image dùng cho đối chứng,
+  lỗi tiêm, luồng giao diện và tập có nhãn được gắn tên `security-triage-worker:v05-measure`; image mốc
+  là `security-triage-worker:v04-0d0ad04`.
+- Hash profile:
+  - `cross-site-scripting-v0.1`: `af7af94a3c2abcdbfdae0900f42e0f0874309b2c8256ab82967b2b9839ca5439`;
+  - `multi-cwe-v0.5`: `11dfc98179cd5172a547429eb29b219f76fd25c82e3a7455ef07150491e3953a`;
+  - ba thành viên còn lại và `multi-cwe-v0.4` không đổi.
+
+**Công cụ:** CodeQL 2.27.1, `codeql/javascript-queries` 2.4.6, Semgrep CE 1.178.0, Bandit 1.9.4,
+ESLint 10.15.0, như `tools/pins.env`.
+
+**Lệnh, chạy từ gốc repo:**
+
+1. Mốc: `python artifacts/cwe79-eval/scan_dev.py multi-cwe-v0.4 artifacts/cwe79-eval/baseline-v04 four-families=<scan> three-families pygoat vulpy dsvpwa dvpwa nodegoat`, trên image `0d0ad04`. Đầu vào bốn nhóm: `docker compose exec -T -e PYTHONPATH=/app api python /tmp/seed/seed_dir.py cwe79-dev-four-families /tmp/seed/four-families -- multi-cwe-v0.4`.
+2. Sau khi dựng lại image: cùng lệnh với `multi-cwe-v0.5 artifacts/cwe79-eval/dev-v05` và `multi-cwe-v0.4 artifacts/cwe79-eval/dev-v04-new-image`.
+3. Đối chứng 1: `python artifacts/cwe79-eval/compare_v05.py four-families three-families pygoat vulpy dsvpwa dvpwa nodegoat`; thêm `--new=dev-v05-oom --out=compare-v05-oom` cho lô hết bộ nhớ.
+4. Đối chứng 2: `python artifacts/cwe79-eval/compare_standalone.py four-families three-families pygoat vulpy dsvpwa dvpwa nodegoat`; `python artifacts/cwe79-eval/sarif_preserved_v05.py`.
+5. Lỗi tiêm: `MSYS_NO_PATHCONV=1 docker compose run -d --name fault-worker-xss --no-deps -v "<repo>/artifacts/cwe79-eval/fault:/fault" worker sh -c 'export PATH=/fault:$PATH; exec celery -A app.workers.celery_app:celery_app worker --concurrency=1 -Q faults -n fault@%h'`, rồi `python artifacts/cwe79-eval/xss_faults.py`.
+6. Tập có nhãn:
+   - chọn ca: `python -I artifacts/cwe79-eval/ossf_cases.py`; mã commit đầy đủ: `resolve_commits.py`; trùng lặp: `overlap_check.py`, `overlap_fields.py`;
+   - chạy thử trước khi chốt: `python artifacts/cwe79-eval/ossf_scan.py --rehearsal=artifacts/cwe79-eval/rehearsal/targets.json --out=artifacts/cwe79-eval/rehearsal/scan`, `python -I artifacts/cwe79-eval/ossf_measure.py --cases=artifacts/cwe79-eval/rehearsal/cases.json --scans=artifacts/cwe79-eval/rehearsal/scan --out=artifacts/cwe79-eval/rehearsal/measure`;
+   - quét: `python artifacts/cwe79-eval/ossf_scan.py`; chấm: `python -I artifacts/cwe79-eval/ossf_measure.py`.
+7. Hồi quy: `bash artifacts/cwe79-eval/final/run_local.sh`, `bash artifacts/cwe79-eval/final/run_stack.sh`.
+
+**Đầu ra** (`artifacts/cwe79-eval/`, không vào git): `baseline-v04/`, `dev-v05/`, `dev-v04-new-image/`,
+`dev-v05-oom/`, `dev-v05-spec1/`, `compare-v05*.txt|json`, `standalone/`, `compare-standalone.json`,
+`sarif-preserved-v05.json`, `xss-faults.txt|json`, `dev-input/`, `PROTOCOL-XSS.md` và `.sha256`,
+`ossf-download/`, `ossf-scan/`, `ossf-measure.txt|json`, `rehearsal/`, `final/`.
+
+### 24.9 Hồi quy
+
+`bash artifacts/cwe79-eval/final/run_local.sh` (đầu ra `final/run-local.txt`) và
+`bash artifacts/cwe79-eval/final/run_stack.sh` (đầu ra `final/run-stack.txt`), cả hai trước lượt quét
+tập có nhãn.
+
+| # | Lệnh | Kết quả |
+|---|---|---|
+| 1 | `uv run pytest -q -rs --cov` (SQLite) | 736 đạt, 2 bỏ qua (nhóm tiến trình POSIX trên Windows) |
+| 2 | `docker compose --profile test run --build --rm test` (PostgreSQL) | 738 đạt, độ phủ 95,67% |
+| 3 | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` | sạch; không lỗ hổng đã biết |
+| 4 | `python -m unittest discover -s experiments/tests` | 153 đạt |
+| 5 | `npm run check`, `npm run build`, `npm run test:e2e` (API giả lập) | Vitest 84; build; Playwright 2 đạt, 4 bỏ qua (kiểm thử stack thật, dòng 7 và 9) |
+| 6 | `scripts.export_openapi` so với `frontend/openapi.json`; `scripts.check_worker` | giống hệt; worker nhận cả chín profile |
+| 7 | `multi-cwe-full-stack.spec` (`multi-cwe-v0.1`, công cụ thật) | đạt |
+| 8 | `legacy_regression.py` (bốn profile cũ, công cụ thật) | 4/5 giống hệt; ca `command-injection-v0.1` khác đúng như mục 18.3 và lần chạy ở mục 23.6 |
+| 9 | `multi-cwe-v02-full-stack`, `multi-cwe-v03-full-stack`, `multi-cwe-v05-full-stack` (PyGoat) | 3 đạt |
+| 10 | Golden, thực nghiệm, công cụ, luật, profile cũ (gồm `sql-injection-v0.3`, `multi-cwe-v0.4`) | 0 tệp đổi; hash `sql-injection-v0.3` và `multi-cwe-v0.4` bằng hash đã ghim |
+
+### 24.10 Nghiệm thu kỹ thuật, kết quả đánh giá, giới hạn
+
+**Nghiệm thu kỹ thuật: đạt cả bốn điều.**
+
+| Điều kiện | Kết quả | Bằng chứng |
+|---|---|---|
+| Một lượt quét thật chạy được cả bốn nhóm | Đạt. Đầu vào bốn nhóm: bốn nhóm `completed`, 32 đơn vị. PyGoat qua giao diện: bốn nhóm `completed`, 15 đơn vị | 24.4, 24.6 |
+| CWE-78, CWE-22, CWE-89 khớp `v0.4` | Đạt trên 7/7 nguồn. Vẫn khớp khi lượt CWE-79 hết bộ nhớ (7/7) và khi tiêm lỗi (3/3) | 24.4, 24.6 |
+| Cảnh báo XSS khớp CodeQL chạy riêng | Đạt: 22/22 cảnh báo trên 7/7 nguồn, cùng rule, vị trí và thông điệp, cùng băm truy vấn | 24.5 |
+| SARIF giữ đủ cảnh báo gốc | Đạt: 203/203 kết quả của 7 lượt và 25/25 của lượt qua giao diện. Mỗi kết quả giữ rule, vùng, thông điệp và nhãn CWE gốc; không kết quả CWE-79 nào bị ẩn | 24.5, 24.6 |
+
+Thêm: mọi mục CWE-79 ở danh sách rà chính, mức U, không gạn. Lượt CWE-79 lỗi hay dở giữ mọi cảnh báo
+đã thu và ghi đúng trạng thái. Hồi quy đạt (24.9).
+
+**Đánh giá trên tập có nhãn: báo riêng, không phải điều kiện nghiệm thu.** OSSF CVE Benchmark, 49 ca
+XSS, giao thức băm trước khi quét:
+
+- **Ca dương:** phát hiện 14 trên 41 ca đo được, bỏ sót 27.
+  - tầng A (lời giải thích là tên một truy vấn trong phạm vi): 14/34;
+  - tầng B: 0/7.
+- **Ca âm:** 1 trên 41 vị trí đã vá vẫn bị báo; trong 14 ca dương được phát hiện, 1 ca âm bị báo.
+- **Mục cần rà:** 387 đơn vị trên 87 commit; 372 trên 390 cảnh báo ở ngoài vị trí có nhãn.
+- **Không đo được hay chạy dở:** 3 ca chạy dở, 5 ca không đo được.
+- **Đọc kết quả:**
+  - Nhãn không độc lập với CodeQL, vì lời giải thích dùng tên truy vấn của nó. Vì vậy 14/41 không phải
+    độ nhạy độc lập.
+  - Không coi được đây là cận trên: CodeQL 2.27.1 không báo gì trong 24 tệp có nhãn.
+  - Phần bỏ sót không do cách ghép theo dòng.
+
+**Giới hạn và việc tiếp theo:**
+
+- **Một công cụ.** Nhóm CWE-79 chỉ có CodeQL; trên tập này nó bỏ sót 27/41 ca. Semgrep cho XSS và
+  đối chứng SonarQube là các lượt đo sau. Mỗi lượt cần một giao thức mới và một tập chưa dùng: các
+  commit OSSF ở đây đã được quét, nên không còn là tập độc lập cho phiên bản sau.
+- **Chỉ JavaScript/TypeScript.** CWE-79 trên Python (template Jinja2, `Markup`, `HttpResponse`) chưa
+  có.
+- **Tải rà:**
+  - `js/xss-through-dom` chiếm 296/390 cảnh báo trên tập có nhãn;
+  - thư viện đi kèm mã cho phần lớn mục rà trên dvpwa (11/12).
+  - Một điều kiện gạn cho CWE-79 (ví dụ theo thư viện đi kèm) chỉ được thêm với gói bằng chứng và lượt
+    đo riêng.
+- **Cảnh báo sai đã thấy trên dữ liệu phát triển:** `res.type("text/plain").send(...)`.
+- **Phạm vi của ứng dụng:**
+  - tệp JavaScript không đuôi không được nhận là JavaScript (D1);
+  - kho vượt 50 MB không tải được.
+- **Chi phí:**
+  - một lượt quét nguồn GitHub phát triển mất 47–122 giây thay vì 31–75 giây của `v0.4`; riêng lượt
+    CWE-79 mất 15–18 giây trên pygoat khi bộ nhớ đệm biên dịch đã có, 200–250 giây ở lượt đầu sau khi
+    dựng lại worker;
+  - giới hạn thời gian mềm của tác vụ tăng lên 12 600 giây; `TIME_LIMIT` còn dưới thời gian hiển thị
+    lại của broker 300 giây. Một nhóm thêm nữa sẽ cần đổi cả thời gian đó.
+- **Bộ nhớ:** CodeQL 2048 MB với hai luồng không đủ để biên dịch bảy truy vấn; cấu hình dùng một luồng.
