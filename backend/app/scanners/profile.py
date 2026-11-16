@@ -16,7 +16,9 @@ profile it is, with its own pinned rules, policy and filter conditions.
 A "detection" profile pins queries of the installed standard CodeQL pack by hash and names the
 CWEs each of their rules is mapped to. It has no evidence query and no filter condition: every
 alert is kept for review. It runs as a member of a composite profile, on the database the
-composite's first member created.
+composite's first member created. A detection profile of schema 2 may also run Semgrep with
+pinned rule files and Bandit with pinned tests, each in a pass of its own, and names how its
+alerts are merged (`units`).
 """
 
 from __future__ import annotations
@@ -85,6 +87,8 @@ class DetectionProfile:
     # Hash of the specification: what assessments record as their policy.
     policy_sha256: str
     specification_sha256: str
+    # How alerts of several tools are merged; None (schema 1): one unit per reported location.
+    unit_merge: str | None = None
 
 
 AnyProfile = ScanProfile | EvidenceProfile | DetectionProfile
@@ -116,6 +120,47 @@ DETECTION_KIND = "detection"
 COMPOSITE_KIND = "composite"
 # Tiers a detection profile may give its units.
 DETECTION_PRIORITIES = ("P1", "P2", "U", "P3", "P4")
+# Tools a schema-2 detection profile may run; CodeQL is required and runs on the shared database.
+DETECTION_TOOLS = ("semgrep", "bandit", "codeql")
+# Ways a schema-2 detection profile may merge alerts (see app.workflows.scans.sql_sites).
+DETECTION_UNIT_MERGES = ("sql-call-site-v1",)
+
+
+def _detection_tools(
+    config: dict[str, Any], files: dict[str, bytes], manifest_files: dict[str, str]
+) -> None:
+    """Check the Semgrep rules and Bandit configuration of a schema-2 detection config."""
+    scanners = config["scanners"]
+    if "codeql" not in scanners or any(tool not in DETECTION_TOOLS for tool in scanners):
+        raise ProfileError("A detection profile runs CodeQL, optionally with Semgrep and Bandit")
+    if len(set(scanners)) != len(scanners):
+        raise ProfileError("A detection profile lists a tool twice")
+    rules = config["semgrep_rules"]
+    if ("semgrep" in scanners) != bool(rules):
+        raise ProfileError("Config must both list Semgrep and pin its rules")
+    for rule in rules:
+        _pinned(files, rule["path"])
+        if manifest_files[rule["path"]] != rule["sha256"]:
+            raise ProfileError(f"Config and profile pin {rule['path']} differently")
+        for key in ("rule_id", "canonical_rule_id"):
+            if not isinstance(rule.get(key), str) or not rule[key]:
+                raise ProfileError(f"Semgrep rule {rule['path']} names no {key}")
+    if ("bandit" in scanners) != ("bandit" in config):
+        raise ProfileError("Config must both list and configure bandit")
+    if "bandit" in config:
+        bandit = config["bandit"]
+        if not bandit["version"] or not bandit["rules"]:
+            raise ProfileError("Config names no version or rules for bandit")
+        _pinned(files, bandit["config"]["path"])
+        if manifest_files[bandit["config"]["path"]] != bandit["config"]["sha256"]:
+            raise ProfileError(f"Config and profile pin {bandit['config']['path']} differently")
+
+
+def _detection_rule_ids(config: dict[str, Any]) -> set[str]:
+    """The rule IDs a schema-2 detection config can report, as canonical pinned IDs."""
+    ids = {rule["canonical_rule_id"] for rule in config["semgrep_rules"]}
+    ids |= set(config.get("bandit", {}).get("rules", []))
+    return ids
 
 
 def _sha256(data: bytes) -> str:
@@ -230,13 +275,21 @@ def load_detection_profile(root: Path, manifest: str) -> DetectionProfile:
         manifest_bytes, raw, files = _verified(root, manifest)
         if raw.get("kind") != DETECTION_KIND:
             raise ProfileError("Not a detection profile")
+        schema = raw.get("schema", 1)
+        if schema not in (1, 2):
+            raise ProfileError(f"Unknown detection profile schema: {schema!r}")
         configs = {
             language: json.loads(_pinned(files, entry["config"]))
             for language, entry in raw["languages"].items()
         }
+        unit_merge = raw.get("units") if schema == 2 else None
+        if schema == 2 and unit_merge not in DETECTION_UNIT_MERGES:
+            raise ProfileError(f"Unknown way of merging detection units: {unit_merge!r}")
         rules: dict[str, dict[str, list[str]]] = {}
         for language, config in configs.items():
-            if config["semgrep_rules"] or config["scanners"] != ["codeql"]:
+            if schema == 2:
+                _detection_tools(config, files, raw["files"])
+            elif config["semgrep_rules"] or config["scanners"] != ["codeql"]:
                 raise ProfileError("A detection profile runs CodeQL only")
             if not config["codeql_queries"] or set(config["codeql_queries"]) != set(
                 config["codeql_query_sha256"]
@@ -256,6 +309,10 @@ def load_detection_profile(root: Path, manifest: str) -> DetectionProfile:
                 ):
                     raise ProfileError(f"Rule {rule} names no mapped CWE")
             rules[language] = {rule: list(cwes) for rule, cwes in mapped.items()}
+            if schema == 2:
+                missing = _detection_rule_ids(config) - set(mapped)
+                if missing:
+                    raise ProfileError(f"No mapped CWE for rules {sorted(missing)}")
         if set(raw["rules"]) != set(configs):
             raise ProfileError("Rules and language configs name different languages")
         priority = raw["priority"]
@@ -273,6 +330,7 @@ def load_detection_profile(root: Path, manifest: str) -> DetectionProfile:
             policy_version=policy["version"],
             policy_sha256=_sha256(_pinned(files, policy["source"])),
             specification_sha256=_sha256(_pinned(files, raw["specification"])),
+            unit_merge=unit_merge,
         )
     except (KeyError, TypeError, AttributeError, json.JSONDecodeError) as exc:
         raise ProfileError(f"Malformed scan profile: {exc!r}") from exc

@@ -63,6 +63,7 @@ class ScanCreate(InputSchema):
         "path-traversal-v0.2",
         "multi-cwe-v0.1",
         "multi-cwe-v0.2",
+        "multi-cwe-v0.3",
     ] = Field(
         default="command-injection-v0.1",
         description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
@@ -76,7 +77,10 @@ class ScanCreate(InputSchema):
         "each alert is routed to one analysis family and assessed by that member profile. "
         "multi-cwe-v0.2: the same two members plus sql-injection-v0.1 (CWE-89, Python and "
         "JavaScript/TypeScript, CodeQL only), whose alerts are detected and kept for review: "
-        "nothing ranks or filters them.",
+        "nothing ranks or filters them. multi-cwe-v0.3: the same three families, with "
+        "sql-injection-v0.2 running Semgrep (unchanged upstream rules), Bandit (Python) and "
+        "CodeQL for CWE-89; their alerts are merged only inside one located SQL execution "
+        "call and are all kept for review.",
     )
 
 

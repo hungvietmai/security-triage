@@ -109,9 +109,9 @@ exactly one unit. A single-profile scan whose profile ranked nothing (a partial
 called from `task.scan_snapshot`; never leave a stored finding without a unit. A new family
 filters nothing until its own evidence has been evaluated.
 
-A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/` and
-`profiles/multi-cwe-v0.2/`) pins its members' manifests; `scanners/profile.py` loads it,
-`families.members_of` checks that it names families in `families.FAMILIES`, and
+A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`,
+`profiles/multi-cwe-v0.2/` and `profiles/multi-cwe-v0.3/`) pins its members' manifests;
+`scanners/profile.py` loads it, `families.members_of` checks that it names families in `families.FAMILIES`, and
 `task.scan_snapshot` runs it. `families.to_language_result`
 turns a composite run into one `LanguageResult` with a part per family; `persist.py` writes
 tool runs and findings per language and units per part, with `location_units.analysis_family`
@@ -129,6 +129,19 @@ its manifest. It runs only as a member, in its own pass (`codeql-sql-injection`)
 database, and `detection.keep_detected` makes one unit per reported location at the manifest's
 tier, always in the review list. `multi-cwe-v0.1` must keep producing what
 `tests/golden/composite/` records; `multi-cwe-v0.2` adds a member and changes nothing else.
+
+A detection manifest with `"schema": 2` (`profiles/sql-injection-v0.2/`, member of
+`multi-cwe-v0.3`) also runs Semgrep and Bandit, each as a member pass of its own on the same
+source (`scanners/passes.py`: `semgrep-sql-injection`, `bandit-sql-injection`; SARIF, logs, staged
+rules and raw IDs carry the pass name). Every Semgrep rule file is staged in its own folder
+(`r<index>`), and `detection.canonical_rule_id` turns the reported ID back into the pinned file's
+upstream rule ID, stored as `rule_id`; the raw ID stays in `raw_rule_id`. `units:
+"sql-call-site-v1"` selects `detection.keep_detected_v2`: alerts of any tool become one unit only
+when each reported region lies inside the same Python SQL execution call located by
+`workflows/scans/sql_sites.py` (innermost call when calls nest, ASCII lines only); everything else
+stays one unit per reported location **and tool**, and JavaScript/TypeScript has no locator yet.
+Nothing is filtered. A failed or incomplete member pass makes the family's run partial: the
+alerts of the other passes are still kept, with `run_incomplete`.
 The task's time limits and the broker's visibility timeout cover the largest profile
 (`task.worst_case_seconds`); change them together.
 

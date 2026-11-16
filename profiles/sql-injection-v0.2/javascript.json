@@ -1,0 +1,98 @@
+{
+  "config_id": "sql-injection-v0.2-javascript",
+  "purpose": "Product scan: detect CWE-89 with Semgrep (unchanged upstream rules) and the standard CodeQL query, merge alerts only inside one located SQL execution call, and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "semgrep",
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/knex-sqli.yaml",
+      "sha256": "caf1c5f56055363af67ead62f248df123c44ef46d3b2e9d8bbd32f8179d296ba",
+      "rule_id": "knex-sqli",
+      "canonical_rule_id": "javascript.aws-lambda.security.knex-sqli.knex-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/mysql-sqli.yaml",
+      "sha256": "d5fa1549406aab261b6e95b82bf4ab238e55f924100e487a2967e965f1fc408e",
+      "rule_id": "mysql-sqli",
+      "canonical_rule_id": "javascript.aws-lambda.security.mysql-sqli.mysql-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/pg-sqli.yaml",
+      "sha256": "267e1dea6127d5f6b311a048c8a9de8c7a88e756a90a31c5c2bd737715c919e8",
+      "rule_id": "pg-sqli",
+      "canonical_rule_id": "javascript.aws-lambda.security.pg-sqli.pg-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/sequelize-sqli.yaml",
+      "sha256": "f2389a77852e1f2fa95ad9cc41cc05da6b533351ac13ba50a350732efa3f0603",
+      "rule_id": "sequelize-sqli",
+      "canonical_rule_id": "javascript.aws-lambda.security.sequelize-sqli.sequelize-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/tainted-sql-string.yaml",
+      "sha256": "c0b4169c9501a6b59b09e5b676a49adc48d53069a477f19f2951688e79cfb861",
+      "rule_id": "tainted-sql-string",
+      "canonical_rule_id": "javascript.aws-lambda.security.tainted-sql-string.tainted-sql-string"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/express/security/injection/tainted-sql-string.yaml",
+      "sha256": "22dab9b0182dd25bb5aaf3ae796973dc53ea91ccb0e747055fd15ee1ef9a8592",
+      "rule_id": "tainted-sql-string",
+      "canonical_rule_id": "javascript.express.security.injection.tainted-sql-string.tainted-sql-string"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-knex-sqli.yaml",
+      "sha256": "074be35c73756917896e051a8d77a8a705c7ef54d4846d7a93c829e4d68aabd2",
+      "rule_id": "node-knex-sqli",
+      "canonical_rule_id": "javascript.lang.security.audit.sqli.node-knex-sqli.node-knex-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-mssql-sqli.yaml",
+      "sha256": "a3c995249bdd6ffbf3d36ba42cdd1f1c04798bb0e41765bd396a218516e59ee9",
+      "rule_id": "node-mssql-sqli",
+      "canonical_rule_id": "javascript.lang.security.audit.sqli.node-mssql-sqli.node-mssql-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-mysql-sqli.yaml",
+      "sha256": "152d5848cbcb5bdd3555507eb4a55b5ee2cd7276effbd5975a7da97d82bba0d0",
+      "rule_id": "node-mysql-sqli",
+      "canonical_rule_id": "javascript.lang.security.audit.sqli.node-mysql-sqli.node-mysql-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-postgres-sqli.yaml",
+      "sha256": "23709e35b9ce213d8306c793a3174320dcf3141043e31297fcdec48735c1bbd8",
+      "rule_id": "node-postgres-sqli",
+      "canonical_rule_id": "javascript.lang.security.audit.sqli.node-postgres-sqli.node-postgres-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/sequelize/security/audit/sequelize-injection-express.yaml",
+      "sha256": "b3b6149dcd1f7611e020aa6c915eabf540a64bdc11626f5003c5d4922d7824a5",
+      "rule_id": "express-sequelize-injection",
+      "canonical_rule_id": "javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/javascript/sequelize/security/audit/sequelize-raw-query.yaml",
+      "sha256": "b51a5f7b8a32132c57960b559bc533e2632da00a863118154d89b692c4a1342c",
+      "rule_id": "sequelize-raw-query",
+      "canonical_rule_id": "javascript.sequelize.security.audit.sequelize-raw-query.sequelize-raw-query"
+    }
+  ],
+  "codeql_queries": [
+    "Security/CWE-089/SqlInjection.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-089/SqlInjection.ql": "38c79ee799144a8c9fe4ca5c933d74dfdba98f1e5b898b36ea173af4fefbbd91"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "sha256": "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833",
+    "javascript_query_pack": "2.4.6"
+  },
+  "language": "javascript"
+}

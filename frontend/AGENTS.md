@@ -75,10 +75,13 @@ A scan has one or more analysis families (one CWE each, `ScanFamilies`). The fam
 is URL state (`?family=`) like tier, tool and list. A unit shows two separate facts: the
 filter decision (`disposition`) and what the evidence says (`evidence_state`); never merge
 them into one label, and never present a unit without refuting evidence as safe.
-A family that is only detected and kept (`sql-injection`, CWE-89, profile `multi-cwe-v0.2`)
-shows its units at tier U with the evidence state "Chưa đủ bằng chứng" and is never in the
-filtered list. `tests/e2e/multi-cwe-full-stack.spec.ts` (`multi-cwe-v0.1`) and
-`tests/e2e/multi-cwe-v02-full-stack.spec.ts` (`multi-cwe-v0.2`) are the browser tests
+A family that is only detected and kept (`sql-injection`, CWE-89, profiles `multi-cwe-v0.2` and
+`multi-cwe-v0.3`) shows its units at tier U with the evidence state "Chưa đủ bằng chứng" and is
+never in the filtered list. Under `multi-cwe-v0.3` one unit may hold alerts of several tools
+(Semgrep, Bandit, CodeQL) when they lie inside one SQL execution call; the unit sheet lists each
+alert with its own pass. `tests/e2e/multi-cwe-full-stack.spec.ts` (`multi-cwe-v0.1`),
+`tests/e2e/multi-cwe-v02-full-stack.spec.ts` (`multi-cwe-v0.2`) and
+`tests/e2e/multi-cwe-v03-full-stack.spec.ts` (`multi-cwe-v0.3`) are the browser tests
 against the complete stack; they are skipped unless `FULL_STACK_URL` is set.
 
 ## Architecture rules

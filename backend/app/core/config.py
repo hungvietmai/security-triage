@@ -41,6 +41,7 @@ class Settings(BaseSettings):
         "path-traversal-v0.2": "profiles/path-traversal-v0.2/profile.json",
         "multi-cwe-v0.1": "profiles/multi-cwe-v0.1/profile.json",
         "multi-cwe-v0.2": "profiles/multi-cwe-v0.2/profile.json",
+        "multi-cwe-v0.3": "profiles/multi-cwe-v0.3/profile.json",
     }
     # CodeQL bundle directory; query packs live under qlpacks/ (tools/install-scanners.sh).
     codeql_home: Path = Path("/opt/codeql")

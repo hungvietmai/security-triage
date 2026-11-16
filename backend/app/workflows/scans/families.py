@@ -35,6 +35,7 @@ from typing import Any, Literal
 
 from app.core.config import Settings
 from app.scanners.codeql import query_pack_for_language, run_codeql_evidence
+from app.scanners.passes import run_member_pass
 from app.scanners.pipeline import PipelineResult, PipelineStatus, run_pipeline
 from app.scanners.process import InvokeCallable, ProcessRecord, invoke
 from app.scanners.profile import (
@@ -54,7 +55,7 @@ from app.workflows.scans.classification import (
     pinned_rules_claim,
     rule_claims_claim,
 )
-from app.workflows.scans.detection import scan_language_detection
+from app.workflows.scans.detection import detection_claim, scan_language_detection
 from app.workflows.scans.results import LanguageResult
 
 COMPOSITION_VERSION = "family-composition-v0.1"
@@ -93,6 +94,7 @@ FAMILY_OF_PROFILE = {
     "command-injection-v0.3": "command-injection",
     "path-traversal-v0.2": "path-traversal",
     "sql-injection-v0.1": "sql-injection",
+    "sql-injection-v0.2": "sql-injection",
 }
 # A member whose queries run on the shared database gets its own analysis pass. Its raw IDs
 # start with this prefix and the family, so they stay unique next to the primary CodeQL pass.
@@ -102,6 +104,8 @@ PASS_PREFIX = "codeql-"
 EVIDENCE_PASS = "detection+evidence"
 DETECTION_PASS = "detection"
 PASS_KINDS = (EVIDENCE_PASS, DETECTION_PASS)
+# Tools a member may run in a pass of its own, and the prefix of that pass's name.
+MEMBER_PASS_TOOLS = ("codeql", "semgrep", "bandit")
 # Files a member's entry point writes; a composite scan keeps them per family.
 MEMBER_FILES = ("run.json", "findings.json", "units.json", "assessments.json")
 # What each step of the primary pipeline is, for the cost record.
@@ -121,6 +125,8 @@ FamilyStatus = Literal["completed", "partial", "failed"]
 # A member's failure is final for that family only; scanner and profile errors are these.
 MEMBER_ERRORS = (KeyError, OSError, RuntimeError, ValueError)
 AnalyzePass = Callable[..., tuple[ProcessRecord, list[Finding], bool]]
+# A member's Semgrep or Bandit pass (`app.scanners.passes.run_member_pass`).
+MemberPass = Callable[..., tuple[ProcessRecord, list[Finding], bool]]
 
 _UNRESOLVED_REASONS = {
     "rule_not_claimed": "không thành viên nào của lượt quét khai rule này",
@@ -240,8 +246,20 @@ def members_of(profile: CompositeProfile) -> list[Member]:
     return _ordered([Member(family, member) for family, member in profile.members])
 
 
-def pass_name(member: Member) -> str:
-    return PASS_PREFIX + member.family
+def pass_name(member: Member, tool: str = "codeql") -> str:
+    """The name of a member's pass of `tool`: `codeql-<family>`, `semgrep-<family>`..."""
+    return f"{tool}-{member.family}"
+
+
+def pass_tool(name: str) -> str:
+    """The tool of a member pass, from its name."""
+    return name.split("-", 1)[0]
+
+
+def member_passes(member: Member, language: str) -> list[tuple[str, str]]:
+    """(tool, pass name) of every pass a non-primary member runs for `language`, in order."""
+    scanners = member.profile.configs[language]["scanners"]
+    return [(tool, pass_name(member, tool)) for tool in scanners if tool in MEMBER_PASS_TOOLS]
 
 
 def _write_json(path: Path, value: Any) -> None:
@@ -264,11 +282,23 @@ def _participating(members: Sequence[Member], language: str) -> list[Member]:
     for member in taking_part[1:]:
         if "codeql" not in config["scanners"]:
             raise ValueError("The primary member creates no CodeQL database to share")
-        version = member.profile.configs[language]["codeql_version"]
+        theirs = member.profile.configs[language]
+        version = theirs["codeql_version"]
         if version != config["codeql_version"]:
             raise ValueError(
                 f"Members pin different CodeQL versions: {config['codeql_version']} and {version}"
             )
+        # A member's own Semgrep or Bandit pass runs the tool the worker checked for the primary.
+        if (
+            "semgrep" in theirs["scanners"]
+            and theirs["semgrep_version"] != config["semgrep_version"]
+        ):
+            raise ValueError("Members pin different Semgrep versions")
+        if (
+            "bandit" in theirs["scanners"]
+            and theirs["bandit"]["version"] != (config.get("bandit") or theirs["bandit"])["version"]
+        ):
+            raise ValueError("Members pin different Bandit versions")
     return taking_part
 
 
@@ -276,6 +306,8 @@ def _claim(member: Member, language: str) -> Claim:
     profile = member.profile
     if isinstance(profile, ScanProfile):
         return rule_claims_claim(profile.rule_claims, language)
+    if isinstance(profile, DetectionProfile) and profile.unit_merge is not None:
+        return detection_claim(profile, language)
     if isinstance(profile, DetectionProfile):
         # The manifest pins each rule's mapped CWEs; nothing is read from the rule's name.
         return pinned_rules_claim(
@@ -471,6 +503,7 @@ def scan_language_families(
     invoke_fn: InvokeCallable = invoke,
     analyze_fn: AnalyzePass = run_codeql_evidence,
     pass_members: Mapping[str, Sequence[str]] | None = None,
+    pass_fn: MemberPass = run_member_pass,
 ) -> CompositeResult:
     """Run the scanners once for `language` and let every member assess its family's findings.
 
@@ -485,7 +518,9 @@ def scan_language_families(
     assert isinstance(primary.profile, ScanProfile)
     config = primary.profile.configs[language]
     serves: dict[str, Sequence[str]] = {tool: [primary.family] for tool in config["scanners"]}
-    serves.update({pass_name(member): [member.family] for member in others})
+    serves.update(
+        {name: [member.family] for member in others for _, name in member_passes(member, language)}
+    )
     serves.update(pass_members or {})
     claims = {member.family: _claim(member, language) for member in taking_part}
 
@@ -512,8 +547,33 @@ def scan_language_families(
         primary_steps.append(result.steps)
         return dataclasses.replace(result, findings=routed_to(primary.family))
 
+    def screening_pass(member: Member, tool: str, kwargs: Mapping[str, Any]) -> ProcessRecord:
+        """A member's own Semgrep or Bandit pass, recorded under its own name."""
+        name = pass_name(member, tool)
+        found: list[Finding] = []
+        try:
+            record, found, _ = pass_fn(
+                tool,
+                name=name,
+                config=member.profile.configs[language],
+                source=source,
+                output=output,
+                snapshot_sha256=snapshot_sha256,
+                repository_root=member.profile.root,
+                invoke_fn=kwargs["invoke_fn"],
+            )
+        except MEMBER_ERRORS as exc:
+            record = {"status": "failed", "error": str(exc)}
+        steps[name] = {**record, "kind": DETECTION_PASS, "serves": [member.family]}
+        classify(found, {finding["raw_id"]: name for finding in found})
+        return record
+
     def shared_database_pipeline(member: Member) -> RunPipeline:
-        """Serve a safety-evidence member's queries from the database the primary created."""
+        """Serve a member's queries from the database the primary created.
+
+        A detection member may also run Semgrep and Bandit with its own pinned rules, each in a
+        pass of its own; its run is complete only when every one of its passes is.
+        """
 
         def run(**kwargs: Any) -> PipelineResult:
             name = pass_name(member)
@@ -521,6 +581,10 @@ def scan_language_families(
             member_steps: dict[str, ProcessRecord] = {
                 step: shared[step] for step in SHARED_STEPS if step in shared
             }
+            scanners = list(kwargs["scanners"])
+            for tool in scanners:
+                if tool in ("semgrep", "bandit"):
+                    member_steps[tool] = screening_pass(member, tool, kwargs)
             found: list[Finding] = []
             manifest: str | None = None
             try:
@@ -555,8 +619,16 @@ def scan_language_families(
             member_steps["codeql"] = record
             status = record["status"]
             usable = status in {"completed", "partial"}
+            statuses = [member_steps[tool]["status"] for tool in scanners if tool in member_steps]
+            overall = (
+                "completed"
+                if statuses and all(s == "completed" for s in statuses)
+                else "partial"
+                if any(s in {"completed", "partial"} for s in statuses)
+                else "failed"
+            )
             return PipelineResult(
-                status=status if usable else "failed",  # type: ignore[arg-type]
+                status=overall,  # type: ignore[arg-type]
                 steps=member_steps,
                 findings=routed_to(member.family),
                 codeql_query_files=dict(kwargs["codeql_query_sha256"]) if usable else None,
@@ -630,6 +702,7 @@ def scan_language_families(
                     snapshot_sha256=snapshot_sha256,
                     run_pipeline_fn=shared_database_pipeline(member),
                     invoke_fn=invoke_fn,
+                    files=files,
                 )
             assert isinstance(profile, EvidenceProfile)
             return scan_language_evidence(
@@ -644,6 +717,14 @@ def scan_language_families(
             )
 
         run_member(member, run_on_shared_database)
+        located = results[-1].result
+        if located is not None and "sink-locator" in located.pipeline.steps:
+            # A member's own locator, kept with the language's steps for the cost record.
+            steps[f"sink-locator-{member.family}"] = {
+                **located.pipeline.steps["sink-locator"],
+                "kind": "locator",
+                "serves": [member.family],
+            }
 
     by_raw_id = {record["raw_id"]: record for record in records}
     held: list[HeldUnits] = []
@@ -794,10 +875,11 @@ def to_language_result(result: CompositeResult) -> LanguageResult:
     passes = tuple(
         name
         for name, step in result.steps.items()
-        if step["kind"] in PASS_KINDS and name.startswith(PASS_PREFIX)
+        # A member's pass is named "<tool>-<family>"; the primary's own steps are named by tool.
+        if step["kind"] in PASS_KINDS and "-" in name and pass_tool(name) in MEMBER_PASS_TOOLS
     )
     for name in passes:
-        versions[name] = versions.get("codeql", "")
+        versions[name] = versions.get(pass_tool(name), "")
     steps: dict[str, ProcessRecord] = {
         name: step  # type: ignore[misc]
         for name, step in result.steps.items()

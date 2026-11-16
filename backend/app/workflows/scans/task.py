@@ -24,6 +24,7 @@ from app.features.scans.models import Scan
 from app.features.sources.models import SourceSnapshot
 from app.scanners.acquisition import SOURCE_EXTENSIONS
 from app.scanners.codeql import run_codeql_evidence
+from app.scanners.passes import run_member_pass
 from app.scanners.pipeline import PipelineStatus, run_pipeline
 from app.scanners.process import InvokeCallable, invoke
 from app.scanners.profile import (
@@ -44,7 +45,9 @@ from app.workflows.scans.exceptions import INFRA_ERRORS
 from app.workflows.scans.families import (
     COMPOSITION_VERSION,
     FAMILY_OF_PROFILE,
+    MEMBER_PASS_TOOLS,
     AnalyzePass,
+    MemberPass,
     family_summaries,
     hold_unranked,
     members_of,
@@ -62,9 +65,9 @@ logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
 # The soft limit must cover every step of the largest profile running to its timeout
-# (`worst_case_seconds`): multi-cwe-v0.2 needs 9960 s, multi-cwe-v0.1 8760 s,
-# command-injection-v0.3 7560 s. A test keeps this above every profile.
-SOFT_TIME_LIMIT = 10200
+# (`worst_case_seconds`): multi-cwe-v0.3 needs 11760 s, multi-cwe-v0.2 9960 s,
+# multi-cwe-v0.1 8760 s, command-injection-v0.3 7560 s. A test keeps this above every profile.
+SOFT_TIME_LIMIT = 12000
 # The soft limit interrupts only the main thread, which then waits for a scanner thread still
 # running, bounded by that step's timeout, before it can mark the scan failed. The hard limit
 # must leave that time, or the scan would be killed and stay "running". The longest step is
@@ -96,9 +99,11 @@ def worst_case_seconds(profile: LoadedProfile) -> int:
         for language, config in primary.configs.items()
     )
     if isinstance(profile, CompositeProfile):
-        # Every other member adds one analysis pass on the shared database per language.
+        # Every other member adds its own passes per language: one CodeQL analysis on the
+        # shared database and, for a detection member, its own Semgrep and Bandit passes.
         total += sum(
             int(config["timeout_seconds"])
+            * sum(tool in MEMBER_PASS_TOOLS for tool in config["scanners"])
             for _, member in profile.members[1:]
             for language, config in member.configs.items()
             if language in primary.configs
@@ -178,6 +183,7 @@ def scan_snapshot(
     run_pipeline_fn: RunPipeline = run_pipeline,
     invoke_fn: InvokeCallable = invoke,
     analyze_fn: AnalyzePass = run_codeql_evidence,
+    pass_fn: MemberPass = run_member_pass,
 ) -> ScanResult:
     """Scan, triage and upload artifacts in a work directory that never outlives the call."""
     profile = load_scan_profile(settings, profile_id)
@@ -214,6 +220,7 @@ def scan_snapshot(
                     run_pipeline_fn=run_pipeline_fn,
                     invoke_fn=invoke_fn,
                     analyze_fn=analyze_fn,
+                    pass_fn=pass_fn,
                 )
                 language_result = to_language_result(composite)
                 families[language] = family_summaries(composite, members)
@@ -365,6 +372,7 @@ def execute_scan(
     run_pipeline_fn: RunPipeline = run_pipeline,
     invoke_fn: InvokeCallable = invoke,
     analyze_fn: AnalyzePass = run_codeql_evidence,
+    pass_fn: MemberPass = run_member_pass,
     fetch: Fetch = fetch_allowlisted,
 ) -> str:
     """Run one scan to a final state. Infrastructure errors propagate for the task to retry."""
@@ -385,6 +393,7 @@ def execute_scan(
                 run_pipeline_fn=run_pipeline_fn,
                 invoke_fn=invoke_fn,
                 analyze_fn=analyze_fn,
+                pass_fn=pass_fn,
             )
             persist_scan_result(session, scan_id, result, now=_now())
         except INFRA_ERRORS:

@@ -426,6 +426,23 @@ describe("A scan with several analysis families", () => {
     expect(dialog.getByText(/chưa được xếp hạng hay gạn/)).toBeInTheDocument();
   });
 
+  it("offers the multi-tool SQL injection profile and says how its alerts are merged", async () => {
+    const project = makeProject();
+    db.projects = [project];
+    const { user } = await renderApp(`/projects/${project.id}`);
+    await user.click(await main().findByRole("button", { name: "Tạo scan" }));
+    const dialog = within(screen.getByRole("dialog", { name: "Tạo scan mới" }));
+    await user.click(dialog.getByRole("combobox", { name: "Profile" }));
+    await user.click(
+      screen.getByRole("option", {
+        name: "CWE-78 + CWE-22 + CWE-89 · SQL injection bằng Semgrep, Bandit và CodeQL",
+      }),
+    );
+    expect(
+      dialog.getByText(/chỉ được gộp khi cùng nằm trong một lời gọi/),
+    ).toBeInTheDocument();
+  });
+
   it("shows a SQL injection unit as kept for review with no evidence to weigh", async () => {
     const sql: Family = {
       family: "sql-injection",
