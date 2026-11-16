@@ -1,7 +1,8 @@
 # Semgrep rules
 
-This folder holds the **evidence rule packs** the scan worker runs in its adjudication step.
-Their results are evidence about existing alerts, never alerts of their own.
+This folder holds the **evidence rule packs** the scan worker runs in its adjudication step,
+and one detection pack (below). Evidence results are evidence about existing alerts, never
+alerts of their own.
 
 | Pack | Used by | What it shows |
 |---|---|---|
@@ -10,6 +11,12 @@ Their results are evidence about existing alerts, never alerts of their own.
 
 Each pack is pinned by SHA-256 in the profile that uses it and has synthetic cases with a check
 script under `tests/`. Do not edit a pack; a new version needs a new directory and profile.
+
+One **detection** pack lives here too; its results are alerts of their own:
+
+| Pack | Used by | What it is |
+|---|---|---|
+| [sql-injection-v0.1/](sql-injection-v0.1/README.md) | `sql-injection-v0.2` (member of `multi-cwe-v0.3`), pass `semgrep-sql-injection`, Python and JavaScript/TypeScript | 37 unchanged upstream CWE-89 rule files of `semgrep/semgrep-rules` at `a84ff9cc`, chosen mechanically; each file pinned by SHA-256 with its rule ID and upstream rule ID |
 
 Detection and locator rules live elsewhere, versioned with the research that pins them:
 
