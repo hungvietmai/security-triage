@@ -17,7 +17,9 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
   nào thực tế khác kế hoạch thì được ghi ngay tại chỗ và ở mục 16, 17. Lần rà nghiệm thu kỹ thuật
   P1 nằm ở [mục 18](#18-nghiệm-thu-kỹ-thuật-p1-2026-11-15); thẩm định và thiết kế tối thiểu cho
   CWE-89 ở [mục 19](#19-p2--thẩm-định-và-thiết-kế-tối-thiểu-cho-cwe-89-2026-11-15); P2a (profile
-  `multi-cwe-v0.2`, CWE-89 chỉ phát hiện và giữ) ở [mục 20](#20-trạng-thái-p2a-2026-11-15).
+  `multi-cwe-v0.2`, CWE-89 chỉ phát hiện và giữ) ở [mục 20](#20-trạng-thái-p2a-2026-11-15); P2b
+  (profile `multi-cwe-v0.3`, CWE-89 bằng Semgrep, Bandit và CodeQL, có số đo trên dữ liệu phát triển
+  có nhãn) ở [mục 21](#21-trạng-thái-p2b-2026-11-16).
 
 ## 1. Kết luận ngắn
 
@@ -1549,8 +1551,8 @@ Giây của từng bước CodeQL (worker đã chạy các truy vấn ít nhất
   Juice Shop 7); ba trong tám nguồn không có cảnh báo CWE-89 nào. Kho lớn nhất đã quét là Juice Shop
   (tạo database JavaScript/TypeScript khoảng 20 giây); **chưa có số đo trên kho lớn hơn thế**.
   BenchmarkPython có 16 ca kiểm thử thuộc loại `sqli` theo cột danh mục của
-  file kết quả mong đợi của nó, nhưng truy vấn chuẩn không báo ca nào, cả trong ứng dụng lẫn khi chạy riêng; nguyên nhân chưa
-  được tìm hiểu và không nhãn nào được dùng để đánh giá.
+  file kết quả mong đợi của nó, nhưng truy vấn chuẩn không báo ca nào, cả trong ứng dụng lẫn khi chạy
+  riêng; không nhãn nào được dùng để đánh giá ở P2a. *Nguyên nhân được tìm ở P2b: mục 20.11.*
 - **Cảnh báo của rule không được ghim** chỉ có kiểm thử với công cụ giả lập (mục 20.4).
 - Hai kiểm thử trình duyệt trên stack thật không nằm trong bộ chạy mặc định (bị bỏ qua khi không có
   `FULL_STACK_URL`); chúng được chạy tay như ở mục 20.5.
@@ -1565,3 +1567,397 @@ ghép bằng công cụ thật) được chủ đề án tách thành đầu vi�
 
 Bước tiếp theo theo mục 19.4 là P2b (lượt `semgrep-sql-injection`, `bandit-sql-injection`, bộ định vị
 sink SQL); điều kiện gạn cho CWE-89 vẫn nằm ngoài P2.
+
+### 20.10 Bổ sung nghiệm thu: dữ liệu đã lưu đọc bằng API của P1 và của P2a (2026-11-16)
+
+Bổ sung cho tiêu chí 8 của mục 19.5 ("dữ liệu cũ đọc như trước"), làm ở bước 1 của P2b.
+
+- **Cách làm.** Database `triage` được sao bằng `pg_dump` thành `p2b_readonly`, đặt
+  `default_transaction_read_only = on`, đọc bằng một vai trò chỉ có quyền `SELECT`. Mã `backend/` ở
+  `ffc218b` (P1) và ở `aea3dc2` (P2a) được lấy bằng `git archive`, mỗi bản chạy trong image kiểm thử
+  và chỉ gọi `GET` qua `TestClient`: lượt quét, mọi trang đơn vị, chi tiết từng đơn vị, báo cáo và
+  SARIF. Lệnh: `artifacts/multi-cwe-p2b/api-compare/dump_api.py`, so sánh bằng `compare_api.py` và
+  `compare_v02.py`; đầu ra `comparison.txt`, `comparison-v02.txt` cùng thư mục.
+- **Kết quả.** 444 lượt quét đã lưu. 426 lượt cho phản hồi giống hệt ở cả hai bản mã: mọi lượt của
+  `command-injection-v0.1` (7), `-v0.2` (169), `-v0.3` (203), `path-traversal-v0.2` (20) và
+  `multi-cwe-v0.1` (27). 18 lượt khác nhau, **đều là `multi-cwe-v0.2`**, tức dữ liệu do chính P2a
+  tạo, mà mã P1 chưa biết nhóm `sql-injection`:
+  - 6 lượt có nhóm `sql-injection` nhưng 0 đơn vị CWE-89 (không có cảnh báo CWE-89): mã P1 đọc
+    được, mọi phản hồi 200, chỉ khác ở danh sách nhóm (2 nhóm thay vì 3);
+  - 12 lượt có đơn vị CWE-89: mã P1 trả 500 cho trang đơn vị và báo cáo (kiểu tên nhóm của P1 chưa
+    có `sql-injection`); SARIF vẫn trả 200, nhưng kết quả SQL mang `cwe: null` và
+    `evidenceState: not_refuted`, còn mã P2a ghi `CWE-89` và `insufficient`.
+- **Chênh lệch ngoài nhóm `sql-injection`: 0.** Ở 12 lượt mà trang đơn vị của P1 lỗi, chi tiết đơn
+  vị của hai nhóm kia không so được qua API của P1; phần đó **chưa xác minh**.
+- **Kết luận.** Dữ liệu ghi trước P2a đọc giống hệt bằng mã P2a. Mã P1 không đọc trọn được dữ liệu có
+  nhóm CWE-89; đây là chiều không tương thích ngược về sau (mã cũ, dữ liệu mới), không phải hồi quy.
+
+### 20.11 Vì sao CodeQL không báo ca `sqli` nào của BenchmarkPython (2026-11-16)
+
+Bước 2 của P2b, làm **trước** khi Semgrep hay Bandit chạy với luật CWE-89. Đầu ra:
+`artifacts/multi-cwe-p2b/codeql-baseline/` (`summary.txt`, truy vấn chẩn đoán `Diag*.ql`, lượt hợp lệ
+ở `out3/`).
+
+| Kiểm tra | Kết quả |
+|---|---|
+| Ca theo nhãn chuẩn (`expectedresults-0.1.csv`, loại `sqli`) | 16 ca: 5 đúng, 11 sai |
+| File đưa vào database | 1.236 file Python; đủ 16 file `testcode/` của các ca và `helpers/db_sqlite.py` |
+| Nhật ký trích xuất | Một thông báo duy nhất: "Could not guess Python version, will use default: Python 3" |
+| Trạng thái truy vấn `py/sql-injection` | `executionSuccessful: true`; thông báo 2.487 mức `none`, 9 mức `note`; 0 kết quả |
+| Nguồn (dữ liệu request) | Được nhận ở cả 16 file |
+| Sink (lời gọi thực thi SQL) | 16 lời gọi `cur.execute(...)` trong 16 file **không** được nhận là `SqlExecution`; cả database chỉ có 1 sink, ở `helpers/db_sqlite.py` |
+| Biến thể một biến (bản sao tạm, chỉ đổi kết nối thành `sqlite3.connect(":memory:")`) | Cả 16 lời gọi thành sink; truy vấn báo 2 ca, `00454` và `00455`, đều đúng |
+
+**Kết luận có căn cứ:** CodeQL báo 0 vì kết nối đến từ hàm của chính benchmark,
+`helpers.db_sqlite.get_connection()`, mà mô hình PEP 249 của CodeQL không nhận ra, nên `cursor()` và
+`execute()` trên kết nối đó không phải sink SQL. Biến thể chỉ đổi đúng điểm đó và làm sink xuất hiện.
+Ba ca đúng còn lại vẫn không được báo trong biến thể; nguyên nhân của ba ca đó **chưa xác định** (không
+được tìm hiểu thêm). Kết quả của biến thể không phải số đo của profile nào và không vào bảng ở mục
+21.6.
+
+## 21. Trạng thái P2b (2026-11-16)
+
+P2b thêm profile `multi-cwe-v0.3`: nhóm CWE-89 chạy ba công cụ, **Semgrep** (Python và
+JavaScript/TypeScript), **Bandit** (Python) và **CodeQL**, và chỉ gộp cảnh báo của chúng khi có căn
+cứ chúng trỏ đến cùng một điểm thực thi truy vấn SQL. Đây là bước 6–7 của mục 19.4. CWE-89 vẫn **chỉ
+được phát hiện và giữ**: không xếp hạng, không gạn. `multi-cwe-v0.2` giữ nguyên làm mốc CodeQL. Không
+dữ liệu held-out hay cặp đã đóng băng nào được quét, không file bị ghim nào bị sửa, G1–G4 giữ nguyên.
+CI/CD và tự động gạn CWE-89 nằm ngoài P2b.
+
+**Trạng thái mã đã kiểm thử:** nhánh cục bộ `feat/multi-cwe-p2a` tại `aea3dc2` cộng thay đổi **chưa
+commit**, chưa push. Cây đã kiểm thử và lệnh: mục 21.7. Hai lượt quét có nhãn chạy trên mã ứng dụng
+có hash `83c58e8179b5ff7b` (giống hệt trong image worker) và profile có hash ở mục 21.1
+(`artifacts/multi-cwe-p2b/labeled-run-state.txt`). Đầu ra thô: `artifacts/multi-cwe-p2b/` (không vào
+Git).
+
+### 21.1 Đã làm
+
+| Việc | File |
+|---|---|
+| 37 file luật CWE-89 của `semgrep/semgrep-rules` ở `a84ff9cc`, chép nguyên văn, chọn cơ học (mục 21.6) | `rules/semgrep/sql-injection-v0.1/` (mới; `LICENSE`, `README.md`) |
+| Lượt Semgrep và Bandit có tên của một thành viên: SARIF, nhật ký, luật dàn sẵn và raw ID mang tên lượt; mỗi file luật một thư mục `r<index>` | `backend/app/scanners/passes.py` (mới) |
+| Bộ định vị lời gọi thực thi truy vấn SQL của Python, `sql-call-site-v1` | `backend/app/workflows/scans/sql_sites.py` (mới) |
+| Gộp theo lời gọi; đơn vị theo vị trí và công cụ khi không định vị được; ID luật thượng nguồn | `backend/app/workflows/scans/detection.py` (`keep_detected_v2`, `canonical_rule_id`) |
+| Manifest `detection` schema 2: công cụ, luật ghim kèm ID thượng nguồn, Bandit, `units` | `backend/app/scanners/profile.py` |
+| Lớp ghép chạy lượt Semgrep/Bandit của thành viên trước lượt CodeQL; trạng thái nhóm tính trên mọi lượt | `backend/app/workflows/scans/families.py` |
+| Giới hạn thời gian theo mọi lượt thành viên | `task.py`, `workers/celery_app.py` |
+| Thành viên `sql-injection-v0.2` và profile ghép `multi-cwe-v0.3` | `profiles/sql-injection-v0.2/`, `profiles/multi-cwe-v0.3/` |
+| Cấu hình, hợp đồng API, lựa chọn profile trên giao diện | `core/config.py`, `workflows/scans/schemas.py`, `frontend/openapi.json`, `src/types/api-schema.d.ts`, `src/features/scans/api/create-scan.ts` |
+| Kiểm thử | `tests/scanners/test_member_passes.py`, `tests/workflows/scans/test_sql_sites.py`, `test_sql_multitool.py` (mới); `tests/scanners/test_detection_profile.py`; `frontend/tests/integration/scans/families.test.tsx`; `frontend/tests/e2e/multi-cwe-v03-full-stack.spec.ts` (mới) |
+
+**Ghim.** Semgrep CE 1.178.0; Bandit 1.9.4 với `tools/bandit/bandit.ini` đã ghim (SHA-256
+`1b314515…`) và đúng ba test Bandit tự gán CWE-89: `B608`, `B610`, `B611`; CodeQL 2.27.1 với cùng hai
+truy vấn như `sql-injection-v0.1`. 25 file luật Python và 12 file JavaScript/TypeScript, mỗi file ghim
+SHA-256, rule ID và ID thượng nguồn. Hash: `profiles/sql-injection-v0.2/profile.json`
+`39498b0e9d7f5ce8f0e11b57aa3b80519dcc4454541be17b3cb169d85831487b`,
+`profiles/multi-cwe-v0.3/profile.json`
+`7f7b752875ffd9573ff8b7abc8e9cf45bf6bc8f031df16d593f500d176aa88d1`. `multi-cwe-v0.3` ghim hai thành
+viên đầu bằng đúng hash mà `multi-cwe-v0.2` ghim, cách ghép vẫn là `family-composition-v0.1`.
+
+Giữ nguyên: `profiles/multi-cwe-v0.1/`, `multi-cwe-v0.2/`, `sql-injection-v0.1/` và bốn profile cũ;
+mọi file bị ghim bởi bản đăng ký nghiên cứu; `experiments/`, `tools/`; schema database (không
+migration).
+
+### 21.2 Quy tắc gộp và nhãn đã cài đặt
+
+- **Python.** Cảnh báo của bất kỳ công cụ nào chỉ thành một đơn vị khi vùng mã mỗi cảnh báo báo nằm
+  trọn trong **cùng một** lời gọi thực thi truy vấn mà bộ định vị tìm được: phương thức `execute`,
+  `executemany`, `executescript`, `raw`, `extra`, hoặc lời gọi `RawSQL`; khi lời gọi lồng nhau, lấy
+  lời gọi trong cùng. Không định vị trên dòng có ký tự ngoài ASCII (các công cụ đếm cột khác nhau ở
+  đó); vùng không có cột không gộp được; vùng một dòng thiếu `endLine` kết thúc ở dòng bắt đầu (SARIF
+  2.1.0, mục 3.30.6).
+- **Mọi trường hợp khác** (không có lời gọi chứa trọn vùng, mơ hồ, file không phân tích được,
+  JavaScript/TypeScript): mỗi vị trí được báo **của mỗi công cụ** là một đơn vị riêng. Đơn vị chỉ có
+  cảnh báo CodeQL giữ cách định danh của `sql-injection-v0.1`. JavaScript/TypeScript chưa có bộ định
+  vị, nên chưa có cảnh báo nào được gộp giữa công cụ ở ngôn ngữ này.
+- **Luật.** Semgrep đặt tên luật theo thư mục của file luật, nên mỗi file được dàn vào thư mục
+  `r<index>` của nó; ID đó được dịch về ID thượng nguồn của file đã ghim, lưu ở `rule_id` và xuất ở
+  `ruleId` của SARIF. ID gốc (có thư mục tạm của lượt quét) giữ ở `raw_rule_id` và trong kết quả gốc.
+- **CWE.** `reported_cwes` là nhãn của chính công cụ (hai luật Semgrep thượng nguồn ghi CWE-704 và
+  CWE-915, và được giữ như vậy); `mapped_cwes` lấy từ manifest (CWE-89; `js/sql-injection` ghi CWE-89,
+  CWE-90, CWE-943).
+- **Quyết định.** Mọi đơn vị ở mức U, `K10_DETECTED_KEPT`, lý do giữ `no_filter_condition_for_family`,
+  trạng thái bằng chứng `insufficient`. Một lượt lỗi hoặc chạy dở làm nhóm của ngôn ngữ đó ở trạng
+  thái `partial`: cảnh báo của các lượt còn lại vẫn thành đơn vị, thêm `run_incomplete`, bằng chứng
+  `unavailable`. Luật không được ghim làm nhóm giữ cảnh báo ở `F10_FAMILY_NOT_RANKED`.
+
+### 21.3 Luồng tích hợp trên stack thật, nguồn không nhãn
+
+Trên stack dựng từ cây đã kiểm thử, `multi-cwe-v0.3` quét sáu nguồn phát triển không nhãn, mỗi nguồn
+một lần, rồi so theo nội dung với lượt `multi-cwe-v0.2` đã lưu ở P2a trên cùng snapshot
+(`python artifacts/multi-cwe-p2b/scan.py …`, `compare_v03.py dev …`; đầu ra `dev/`,
+`dev/compare-v03.txt`). Phép so: đơn vị, báo cáo theo nhóm và kết quả SARIF của CWE-78 và CWE-22
+bằng nhau; tập cảnh báo CodeQL của nhóm SQL bằng nhau; mỗi kết quả nằm trong đúng một đơn vị, không
+đơn vị nào lẫn nhóm, SARIF có đủ mọi kết quả, không đơn vị SQL nào bị gạn hay mang `suppressions`.
+
+| Nguồn | Lượt `v0.3` | Trạng thái `v0.2` → `v0.3` | Cảnh báo CWE-89 CodeQL / Semgrep / Bandit | Mục rà CWE-89 `v0.2` → `v0.3` | Mục chứa cảnh báo của ≥ 2 công cụ | CWE-78, CWE-22 như `v0.2` |
+|---|---|---|---|---|---|---|
+| Tổng hợp ba nhóm | `1e694a8d` | completed → completed | 8 / 18 / 4 | 8 → 12 | 4 | Có (7 và 3 đơn vị) |
+| `pygoat@2aa4cc1` | `710b72e4` | completed → completed | 1 / 6 / 1 | 1 → 5 | 1 | Có (4 và 3) |
+| `vulpy@5249cc8` | `b013890e` | completed → completed | 3 / 12 / 6 | 3 → 6 | 6 | Có (1 và 1) |
+| `DSVPWA@961f86d` | `bf684899` | completed → completed | 0 / 2 / 2 | 0 → 2 | 2 | Có (3 và 2) |
+| `dvpwa@4a8f4a4` | `ef46639b` | completed → completed | 0 / 2 / 1 | 0 → 2 | 0 | Có (0 và 0) |
+| `NodeGoat@c5cb68a` | `c56431b7` | completed → **partial** | 2 / 0 / — | 2 → 2 | 0 | Có (1 và 0) |
+
+Mọi phép so đạt ở cả sáu nguồn. Hai điều cần biết khi đọc:
+
+- **NodeGoat chuyển sang `partial`.** Lượt `semgrep-sql-injection` của JavaScript/TypeScript tự ghi
+  chưa hoàn tất: SARIF của nó có một thông báo "Syntax error" ở `app/assets/vendor/jquery.min.js`.
+  Lượt Semgrep bằng chứng của nhóm lệnh cũng ghi `partial` ở cả `v0.2` và `v0.3` (ở `v0.3` SARIF của
+  nó có đúng thông báo đó), nhưng lượt bằng chứng không quyết định trạng thái lượt quét; lượt của
+  thành viên CWE-89 thì có. Hai cảnh báo CodeQL vẫn là hai đơn vị ở
+  danh sách rà, bằng chứng `unavailable`.
+- **Công cụ so sánh được chỉnh hai lần trong lúc so, không sửa mã ứng dụng.** (1) Semgrep ghi thư mục
+  tạm của lượt quét (`tmp.scan-<id>-<ngẫu nhiên>.`) vào raw ID của luật lệnh: khác nhau giữa hai lượt
+  bất kỳ, như đã biết từ P1a; phép so bỏ tiền tố đó. (2) CodeQL ghi `relatedLocations` của một kết quả
+  CWE-22 ở `vulpy` theo thứ tự khác và đánh số theo thứ tự ấy; phép so coi chúng là một tập, bỏ số.
+  Vùng mã, rule và quyết định giống hệt.
+
+Lượt đầu tiên của `multi-cwe-v0.3` (`a5fe7be1`, nguồn tổng hợp) cho thấy cảnh báo CodeQL không được
+gộp vào lời gọi: CodeQL bỏ `endLine` ở vùng một dòng. Bộ định vị được sửa theo SARIF 2.1.0 và có kiểm
+thử (3 kiểm thử hỏng khi bỏ bản sửa), trước mọi lượt quét có nhãn; hash profile không đổi vì profile
+không ghim mã ứng dụng (lệch giao thức D2). Bảng trên là các lượt sau khi sửa.
+
+Kiểm thêm, theo từng kết quả (`sarif_preserved.py`, đầu ra `sarif-preserved.txt`) trên sáu lượt này và
+hai lượt có nhãn: tập (lượt chạy, rule, file, vùng) của SARIF xuất ra bằng đúng tập của các cảnh báo
+đã lưu (tổng 413 kết quả); mỗi kết quả giữ vùng và thông điệp của kết quả gốc của công cụ và đúng CWE
+công cụ báo; 70 kết quả Semgrep CWE-89 có raw ID truy được về đúng file luật đã ghim có ID thượng
+nguồn bằng `ruleId` đã xuất; 0 kết quả CWE-89 mang `suppressions`. Đạt cả tám lượt.
+
+### 21.4 Ca lỗi có kiểm soát
+
+Trên stack thật, một worker thứ hai cùng image nghe hàng đợi `faults`, với tệp bọc `semgrep`, `bandit`
+và `codeql` đứng đầu `PATH` (`artifacts/multi-cwe-p2b/fault/`). Tệp bọc gọi công cụ thật, trừ đúng một
+lỗi ghi trong `fault/mode` và chỉ cho lượt của thành viên CWE-89. Nguồn: snapshot tổng hợp ba nhóm.
+Mỗi lượt lỗi được so theo nội dung với một lượt sạch chạy cùng cách
+(`python artifacts/multi-cwe-p2b/sql_tool_faults.py`, đầu ra `sql-tool-faults.txt`; lỗi của CodeQL:
+`sql_tool_faults.py sql-codeql-faults sql-pass-fails sql-pass-exits-nonzero`, đầu ra
+`sql-codeql-faults.txt`).
+
+| Lỗi tiêm vào | Lượt quét | Lượt hỏng | Nhóm CWE-89 | Cảnh báo của các công cụ còn lại | CWE-78, CWE-22 |
+|---|---|---|---|---|---|
+| Không lỗi (hai lượt sạch) | `completed` | — | 30 cảnh báo, 12 đơn vị `K10_DETECTED_KEPT`, `insufficient` | — | 7 và 3 đơn vị |
+| Semgrep CWE-89 thoát lỗi, không ghi SARIF | `partial` | `semgrep-sql-injection`, cả hai ngôn ngữ: `failed` | 12 cảnh báo (CodeQL 8, Bandit 4), 8 đơn vị K10, `run_incomplete`, `unavailable` | Giống lượt sạch | Giống lượt sạch |
+| Semgrep CWE-89 ghi SARIF rồi thoát lỗi | `partial` | như trên | 30 cảnh báo, 12 đơn vị K10, `run_incomplete`, `unavailable` (18 cảnh báo Semgrep đã thu vẫn được giữ) | Giống lượt sạch | Giống lượt sạch |
+| Bandit CWE-89 thoát lỗi, không ghi SARIF | `partial` | `bandit-sql-injection` (Python): `failed` | 26 cảnh báo; 4 đơn vị Python `run_incomplete`, `unavailable`; 8 đơn vị JS/TS `insufficient` | Giống lượt sạch | Giống lượt sạch |
+| CodeQL CWE-89 thoát lỗi, không ghi SARIF | `partial` | `codeql-sql-injection`, cả hai ngôn ngữ: `failed` | 22 cảnh báo (Semgrep 18, Bandit 4), 8 đơn vị K10, `run_incomplete`, `unavailable` | Giống lượt sạch | Giống lượt sạch |
+| CodeQL CWE-89 ghi SARIF rồi thoát lỗi | `partial` | như trên | 30 cảnh báo, 12 đơn vị K10, `run_incomplete`, `unavailable` | Giống lượt sạch | Giống lượt sạch |
+
+Mọi lượt: mỗi kết quả trong đúng một đơn vị, SARIF đủ kết quả, mọi đơn vị CWE-89 ở danh sách rà, 0
+gạn, 0 `suppressions`. **Khác P2a:** ở `multi-cwe-v0.2`, CodeQL là công cụ duy nhất của nhóm, nên lượt
+CodeQL hỏng làm cả nhóm hỏng và cảnh báo thành đơn vị giữ `F10_FAMILY_NOT_RANKED`. Ở `v0.3`, nhóm còn
+lượt chạy được nên chỉ `partial`: cảnh báo vẫn qua bộ "phát hiện và giữ" và vẫn được gộp theo lời gọi,
+với `run_incomplete`. Trường hợp cả ba lượt cùng hỏng chỉ có kiểm thử với công cụ giả lập
+(`test_every_pass_failing_ranks_nothing_and_holds_nothing_unreported`), chưa chạy trên stack thật.
+
+### 21.5 Giao thức đo đã chốt trước
+
+`artifacts/multi-cwe-p2b/PROTOCOL.md`, SHA-256
+`0931ee0b1c0ca52e7098f701fe5181296897f10503915084952c1f744ed8c897`, ghi lúc 2026-11-16T07:19:11Z,
+trước khi Semgrep hay Bandit chạy với luật CWE-89 trên bất kỳ nguồn có nhãn nào. File không sửa sau
+đó; lệch giao thức ghi ở `PROTOCOL-DEVIATIONS.md`. Tóm tắt:
+
+- **Luật, chọn cơ học.** Mọi file luật dưới `python/`, `javascript/`, `typescript/` của
+  `semgrep/semgrep-rules@a84ff9cc` (cùng commit đã dùng cho luật lệnh), không phải file kiểm thử, có
+  một luật ghi CWE-89 cho một trong ba ngôn ngữ, hoặc nằm dưới `/security/` và tên chứa `sql`. Không
+  bỏ, không sửa luật nào. Bandit: mọi test Bandit tự gán CWE-89.
+- **Nguồn và nhãn.** BenchmarkPython `f1291485` (archive `0defda4c…`), nhãn `expectedresults-0.1.csv`:
+  16 ca `sqli`, 5 đúng, 11 sai. Juice Shop `266448ab` (snapshot `f47f3dfe…`), nhãn là chú thích
+  `vuln-code-snippet vuln-line` (trừ `data/static/codefixes/`) với challenge trong
+  `data/static/challenges.yml`: 2 vị trí SQL (`routes/login.ts:34`, `routes/search.ts:23`); 1 vị trí
+  NoSQL (`routes/updateProductReviews.ts:18` hoặc `:20`) báo riêng; **không có nhãn âm tính**.
+- **Ghép cảnh báo với nhãn.** Python: một công cụ báo một ca nếu có cảnh báo CWE-89 của nó trong file
+  của ca; ca sai được báo là cảnh báo sai xác minh được; cảnh báo ở file khác là "ngoài tập có nhãn",
+  không tính là sai. JavaScript/TypeScript: một vị trí được báo nếu khoảng dòng của vùng báo chứa dòng
+  có nhãn; cảnh báo khác là "ngoài tập có nhãn", không phân loại đúng sai. "Bổ sung so với CodeQL": ca
+  hoặc vị trí đúng mà công cụ báo còn CodeQL không. Chỉ báo số đếm.
+- **Dừng.** Mỗi nguồn có nhãn được quét một lần với `multi-cwe-v0.3`, sau khi hash profile đã ghim và
+  luồng tích hợp đã chạy trên nguồn không nhãn. Không chỉnh luật, cấu hình hay cách gộp sau đó.
+- **Lệch giao thức.** D1: đếm sai số file luật theo ngôn ngữ trong câu mô tả (thực tế 25 Python, 12
+  JavaScript/TypeScript; tổng 37 và tiêu chí không đổi). D2: sửa `endLine` ở bộ định vị dưới cùng hash
+  profile, trước lượt có nhãn (mục 21.3). D3: thêm số mục rà theo từng công cụ ở lần chạy thứ hai của
+  `measure.py`, cách ghép không đổi. D4: lượt Semgrep CWE-89 của Juice Shop tự ghi `partial` mà mục 1
+  chưa nêu trước (mục 21.6).
+
+**Điều đã biết trước khi đo:** kết quả CodeQL trên cả hai nguồn (P2a và mục 20.11); nội dung 5 ca
+`sqli` đúng của BenchmarkPython (đọc ở mục 20.11; vì vậy không luật nào được viết hay sửa).
+
+### 21.6 Giá trị tăng thêm trên dữ liệu phát triển có nhãn
+
+Hai lượt quét, mỗi nguồn một lần, cùng phiên bản mã nguồn cho cả ba công cụ: BenchmarkPython
+`87aa1417` (`completed`), Juice Shop `1dc10be3` (`partial`). Lệnh:
+`python artifacts/multi-cwe-p2b/scan.py multi-cwe-v0.3 labeled …`, rồi
+`uv run --no-project --python 3.12 --with pyyaml==6.0.3 python artifacts/multi-cwe-p2b/measure.py`;
+đầu ra `labeled/`, `measure.json`, `measure.txt`. Trên cả hai lượt, CWE-78 và CWE-22 giống hệt
+`multi-cwe-v0.2` và cảnh báo CodeQL CWE-89 giống hệt tập của `v0.2` (`labeled/compare-v03.txt`).
+
+**Python — BenchmarkPython, 16 ca `sqli` (5 đúng, 11 sai)**
+
+| | CodeQL | Semgrep | Bandit | Hợp nhất |
+|---|---|---|---|---|
+| Cảnh báo thô | 0 | 12 | 16 | 28 |
+| Mục rà chứa cảnh báo của công cụ | 0 | 6 | 16 | 22 |
+| Ca đúng được báo (trên 5) | 0 | 5 | 5 | 5 |
+| Ca đúng bổ sung so với CodeQL | — | 5 | 5 | 5 |
+| Cảnh báo sai xác minh được (ca sai được báo, trên 11) | 0 | 0 | 11 | 11 |
+| Cảnh báo ngoài tập có nhãn | 0 | 0 | 0 | 0 |
+| Thời gian lượt (giây) | 18,2 (bộ đệm trống, xem mục 21.8) | 7,4 | 1,8 | — |
+
+**JavaScript/TypeScript — Juice Shop, 2 vị trí SQL có nhãn, không nhãn âm tính**
+
+| | CodeQL | Semgrep | Hợp nhất |
+|---|---|---|---|
+| Cảnh báo thô | 7 | 18 | 25 |
+| Mục rà chứa cảnh báo của công cụ | 7 | 18 | 25 |
+| Vị trí SQL được báo (trên 2) | 2 | 2 | 2 |
+| Vị trí bổ sung so với CodeQL | — | 0 | 0 |
+| Vị trí NoSQL được báo (báo riêng, trên 1) | 1 | 0 | 1 |
+| Cảnh báo trúng một vị trí có nhãn | 3 | 6 | 9 |
+| Cảnh báo ngoài tập có nhãn (không phân loại đúng sai) | 4 | 12 | 16 |
+| Thời gian lượt (giây) | 9,3 | 4,9 | — |
+
+Bandit không quét JavaScript/TypeScript. Lượt CodeQL và lượt Semgrep CWE-89 của JavaScript/TypeScript
+đều tự ghi `partial`. Với Semgrep, SARIF đã lưu có 15 thông báo "Syntax error", tất cả ở
+`data/static/codefixes/*.ts`, thư mục đã loại khỏi nhãn (D4); vì vậy số của ngôn ngữ này là cận dưới.
+
+**Đọc bảng (quan sát sau khi đo, không phải chỉ số của giao thức):**
+
+- **Mốc CodeQL bằng 0 trên Python có nguyên nhân đã biết** (mục 20.11): kết nối qua hàm của chính
+  benchmark. "Bổ sung so với CodeQL" ở Python vì vậy đo so với một mốc không thấy sink nào, không so
+  với CodeQL nói chung.
+- **5 ca đúng Semgrep báo đúng là 5 ca Bandit báo.** Thêm công cụ thứ hai không thêm ca đúng nào so với
+  một trong hai công cụ.
+- **Không mục nào trên BenchmarkPython chứa cảnh báo của hai công cụ.** Bandit `B608` báo dòng dựng
+  chuỗi truy vấn (`sql = f'…'`), nằm ngoài lời gọi `cur.execute(sql)` mà Semgrep báo, nên theo quy tắc
+  ở mục 21.2 chúng là các mục riêng. Mức giảm từ 28 cảnh báo xuống 22 mục là do hai luật Semgrep cùng
+  báo một lời gọi (5 mục) và hai luật Semgrep cùng báo một vùng (1 mục), không phải do gộp giữa công
+  cụ.
+- **11 cảnh báo sai của Bandit** là mọi ca sai của tập: Bandit báo cả chuỗi f-string không chèn giá
+  trị nào (`… where password = ?`, truy vấn có tham số).
+- **Juice Shop:** 6 cảnh báo Semgrep trúng hai vị trí CodeQL đã báo (ba luật, mỗi luật hai vị trí) và
+  thành 6 mục riêng, vì JavaScript/TypeScript chưa có bộ định vị. 12 cảnh báo Semgrep còn lại nằm
+  ngoài tập có nhãn và chưa được phân loại.
+- Nhãn CWE gốc được giữ: kết quả của hai luật Semgrep thượng nguồn ghi CWE-704 và CWE-915 xuất ở
+  `reportedCwes` đúng như vậy, `mappedCwes` là CWE-89.
+
+### 21.7 Kiểm thử hồi quy
+
+Một lệnh trên trạng thái mã cuối: `bash artifacts/multi-cwe-p2b/final/run_all.sh` (đầu ra `run.txt` và
+các file cùng thư mục). **Trạng thái đã kiểm thử:** `aea3dc2` cộng thay đổi chưa commit; cây
+`backend/`, `frontend/`, `profiles/`, `rules/` có mã Git `55c68496b7d828eb19f2125ec6ecfbd85bed7711`
+(`final/tested-state.txt`; tính ngay sau lượt chạy vì đường dẫn chỉ mục tạm trong script hỏng trên
+Windows; không file nào trong bốn thư mục đổi sau khi lượt chạy bắt đầu). Mã ứng dụng trong image
+worker có hash `83c58e8179b5ff7b`, giống cây làm việc và giống lượt quét có nhãn. Bốn thư mục này
+sau đó được commit nguyên vẹn thành `557735e` (bộ luật) và `64b6d78` (mã, profile, giao diện):
+`git diff --quiet 55c6849 64b6d78 -- backend frontend profiles rules` không báo khác biệt.
+
+| # | Lệnh | Đạt | Bỏ qua |
+|---|---|---|---|
+| 1 | `uv run pytest -q -rs --cov` (SQLite, công cụ giả lập) | 692 | 2 (`test_process.py:65`, `:157`, nhóm tiến trình POSIX trên Windows) |
+| 2 | `docker compose --profile test run --build --rm test` (PostgreSQL, công cụ giả lập) | 694, độ phủ 95,64% | 0 |
+| 3 | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` (image kiểm thử) | sạch; không lỗ hổng đã biết | — |
+| 4 | `python -m unittest discover -s experiments/tests` (Python 3.12) | 153 | 0 |
+| 5 | `npm run check`, `npm run build`, `npm run test:e2e` (API giả lập) | Vitest 81; build; Playwright 2 | 3 (ba kiểm thử stack thật, chạy riêng ở dòng 7 và 9) |
+| 6 | `scripts.export_openapi` so với `frontend/openapi.json`; `scripts.check_worker` | giống hệt; worker nhận cả bảy profile | — |
+| 7 | `FULL_STACK_URL=… npx playwright test multi-cwe-full-stack.spec` (công cụ thật, `multi-cwe-v0.1`, không có lượt CWE-89) | 1: 239 kết quả, 149 đơn vị, 64 gạn, như trước | 0 |
+| 8 | `legacy_regression.py` (công cụ thật, bốn profile cũ so với lượt quét lưu ngày 14/11) | 4/5 giống hệt; ca `command-injection-v0.1` khác đúng như mục 18.3 và 20.5 | — |
+| 9 | `FULL_STACK_URL=… npx playwright test multi-cwe-v02-full-stack` và `multi-cwe-v03-full-stack` (công cụ thật, PyGoat, không nhãn) | 2: lượt `v0.3` `239e954d…`: 22 kết quả, 5 mục CWE-89, 1 mục chứa cảnh báo của hai công cụ, SARIF có 8 kết quả CWE-89 | 0 |
+| 10 | Golden, thực nghiệm, công cụ, pack và profile cũ; hash hai profile mới | 0 file đổi; hash bằng đúng hash lúc chạy lượt có nhãn | — |
+
+Dòng 7 và 8 quét lại BenchmarkPython bằng `multi-cwe-v0.1` và `command-injection-v0.2`, như mọi lần
+hồi quy trước; hai profile này không có lượt Semgrep hay Bandit CWE-89, nên không phải lần đo thứ hai
+của giao thức. Dòng 9 là kiểm thử mới `frontend/tests/e2e/multi-cwe-v03-full-stack.spec.ts`: chọn
+`multi-cwe-v0.3` trên biểu mẫu, quét `pygoat@2aa4cc1` bằng công cụ thật, kiểm ba lượt CWE-89 có tên,
+lọc theo CWE-89, mở mục chứa cảnh báo của hai công cụ, tải báo cáo JSON và SARIF. Đầu ra:
+`artifacts/multi-cwe-p2b/final/e2e-v03/`.
+
+Trong dòng 1 và 2:
+
+- 15 golden của bốn profile cũ và 16 golden của `multi-cwe-v0.1` và `v0.2` không đổi một byte.
+- Kiểm thử mới: `tests/scanners/test_member_passes.py` và `tests/workflows/scans/test_sql_sites.py`
+  (13 cùng nhau, gồm vùng thiếu `endLine`), `test_sql_multitool.py` (13); thêm ca cho manifest
+  schema 2 và profile `multi-cwe-v0.3` trong `tests/scanners/test_detection_profile.py`.
+
+### 21.8 Thời gian quét và giới hạn chạy
+
+Giây của từng lượt CWE-89 (mỗi ô một lần đo, lượt quét có nhãn ở mục 21.6):
+
+| Lượt | BenchmarkPython | Juice Shop |
+|---|---|---|
+| Python `semgrep-sql-injection` | 7,4 | 2,5 |
+| Python `bandit-sql-injection` | 1,8 | 0,2 |
+| Python `codeql-sql-injection` | 18,2 (bộ đệm trống) | 4,3 |
+| JS/TS `semgrep-sql-injection` | 2,6 | 4,9 |
+| JS/TS `codeql-sql-injection` | 49,6 (bộ đệm trống) | 9,3 |
+| Cả lượt quét, `v0.2` → `v0.3` | 288,4 → 296,1 | 82,0 → 88,1 |
+
+- **Cột BenchmarkPython đo với bộ đệm biên dịch truy vấn của CodeQL còn trống:** đó là lượt quét
+  đầu tiên sau lần dựng lại image cuối, nên hai lượt `codeql-sql-injection` gồm cả thời gian biên
+  dịch (P2a đo 6,4 và 5,1 giây khi bộ đệm đã đầy, mục 20.6). Không quét lại để lấy số đo khác, vì mỗi
+  nguồn có nhãn chỉ được quét một lần. Số khi bộ đệm đã đầy: cột Juice Shop và các nguồn không nhãn.
+- Semgrep CWE-89 tốn 1,6–7,4 giây mỗi ngôn ngữ, Bandit dưới 2 giây. Trên năm nguồn không nhãn có mã
+  thật, cả lượt quét dài hơn `v0.2` từ 3 đến 8 giây; với nguồn tổng hợp, lượt `v0.3` ngắn hơn (247 so
+  với 281 giây). Trạng thái bộ đệm không được kiểm soát cho tổng thời gian của cả lượt quét, nên các
+  tổng này chỉ để tham khảo.
+- **Giới hạn chạy phải tăng, vì phép tính trường hợp xấu nhất.** `task.worst_case_seconds` nay cộng
+  mọi lượt của thành viên: `multi-cwe-v0.3` cần 11.760 giây (thêm ba lượt 600 giây so với `v0.2`).
+  Đã chỉnh: giới hạn mềm 12.000 giây (trước 10.200), giới hạn cứng 13.500 giây (trước 11.700);
+  visibility timeout của broker giữ 4 giờ (14.400 giây), vẫn lớn hơn giới hạn cứng. Kiểm thử giới
+  hạn thời gian chạy cho cả bảy profile.
+
+### 21.9 Quyết định kỹ thuật cần chủ đề án biết
+
+- **Lượt quét "chạy dở" nhiều hơn.** Lượt Semgrep CWE-89 tự ghi chưa hoàn tất khi gặp một file không
+  phân tích được, kể cả file thư viện nén như `jquery.min.js`; lượt đó quyết định trạng thái lượt
+  quét. NodeGoat: `completed` ở `v0.2`, `partial` ở `v0.3`, cùng số đơn vị.
+- **Lượt CWE-89 hỏng không còn làm cả nhóm hỏng.** Khác P2a: cảnh báo của các lượt còn lại vẫn qua
+  bộ "phát hiện và giữ" (`K10_DETECTED_KEPT` cùng `run_incomplete`), không thành đơn vị giữ `F10`.
+- **`ruleId` trong SARIF của kết quả Semgrep CWE-89 là ID thượng nguồn**, không phải ID có thư mục
+  tạm như ở kết quả Semgrep của nhóm lệnh (giữ nguyên như trước để không đổi nhóm đó).
+- **Không gộp cảnh báo ở dòng dựng chuỗi truy vấn với lời gọi thực thi.** Bộ định vị không theo luồng
+  dữ liệu; một cảnh báo Bandit ở `sql = f'…'` và một cảnh báo Semgrep ở `cur.execute(sql)` vài dòng
+  dưới là hai mục, kể cả khi chuỗi chỉ đi vào lời gọi đó. Gộp những cặp này cần căn cứ luồng dữ liệu,
+  là một phiên bản bộ định vị mới.
+- **Khối lượng rà tăng.** Trên dữ liệu đã đo: Python từ 0 lên 22 mục, JavaScript/TypeScript từ 7 lên
+  25 (mục 21.6). Mức `U` của mọi mục CWE-89 giữ như `v0.2`.
+
+### 21.10 Chưa kiểm chứng
+
+- **CI trên GitHub chưa chạy** (đầu việc CI/CD riêng, như P2a). Thay đổi P2b đã commit cục bộ
+  (`557735e`, `64b6d78` và commit tài liệu kế tiếp); nhánh `feat/multi-cwe-p2a` chưa push.
+- **JavaScript/TypeScript chưa có bộ định vị lời gọi SQL**, nên chưa có cảnh báo nào được gộp giữa
+  công cụ ở ngôn ngữ này.
+- **Độ đúng của phép gộp** chỉ có kiểm thử tự động và các nguồn không nhãn. Trên BenchmarkPython không
+  mục nào chứa cảnh báo của hai công cụ, nên dữ liệu có nhãn chưa kiểm phép gộp giữa công cụ.
+- Cả ba lượt CWE-89 cùng hỏng: chỉ có kiểm thử với công cụ giả lập.
+- Kho lớn hơn Juice Shop: chưa quét; giới hạn thời gian dựa trên phép tính.
+- Mục 20.10: với 12 lượt quét mà mã P1 không đọc được trang đơn vị, chi tiết đơn vị của nhóm CWE-78
+  và CWE-22 chưa so được qua API của P1.
+- Tập có nhãn rất nhỏ (5 ca đúng Python, 2 vị trí JavaScript/TypeScript, không nhãn âm tính ở Juice
+  Shop) và là dữ liệu phát triển: số đếm ở mục 21.6 không phải đánh giá độc lập và không ước lượng
+  được tỷ lệ.
+
+### 21.11 Kết luận
+
+**P2b hoàn tất về kỹ thuật.** Luồng tích hợp đã chạy thật trên sáu nguồn không nhãn, hai nguồn có nhãn
+và qua giao diện (mục 21.3, 21.6, 21.7); khi một công cụ CWE-89 bất kỳ hỏng, kết quả còn lại vẫn xuất
+hiện với trạng thái chạy dở (mục 21.4); CWE-78 và CWE-22 cho kết quả như `v0.2` ở mọi nguồn; SARIF giữ
+mọi cảnh báo gốc; hồi quy đạt (mục 21.7); có số liệu đối chứng cho từng công cụ (mục 21.6). Thay đổi
+đã commit cục bộ (`557735e`, `64b6d78`), chưa push; CI chưa chạy.
+
+Trên tập đã đo:
+
+- **Semgrep bổ sung ca dương tính đã xác minh ở Python, chỉ làm tăng khối lượng rà ở
+  JavaScript/TypeScript.** BenchmarkPython: 5/5 ca đúng mà mốc CodeQL không báo (mốc này bằng 0 vì
+  nguyên nhân ở mục 20.11), 0 ca sai được báo, thêm 6 mục rà. Juice Shop: không thêm vị trí có nhãn
+  nào (cả 2 vị trí CodeQL đã báo); thêm 18 mục rà, gồm 6 mục trùng vị trí CodeQL nhưng tách riêng vì
+  chưa có bộ định vị, và 12 mục ngoài tập có nhãn chưa phân loại.
+- **Bandit bổ sung 5 ca dương tính đã xác minh so với CodeQL, kèm 11 cảnh báo sai xác minh được và 16
+  mục rà** (chỉ số của giao thức, BenchmarkPython): 5/5 ca đúng mà mốc CodeQL không báo; cả 11 ca sai
+  của tập cũng bị báo; 16 mục rà, không mục nào gộp với Semgrep. Quan sát sau khi đo, không phải chỉ
+  số của giao thức: 5 ca đó đúng là 5 ca Semgrep đã báo, nên khi đã có Semgrep, Bandit không thêm ca
+  đúng nào trên tập này mà chỉ làm tăng khối lượng rà. Bandit không quét JavaScript/TypeScript.
+
+Bước tiếp theo, nếu chủ đề án chọn: bộ định vị lời gọi SQL cho JavaScript/TypeScript; xét lại việc
+đưa Bandit vào nhóm CWE-89 dựa trên số liệu trên; nhãn âm tính trên mã thật trước khi nghĩ tới bất kỳ
+điều kiện gạn nào cho CWE-89.

@@ -354,7 +354,18 @@ trình bày cả hai kịch bản.
      CodeQL, **chỉ phát hiện và giữ**. Không có chính sách xếp hạng, không có điều kiện gạn và
      **không có số liệu hiệu quả nào** cho CWE-89; không nhãn nào được dùng. Hai nhóm CWE-78 và
      CWE-22 cho đúng kết quả của `multi-cwe-v0.1`. Xem [plans/multi-cwe.md](plans/multi-cwe.md),
-     mục 20.
+     mục 20. CodeQL không báo ca `sqli` nào của BenchmarkPython vì kết nối cơ sở dữ liệu đến từ hàm
+     của chính benchmark, mà CodeQL không mô hình hóa là kết nối SQL (mục 20.11).
+   - Profile ghép `multi-cwe-v0.3` (16/11, P2b, commit `64b6d78`, chưa push; đo kỹ thuật trên dữ liệu
+     phát triển có nhãn, **không** phải đánh giá độc lập): nhóm CWE-89 chạy thêm Semgrep (37 file luật
+     thượng nguồn, chọn cơ học) và Bandit, chỉ gộp cảnh báo nằm trong cùng một lời gọi thực thi truy
+     vấn của Python. Giao thức đo ghi và băm trước khi chạy hai công cụ trên nguồn có nhãn; mỗi nguồn
+     quét một lần. **BenchmarkPython** (16 ca `sqli`, 5 đúng, 11 sai): CodeQL 0 ca; Semgrep báo 5 ca
+     đúng, 0 ca sai, thêm 6 mục rà; Bandit báo cùng 5 ca đúng và cả 11 ca sai, thêm 16 mục rà; hợp
+     nhất 28 cảnh báo thành 22 mục, không mục nào chứa cảnh báo của hai công cụ. **Juice Shop** (2 vị
+     trí SQL có nhãn, chỉ nhãn dương tính): CodeQL và Semgrep đều báo cả 2 vị trí; Semgrep không bổ
+     sung vị trí nào, thêm 18 mục rà. Chỉ là số đếm trên tập rất nhỏ. Xem
+     [plans/multi-cwe.md](plans/multi-cwe.md), mục 21.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
