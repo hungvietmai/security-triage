@@ -443,6 +443,25 @@ describe("A scan with several analysis families", () => {
     ).toBeInTheDocument();
   });
 
+  it("offers the experimental profile that links a Bandit alert to its SQL call", async () => {
+    const project = makeProject();
+    db.projects = [project];
+    const { user } = await renderApp(`/projects/${project.id}`);
+    await user.click(await main().findByRole("button", { name: "Tạo scan" }));
+    const dialog = within(screen.getByRole("dialog", { name: "Tạo scan mới" }));
+    await user.click(dialog.getByRole("combobox", { name: "Profile" }));
+    await user.click(
+      screen.getByRole("option", {
+        name: "CWE-78 + CWE-22 + CWE-89 · Thử nghiệm: nối cảnh báo Bandit với lời gọi SQL",
+      }),
+    );
+    expect(
+      dialog.getByText(
+        /chỉ được gán một lần và chỉ được dùng ở đúng lời gọi ấy/,
+      ),
+    ).toBeInTheDocument();
+  });
+
   it("shows a SQL injection unit as kept for review with no evidence to weigh", async () => {
     const sql: Family = {
       family: "sql-injection",

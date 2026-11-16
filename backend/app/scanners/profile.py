@@ -123,7 +123,7 @@ DETECTION_PRIORITIES = ("P1", "P2", "U", "P3", "P4")
 # Tools a schema-2 detection profile may run; CodeQL is required and runs on the shared database.
 DETECTION_TOOLS = ("semgrep", "bandit", "codeql")
 # Ways a schema-2 detection profile may merge alerts (see app.workflows.scans.sql_sites).
-DETECTION_UNIT_MERGES = ("sql-call-site-v1",)
+DETECTION_UNIT_MERGES = ("sql-call-site-v1", "sql-call-site-v2")
 
 
 def _detection_tools(

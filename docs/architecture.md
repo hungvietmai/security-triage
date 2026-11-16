@@ -13,9 +13,10 @@ viên rà soát và gạn những ứng viên có bằng chứng cụ thể là 
 trạng thái lượt quét, danh sách rà chính và danh sách đã gạn theo hàng đợi P1→P4, bằng chứng
 của từng đơn vị và báo cáo trước–sau.
 
-Người dùng chọn một trong bảy profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
+Người dùng chọn một trong tám profile khi tạo lượt quét. Bốn profile đầu quét một nhóm CWE;
 `multi-cwe-v0.1` ghép hai profile có sẵn vào một lượt quét, `multi-cwe-v0.2` thêm nhóm CWE-89, và
-`multi-cwe-v0.3` cho nhóm CWE-89 chạy ba công cụ:
+`multi-cwe-v0.3` cho nhóm CWE-89 chạy ba công cụ, và `multi-cwe-v0.4` (thử nghiệm) gộp thêm cảnh báo
+Bandit ở dòng dựng câu SQL với lời gọi thực thi nó:
 
 | Profile | Phạm vi | Cách xếp hàng đợi |
 |---|---|---|
@@ -26,6 +27,7 @@ Người dùng chọn một trong bảy profile khi tạo lượt quét. Bốn p
 | `multi-cwe-v0.1` | CWE-78 (JavaScript/TypeScript và Python) và CWE-22 (Python) trong một lượt quét; ghim manifest của `command-injection-v0.3` và `path-traversal-v0.2` | Mỗi cảnh báo thuộc đúng một nhóm phân tích và được xếp hạng, gạn bằng đúng profile thành viên của nhóm đó. Cảnh báo không xác định được nhóm, hoặc thuộc nhóm chưa xếp hạng được, ở mức **U** trong danh sách rà. Mới kiểm chứng kỹ thuật trên dữ liệu phát triển, chưa có số liệu đánh giá riêng |
 | `multi-cwe-v0.2` | Như `multi-cwe-v0.1`, thêm CWE-89 (Python và JavaScript/TypeScript; chỉ CodeQL); ghim thêm manifest của `sql-injection-v0.1` | Hai nhóm đầu như `multi-cwe-v0.1`. Nhóm `sql-injection` **chỉ phát hiện và giữ**: mỗi vị trí CodeQL báo là một đơn vị mức **U** ("chưa xếp hạng") ở danh sách rà chính; không có chính sách xếp hạng và không có điều kiện gạn |
 | `multi-cwe-v0.3` | Như `multi-cwe-v0.2`, nhưng CWE-89 dùng Semgrep (Python và JavaScript/TypeScript; 37 file luật thượng nguồn nguyên văn), Bandit (Python; `B608`, `B610`, `B611`) và CodeQL; ghim manifest của `sql-injection-v0.2` | Hai nhóm đầu như `multi-cwe-v0.1`. Nhóm `sql-injection` chỉ phát hiện và giữ, mức **U**; cảnh báo của nhiều công cụ chỉ thành một đơn vị khi cùng nằm trong một lời gọi thực thi truy vấn SQL của Python, còn lại mỗi vị trí của mỗi công cụ là một đơn vị. Đã đo trên dữ liệu phát triển có nhãn: [plans/multi-cwe.md §21](plans/multi-cwe.md#21-trạng-thái-p2b-2026-11-16) |
+| `multi-cwe-v0.4` (thử nghiệm) | Như `multi-cwe-v0.3`, cùng công cụ và luật; ghim manifest của `sql-injection-v0.3` | Như `multi-cwe-v0.3`, thêm: cảnh báo Bandit B608 ở câu gán `tên = <chuỗi SQL>` vào đơn vị của lời gọi thực thi duy nhất đọc `tên`, nếu lời gọi đó có cảnh báo CodeQL hoặc Semgrep và biến chỉ được gán một lần. Đo bằng cách chạy lại trên SARIF đã lưu: [plans/multi-cwe.md §23](plans/multi-cwe.md#23-phép-gộp-bandit-với-lời-gọi-sql-và-giá-trị-bandit-sau-gộp-2026-11-16) |
 
 Profile `path-traversal-v0.2` dùng đúng pack đã đánh giá trong nghiên cứu
 ([rules/codeql/path-traversal-v0.2/](../rules/codeql/path-traversal-v0.2/README.md)), trùng từng
@@ -187,6 +189,17 @@ thành viên theo hash, mỗi thành viên ứng với một **nhóm phân tích
    vị. `rule_id` của cảnh báo Semgrep là ID thượng nguồn; ID gốc giữ ở `raw_rule_id`. Một lượt hỏng
    hay chạy dở làm nhóm ở ngôn ngữ đó "chạy dở": cảnh báo của các lượt còn lại vẫn thành đơn vị với
    `run_incomplete`. Hai nhóm kia của `multi-cwe-v0.3` cho đúng kết quả của `multi-cwe-v0.2`.
+9. **Nối cảnh báo Bandit với lời gọi SQL** (`multi-cwe-v0.4`, thành viên `sql-injection-v0.3`,
+   [DETECTION.md](../profiles/sql-injection-v0.3/DETECTION.md), đơn vị `detection-units-v3`).
+   - **Bước 1:** như `sql-call-site-v1`.
+   - **Bước 2:** `sql_sites.locate_sql_strings` tìm các câu gán `tên = <biểu thức chuỗi>` (nối `+`, `%`,
+     `.format()`, f-string) mà `tên` chỉ được gán một lần trong phạm vi của nó, không xuất hiện ở
+     phạm vi lồng nhau, và chỉ được đọc một lần, làm đối số đầu của một lời gọi thực thi sau đó.
+   - **Nối:** `detection.link_decisions` nối một cảnh báo Bandit B608 có vùng báo trùng một chuỗi
+     literal của câu gán đó vào đơn vị của lời gọi, nếu lời gọi có cảnh báo CodeQL hoặc Semgrep.
+   - **Truy vết:** cảnh báo được nối có `match_rule` là `explicit_link` và `linked_by` trong bằng
+     chứng. Mọi B608 không nối được có lý do, ghi trong bản ghi chạy lại.
+   - **Phạm vi:** JavaScript/TypeScript và hai nhóm kia không đổi so với `multi-cwe-v0.3`.
 
 Công cụ dòng lệnh `backend/scripts/scan_families.py` chạy cùng lớp ghép này mà không qua cơ sở dữ
 liệu, và so lượt quét ghép với lượt quét riêng từng profile. Thiết kế, bất biến và kết quả kiểm

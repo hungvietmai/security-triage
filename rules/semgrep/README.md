@@ -16,7 +16,7 @@ One **detection** pack lives here too; its results are alerts of their own:
 
 | Pack | Used by | What it is |
 |---|---|---|
-| [sql-injection-v0.1/](sql-injection-v0.1/README.md) | `sql-injection-v0.2` (member of `multi-cwe-v0.3`), pass `semgrep-sql-injection`, Python and JavaScript/TypeScript | 37 unchanged upstream CWE-89 rule files of `semgrep/semgrep-rules` at `a84ff9cc`, chosen mechanically; each file pinned by SHA-256 with its rule ID and upstream rule ID |
+| [sql-injection-v0.1/](sql-injection-v0.1/README.md) | `sql-injection-v0.2` (member of `multi-cwe-v0.3`) and `sql-injection-v0.3` (member of `multi-cwe-v0.4`), pass `semgrep-sql-injection`, Python and JavaScript/TypeScript | 37 unchanged upstream CWE-89 rule files of `semgrep/semgrep-rules` at `a84ff9cc`, chosen mechanically; each file pinned by SHA-256 with its rule ID and upstream rule ID |
 
 Detection and locator rules live elsewhere, versioned with the research that pins them:
 

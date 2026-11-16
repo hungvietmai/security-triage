@@ -9,7 +9,7 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong bảy profile:
+  một commit GitHub, chọn một trong tám profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
@@ -39,6 +39,11 @@ và CodeQL. Repository gồm hai phần:
     các công cụ chỉ được gộp khi cùng nằm trong một lời gọi thực thi truy vấn SQL của Python; mọi
     trường hợp khác là mục rà riêng. Vẫn chỉ phát hiện và giữ. Đã đo trên dữ liệu phát triển có nhãn
     ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 21).
+  - `multi-cwe-v0.4` (**thử nghiệm**): như `multi-cwe-v0.3`, thêm một bước gộp cho Python. Cảnh báo
+    Bandit B608 ở câu gán dựng chuỗi SQL được nối với cảnh báo CodeQL hoặc Semgrep tại lời gọi
+    thực thi chuỗi đó, khi biến chỉ được gán một lần và chỉ được đọc ở đúng lời gọi ấy. Đo bằng cách
+    chạy lại phép gộp trên SARIF đã lưu của tập SVEN
+    ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 23).
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
 
 ## Tài liệu
@@ -123,6 +128,13 @@ vấn (`execute`, `executemany`, `executescript`, `raw`, `extra`, `RawSQL`) củ
 định được lời gọi, mỗi vị trí của mỗi công cụ là một đơn vị riêng. Trong chi tiết đơn vị, mỗi cảnh
 báo gốc giữ lượt chạy, rule và nhãn CWE của chính công cụ. Một lượt công cụ lỗi làm lượt quét "chạy
 dở", nhưng cảnh báo của các công cụ còn lại vẫn ở danh sách rà.
+
+Profile thử nghiệm **"CWE-78 + CWE-22 + CWE-89 · Thử nghiệm: nối cảnh báo Bandit với lời gọi SQL"**
+(`multi-cwe-v0.4`) giống `multi-cwe-v0.3`, cùng công cụ và luật. Thêm một bước: cảnh báo Bandit
+B608 ở dòng dựng câu SQL (`sql = "..." % x`) vào cùng đơn vị với cảnh báo CodeQL hoặc Semgrep ở lời
+gọi `execute(sql)`, khi biến chỉ được gán một lần và chỉ được đọc ở lời gọi đó. Có phép gán lại,
+nhiều lời gọi hay hàm bọc thì vẫn là đơn vị riêng. Cảnh báo được nối giữ vị trí gốc; chi tiết đơn vị
+ghi biến và câu gán đã nối nó.
 
 Giới hạn: CWE-22 chỉ có trên Python; CWE-89 chưa gộp cảnh báo giữa công cụ ở JavaScript/TypeScript
 (chưa có bộ định vị lời gọi), và trên dữ liệu đã đo Semgrep và Bandit làm tăng đáng kể số mục cần rà
@@ -251,14 +263,16 @@ Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm bảy scan profi
 [`command-injection-v0.2`](profiles/command-injection-v0.2/profile.json),
 [`command-injection-v0.3`](profiles/command-injection-v0.3/profile.json),
 [`path-traversal-v0.2`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
-[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và ba profile ghép
+[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và bốn profile ghép
 [`multi-cwe-v0.1`](profiles/multi-cwe-v0.1/profile.json),
-[`multi-cwe-v0.2`](profiles/multi-cwe-v0.2/profile.json) và
-[`multi-cwe-v0.3`](profiles/multi-cwe-v0.3/profile.json), vốn chỉ ghim manifest của các profile
+[`multi-cwe-v0.2`](profiles/multi-cwe-v0.2/profile.json),
+[`multi-cwe-v0.3`](profiles/multi-cwe-v0.3/profile.json) và
+[`multi-cwe-v0.4`](profiles/multi-cwe-v0.4/profile.json), vốn chỉ ghim manifest của các profile
 thành viên. Thành viên [`sql-injection-v0.1`](profiles/sql-injection-v0.1/profile.json) chỉ chạy
 bên trong `multi-cwe-v0.2`, và [`sql-injection-v0.2`](profiles/sql-injection-v0.2/profile.json)
 (luật Semgrep ở [`rules/semgrep/sql-injection-v0.1/`](rules/semgrep/sql-injection-v0.1/README.md))
-chỉ bên trong `multi-cwe-v0.3`. Worker từ chối
+chỉ bên trong `multi-cwe-v0.3`, [`sql-injection-v0.3`](profiles/sql-injection-v0.3/profile.json)
+chỉ bên trong `multi-cwe-v0.4`. Worker từ chối
 khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
 kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
 

@@ -12,6 +12,12 @@ A detection profile of schema 2 (`sql-injection-v0.2`) also runs Semgrep and Ban
 own pinned rules and merges alerts of several tools, but only where a located SQL execution
 call contains every one of them (`sql_sites`); any other alert stays a unit of its own. Units
 of such a profile are versioned `detection-units-v2`.
+
+A profile whose units are `sql-call-site-v2` (`sql-injection-v0.3`) also joins a Bandit B608
+alert on the statement that builds a SQL string to the unit of the one execution call that runs
+that string, when the site already holds a CodeQL or Semgrep alert and the string's variable is
+bound once and read only there (`sql_sites.locate_sql_strings`). Its units are versioned
+`detection-units-v3`; the linked alert keeps its own location and is mapped `explicit_link`.
 """
 
 from __future__ import annotations
@@ -37,8 +43,17 @@ from app.triage.reconcile import (
 from app.workflows.scans.analysis import RunPipeline
 from app.workflows.scans.classification import Claim, RuleClaim
 from app.workflows.scans.results import LanguageResult
+from app.workflows.scans.sql_sites import LINK_LOCATOR_VERSION as SQL_LINK_LOCATOR
+from app.workflows.scans.sql_sites import (
+    LINKED,
+    SqlSite,
+    SqlString,
+    locate_all,
+    locate_all_strings,
+    site_of,
+    string_link,
+)
 from app.workflows.scans.sql_sites import LOCATOR_VERSION as SQL_SITE_LOCATOR
-from app.workflows.scans.sql_sites import SqlSite, locate_all, site_of
 
 DETECTION_UNIT_VERSION = "detection-units-v1"
 DETECTION_LOCATOR_VERSION = "codeql-reported-location"
@@ -69,6 +84,18 @@ _REASON_COMMON = (
 )
 _INCOMPLETE_V2 = " Một lượt chạy công cụ của nhóm chưa hoàn tất: có thể còn cảnh báo chưa được báo."
 _TOOL_NAMES = {"codeql": "CodeQL", "semgrep": "Semgrep", "bandit": "Bandit"}
+
+DETECTION_UNIT_VERSION_V3 = "detection-units-v3"
+# (tool, pinned rule) whose alerts on a string-building statement may be linked to a call.
+LINKED_RULES = frozenset({("bandit", "B608")})
+# Tools whose alert must already sit at the call for a string alert to join it.
+SITE_TOOLS = frozenset({"codeql", "semgrep"})
+INSIDE_CALL = "inside_located_call"
+SITE_WITHOUT_OTHER_TOOL = "call_has_no_codeql_or_semgrep_alert"
+_REASON_LINKED = (
+    " Cảnh báo Bandit ở dòng {lines} (câu SQL gán cho `{variable}`) được nối vào mục này: biến đó "
+    "chỉ được gán một lần trong phạm vi của nó và chỉ được đọc ở lời gọi này."
+)
 
 Finding = Mapping[str, Any]
 Location = tuple[str | None, tuple[int, int, int, int] | None]
@@ -234,6 +261,52 @@ def detection_claim(profile: DetectionProfile, language: str) -> Claim:
     return claim
 
 
+def _site_key(site: SqlSite) -> tuple[Any, ...]:
+    span = site["span"]
+    return (
+        "site",
+        site["path"],
+        (span["startLine"], span["startColumn"], span["endLine"], span["endColumn"]),
+    )
+
+
+def link_decisions(
+    findings: Sequence[Finding],
+    *,
+    canonical_of: Callable[[Finding], str | None],
+    sites: Sequence[SqlSite],
+    strings: Sequence[SqlString],
+    link_rules: frozenset[tuple[str, str]] = LINKED_RULES,
+) -> dict[str, dict[str, Any]]:
+    """For every alert of a linked rule: the call it joins (`site`), or why it stays alone.
+
+    An alert inside a located call is merged by containment already. Any other is linked when
+    its region is one of the string literals of a statement `sql_sites` links to an execution
+    call, and that call already holds an alert of CodeQL or Semgrep.
+    """
+    site_tools: dict[tuple[Any, ...], set[str]] = {}
+    for finding in findings:
+        site = site_of(finding["reported_region"], finding["reported_path"], sites)
+        if site is not None:
+            site_tools.setdefault(_site_key(site), set()).add(str(finding["tool"]))
+    decisions: dict[str, dict[str, Any]] = {}
+    for finding in findings:
+        if (finding["tool"], canonical_of(finding)) not in link_rules:
+            continue
+        region, path = finding["reported_region"], finding["reported_path"]
+        record: dict[str, Any] = {"reason": INSIDE_CALL, "site": None, "string": None}
+        if site_of(region, path, sites) is None:
+            string, reason = string_link(region, path, strings)
+            record.update(reason=reason, string=string)
+            if reason == LINKED and string is not None and string["site"] is not None:
+                if site_tools.get(_site_key(string["site"]), set()) & SITE_TOOLS:
+                    record["site"] = string["site"]
+                else:
+                    record["reason"] = SITE_WITHOUT_OTHER_TOOL
+        decisions[finding["raw_id"]] = record
+    return decisions
+
+
 def keep_detected_v2(
     findings: Sequence[Finding],
     *,
@@ -245,6 +318,9 @@ def keep_detected_v2(
     priority: str,
     complete: bool,
     provenance: Mapping[str, str],
+    strings: Sequence[SqlString] = (),
+    link_rules: frozenset[tuple[str, str]] = frozenset(),
+    locator: str = SQL_SITE_LOCATOR,
 ) -> tuple[list[ReconciledUnit], list[dict[str, Any]]]:
     """Units of several tools' alerts, every one kept for review at `priority`.
 
@@ -254,10 +330,22 @@ def keep_detected_v2(
     same point of execution. A CodeQL unit keeps the identity a CodeQL-only detection unit has
     there. Nothing is ranked or filtered. `canonical_of` names the pinned rule of a finding;
     `rules` maps pinned rules to their mapped CWEs.
+
+    With `link_rules` (units `sql-call-site-v2`), an alert of those rules on a statement that
+    builds the SQL string of one execution call joins that call's unit (`link_decisions`);
+    `locator` names the version in the unit identity.
     """
     groups: dict[tuple[Any, ...], list[Finding]] = {}
     places: dict[tuple[Any, ...], tuple[SqlSite | None, Any]] = {}
     canonical: dict[str, str] = {}
+    decisions = (
+        link_decisions(
+            findings, canonical_of=canonical_of, sites=sites, strings=strings, link_rules=link_rules
+        )
+        if link_rules
+        else {}
+    )
+    linked: dict[str, SqlString] = {}
     for finding in findings:
         rule = canonical_of(finding)
         if rule is None or rule not in rules:
@@ -265,6 +353,10 @@ def keep_detected_v2(
         canonical[finding["raw_id"]] = rule
         region = finding["reported_region"]
         site = site_of(region, finding["reported_path"], sites)
+        decision = decisions.get(finding["raw_id"])
+        if site is None and decision is not None and decision["site"] is not None:
+            site = decision["site"]
+            linked[finding["raw_id"]] = decision["string"]
         key: tuple[Any, ...]
         if site is not None:
             span = site["span"]
@@ -305,11 +397,17 @@ def keep_detected_v2(
                 "path": path,
                 "call": list(key[2]),
                 "detection_family": family,
-                "locator": SQL_SITE_LOCATOR,
+                "locator": locator,
             }
             status, basis = "mapped", "same_call_site"
             method: Literal["containment", "exact_span"] | None = "containment"
             reason = _REASON_SITE.format(tools=named)
+            for finding in reported:
+                string = linked.get(finding["raw_id"])
+                if string is not None:
+                    reason += _REASON_LINKED.format(
+                        lines=_lines(string["statement"]), variable=string["variable"]
+                    )
         else:
             # A CodeQL unit keeps the identity a CodeQL-only unit has here (detection-units-v1).
             identity = {
@@ -330,7 +428,7 @@ def keep_detected_v2(
                 "raw_id": finding["raw_id"],
                 "tool": finding["tool"],
                 "mapping_status": status,
-                "mapping_method": method,
+                "mapping_method": "explicit_link" if finding["raw_id"] in linked else method,
             }
             for finding in reported
         ]
@@ -362,6 +460,11 @@ def keep_detected_v2(
                     "detected": True,
                     "run_complete": complete,
                     "located_sql_call": site is not None,
+                    **(
+                        {"linked_sql_string": any(f["raw_id"] in linked for f in reported)}
+                        if link_rules
+                        else {}
+                    ),
                 },
                 "unknown_fields": ["priority_policy", "filter_condition"],
                 "candidate": {
@@ -391,6 +494,7 @@ def keep_detected_v2(
                         "mapped_cwes": list(rules[canonical[finding["raw_id"]]]),
                         "reported_cwes": list(finding["reported_cwes"]),
                         "message": finding["message"],
+                        **_linked_by(linked.get(finding["raw_id"])),
                     }
                     for finding in reported
                 ],
@@ -398,6 +502,24 @@ def keep_detected_v2(
             }
         )
     return units, assessments
+
+
+def _lines(statement: Mapping[str, Any]) -> str:
+    start, end = statement["startLine"], statement["endLine"]
+    return str(start) if start == end else f"{start}–{end}"
+
+
+def _linked_by(string: SqlString | None) -> dict[str, Any]:
+    """What ties a linked alert to its unit: the assigned variable and its statement."""
+    if string is None:
+        return {}
+    return {
+        "linked_by": {
+            "locator": SQL_LINK_LOCATOR,
+            "variable": string["variable"],
+            "statement": dict(string["statement"]),
+        }
+    }
 
 
 def scan_language_detection(
@@ -419,7 +541,8 @@ def scan_language_detection(
     SQL execution calls.
     """
     config = profile.configs[language]
-    merging = profile.unit_merge == SQL_SITE_LOCATOR
+    merging = profile.unit_merge in (SQL_SITE_LOCATOR, SQL_LINK_LOCATOR)
+    linking = profile.unit_merge == SQL_LINK_LOCATOR
     pack_version = config["codeql_bundle"][f"{language}_query_pack"]
     pack = settings.codeql_home / f"qlpacks/codeql/{language}-queries/{pack_version}"
     extra: dict[str, Any] = {"bandit": config.get("bandit")} if merging else {}
@@ -458,17 +581,30 @@ def scan_language_detection(
         "rule_claims_sha256": "",
     }
     sites: list[SqlSite] = []
+    strings: list[SqlString] = []
     if merging and language == "python":
-        sites, unparsed = locate_all(load_source_texts(source, files, language))
+        texts = load_source_texts(source, files, language)
+        sites, unparsed = locate_all(texts)
         locator: dict[str, Any] = {
             "status": "partial" if unparsed else "completed",
             "raw_findings": len(sites),
         }
+        if linking:
+            strings = locate_all_strings(texts)
+            locator["sql_strings"] = len(strings)
+            locator["sql_strings_linked"] = sum(item["reason"] == LINKED for item in strings)
         if unparsed:
             locator["error"] = (
                 f"{len(unparsed)} Python file(s) could not be parsed; no call located there"
             )
         result.steps["sink-locator"] = locator  # type: ignore[assignment]
+    unit_version = (
+        DETECTION_UNIT_VERSION_V3
+        if linking
+        else DETECTION_UNIT_VERSION_V2
+        if merging
+        else DETECTION_UNIT_VERSION
+    )
     # A failed run that still wrote results is left to the caller, which holds its alerts
     # as not ranked: what a failed analysis reported is not this profile's to describe.
     if merging and result.status != "failed":
@@ -481,7 +617,10 @@ def scan_language_detection(
             sites=sites,
             priority=profile.priority,
             complete=result.status == "completed",
-            provenance={**provenance, "reconciler_version": DETECTION_UNIT_VERSION_V2},
+            provenance={**provenance, "reconciler_version": unit_version},
+            strings=strings,
+            link_rules=LINKED_RULES if linking else frozenset(),
+            locator=SQL_LINK_LOCATOR if linking else SQL_SITE_LOCATOR,
         )
     elif result.status != "failed":
         units, assessments = keep_detected(
@@ -522,11 +661,11 @@ def scan_language_detection(
         versions,
         units,
         assessments,
-        unit_version=DETECTION_UNIT_VERSION_V2 if merging else DETECTION_UNIT_VERSION,
+        unit_version=unit_version,
         locator_version=(
             DETECTION_LOCATOR_VERSION
             if not merging
-            else SQL_SITE_LOCATOR
+            else (SQL_LINK_LOCATOR if linking else SQL_SITE_LOCATOR)
             if language == "python"
             else LOCATION_SINK_KIND
         ),

@@ -95,6 +95,7 @@ FAMILY_OF_PROFILE = {
     "path-traversal-v0.2": "path-traversal",
     "sql-injection-v0.1": "sql-injection",
     "sql-injection-v0.2": "sql-injection",
+    "sql-injection-v0.3": "sql-injection",
 }
 # A member whose queries run on the shared database gets its own analysis pass. Its raw IDs
 # start with this prefix and the family, so they stay unique next to the primary CodeQL pass.

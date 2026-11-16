@@ -110,7 +110,8 @@ called from `task.scan_snapshot`; never leave a stored finding without a unit. A
 filters nothing until its own evidence has been evaluated.
 
 A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`,
-`profiles/multi-cwe-v0.2/` and `profiles/multi-cwe-v0.3/`) pins its members' manifests;
+`profiles/multi-cwe-v0.2/`, `profiles/multi-cwe-v0.3/` and `profiles/multi-cwe-v0.4/`) pins its
+members' manifests;
 `scanners/profile.py` loads it, `families.members_of` checks that it names families in `families.FAMILIES`, and
 `task.scan_snapshot` runs it. `families.to_language_result`
 turns a composite run into one `LanguageResult` with a part per family; `persist.py` writes
@@ -142,6 +143,13 @@ when each reported region lies inside the same Python SQL execution call located
 stays one unit per reported location **and tool**, and JavaScript/TypeScript has no locator yet.
 Nothing is filtered. A failed or incomplete member pass makes the family's run partial: the
 alerts of the other passes are still kept, with `run_incomplete`.
+`units: "sql-call-site-v2"` (`profiles/sql-injection-v0.3/`, member of the experimental
+`multi-cwe-v0.4`) adds one step: `sql_sites.locate_sql_strings` finds statements
+`name = <string expression>` whose name is bound once in its scope and read only as the first
+argument of one execution call, and `detection.link_decisions` joins a Bandit B608 alert on one of
+that statement's string literals to the call's unit when the call holds a CodeQL or Semgrep alert
+(mapping `explicit_link`, `linked_by` in the evidence, units `detection-units-v3`). Every other B608
+keeps its own unit, with the reason. Keep the v1 path byte-identical: the new mode is opt-in.
 The task's time limits and the broker's visibility timeout cover the largest profile
 (`task.worst_case_seconds`); change them together.
 

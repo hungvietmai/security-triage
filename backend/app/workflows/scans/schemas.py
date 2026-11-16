@@ -64,6 +64,7 @@ class ScanCreate(InputSchema):
         "multi-cwe-v0.1",
         "multi-cwe-v0.2",
         "multi-cwe-v0.3",
+        "multi-cwe-v0.4",
     ] = Field(
         default="command-injection-v0.1",
         description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
@@ -80,7 +81,10 @@ class ScanCreate(InputSchema):
         "nothing ranks or filters them. multi-cwe-v0.3: the same three families, with "
         "sql-injection-v0.2 running Semgrep (unchanged upstream rules), Bandit (Python) and "
         "CodeQL for CWE-89; their alerts are merged only inside one located SQL execution "
-        "call and are all kept for review.",
+        "call and are all kept for review. multi-cwe-v0.4 (experimental): as multi-cwe-v0.3, "
+        "with sql-injection-v0.3, which also joins a Bandit B608 alert on the statement that "
+        "builds a SQL string to the CodeQL or Semgrep alert at the one execution call that runs "
+        "it (Python).",
     )
 
 

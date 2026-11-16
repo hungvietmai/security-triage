@@ -1,0 +1,198 @@
+{
+  "schema": 2,
+  "kind": "detection",
+  "profile_id": "sql-injection-v0.3",
+  "languages": {
+    "javascript": {
+      "config": "profiles/sql-injection-v0.3/javascript.json"
+    },
+    "python": {
+      "config": "profiles/sql-injection-v0.3/python.json"
+    }
+  },
+  "rules": {
+    "python": {
+      "python.aws-lambda.security.mysql-sqli.mysql-sqli": [
+        "CWE-89"
+      ],
+      "python.aws-lambda.security.psycopg-sqli.psycopg-sqli": [
+        "CWE-89"
+      ],
+      "python.aws-lambda.security.pymssql-sqli.pymssql-sqli": [
+        "CWE-89"
+      ],
+      "python.aws-lambda.security.pymysql-sqli.pymysql-sqli": [
+        "CWE-89"
+      ],
+      "python.aws-lambda.security.sqlalchemy-sqli.sqlalchemy-sqli": [
+        "CWE-89"
+      ],
+      "python.aws-lambda.security.tainted-sql-string.tainted-sql-string": [
+        "CWE-89"
+      ],
+      "python.django.security.audit.custom-expression-as-sql.custom-expression-as-sql": [
+        "CWE-89"
+      ],
+      "python.django.security.audit.extends-custom-expression.extends-custom-expression": [
+        "CWE-89"
+      ],
+      "python.django.security.audit.query-set-extra.avoid-query-set-extra": [
+        "CWE-89"
+      ],
+      "python.django.security.audit.raw-query.avoid-raw-sql": [
+        "CWE-89"
+      ],
+      "python.django.security.injection.sql.sql-injection-extra.sql-injection-using-extra-where": [
+        "CWE-89"
+      ],
+      "python.django.security.injection.sql.sql-injection-rawsql.sql-injection-using-rawsql": [
+        "CWE-89"
+      ],
+      "python.django.security.injection.sql.sql-injection-using-db-cursor-execute.sql-injection-db-cursor-execute": [
+        "CWE-89"
+      ],
+      "python.django.security.injection.sql.sql-injection-using-raw.sql-injection-using-raw": [
+        "CWE-89"
+      ],
+      "python.django.security.injection.tainted-sql-string.tainted-sql-string": [
+        "CWE-89"
+      ],
+      "python.flask.security.injection.tainted-sql-string.tainted-sql-string": [
+        "CWE-89"
+      ],
+      "python.lang.security.audit.formatted-sql-query.formatted-sql-query": [
+        "CWE-89"
+      ],
+      "python.lang.security.audit.sqli.aiopg-sqli.aiopg-sqli": [
+        "CWE-89"
+      ],
+      "python.lang.security.audit.sqli.asyncpg-sqli.asyncpg-sqli": [
+        "CWE-89"
+      ],
+      "python.lang.security.audit.sqli.pg8000-sqli.pg8000-sqli": [
+        "CWE-89"
+      ],
+      "python.lang.security.audit.sqli.psycopg-sqli.psycopg-sqli": [
+        "CWE-89"
+      ],
+      "python.pyramid.security.sqlalchemy-sql-injection.pyramid-sqlalchemy-sql-injection": [
+        "CWE-89"
+      ],
+      "python.sqlalchemy.security.audit.avoid-sqlalchemy-text.avoid-sqlalchemy-text": [
+        "CWE-89"
+      ],
+      "python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query": [
+        "CWE-89"
+      ],
+      "python.sqlalchemy.security.sqlalchemy-sql-injection.sqlalchemy-sql-injection": [
+        "CWE-89"
+      ],
+      "B608": [
+        "CWE-89"
+      ],
+      "B610": [
+        "CWE-89"
+      ],
+      "B611": [
+        "CWE-89"
+      ],
+      "py/sql-injection": [
+        "CWE-89"
+      ]
+    },
+    "javascript": {
+      "javascript.aws-lambda.security.knex-sqli.knex-sqli": [
+        "CWE-89"
+      ],
+      "javascript.aws-lambda.security.mysql-sqli.mysql-sqli": [
+        "CWE-89"
+      ],
+      "javascript.aws-lambda.security.pg-sqli.pg-sqli": [
+        "CWE-89"
+      ],
+      "javascript.aws-lambda.security.sequelize-sqli.sequelize-sqli": [
+        "CWE-89"
+      ],
+      "javascript.aws-lambda.security.tainted-sql-string.tainted-sql-string": [
+        "CWE-89"
+      ],
+      "javascript.express.security.injection.tainted-sql-string.tainted-sql-string": [
+        "CWE-89"
+      ],
+      "javascript.lang.security.audit.sqli.node-knex-sqli.node-knex-sqli": [
+        "CWE-89"
+      ],
+      "javascript.lang.security.audit.sqli.node-mssql-sqli.node-mssql-sqli": [
+        "CWE-89"
+      ],
+      "javascript.lang.security.audit.sqli.node-mysql-sqli.node-mysql-sqli": [
+        "CWE-89"
+      ],
+      "javascript.lang.security.audit.sqli.node-postgres-sqli.node-postgres-sqli": [
+        "CWE-89"
+      ],
+      "javascript.sequelize.security.audit.sequelize-injection-express.express-sequelize-injection": [
+        "CWE-89"
+      ],
+      "javascript.sequelize.security.audit.sequelize-raw-query.sequelize-raw-query": [
+        "CWE-89"
+      ],
+      "js/sql-injection": [
+        "CWE-89",
+        "CWE-90",
+        "CWE-943"
+      ]
+    }
+  },
+  "units": "sql-call-site-v2",
+  "priority": "U",
+  "policy": {
+    "id": "sql-injection-detect-and-keep",
+    "version": "0.3",
+    "source": "profiles/sql-injection-v0.3/DETECTION.md"
+  },
+  "specification": "profiles/sql-injection-v0.3/DETECTION.md",
+  "files": {
+    "profiles/sql-injection-v0.3/DETECTION.md": "ac2220d7d2d485aa5b50afe9ec713c6240cfd823df240f33a87205a586c3587b",
+    "profiles/sql-injection-v0.3/javascript.json": "ce71e909ea45f9eab21b9f342ee8438d6840601b10113378211215ec207f4308",
+    "profiles/sql-injection-v0.3/python.json": "ed002b7515396230c3881f0e89f1b52439063b1a98e35a8c7ec89284a7b52b47",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/knex-sqli.yaml": "caf1c5f56055363af67ead62f248df123c44ef46d3b2e9d8bbd32f8179d296ba",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/mysql-sqli.yaml": "d5fa1549406aab261b6e95b82bf4ab238e55f924100e487a2967e965f1fc408e",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/pg-sqli.yaml": "267e1dea6127d5f6b311a048c8a9de8c7a88e756a90a31c5c2bd737715c919e8",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/sequelize-sqli.yaml": "f2389a77852e1f2fa95ad9cc41cc05da6b533351ac13ba50a350732efa3f0603",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/aws-lambda/security/tainted-sql-string.yaml": "c0b4169c9501a6b59b09e5b676a49adc48d53069a477f19f2951688e79cfb861",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/express/security/injection/tainted-sql-string.yaml": "22dab9b0182dd25bb5aaf3ae796973dc53ea91ccb0e747055fd15ee1ef9a8592",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-knex-sqli.yaml": "074be35c73756917896e051a8d77a8a705c7ef54d4846d7a93c829e4d68aabd2",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-mssql-sqli.yaml": "a3c995249bdd6ffbf3d36ba42cdd1f1c04798bb0e41765bd396a218516e59ee9",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-mysql-sqli.yaml": "152d5848cbcb5bdd3555507eb4a55b5ee2cd7276effbd5975a7da97d82bba0d0",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/lang/security/audit/sqli/node-postgres-sqli.yaml": "23709e35b9ce213d8306c793a3174320dcf3141043e31297fcdec48735c1bbd8",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/sequelize/security/audit/sequelize-injection-express.yaml": "b3b6149dcd1f7611e020aa6c915eabf540a64bdc11626f5003c5d4922d7824a5",
+    "rules/semgrep/sql-injection-v0.1/upstream/javascript/sequelize/security/audit/sequelize-raw-query.yaml": "b51a5f7b8a32132c57960b559bc533e2632da00a863118154d89b692c4a1342c",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/mysql-sqli.yaml": "51fceaf5274e3a53251c8b34b83769a226731e1d59cf6965b87d45387788e8b3",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/psycopg-sqli.yaml": "43e79434cf6a3953e2de443b506c751246cf0bc637b54e0b174f40c13e726d3c",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/pymssql-sqli.yaml": "d5bd71e7f762cbeb41e787f1bdf73efc5d4be183b08de23c159a070bc58d6659",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/pymysql-sqli.yaml": "836301d9b00f13b25d47d07b1a3fc2dae0a078c66375d664d03a5dfaaaf796ed",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/sqlalchemy-sqli.yaml": "d42f3f0e1b45f89cf54243dfa0de30d811d996a70f7e73cedf290a28692415b8",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/tainted-sql-string.yaml": "6c28ef216e3aba3b69849cb2862af72553f6e5c6335706354d475d1f4debb56b",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/custom-expression-as-sql.yaml": "516a9d1d0c84701e3aa92a202c9ca8b9596f6b98de022c0c01c1135ef12fb3ab",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/extends-custom-expression.yaml": "271b0932608afa83aa83b5f08051b0da7ec1d835a1438beadf6ad7ada9a32088",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/query-set-extra.yaml": "ba41654546f12eec37271071181b6833908c1342b05d7e47af916a59275d8266",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/raw-query.yaml": "3ed9f9713f2928257c648cf4c5c20fda908f17c07eea153f243c9950c34a1d10",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-extra.yaml": "c100c7f70353217bdb26bd0292bb908e0e708e63f5ea52fdce88ebc5ffd0f802",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-rawsql.yaml": "1cffd4593ed3a1304931f687fcd6e87a803d90a74a598c41bf52e5b26eaf8b2f",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-using-db-cursor-execute.yaml": "e4f74b36aa657c91def7eaea4ea545e046d63be195eb05d99de9ed6e20de1ef4",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-using-raw.yaml": "d632bb390c6bf5e477b38d49562c94eb3acba460fd8a3073c564dd3903d7bed2",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/tainted-sql-string.yaml": "43e19cfec1bef17a4efd9490a2359383e8ba67ac6335de9114c655ffbec24300",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/flask/security/injection/tainted-sql-string.yaml": "d9b562b5eb8bd7efaaa696ebd0db97e47fc498edeec094c6956ba3567bbddd77",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/formatted-sql-query.yaml": "3543d454e520952116963c7913a2c2bad9bf9192b6c8c80be91ab7529a88ff09",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/aiopg-sqli.yaml": "a7687e9f25881204de6d5f5087d76ccf61b361b715c95d9e1af9be4139f44fcd",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/asyncpg-sqli.yaml": "c5c56307c0128f47e4aae85ea2b5ab5834ce47c35690863370d010d6fbd47300",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/pg8000-sqli.yaml": "70658799eacf63fadffe5bb79969acb7133daaf50058af627e1dfd9041628a77",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/psycopg-sqli.yaml": "22f640c86a6e4d594b8193dd40a99830e211c4af46e526306dc261f0c1a334a0",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/pyramid/security/sqlalchemy-sql-injection.yaml": "1e9cde186df20ed004805d57bee487f4424a629082b227e33da3e2936b74b1e6",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/sqlalchemy/security/audit/avoid-sqlalchemy-text.yaml": "bbb930c18dd59b667200a23eb658fb665b87bd698c674e38b0f75069e84244cb",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/sqlalchemy/security/sqlalchemy-execute-raw-query.yaml": "ad1a0cdc4622c4031d8a43796d66a4ed89778a1ebd9d8140d42ef81e857bda3d",
+    "rules/semgrep/sql-injection-v0.1/upstream/python/sqlalchemy/security/sqlalchemy-sql-injection.yaml": "94efc2a706da4cc0fce95cf50e8ea65e0a0480503cd7d55c7841ed34905350de",
+    "tools/bandit/bandit.ini": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1"
+  }
+}

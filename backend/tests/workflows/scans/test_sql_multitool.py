@@ -121,11 +121,13 @@ class MultiTools(SqlTools):
     bandit_pass: str = "completed"
     semgrep_rule: str = ""
     calls: list[tuple[str, str]] = dataclasses.field(default_factory=list)
+    bandit_regions: tuple[dict[str, Any], ...] = (LINE4, LINE5, LINE7)
+    codeql_regions: tuple[dict[str, Any], ...] = (CODEQL_LINE4, LINE6, LINE7)
 
     def _sql_alerts(self, name: str) -> list[Any]:
         return [
             _db(f"{name}:0:{index}", name, self.sql_rule, region, ["cwe-089"])
-            for index, region in enumerate((CODEQL_LINE4, LINE6, LINE7))
+            for index, region in enumerate(self.codeql_regions)
         ]
 
     def member_pass(self, tool: str, **kwargs: Any) -> tuple[Any, list[Any], bool]:
@@ -149,7 +151,7 @@ class MultiTools(SqlTools):
             assert name == BANDIT_PASS and config["bandit"]["rules"] == ["B608", "B610", "B611"]
             found = [
                 _db(f"{name}:0:{index}", name, "B608", region, ["CWE-89"])
-                for index, region in enumerate((LINE4, LINE5, LINE7))
+                for index, region in enumerate(self.bandit_regions)
             ]
         for finding in found:
             finding["tool"] = tool

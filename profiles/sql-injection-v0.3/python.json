@@ -1,0 +1,191 @@
+{
+  "config_id": "sql-injection-v0.3-python",
+  "purpose": "Experimental scan: detect CWE-89 with Semgrep (unchanged upstream rules), Bandit and the standard CodeQL query, merge alerts inside one located SQL execution call, also join a Bandit B608 alert on the statement that builds the SQL string of exactly one such call, and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "semgrep",
+    "bandit",
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/mysql-sqli.yaml",
+      "sha256": "51fceaf5274e3a53251c8b34b83769a226731e1d59cf6965b87d45387788e8b3",
+      "rule_id": "mysql-sqli",
+      "canonical_rule_id": "python.aws-lambda.security.mysql-sqli.mysql-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/psycopg-sqli.yaml",
+      "sha256": "43e79434cf6a3953e2de443b506c751246cf0bc637b54e0b174f40c13e726d3c",
+      "rule_id": "psycopg-sqli",
+      "canonical_rule_id": "python.aws-lambda.security.psycopg-sqli.psycopg-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/pymssql-sqli.yaml",
+      "sha256": "d5bd71e7f762cbeb41e787f1bdf73efc5d4be183b08de23c159a070bc58d6659",
+      "rule_id": "pymssql-sqli",
+      "canonical_rule_id": "python.aws-lambda.security.pymssql-sqli.pymssql-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/pymysql-sqli.yaml",
+      "sha256": "836301d9b00f13b25d47d07b1a3fc2dae0a078c66375d664d03a5dfaaaf796ed",
+      "rule_id": "pymysql-sqli",
+      "canonical_rule_id": "python.aws-lambda.security.pymysql-sqli.pymysql-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/sqlalchemy-sqli.yaml",
+      "sha256": "d42f3f0e1b45f89cf54243dfa0de30d811d996a70f7e73cedf290a28692415b8",
+      "rule_id": "sqlalchemy-sqli",
+      "canonical_rule_id": "python.aws-lambda.security.sqlalchemy-sqli.sqlalchemy-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/aws-lambda/security/tainted-sql-string.yaml",
+      "sha256": "6c28ef216e3aba3b69849cb2862af72553f6e5c6335706354d475d1f4debb56b",
+      "rule_id": "tainted-sql-string",
+      "canonical_rule_id": "python.aws-lambda.security.tainted-sql-string.tainted-sql-string"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/custom-expression-as-sql.yaml",
+      "sha256": "516a9d1d0c84701e3aa92a202c9ca8b9596f6b98de022c0c01c1135ef12fb3ab",
+      "rule_id": "custom-expression-as-sql",
+      "canonical_rule_id": "python.django.security.audit.custom-expression-as-sql.custom-expression-as-sql"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/extends-custom-expression.yaml",
+      "sha256": "271b0932608afa83aa83b5f08051b0da7ec1d835a1438beadf6ad7ada9a32088",
+      "rule_id": "extends-custom-expression",
+      "canonical_rule_id": "python.django.security.audit.extends-custom-expression.extends-custom-expression"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/query-set-extra.yaml",
+      "sha256": "ba41654546f12eec37271071181b6833908c1342b05d7e47af916a59275d8266",
+      "rule_id": "avoid-query-set-extra",
+      "canonical_rule_id": "python.django.security.audit.query-set-extra.avoid-query-set-extra"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/audit/raw-query.yaml",
+      "sha256": "3ed9f9713f2928257c648cf4c5c20fda908f17c07eea153f243c9950c34a1d10",
+      "rule_id": "avoid-raw-sql",
+      "canonical_rule_id": "python.django.security.audit.raw-query.avoid-raw-sql"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-extra.yaml",
+      "sha256": "c100c7f70353217bdb26bd0292bb908e0e708e63f5ea52fdce88ebc5ffd0f802",
+      "rule_id": "sql-injection-using-extra-where",
+      "canonical_rule_id": "python.django.security.injection.sql.sql-injection-extra.sql-injection-using-extra-where"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-rawsql.yaml",
+      "sha256": "1cffd4593ed3a1304931f687fcd6e87a803d90a74a598c41bf52e5b26eaf8b2f",
+      "rule_id": "sql-injection-using-rawsql",
+      "canonical_rule_id": "python.django.security.injection.sql.sql-injection-rawsql.sql-injection-using-rawsql"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-using-db-cursor-execute.yaml",
+      "sha256": "e4f74b36aa657c91def7eaea4ea545e046d63be195eb05d99de9ed6e20de1ef4",
+      "rule_id": "sql-injection-db-cursor-execute",
+      "canonical_rule_id": "python.django.security.injection.sql.sql-injection-using-db-cursor-execute.sql-injection-db-cursor-execute"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/sql/sql-injection-using-raw.yaml",
+      "sha256": "d632bb390c6bf5e477b38d49562c94eb3acba460fd8a3073c564dd3903d7bed2",
+      "rule_id": "sql-injection-using-raw",
+      "canonical_rule_id": "python.django.security.injection.sql.sql-injection-using-raw.sql-injection-using-raw"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/django/security/injection/tainted-sql-string.yaml",
+      "sha256": "43e19cfec1bef17a4efd9490a2359383e8ba67ac6335de9114c655ffbec24300",
+      "rule_id": "tainted-sql-string",
+      "canonical_rule_id": "python.django.security.injection.tainted-sql-string.tainted-sql-string"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/flask/security/injection/tainted-sql-string.yaml",
+      "sha256": "d9b562b5eb8bd7efaaa696ebd0db97e47fc498edeec094c6956ba3567bbddd77",
+      "rule_id": "tainted-sql-string",
+      "canonical_rule_id": "python.flask.security.injection.tainted-sql-string.tainted-sql-string"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/formatted-sql-query.yaml",
+      "sha256": "3543d454e520952116963c7913a2c2bad9bf9192b6c8c80be91ab7529a88ff09",
+      "rule_id": "formatted-sql-query",
+      "canonical_rule_id": "python.lang.security.audit.formatted-sql-query.formatted-sql-query"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/aiopg-sqli.yaml",
+      "sha256": "a7687e9f25881204de6d5f5087d76ccf61b361b715c95d9e1af9be4139f44fcd",
+      "rule_id": "aiopg-sqli",
+      "canonical_rule_id": "python.lang.security.audit.sqli.aiopg-sqli.aiopg-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/asyncpg-sqli.yaml",
+      "sha256": "c5c56307c0128f47e4aae85ea2b5ab5834ce47c35690863370d010d6fbd47300",
+      "rule_id": "asyncpg-sqli",
+      "canonical_rule_id": "python.lang.security.audit.sqli.asyncpg-sqli.asyncpg-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/pg8000-sqli.yaml",
+      "sha256": "70658799eacf63fadffe5bb79969acb7133daaf50058af627e1dfd9041628a77",
+      "rule_id": "pg8000-sqli",
+      "canonical_rule_id": "python.lang.security.audit.sqli.pg8000-sqli.pg8000-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/lang/security/audit/sqli/psycopg-sqli.yaml",
+      "sha256": "22f640c86a6e4d594b8193dd40a99830e211c4af46e526306dc261f0c1a334a0",
+      "rule_id": "psycopg-sqli",
+      "canonical_rule_id": "python.lang.security.audit.sqli.psycopg-sqli.psycopg-sqli"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/pyramid/security/sqlalchemy-sql-injection.yaml",
+      "sha256": "1e9cde186df20ed004805d57bee487f4424a629082b227e33da3e2936b74b1e6",
+      "rule_id": "pyramid-sqlalchemy-sql-injection",
+      "canonical_rule_id": "python.pyramid.security.sqlalchemy-sql-injection.pyramid-sqlalchemy-sql-injection"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/sqlalchemy/security/audit/avoid-sqlalchemy-text.yaml",
+      "sha256": "bbb930c18dd59b667200a23eb658fb665b87bd698c674e38b0f75069e84244cb",
+      "rule_id": "avoid-sqlalchemy-text",
+      "canonical_rule_id": "python.sqlalchemy.security.audit.avoid-sqlalchemy-text.avoid-sqlalchemy-text"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/sqlalchemy/security/sqlalchemy-execute-raw-query.yaml",
+      "sha256": "ad1a0cdc4622c4031d8a43796d66a4ed89778a1ebd9d8140d42ef81e857bda3d",
+      "rule_id": "sqlalchemy-execute-raw-query",
+      "canonical_rule_id": "python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query"
+    },
+    {
+      "path": "rules/semgrep/sql-injection-v0.1/upstream/python/sqlalchemy/security/sqlalchemy-sql-injection.yaml",
+      "sha256": "94efc2a706da4cc0fce95cf50e8ea65e0a0480503cd7d55c7841ed34905350de",
+      "rule_id": "sqlalchemy-sql-injection",
+      "canonical_rule_id": "python.sqlalchemy.security.sqlalchemy-sql-injection.sqlalchemy-sql-injection"
+    }
+  ],
+  "codeql_queries": [
+    "Security/CWE-089/SqlInjection.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-089/SqlInjection.ql": "e8324e568041a22d5d3a4ea21ef52ef791d67a699352273edda350caeca84964"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "asset": "codeql-bundle-python-linux64.tar.zst",
+    "sha256": "ea86393c6c812542ae5a3a7122bcc760873707a50b25cc47d2fd7cfd514b0cb0",
+    "python_query_pack": "1.8.11",
+    "python_all_pack": "7.2.6"
+  },
+  "language": "python",
+  "bandit": {
+    "version": "1.9.4",
+    "config": {
+      "path": "tools/bandit/bandit.ini",
+      "sha256": "1b314515b674e550d1e66986e654f32010f5d56171a114b5f98fd79068e9e6d1"
+    },
+    "rules": [
+      "B608",
+      "B610",
+      "B611"
+    ]
+  }
+}
