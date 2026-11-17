@@ -387,10 +387,32 @@ trình bày cả hai kịch bản.
      trí có nhãn. Nhãn không độc lập với CodeQL (lời giải thích dùng tên truy vấn của nó), nhưng
      CodeQL 2.27.1 không báo gì trong 24 tệp có nhãn. Xem [plans/multi-cwe.md](plans/multi-cwe.md),
      mục 24.
+   - Semgrep cho CWE-79 (16/11): rà lại 27 ca OSSF bỏ sót từ nhật ký và SARIF (cả 28 tệp được trích
+     xuất; 13 ca là điểm ghi quen thuộc mà nguồn không thuộc mô hình của CodeQL). Tập mới, nhãn độc
+     lập với CodeQL: 60 advisory npm CWE-79 của GitHub Advisory Database, nhãn từ bản vá, giao thức
+     băm trước khi chạy, mỗi commit chạy một lần. CodeQL phát hiện 2/60 ca, Semgrep (36 luật thượng
+     nguồn) thêm **9 ca có xác nhận tay** (người xét là trợ lý AI; việc giấu công cụ không trọn ở mức
+     ca, sai lệch D1), nhưng thêm 5 157 mục rà sau gộp (573 mục cho mỗi ca thêm, trần đã chốt là 20). Gộp chỉ bớt 2,4% số mục; kiểm tay 47 liên kết gộp: 36 đúng, 11 sai.
+     **Quyết định: không tích hợp Semgrep, giữ CodeQL cho XSS.** Xem
+     [plans/multi-cwe.md](plans/multi-cwe.md), mục 25.
+   - Profile thử nghiệm `multi-cwe-v0.6` (17/11): thêm nhóm CWE-918 (SSRF) cho Python và
+     JavaScript/TypeScript, truy vấn CodeQL chọn theo nội dung kiểm tra (`py/full-ssrf`,
+     `py/partial-ssrf`, `js/request-forgery`; không lấy `js/client-side-request-forgery` dù cùng nhãn
+     CWE), chỉ phát hiện và giữ. Bốn nhóm cũ giống `v0.5` trên tám nguồn phát triển; cảnh báo SSRF
+     giống CodeQL chạy riêng; SARIF giữ đủ cảnh báo gốc. Xem [plans/multi-cwe.md](plans/multi-cwe.md),
+     mục 26.
+   - Đánh giá độc lập CWE-918 (17/11, mục 27): 64 advisory GHSA có commit sửa (24 pip, 40 npm), mỗi kho
+     một ca, nhãn vị trí lời gọi gửi yêu cầu gán trước khi chạy (AI gán, có người gán thứ hai trên 12 ca),
+     giao thức băm trước. **CodeQL (`ssrf-v0.1`) phát hiện 1/20 ca Python và 2/21 ca JS/TS** (1/24 và
+     2/40 advisory); 3/3 vị trí đã vá vẫn bị báo; mục rà thấp (Python 5 trên 24 commit, JS/TS 33 trên
+     39, phần lớn chưa phân loại). 22/40 ca bỏ sót có nguyên nhân đã xác minh: nguồn ngoài mô hình đe dọa
+     `remote` (tham số thư viện, cấu hình, cơ sở dữ liệu), framework hay thư viện không có mô hình (h3,
+     Hono, Cloudflare Workers, swob, MCP, ofetch); 18 ca còn là giả thuyết.
    - Còn lại: đánh giá trên `pairs-v1` (chưa quét; điều kiện chặn và bộ chấm ở
      [pairs-v1/README.md](../experiments/evaluation/pairs-v1/README.md)), nhãn âm tính trên mã
      thật, gói bằng chứng cho JS/TS, bộ định vị lời gọi JavaScript, phiếu rà soát, hiển thị bảng bằng chứng
-     CWE-22, Semgrep và đối chứng SonarQube cho CWE-79, CWE-79 cho Python, đánh giá với người dùng.
+     CWE-22, đối chứng SonarQube cho CWE-79, CWE-79 cho Python, CWE-918 cho kho vượt giới hạn của ứng dụng
+     và một công cụ thứ hai cho SSRF, đánh giá với người dùng.
      Hồ sơ đề án và bảng tiêu chí:
      [thesis/README.md](thesis/README.md).
 7. **Tập held-out CWE-78** (16 cặp): đã mở một lần ngày 15/11 cho profile `command-injection-v0.3` theo Amendment 08. Hợp mọi nguồn báo 9/9 vị trí lỗi đã biết, 0 bị gạn; không còn dùng được cho phiên bản sau.

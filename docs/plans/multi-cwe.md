@@ -25,7 +25,14 @@ dòng mã ứng dụng nào được sửa. Trạng thái ứng dụng như đã
   profile thử nghiệm `multi-cwe-v0.4` (nối cảnh báo Bandit với lời gọi SQL) và giá trị Bandit sau gộp
   ở [mục 23](#23-phép-gộp-bandit-với-lời-gọi-sql-và-giá-trị-bandit-sau-gộp-2026-11-16); profile thử
   nghiệm `multi-cwe-v0.5` (thêm CWE-79 cho JavaScript/TypeScript bằng CodeQL, đối chứng với `v0.4` và
-  đo trên OSSF CVE Benchmark) ở [mục 24](#24-nhóm-cwe-79-cho-javascripttypescript-profile-multi-cwe-v05-2026-11-16).
+  đo trên OSSF CVE Benchmark) ở [mục 24](#24-nhóm-cwe-79-cho-javascripttypescript-profile-multi-cwe-v05-2026-11-16);
+  phép đo Semgrep cho CWE-79 trên tập nhãn độc lập với CodeQL và quyết định giữ CodeQL ở
+  [mục 25](#25-semgrep-cho-cwe-79-đo-trên-tập-nhãn-độc-lập-với-codeql-2026-11-16); profile thử
+  nghiệm `multi-cwe-v0.6` (thêm CWE-918 cho Python và JavaScript/TypeScript bằng CodeQL, đối chứng
+  với `v0.5`, bảng năm nhóm CWE) ở
+  [mục 26](#26-nhóm-cwe-918-cho-python-và-javascripttypescript-profile-multi-cwe-v06-2026-11-17); đánh giá
+  độc lập CWE-918 trên 64 advisory GHSA và bảng năm nhóm CWE cập nhật ở
+  [mục 27](#27-đánh-giá-độc-lập-cwe-918-trên-advisory-ghsa-pip-và-npm-multi-cwe-v06-2026-11-17).
 
 ## 1. Kết luận ngắn
 
@@ -3020,3 +3027,1197 @@ XSS, giao thức băm trước khi quét:
   - giới hạn thời gian mềm của tác vụ tăng lên 12 600 giây; `TIME_LIMIT` còn dưới thời gian hiển thị
     lại của broker 300 giây. Một nhóm thêm nữa sẽ cần đổi cả thời gian đó.
 - **Bộ nhớ:** CodeQL 2048 MB với hai luồng không đủ để biên dịch bảy truy vấn; cấu hình dùng một luồng.
+
+## 25. Semgrep cho CWE-79: đo trên tập nhãn độc lập với CodeQL (2026-11-16)
+
+Mốc: `multi-cwe-v0.5` và mục 24. Câu hỏi: thêm Semgrep vào nhóm `cross-site-scripting` thì tìm thêm
+được bao nhiêu ca XSS đúng mà CodeQL bỏ sót trên JavaScript/TypeScript, và sau khi gộp cảnh báo
+trùng, người dùng phải rà thêm bao nhiêu mục?
+
+- **Không đổi:** mã ứng dụng, mọi profile (`multi-cwe-v0.5` vẫn là mốc), các số đo của mục 20–24.
+- **Không quét lại:** các commit OSSF của mục 24.7, hay nguồn có nhãn nào khác của dự án.
+- **Cách đo:** hai công cụ chạy bên ngoài lượt quét của ứng dụng, nhưng bằng adapter của chính ứng
+  dụng, trong container của image worker. Không lượt quét nào của ứng dụng chạy trên tập có nhãn.
+
+### 25.1 Rà lại 27 ca dương CodeQL bỏ sót trên OSSF
+
+Chỉ đọc kết quả đã lưu, không quét lại. Chi tiết: `artifacts/cwe79-eval/semgrep-xss/ossf-missed-review.md`.
+
+**Đã xác minh, cho cả 28 vị trí (27 ca):**
+
+- **Tệp được trích xuất:** nhật ký tạo database có `Done extracting …/<tệp>` cho cả 28 tệp.
+- **Không có lỗi trích xuất** trong SARIF: thông báo duy nhất về các tệp đó là
+  `js/baseline/expected-extracted-files`, mức `none`.
+- **Lượt phân tích hoàn tất.**
+- **Không có cảnh báo CWE-79 ở dòng điểm yếu.** 24 tệp không có cảnh báo CWE-79 nào; 4 tệp có cảnh
+  báo ở dòng khác.
+- Ở CVE-2017-0931, dòng có nhãn nằm ngay trên điểm ghi HTML.
+
+Vậy nguyên nhân không phải trích xuất hay lượt chạy dở.
+
+**Phân loại theo phạm vi của bảy truy vấn.** Đây là nhận định từ đọc mã, không phải kết quả công cụ.
+
+| Nhóm | Ca | Điều đọc được từ mã |
+|---|---|---|
+| K1. Đích quen thuộc, nguồn không thuộc mô hình | 13 | Điểm ghi là `innerHTML`, `.html()`, `dangerouslySetInnerHTML`, `res.send`/`res.end` hay `execCommand("inserthtml")`. Dữ liệu đến từ tham số hàm, props, dữ liệu tài liệu, thông điệp socket.io hay đối tượng lỗi của framework. |
+| K2. Đích ngoài mã được quét, hoặc là cơ chế khuôn mẫu | 3 | Chỉ dựng chuỗi HTML hay khai báo ràng buộc (CKEditor `bind.to('href')`, typeahead, bộ hiển thị của CyberChef). |
+| K3. Không phải luồng tới điểm ghi | 7, cả 7 ca bỏ sót của tầng B | Bộ làm sạch chưa đủ, tuần tự hóa, mXSS, URL `javascript:`. Một ca là đúng truy vấn `js/incomplete-html-attribute-sanitization` đã bị loại khỏi phạm vi. |
+| K4. Chưa xác định | 4 | Ba ca bootstrap: tùy chọn plugin jQuery dùng như bộ chọn hay đích của `appendTo`. Prism: `location.href` ghép vào chuỗi gán cho `innerHTML`. Dạng mã có vẻ thuộc mô hình, nhưng truy vấn không báo, và database không được lưu để chẩn đoán. |
+
+**Giả thuyết cho đợt đo mới:**
+
+- **H1.** Luật Semgrep dạng mẫu báo điểm ghi bất kể nguồn, nên bắt được một phần loại K1.
+- **H2.** Cũng vì vậy, Semgrep thêm nhiều mục rà, cả ở vị trí đã vá.
+- **H3.** Semgrep không giúp được với K2 và K3.
+
+### 25.2 Tập nhãn độc lập với CodeQL
+
+Nhãn của OSSF không độc lập với CodeQL, nên tập mới lấy từ **GitHub Advisory Database**: advisory
+npm có CWE-79, mỗi advisory một commit sửa lỗi do người bảo trì viết. Nhãn là vùng mã mà bản vá đổi,
+không bước nào dùng CodeQL.
+
+- **Chọn ứng viên** (`ghsa_candidates.py`, chỉ đọc metadata, 970 advisory):
+  - chưa rút;
+  - CWE chỉ gồm CWE-79 cùng 20, 80, 83, 87, 116;
+  - đúng một tham chiếu commit đầy đủ;
+  - không nhắc GitHub Security Lab hay CodeQL;
+  - không thuộc OSSF, cả theo CVE lẫn theo kho;
+  - kho và gói không có trong dữ liệu nào của dự án.
+  - Kết quả: 313 ứng viên, 217 kho.
+- **Dựng ca** (`build_cases.py 60`), theo thứ tự cố định `sha256("cwe79-semgrep-v1:" + GHSA ID)`,
+  mỗi kho một ca:
+  - commit sửa có một cha;
+  - có tệp `.js/.jsx/.mjs/.cjs/.ts/.tsx`, không phải tệp kiểm thử hay bản dựng, với dòng bị xóa hay
+    sửa;
+  - các tệp đó đổi tổng cộng ≤ 150 dòng;
+  - snapshot qua giới hạn và phép kiểm `unpack` của ứng dụng.
+  - Đã xét 122 ứng viên để có **60 ca, 60 kho, 104 tệp có nhãn, 120 snapshot**.
+- **Nhãn:**
+  - **vùng dương:** các dòng bản vá xóa hay sửa trên commit trước bản vá, mở rộng 3 dòng mỗi phía,
+    trung vị 25 dòng mỗi ca;
+  - **vùng âm:** các dòng bản vá thêm hay sửa trên commit bản vá.
+- **Hai lần dựng trước bị thay trước khi chạy công cụ nào:** lần đầu còn trùng 4 kho và 2 commit
+  OSSF đã quét; lần hai còn một ca vượt 200 MB khi giải nén.
+
+### 25.3 Giao thức
+
+`artifacts/cwe79-eval/semgrep-xss/PROTOCOL-SEMGREP-XSS.md`.
+
+- sha256 `768a447d2f95e369c9c939c28e80635fac1265ff0fb5cee61810b809a64e09a4`, chốt
+  2026-11-16T16:27:53Z, trước lượt chạy công cụ đầu tiên trên tập này.
+- `PROTOCOL-SEMGREP-XSS.sha256` băm 29 tệp: các script chọn, dựng, chạy và chấm; danh sách ca, việc
+  và luật; trang API; tệp nén luật Semgrep. `run_measure.sh` kiểm các băm đó, bản sao container
+  đọc, mã image worker và băm của 120 snapshot trước khi chạy.
+
+**Hai cấu hình**, cùng snapshot, image `security-triage-worker:v05-measure`, adapter của ứng dụng:
+
+- **C, CodeQL:** `run_codeql`, bảy truy vấn của `cross-site-scripting-v0.1`, một luồng, 2048 MB,
+  600 giây.
+- **C + S:** thêm `run_semgrep_pass`, lượt `semgrep-cross-site-scripting`, Semgrep CE 1.178.0, 600
+  giây.
+- **Luật Semgrep:** mọi tệp luật của `semgrep/semgrep-rules@a84ff9cc` (cây đã vendor ở P2b) có
+  `metadata.cwe` nêu CWE-79 và ngôn ngữ JS/TS. Kết quả 36 tệp, mỗi tệp một luật: 23 `audit` dạng
+  mẫu, 13 `vuln` dạng taint.
+
+**Ghép với ca:**
+
+- Cảnh báo có dòng đầu trong vùng dương là **trúng**.
+- Mọi vị trí trúng được **xác nhận tay**, trên gói xét không ghi công cụ:
+  - "đúng" khi dòng đó là mã có lỗ hổng mà advisory nói tới;
+  - người xét là trợ lý AI thực hiện phép đo.
+  - Việc giấu công cụ không trọn ở mức ca: xem D1 ở 25.4.
+- Bảng chính gồm các ca không công cụ nào thất bại; bảng độ nhạy chỉ gồm ca cả hai `completed`.
+- Cảnh báo ngoài vùng có nhãn giữ trạng thái chưa phân loại.
+
+**Gộp:** hai đơn vị nối khi cùng tệp, vùng giao nhau, và mỗi vùng trải ≤ 5 dòng. Kiểm tay một mẫu
+cố định tối đa 40 mục gộp trên commit trước bản vá.
+
+**Tiêu chí tích hợp** (đạt cả hai):
+
+- **Lợi ích:** số ca chỉ Semgrep phát hiện có xác nhận `G ≥ 3` và `≥ 10%` số ca.
+- **Chi phí:** số mục rà thêm sau gộp chia `G` ≤ min(2 × số đơn vị CodeQL trên mỗi ca CodeQL phát
+  hiện, 20).
+
+### 25.4 Kết quả: CodeQL so với CodeQL + Semgrep
+
+**Chạy:**
+
+- 2026-11-16, 16:27:59Z đến 17:15:33Z (48 phút), ba container chạy song song, mỗi snapshot một lần.
+- Không công cụ nào `failed` trên 120 snapshot. Băm của mọi tệp đã chốt vẫn khớp sau khi chạy và chấm.
+- Trạng thái trên commit trước bản vá (commit bản vá cho cùng phân bố):
+  - 37 ca cả hai `completed`;
+  - 18 ca chỉ Semgrep `partial`;
+  - 4 ca cả hai `partial`;
+  - 1 ca chỉ CodeQL `partial`.
+- **Một sai lệch, D1** (`PROTOCOL-SEMGREP-XSS-DEVIATIONS.md`): gói xét không ghi công cụ, nhưng
+  lần chấm đầu đã in danh sách ca chỉ Semgrep trúng trước khi người xét đọc gói. Việc xét vì vậy
+  không giấu được công cụ ở mức ca.
+
+**Xác nhận tay:** 28 vị trí trúng: 25 đúng, 2 sai, 1 chưa xác định.
+
+- Hai vị trí sai là lệnh nối một phần tử jQuery hay nút DOM, không phải chuỗi HTML.
+- Vị trí chưa xác định là bước thoát ký tự HTML mà bản vá của next-auth bỏ đi.
+
+**Ca dương, bảng chính** (60 ca, không công cụ nào thất bại):
+
+| | Chỉ CodeQL | Chỉ Semgrep | Cả hai | Cả hai bỏ sót | CodeQL | CodeQL + Semgrep |
+|---|---|---|---|---|---|---|
+| Có xác nhận | 1 | **9** | 1 | 49 | **2** | **11** |
+| Trúng theo cơ học | 1 | 10 | 1 | 48 | 2 | 12 |
+| Độ nhạy: 37 ca cả hai `completed`, có xác nhận | 1 | 7 | 1 | 28 | 2 | 9 |
+| Phụ: chỉ 13 luật `vuln`, có xác nhận | 2 | 1 | 0 | 57 | 2 | 3 |
+
+- **CodeQL phát hiện 2 trong 60 ca:**
+  - `samschurter/materialize`, với `js/html-constructed-from-input` và `js/xss-through-dom`; Semgrep
+    cũng phát hiện ca này;
+  - `denpiligrim/repostat`, chỉ CodeQL, `js/html-constructed-from-input` ở `dangerouslySetInnerHTML`.
+- **Semgrep phát hiện thêm 9 ca:**
+  - vxe-table, jupyterlab-git, QuestDB UI, lazysizes, jquery-ui, NocoDB, jquery-validation,
+    GraphQL Playground, Umbraco;
+  - mọi vị trí đúng của Semgrep đến từ luật dạng mẫu: `insecure-document-method` 13,
+    `insecure-innerhtml` 13, `prohibit-jquery-html` 6, `jquery-insecure-method` 3;
+  - ngoại lệ duy nhất là một vị trí của luật taint `raw-html-format`.
+  - Giả thuyết H1 đúng cho 8 trong 9 ca thêm: điểm ghi `innerHTML`, `.html()` hay `.append()` của
+    chuỗi HTML mà dữ liệu đến từ tham số, tùy chọn hay dữ liệu ứng dụng.
+  - Ca thứ chín, Umbraco, có vẻ trúng tình cờ: luật `prohibit-jquery-html` khớp một template `html`
+    của Lit. Dòng đó đúng là đoạn mã bản vá sửa, nên theo quy tắc đã chốt nó vẫn được ghi "đúng". Bỏ
+    ca này thì `G = 8`, tiêu chí 1 vẫn đạt.
+- **Ca âm:**
+  - Không công cụ nào thất bại trên 60 commit bản vá. CodeQL báo 0 vị trí đã vá; Semgrep báo 6.
+  - Trong 12 ca mà C + S báo trúng vị trí lỗi theo cơ học (chưa xác nhận tay), 5 vị trí đã vá vẫn
+    bị Semgrep báo, vì bản vá thường giữ `innerHTML` hay `.html()` nhưng đổi dữ liệu đưa vào.
+  - Trong 2 ca CodeQL phát hiện, 0 vị trí đã vá bị báo.
+- **Cảnh báo ngoài vị trí có nhãn, chưa phân loại**, trên 120 commit, mỗi commit một lần:
+  - CodeQL 244 trên 247 cảnh báo;
+  - Semgrep 11 624 trên 11 687 cảnh báo.
+- **Vì sao Semgrep `partial`** trên 22 commit trước bản vá: lỗi cú pháp ở từng tệp, ví dụ tệp đã
+  thu gọn, TypeScript có decorator, fixture lỗi cố ý; và luật chạy quá giới hạn thời gian trên một
+  tệp. Các tệp đó bị phân tích thiếu, các tệp khác vẫn được báo.
+- **Cách ghép theo vùng có giấu bớt phát hiện không?** Kiểm sau đo: ở 49 ca cả hai bỏ sót, tìm cảnh
+  báo trong tệp có nhãn của bản lỗi mà dòng của nó không còn trong tệp sau bản vá. CodeQL: 0 ca;
+  Semgrep: 1 ca (`posthoc.json`). Vậy quy tắc vùng hầu như không giấu phát hiện nào. Dù vậy, "2/60"
+  và "+9" vẫn chỉ là cận dưới theo quy tắc ghép đã chốt.
+- **Thời gian quét**, mỗi snapshot:
+  - CodeQL: trung vị 30,8 giây, tổng 5 412 giây;
+  - Semgrep: trung vị 9,7 giây, tổng 2 014 giây, tức thêm khoảng 37% thời gian công cụ.
+
+### 25.5 Hiệu quả gộp
+
+Trên cùng các cảnh báo đã lưu, đếm trên 60 commit trước bản vá:
+
+| | Đơn vị CodeQL | Đơn vị Semgrep | C + S trước gộp | C + S sau gộp | Sau gộp, chỉ luật `vuln` |
+|---|---|---|---|---|---|
+| 60 commit trước bản vá | 123 (125 cảnh báo) | 5 288 (5 855 cảnh báo) | 5 411 | 5 280 | 204 |
+| Cả 120 commit | 243 | 10 564 | 10 807 | 10 544 | 404 |
+
+- **Gộp bớt:** 131 mục trên commit trước bản vá, 2,4%. 104 mục gộp từ hai đơn vị trở lên, trong đó
+  57 mục nối một cảnh báo CodeQL với cảnh báo Semgrep.
+- **Truy vết** (`posthoc.py`, `units-export.json`):
+  - mọi mục sau gộp của 120 commit được xuất kèm mã gốc, công cụ, luật và vùng của từng cảnh báo:
+    10 544 mục, 11 934 cảnh báo;
+  - mỗi cảnh báo nằm trong đúng một mục;
+  - số cảnh báo đã lưu của mỗi công cụ bằng số kết quả trong SARIF đã lưu;
+  - mỗi mã gốc `<lượt>:<run>:<chỉ số>` trỏ đúng một kết quả SARIF cùng luật, cùng dòng.
+- **Kiểm tay 40 mục gộp** (`merge-review.md`): **47 liên kết, 36 đúng, 11 sai, 0 chưa xác định.**
+  Hai kiểu sai lặp lại:
+  - một cảnh báo ở bộ chọn `$(...)`, cảnh báo kia ở nội dung được ghi bằng `.html()`, `.append()`,
+    `.after()` hay `.before()` trong cùng câu lệnh;
+  - hai template `html` lồng nhau.
+  - Cả hai kiểu đều do vùng báo của một luật Semgrep phủ cả câu lệnh: chỉ dựa vào giao vùng thì không
+    tách được hai điểm ghi trong cùng một câu.
+- **Kết luận về gộp:** gộp đúng phần lớn cặp CodeQL–Semgrep cùng một điểm ghi, nhưng chỉ bớt 2,4% số
+  mục. Khối mục thêm của Semgrep nằm ở những điểm CodeQL không báo, nên gộp không làm nó nhỏ đi.
+
+### 25.6 Quyết định về Semgrep
+
+Tính trên 60 ca của bảng chính, như giao thức đã chốt:
+
+| Tiêu chí | Giá trị | Ngưỡng | Kết quả |
+|---|---|---|---|
+| 1. Số ca chỉ Semgrep phát hiện có xác nhận `G` | 9 (15%) | ≥ 3 và ≥ 10% (6) | **đạt** |
+| 2. Mục rà thêm sau gộp trên mỗi ca thêm | (5 280 − 123) / 9 = **573** | min(2 × 123/2, 20) = **20** | **không đạt** |
+
+**Quyết định: không tích hợp Semgrep. Giữ CodeQL (`cross-site-scripting-v0.1` trong `multi-cwe-v0.5`)
+làm cấu hình chính cho XSS.** Không tạo profile mới.
+
+**Các phép kiểm sau đo**, không đổi quyết định:
+
+- **Khối mục thêm tập trung ở vài kho:**
+  - 74% cảnh báo Semgrep trên commit trước bản vá đến từ 5 commit nhiều jQuery;
+  - `jquery-insecure-selector` 2 629 và `prohibit-jquery-html` 1 758, trên 5 855 cảnh báo.
+- **Bỏ bớt commit nặng nhất, tiêu chí 2 vẫn không đạt:** bỏ 2 commit thì 179 mục mỗi ca thêm, bỏ 5
+  commit thì 114, đều trên trần 20. Trung vị là 7 mục thêm mỗi commit.
+- **Chỉ 13 luật `vuln`:** thêm 81 mục sau gộp nhưng chỉ tìm thêm 1 ca, nên không đạt tiêu chí 1.
+- **Gộp sai làm giảm `U_CS`:** 11 trên 47 liên kết của mẫu là sai, nên con số 573 hơi thấp hơn thực
+  tế.
+- **Bộ luật hẹp hơn:** chỉ là giả thuyết. Mọi đề xuất bộ luật Semgrep hẹp hơn rút từ kết quả này cần
+  một tập nhãn mới, vì tập này đã bị lộ.
+
+**Đọc kết quả:**
+
+- Semgrep có tìm thêm ca đúng mà CodeQL bỏ sót: 9 ca, so với 2 ca CodeQL tìm được trên cùng tập.
+- Nhưng các ca đó đến từ luật dạng mẫu báo mọi điểm ghi HTML không phải hằng. Cái giá là hàng nghìn
+  mục chưa phân loại, và vẫn báo ở chỗ đã vá. Đúng như H2.
+- Tập này cũng cho thấy CodeQL bỏ sót phần lớn ca XSS có nhãn độc lập: 58/60 ca không được CodeQL phát
+  hiện.
+
+### 25.7 Lệnh, phiên bản, đầu ra
+
+**Phiên bản:**
+
+- image `security-triage-worker:v05-measure`
+  (`sha256:57bc147c1d5514c1766baae7e88529d17704b224d09a98fcfa507ed8d7e689ff`), mã ứng dụng
+  `93c658820937f424`;
+- CodeQL 2.27.1, `codeql/javascript-queries` 2.4.6, bảy truy vấn của `cross-site-scripting-v0.1`;
+- Semgrep CE 1.178.0, 36 tệp luật của `semgrep/semgrep-rules@a84ff9cc`.
+
+**Lệnh, chạy từ gốc repo, thư mục `artifacts/cwe79-eval/semgrep-xss/`:**
+
+1. **Rà OSSF:** `python artifacts/cwe79-eval/semgrep-xss/fetch_missed.py`, rồi
+   `python -I …/review_missed.py`.
+2. **Tập nhãn:**
+   - lấy 10 trang API vào `ghsa/`;
+   - `python -I …/ghsa_candidates.py`;
+   - `python -I …/build_cases.py 60`;
+   - kiểm `unpack` (`preflight.json`).
+3. **Luật Semgrep:** `uv run --no-project --with pyyaml==6.0.3 python …/select_xss_rules.py artifacts/multi-cwe-p2b/upstream/tree`.
+4. **Chạy:** `bash artifacts/cwe79-eval/semgrep-xss/run_measure.sh`. Lệnh này kiểm băm, rồi chạy
+   `measure_runner.py` trong ba container.
+5. **Chấm:**
+   - `python -I …/score.py` xuất `score-hit-packets.txt`;
+   - xét tay vào `hit-review.json`;
+   - `python -I …/score.py --review=hit-review.json`;
+   - kiểm tay gộp vào `merge-review.md`.
+
+**Đầu ra** (không vào git):
+
+- `ossf-missed-review.md`, `review/`;
+- `candidates.json`, `cases.json`, `build-log.json`, `archives/`, `repos/`;
+- `PROTOCOL-SEMGREP-XSS.md`, `.sha256` và `-DEVIATIONS.md`;
+- `runs/`;
+- `score.json`, `score.txt`, `score-hit-packets.txt`, `hit-review.json`, `hit-review-notes.json`;
+- `score-merge-sample.txt`, `merge-review.md`;
+- `posthoc.py`, `posthoc.json`, `units-export.json` (phân tích sau đo và bản xuất mọi mục gộp);
+- `rehearsal/`.
+
+### 25.8 Giới hạn
+
+- **Nhãn từ bản vá, không từ vị trí lỗi được xác minh:**
+  - vùng dương rộng, trung vị 25 dòng;
+  - bản vá làm sạch dữ liệu ở xa điểm ghi thì điểm ghi nằm ngoài vùng.
+  - Xác nhận tay loại các lần trúng tình cờ, nhưng không tìm lại các ca bị bỏ vì vùng lệch.
+- **Một người xét, là trợ lý AI thực hiện phép đo**, không phải chủ đề án.
+  - Gói xét không ghi công cụ, nhưng người xét đã thấy danh sách ca chỉ Semgrep trúng (D1).
+  - Dạng mã ở dòng trúng cũng có thể gợi ý công cụ.
+- **Ca âm** là vị trí đã vá, không phải mã an toàn bất kỳ.
+- **Tập nhỏ:** 60 kho npm, mỗi kho một advisory. Phân bố khối mục thêm lệch mạnh về vài kho dùng
+  nhiều jQuery.
+- **Ngoài phạm vi:**
+  - Semgrep chỉ dùng luật upstream ở commit đã ghim, không thử luật viết riêng hay tinh chỉnh;
+  - không đo SonarQube và CWE-79 cho Python.
+- **Đã chạy công cụ:** 120 commit này đã được chạy bằng CodeQL và Semgrep, nên tập không còn độc lập
+  cho phiên bản sau của hai cấu hình này.
+
+## 26. Nhóm CWE-918 cho Python và JavaScript/TypeScript: profile `multi-cwe-v0.6` (2026-11-17)
+
+Profile ghép thử nghiệm `multi-cwe-v0.6`: bốn nhóm của `multi-cwe-v0.5` cộng nhóm **server-side
+request forgery (CWE-918, SSRF)** cho Python và JavaScript/TypeScript, chỉ bằng CodeQL, chỉ phát hiện
+và giữ: mọi cảnh báo SSRF vào danh sách rà chính.
+
+- **Mốc đối chứng:** `multi-cwe-v0.5` ở commit `5a47d4e`, chạy trên image worker của commit đó (mã ứng
+  dụng `93c658820937f424`, image `security-triage-worker:v05-measure`
+  `sha256:57bc147c…`) trước mọi thay đổi mã (26.3).
+- **Không đổi:** `multi-cwe-v0.5` và bốn thành viên của nó (cùng manifest, cùng hash), các profile đã
+  khóa, golden, dữ liệu nghiên cứu, các số đo của mục 20–25.
+- **Không quét lại:** nguồn có nhãn của CWE-89 (BenchmarkPython, Juice Shop, SVEN), các commit OSSF
+  của mục 24.7, tập GHSA của mục 25, các cặp đã đóng băng hay giữ lại. Hai commit rendertron của
+  tập SSRF đã được quét ở mục 24.7; phép đo SSRF dùng lại byte snapshot đã lưu và chỉ chạy truy vấn
+  CWE-918 trên đó, không chạy lượt quét nào của ứng dụng (26.8).
+
+### 26.1 Thành viên CWE-918 (`ssrf-v0.1`)
+
+Đặc tả: [profiles/ssrf-v0.1/DETECTION.md](../../profiles/ssrf-v0.1/DETECTION.md).
+
+- **Kiểu:** profile `detection` schema 1, cấu hình Python và JavaScript. Dùng lại nguyên đường xử lý
+  của `sql-injection-v0.1` và `cross-site-scripting-v0.1`: lượt có tên trên database dùng chung của mỗi
+  ngôn ngữ, `detection.keep_detected`, mỗi vị trí được báo là một đơn vị mức U, quyết định
+  `K10_DETECTED_KEPT`, lý do giữ `no_filter_condition_for_family`.
+- **Tên nhóm `ssrf`, lượt `codeql-ssrf`:** tên lượt được lưu ở cột `tool_runs.tool` (`String(32)`);
+  `codeql-server-side-request-forgery` dài 34 ký tự, PostgreSQL sẽ từ chối. Không thêm migration.
+- **Chọn truy vấn theo nội dung kiểm tra,** không theo nhãn CWE. Đã đọc tệp `.ql` và thư viện
+  `*RequestForgery*Query.qll` mà chúng nhập, trong đúng gói CodeQL 2.27.1 của worker. Điều kiện chọn:
+  một yêu cầu mạng do máy chủ gửi có URL phụ thuộc vào dữ liệu từ xa mà máy chủ nhận.
+
+| Ngôn ngữ | Rule | Điều truy vấn kiểm | Độ chính xác (gói) | sha256 của tệp `.ql` |
+|---|---|---|---|---|
+| Python | `py/full-ssrf` | mọi phần URL đến từ nguồn từ xa | cao; `code-scanning` | `f48ee50c…` |
+| Python | `py/partial-ssrf` | một phần URL đến từ nguồn từ xa; loại trừ đúng các yêu cầu `py/full-ssrf` báo | trung bình; chỉ `security-extended` | `799f1218…` |
+| JavaScript/TypeScript | `js/request-forgery` | URL phụ thuộc vào nguồn `isServerSide()`; chỉ tiền tố hằng có `?` hay `#` chặn luồng | cao; `code-scanning` | `935b8e54…` |
+
+| Truy vấn mang nhãn `cwe-918` nhưng không chọn | Lý do |
+|---|---|
+| `js/client-side-request-forgery` | Nguồn là dữ liệu phía trình duyệt (`not isServerSide()`): yêu cầu do trình duyệt gửi, không phải SSRF phía máy chủ. Đây đúng là trường hợp nhãn CWE dùng chung cho một kiểu cảnh báo khác |
+| `javascript/ssrf` (thử nghiệm) | Không thuộc bộ chuẩn nào; nguồn gồm cả nguồn phía trình duyệt |
+| `javascript/ssrf-ipv6-transition-incomplete-guard` (thử nghiệm) | Kiểm chất lượng hàm chặn địa chỉ nội bộ, không kiểm luồng tới yêu cầu |
+
+- **CWE ánh xạ:** chỉ CWE-918, đúng nhãn `external/cwe/*` của ba truy vấn; nhãn gốc `cwe-918` giữ ở
+  `reported_cwes`.
+- **Cấu hình chạy:** mỗi ngôn ngữ một lượt `database analyze` (`--rerun`), `--threads 1`,
+  `--ram=2048`, giới hạn 600 giây. Một luồng như CWE-79 (hai luồng đã làm CodeQL hết bộ nhớ khi biên
+  dịch, mục 24.4).
+- **Một chỗ sửa chữ trong đặc tả trước khi chốt,** không đổi hành vi. Bản đầu viết rằng
+  `js/request-forgery` coi tiền tố hằng cố định máy chủ đích là chặn luồng, nên không báo trường hợp
+  chỉ đường dẫn bị điều khiển. Lần chạy thử bộ chấm trên dữ liệu phát triển cho thấy nó có báo
+  (`fetcher.js:29`). Đọc lại `UrlConcatenation.qll`: chỉ tiền tố có `?` hay `#`, hoặc gốc URL không
+  biết và không kết thúc bằng `/`, mới chặn luồng. Đặc tả được sửa (cả câu về cấu hình luồng của hai
+  truy vấn Python), image được dựng lại, và mọi lượt nghiệm thu được chạy lại trên image cuối (26.4).
+  Băm manifest cuối: `ssrf-v0.1` `08c5eff0319a4d0c2a7bf5be50d089eeab7a488ff12afe1d52414b1275786ae3`,
+  `multi-cwe-v0.6` `a51674f34d42b387d069133816d316c7739969543a29cd915c55e4cc6152c120`.
+
+### 26.2 Thay đổi mã
+
+- `families.py`: nhóm `ssrf` (CWE-918, `DetectionProfile`) và profile thành viên `ssrf-v0.1`. Không có
+  mã xử lý riêng cho nhóm này.
+- `config.py`, `schemas.py`: profile `multi-cwe-v0.6` và giá trị `ssrf` của `FamilyName`;
+  `frontend/openapi.json` và `api-schema.d.ts` xuất lại.
+- **Giới hạn thời gian, đổi cùng nhau:**
+  - trường hợp xấu nhất của `multi-cwe-v0.6` là 13 560 giây (`v0.5`: 12 360, cộng hai lượt 600 giây,
+    một cho mỗi ngôn ngữ);
+  - `task.SOFT_TIME_LIMIT` từ 12 600 lên 13 800 giây; `TIME_LIMIT` thành 15 300 giây;
+  - `celery_app` `visibility_timeout` từ 4 giờ (14 400 giây) lên 5 giờ (18 000 giây), vì
+    `TIME_LIMIT` phải nằm dưới nó. Mục 24.10 đã ghi trước rằng nhóm thêm sau CWE-79 sẽ cần đổi thời
+    gian này. Hệ quả: một tác vụ của worker chết giữa chừng được giao lại sau 5 giờ thay vì 4.
+- Giao diện: lựa chọn "CWE-78 + CWE-22 + CWE-89 + CWE-79 + CWE-918 · Thử nghiệm: thêm SSRF cho Python
+  và JavaScript/TypeScript" và nhãn nhóm "CWE-918 · Server-side request forgery (SSRF)".
+- Kiểm thử:
+  - `test_ssrf_family.py`, 19 ca: profile thành viên và profile ghép; giới hạn thời gian so với
+    `visibility_timeout`; với từng ngôn ngữ, bốn nhóm cũ giống `v0.5` trên cùng công cụ giả lập, mọi
+    cảnh báo SSRF ở nhóm riêng và không bị gạn, cảnh báo SSRF trùng vị trí cảnh báo CWE-78 hay CWE-22
+    vẫn là đơn vị riêng, ba kiểu lỗi của lượt SSRF; rule không ghim; qua worker, API, báo cáo và
+    SARIF cho một lượt quét có cả Python và JavaScript; lượt SSRF Python thất bại trong khi lượt
+    JavaScript hoàn tất;
+  - hai ca giao diện;
+  - `multi-cwe-v06-full-stack.spec.ts`: từ chọn profile tới tải SARIF, trên stack thật.
+
+### 26.3 Mốc `v0.5` trước khi sửa
+
+Chạy `multi-cwe-v0.5` trên tám nguồn phát triển không nhãn, bằng image của `5a47d4e`, trước khi sửa
+mã. Kết quả lưu ở `artifacts/cwe918-eval/baseline-v05/`: lượt quét, mọi đơn vị kèm cảnh báo, quyết
+định gạn và trạng thái bằng chứng, báo cáo trước–sau, SARIF; `MANIFEST.txt` ghi image, mã ứng dụng
+và băm snapshot.
+
+- **Bảy nguồn của mục 24**, cùng snapshot: đầu vào bốn nhóm, nguồn tổng hợp ba nhóm, pygoat, vulpy,
+  DSVPWA, dvpwa, NodeGoat.
+- **Đầu vào phát triển năm nhóm, mới** (`artifacts/cwe918-eval/dev-input/five-families/`, snapshot
+  `60b11e05…`): sáu tệp của đầu vào bốn nhóm, thêm bốn tệp:
+  - `fetch_app.py` (Flask): URL toàn phần từ tham số với `requests` và `urllib`; chỉ đường dẫn bị điều
+    khiển; URL hằng; URL kiểm theo danh sách cho phép; một yêu cầu và một lệnh `os.system` (CWE-78)
+    trên cùng dòng;
+  - `fetcher.js` (Express): URL toàn phần với `axios` và `http.get`; máy chủ bị điều khiển; chỉ đường
+    dẫn bị điều khiển; URL hằng; một yêu cầu và một truy vấn SQL (CWE-89) trên cùng dòng;
+  - `proxy.ts`: SSRF trong TypeScript và một URL hằng;
+  - `public/loader.js`: mã trình duyệt gửi yêu cầu theo URL của trang (client-side request forgery):
+    nhóm CWE-918 không được báo ở đây.
+- **Mốc tái lập được:** trên bảy nguồn chung, bốn nhóm của mốc mới giống hệt các lượt `v0.5` đã ghi ở
+  mục 24 (`reproduce_checks.py`).
+
+### 26.4 Đối chứng 1: bốn nhóm cũ so với `v0.5`
+
+So theo nội dung như mục 24.4 (`compare_v06.py`, đầu ra `compare-v06.txt`): mọi đơn vị với quyết định,
+lý do, trạng thái bằng chứng và cảnh báo (lượt, rule, tệp, vùng, nhãn CWE); báo cáo của nhóm; các kết
+quả SARIF của nhóm; bản ghi nhóm của lượt quét. Lượt `v0.6` chạy trên image cuối
+(`security-triage-worker:v06-measure`, `sha256:272b8a94…`, mã ứng dụng `44c40c82092811be`).
+
+| Nguồn | Trạng thái `v0.5` → `v0.6` | Đơn vị CWE-78 / 22 / 89 / 79 | Bốn nhóm giống `v0.5` | `v0.5` dựng lại giống mốc | Cảnh báo / đơn vị CWE-918 |
+|---|---|---|---|---|---|
+| năm nhóm (tổng hợp) | completed → completed | 9 / 3 / 16 / 7 | có | có | 11 / 11 |
+| bốn nhóm (tổng hợp) | completed → completed | 8 / 3 / 14 / 7 | có | có | 0 / 0 |
+| ba nhóm (tổng hợp) | completed → completed | 7 / 3 / 12 / 0 | có | có | 0 / 0 |
+| pygoat | completed → completed | 4 / 3 / 5 / 3 | có | có | 1 / 1 |
+| vulpy | completed → completed | 1 / 1 / 6 / 0 | có | có | 0 / 0 |
+| DSVPWA | completed → completed | 3 / 2 / 2 / 1 | có | có | 0 / 0 |
+| dvpwa | completed → completed | 0 / 0 / 1 / 11 | có | có | 0 / 0 |
+| NodeGoat | partial → partial (Semgrep, như `v0.3`) | 1 / — / 2 / 0 | có | có | 1 / 1 |
+
+- **Đối chứng của phép đối chứng:** `v0.5` cũng được quét lại trên image mới (`dev-v05-new-image/`).
+  Nó giống mốc, nên mã mới, kể cả giới hạn thời gian và thời gian hiển thị lại mới, không đổi gì ở
+  `v0.5`.
+- **Không cần nới phép so:** lần này CodeQL ghi `codeFlows` theo cùng thứ tự ở mọi nguồn; phép so
+  theo thứ tự ghi của P2b cũng cho "giống".
+- **Lô trên image đầu (spec1):** cùng tám nguồn, cùng phép so, cũng đạt cả tám (`compare-v06-spec1.txt`).
+  Lô cuối giống lô đầu trên cả năm nhóm; khác duy nhất là hai băm của đặc tả `ssrf-v0.1`
+  (`policy_sha256` của mỗi đơn vị CWE-918 và `profile_sha256` của nhóm). Đối chứng `v0.5` của hai image
+  giống nhau (`reproduce_checks.py`, `reproduce-checks.json`).
+- **Một database cho mỗi ngôn ngữ, dùng chung:** trong cả tám lượt và lượt qua giao diện (26.10), mỗi
+  ngôn ngữ có đúng một bước `codeql-create`, và bước đó ghi phục vụ cả nhóm `ssrf` bên cạnh các nhóm
+  khác; lượt `codeql-ssrf` chỉ chạy truy vấn trên database đó (`db_reuse.py`, `db-reuse.txt`).
+- **Mọi cảnh báo CWE-918:**
+  - thuộc một trong ba rule, đến từ lượt `codeql-ssrf` của đúng ngôn ngữ;
+  - nằm trong đúng một đơn vị của nhóm mình, mức U, `K10_DETECTED_KEPT`, danh sách rà chính, trạng
+    thái bằng chứng "chưa đủ"; CWE ánh xạ `CWE-918`, nhãn gốc `cwe-918`;
+  - không bị gạn, không có `suppressions`.
+- **Trên đầu vào năm nhóm:**
+  - Python 5 cảnh báo: `py/full-ssrf` ở URL toàn phần với `requests` (dòng 17) và `urllib` (22), ở
+    dòng có cả lệnh `os.system` (49), và **ở ca danh sách cho phép** (43); `py/partial-ssrf` ở ca chỉ
+    đường dẫn bị điều khiển (28). Không báo URL hằng.
+  - JavaScript/TypeScript 6 cảnh báo `js/request-forgery`: `axios` (14), `http.get` (19), máy chủ bị
+    điều khiển (23), chỉ đường dẫn bị điều khiển (29), dòng có cả truy vấn SQL (41), `proxy.ts:10`.
+    Không báo URL hằng ở cả hai tệp.
+  - Không cảnh báo nào ở `public/loader.js` (yêu cầu do trình duyệt gửi).
+  - Cảnh báo SSRF ở dòng 49 của `fetch_app.py` là đơn vị riêng, cạnh đơn vị CWE-78 (P1) cùng dòng; ở
+    dòng 41 của `fetcher.js` là đơn vị riêng, cạnh hai đơn vị CWE-89 cùng dòng.
+  - **Một cảnh báo sai trên dữ liệu phát triển:** ca `if url not in ALLOWED: abort(400)` vẫn bị báo;
+    CodeQL không coi phép kiểm danh sách đó là chặn luồng.
+- **Trên mã thật:** 2 cảnh báo. PyGoat: `py/full-ssrf` ở `dockerized_labs/ssrf_lab/app.py:37` (bài thực
+  hành SSRF của dự án). NodeGoat: `js/request-forgery` ở `app/routes/research.js:16` (lỗ hổng SSRF có
+  chủ đích của NodeGoat). vulpy, DSVPWA, dvpwa: 0.
+
+### 26.5 Đối chứng 2: CWE-918 so với CodeQL chạy riêng
+
+`standalone_codeql_ssrf.sh` chạy riêng CodeQL bên ngoài ứng dụng, cho từng ngôn ngữ có lượt
+`codeql-ssrf`:
+
+- trong một container dùng một lần của image worker (cùng bundle CodeQL, cùng gói truy vấn);
+- trên đúng tệp nén snapshot mà ứng dụng đã quét, giải nén như worker;
+- tạo database mới của ngôn ngữ đó với tham số của `run_codeql` (một luồng, 2048 MB), rồi chạy đúng
+  các truy vấn của `ssrf-v0.1` cho ngôn ngữ đó với tham số của `run_codeql_evidence`.
+
+Không dùng chung database, không có lượt nào khác. So theo tập bội (rule, tệp, dòng/cột đầu, dòng/cột
+cuối) giữa SARIF của lượt `codeql-ssrf` cùng ngôn ngữ trong SARIF hợp nhất của ứng dụng và SARIF của
+CodeQL chạy riêng; thêm: các đơn vị đã lưu bằng đúng tập đó, thông điệp từng kết quả bằng nhau, nhãn
+CWE của từng kết quả bằng tag `external/cwe/*` của rule, băm truy vấn bằng băm đã ghim
+(`compare_standalone.py`, đầu ra `compare-standalone.json`).
+
+| Nguồn | Python: ứng dụng / chạy riêng | JavaScript: ứng dụng / chạy riêng | Giống nhau | Thông điệp, nhãn CWE, băm truy vấn |
+|---|---|---|---|---|
+| năm nhóm | 5 / 5 (`py/full-ssrf` 4, `py/partial-ssrf` 1) | 6 / 6 | có | giống |
+| bốn nhóm | 0 / 0 | 0 / 0 | có | giống |
+| ba nhóm | 0 / 0 | 0 / 0 | có | giống |
+| pygoat | 1 / 1 | 0 / 0 | có | giống |
+| vulpy | 0 / 0 | 0 / 0 | có | giống |
+| DSVPWA | 0 / 0 | 0 / 0 | có | giống |
+| dvpwa | 0 / 0 | 0 / 0 | có | giống |
+| NodeGoat | — (không có tệp Python) | 1 / 1 | có | giống |
+
+- 15 lượt chạy riêng theo ngôn ngữ, 13/13 cảnh báo, cùng rule, vị trí và thông điệp. Mọi kết quả SARIF
+  của lượt `codeql-ssrf` trong SARIF hợp nhất giữ nhãn gốc `cwe-918`, đúng tag của rule trong SARIF của
+  CodeQL; đơn vị đã lưu chứa đúng tập cảnh báo đó.
+- Năm lượt chạy riêng đầu (năm nhóm, bốn nhóm, Python của ba nhóm) chạy bằng image đầu (`v06-spec1`),
+  mười lượt còn lại bằng image cuối; hai image có cùng bundle CodeQL, và băm truy vấn của cả 15 lượt
+  bằng băm đã ghim. Một lượt bị dừng giữa chừng (JavaScript của ba nhóm) được xóa hết tệp và chạy lại.
+- **Chi phí:** CodeQL chạy riêng, không có bộ nhớ đệm biên dịch, mất 43–55 giây cho bước phân tích
+  Python và 70–81 giây cho JavaScript.
+
+- SARIF giữ đủ cảnh báo gốc, theo từng kết quả, trên mọi nhóm của tám lượt `v0.6`
+  (`sarif_preserved_v06.py`, đầu ra `sarif-preserved-v06.json`): **288 kết quả SARIF, bằng đúng 288
+  cảnh báo đã lưu**; mỗi kết quả giữ vùng, thông điệp và nhãn CWE của kết quả gốc; 79 rule Semgrep
+  CWE-89 truy được về tệp luật đã ghim; không kết quả nào của ba nhóm chỉ phát hiện bị ẩn. Đạt cả tám.
+
+### 26.6 Lượt CWE-918 lỗi hoặc chạy dở
+
+**Lỗi có kiểm soát** (`ssrf_faults.py`, đầu ra `ssrf-faults.txt|json`):
+
+- Một worker thứ hai nghe hàng đợi `faults`, có tệp bọc `codeql` đứng đầu `PATH`
+  (`artifacts/cwe918-eval/fault/`), cùng image cuối.
+- Tệp bọc gọi CodeQL thật, trừ đúng lỗi ghi trong `fault/mode`, và chỉ cho lệnh phân tích có truy vấn
+  `CWE-918` của ngôn ngữ đã chọn: chỉ Python, chỉ JavaScript, hay cả hai. Lỗi một ngôn ngữ trong khi
+  ngôn ngữ kia hoàn tất là trường hợp mới của nhóm này: nhóm CWE-79 chỉ có một ngôn ngữ.
+- Nguồn: đầu vào năm nhóm. Mỗi lượt lỗi được so theo nội dung với một lượt sạch chạy cùng cách: bốn
+  nhóm kia (đơn vị, báo cáo, SARIF, bản ghi nhóm), và cảnh báo CWE-918 của từng ngôn ngữ.
+
+| Lỗi tiêm vào | Ngôn ngữ bị lỗi | Lượt quét | Lượt `codeql-ssrf` Python / JS | Nhóm CWE-918 | Bốn nhóm kia |
+|---|---|---|---|---|---|
+| không lỗi | — | `completed` | completed / completed | 11 cảnh báo (5 + 6), 11 đơn vị `K10_DETECTED_KEPT`, "chưa đủ" | 9, 3, 16, 7 đơn vị |
+| thoát lỗi, chưa ghi SARIF | Python | `partial` | failed / completed | 6 cảnh báo JS giống lượt sạch; 0 của Python | giống lượt sạch |
+| | JavaScript | `partial` | completed / failed | 5 cảnh báo Python giống lượt sạch; 0 của JS | giống lượt sạch |
+| | cả hai | `partial` | failed / failed | 0 cảnh báo | giống lượt sạch |
+| ghi SARIF rồi thoát lỗi | Python | `partial` | failed / completed | 11 cảnh báo giống lượt sạch: 5 của Python giữ thành `F10_FAMILY_NOT_RANKED` mức U, "không lấy được"; 6 của JS vẫn K10 | giống lượt sạch |
+| | JavaScript | `partial` | completed / failed | 11 giống lượt sạch: 6 của JS thành F10, 5 của Python vẫn K10 | giống lượt sạch |
+| | cả hai | `partial` | failed / failed | 11 giống lượt sạch, cả 11 thành F10 | giống lượt sạch |
+| SARIF ghi lượt chạy chưa xong | Python | `partial` | partial / completed | 11 giống lượt sạch; 5 của Python là K10 với `run_incomplete`, "không lấy được" | giống lượt sạch |
+| | JavaScript | `partial` | completed / partial | 11 giống lượt sạch; 6 của JS là K10 với `run_incomplete` | giống lượt sạch |
+| | cả hai | `partial` | partial / partial | 11 giống lượt sạch, cả 11 K10 với `run_incomplete` | giống lượt sạch |
+
+- **Đạt cả mười lượt.** Trong mọi lượt: mọi cảnh báo đã lưu nằm trong đúng một đơn vị và có trong
+  SARIF (83, 78, 77 hay 72 kết quả), không đơn vị nào trộn hai nhóm, mọi đơn vị CWE-918 ở danh sách rà
+  chính, không kết quả CWE-918 nào bị ẩn.
+- Lượt quét lỗi ghi lý do theo ngôn ngữ (ví dụ `python/codeql-ssrf: failed`) và ngôn ngữ không bị lỗi
+  giữ nguyên trạng thái `completed` với đúng cảnh báo của lượt sạch.
+- **SARIF giữ đủ cảnh báo đã thu được:** khi lượt CWE-918 đã ghi SARIF (thoát lỗi sau khi ghi, hay
+  ghi lượt chạy chưa xong), cả 11 cảnh báo vẫn có trong SARIF hợp nhất; khi lượt lỗi trước khi ghi,
+  không có cảnh báo nào để giữ, và ngôn ngữ kia vẫn xuất đủ cảnh báo của nó.
+- **Lượt CWE-918 treo quá giới hạn:** một lượt riêng, ở 26.7. Ứng dụng dừng lượt Python ở 600 giây
+  và ghi nó là thất bại, như dòng "thoát lỗi, chưa ghi SARIF"; các nhóm khác và lượt JavaScript
+  không đổi.
+
+### 26.7 Thời gian tăng thêm và giới hạn chạy
+
+**Lượt `codeql-ssrf`** (`report.steps`, `timing.py`, đầu ra `timing.json`):
+
+- khi bộ nhớ đệm biên dịch của worker đã có: Python 4,5–6,3 giây, JavaScript 4,8–5,9 giây mỗi lượt,
+  trên năm nguồn GitHub và nguồn tổng hợp ba nhóm;
+- ở hai lượt quét đầu sau khi dựng lại worker: Python 35–38 giây, JavaScript 33–34 giây, chủ yếu là
+  biên dịch truy vấn. Cùng lúc đó lượt CWE-79 mất 160–165 giây và cả lượt quét khoảng 520–540 giây,
+  vì mọi truy vấn của mọi nhóm đều phải biên dịch lại.
+
+**Cả lượt quét,** `v0.6` so với `v0.5` trên cùng image cuối, bộ nhớ đệm đã có, hai lượt quét chạy
+cùng lúc trên worker:
+
+| Nguồn | `v0.5` (giây) | `v0.6` (giây) | Tăng thêm |
+|---|---|---|---|
+| ba nhóm (tổng hợp) | 62,0 | 70,3 | +8,3 |
+| pygoat | 68,6 | 80,3 | +11,7 |
+| vulpy | 60,9 | 73,2 | +12,3 |
+| DSVPWA | 64,4 | 76,5 | +12,1 |
+| dvpwa | 69,5 | 79,4 | +9,9 |
+| NodeGoat (chỉ JavaScript) | 40,7 | 46,2 | +5,5 |
+
+Tức khoảng 13–20% thời gian của một lượt quét `v0.5` trên các nguồn này. Hai nguồn tổng hợp năm và
+bốn nhóm của lô `v0.6` là hai lượt quét đầu sau khi dựng lại image, nên không so được ở đây.
+
+**Giới hạn chạy:**
+
+- `worst_case_seconds(multi-cwe-v0.6)` = 13 560 giây = `v0.5` (12 360) + 2 × 600; kiểm thử
+  `test_the_time_limits_cover_the_five_family_profile_within_the_broker_timeout` giữ đẳng thức này.
+- `SOFT_TIME_LIMIT` 13 800 > 13 560; `TIME_LIMIT` = 13 800 + 1 200 + 300 = 15 300; `visibility_timeout`
+  18 000 > 15 300. `test_task.py` vẫn kiểm `TIME_LIMIT < visibility_timeout` và bước dài nhất ≤
+  `LONGEST_SCANNER_STEP`.
+- Worker khởi động lại với cấu hình mới và nhận cả mười profile (`scripts.check_worker`, 26.10).
+- **Trên worker đang chạy** (image `v06-measure`; `limits_check.py` chạy trong container worker, đọc
+  mã và profile đã ghim trong image; đầu ra `limits-check.json`): tác vụ `scans.run_scan` đăng ký
+  giới hạn mềm 13 800 giây và giới hạn cứng 15 300 giây; `celery inspect conf` của worker cho
+  `visibility_timeout` 18 000 giây; `worst_case_seconds` của cả mười profile, lớn nhất
+  `multi-cwe-v0.6` 13 560 giây, đều dưới giới hạn mềm; giới hạn cứng chừa đủ bước dài nhất (1 200
+  giây) và nằm dưới `visibility_timeout`. Đạt cả năm phép kiểm.
+- **Thời gian thật so với giới hạn:** lượt quét `v0.6` dài nhất đã quan sát là 539 giây (lượt đầu sau
+  khi dựng lại image), khoảng 4% giới hạn mềm; lượt `codeql-ssrf` dài nhất 38 giây so với giới hạn
+  600 giây của nó.
+- **Giới hạn của chính lượt CWE-918, trên stack thật** (`ssrf_timeout.py`, đầu ra
+  `ssrf-timeout.txt|json`): tệp bọc làm lượt phân tích CWE-918 Python treo 1 200 giây, quá giới hạn
+  600 giây của lượt. Ứng dụng dừng nó ở giới hạn: lượt quét `c8b2fbbd…` dài 660,3 giây, hơn lượt tham
+  chiếu sạch ngay trước trên cùng worker (65,8 giây) **594,5 giây**; trạng thái `partial`, lý do
+  `python/codeql-ssrf: Evidence queries produced no SARIF output`; lượt CWE-918 JavaScript `completed`
+  với đúng 6 cảnh báo của lượt sạch, có trong SARIF và không bị ẩn; bốn nhóm kia giống lượt sạch theo
+  nội dung; mọi cảnh báo nằm trong đúng một đơn vị. Đạt.
+- Chưa kiểm chứng: một lượt quét thật chạy tới gần giới hạn mềm của cả tác vụ (13 800 giây).
+
+### 26.8 Hiệu quả phát hiện trên tập có nhãn: chưa đủ căn cứ
+
+Kết quả này tách khỏi nghiệm thu kỹ thuật (26.12).
+
+**Tập có nhãn sẵn có trong dự án:**
+
+| Nguồn | CWE-918 | Dùng |
+|---|---|---|
+| OSSF CVE Benchmark @`91c59fd5` (tệp nén của mục 24.7, MIT) | 3 ca, cả 3 JavaScript | có |
+| OWASP BenchmarkPython (`expectedresults-0.1.csv`) | 14 hạng mục, không có SSRF | không |
+| Tập GHSA của mục 25 | chỉ CWE-79 | không |
+| Dữ liệu nghiên cứu đóng băng (`experiments/`) | không được quét | không |
+
+Không có tập SSRF nào cho Python. Đợt này không dựng tập mới.
+
+**Giao thức:** `artifacts/cwe918-eval/labeled/PROTOCOL-SSRF.md`.
+
+- sha256 `9f1d00fa81726fc30b8cf6550a341f51c217a261976122b560736df666993ebd`, chốt
+  2026-11-17T07:50:02Z, trước lượt chạy công cụ đầu tiên trên tập này.
+- `PROTOCOL-SSRF.sha256` băm cùng lúc: các script chọn ca, lấy mã, chạy, chấm; danh sách ca và việc;
+  bốn tệp nén; ID image worker; manifest và cấu hình `ssrf-v0.1`, manifest `multi-cwe-v0.6`; tệp nén
+  của bộ dữ liệu. `run_measure.sh` kiểm các băm đó, ID image và bản sao cấu hình trong image trước khi
+  chạy; sau lượt chạy, `sha256sum -c` vẫn khớp.
+- **Chốt trước:** phiên bản dữ liệu (OSSF `91c59fd5`, tệp nén sha256 `df695d19…`); phạm vi (mọi ca có
+  CWE-918: 3 ca, 6 commit); cách ghép (quy tắc của mục 24.7: cảnh báo `js/request-forgery` cùng tệp,
+  bắt đầu đúng dòng điểm yếu; ca âm theo phép so dòng sang commit bản vá); trạng thái mong đợi: tập này
+  không đủ căn cứ để kết luận, chỉ báo như mô tả.
+- **Cách chạy:** không lượt quét nào của ứng dụng. Trong container của image `v06-measure`,
+  `ssrf_runner.py` giải nén bằng `unpack` của ứng dụng và gọi `run_codeql` với đúng cấu hình
+  JavaScript của `ssrf-v0.1`; chỉ truy vấn CWE-918 chạy. Phép chạy này tương đương lượt `codeql-ssrf`
+  của ứng dụng (26.5). Mỗi commit chạy một lần (2026-11-17T08:07:37Z–08:09:37Z).
+- **Hai điểm đã biết trước khi chạy:**
+  - uppy: tệp nén của cả hai commit khoảng 229 MB, vượt giới hạn 50 MB của ứng dụng: không đo được;
+  - rendertron: hai commit này đã được quét một lần bằng `multi-cwe-v0.5` ở mục 24.7 (ca XSS
+    CVE-2017-18352/18353 cùng commit). Phép đo dùng lại byte snapshot đã lưu và không chạy lại lượt
+    quét nào của ứng dụng, nên không có lượt CWE-79 mới nào trên các commit đó.
+- Không sai lệch về cách chạy hay chấm (`PROTOCOL-SSRF-DEVIATIONS.md`).
+
+**Kết quả** (`labeled/score.txt`, `score.json`):
+
+| CVE | Kho | Trạng thái | Ca dương (dòng điểm yếu) | Ca âm (vị trí sau bản vá) | Mục rà trước / sau bản vá |
+|---|---|---|---|---|---|
+| CVE-2017-18354 | rendertron | đo được | **phát hiện** (`src/renderer.js:75`, `js/request-forgery`; vùng cũng chứa dòng) | **bị báo** (dòng không đổi qua bản vá) | 1 / 1 |
+| CVE-2020-15152 | ftp-srv | đo được | **bỏ sót** (không cảnh báo CWE-918 nào trong commit) | không bị báo | 0 / 0 |
+| CVE-2020-8205 | uppy | không đo được (vượt 50 MB) | — | — | — |
+
+- **Ca dương:** tìm được 1, bỏ sót 1, trên 2 ca đo được; 1 ca không đo được.
+- **Ca âm:** bị báo 1 trên 2 ca âm đo được.
+- **Mục cần rà:** 2 đơn vị trên 4 commit (1 trước bản vá, 1 sau bản vá), cả 2 ở vị trí có nhãn; 0 cảnh
+  báo ngoài vị trí có nhãn.
+
+**Mô tả sau đo**, viết sau khi xem kết quả, không đổi số nào:
+
+- rendertron: bản vá chỉ thêm kiểm giao thức `^https?` trong `isRestricted` (`src/main.js`); dòng 75
+  của `src/renderer.js` (`Page.navigate({url: url})`) không đổi. CodeQL không coi phép kiểm đó là chặn
+  luồng, và sau bản vá ứng dụng vẫn render mọi URL http(s) khi không cấu hình `renderOnly`. Ca âm bị
+  báo vì vậy không hẳn là cảnh báo sai.
+- ftp-srv: điểm yếu là `net.Socket.connect({host, port, family})` với host và port lấy từ lệnh `PORT`
+  của kết nối điều khiển FTP. Đích không phải yêu cầu HTTP, nguồn không phải dữ liệu yêu cầu HTTP: nằm
+  ngoài mô hình nguồn và đích của `js/request-forgery`.
+
+**Vì sao chưa đủ căn cứ:**
+
+- 2 ca đo được, 2 kho, chỉ JavaScript; Python không có ca nào.
+- Nhãn không độc lập với CodeQL: cả ba lời giải thích là nguyên văn `@name` của truy vấn thử nghiệm
+  `javascript/ssrf`, truy vấn không thuộc `ssrf-v0.1`.
+- Ca âm là vị trí đã vá, không phải mã an toàn bất kỳ; ở rendertron bản vá không loại hẳn SSRF.
+
+**Phần đánh giá hiệu quả còn thiếu cho CWE-918:** một tập có nhãn độc lập với CodeQL, có cả Python và
+JavaScript/TypeScript, đủ lớn để báo số ca dương tìm được và bỏ sót, số ca âm bị báo và số mục rà với ý
+nghĩa thống kê. Cách dựng khả thi theo mục 25: advisory CWE-918 của GitHub Advisory Database (pip và
+npm), mỗi advisory một commit sửa, nhãn từ bản vá, giao thức băm trước khi chạy. Việc này cần chủ đề án
+quyết định.
+
+Đã thực hiện ở mục 27 (64 advisory GHSA, 24 Python và 40 JS/TS).
+
+### 26.9 Phiên bản, lệnh, đầu ra
+
+**Trạng thái mã:**
+
+- Commit `5a47d4e` cộng thay đổi chưa commit. Cây `backend/`, `frontend/`, `profiles/`, `rules/` đã
+  kiểm thử: `7b2a5273e0f16556cfbd1efcc9829788f1e75598`.
+- Mã ứng dụng trong image worker: `44c40c82092811be`, giống cây làm việc.
+- Image:
+  - mốc: `security-triage-worker:v05-measure` (`sha256:57bc147c…`), `security-triage-api:v05-measure`;
+  - cuối: `security-triage-worker:v06-measure` (`sha256:272b8a94b39275dff0ce2cb0725a02382ef6d5ecdb74675352704fd6e9f65ae1`),
+    dùng cho lô cuối, CodeQL chạy riêng, lỗi tiêm, luồng giao diện và tập có nhãn;
+  - đầu (đặc tả trước khi sửa chữ): `security-triage-worker:v06-spec1` (`sha256:397ececa…`).
+- Hash profile:
+  - `ssrf-v0.1`: `08c5eff0319a4d0c2a7bf5be50d089eeab7a488ff12afe1d52414b1275786ae3`;
+  - `multi-cwe-v0.6`: `a51674f34d42b387d069133816d316c7739969543a29cd915c55e4cc6152c120`;
+  - bốn thành viên còn lại và `multi-cwe-v0.5` (`11dfc981…`) không đổi.
+
+**Công cụ:** CodeQL 2.27.1, `codeql/python-queries` 1.8.11, `codeql/javascript-queries` 2.4.6, Semgrep
+CE 1.178.0, Bandit 1.9.4, ESLint 10.15.0, như `tools/pins.env`.
+
+**Lệnh, chạy từ gốc repo** (thư mục `artifacts/cwe918-eval/`):
+
+1. Đầu vào năm nhóm: `docker compose cp artifacts/cwe918-eval/dev-input/five-families api:/tmp/seed918/five-families`,
+   `docker compose cp artifacts/cwe89-eval/seed_dir.py api:/tmp/seed918/seed_dir.py`, rồi
+   `docker compose exec -T -e PYTHONPATH=/app api python /tmp/seed918/seed_dir.py cwe918-dev-five-families /tmp/seed918/five-families -- multi-cwe-v0.5`
+   (kết quả `dev-input/five-families-seed.json`).
+2. Mốc, trên image `v05-measure`: `python artifacts/cwe918-eval/scan_dev.py multi-cwe-v0.5 artifacts/cwe918-eval/baseline-v05 five-families=<scan> four-families three-families pygoat vulpy dsvpwa dvpwa nodegoat`.
+3. Sau khi dựng lại image (`docker compose up -d --build`): cùng lệnh với
+   `multi-cwe-v0.6 artifacts/cwe918-eval/dev-v06` và `multi-cwe-v0.5 artifacts/cwe918-eval/dev-v05-new-image`
+   (lô đầu đã được lưu thành `dev-v06-spec1/`, `dev-v05-new-image-spec1/`).
+4. Đối chứng 1: `python artifacts/cwe918-eval/compare_v06.py five-families four-families three-families pygoat vulpy dsvpwa dvpwa nodegoat`;
+   lô đầu: thêm `--new=dev-v06-spec1 --control=dev-v05-new-image-spec1 --out=compare-v06-spec1`;
+   tái lập: `cd artifacts/cwe918-eval && python reproduce_checks.py`.
+5. Đối chứng 2: `python artifacts/cwe918-eval/compare_standalone.py five-families four-families three-families pygoat vulpy dsvpwa dvpwa nodegoat`;
+   `python artifacts/cwe918-eval/sarif_preserved_v06.py`.
+6. Thời gian: `python artifacts/cwe918-eval/timing.py`.
+7. Lỗi tiêm: `bash artifacts/cwe918-eval/fault/start_fault_worker.sh`, rồi
+   `python artifacts/cwe918-eval/ssrf_faults.py`; dừng worker: `docker rm -f fault-worker-ssrf`.
+8. Tập có nhãn: `python -I artifacts/cwe918-eval/labeled/ossf_ssrf_cases.py`,
+   `python -I artifacts/cwe918-eval/labeled/fetch_archives.py`; chạy thử trên dữ liệu phát triển
+   (`labeled/rehearsal/`); chốt giao thức; `bash artifacts/cwe918-eval/labeled/run_measure.sh`.
+9. Hồi quy: `bash artifacts/cwe918-eval/final/run_local.sh`, `bash artifacts/cwe918-eval/final/run_stack.sh`.
+10. Lượt qua giao diện: `python artifacts/cwe918-eval/scan_dev.py multi-cwe-v0.6 artifacts/cwe918-eval/ui-v06 pygoat=<scan>`,
+    rồi `compare_v06.py --new=ui-v06 --out=compare-v06-ui pygoat`,
+    `compare_standalone.py --dev=ui-v06 --out=compare-standalone-ui pygoat`,
+    `python artifacts/cwe918-eval/db_reuse.py`.
+11. Giới hạn chạy: `docker compose exec -T -e PYTHONPATH=/app worker python - < artifacts/cwe918-eval/limits_check.py`,
+    `docker compose exec -T worker celery -A app.workers.celery_app:celery_app inspect conf`; lượt treo:
+    `bash artifacts/cwe918-eval/fault/start_fault_worker.sh`, rồi `python artifacts/cwe918-eval/ssrf_timeout.py`.
+
+**Đầu ra** (`artifacts/cwe918-eval/`, không vào git): `dev-input/`, `baseline-v05/` (kèm
+`MANIFEST.txt`), `dev-v06/`, `dev-v05-new-image/`, `dev-v06-spec1/`, `dev-v05-new-image-spec1/`,
+`compare-v06*.txt|json`, `reproduce-checks.json`, `standalone/`, `compare-standalone.json`,
+`sarif-preserved-v06.json`, `timing.json`, `ssrf-faults.txt|json`, `fault/`, `ui-v06/`,
+`compare-v06-ui.*`, `compare-standalone-ui.json`, `db-reuse.txt`, `limits-check.json`,
+`ssrf-timeout.txt|json`, `ssrf-timeout-scan.json`, `labeled/`
+(`PROTOCOL-SSRF.*`, `cases.json`, `jobs.json`, `archives/`, `runs/`, `score.txt|json`, `rehearsal/`),
+`final/`.
+
+### 26.10 Hồi quy
+
+`bash artifacts/cwe918-eval/final/run_local.sh` (đầu ra `final/run-local.txt`) và
+`bash artifacts/cwe918-eval/final/run_stack.sh` (đầu ra `final/run-stack.txt`), sau lô cuối, trên cây
+`7b2a5273…` và image cuối.
+
+| # | Lệnh | Kết quả |
+|---|---|---|
+| 1 | `uv run pytest -q -rs --cov` (SQLite) | 756 đạt, 2 bỏ qua (nhóm tiến trình POSIX trên Windows) |
+| 2 | `docker compose --profile test run --build --rm test` (PostgreSQL) | 758 đạt, độ phủ 95,67% |
+| 3 | `ruff check`, `ruff format --check`, `mypy`, `pip-audit` | sạch; không lỗ hổng đã biết |
+| 4 | `python -m unittest discover -s experiments/tests` | 153 đạt |
+| 5 | `npm run check`, `npm run build`, `npm run test:e2e` (API giả lập) | Vitest 86; build; Playwright 2 đạt, 5 bỏ qua (kiểm thử stack thật, dòng 7 và 9) |
+| 6 | `scripts.export_openapi` so với `frontend/openapi.json`; `scripts.check_worker` | giống hệt; worker nhận cả mười profile |
+| 7 | `multi-cwe-full-stack.spec` (`multi-cwe-v0.1`, công cụ thật) | đạt |
+| 8 | `legacy_regression.py` (bốn profile cũ, công cụ thật) | 4/5 giống hệt; ca `command-injection-v0.1` khác đúng như mục 18.3: bản lưu ngày 14/11 không có `candidate`, `adjudication`, `kept_because`, nên `evidence_state` là `not_assessed`; khóa đơn vị, mức, quyết định giống |
+| 9 | `multi-cwe-v02-full-stack`, `multi-cwe-v03-full-stack`, `multi-cwe-v05-full-stack`, `multi-cwe-v06-full-stack` (PyGoat) | 4 đạt |
+| 10 | Golden, thực nghiệm, công cụ, luật, profile cũ (gồm `cross-site-scripting-v0.1`, `multi-cwe-v0.5`) | 0 tệp đổi; hash của `sql-injection-v0.3`, `multi-cwe-v0.4`, `cross-site-scripting-v0.1`, `multi-cwe-v0.5` bằng hash đã ghim; mã ứng dụng của worker bằng cây làm việc (`44c40c82092811be`) |
+
+**Luồng giao diện của `v0.6`** (`tests/e2e/multi-cwe-v06-full-stack.spec.ts`, stack thật, PyGoat): chọn
+profile năm nhóm trong biểu mẫu, nguồn GitHub, gửi; trang lượt quét hiện năm nhóm, hàng CWE-918 ghi
+`ssrf-v0.1`, `python: completed`, `javascript: completed`; lọc theo nhóm CWE-918, mở chi tiết đơn vị;
+tải báo cáo JSON và SARIF hợp nhất. Kết quả: **đạt**. Lượt quét `2e740f05…`, `completed`; đơn vị theo
+nhóm: CWE-78 4, CWE-22 3, CWE-89 5, CWE-79 3, CWE-918 1, tất cả ở danh sách rà chính; SARIF 26 kết quả,
+bằng số cảnh báo đã lưu; 1 kết quả CWE-918 (`py/full-ssrf`, nhãn `cwe-918`, không bị ẩn).
+
+**Đối chiếu chính lượt quét qua giao diện,** không quét lại (thư mục `ui-v06/`):
+
+- snapshot do giao diện tải về có băm `19db7dc2…`, đúng snapshot PyGoat của mốc;
+- bốn nhóm cũ giống mốc `v0.5` theo nội dung, cảnh báo CWE-918 qua mọi phép kiểm của 26.4
+  (`compare_v06.py --new=ui-v06 --out=compare-v06-ui pygoat`: đạt);
+- cảnh báo CWE-918 giống CodeQL chạy riêng trên cùng snapshot, Python 1/1, JavaScript 0/0
+  (`compare_standalone.py --dev=ui-v06 --out=compare-standalone-ui pygoat`: đạt);
+- tệp SARIF trình duyệt đã tải (`final/e2e-v06/report.sarif`) có đúng 26 kết quả của SARIF xuất qua
+  API, cùng lượt, rule, vị trí, thông điệp và nhãn (`db_reuse.py`).
+
+### 26.11 Năm nhóm CWE của `multi-cwe-v0.6`
+
+Bảng dùng lại kết quả đã lưu của các đợt trước; không nhóm nào được đo lại. "Bằng chứng tích hợp" là
+bằng chứng kỹ thuật (luồng quét, đối chứng, lỗi tiêm); "bằng chứng trên tập có nhãn" là số đo hiệu
+quả phát hiện hay gạn, ghi kèm giới hạn của tập.
+
+Bảng cập nhật với kết quả CWE-918 trên tập GHSA ở 27.8.
+
+| Nhóm (thành viên) | Ngôn ngữ hỗ trợ | Công cụ đang dùng | Bằng chứng tích hợp | Bằng chứng trên tập có nhãn | Giới hạn |
+|---|---|---|---|---|---|
+| CWE-78 `command-injection` (`command-injection-v0.3`) | Python, JavaScript/TypeScript | Semgrep, Bandit (Python), ESLint + eslint-plugin-security (JS/TS), CodeQL; bằng chứng an toàn Semgrep và CodeQL; bộ định vị lời gọi; chính sách ưu tiên v0.2; gạn G1–G4 | Mỗi nhóm bằng lượt quét riêng profile đó trên BenchmarkPython và golden `multi-cwe-v0.1` (mục 16–18); `v0.2`…`v0.5` không đổi nhóm này (mục 20–24); `v0.6` giống `v0.5` trên 8/8 nguồn, kể cả khi lượt CWE-918 lỗi (26.4, 26.6) | Giai đoạn CWE-78 trước đây, BenchmarkPython 20 site: CodeQL 11 TP/2 FP/2 FN (research.md §3.1); 84 package npm có nhãn: 11/133 ứng viên JS là cảnh báo sai, gạn đúng 1, gạn nhầm 0; held-out `pairs-v1` (16 cặp, mở một lần): báo 9/9 vị trí lỗi đã biết, 0 bị gạn | Held-out chỉ có nhãn dương; hiệu quả gạn trên JS rất thấp; bộ định vị JS v1 chưa phủ mọi dạng bí danh |
+| CWE-22 `path-traversal` (`path-traversal-v0.2`) | Python | CodeQL + gói bằng chứng an toàn v0.2 | Như CWE-78 (mục 16–18); `v0.6` giống `v0.5` trên 8/8 nguồn (26.4) | Mã thật, nhãn chủ đề án xác minh: v0.2 loại 4/43 FP (khoảng 9%), giữ 7/7 TP; Đợt B (11 cặp CVE): CodeQL không báo vị trí CVE nào (research.md §3.5, §3.10) | Chỉ Python; chỉ gạn, không tăng phát hiện; nhãn do một người xác minh, không mù |
+| CWE-89 `sql-injection` (`sql-injection-v0.3`) | Python, JavaScript/TypeScript | CodeQL, Semgrep (37 file luật thượng nguồn), Bandit B608/B610/B611 (Python); gộp trong một lời gọi SQL Python và nối B608 với lời gọi | Mục 20, 21, 23; `v0.6` giống `v0.5` trên 8/8 nguồn (26.4) | BenchmarkPython 16 ca `sqli`: CodeQL 0, Semgrep 5 đúng/0 sai, Bandit 5 đúng/11 sai; Juice Shop 2 vị trí: CodeQL và Semgrep đều báo 2/2; SVEN 174 cặp: Bandit +45 ca dương/+20 ca âm; gộp `v0.4` 343 → 306 mục (mục 21, 22, 23) | Chỉ phát hiện và giữ; JS/TS chưa gộp giữa công cụ; các tập nhỏ hoặc là tập phát triển |
+| CWE-79 `cross-site-scripting` (`cross-site-scripting-v0.1`) | JavaScript/TypeScript | CodeQL, 7 truy vấn `Security/CWE-079/` | Mục 24 (ba nhóm cũ giống `v0.4`, XSS giống CodeQL chạy riêng, lỗi tiêm); `v0.6` giống `v0.5` trên 8/8 nguồn (26.4) | OSSF (49 ca, nhãn không độc lập với CodeQL): 14/41 ca đo được; 60 advisory npm, nhãn độc lập: CodeQL 2/60; Semgrep thêm 9 ca nhưng 573 mục rà mỗi ca thêm, không tích hợp (mục 24.7, 25) | Chỉ JS/TS; CodeQL bỏ sót phần lớn ca có nhãn độc lập; nhiều mục rà ở thư viện đi kèm; chỉ phát hiện và giữ |
+| CWE-918 `ssrf` (`ssrf-v0.1`) | Python, JavaScript/TypeScript | CodeQL: `py/full-ssrf`, `py/partial-ssrf`, `js/request-forgery` | `v0.6`: năm nhóm chạy trong một lượt quét thật, kể cả qua giao diện tới SARIF; bốn nhóm cũ giống `v0.5` trên 8/8 nguồn; 13/13 cảnh báo CWE-918 giống CodeQL chạy riêng; SARIF giữ 288/288 kết quả; 9/9 lượt lỗi tiêm theo ngôn ngữ đạt, cùng lượt sạch (26.4–26.7, 26.10) | **Chưa đủ căn cứ:** OSSF, 3 ca JavaScript (nhãn mang tên một truy vấn CodeQL thử nghiệm): 2 đo được, 1 tìm được, 1 bỏ sót, 1/2 ca âm bị báo, 2 mục rà; 1 ca vượt 50 MB; không có ca Python (26.8) | Một công cụ; chỉ yêu cầu HTTP phía máy chủ theo mô hình CodeQL (socket thô, phép kiểm danh sách cho phép hay giao thức không được nhận ra); `py/partial-ssrf` độ chính xác trung bình; JS không tách toàn phần/một phần; chỉ phát hiện và giữ |
+
+### 26.12 Nghiệm thu kỹ thuật, trạng thái đánh giá, giới hạn
+
+**Nghiệm thu kỹ thuật: đạt cả năm điều.**
+
+| Điều kiện | Kết quả | Bằng chứng |
+|---|---|---|
+| Profile mới chạy được cả năm nhóm trong một lượt quét thật | Đạt. Đầu vào năm nhóm: năm nhóm `completed`, 46 đơn vị (CWE-918: Python 5, JavaScript 6). PyGoat qua giao diện, từ chọn profile tới tải SARIF: năm nhóm `completed`, 16 đơn vị (CWE-918: 1), SARIF 26 kết quả; chính lượt này cùng snapshot với mốc, giống `v0.5` ở bốn nhóm và giống CodeQL chạy riêng ở CWE-918. Mỗi ngôn ngữ một database dùng chung | 26.4, 26.10 |
+| Bốn nhóm cũ khớp `v0.5` | Đạt trên 8/8 nguồn, ở cả lô đầu và lô cuối; vẫn khớp lượt sạch khi lượt CWE-918 lỗi hay dở (9/9 lượt lỗi: Python, JavaScript hay cả hai, ba kiểu lỗi) và khi lượt CWE-918 Python treo quá giới hạn 600 giây | 26.4, 26.6, 26.7 |
+| Cảnh báo CWE-918 khớp CodeQL chạy riêng | Đạt: 13/13 cảnh báo trên 8/8 nguồn, 15 lượt theo ngôn ngữ; cùng rule, vị trí và thông điệp, cùng băm truy vấn; nhãn CWE gốc giữ nguyên | 26.5 |
+| SARIF giữ đủ cảnh báo gốc | Đạt: 288/288 kết quả của 8 lượt; mỗi kết quả giữ lượt (nguồn: `codeql-ssrf` của đúng ngôn ngữ cho CWE-918), rule, vùng, thông điệp và nhãn CWE gốc; không kết quả CWE-918 nào bị ẩn. SARIF trình duyệt tải về bằng SARIF xuất qua API (26/26). Lượt CWE-918 lỗi hay dở: SARIF giữ mọi cảnh báo đã thu được | 26.5, 26.6 |
+| Kiểm thử hồi quy đạt | Đạt: SQLite 756 (+2 bỏ qua), PostgreSQL 758, tĩnh sạch, thực nghiệm 153, Vitest 86, năm kiểm thử trình duyệt trên stack thật; bốn profile cũ như các lần trước; 0 tệp khóa hay golden đổi | 26.10 |
+
+Thêm, theo yêu cầu kiểm giới hạn chạy: worker đang chạy áp đúng giới hạn mới (mềm 13 800, cứng 15 300,
+`visibility_timeout` 18 000 giây), mọi profile có trường hợp xấu nhất dưới giới hạn mềm, và một lượt
+CWE-918 treo bị dừng ở giới hạn 600 giây của nó mà không ảnh hưởng nhóm nào khác (26.7). Thời gian tăng
+thêm khi bộ nhớ đệm đã có: 5–12 giây mỗi lượt quét.
+
+**Trạng thái đánh giá hiệu quả phát hiện, theo nhóm** (không phải điều kiện nghiệm thu):
+
+| Nhóm | Trạng thái |
+|---|---|
+| CWE-78 | Đã đo trên dữ liệu phát triển có nhãn và một tập giữ lại chỉ có nhãn dương (9/9 vị trí lỗi đã biết được báo). Chưa có tập độc lập có cả nhãn âm cho `command-injection-v0.3` |
+| CWE-22 | Đã đo hiệu quả gạn trên mã thật (nhãn chủ đề án xác minh: loại 4/43 cảnh báo sai, giữ 7/7 TP). Không đo lại trong đợt này |
+| CWE-89 | Đã đo trên tập phát triển có nhãn (BenchmarkPython, Juice Shop) và tập Python độc lập SVEN; các tập nhỏ; JS/TS chưa có tập độc lập |
+| CWE-79 | Đã đo trên OSSF (nhãn không độc lập) và trên 60 advisory npm có nhãn độc lập (CodeQL 2/60) |
+| CWE-918 | **Chưa đủ căn cứ.** Tập sẵn có duy nhất cho 2 ca đo được (JavaScript): 1 tìm được, 1 bỏ sót, 1 ca âm bị báo, 2 mục rà; Python không có ca nào. Cần một tập độc lập (26.8) |
+
+**Giới hạn:**
+
+- **Một công cụ.** Nhóm CWE-918 chỉ có CodeQL. Semgrep cho SSRF và đối chứng khác chưa được xét.
+- **Mô hình của CodeQL:** chỉ yêu cầu HTTP do máy chủ gửi tới URL bị điều khiển; kết nối socket thô
+  (như ftp-srv) nằm ngoài. Phép kiểm danh sách cho phép (`if url not in ALLOWED`) và phép kiểm giao thức
+  (rendertron) không được coi là chặn luồng.
+- **`py/partial-ssrf`** có độ chính xác "trung bình" theo gói; trên dữ liệu đã quét chỉ có một cảnh
+  báo của nó (đầu vào tổng hợp).
+- **Không phân biệt toàn phần hay một phần ở JavaScript:** một rule cho cả hai.
+- **Tải rà:** trên năm nguồn GitHub phát triển chỉ có 2 cảnh báo; chưa có số đo tải rà trên kho lớn.
+- **Chi phí:** thêm 5–12 giây mỗi lượt quét khi bộ nhớ đệm biên dịch đã có; trường hợp xấu nhất
+  thêm 1 200 giây; thời gian hiển thị lại của broker tăng lên 5 giờ.
+- **Thời gian hiển thị lại:** một nhóm thêm nữa với lượt 600 giây mỗi ngôn ngữ vẫn vừa 5 giờ (trường
+  hợp xấu nhất 14 760 giây, giới hạn cứng khoảng 16 500 < 18 000), nhưng mọi thay đổi giới hạn vẫn
+  phải đổi cùng lúc ba giá trị.
+
+## 27. Đánh giá độc lập CWE-918 trên advisory GHSA (pip và npm), `multi-cwe-v0.6` (2026-11-17)
+
+Mốc kỹ thuật là mục 26. Đợt này trả lời ba câu hỏi, tách riêng Python và JavaScript/TypeScript:
+
+1. trên commit trước bản vá, hệ thống phát hiện được bao nhiêu ca;
+2. trên commit bản vá, còn báo ở bao nhiêu vị trí tương ứng;
+3. người dùng phải rà bao nhiêu mục.
+
+- **Không đổi:** mã ứng dụng, mọi profile và mọi số đo của mục 20–26.
+- **Không quét lại nguồn có nhãn đã đo.** Kho của mọi tập dữ liệu của dự án bị loại khỏi tập này.
+- **Đầu ra:** `artifacts/cwe918-eval/ghsa/`, không vào git.
+
+### 27.1 Kiểm kê và chọn ca
+
+**Nguồn.**
+
+- GitHub Advisory Database, `GET /advisories?ecosystem={pip,npm}&cwes=918&type=reviewed`, đủ mọi trang.
+- Chốt lúc **2026-11-17T11:25:54Z** (`advisories/`).
+- Kết quả: 271 advisory pip và 311 advisory npm, tức 580 advisory khác nhau; 2 advisory có ở cả hai hệ.
+
+**Quy tắc chọn ứng viên** (`inventory.py`, chỉ đọc metadata). Loại advisory khi:
+
+- đã rút;
+- có CWE khác thuộc loại có đích riêng (path traversal, chèn mã hay lệnh, XSS, SQL injection, giải
+  tuần tự, XXE, tải tệp, chèn khuôn mẫu);
+- không có đúng một commit sửa với mã đầy đủ;
+- nhắc GitHub Security Lab hay CodeQL;
+- CVE hay kho thuộc OSSF CVE Benchmark;
+- kho hay gói có trong dữ liệu của dự án.
+
+Một commit sửa được nhiều advisory tham chiếu chỉ được tính một lần.
+
+| | pip | npm |
+|---|---|---|
+| Advisory | 271 | 311 |
+| Đã rút | 10 | 10 |
+| CWE khác có đích riêng | 14 | 9 |
+| Không có commit đầy đủ / nhiều hơn một commit | 99 / 19 | 114 / 40 |
+| Nhắc GitHub Security Lab hay CodeQL | 4 | 0 |
+| CVE hay kho thuộc OSSF | 0 | 6 |
+| Kho hay gói trong dữ liệu dự án | 73 | 20 |
+| **Trùng commit sửa với advisory trước** | 3 | 6 |
+| **Ứng viên** | **49 (39 kho)** | **106 (60 kho)** |
+
+Ở pip, 73 advisory bị loại vì trùng dữ liệu dự án. Phần lớn là kho của các đợt nghiên cứu CWE-78 trên
+Python (`experiments/wave-c/inventory.json` 38, `wave-b` 9) và kho của mục 25.
+
+**Dựng ca** (`build_cases.py 40`):
+
+- **Thứ tự** cố định theo `sha256("cwe918-ghsa-v1:" + GHSA ID)`; trần 40 ca mỗi ngôn ngữ.
+- **Commit:** commit sửa có một cha; bản vá đổi tệp mã của ngôn ngữ đó, tối đa 400 dòng.
+- **Phạm vi phân tích: cả kho**, trong giới hạn của ứng dụng (50 MB, 20 000 mục, 200 MB khi giải nén).
+- **Mỗi kho một ca cho mỗi ngôn ngữ.** Advisory khác của kho đã có ca không được dùng: pip 8 (vllm 4,
+  lemur 3, GeoNode 1), npm 33 (openclaw 19, directus 3, ip-address 2, n8n-mcp 2, …). Vì vậy mỗi ca là một
+  kho khác nhau, và nhiều advisory của một kho không bị đếm thành nhiều quan sát.
+
+| | Python | JavaScript/TypeScript |
+|---|---|---|
+| Ứng viên đã xét (kho) | 48 (38) + 1 có ở cả hai hệ | 105 (59) + 1 có ở cả hai hệ |
+| **Giữ** | **24 ca, 24 kho** | **40 ca, 40 kho** |
+| Kho đã có ca | 8 | 33 |
+| Không có đúng một cha / đổi quá 400 dòng | 5 / 5 | 6 / 5 |
+| **Vượt giới hạn của ứng dụng (bị chặn)** | 3 (crewAI, label-studio, pydantic-ai) | 8 advisory, 6 kho (Rocket.Chat, backstage, angular, nocobase, next.js, budibase) |
+| Không tải được / không có tệp đủ điều kiện | 1 / 2 | 1 / 1 |
+| Không xét vì đã đủ 40 ca | 0 | 11 advisory của 9 kho (5 kho chưa có ca) |
+
+- **Hai lần dựng:** ở lần đầu, 2 ứng viên không tải được vì lỗi của bộ dựng (kho thiếu remote). Dựng lại
+  theo cùng quy tắc: dtale được giữ, vrite bị loại vì đổi 10 757 dòng.
+- **Kiểm `unpack`:** 128 snapshot qua `unpack` của ứng dụng (`preflight-out/preflight.json`).
+
+### 27.2 Nhãn
+
+Nhãn được gán **trước khi chạy CodeQL** trên tập này, chỉ từ advisory, bản vá và mã của hai commit
+(`LABELING.md`, `packets/`).
+
+- **Vị trí:** lời gọi thư viện gửi yêu cầu hay mở kết nối tới đích mà kẻ tấn công điều khiển, cả khoảng
+  dòng của biểu thức lời gọi trên commit trước bản vá. Nhãn `Có lỗi`, mức chắc chắn `cao` hay `trung bình`.
+- **Nhãn sau bản vá** của cùng vị trí:
+  - `An toàn` khi bản vá chặn đích tại lời gọi đó, kể cả khi tắt tính năng theo mặc định;
+  - `Chưa xác định` khi chỉ chặn một phần.
+- **Cả ca `chưa xác định`** khi commit không khớp advisory, advisory không phải SSRF phía máy chủ, hay
+  không đủ căn cứ.
+- **Loại điểm yếu:** `request_sink`, `validator` (thư viện kiểm tra, không gửi yêu cầu), `other` (yêu cầu
+  gián tiếp: dependency, chương trình ngoài, trình duyệt, SDK). **Chỉ ca `request_sink` có nhãn vào mẫu số
+  phát hiện.**
+- **Ánh xạ vị trí giữa hai commit:** so dòng hai phiên bản của tệp (`difflib`). Dòng giữ nguyên ánh xạ
+  sang dòng mới; dòng bị thay ánh xạ sang các dòng thay nó; dòng bị xóa không ánh xạ.
+- **Người gán:**
+  - người gán thứ nhất: bốn tác nhân phụ (AI), mỗi tác nhân một lô, cho 63 ca; ca dtale, thêm ở lần dựng
+    thứ hai, do trợ lý chính gán;
+  - người gán thứ hai: trợ lý chính (AI) gán độc lập một mẫu cố định 12 ca.
+- **Đồng thuận trên 12 ca:**
+  - nhãn cả ca 12/12;
+  - loại điểm yếu 10/12;
+  - vị trí 11/14;
+  - mức chắc chắn 7/11 vị trí trùng;
+  - nhãn sau bản vá 9/11 vị trí trùng.
+- **Phân xử** (11 ca, kèm lý do, trước khi khóa): 7 ca của mẫu, cùng hai quy tắc nhất quán áp cho mọi lô.
+  Contentful, peertube, hackmd-mcp và happy-dom chuyển sang `other`; plate chuyển nhãn sau bản vá sang
+  `An toàn`. Quyết định ghi lúc 12:21:20Z, trước khi khóa lúc 12:21:51Z.
+
+| | Python | JavaScript/TypeScript |
+|---|---|---|
+| Ca | 24 | 40 |
+| **`request_sink` có nhãn (mẫu số chính)** | **20** (32 vị trí; 15 ca có vị trí `cao`) | **23** (72 vị trí, n8n-mcp 44; 14 ca có vị trí `cao`) |
+| `other` / `validator` | 1 / 0 | 6 / 6 |
+| Cả ca `chưa xác định` | 3 (TaskWeaver, django-select2, nanobot) | 5 (openclaw, specifyjs, sveltejs/kit, lobe-chat, kysely) |
+
+Bốn ca `chưa xác định` có commit không khớp advisory (nanobot, openclaw, lobe-chat, kysely). Ba ca không
+phải SSRF dù mang CWE-918 (django-select2, specifyjs, sveltejs/kit).
+
+**Nguồn URL** (sửa đổi 1, gán trước khi đọc kết quả):
+
+- **Người gán:** trợ lý chính và Codex, độc lập; đồng thuận 58/64; 6 ca bất đồng do trợ lý chính phân xử.
+- **Phạm vi chính, Python (20 ca):** yêu cầu web 12, nội dung bên ngoài 3, tham số thư viện 2, đầu vào công
+  cụ AI 2, tệp cấu hình 1.
+- **Phạm vi chính, JS/TS (23 ca):** yêu cầu web 12, tham số thư viện 5, nội dung bên ngoài 4, đầu vào công
+  cụ AI 1, socket 1.
+
+### 27.3 Giao thức, detector, cách chạy
+
+**Giao thức** (`PROTOCOL-GHSA-SSRF.md`).
+
+- sha256 `f644076df90d75ba…`, khóa **2026-11-17T12:21:51Z**, trước lượt chạy CodeQL đầu tiên trên tập.
+- `PROTOCOL-GHSA-SSRF.sha256` băm 58 tệp:
+  - script chọn, dựng, chạy, chấm;
+  - trang advisory;
+  - danh sách ca và việc;
+  - nhãn và quyết định phân xử;
+  - snapshot chạy thử;
+  - cấu hình `ssrf-v0.1` và `multi-cwe-v0.6`.
+- 128 tệp nén được ghim bằng băm trong `cases.json`.
+
+**Sửa đổi 1** (`PROTOCOL-GHSA-SSRF-AMENDMENT-1.md`, sha256 `5f6896d8…`).
+
+- Khóa **12:37:25Z**, khi phép đo đang chạy nhưng **trước khi đọc kết quả nào**.
+- Chỉ thêm, không đổi kết quả chính:
+  - trường nguồn URL;
+  - bảng 64 advisory và 21 ca báo riêng;
+  - hai mẫu số;
+  - phép kiểm đường dữ liệu sau đo;
+  - các con số thay cho phần tổng hợp chưa đúng giao thức của `score.py`.
+
+**Sai lệch D1** (`PROTOCOL-GHSA-SSRF-DEVIATIONS.md`).
+
+- Codex rà `score.py` trước khi chấm, trợ lý chính kiểm lại.
+- **Lệch:** phần tổng hợp của `score.py` đếm câu hỏi 2 theo ca, chưa theo vị trí; mục rà chỉ tính trên cặp
+  hoàn tất; thời gian gộp theo ngôn ngữ của ca.
+- **Xử lý:** `score.py` không sửa; số đúng giao thức lấy từ bản ghi chi tiết bằng `report.py`.
+
+**Detector**, không đổi suốt đợt đo.
+
+- Image `security-triage-worker:v06-measure` (`sha256:272b8a94…`); `run_measure.sh` kiểm ID image và băm
+  cấu hình trong image.
+- Cấu hình `ssrf-v0.1`:
+  - CodeQL 2.27.1;
+  - `py/full-ssrf`, `py/partial-ssrf` (`codeql/python-queries` 1.8.11);
+  - `js/request-forgery` (`codeql/javascript-queries` 2.4.6);
+  - một luồng, 2048 MB, 600 giây cho tạo database và 600 giây cho phân tích.
+- **Cách chạy** (`ghsa_runner.py`):
+  - adapter `run_codeql` của ứng dụng chạy trong container của image, như mục 26.8. Mục 26.5 đã cho thấy
+    cách này cho cùng cảnh báo với lượt `codeql-ssrf` (13/13);
+  - mỗi snapshot chạy mọi ngôn ngữ có trong nó, như ứng dụng.
+- **Chạy thử** trên dữ liệu phát triển riêng (`rehearsal/`: đầu vào năm nhóm và một bản vá viết tay).
+
+**Chạy.**
+
+- Bốn container tách rời, mỗi snapshot một lần, 2026-11-17T12:21:57Z–13:14:46Z.
+- 132 việc (4 việc làm nóng không chấm); 0 lỗi chuẩn bị, 0 lỗi hạ tầng; `reruns.json` ghi một lần kiểm
+  lúc 13:14:46Z, không việc nào phải chạy lại.
+- Băm của giao thức và sửa đổi vẫn khớp sau lượt chạy.
+
+| Lượt theo ngôn ngữ của ca | Python (48 lượt) | JS/TS (80 lượt) |
+|---|---|---|
+| `completed` | 48 | 70 |
+| `partial` | 0 | 8 (MagicMirror, n8n-mcp, happy-dom, sveltejs/kit, mỗi ca hai commit: lỗi cú pháp ở tệp không có nhãn) |
+| `failed` | 0 | 2 (angular-cli, hai commit: CodeQL hết bộ nhớ khi nhập TRAP ở 2048 MB) |
+
+### 27.4 Kết quả theo giao thức
+
+Mẫu số chính là ca `request_sink` có nhãn với cặp đo hoàn tất.
+
+| | Python | JavaScript/TypeScript |
+|---|---|---|
+| Ca đủ điều kiện | 20 | 23 |
+| Cặp đo hoàn tất | 20 | 21 (2 cặp `partial`: MagicMirror, n8n-mcp, đều không phát hiện) |
+| **Câu 1: phát hiện / bỏ sót** | **1 / 19** (dtale) | **2 / 19** (TerriaJS, Flowise) |
+| Câu 1, mẫu số là tổng số advisory | 1/24 advisory có cảnh báo ở vị trí có nhãn | 2/40 |
+| Ca phát hiện theo mức chắc chắn | 1 ca `cao` | 2 ca `cao` |
+| **Câu 2: vị trí đã vá vẫn bị báo** (vị trí được phát hiện) | **1/1** (nhãn `An toàn`, ánh xạ giữ nguyên) | **2/2** (nhãn `An toàn`, ánh xạ giữ nguyên) |
+| Cảnh báo trong vùng bản vá (phụ, cơ học) | 0 | 0 |
+| **Câu 3: mục rà CWE-918 trên commit trước bản vá** | **5** trên 24 commit (1 ở vị trí có nhãn, **4 chưa phân loại**) | **33** trên 39 commit đo được (`completed` 31, `partial` 2; 2 ở vị trí có nhãn, **31 chưa phân loại**) |
+| Commit trước bản vá có ít nhất một mục | 4/24 (tối đa 2) | 9/39 (tối đa 12, 9router) |
+| Mục rà trên commit bản vá | 5 | 33 |
+| Mục của ngôn ngữ còn lại trong snapshot | 0 | 0 |
+| Thời gian mỗi lượt (theo ngôn ngữ của lượt): tạo DB / phân tích, trung vị | 10,3 s / 13,1 s (56 lượt, tổng 1 956 s) | 11,0 s / 14,4 s (114 lượt, tổng 6 442 s) |
+
+**Hai mẫu số:** 1/20 ca Python có lời gọi trong kho, 1/24 advisory Python; 2/21 ca JS/TS có lời gọi
+trong kho và cặp hoàn tất (2/23 ca trong phạm vi), 2/40 advisory JS/TS.
+
+### 27.5 Bảng sau đo: nguồn URL, cả 64 advisory, đường dữ liệu
+
+Các bảng này theo sửa đổi 1. Nguồn URL và quy tắc kiểm đường dữ liệu được chốt trước khi đọc kết quả;
+việc xét đường dữ liệu làm sau đo. Không bảng nào đổi kết quả chính.
+
+**Phát hiện theo nguồn URL** (ca phát hiện / cặp hoàn tất, phạm vi chính):
+
+| Nguồn | Python | JavaScript/TypeScript |
+|---|---|---|
+| yêu cầu web | **1/12** | **2/11** (1 ca dở) |
+| tham số thư viện | 0/2 | 0/5 |
+| nội dung bên ngoài | 0/3 | 0/4 |
+| đầu vào công cụ AI | 0/2 | 0/1 |
+| tệp cấu hình | 0/1 | — |
+| socket | — | 0/0 (1 ca dở) |
+
+**21 ca ngoài phạm vi chính** (lý do; đo được nghĩa là cặp hoàn tất):
+
+- **Python, 4 ca, đều đo được:**
+  - 3 `chưa xác định`;
+  - 1 `other` (PlaywrightCapture).
+- **JS/TS, 17 ca:**
+  - 5 `chưa xác định`: 4 đo được, sveltejs/kit `partial`;
+  - 6 `other`: 5 đo được, happy-dom `partial`;
+  - 6 `validator`: 5 đo được, angular-cli `failed`.
+- Không ca nào trong 21 ca có cảnh báo ở vị trí có nhãn. Có cảnh báo ở chỗ khác: openclaw 4, sentry-javascript
+  4, peertube 3, happy-dom 2, lobe-chat 1 (chưa phân loại).
+
+**Đường dữ liệu của cảnh báo trúng** (`dataflow-review.json`, căn cứ là `codeFlows` trong SARIF):
+
+| Ca | Trước bản vá | Sau bản vá | Căn cứ |
+|---|---|---|---|
+| dtale | khớp | khớp | `request.args["url"]` của `web_upload` → `load_csv`/`load_json`/`load_excel` → `handle_path` → `requests.get` |
+| TerriaJS | khớp | khớp | `req.url` của route `/proxy/<url>` → `request(...)`; bốn đường đã ghi đều từ đây |
+| Flowise | khớp | khớp | `req.query.url` của dịch vụ fetch-links → `secureFetch`; advisory nêu mọi đường dùng hàm bảo vệ, kể cả fetch-links. Đường HTTP Node của PoC (`secureAxiosRequest`) không bị báo |
+
+Cả 3/3 ca trúng đều khớp đường advisory mô tả, ở cả hai phía. Sau bản vá, CodeQL vẫn báo cùng đường. Phép
+kiểm mới (so khớp miền đúng, cờ cấu hình, sửa `isDeniedIP`) không phải barrier của truy vấn: điều này đã
+xác minh trên danh sách barrier của gói đã ghim.
+
+### 27.6 Rà lại các ca bất nhất
+
+`posthoc-review.json`, `posthoc-material.txt`. Chỉ dùng hiện vật đã lưu và gói truy vấn đã ghim trong image.
+
+- **Phạm vi rà:** 40 ca không được phát hiện, gồm 38 ca bỏ sót có cặp hoàn tất (19 + 19) và 2 ca JS/TS
+  dở (MagicMirror, n8n-mcp).
+- **Tệp có nhãn đều nằm trong database ở cả 40 ca** (`extracted-files.txt`). Trích xuất thiếu không phải
+  nguyên nhân.
+- **Gói đã ghim:** truy vấn chỉ nhận `ActiveThreatModelSource`, mô hình đe dọa mặc định `remote` (`request`,
+  `response`). `database`, `file`, `environment`, `commandargs` thuộc `local`.
+- **Không có mô hình trong gói:**
+  - JS: h3/Nuxt, Hono, Cloudflare Workers, MCP SDK, ofetch, undici;
+  - Python: swob, MCP/fastmcp, `acme`.
+- **Có mô hình trong gói:**
+  - JS: Express, Next.js (kể cả App Router), socket.io, `fetch`, axios, `net`/`tls`;
+  - Python: Flask, Django, DRF, FastAPI, Starlette, Tornado, requests, httpx, aiohttp, urllib, http.client,
+    pycurl.
+
+| Nguyên nhân bỏ sót | Python (19) | JS/TS (21, gồm 2 dở) | Trạng thái |
+|---|---|---|---|
+| A. Nguồn ngoài mô hình đe dọa mặc định: tham số thư viện, tệp cấu hình, giá trị đọc lại từ cơ sở dữ liệu | 5 (pyjwt, glances, safeurl, recurly; lemur kèm C) | 9 (webfinger, frontmcp, i18next, google-translate, undici, plate, novu; papra kèm C; Hemmelig kèm B) | đã xác minh |
+| B. Framework nhận yêu cầu không có mô hình | 3 (swift/swob, meta-ads-mcp, fastmcp) | 4 (opennextjs/Cloudflare, og-image/h3, ckan-mcp; nuxt-api-party kèm C) | đã xác minh |
+| D. Lời gọi qua `getattr` động; cùng hàm có cảnh báo ở lời gọi `session.get` kế bên | 1 (GeoNode) | 0 | đã xác minh |
+| E. Framework và thư viện có mô hình, không có cảnh báo tại lời gọi | 10 (vllm, lmdeploy, MISP, local-deep-research, InvenTree, calibre-web, chainlit, firefighter, web3, zeep) | 8 (directus, summarize, cors-proxy, 9router, cypress-request, swagger-typescript-api, MagicMirror, n8n-mcp) | **giả thuyết** |
+
+- **Đã xác minh: 9/19 ca Python và 13/21 ca JS/TS.** Mỗi ca có hai căn cứ:
+  - kênh nguồn hay framework của chính ca, đọc trong mã của commit;
+  - phép kiểm trên gói đã ghim: có hay không mô hình, mô hình đe dọa nào.
+- **Giả thuyết** (luồng đứt ở chỗ chưa xác minh được, không quét lại để xác minh):
+  - dispatch đa hình hay import động: MISP, local-deep-research;
+  - mô hình pydantic và client lưu trong thuộc tính: vLLM, lmdeploy;
+  - validator ngầm của DRF: InvenTree;
+  - lời gọi qua `getattr` không có đối chứng: firefighter;
+  - URL lấy từ nội dung đã phân tích: web3, zeep, swagger-typescript-api;
+  - hàm được tiêm: summarize.
+- **Chưa rõ, dù có hiện vật gợi ý:**
+  - calibre-web: có cảnh báo Flask ở `cps/kobo.py:94`;
+  - 9router: có 12 cảnh báo ở các route App Router khác.
+- **Vị trí `An toàn` vẫn bị báo** (dtale, TerriaJS, Flowise): đã xác minh như 27.5.
+- **Lượt không hoàn tất:** lỗi cú pháp ở tệp không có nhãn (`partial`), CodeQL hết bộ nhớ (angular-cli);
+  đã xác minh trên SARIF và nhật ký.
+
+### 27.7 Phiên bản, lệnh, đầu ra
+
+Chạy từ gốc repo, thư mục `artifacts/cwe918-eval/ghsa/`:
+
+1. **Kiểm kê:**
+   - tải `GET /advisories?ecosystem=ECO&cwes=918&type=reviewed&per_page=100` theo header `Link` vào
+     `advisories/`;
+   - `python -I …/inventory.py`.
+2. **Dựng ca:** `python -I …/build_cases.py 40`; rồi `preflight.py` trong container (`docker run … /ghsa/preflight.py`).
+3. **Nhãn:**
+   - `python -I …/make_packets.py`;
+   - gán nhãn vào `labels/batch-*.json`, `labels/review-main.json`, `labels/adjudication.json`;
+   - `python -X utf8 -I …/merge_labels.py`.
+4. **Chạy thử:** `python -I …/rehearsal/make_rehearsal.py`, `ghsa_runner.py` trên `rehearsal/jobs.json`,
+   `score.py --base=…/rehearsal`.
+5. **Khóa:** `python -I …/make_jobs.py`, `bash …/freeze.sh`.
+6. **Đo:** `bash …/run_measure.sh` (kiểm băm, image và 128 tệp nén, chạy bốn container); sau khi chạy:
+   `python -I …/rerun_infrastructure.py`.
+7. **Chấm:**
+   - `python -X utf8 -I …/score.py` (đã khóa);
+   - `…/report.py`;
+   - `…/posthoc.py`;
+   - `…/posthoc_review.py`.
+
+**Đầu ra.**
+
+- **Kiểm kê và dựng ca:** `candidates.json`, `cases.json`, `build-log.json`, `archives/`, `repos/`,
+  `diffs/`, `packets/`.
+- **Nhãn:** `labels/`, `labels.json`, `label-review.json`, `source/`.
+- **Giao thức:** `PROTOCOL-GHSA-SSRF*.md|sha256`.
+- **Lượt chạy:** `runs/<kho>@<commit>/` (`result.json`; mỗi ngôn ngữ: SARIF, nhật ký, `extracted-files.txt`),
+  `reruns.json`.
+- **Chấm và rà:** `score.json|txt`, `report.json|txt`, `dataflow-material.txt`, `dataflow-review.json`,
+  `posthoc-material.*`, `posthoc-review.json`.
+
+### 27.8 Năm nhóm CWE: kết quả trên dữ liệu có nhãn
+
+Bảng này cập nhật bảng 26.11 với cột mới. Bằng chứng của bốn nhóm cũ dùng lại số đã lưu, không đo lại.
+Mỗi phép đo ghi mẫu số riêng của nó.
+
+| Nhóm (thành viên) | Ngôn ngữ | Công cụ | Bằng chứng tích hợp | Kết quả trên dữ liệu có nhãn | Giới hạn |
+|---|---|---|---|---|---|
+| CWE-78 (`command-injection-v0.3`) | Python, JS/TS | Semgrep, Bandit (Python), ESLint + eslint-plugin-security (JS/TS), CodeQL; bằng chứng an toàn; gạn G1–G4 | Mục 16–18; `v0.6` giống `v0.5` trên 8/8 nguồn, kể cả khi lượt CWE-918 lỗi (26.4, 26.6) | BenchmarkPython 20 site: CodeQL 11 TP / 2 FP / 2 FN; 84 package npm: 11/133 ứng viên JS sai, gạn đúng 1, gạn nhầm 0; held-out `pairs-v1` (16 cặp): 9/9 vị trí lỗi được báo, 0 bị gạn | Held-out chỉ có nhãn dương; gạn trên JS rất thấp |
+| CWE-22 (`path-traversal-v0.2`) | Python | CodeQL + bằng chứng an toàn v0.2 | Mục 16–18; 26.4 | Mã thật, nhãn chủ đề án: loại 4/43 FP, giữ 7/7 TP; Đợt B (11 cặp CVE): CodeQL không báo vị trí CVE nào | Chỉ Python; chỉ gạn |
+| CWE-89 (`sql-injection-v0.3`) | Python, JS/TS | CodeQL, Semgrep (37 tệp luật), Bandit B608/B610/B611; gộp trong lời gọi SQL Python | Mục 20, 21, 23; 26.4 | BenchmarkPython 16 ca: CodeQL 0, Semgrep 5 đúng / 0 sai, Bandit 5 đúng / 11 sai; Juice Shop 2/2; SVEN 174 cặp: Bandit +45 ca dương / +20 ca âm; gộp 343 → 306 mục | Các tập nhỏ hay tập phát triển; JS/TS chưa có tập độc lập |
+| CWE-79 (`cross-site-scripting-v0.1`) | JS/TS | CodeQL, 7 truy vấn | Mục 24; 26.4 | OSSF (nhãn không độc lập): 14/41 ca đo được; 60 advisory npm, nhãn độc lập: CodeQL 2/60; Semgrep +9 ca nhưng 573 mục mỗi ca thêm (mục 24.7, 25) | Chỉ JS/TS; CodeQL bỏ sót phần lớn ca có nhãn độc lập |
+| CWE-918 (`ssrf-v0.1`) | Python, JS/TS | CodeQL: `py/full-ssrf`, `py/partial-ssrf`, `js/request-forgery` | Mục 26: năm nhóm trong một lượt quét thật tới SARIF; 13/13 cảnh báo giống CodeQL chạy riêng; SARIF 288/288; 9/9 lượt lỗi tiêm | **GHSA, nhãn độc lập (mục 27):** Python **1/20** ca (1/24 advisory), JS/TS **2/21** cặp hoàn tất (2/40 advisory); vị trí đã vá vẫn bị báo 1/1 và 2/2; mục rà trên commit trước bản vá: Python 5 trên 24 commit (4 chưa phân loại), JS/TS 33 trên 39 (31 chưa phân loại). OSSF (mục 26.8, 2 ca JS): 1/2 | Chỉ một công cụ; nguồn chỉ thuộc mô hình đe dọa `remote` (yêu cầu tới máy chủ, phản hồi của máy khách) của framework và thư viện có mô hình; không nhận phép kiểm tự viết của bản vá; ca dương lẫn ca âm đều ít |
+
+### 27.9 Kết luận cho đồ án
+
+Mỗi kết luận ghi kèm phạm vi dữ liệu hỗ trợ nó.
+
+1. **CodeQL (`ssrf-v0.1`) phát hiện rất ít ca SSRF có nhãn độc lập.**
+   - Python: 1/20 ca có lời gọi trong kho. JS/TS: 2/21 ca có cặp hoàn tất.
+   - Phạm vi: 64 advisory GHSA pip/npm có commit sửa, mỗi kho một ca, kho dưới 50 MB, nhãn do AI gán (đồng
+     thuận đo trên 12 ca). Tập lệch về kho nhỏ và vừa và về advisory mới: 47/64 công bố năm 2025–2026, nhiều máy chủ MCP và ứng dụng AI.
+2. **Một nửa số ca bỏ sót có nguyên nhân đã xác minh, đều nằm ngoài mô hình của truy vấn:**
+   - nguồn ngoài mô hình đe dọa `remote`: tham số thư viện, tệp cấu hình, cơ sở dữ liệu;
+   - framework hay thư viện gửi yêu cầu không có mô hình: h3, Hono, Cloudflare Workers, swob, MCP SDK,
+     ofetch, `acme`;
+   - lời gọi qua `getattr` động.
+   - Phạm vi: 22 trên 40 ca không được phát hiện (38 ca bỏ sót có cặp hoàn tất và 2 ca dở; Python 9/19,
+     JS/TS 13/21), mỗi ca có phép kiểm trên chính ca đó. 18 ca còn lại chỉ có giả thuyết.
+3. **Ngay ở ca "yêu cầu web", trường hợp truy vấn nhắm tới, CodeQL chỉ phát hiện 1/12 ca Python và 2/11 ca
+   JS/TS.**
+   - Phạm vi: nguồn URL do AI gán (đồng thuận 58/64) và khóa trong sửa đổi 1 trước khi đọc kết quả; bảng
+     tách theo nguồn là bảng sau đo.
+   - Không suy rộng: các ca này lẫn framework có và không có mô hình.
+4. **Khi phát hiện, cảnh báo đi đúng đường advisory mô tả, nhưng vẫn báo sau bản vá.**
+   - 3/3 ca trúng khớp đường dữ liệu.
+   - 3/3 vị trí đã vá (nhãn `An toàn`) vẫn bị báo, vì phép kiểm của bản vá không phải barrier của truy
+     vấn.
+   - Phạm vi: chỉ 3 ca; không đủ để ước lượng tỉ lệ báo sai sau bản vá.
+5. **Tải rà thấp.**
+   - Python: 5 mục trên 24 commit trước bản vá; 20/24 commit không có mục nào.
+   - JS/TS: 33 mục trên 39 commit; 30/39 commit không có mục nào.
+   - Đa số mục là **chưa phân loại**: 4/5 và 31/33 nằm ngoài vị trí có nhãn. Riêng một kho (9router) có 12
+     mục.
+   - Phạm vi: chỉ nhóm CWE-918 của `multi-cwe-v0.6`, không gồm bốn nhóm còn lại.
+6. **Chi phí thấp.** Trung vị mỗi lượt theo ngôn ngữ: khoảng 23 giây (Python) và 27 giây (JS/TS), gồm tạo
+   database. Trong ứng dụng, database dùng chung với nhóm khác, nên phần thêm chỉ là phần phân tích, như
+   mục 26.7.
+7. **Không ngôn ngữ nào bị chặn hoàn toàn**, nhưng có phần không đo được:
+   - 9 kho vượt giới hạn của ứng dụng (Python 3, JS/TS 6): 7 kho quá 50 MB, nocobase và next.js quá 20 000
+     mục;
+   - 2 kho không tải được;
+   - 1 ca `validator` thất bại vì hết bộ nhớ ở 2048 MB;
+   - 2 ca JS/TS trong phạm vi chính chỉ có lượt `partial` (4 ca nếu tính cả happy-dom và sveltejs/kit,
+     ngoài phạm vi).
+   - Muốn ước lượng cho kho lớn cần nâng giới hạn của ứng dụng, hoặc đo riêng với phạm vi thư mục con.
+
+**Giới hạn:**
+
+- người gán nhãn và người xét đường dữ liệu là trợ lý AI, không phải chủ đề án;
+- nhãn sau bản vá không đồng nhất hoàn toàn giữa các lô (mục 9.1 của giao thức);
+- tập nhỏ: 20 và 23 ca trong mẫu số;
+- ca âm chỉ là vị trí đã vá;
+- tập này đã chạy CodeQL nên không còn độc lập cho phiên bản sau của cấu hình.
+
+### 27.10 Công cụ hỗ trợ đã dùng
+
+| Công cụ | Việc | Kết quả và phần đã kiểm chứng |
+|---|---|---|
+| Tác nhân phụ (4) | Gán nhãn lần một theo `LABELING.md`, mỗi lô 15–16 ca | 63 nhãn (ca thứ 64, dtale, do trợ lý chính gán); trợ lý chính kiểm khoảng dòng của mọi nhãn, gán lại độc lập 12 ca và phân xử 11 ca |
+| Codex (plugin `codex`) | Rà `score.py` theo giao thức trước khi chấm | 5 điểm, đều ở phần tổng hợp; trợ lý chính kiểm trên mã, ghi D1, tính lại bằng `report.py` |
+| Codex | Phân loại nguồn URL độc lập | Đồng thuận 58/64; 6 ca do trợ lý chính phân xử |
+| LSP Pyright | Kiểm script khi viết | Báo một import thừa ở `score.py` trước khi khóa; đã sửa |
+| Không dùng | fp-check, variant-analysis, semgrep-rule-creator, audit-context-building, vulnerability-triage-brocards, `static-analysis` (cả `codeql`, `semgrep`, `sarif-parsing`); Superpowers, Serena, Context7 | Quét bằng skill sẽ là một detector khác với detector đã ghim. Sáu mục của phép kiểm đường dữ liệu và 40 ca bỏ sót được xét trực tiếp trên SARIF, nhật ký, mã và gói truy vấn |
