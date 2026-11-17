@@ -1,0 +1,28 @@
+{
+  "config_id": "ssrf-v0.1-python",
+  "purpose": "Experimental scan: detect CWE-918 (server-side request forgery) in Python with the two standard CodeQL queries under Security/CWE-918, full and partial URL control, and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [],
+  "codeql_queries": [
+    "Security/CWE-918/FullServerSideRequestForgery.ql",
+    "Security/CWE-918/PartialServerSideRequestForgery.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-918/FullServerSideRequestForgery.ql": "f48ee50c0ccbce0df4f11d65b8db32851fc5baa9dc83150da02f190d67263cef",
+    "Security/CWE-918/PartialServerSideRequestForgery.ql": "799f1218d22381ff7257e7cb3bc8f0cc4480208de3169ecb0cde2618031f69f6"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "asset": "codeql-bundle-python-linux64.tar.zst",
+    "sha256": "ea86393c6c812542ae5a3a7122bcc760873707a50b25cc47d2fd7cfd514b0cb0",
+    "python_query_pack": "1.8.11",
+    "python_all_pack": "7.2.6"
+  },
+  "language": "python"
+}

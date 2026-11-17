@@ -82,11 +82,14 @@ unit may hold alerts of several tools (Semgrep, Bandit, CodeQL) when they lie in
 execution call; under `multi-cwe-v0.4` a Bandit alert on the statement that builds the query may
 also join the unit of the call that runs it. The experimental `multi-cwe-v0.5` adds the family
 `cross-site-scripting` (CWE-79, JavaScript/TypeScript, CodeQL only), detected and kept the same
-way. The unit sheet lists each alert with its own pass and location.
+way, and the experimental `multi-cwe-v0.6` adds the family `ssrf` (CWE-918, server-side request
+forgery, Python and JavaScript/TypeScript, CodeQL only) on top of those four. The unit sheet lists
+each alert with its own pass and location.
 `tests/e2e/multi-cwe-full-stack.spec.ts` (`multi-cwe-v0.1`),
 `tests/e2e/multi-cwe-v02-full-stack.spec.ts` (`multi-cwe-v0.2`),
-`tests/e2e/multi-cwe-v03-full-stack.spec.ts` (`multi-cwe-v0.3`) and
-`tests/e2e/multi-cwe-v05-full-stack.spec.ts` (`multi-cwe-v0.5`) are the browser tests
+`tests/e2e/multi-cwe-v03-full-stack.spec.ts` (`multi-cwe-v0.3`),
+`tests/e2e/multi-cwe-v05-full-stack.spec.ts` (`multi-cwe-v0.5`) and
+`tests/e2e/multi-cwe-v06-full-stack.spec.ts` (`multi-cwe-v0.6`) are the browser tests
 against the complete stack; they are skipped unless `FULL_STACK_URL` is set.
 
 ## Architecture rules

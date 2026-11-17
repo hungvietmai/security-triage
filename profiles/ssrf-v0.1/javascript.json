@@ -1,0 +1,24 @@
+{
+  "config_id": "ssrf-v0.1-javascript",
+  "purpose": "Experimental scan: detect CWE-918 (server-side request forgery) in JavaScript and TypeScript with the standard CodeQL query Security/CWE-918/RequestForgery.ql (server-side sources only) and keep every alert for review. No ranking policy and no filter condition.",
+  "scanners": [
+    "codeql"
+  ],
+  "semgrep_version": "1.178.0",
+  "codeql_version": "2.27.1",
+  "jobs": 1,
+  "timeout_seconds": 600,
+  "semgrep_rules": [],
+  "codeql_queries": [
+    "Security/CWE-918/RequestForgery.ql"
+  ],
+  "codeql_query_sha256": {
+    "Security/CWE-918/RequestForgery.ql": "935b8e54e10997d0792a5c346c9a0da79c9d977c51f3a7096acfb9f6464866b1"
+  },
+  "codeql_bundle": {
+    "release": "codeql-bundle-v2.27.1",
+    "sha256": "8d30281899f150633913b08cf4eae755be607f282d643ad418ad638f4210e833",
+    "javascript_query_pack": "2.4.6"
+  },
+  "language": "javascript"
+}

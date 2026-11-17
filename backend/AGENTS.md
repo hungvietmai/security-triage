@@ -110,8 +110,8 @@ called from `task.scan_snapshot`; never leave a stored finding without a unit. A
 filters nothing until its own evidence has been evaluated.
 
 A composite profile (`"kind": "composite"`, `profiles/multi-cwe-v0.1/`,
-`profiles/multi-cwe-v0.2/`, `profiles/multi-cwe-v0.3/`, `profiles/multi-cwe-v0.4/` and
-`profiles/multi-cwe-v0.5/`) pins its members' manifests;
+`profiles/multi-cwe-v0.2/`, `profiles/multi-cwe-v0.3/`, `profiles/multi-cwe-v0.4/`,
+`profiles/multi-cwe-v0.5/` and `profiles/multi-cwe-v0.6/`) pins its members' manifests;
 `scanners/profile.py` loads it, `families.members_of` checks that it names families in `families.FAMILIES`, and
 `task.scan_snapshot` runs it. `families.to_language_result`
 turns a composite run into one `LanguageResult` with a part per family; `persist.py` writes
@@ -159,8 +159,20 @@ compiling), and `detection.keep_detected` keeps one unit per reported location. 
 four-family scan has three families. The other three families of `multi-cwe-v0.5` are those of
 `multi-cwe-v0.4`, byte for byte; `tests/workflows/scans/test_xss_family.py` checks it.
 
+`profiles/ssrf-v0.1/` (family `ssrf`, CWE-918, member of the experimental `multi-cwe-v0.6`) is a
+schema-1 detection profile for Python and JavaScript/TypeScript: its pass `codeql-ssrf` runs the
+server-side request forgery queries `py/full-ssrf` and `py/partial-ssrf` on the shared Python
+database and `js/request-forgery` on the shared JavaScript database, one thread, and keeps one unit
+per reported location. The queries were chosen by what they check, not by their CWE tag:
+`js/client-side-request-forgery` is tagged CWE-918 too but is not in the profile. The family name is
+short because the pass name is stored in `tool_runs.tool` (32 characters). The other four families
+of `multi-cwe-v0.6` are those of `multi-cwe-v0.5`, byte for byte;
+`tests/workflows/scans/test_ssrf_family.py` checks it.
+
 The task's time limits and the broker's visibility timeout cover the largest profile
-(`task.worst_case_seconds`); change them together.
+(`task.worst_case_seconds`); change them together. `multi-cwe-v0.6` needs 13 560 s: the soft
+limit is 13 800 s, the hard limit 15 300 s and the visibility timeout 5 h
+(`app/workers/celery_app.py`).
 
 To add an analysis family: add it to `families.FAMILIES` and its profiles to
 `FAMILY_OF_PROFILE`, give it a member profile, and leave it without filter conditions until

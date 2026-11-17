@@ -18,7 +18,12 @@ Tool = Literal["semgrep", "bandit", "eslint", "codeql"]
 Disposition = Literal["review", "filtered"]
 # An analysis family of a scan; "unassigned" holds findings whose family could not be named.
 FamilyName = Literal[
-    "command-injection", "path-traversal", "sql-injection", "cross-site-scripting", "unassigned"
+    "command-injection",
+    "path-traversal",
+    "sql-injection",
+    "cross-site-scripting",
+    "ssrf",
+    "unassigned",
 ]
 # What the evidence says about a unit. This is not the scan's status and not the filter
 # decision (`disposition`): only "refuted" ever leads to "filtered".
@@ -68,6 +73,7 @@ class ScanCreate(InputSchema):
         "multi-cwe-v0.3",
         "multi-cwe-v0.4",
         "multi-cwe-v0.5",
+        "multi-cwe-v0.6",
     ] = Field(
         default="command-injection-v0.1",
         description="command-injection-v0.1: CWE-78, JavaScript and Python, Semgrep and "
@@ -90,7 +96,11 @@ class ScanCreate(InputSchema):
         "it (Python). multi-cwe-v0.5 (experimental): the three families of multi-cwe-v0.4 plus "
         "cross-site-scripting-v0.1 (CWE-79, JavaScript/TypeScript), the seven standard CodeQL "
         "queries under Security/CWE-079 run on the same database; their alerts are detected and "
-        "kept for review: nothing ranks or filters them.",
+        "kept for review: nothing ranks or filters them. multi-cwe-v0.6 (experimental): the four "
+        "families of multi-cwe-v0.5 plus ssrf-v0.1 (CWE-918, server-side request forgery, Python "
+        "and JavaScript/TypeScript), the standard CodeQL queries py/full-ssrf, py/partial-ssrf "
+        "and js/request-forgery run on the same databases; their alerts are detected and kept "
+        "for review: nothing ranks or filters them.",
     )
 
 

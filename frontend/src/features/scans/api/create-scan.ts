@@ -57,6 +57,7 @@ export const createScanInputSchema = z.object({
     "multi-cwe-v0.3",
     "multi-cwe-v0.4",
     "multi-cwe-v0.5",
+    "multi-cwe-v0.6",
   ]),
 }) satisfies z.ZodType<ScanCreate>;
 
@@ -112,6 +113,12 @@ export const SCAN_PROFILES: Record<
       "CWE-78 + CWE-22 + CWE-89 + CWE-79 · Thử nghiệm: thêm XSS cho JavaScript/TypeScript",
     description:
       "Như multi-cwe-v0.4, thêm nhóm cross-site scripting (CWE-79) cho JavaScript/TypeScript: bảy truy vấn XSS chuẩn của CodeQL chạy trên cùng database. Cảnh báo CWE-79 chưa được xếp hạng hay gạn: tất cả ở danh sách rà chính.",
+  },
+  "multi-cwe-v0.6": {
+    label:
+      "CWE-78 + CWE-22 + CWE-89 + CWE-79 + CWE-918 · Thử nghiệm: thêm SSRF cho Python và JavaScript/TypeScript",
+    description:
+      "Như multi-cwe-v0.5, thêm nhóm server-side request forgery (CWE-918) cho Python và JavaScript/TypeScript: ba truy vấn SSRF phía máy chủ của CodeQL (py/full-ssrf, py/partial-ssrf, js/request-forgery) chạy trên cùng database. Cảnh báo CWE-918 chưa được xếp hạng hay gạn: tất cả ở danh sách rà chính.",
   },
 };
 

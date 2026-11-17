@@ -9,7 +9,7 @@ và CodeQL. Repository gồm hai phần:
   nhưng chỉ loại được khoảng 9% FP (4/43), còn v0.3 không loại thêm FP nào.
   Trạng thái đầy đủ: **[docs/research.md](docs/research.md)**.
 - **Ứng dụng web** ([frontend/](frontend/), [backend/](backend/)): quét một package npm hoặc
-  một commit GitHub, chọn một trong chín profile:
+  một commit GitHub, chọn một trong mười profile:
   - `command-injection-v0.1`: CWE-78, JavaScript/Python, Semgrep và CodeQL, gộp cảnh báo theo
     sink và xếp hàng đợi P1→P4;
   - `command-injection-v0.2`: như trên, thêm công cụ bổ trợ vào bước phát hiện (Bandit cho
@@ -49,7 +49,16 @@ và CodeQL. Repository gồm hai phần:
     (`Security/CWE-079/`) chạy trên cùng database. CWE-79 **chỉ được phát hiện và giữ**. Ba nhóm cũ
     cho đúng kết quả của `v0.4`. Trên tập có nhãn OSSF CVE Benchmark, CWE-79 phát hiện 14 trong 41 ca
     đo được; nhãn của tập này không độc lập với CodeQL
-    ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 24).
+    ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 24). Semgrep cho CWE-79 đã được đo trên
+    một tập nhãn độc lập: tìm thêm 9 ca đúng nhưng thêm hàng nghìn mục rà, nên không được tích hợp
+    (mục 25).
+  - `multi-cwe-v0.6` (**thử nghiệm**): bốn nhóm của `multi-cwe-v0.5`, thêm nhóm **server-side
+    request forgery (CWE-918)** cho Python và JavaScript/TypeScript: các truy vấn SSRF phía máy chủ
+    của CodeQL (`py/full-ssrf`, `py/partial-ssrf`, `js/request-forgery`) chạy trên cùng database.
+    CWE-918 **chỉ được phát hiện và giữ**. Bốn nhóm cũ cho đúng kết quả của `v0.5`. Trên 64 advisory
+    GHSA có nhãn độc lập, CWE-918 chỉ phát hiện **1/20 ca Python và 2/21 ca JS/TS**; nhiều ca nằm ngoài
+    mô hình nguồn hay framework của CodeQL ([docs/plans/multi-cwe.md](docs/plans/multi-cwe.md), mục 26
+    và 27).
   Chi tiết: **[docs/architecture.md](docs/architecture.md)**.
 
 ## Tài liệu
@@ -149,6 +158,15 @@ và thêm nhóm "CWE-79 · Cross-site scripting (XSS)". Nhóm này chạy bảy 
 trong một lượt `codeql-cross-site-scripting` trên database JavaScript dùng chung. Mỗi vị trí CodeQL
 báo là một mục ở mức U trong danh sách rà chính; cảnh báo XSS không bao giờ chung mục với cảnh báo
 của nhóm khác, kể cả khi trùng dòng. Lượt XSS lỗi hay chạy dở chỉ ảnh hưởng nhóm CWE-79.
+
+Profile thử nghiệm **"CWE-78 + CWE-22 + CWE-89 + CWE-79 + CWE-918 · Thử nghiệm: thêm SSRF cho Python
+và JavaScript/TypeScript"** (`multi-cwe-v0.6`) giữ nguyên bốn nhóm của `multi-cwe-v0.5` (cùng
+manifest) và thêm nhóm "CWE-918 · Server-side request forgery (SSRF)". Nhóm này chạy các truy vấn
+SSRF phía máy chủ của CodeQL (`py/full-ssrf`, `py/partial-ssrf` cho Python, `js/request-forgery` cho
+JavaScript/TypeScript) trong lượt `codeql-ssrf` trên database dùng chung của mỗi ngôn ngữ. Mỗi vị trí
+CodeQL báo là một mục ở mức U trong danh sách rà chính. Truy vấn yêu cầu do trình duyệt gửi
+(`js/client-side-request-forgery`) cũng mang nhãn CWE-918 nhưng không thuộc nhóm này. Lượt SSRF của
+một ngôn ngữ lỗi hay chạy dở chỉ ảnh hưởng nhóm CWE-918 ở ngôn ngữ đó.
 
 Giới hạn: CWE-22 chỉ có trên Python, CWE-79 chỉ có trên JavaScript/TypeScript; CWE-89 chưa gộp cảnh báo giữa công cụ ở JavaScript/TypeScript
 (chưa có bộ định vị lời gọi), và trên dữ liệu đã đo Semgrep và Bandit làm tăng đáng kể số mục cần rà
@@ -277,19 +295,21 @@ Bandit và ESLint theo [`tools/pins.env`](tools/pins.env), kèm chín scan profi
 [`command-injection-v0.2`](profiles/command-injection-v0.2/profile.json),
 [`command-injection-v0.3`](profiles/command-injection-v0.3/profile.json),
 [`path-traversal-v0.2`](profiles/path-traversal-v0.2/profile.json) (pack CodeQL ở
-[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và năm profile ghép
+[`rules/codeql/path-traversal-v0.2/`](rules/codeql/path-traversal-v0.2/README.md)) và sáu profile ghép
 [`multi-cwe-v0.1`](profiles/multi-cwe-v0.1/profile.json),
 [`multi-cwe-v0.2`](profiles/multi-cwe-v0.2/profile.json),
 [`multi-cwe-v0.3`](profiles/multi-cwe-v0.3/profile.json),
-[`multi-cwe-v0.4`](profiles/multi-cwe-v0.4/profile.json) và
-[`multi-cwe-v0.5`](profiles/multi-cwe-v0.5/profile.json), vốn chỉ ghim manifest của các profile
+[`multi-cwe-v0.4`](profiles/multi-cwe-v0.4/profile.json),
+[`multi-cwe-v0.5`](profiles/multi-cwe-v0.5/profile.json) và
+[`multi-cwe-v0.6`](profiles/multi-cwe-v0.6/profile.json), vốn chỉ ghim manifest của các profile
 thành viên. Thành viên [`sql-injection-v0.1`](profiles/sql-injection-v0.1/profile.json) chỉ chạy
 bên trong `multi-cwe-v0.2`, và [`sql-injection-v0.2`](profiles/sql-injection-v0.2/profile.json)
 (luật Semgrep ở [`rules/semgrep/sql-injection-v0.1/`](rules/semgrep/sql-injection-v0.1/README.md))
 chỉ bên trong `multi-cwe-v0.3`, [`sql-injection-v0.3`](profiles/sql-injection-v0.3/profile.json)
-bên trong `multi-cwe-v0.4` và `multi-cwe-v0.5`, và
+bên trong `multi-cwe-v0.4`, `multi-cwe-v0.5` và `multi-cwe-v0.6`,
 [`cross-site-scripting-v0.1`](profiles/cross-site-scripting-v0.1/profile.json) chỉ bên trong
-`multi-cwe-v0.5`. Worker từ chối
+`multi-cwe-v0.5` và `multi-cwe-v0.6`, và [`ssrf-v0.1`](profiles/ssrf-v0.1/profile.json) chỉ bên
+trong `multi-cwe-v0.6`. Worker từ chối
 khởi động nếu hash của bất kỳ profile nào hoặc phiên bản scanner lệch so với bản đã ghim. Image API không
 kèm scanner. Không commit mã nguồn người dùng, dữ liệu object store hay CodeQL database vào Git.
 

@@ -1,0 +1,39 @@
+{
+  "kind": "detection",
+  "profile_id": "ssrf-v0.1",
+  "languages": {
+    "javascript": {
+      "config": "profiles/ssrf-v0.1/javascript.json"
+    },
+    "python": {
+      "config": "profiles/ssrf-v0.1/python.json"
+    }
+  },
+  "rules": {
+    "javascript": {
+      "js/request-forgery": [
+        "CWE-918"
+      ]
+    },
+    "python": {
+      "py/full-ssrf": [
+        "CWE-918"
+      ],
+      "py/partial-ssrf": [
+        "CWE-918"
+      ]
+    }
+  },
+  "priority": "U",
+  "policy": {
+    "id": "ssrf-detect-and-keep",
+    "version": "0.1",
+    "source": "profiles/ssrf-v0.1/DETECTION.md"
+  },
+  "specification": "profiles/ssrf-v0.1/DETECTION.md",
+  "files": {
+    "profiles/ssrf-v0.1/DETECTION.md": "853c39299a81dc5b18dc0ba5fdff04f34727f9328745989dc06bfda185fe0c33",
+    "profiles/ssrf-v0.1/javascript.json": "25c864b58d7a935ead9af767c5ce5204c045cd88b9171acd4cb248970c3d5b60",
+    "profiles/ssrf-v0.1/python.json": "67eb23252cb430c29c80414580812a2d6efc75ae508b2ccfa1696cd6940f641a"
+  }
+}

@@ -65,10 +65,11 @@ logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
 # The soft limit must cover every step of the largest profile running to its timeout
-# (`worst_case_seconds`): multi-cwe-v0.5 needs 12360 s, multi-cwe-v0.3 and v0.4 11760 s,
-# multi-cwe-v0.2 9960 s, multi-cwe-v0.1 8760 s, command-injection-v0.3 7560 s. A test keeps this
-# above every profile, and TIME_LIMIT below the broker's visibility timeout of 14400 s.
-SOFT_TIME_LIMIT = 12600
+# (`worst_case_seconds`): multi-cwe-v0.6 needs 13560 s, multi-cwe-v0.5 12360 s, multi-cwe-v0.3
+# and v0.4 11760 s, multi-cwe-v0.2 9960 s, multi-cwe-v0.1 8760 s, command-injection-v0.3 7560 s.
+# A test keeps this above every profile, and TIME_LIMIT below the broker's visibility timeout
+# (app.workers.celery_app, 18000 s).
+SOFT_TIME_LIMIT = 13800
 # The soft limit interrupts only the main thread, which then waits for a scanner thread still
 # running, bounded by that step's timeout, before it can mark the scan failed. The hard limit
 # must leave that time, or the scan would be killed and stay "running". The longest step is

@@ -21,8 +21,9 @@ celery_app.conf.update(
     timezone="UTC",
     # Redis redelivers unacknowledged tasks after this; acks_late tasks (run_scan) must finish
     # well within it, or a long scan would start again on another worker while still running.
-    # run_scan's hard limit is 13500 s (app.workflows.scans.task); a test keeps the two apart.
-    broker_transport_options={"visibility_timeout": 4 * 60 * 60},
+    # run_scan's hard limit is 15300 s (app.workflows.scans.task); a test keeps the two apart.
+    # Raised from 4 h with multi-cwe-v0.6, whose worst case passed the old timeout.
+    broker_transport_options={"visibility_timeout": 5 * 60 * 60},
 )
 
 

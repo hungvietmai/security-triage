@@ -600,6 +600,151 @@ describe("A scan with several analysis families", () => {
     ).toBeInTheDocument();
   });
 
+  it("offers the five-family profile and says SSRF is only detected and kept", async () => {
+    const project = makeProject();
+    db.projects = [project];
+    const { user } = await renderApp(`/projects/${project.id}`);
+    await user.click(await main().findByRole("button", { name: "Tạo scan" }));
+    const dialog = within(screen.getByRole("dialog", { name: "Tạo scan mới" }));
+    await user.click(dialog.getByRole("combobox", { name: "Profile" }));
+    await user.click(
+      screen.getByRole("option", {
+        name: "CWE-78 + CWE-22 + CWE-89 + CWE-79 + CWE-918 · Thử nghiệm: thêm SSRF cho Python và JavaScript/TypeScript",
+      }),
+    );
+    expect(
+      dialog.getByText(/ba truy vấn SSRF phía máy chủ của CodeQL/),
+    ).toBeInTheDocument();
+    let input: Schemas["ScanCreate"] | undefined;
+    server.use(
+      http.post(
+        "/api/v1/projects/:projectId/scans",
+        async ({ request, params }) => {
+          input = (await request.json()) as Schemas["ScanCreate"];
+          const scan = makeScan({
+            project_id: String(params.projectId),
+            profile: "multi-cwe-v0.6",
+          });
+          db.scans = [scan];
+          return HttpResponse.json(
+            {
+              scan_id: scan.id,
+              snapshot_id: scan.snapshot.id,
+              status: "queued",
+            },
+            { status: 202 },
+          );
+        },
+      ),
+    );
+    await user.type(dialog.getByLabelText("Tên npm"), "demo");
+    await user.type(dialog.getByLabelText("Phiên bản"), "1.0.0");
+    await user.click(dialog.getByRole("button", { name: "Tạo scan" }));
+    await waitFor(() =>
+      expect(input).toEqual({
+        source: { kind: "npm", package: "demo", version: "1.0.0" },
+        profile: "multi-cwe-v0.6",
+      }),
+    );
+  });
+
+  it("shows an SSRF unit in its own family, kept for review", async () => {
+    const ssrf: Family = {
+      family: "ssrf",
+      cwe: "CWE-918",
+      label: "Server-side request forgery",
+      profile_id: "ssrf-v0.1",
+      profile_sha256: "5".repeat(64),
+      runs: [
+        {
+          language: "python",
+          status: "completed",
+          error: null,
+          raw_findings: 1,
+          evidence_steps: {},
+        },
+        {
+          language: "javascript",
+          status: "completed",
+          error: null,
+          raw_findings: 0,
+          evidence_steps: {},
+        },
+      ],
+      units: 1,
+      review: 1,
+      filtered: 0,
+      held: 0,
+    };
+    const scan = makeScan({
+      profile: "multi-cwe-v0.6",
+      reconciler_version: "family-composition-v0.1",
+      policy_version: "family-composition-v0.1",
+      unit_counts: { P1: 1, P2: 0, U: 1, P3: 0, P4: 0 },
+      disposition_counts: { review: 2, filtered: 0 },
+      families: [COMMAND, ssrf],
+    });
+    const command = makeUnit({ path: "run.py" });
+    const proxy = makeUnit({
+      path: "fetch_app.py",
+      priority: "U",
+      sink_kind: "codeql-reported-sink",
+      argument_role: null,
+      shell_state: null,
+      analysis_family: "ssrf",
+      cwe: "CWE-918",
+      tools: ["codeql"],
+      decision_id: "K10_DETECTED_KEPT",
+      evidence_state: "insufficient",
+      kept_because: ["no_filter_condition_for_family"],
+      adjudication: {
+        status: "kept",
+        rule: null,
+        rules: [],
+        kept_because: ["no_filter_condition_for_family"],
+        reason: "Nhóm phân tích này chưa có điều kiện gạn nào đã được đo.",
+        evidence: [],
+      },
+    });
+    proxy.findings[0] = {
+      ...proxy.findings[0],
+      tool: "codeql",
+      rule_id: "py/full-ssrf",
+      cwe_ids: ["cwe-918"],
+      mapped_cwes: ["CWE-918"],
+      analysis_family: "ssrf",
+      family_status: "resolved",
+      family_basis: "pass_provenance",
+      tool_pass: "codeql-ssrf",
+    };
+    db.scans = [scan];
+    db.units[scan.id] = [command, proxy];
+
+    const { user } = await renderApp(`/scans/${scan.id}?family=ssrf`);
+    expect(
+      await main().findByRole("button", {
+        name: "CWE-918 · Server-side request forgery (SSRF): 1",
+      }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      main().queryByRole("button", { name: "Xem đơn vị run.py:12" }),
+    ).not.toBeInTheDocument();
+    await user.click(
+      await main().findByRole("button", {
+        name: "Xem đơn vị fetch_app.py:12",
+      }),
+    );
+    const sheet = within(await screen.findByRole("dialog"));
+    expect(
+      await sheet.findByText("CWE-918 · Server-side request forgery (SSRF)"),
+    ).toBeInTheDocument();
+    expect(sheet.getByText("Chưa đủ bằng chứng")).toBeInTheDocument();
+    expect(sheet.getByText(/cwe-918/)).toBeInTheDocument();
+    expect(
+      sheet.getByText("Nằm trong danh sách rà chính."),
+    ).toBeInTheDocument();
+  });
+
   it("shows a SQL injection unit as kept for review with no evidence to weigh", async () => {
     const sql: Family = {
       family: "sql-injection",

@@ -89,6 +89,9 @@ FAMILIES = {
     "cross-site-scripting": Family(
         "cross-site-scripting", "CWE-79", "Cross-site scripting", DetectionProfile
     ),
+    # Python and JavaScript/TypeScript, detected and kept like sql-injection. The short name
+    # keeps the pass name "codeql-ssrf" within the 32 characters of `tool_runs.tool`.
+    "ssrf": Family("ssrf", "CWE-918", "Server-side request forgery", DetectionProfile),
 }
 # The analysis family each pinned profile handles. A profile that is not listed cannot be a
 # member: its family, and with it the conditions under which it may filter, is unknown.
@@ -101,6 +104,7 @@ FAMILY_OF_PROFILE = {
     "sql-injection-v0.2": "sql-injection",
     "sql-injection-v0.3": "sql-injection",
     "cross-site-scripting-v0.1": "cross-site-scripting",
+    "ssrf-v0.1": "ssrf",
 }
 # A member whose queries run on the shared database gets its own analysis pass. Its raw IDs
 # start with this prefix and the family, so they stay unique next to the primary CodeQL pass.
